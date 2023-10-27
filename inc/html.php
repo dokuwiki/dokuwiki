@@ -147,7 +147,9 @@ function html_secedit_get_button($data)
     global $ID;
     global $INFO;
 
-    if (!isset($data['name']) || $data['name'] === '') return '';
+    if (!isset($data['name']) || $data['name'] === '') {
+        return '';
+    }
 
     $name = $data['name'];
     unset($data['name']);
@@ -204,8 +206,9 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
     global $conf;
     global $lang;
 
-    if (!$label)
+    if (!$label) {
         $label = $lang['btn_' . $name];
+    }
 
     //filter id (without urlencoding)
     $id = idfilter($id, false);
@@ -302,8 +305,12 @@ function html_hilight($html, $phrases)
 
     $regex = implode('|', $phrases);
 
-    if ($regex === '') return $html;
-    if (!Clean::isUtf8($regex)) return $html;
+    if ($regex === '') {
+        return $html;
+    }
+    if (!Clean::isUtf8($regex)) {
+        return $html;
+    }
 
     return @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
         $hlight = unslash($match[0]);
@@ -474,7 +481,9 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
         if ($item['level'] > $level) {
             //open new list
             for ($i = 0; $i < ($item['level'] - $level); $i++) {
-                if ($i) $html .= '<li class="clear">';
+                if ($i) {
+                    $html .= '<li class="clear">';
+                }
                 $html .= "\n" . '<ul class="' . $class . '">' . "\n";
                 $open++;
             }
@@ -639,12 +648,16 @@ function html_msgarea()
     // store if the global $MSG has already been shown and thus HTML output has been started
     $MSG_shown = true;
 
-    if (!isset($MSG)) return;
+    if (!isset($MSG)) {
+        return;
+    }
 
     $shown = [];
     foreach ($MSG as $msg) {
         $hash = md5($msg['msg']);
-        if (isset($shown[$hash])) continue; // skip double messages
+        if (isset($shown[$hash])) {
+            continue;
+        } // skip double messages
         if (info_msg_allowed($msg)) {
             echo '<div class="' . $msg['lvl'] . '">';
             echo $msg['msg'];
@@ -830,7 +843,9 @@ function html_resendpwd()
  */
 function html_TOC($toc)
 {
-    if ($toc === []) return '';
+    if ($toc === []) {
+        return '';
+    }
     global $lang;
     $out  = '<!-- TOC START -->' . DOKU_LF;
     $out .= '<div id="dw__toc" class="dw__toc">' . DOKU_LF;
@@ -945,11 +960,17 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
     $out = '';
 
     // prepare the object attributes
-    if (is_null($atts)) $atts = [];
+    if (is_null($atts)) {
+        $atts = [];
+    }
     $atts['width']  = (int) $width;
     $atts['height'] = (int) $height;
-    if (!$atts['width'])  $atts['width']  = 425;
-    if (!$atts['height']) $atts['height'] = 350;
+    if (!$atts['width']) {
+        $atts['width']  = 425;
+    }
+    if (!$atts['height']) {
+        $atts['height'] = 350;
+    }
 
     // add object attributes for standard compliant browsers
     $std = $atts;
@@ -970,8 +991,10 @@ function html_flashobject($swf, $width, $height, $params = null, $flashvars = nu
     $out .= '<!--><!-- -->' . NL;
 
     // print params
-    if (is_array($params)) foreach ($params as $key => $val) {
-        $out .= '  <param name="' . hsc($key) . '" value="' . hsc($val) . '" />' . NL;
+    if (is_array($params)) {
+        foreach ($params as $key => $val) {
+            $out .= '  <param name="' . hsc($key) . '" value="' . hsc($val) . '" />' . NL;
+        }
     }
 
     // add flashvars

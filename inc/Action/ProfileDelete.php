@@ -28,7 +28,9 @@ class ProfileDelete extends AbstractUserAction
 
         /** @var AuthPlugin $auth */
         global $auth;
-        if (!$auth->canDo('delUser')) throw new ActionDisabledException();
+        if (!$auth->canDo('delUser')) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */

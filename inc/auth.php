@@ -43,7 +43,9 @@ function auth_setup()
     global $plugin_controller;
     $AUTH_ACL = [];
 
-    if (!$conf['useacl']) return false;
+    if (!$conf['useacl']) {
+        return false;
+    }
 
     // try to load auth backend from plugins
     foreach ($plugin_controller->getList('auth') as $plugin) {
@@ -68,7 +70,9 @@ function auth_setup()
 
     // do the login either by cookie or provided credentials XXX
     $INPUT->set('http_credentials', false);
-    if (!$conf['rememberme']) $INPUT->set('r', false);
+    if (!$conf['rememberme']) {
+        $INPUT->set('r', false);
+    }
 
     // Populate Basic Auth user/password from Authorization header
     // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
@@ -128,20 +132,26 @@ function auth_loadACL()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!is_readable($config_cascade['acl']['default'])) return [];
+    if (!is_readable($config_cascade['acl']['default'])) {
+        return [];
+    }
 
     $acl = file($config_cascade['acl']['default']);
 
     $out = [];
     foreach ($acl as $line) {
         $line = trim($line);
-        if (empty($line) || ($line[0] == '#')) continue; // skip blank lines & comments
+        if (empty($line) || ($line[0] == '#')) {
+            continue;
+        } // skip blank lines & comments
         [$id, $rest] = preg_split('/[ \t]+/', $line, 2);
 
         // substitute user wildcard first (its 1:1)
         if (strstr($line, '%USER%')) {
             // if user is not logged in, this ACL line is meaningless - skip it
-            if (!$INPUT->server->has('REMOTE_USER')) continue;
+            if (!$INPUT->server->has('REMOTE_USER')) {
+                continue;
+            }
 
             $id   = str_replace('%USER%', cleanID($INPUT->server->str('REMOTE_USER')), $id);
             $rest = str_replace('%USER%', auth_nameencode($INPUT->server->str('REMOTE_USER')), $rest);
@@ -222,7 +232,9 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
 
     if (!empty($user)) {
         //usual login
@@ -435,14 +447,18 @@ function auth_logoff($keepbc = false)
     // make sure the session is writable (it usually is)
     @session_start();
 
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['user']))
+    if (isset($_SESSION[DOKU_COOKIE]['auth']['user'])) {
         unset($_SESSION[DOKU_COOKIE]['auth']['user']);
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['pass']))
+    }
+    if (isset($_SESSION[DOKU_COOKIE]['auth']['pass'])) {
         unset($_SESSION[DOKU_COOKIE]['auth']['pass']);
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['info']))
+    }
+    if (isset($_SESSION[DOKU_COOKIE]['auth']['info'])) {
         unset($_SESSION[DOKU_COOKIE]['auth']['info']);
-    if (!$keepbc && isset($_SESSION[DOKU_COOKIE]['bc']))
+    }
+    if (!$keepbc && isset($_SESSION[DOKU_COOKIE]['bc'])) {
         unset($_SESSION[DOKU_COOKIE]['bc']);
+    }
     $INPUT->server->remove('REMOTE_USER');
     $USERINFO = null; //FIXME
 
@@ -487,7 +503,9 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
     global $INPUT;
 
 
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
     if (is_null($user)) {
         if (!$INPUT->server->has('REMOTE_USER')) {
             return false;
@@ -558,7 +576,9 @@ function auth_isMember($memberlist, $user, array $groups)
 {
     /* @var AuthPlugin $auth */
     global $auth;
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
 
     // clean user and groups
     if (!$auth->isCaseSensitive()) {
@@ -576,14 +596,22 @@ function auth_isMember($memberlist, $user, array $groups)
 
     // compare cleaned values
     foreach ($members as $member) {
-        if ($member == '@ALL') return true;
-        if (!$auth->isCaseSensitive()) $member = PhpString::strtolower($member);
+        if ($member == '@ALL') {
+            return true;
+        }
+        if (!$auth->isCaseSensitive()) {
+            $member = PhpString::strtolower($member);
+        }
         if ($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
-            if (in_array($member, $groups)) return true;
+            if (in_array($member, $groups)) {
+                return true;
+            }
         } else {
             $member = $auth->cleanUser($member);
-            if ($member == $user) return true;
+            if ($member == $user) {
+                return true;
+            }
         }
     }
 
@@ -608,7 +636,9 @@ function auth_quickaclcheck($id)
     /* @var Input $INPUT */
     global $INPUT;
     # if no ACL is used always return upload rights
-    if (!$conf['useacl']) return AUTH_UPLOAD;
+    if (!$conf['useacl']) {
+        return AUTH_UPLOAD;
+    }
     return auth_aclcheck($id, $INPUT->server->str('REMOTE_USER'), is_array($USERINFO) ? $USERINFO['grps'] : []);
 }
 
@@ -656,12 +686,20 @@ function auth_aclcheck_cb($data)
     global $auth;
 
     // if no ACL is used always return upload rights
-    if (!$conf['useacl']) return AUTH_UPLOAD;
-    if (!$auth instanceof AuthPlugin) return AUTH_NONE;
-    if (!is_array($AUTH_ACL)) return AUTH_NONE;
+    if (!$conf['useacl']) {
+        return AUTH_UPLOAD;
+    }
+    if (!$auth instanceof AuthPlugin) {
+        return AUTH_NONE;
+    }
+    if (!is_array($AUTH_ACL)) {
+        return AUTH_NONE;
+    }
 
     //make sure groups is an array
-    if (!is_array($groups)) $groups = [];
+    if (!is_array($groups)) {
+        $groups = [];
+    }
 
     //if user is superuser or in superusergroup return 255 (acl_admin)
     if (auth_isadmin($user, $groups)) {
@@ -687,7 +725,9 @@ function auth_aclcheck_cb($data)
     $groups[] = '@ALL';
 
     //add User
-    if ($user) $groups[] = $user;
+    if ($user) {
+        $groups[] = $user;
+    }
 
     //check exact match first
     $matches = preg_grep('/^' . preg_quote($id, '/') . '[ \t]+([^ \t]+)[ \t]+/', $AUTH_ACL);
@@ -701,7 +741,9 @@ function auth_aclcheck_cb($data)
             if (!in_array($acl[1], $groups)) {
                 continue;
             }
-            if ($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
+            if ($acl[2] > AUTH_DELETE) {
+                $acl[2] = AUTH_DELETE;
+            } //no admins in the ACL!
             if ($acl[2] > $perm) {
                 $perm = $acl[2];
             }
@@ -731,7 +773,9 @@ function auth_aclcheck_cb($data)
                 if (!in_array($acl[1], $groups)) {
                     continue;
                 }
-                if ($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
+                if ($acl[2] > AUTH_DELETE) {
+                    $acl[2] = AUTH_DELETE;
+                } //no admins in the ACL!
                 if ($acl[2] > $perm) {
                     $perm = $acl[2];
                 }
@@ -746,7 +790,9 @@ function auth_aclcheck_cb($data)
 
         if ($path != '*') {
             $path = $ns . ':*';
-            if ($path == ':*') $path = '*';
+            if ($path == ':*') {
+                $path = '*';
+            }
         } else {
             //we did this already
             //looks like there is something wrong with the ACL
@@ -782,8 +828,12 @@ function auth_nameencode($name, $skip_group = false)
     $name  = (string) $name;
 
     // never encode wildcard FS#1955
-    if ($name == '%USER%') return $name;
-    if ($name == '%GROUP%') return $name;
+    if ($name == '%USER%') {
+        return $name;
+    }
+    if ($name == '%GROUP%') {
+        return $name;
+    }
 
     if (!isset($cache[$name][$skip_group])) {
         if ($skip_group && $name[0] == '@') {
@@ -872,12 +922,16 @@ function auth_sendPassword($user, $password)
     global $lang;
     /* @var AuthPlugin $auth */
     global $auth;
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
 
     $user     = $auth->cleanUser($user);
     $userinfo = $auth->getUserData($user, false);
 
-    if (!$userinfo['mail']) return false;
+    if (!$userinfo['mail']) {
+        return false;
+    }
 
     $text = rawLocale('password');
     $trep = [
@@ -911,8 +965,12 @@ function register()
     global $auth;
     global $INPUT;
 
-    if (!$INPUT->post->bool('save')) return false;
-    if (!actionOK('register')) return false;
+    if (!$INPUT->post->bool('save')) {
+        return false;
+    }
+    if (!actionOK('register')) {
+        return false;
+    }
 
     // gather input
     $login    = trim($auth->cleanUser($INPUT->post->str('login')));
@@ -984,8 +1042,12 @@ function updateprofile()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!$INPUT->post->bool('save')) return false;
-    if (!checkSecurityToken()) return false;
+    if (!$INPUT->post->bool('save')) {
+        return false;
+    }
+    if (!checkSecurityToken()) {
+        return false;
+    }
 
     if (!actionOK('profile')) {
         msg($lang['profna'], -1);
@@ -1023,9 +1085,15 @@ function updateprofile()
     $changes = array_filter($changes);
 
     // check for unavailable capabilities
-    if (!$auth->canDo('modName')) unset($changes['name']);
-    if (!$auth->canDo('modMail')) unset($changes['mail']);
-    if (!$auth->canDo('modPass')) unset($changes['pass']);
+    if (!$auth->canDo('modName')) {
+        unset($changes['name']);
+    }
+    if (!$auth->canDo('modMail')) {
+        unset($changes['mail']);
+    }
+    if (!$auth->canDo('modPass')) {
+        unset($changes['pass']);
+    }
 
     // anything to do?
     if ($changes === []) {
@@ -1075,8 +1143,12 @@ function auth_deleteprofile()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!$INPUT->post->bool('delete')) return false;
-    if (!checkSecurityToken()) return false;
+    if (!$INPUT->post->bool('delete')) {
+        return false;
+    }
+    if (!checkSecurityToken()) {
+        return false;
+    }
 
     // action prevented or auth module disallows
     if (!actionOK('profile_delete') || !$auth->canDo('delUser')) {
@@ -1166,7 +1238,9 @@ function act_resendpwd()
             $pass = $INPUT->str('pass');
 
             // password given correctly?
-            if (!$pass) return false;
+            if (!$pass) {
+                return false;
+            }
             if ($pass != $INPUT->str('passchk')) {
                 msg($lang['regbadpass'], -1);
                 return false;
@@ -1196,7 +1270,9 @@ function act_resendpwd()
     } else {
         // we're in request phase
 
-        if (!$INPUT->post->bool('save')) return false;
+        if (!$INPUT->post->bool('save')) {
+            return false;
+        }
 
         if (!$INPUT->post->str('login')) {
             msg($lang['resendpwdmissing'], -1);
@@ -1251,7 +1327,9 @@ function act_resendpwd()
 function auth_cryptPassword($clear, $method = '', $salt = null)
 {
     global $conf;
-    if (empty($method)) $method = $conf['passcrypt'];
+    if (empty($method)) {
+        $method = $conf['passcrypt'];
+    }
 
     $pass = new PassHash();
     $call = 'hash_' . $method;
@@ -1295,7 +1373,9 @@ function auth_setCookie($user, $pass, $sticky)
     global $auth;
     global $USERINFO;
 
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
     $USERINFO = $auth->getUserData($user);
 
     // set cookie

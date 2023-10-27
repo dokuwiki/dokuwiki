@@ -17,7 +17,9 @@ class Table
     public static function upperCaseToLowerCase()
     {
         static $table = null;
-        if ($table === null) $table = include __DIR__ . '/tables/case.php';
+        if ($table === null) {
+            $table = include __DIR__ . '/tables/case.php';
+        }
         return $table;
     }
 

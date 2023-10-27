@@ -102,8 +102,10 @@ class Export extends AbstractAction
         Event::createAndTrigger('ACTION_EXPORT_POSTPROCESS', $data);
 
         if (!empty($data['output'])) {
-            if (is_array($data['headers'])) foreach ($data['headers'] as $key => $val) {
-                header("$key: $val");
+            if (is_array($data['headers'])) {
+                foreach ($data['headers'] as $key => $val) {
+                    header("$key: $val");
+                }
             }
             echo $pre . $data['output'] . $post;
             exit;

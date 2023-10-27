@@ -10,8 +10,12 @@
 use dokuwiki\Input\Input;
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1);
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) {
+    define('DOKU_DISABLE_GZIP_OUTPUT', 1);
+}
 require_once(DOKU_INC . 'inc/init.php');
 session_write_close(); //close session
 
@@ -73,7 +77,9 @@ $evt = new Event('FETCH_MEDIA_STATUS', $data);
 if ($evt->advise_before()) {
     // redirects
     if ($data['status'] > 300 && $data['status'] <= 304) {
-        if (defined('SIMPLE_TEST')) return; //TestResponse doesn't recognize redirects
+        if (defined('SIMPLE_TEST')) {
+            return;
+        } //TestResponse doesn't recognize redirects
         send_redirect($data['statusmessage']);
     }
     // send any non 200 status
@@ -83,7 +89,9 @@ if ($evt->advise_before()) {
     // die on errors
     if ($data['status'] > 203) {
         echo $data['statusmessage'];
-        if (defined('SIMPLE_TEST')) return;
+        if (defined('SIMPLE_TEST')) {
+            return;
+        }
         exit;
     }
 }

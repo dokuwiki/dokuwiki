@@ -2,8 +2,12 @@
 
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('DOKU_MEDIADETAIL')) define('DOKU_MEDIADETAIL', 1);
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('DOKU_MEDIADETAIL')) {
+    define('DOKU_MEDIADETAIL', 1);
+}
 
 // define all DokuWiki globals here (needed within test requests but also helps to keep track)
 global $INPUT, $IMG, $ID, $REV, $SRC, $ERROR, $AUTH;

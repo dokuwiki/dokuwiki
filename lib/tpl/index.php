@@ -11,8 +11,12 @@
  */
 
 // phpcs:disable PSR1.Files.SideEffects
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('NOSESSION')) define('NOSESSION', 1);
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('NOSESSION')) {
+    define('NOSESSION', 1);
+}
 require_once(DOKU_INC . 'inc/init.php');
 ?>
 <!DOCTYPE html>

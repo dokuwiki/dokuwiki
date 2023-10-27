@@ -11,10 +11,18 @@ use dokuwiki\StyleUtils;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
-if (!defined('NL')) define('NL', "\n");
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('NOSESSION')) {
+    define('NOSESSION', true);
+} // we do not use a session or authentication here (better caching)
+if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) {
+    define('DOKU_DISABLE_GZIP_OUTPUT', 1);
+} // we gzip ourself here
+if (!defined('NL')) {
+    define('NL', "\n");
+}
 require_once(DOKU_INC . 'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -440,10 +448,14 @@ class DokuCssFile
      */
     public function load($location = '')
     {
-        if (!file_exists($this->filepath)) return '';
+        if (!file_exists($this->filepath)) {
+            return '';
+        }
 
         $css = io_readFile($this->filepath);
-        if (!$location) return $css;
+        if (!$location) {
+            return $css;
+        }
 
         $this->location = $location;
 
@@ -657,7 +669,9 @@ function css_compress($css)
  */
 function css_comment_cb($matches)
 {
-    if (strlen($matches[2]) > 4) return '';
+    if (strlen($matches[2]) > 4) {
+        return '';
+    }
     return $matches[0];
 }
 

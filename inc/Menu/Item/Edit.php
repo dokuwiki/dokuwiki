@@ -33,13 +33,17 @@ class Edit extends AbstractItem
                     }
                 }
             } else {
-                if (!actionOK("source")) throw new \RuntimeException("action disabled: source");
+                if (!actionOK("source")) {
+                    throw new \RuntimeException("action disabled: source");
+                }
                 $params['rev'] = $REV;
                 $this->type = 'source';
                 $this->accesskey = 'v';
             }
         } else {
-            if (auth_quickaclcheck($INFO['id']) < AUTH_READ) throw new \RuntimeException("no permission to read");
+            if (auth_quickaclcheck($INFO['id']) < AUTH_READ) {
+                throw new \RuntimeException("no permission to read");
+            }
             $this->params = ['do' => ''];
             $this->type = 'show';
             $this->accesskey = 'v';

@@ -37,7 +37,9 @@ class SettingNumeric extends SettingString
     /** @inheritdoc */
     public function out($var, $fmt = 'php')
     {
-        if ($fmt != 'php') return '';
+        if ($fmt != 'php') {
+            return '';
+        }
 
         $local = $this->local === '' ? "''" : $this->local;
         $out = '$' . $var . "['" . $this->getArrayKey() . "'] = " . $local . ";\n";

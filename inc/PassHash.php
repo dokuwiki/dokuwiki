@@ -155,7 +155,9 @@ class PassHash
             $salt = $this->gen_salt($len);
             $cut  = true; // for new hashes we alway apply length restriction
         }
-        if (strlen($salt) > $len && $cut) $salt = substr($salt, 0, $len);
+        if (strlen($salt) > $len && $cut) {
+            $salt = substr($salt, 0, $len);
+        }
     }
 
     // Password hashing methods follow below
@@ -237,8 +239,12 @@ class PassHash
         $bin = pack("H32", md5($text));
         for ($i = 0; $i < 1000; $i++) {
             $new = ($i & 1) ? $clear : $bin;
-            if ($i % 3) $new .= $salt;
-            if ($i % 7) $new .= $clear;
+            if ($i % 3) {
+                $new .= $salt;
+            }
+            if ($i % 7) {
+                $new .= $clear;
+            }
             $new .= ($i & 1) ? $bin : $clear;
             $bin = pack("H32", md5($new));
         }
@@ -246,7 +252,9 @@ class PassHash
         for ($i = 0; $i < 5; $i++) {
             $k = $i + 6;
             $j = $i + 12;
-            if ($j == 16) $j = 5;
+            if ($j == 16) {
+                $j = 5;
+            }
             $tmp = $bin[$i] . $bin[$k] . $bin[$j] . $tmp;
         }
         $tmp = chr(0) . chr(0) . $bin[11] . $tmp;
@@ -331,7 +339,9 @@ class PassHash
         $add     = 7;
         $charArr = preg_split("//", $clear);
         foreach ($charArr as $char) {
-            if (($char == '') || ($char == ' ') || ($char == '\t')) continue;
+            if (($char == '') || ($char == ' ') || ($char == '\t')) {
+                continue;
+            }
             $charVal = ord($char);
             $nr ^= ((($nr & 63) + $add) * $charVal) + ($nr << 8);
             $nr2 += ($nr2 << 8) ^ $nr;
@@ -432,16 +442,20 @@ class PassHash
         do {
             $value = ord($hash[$i++]);
             $output .= $itoa64[$value & 0x3f];
-            if ($i < $count)
+            if ($i < $count) {
                 $value |= ord($hash[$i]) << 8;
+            }
             $output .= $itoa64[($value >> 6) & 0x3f];
-            if ($i++ >= $count)
+            if ($i++ >= $count) {
                 break;
-            if ($i < $count)
+            }
+            if ($i < $count) {
                 $value |= ord($hash[$i]) << 16;
+            }
             $output .= $itoa64[($value >> 12) & 0x3f];
-            if ($i++ >= $count)
+            if ($i++ >= $count) {
                 break;
+            }
             $output .= $itoa64[($value >> 18) & 0x3f];
         } while ($i < $count);
 
@@ -677,7 +691,9 @@ class PassHash
         }
 
         if (is_null($salt)) {
-            if ($compute < 4 || $compute > 31) $compute = 8;
+            if ($compute < 4 || $compute > 31) {
+                $compute = 8;
+            }
             $salt = '$2y$' . str_pad($compute, 2, '0', STR_PAD_LEFT) . '$' .
                 $this->gen_salt(22);
         }

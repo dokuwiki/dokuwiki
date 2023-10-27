@@ -24,9 +24,15 @@
  */
 
 // DOKU_FARMDIR needs to be set in preload.php, the fallback is the same as DOKU_INC would be (if it was set already)
-if (!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(__DIR__ . '/../') . '/');
-if (!defined('DOKU_CONF')) define('DOKU_CONF', farm_confpath(DOKU_FARMDIR));
-if (!defined('DOKU_FARM')) define('DOKU_FARM', false);
+if (!defined('DOKU_FARMDIR')) {
+    define('DOKU_FARMDIR', fullpath(__DIR__ . '/../') . '/');
+}
+if (!defined('DOKU_CONF')) {
+    define('DOKU_CONF', farm_confpath(DOKU_FARMDIR));
+}
+if (!defined('DOKU_FARM')) {
+    define('DOKU_FARM', false);
+}
 
 /**
  * Find the appropriate configuration directory.
@@ -57,15 +63,21 @@ function farm_confpath($farm)
             unset($_GET['animal']);
             $params = [];
             parse_str($_SERVER['QUERY_STRING'], $params);
-            if (isset($params['animal'])) unset($params['animal']);
+            if (isset($params['animal'])) {
+                unset($params['animal']);
+            }
             $_SERVER['QUERY_STRING'] = http_build_query($params);
         }
         // check that $animal is a string and just a directory name and not a path
-        if (!is_string($animal) || strpbrk($animal, '\\/') !== false)
+        if (!is_string($animal) || strpbrk($animal, '\\/') !== false) {
             nice_die('Sorry! Invalid animal name!');
-        if (!is_dir($farm . '/' . $animal))
+        }
+        if (!is_dir($farm . '/' . $animal)) {
             nice_die("Sorry! This Wiki doesn't exist!");
-        if (!defined('DOKU_FARM')) define('DOKU_FARM', $mode);
+        }
+        if (!defined('DOKU_FARM')) {
+            define('DOKU_FARM', $mode);
+        }
         return $farm . '/' . $animal . '/conf/';
     }
 
@@ -76,7 +88,9 @@ function farm_confpath($farm)
         for ($j = count($server); $j > 0; $j--) {
             $dir = implode('.', array_slice($server, -$j)) . implode('.', array_slice($uri, 0, $i));
             if (is_dir("$farm/$dir/conf/")) {
-                if (!defined('DOKU_FARM')) define('DOKU_FARM', 'virtual');
+                if (!defined('DOKU_FARM')) {
+                    define('DOKU_FARM', 'virtual');
+                }
                 return "$farm/$dir/conf/";
             }
         }
@@ -84,7 +98,9 @@ function farm_confpath($farm)
 
     // default conf directory in farm
     if (is_dir("$farm/default/conf/")) {
-        if (!defined('DOKU_FARM')) define('DOKU_FARM', 'default');
+        if (!defined('DOKU_FARM')) {
+            define('DOKU_FARM', 'default');
+        }
         return "$farm/default/conf/";
     }
     // farmer

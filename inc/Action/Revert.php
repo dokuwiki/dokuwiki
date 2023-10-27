@@ -29,7 +29,9 @@ class Revert extends AbstractUserAction
      */
     public function preProcess()
     {
-        if (!checkSecurityToken()) throw new ActionException();
+        if (!checkSecurityToken()) {
+            throw new ActionException();
+        }
 
         global $ID;
         global $REV;
@@ -41,7 +43,9 @@ class Revert extends AbstractUserAction
         $sum = $lang['deleted'];
         if ($REV) {
             $text = rawWiki($ID, $REV);
-            if (!$text) throw new ActionException(); //something went wrong
+            if (!$text) {
+                throw new ActionException();
+            } //something went wrong
             $sum = sprintf($lang['restored'], dformat($REV));
         }
 

@@ -9,7 +9,9 @@
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
+if (!defined('DOKU_INC')) {
+    die();
+} /* must be run from within DokuWiki */
 
 $hasSidebar = page_findnearest($conf['sidebar']);
 $showSidebar = $hasSidebar && ($ACT == 'show');

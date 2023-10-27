@@ -30,7 +30,9 @@ class Subscribe extends AbstractUserAction
         parent::checkPreconditions();
 
         global $conf;
-        if (isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
+        if (isset($conf['subscribers']) && !$conf['subscribers']) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */
@@ -73,7 +75,9 @@ class Subscribe extends AbstractUserAction
         }
 
         // any action given? if not just return and show the subscription page
-        if (empty($params['action']) || !checkSecurityToken()) return;
+        if (empty($params['action']) || !checkSecurityToken()) {
+            return;
+        }
 
         // Handle POST data, may throw exception.
         Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);

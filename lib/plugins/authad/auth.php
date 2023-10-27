@@ -89,12 +89,15 @@ class auth_plugin_authad extends AuthPlugin
         if (isset($this->conf['additional'])) {
             $this->conf['additional'] = str_replace(' ', '', $this->conf['additional']);
             $this->conf['additional'] = explode(',', $this->conf['additional']);
-        } else $this->conf['additional'] = [];
+        } else {
+            $this->conf['additional'] = [];
+        }
 
         // ldap extension is needed
         if (!function_exists('ldap_connect')) {
-            if ($this->conf['debug'])
+            if ($this->conf['debug']) {
                 msg("AD Auth: PHP LDAP extension not found.", -1);
+            }
             $this->success = false;
             return;
         }
@@ -162,10 +165,14 @@ class auth_plugin_authad extends AuthPlugin
         if (
             $INPUT->server->str('REMOTE_USER') == $user &&
             $this->conf['sso']
-        ) return true;
+        ) {
+            return true;
+        }
 
         $adldap = $this->initAdLdap($this->getUserDomain($user));
-        if (!$adldap) return false;
+        if (!$adldap) {
+            return false;
+        }
 
         try {
             return $adldap->authenticate($this->getUserName($user), $pass);
@@ -207,9 +214,13 @@ class auth_plugin_authad extends AuthPlugin
         global $ID;
         global $INPUT;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
-        if (!$adldap) return [];
+        if (!$adldap) {
+            return [];
+        }
 
-        if ($user == '') return [];
+        if ($user == '') {
+            return [];
+        }
 
         $fields = ['mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol'];
 
@@ -326,10 +337,16 @@ class auth_plugin_authad extends AuthPlugin
 
         // get NTLM or Kerberos domain part
         [$dom, $user] = sexplode('\\', $user, 2, '');
-        if (!$user) $user = $dom;
-        if ($dom) $domain = $dom;
+        if (!$user) {
+            $user = $dom;
+        }
+        if ($dom) {
+            $domain = $dom;
+        }
         [$user, $dom] = sexplode('@', $user, 2, '');
-        if ($dom) $domain = $dom;
+        if ($dom) {
+            $domain = $dom;
+        }
 
         // clean up both
         $domain = PhpString::strtolower(trim($domain));
@@ -344,7 +361,9 @@ class auth_plugin_authad extends AuthPlugin
         }
 
         // reattach domain
-        if ($domain) $user = "$user@$domain";
+        if ($domain) {
+            $user = "$user@$domain";
+        }
         return $user;
     }
 
@@ -493,7 +512,9 @@ class auth_plugin_authad extends AuthPlugin
             }
             if ($this->filter($user, $info)) {
                 $this->grpsusers[$this->filterToString($filter)][$user] = $info;
-                if (($numberOfAdds > 0) && (++$count >= $numberOfAdds)) break;
+                if (($numberOfAdds > 0) && (++$count >= $numberOfAdds)) {
+                    break;
+                }
             }
         }
         return $count;
@@ -512,12 +533,16 @@ class auth_plugin_authad extends AuthPlugin
     public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
         $adldap = $this->initAdLdap(null);
-        if (!$adldap) return [];
+        if (!$adldap) {
+            return [];
+        }
 
         //if (!$this->users) {
             //get info for given user
             $result = $adldap->user()->all(false, $this->constructSearchString($filter));
-            if (!$result) return [];
+        if (!$result) {
+            return [];
+        }
             $this->users = array_fill_keys($result, false);
         //}
 
@@ -538,7 +563,9 @@ class auth_plugin_authad extends AuthPlugin
                     $info = $this->getUserData($user);
                 }
                 $result[$user] = $info;
-                if (($limit > 0) && (++$count >= $limit)) break;
+                if (($limit > 0) && (++$count >= $limit)) {
+                    break;
+                }
             }
         } else {
             /** @var admin_plugin_usermanager $usermanager */
@@ -557,13 +584,17 @@ class auth_plugin_authad extends AuthPlugin
                     $start + $limit - count($this->grpsusers[$this->filterToString($filter)]) + 1
                 );
             }
-            if (!$this->grpsusers[$this->filterToString($filter)]) return [];
+            if (!$this->grpsusers[$this->filterToString($filter)]) {
+                return [];
+            }
             foreach ($this->grpsusers[$this->filterToString($filter)] as $user => &$info) {
                 if ($i++ < $start) {
                     continue;
                 }
                 $result[$user] = $info;
-                if (($limit > 0) && (++$count >= $limit)) break;
+                if (($limit > 0) && (++$count >= $limit)) {
+                    break;
+                }
             }
         }
         return $result;
@@ -590,10 +621,14 @@ class auth_plugin_authad extends AuthPlugin
             try {
                 $return = $adldap->user()->password($this->getUserName($user), $changes['pass']);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
+                if ($this->conf['debug']) {
+                    msg('AD Auth: ' . $e->getMessage(), -1);
+                }
                 $return = false;
             }
-            if (!$return) msg($this->getLang('passchangefail'), -1);
+            if (!$return) {
+                msg($this->getLang('passchangefail'), -1);
+            }
         }
 
         // changing user data
@@ -612,10 +647,14 @@ class auth_plugin_authad extends AuthPlugin
             try {
                 $return &= $adldap->user()->modify($this->getUserName($user), $adchanges);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
+                if ($this->conf['debug']) {
+                    msg('AD Auth: ' . $e->getMessage(), -1);
+                }
                 $return = false;
             }
-            if (!$return) msg($this->getLang('userchangefail'), -1);
+            if (!$return) {
+                msg($this->getLang('userchangefail'), -1);
+            }
         }
 
         return $return;
@@ -638,7 +677,9 @@ class auth_plugin_authad extends AuthPlugin
         }
 
         $this->opts = $this->loadServerConfig((string) $domain);
-        if (isset($this->adldap[$domain])) return $this->adldap[$domain];
+        if (isset($this->adldap[$domain])) {
+            return $this->adldap[$domain];
+        }
 
         // connect
         try {
@@ -696,8 +737,10 @@ class auth_plugin_authad extends AuthPlugin
         $opts['domain'] = $domain;
 
         // add possible domain specific configuration
-        if ($domain && is_array($this->conf[$domain])) foreach ($this->conf[$domain] as $key => $val) {
-            $opts[$key] = $val;
+        if ($domain && is_array($this->conf[$domain])) {
+            foreach ($this->conf[$domain] as $key => $val) {
+                $opts[$key] = $val;
+            }
         }
 
         // handle multiple AD servers
@@ -722,8 +765,12 @@ class auth_plugin_authad extends AuthPlugin
         }
 
         // adLDAP expects empty user/pass as NULL, we're less strict FS#2781
-        if (empty($opts['admin_username'])) $opts['admin_username'] = null;
-        if (empty($opts['admin_password'])) $opts['admin_password'] = null;
+        if (empty($opts['admin_username'])) {
+            $opts['admin_username'] = null;
+        }
+        if (empty($opts['admin_password'])) {
+            $opts['admin_password'] = null;
+        }
 
         // user listing needs admin priviledges
         if (!empty($opts['admin_username']) && !empty($opts['admin_password'])) {
@@ -745,7 +792,9 @@ class auth_plugin_authad extends AuthPlugin
     public function getConfiguredDomains()
     {
         $domains = [];
-        if (empty($this->conf['account_suffix'])) return $domains; // not configured yet
+        if (empty($this->conf['account_suffix'])) {
+            return $domains;
+        } // not configured yet
 
         // add default domain, using the name from account suffix
         $domains[''] = ltrim($this->conf['account_suffix'], '@');
@@ -776,9 +825,13 @@ class auth_plugin_authad extends AuthPlugin
     {
         foreach ($this->pattern as $item => $pattern) {
             if ($item == 'user') {
-                if (!preg_match($pattern, $user)) return false;
+                if (!preg_match($pattern, $user)) {
+                    return false;
+                }
             } elseif ($item == 'grps') {
-                if (!count(preg_grep($pattern, $info['grps']))) return false;
+                if (!count(preg_grep($pattern, $info['grps']))) {
+                    return false;
+                }
             } elseif (!preg_match($pattern, $info[$item])) {
                 return false;
             }

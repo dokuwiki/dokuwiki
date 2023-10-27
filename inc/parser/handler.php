@@ -85,7 +85,9 @@ class Doku_Handler
      */
     public function getStatus($status)
     {
-        if (!isset($this->status[$status])) return null;
+        if (!isset($this->status[$status])) {
+            return null;
+        }
         return $this->status[$status];
     }
 
@@ -329,11 +331,15 @@ class Doku_Handler
         // get level and title
         $title = trim($match);
         $level = 7 - strspn($title, '=');
-        if ($level < 1) $level = 1;
+        if ($level < 1) {
+            $level = 1;
+        }
         $title = trim($title, '=');
         $title = trim($title);
 
-        if ($this->status['section']) $this->addCall('section_close', [], $pos);
+        if ($this->status['section']) {
+            $this->addCall('section_close', [], $pos);
+        }
 
         $this->addCall('header', [$title, $level, $pos], $pos);
 
@@ -494,7 +500,9 @@ class Doku_Handler
      */
     public function footnote($match, $state, $pos)
     {
-        if (!isset($this->footnote)) $this->footnote = false;
+        if (!isset($this->footnote)) {
+            $this->footnote = false;
+        }
 
         switch ($state) {
             case DOKU_LEXER_ENTER:
@@ -667,8 +675,12 @@ class Doku_Handler
             $param = preg_split('/\s+/', $matches[0], 2, PREG_SPLIT_NO_EMPTY);
             while (count($param) < 2) $param[] = null;
             // We shortcut html here.
-            if ($param[0] == 'html') $param[0] = 'html4strict';
-            if ($param[0] == '-') $param[0] = null;
+            if ($param[0] == 'html') {
+                $param[0] = 'html4strict';
+            }
+            if ($param[0] == '-') {
+                $param[0] = null;
+            }
             array_unshift($param, $matches[1]);
             if (!empty($options[0])) {
                 $param [] = $this->parse_highlight_options($options[0]);

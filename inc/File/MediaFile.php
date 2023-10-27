@@ -55,7 +55,9 @@ class MediaFile
     /** @return string */
     public function getMime()
     {
-        if (!$this->mime) return 'application/octet-stream';
+        if (!$this->mime) {
+            return 'application/octet-stream';
+        }
         return $this->mime;
     }
 
@@ -73,7 +75,9 @@ class MediaFile
     public function getIcoClass()
     {
         $ext = $this->getExtension();
-        if ($ext === '') $ext = 'file';
+        if ($ext === '') {
+            $ext = 'file';
+        }
         return preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
     }
 
@@ -118,9 +122,13 @@ class MediaFile
     {
         $this->width = 0;
         $this->height = 0;
-        if (!$this->isImage()) return;
+        if (!$this->isImage()) {
+            return;
+        }
         $info = getimagesize($this->path);
-        if ($info === false) return;
+        if ($info === false) {
+            return;
+        }
         [$this->width, $this->height] = $info;
     }
 
@@ -131,7 +139,9 @@ class MediaFile
      */
     public function getWidth()
     {
-        if ($this->width === null) $this->initSizes();
+        if ($this->width === null) {
+            $this->initSizes();
+        }
         return $this->width;
     }
 
@@ -142,7 +152,9 @@ class MediaFile
      */
     public function getHeight()
     {
-        if ($this->height === null) $this->initSizes();
+        if ($this->height === null) {
+            $this->initSizes();
+        }
         return $this->height;
     }
 
@@ -160,7 +172,9 @@ class MediaFile
     /** @return JpegMeta */
     public function getMeta()
     {
-        if ($this->meta === null) $this->meta = new JpegMeta($this->path);
+        if ($this->meta === null) {
+            $this->meta = new JpegMeta($this->path);
+        }
         return $this->meta;
     }
 }

@@ -36,7 +36,9 @@ class PageDiff extends Diff
     public function __construct($id = null)
     {
         global $INFO;
-        if (!isset($id)) $id = $INFO['id'];
+        if (!isset($id)) {
+            $id = $INFO['id'];
+        }
 
         // init preference
         $this->preference['showIntro'] = true;
@@ -216,7 +218,9 @@ class PageDiff extends Diff
         [$rev1Navi, $rev2Navi] = $this->buildRevisionsNavigation();
 
         // display intro
-        if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
+        if ($this->preference['showIntro']) {
+            echo p_locale_xhtml('diff');
+        }
 
         // print form to choose diff view type, and exact url reference to the view
         $this->showDiffViewSelector();
@@ -293,7 +297,9 @@ class PageDiff extends Diff
         global $lang;
 
         // no revisions selector for PageConflict or PageDraft
-        if ($this->RevInfo2->val('extra') == 'compareWith') return;
+        if ($this->RevInfo2->val('extra') == 'compareWith') {
+            return;
+        }
 
         // use timestamp for current revision, date may be false when revisions < 2
         [$rev1, $rev2] = [(int)$this->RevInfo1->val('date'), (int)$this->RevInfo2->val('date')];
@@ -503,7 +509,9 @@ class PageDiff extends Diff
     protected function diffViewlink($linktype, $rev1, $rev2 = null)
     {
         global $lang;
-        if ($rev1 === false) return '';
+        if ($rev1 === false) {
+            return '';
+        }
 
         if ($rev2 === null) {
             $urlparam = [
@@ -541,7 +549,9 @@ class PageDiff extends Diff
         // - long strings of characters without breaking characters
         return preg_replace_callback('/<[^>]*>|[^<> ]{12,}/', function ($match) {
             // if match is an html tag, return it intact
-            if ($match[0][0] == '<') return $match[0];
+            if ($match[0][0] == '<') {
+                return $match[0];
+            }
             // its a long string without a breaking character,
             // make certain characters into breaking characters by inserting a
             // word break opportunity (<wbr> tag) in front of them.

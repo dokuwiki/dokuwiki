@@ -56,7 +56,9 @@ abstract class Diff extends Ui
      */
     public function compare($rev1, $rev2)
     {
-        if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+        if ($rev2 < $rev1) {
+            [$rev1, $rev2] = [$rev2, $rev1];
+        }
         $this->rev1 = (int)$rev1;
         $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
         return $this;
@@ -108,7 +110,9 @@ abstract class Diff extends Ui
         $revs = $INPUT->arr('rev2', []);
         if (count($revs) > 1) {
             [$rev1, $rev2] = $revs;
-            if ($rev2 < $rev1) [$rev1, $rev2] = [$rev2, $rev1];
+            if ($rev2 < $rev1) {
+                [$rev1, $rev2] = [$rev2, $rev1];
+            }
             $this->rev1 = (int)$rev1;
             $this->rev2 = (int)$this->changelog->traceCurrentRevision($rev2);
         }

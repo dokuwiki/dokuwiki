@@ -18,7 +18,9 @@ class Headers
     {
         foreach ($policy as $key => $values) {
             // if the value is not an array, we also accept newline terminated strings
-            if (!is_array($values)) $values = explode("\n", $values);
+            if (!is_array($values)) {
+                $values = explode("\n", $values);
+            }
             $values = array_map('trim', $values);
             $values = array_unique($values);
             $values = array_filter($values);

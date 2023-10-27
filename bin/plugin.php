@@ -8,7 +8,9 @@ use splitbrain\phpcli\Options;
 use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\TableFormatter;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+}
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -74,7 +76,9 @@ class PluginCLI extends CLI
 
             foreach ($list as $name) {
                 $plugin = $this->loadPlugin($name);
-                if (!$plugin instanceof CLIPlugin) continue;
+                if (!$plugin instanceof CLIPlugin) {
+                    continue;
+                }
                 $info = $plugin->getInfo();
 
                 echo $tf->format(
@@ -94,7 +98,9 @@ class PluginCLI extends CLI
      */
     protected function loadPlugin($name)
     {
-        if (plugin_isdisabled($name)) return null;
+        if (plugin_isdisabled($name)) {
+            return null;
+        }
 
         // execute the plugin CLI
         $class = "cli_plugin_$name";

@@ -53,7 +53,9 @@ abstract class Revisions extends Ui
         $revisions = [];
 
         $currentRevInfo = $changelog->getCurrentRevisionInfo();
-        if (!$currentRevInfo) return $revisions;
+        if (!$currentRevInfo) {
+            return $revisions;
+        }
 
         $num = $conf['recent'];
 

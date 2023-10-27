@@ -33,7 +33,9 @@ class InputElement extends Element
         parent::__construct($type, ['name' => $name]);
         $this->attr('name', $name);
         $this->attr('type', $type);
-        if ($label) $this->label = new LabelElement($label);
+        if ($label) {
+            $this->label = new LabelElement($label);
+        }
     }
 
     /**
@@ -69,7 +71,9 @@ class InputElement extends Element
      */
     public function id($id = null)
     {
-        if ($this->label) $this->label->attr('for', $id);
+        if ($this->label) {
+            $this->label->attr('for', $id);
+        }
         return parent::id($id);
     }
 
@@ -83,7 +87,9 @@ class InputElement extends Element
      */
     public function addClass($class)
     {
-        if ($this->label) $this->label->addClass($class);
+        if ($this->label) {
+            $this->label->addClass($class);
+        }
         return parent::addClass($class);
     }
 
@@ -125,7 +131,9 @@ class InputElement extends Element
         global $INPUT;
 
         [$name, $key] = $this->getInputName();
-        if (!$INPUT->has($name)) return;
+        if (!$INPUT->has($name)) {
+            return;
+        }
 
         if ($key === null) {
             $value = $INPUT->str($name);
@@ -147,7 +155,9 @@ class InputElement extends Element
      */
     protected function mainElementHTML()
     {
-        if ($this->useInput) $this->prefillInput();
+        if ($this->useInput) {
+            $this->prefillInput();
+        }
         return '<input ' . buildAttributes($this->attrs()) . ' />';
     }
 

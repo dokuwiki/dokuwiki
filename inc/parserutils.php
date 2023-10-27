@@ -27,7 +27,9 @@ use dokuwiki\Parsing\ParserMode\Smiley;
  * at maximum? Note that this limit isn't respected when METADATA_RENDER_UNLIMITED
  * is passed as render parameter to p_get_metadata.
  */
-if (!defined('P_GET_METADATA_RENDER_LIMIT')) define('P_GET_METADATA_RENDER_LIMIT', 5);
+if (!defined('P_GET_METADATA_RENDER_LIMIT')) {
+    define('P_GET_METADATA_RENDER_LIMIT', 5);
+}
 
 /** Don't render metadata even if it is outdated or doesn't exist */
 define('METADATA_DONT_RENDER', 0);
@@ -187,7 +189,9 @@ function p_cached_output($file, $format = 'xhtml', $id = '')
 function p_cached_instructions($file, $cacheonly = false, $id = '')
 {
     static $run = null;
-    if (is_null($run)) $run = [];
+    if (is_null($run)) {
+        $run = [];
+    }
 
     $cache = new CacheInstructions($id, $file);
 
@@ -339,7 +343,9 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
  */
 function p_set_metadata($id, $data, $render = false, $persistent = true)
 {
-    if (!is_array($data)) return false;
+    if (!is_array($data)) {
+        return false;
+    }
 
     global $ID, $METADATA_RENDERERS;
 
@@ -397,12 +403,16 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
             // no special treatment for the rest
         } else {
             $meta['current'][$key] = $value;
-            if ($persistent) $meta['persistent'][$key] = $value;
+            if ($persistent) {
+                $meta['persistent'][$key] = $value;
+            }
         }
     }
 
     // save only if metadata changed
-    if ($meta == $orig) return true;
+    if ($meta == $orig) {
+        return true;
+    }
 
     if (isset($METADATA_RENDERERS[$id])) {
         // set both keys individually as the renderer has references to the individual keys
@@ -452,7 +462,9 @@ function p_read_metadata($id, $cache = false)
 {
     global $cache_metadata;
 
-    if (isset($cache_metadata[(string)$id])) return $cache_metadata[(string)$id];
+    if (isset($cache_metadata[(string)$id])) {
+        return $cache_metadata[(string)$id];
+    }
 
     $file = metaFN($id, '.meta');
     $meta = file_exists($file) ?
@@ -479,7 +491,9 @@ function p_save_metadata($id, $meta)
     // sync cached copies, including $INFO metadata
     global $cache_metadata, $INFO;
 
-    if (isset($cache_metadata[$id])) $cache_metadata[$id] = $meta;
+    if (isset($cache_metadata[$id])) {
+        $cache_metadata[$id] = $meta;
+    }
     if (!empty($INFO) && isset($INFO['id']) && ($id == $INFO['id'])) {
         $INFO['meta'] = $meta['current'];
     }
@@ -576,7 +590,9 @@ function p_get_parsermodes()
         foreach ($pluginlist as $p) {
             /** @var SyntaxPlugin $obj */
             $obj = plugin_load('syntax', $p);
-            if (!$obj instanceof PluginInterface) continue;
+            if (!$obj instanceof PluginInterface) {
+                continue;
+            }
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = [
@@ -667,11 +683,17 @@ function p_sort_modes($a, $b)
  */
 function p_render($mode, $instructions, &$info, $date_at = '')
 {
-    if (is_null($instructions)) return '';
-    if ($instructions === false) return '';
+    if (is_null($instructions)) {
+        return '';
+    }
+    if ($instructions === false) {
+        return '';
+    }
 
     $Renderer = p_get_renderer($mode);
-    if (is_null($Renderer)) return null;
+    if (is_null($Renderer)) {
+        return null;
+    }
 
     $Renderer->reset();
 

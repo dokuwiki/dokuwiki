@@ -20,11 +20,15 @@
  * @author Chris Smith <chris@jalakai.co.uk>
  * Check if a given mail address is valid
  */
-if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT', "0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
-if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
-    'PREG_PATTERN_VALID_EMAIL',
-    '[' . RFC2822_ATEXT . ']+(?:\.[' . RFC2822_ATEXT . ']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
-);
+if (!defined('RFC2822_ATEXT')) {
+    define('RFC2822_ATEXT', "0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
+}
+if (!defined('PREG_PATTERN_VALID_EMAIL')) {
+    define(
+        'PREG_PATTERN_VALID_EMAIL',
+        '[' . RFC2822_ATEXT . ']+(?:\.[' . RFC2822_ATEXT . ']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
+    );
+}
 
 /**
  * Prepare mailfrom replacement patterns
@@ -43,7 +47,9 @@ function mail_setup()
 
     // auto constructed address
     $host = @parse_url(DOKU_URL, PHP_URL_HOST);
-    if (!$host) $host = 'example.com';
+    if (!$host) {
+        $host = 'example.com';
+    }
     $noreply = 'noreply@' . $host;
 
     $replace = [];
@@ -109,15 +115,18 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
 
     for ($i = 0; $i < $cnt; $i++) {
         $sLine =& $aLines[$i];
-        if ($sLine === '') continue; // do nothing, if empty
+        if ($sLine === '') {
+            continue;
+        } // do nothing, if empty
 
         $sRegExp = '/[^\x09\x20\x21-\x3C\x3E-\x7E]/e';
 
         // imap_8bit encodes x09 everywhere, not only at lineends,
         // for EBCDIC safeness encode !"#$@[\]^`{|}~,
         // for complete safeness encode every character :)
-        if ($bEmulate_imap_8bit)
+        if ($bEmulate_imap_8bit) {
             $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/';
+        }
 
         $sLine = preg_replace_callback($sRegExp, 'mail_quotedprintable_encode_callback', $sLine);
 

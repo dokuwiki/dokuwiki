@@ -193,7 +193,9 @@ class Unicode
      */
     public static function toUtf8($arr, $strict = false)
     {
-        if (!is_array($arr)) return '';
+        if (!is_array($arr)) {
+            return '';
+        }
         ob_start();
 
         foreach (array_keys($arr) as $k) {

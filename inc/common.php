@@ -73,11 +73,21 @@ function sexplode($separator, $string, $limit, $default = null)
  */
 function blank(&$in, $trim = false)
 {
-    if (is_null($in)) return true;
-    if (is_array($in)) return $in === [];
-    if ($in === "\0") return true;
-    if ($trim && trim($in) === '') return true;
-    if (strlen($in) > 0) return false;
+    if (is_null($in)) {
+        return true;
+    }
+    if (is_array($in)) {
+        return $in === [];
+    }
+    if ($in === "\0") {
+        return true;
+    }
+    if ($trim && trim($in) === '') {
+        return true;
+    }
+    if (strlen($in) > 0) {
+        return false;
+    }
     return empty($in);
 }
 
@@ -112,7 +122,9 @@ function getSecurityToken()
     $session = session_id();
 
     // CSRF checks are only for logged in users - do not generate for anonymous
-    if (trim($user) == '' || trim($session) == '') return '';
+    if (trim($user) == '' || trim($session) == '') {
+        return '';
+    }
     return PassHash::hmac('md5', $session . $user, auth_cookiesalt());
 }
 
@@ -126,9 +138,13 @@ function checkSecurityToken($token = null)
 {
     /** @var Input $INPUT */
     global $INPUT;
-    if (!$INPUT->server->str('REMOTE_USER')) return true; // no logged in user, no need for a check
+    if (!$INPUT->server->str('REMOTE_USER')) {
+        return true;
+    } // no logged in user, no need for a check
 
-    if (is_null($token)) $token = $INPUT->str('sectok');
+    if (is_null($token)) {
+        $token = $INPUT->str('sectok');
+    }
     if (getSecurityToken() != $token) {
         msg('Security Token did not match. Possible CSRF attack.', -1);
         return false;
@@ -147,7 +163,9 @@ function checkSecurityToken($token = null)
 function formSecurityToken($print = true)
 {
     $ret = '<div class="no"><input type="hidden" name="sectok" value="' . getSecurityToken() . '" /></div>' . "\n";
-    if ($print) echo $ret;
+    if ($print) {
+        echo $ret;
+    }
     return $ret;
 }
 
@@ -355,7 +373,9 @@ function buildURLparams($params, $sep = '&amp;')
     $url = '';
     $amp = false;
     foreach ($params as $key => $val) {
-        if ($amp) $url .= $sep;
+        if ($amp) {
+            $url .= $sep;
+        }
 
         $url .= rawurlencode($key) . '=';
         $url .= rawurlencode((string) $val);
@@ -380,9 +400,15 @@ function buildAttributes($params, $skipEmptyStrings = false)
     $url   = '';
     $white = false;
     foreach ($params as $key => $val) {
-        if ($key[0] == '_') continue;
-        if ($val === '' && $skipEmptyStrings) continue;
-        if ($white) $url .= ' ';
+        if ($key[0] == '_') {
+            continue;
+        }
+        if ($val === '' && $skipEmptyStrings) {
+            continue;
+        }
+        if ($white) {
+            $url .= ' ';
+        }
 
         $url .= $key . '="';
         $url .= hsc($val);
@@ -403,7 +429,9 @@ function breadcrumbs()
 {
     // we prepare the breadcrumbs early for quick session closing
     static $crumbs = null;
-    if ($crumbs != null) return $crumbs;
+    if ($crumbs != null) {
+        return $crumbs;
+    }
 
     global $ID;
     global $ACT;
@@ -507,7 +535,9 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
 {
     global $conf;
     if (is_array($urlParameters)) {
-        if (isset($urlParameters['rev']) && !$urlParameters['rev']) unset($urlParameters['rev']);
+        if (isset($urlParameters['rev']) && !$urlParameters['rev']) {
+            unset($urlParameters['rev']);
+        }
         if (isset($urlParameters['at']) && $conf['date_at_format']) {
             $urlParameters['at'] = date($conf['date_at_format'], $urlParameters['at']);
         }
@@ -527,16 +557,24 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
 
     if ($conf['userewrite'] == 2) {
         $xlink .= DOKU_SCRIPT . '/' . $id;
-        if ($urlParameters) $xlink .= '?' . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= '?' . $urlParameters;
+        }
     } elseif ($conf['userewrite']) {
         $xlink .= $id;
-        if ($urlParameters) $xlink .= '?' . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= '?' . $urlParameters;
+        }
     } elseif ($id !== '') {
         $xlink .= DOKU_SCRIPT . '?id=' . $id;
-        if ($urlParameters) $xlink .= $separator . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= $separator . $urlParameters;
+        }
     } else {
         $xlink .= DOKU_SCRIPT;
-        if ($urlParameters) $xlink .= '?' . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= '?' . $urlParameters;
+        }
     }
 
     return $xlink;
@@ -574,13 +612,19 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
 
     if ($conf['userewrite'] == 2) {
         $xlink .= DOKU_SCRIPT . '/' . $id . '?do=export_' . $format;
-        if ($urlParameters) $xlink .= $sep . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= $sep . $urlParameters;
+        }
     } elseif ($conf['userewrite'] == 1) {
         $xlink .= '_export/' . $format . '/' . $id;
-        if ($urlParameters) $xlink .= '?' . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= '?' . $urlParameters;
+        }
     } else {
         $xlink .= DOKU_SCRIPT . '?do=export_' . $format . $sep . 'id=' . $id;
-        if ($urlParameters) $xlink .= $sep . $urlParameters;
+        if ($urlParameters) {
+            $xlink .= $sep . $urlParameters;
+        }
     }
 
     return $xlink;
@@ -617,11 +661,21 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
             $more['tok'] = media_get_token($id, $w, $h);
         }
         // strip defaults for shorter URLs
-        if (isset($more['cache']) && $more['cache'] == 'cache') unset($more['cache']);
-        if (empty($more['w'])) unset($more['w']);
-        if (empty($more['h'])) unset($more['h']);
-        if (isset($more['id']) && $direct) unset($more['id']);
-        if (isset($more['rev']) && !$more['rev']) unset($more['rev']);
+        if (isset($more['cache']) && $more['cache'] == 'cache') {
+            unset($more['cache']);
+        }
+        if (empty($more['w'])) {
+            unset($more['w']);
+        }
+        if (empty($more['h'])) {
+            unset($more['h']);
+        }
+        if (isset($more['id']) && $direct) {
+            unset($more['id']);
+        }
+        if (isset($more['rev']) && !$more['rev']) {
+            unset($more['rev']);
+        }
         $more = buildURLparams($more, $sep);
     } else {
         $matches = [];
@@ -670,7 +724,9 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
     // build URL based on rewrite mode
     if ($conf['userewrite']) {
         $xlink .= $script . '/' . $id;
-        if ($more) $xlink .= '?' . $more;
+        if ($more) {
+            $xlink .= '?' . $more;
+        }
     } elseif ($more) {
         $xlink .= $script . '?' . $more;
         $xlink .= $sep . 'media=' . $id;
@@ -731,9 +787,13 @@ function checkwordblock($text = '')
     /* @var Input $INPUT */
     global $INPUT;
 
-    if (!$conf['usewordblock']) return false;
+    if (!$conf['usewordblock']) {
+        return false;
+    }
 
-    if (!$text) $text = "$PRE $TEXT $SUF $SUM";
+    if (!$text) {
+        $text = "$PRE $TEXT $SUF $SUM";
+    }
 
     // we prepare the text a tiny bit to prevent spammers circumventing URL checks
     // phpcs:disable Generic.Files.LineLength.TooLong
@@ -755,7 +815,9 @@ function checkwordblock($text = '')
         foreach ($blocks as $block) {
             $block = preg_replace('/#.*$/', '', $block);
             $block = trim($block);
-            if (empty($block)) continue;
+            if (empty($block)) {
+                continue;
+            }
             $re[] = $block;
         }
         if (count($re) && preg_match('#(' . implode('|', $re) . ')#si', $text, $matches)) {
@@ -812,9 +874,13 @@ function clientIP($single = false)
         }
     }
     $ip = array_values(array_unique($ip));
-    if ($ip === [] || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
+    if ($ip === [] || !$ip[0]) {
+        $ip[0] = '0.0.0.0';
+    } // for some strange reason we don't have a IP
 
-    if (!$single) return implode(',', $ip);
+    if (!$single) {
+        return implode(',', $ip);
+    }
 
     // skip trusted local addresses
     foreach ($ip as $i) {
@@ -845,11 +911,17 @@ function clientismobile()
     /* @var Input $INPUT */
     global $INPUT;
 
-    if ($INPUT->server->has('HTTP_X_WAP_PROFILE')) return true;
+    if ($INPUT->server->has('HTTP_X_WAP_PROFILE')) {
+        return true;
+    }
 
-    if (preg_match('/wap\.|\.wap/i', $INPUT->server->str('HTTP_ACCEPT'))) return true;
+    if (preg_match('/wap\.|\.wap/i', $INPUT->server->str('HTTP_ACCEPT'))) {
+        return true;
+    }
 
-    if (!$INPUT->server->has('HTTP_USER_AGENT')) return false;
+    if (!$INPUT->server->has('HTTP_USER_AGENT')) {
+        return false;
+    }
 
     $uamatches = implode(
         '|',
@@ -864,7 +936,9 @@ function clientismobile()
         ]
     );
 
-    if (preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) return true;
+    if (preg_match("/$uamatches/i", $INPUT->server->str('HTTP_USER_AGENT'))) {
+        return true;
+    }
 
     return false;
 }
@@ -877,7 +951,9 @@ function clientismobile()
  */
 function link_isinterwiki($link)
 {
-    if (preg_match('/^[a-zA-Z0-9\.]+>/u', $link)) return true;
+    if (preg_match('/^[a-zA-Z0-9\.]+>/u', $link)) {
+        return true;
+    }
     return false;
 }
 
@@ -894,7 +970,9 @@ function link_isinterwiki($link)
 function gethostsbyaddrs($ips)
 {
     global $conf;
-    if (!$conf['dnslookups']) return $ips;
+    if (!$conf['dnslookups']) {
+        return $ips;
+    }
 
     $hosts = [];
     $ips   = explode(',', $ips);
@@ -928,7 +1006,9 @@ function checklock($id)
     $lock = wikiLockFN($id);
 
     //no lockfile
-    if (!file_exists($lock)) return false;
+    if (!file_exists($lock)) {
+        return false;
+    }
 
     //lockfile expired
     if ((time() - filemtime($lock)) > $conf['locktime']) {
@@ -1012,7 +1092,9 @@ function cleanText($text)
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if (!Clean::isUtf8($text)) $text = utf8_encode($text);
+    if (!Clean::isUtf8($text)) {
+        $text = utf8_encode($text);
+    }
 
     return $text;
 }
@@ -1075,7 +1157,9 @@ function pageTemplate($id)
 {
     global $conf;
 
-    if (is_array($id)) $id = $id[0];
+    if (is_array($id)) {
+        $id = $id[0];
+    }
 
     // prepare initial event data
     $data = [
@@ -1109,7 +1193,9 @@ function pageTemplate($id)
             // load the content
             $data['tpl'] = io_readFile($data['tplfile']);
         }
-        if ($data['doreplace']) parsePageTemplate($data);
+        if ($data['doreplace']) {
+            parsePageTemplate($data);
+        }
     }
     $evt->advise_after();
     unset($evt);
@@ -1298,7 +1384,9 @@ function saveWikiText($id, $text, $summary, $minor = false)
 
     // get COMMON_WIKIPAGE_SAVE event data
     $data = (new PageFile($id))->saveWikiText($text, $summary, $minor);
-    if (!$data) return; // save was cancelled (for no changes or by a plugin)
+    if (!$data) {
+        return;
+    } // save was cancelled (for no changes or by a plugin)
 
     // send notify mails
     ['oldRevision' => $rev, 'newRevision' => $new_rev, 'summary' => $summary] = $data;
@@ -1352,12 +1440,18 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
 
     // decide if there is something to do, eg. whom to mail
     if ($who == 'admin') {
-        if (empty($conf['notify'])) return false; //notify enabled?
+        if (empty($conf['notify'])) {
+            return false;
+        } //notify enabled?
         $tpl = 'mailtext';
         $to  = $conf['notify'];
     } elseif ($who == 'subscribers') {
-        if (!actionOK('subscribe')) return false; //subscribers enabled?
-        if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
+        if (!actionOK('subscribe')) {
+            return false;
+        } //subscribers enabled?
+        if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) {
+            return false;
+        } //skip minors
         $data = ['id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace];
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST',
@@ -1365,7 +1459,9 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
             [new SubscriberManager(), 'notifyAddresses']
         );
         $to = $data['addresslist'];
-        if (empty($to)) return false;
+        if (empty($to)) {
+            return false;
+        }
         $tpl = 'subscr_single';
     } else {
         return false; //just to be safe
@@ -1395,11 +1491,17 @@ function getGoogleQuery()
     $url = parse_url($INPUT->server->str('HTTP_REFERER'));
 
     // only handle common SEs
-    if (!array_key_exists('host', $url)) return '';
-    if (!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/', $url['host'])) return '';
+    if (!array_key_exists('host', $url)) {
+        return '';
+    }
+    if (!preg_match('/(google|bing|yahoo|ask|duckduckgo|babylon|aol|yandex)/', $url['host'])) {
+        return '';
+    }
 
     $query = [];
-    if (!array_key_exists('query', $url)) return '';
+    if (!array_key_exists('query', $url)) {
+        return '';
+    }
     parse_str($url['query'], $query);
 
     $q = '';
@@ -1412,9 +1514,13 @@ function getGoogleQuery()
     }
     $q = trim($q);
 
-    if (!$q) return '';
+    if (!$q) {
+        return '';
+    }
     // ignore if query includes a full URL
-    if (strpos($q, '//') !== false) return '';
+    if (strpos($q, '//') !== false) {
+        return '';
+    }
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
@@ -1495,9 +1601,13 @@ function dformat($dt = null, $format = '')
 {
     global $conf;
 
-    if (is_null($dt)) $dt = time();
+    if (is_null($dt)) {
+        $dt = time();
+    }
     $dt = (int) $dt;
-    if (!$format) $format = $conf['dformat'];
+    if (!$format) {
+        $format = $conf['dformat'];
+    }
 
     $format = str_replace('%f', datetime_h($dt), $format);
     return strftime($format, $dt);
@@ -1621,9 +1731,13 @@ function preg_quote_cb($string)
 function shorten($keep, $short, $max, $min = 9, $char = '…')
 {
     $max -= PhpString::strlen($keep);
-    if ($max < $min) return $keep;
+    if ($max < $min) {
+        return $keep;
+    }
     $len = PhpString::strlen($short);
-    if ($len <= $max) return $keep . $short;
+    if ($len <= $max) {
+        return $keep . $short;
+    }
     $half = floor($max / 2);
     return $keep .
         PhpString::substr($short, 0, $half - 1) .
@@ -1781,8 +1895,12 @@ function license_img($type)
 {
     global $license;
     global $conf;
-    if (!$conf['license']) return '';
-    if (!is_array($license[$conf['license']])) return '';
+    if (!$conf['license']) {
+        return '';
+    }
+    if (!is_array($license[$conf['license']])) {
+        return '';
+    }
     $try   = [];
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.png';
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.gif';
@@ -1790,7 +1908,9 @@ function license_img($type)
         $try[] = 'lib/images/license/' . $type . '/cc.png';
     }
     foreach ($try as $src) {
-        if (file_exists(DOKU_INC . $src)) return $src;
+        if (file_exists(DOKU_INC . $src)) {
+            return $src;
+        }
     }
     return '';
 }
@@ -1811,8 +1931,12 @@ function license_img($type)
 function is_mem_available($mem, $bytes = 1_048_576)
 {
     $limit = trim(ini_get('memory_limit'));
-    if (empty($limit)) return true; // no limit set!
-    if ($limit == -1) return true; // unlimited
+    if (empty($limit)) {
+        return true;
+    } // no limit set!
+    if ($limit == -1) {
+        return true;
+    } // unlimited
 
     // parse limit to bytes
     $limit = php_to_byte($limit);
@@ -2021,17 +2145,27 @@ function stripsourcemaps(&$text)
 function inlineSVG($file, $maxsize = 2048)
 {
     $file = trim($file);
-    if ($file === '') return false;
-    if (!file_exists($file)) return false;
-    if (filesize($file) > $maxsize) return false;
-    if (!is_readable($file)) return false;
+    if ($file === '') {
+        return false;
+    }
+    if (!file_exists($file)) {
+        return false;
+    }
+    if (filesize($file) > $maxsize) {
+        return false;
+    }
+    if (!is_readable($file)) {
+        return false;
+    }
     $content = file_get_contents($file);
     $content = preg_replace('/<!--.*?(-->)/s', '', $content); // comments
     $content = preg_replace('/<\?xml .*?\?>/i', '', $content); // xml header
     $content = preg_replace('/<!DOCTYPE .*?>/i', '', $content); // doc type
     $content = preg_replace('/>\s+</s', '><', $content); // newlines between tags
     $content = trim($content);
-    if (!str_starts_with($content, '<svg ')) return false;
+    if (!str_starts_with($content, '<svg ')) {
+        return false;
+    }
     return $content;
 }
 

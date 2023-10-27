@@ -13,11 +13,17 @@ class SettingEmail extends SettingString
     /** @inheritdoc */
     public function update($input)
     {
-        if (is_null($input)) return false;
-        if ($this->isProtected()) return false;
+        if (is_null($input)) {
+            return false;
+        }
+        if ($this->isProtected()) {
+            return false;
+        }
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if ($value == $input) return false;
+        if ($value == $input) {
+            return false;
+        }
         if ($input === '') {
             $this->local = $input;
             return true;

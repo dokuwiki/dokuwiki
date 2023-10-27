@@ -145,7 +145,9 @@ function getCdnUrls()
     $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
     foreach ($lines as $line) {
         $line = trim(preg_replace('/#.*$/', '', $line));
-        if ($line === '') continue;
+        if ($line === '') {
+            continue;
+        }
         [$key, $val] = sexplode('=', $line, 2, '');
         $key = trim($key);
         $val = trim($val);
@@ -227,14 +229,17 @@ function linesToHash($lines, $lower = false)
 {
     $conf = [];
     // remove BOM
-    if (isset($lines[0]) && str_starts_with($lines[0], pack('CCC', 0xef, 0xbb, 0xbf)))
+    if (isset($lines[0]) && str_starts_with($lines[0], pack('CCC', 0xef, 0xbb, 0xbf))) {
         $lines[0] = substr($lines[0], 3);
+    }
     foreach ($lines as $line) {
         //ignore comments (except escaped ones)
         $line = preg_replace('/(?<![&\\\\])#.*$/', '', $line);
         $line = str_replace('\\#', '#', $line);
         $line = trim($line);
-        if ($line === '') continue;
+        if ($line === '') {
+            continue;
+        }
         $line = preg_split('/\s+/', $line, 2);
         $line = array_pad($line, 2, '');
         // Build the associative array
@@ -267,7 +272,9 @@ function confToHash($file, $lower = false)
 {
     $conf = [];
     $lines = @file($file);
-    if (!$lines) return $conf;
+    if (!$lines) {
+        return $conf;
+    }
 
     return linesToHash($lines, $lower);
 }
@@ -311,12 +318,18 @@ function retrieveConfig($type, $fn, $params = null, $combine = 'array_merge')
 {
     global $config_cascade;
 
-    if (!is_array($params)) $params = [];
+    if (!is_array($params)) {
+        $params = [];
+    }
 
     $combined = [];
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) {
+        trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
+    }
     foreach (['default', 'local', 'protected'] as $config_group) {
-        if (empty($config_cascade[$type][$config_group])) continue;
+        if (empty($config_cascade[$type][$config_group])) {
+            continue;
+        }
         foreach ($config_cascade[$type][$config_group] as $file) {
             if (file_exists($file)) {
                 $config = call_user_func_array($fn, array_merge([$file], $params));
@@ -341,9 +354,13 @@ function getConfigFiles($type)
     global $config_cascade;
     $files = [];
 
-    if (!is_array($config_cascade[$type])) trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
+    if (!is_array($config_cascade[$type])) {
+        trigger_error('Missing config cascade for "' . $type . '"', E_USER_WARNING);
+    }
     foreach (['default', 'local', 'protected'] as $config_group) {
-        if (empty($config_cascade[$type][$config_group])) continue;
+        if (empty($config_cascade[$type][$config_group])) {
+            continue;
+        }
         $files = array_merge($files, $config_cascade[$type][$config_group]);
     }
 
@@ -413,7 +430,9 @@ function actionOK($action)
 function useHeading($linktype)
 {
     static $useHeading = null;
-    if (defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
+    if (defined('DOKU_UNITTEST')) {
+        $useHeading = null;
+    } // don't cache during unit tests
 
     if (is_null($useHeading)) {
         global $conf;

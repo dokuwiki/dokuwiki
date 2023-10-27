@@ -179,7 +179,9 @@ class RevisionInfo
         if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             $params = ['tab_details' => 'view', 'ns' => getNS($id), 'image' => $id];
-            if ($rev) $params += ['rev' => $rev];
+            if ($rev) {
+                $params += ['rev' => $rev];
+            }
             $href = media_managerURL($params, '&');
             $display_name = $id;
             $exists = file_exists(mediaFN($id, $rev));
@@ -188,7 +190,9 @@ class RevisionInfo
             $params = $rev ? ['rev' => $rev] : [];
             $href = wl($id, $params, false, '&');
             $display_name = useHeading('navigation') ? hsc(p_get_first_heading($id)) : $id;
-            if (!$display_name) $display_name = $id;
+            if (!$display_name) {
+                $display_name = $id;
+            }
             $exists = page_exists($id, $rev);
         }
 
@@ -216,7 +220,9 @@ class RevisionInfo
     {
         global $lang;
 
-        if (!$this->val('date')) return '&mdash;';
+        if (!$this->val('date')) {
+            return '&mdash;';
+        }
 
         $id = $this->val('id');
         $rev = $this->isCurrent() ? '' : $this->val('date');

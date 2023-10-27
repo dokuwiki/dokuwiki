@@ -34,17 +34,26 @@ class Clean
         $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
             $b = ord($str[$i]);
-            if ($b < 0x80) continue; # 0bbbbbbb
-            elseif (($b & 0xE0) === 0xC0) $n = 1; # 110bbbbb
-            elseif (($b & 0xF0) === 0xE0) $n = 2; # 1110bbbb
-            elseif (($b & 0xF8) === 0xF0) $n = 3; # 11110bbb
-            elseif (($b & 0xFC) === 0xF8) $n = 4; # 111110bb
-            elseif (($b & 0xFE) === 0xFC) $n = 5; # 1111110b
-            else return false; # Does not match any model
+            if ($b < 0x80) {
+                continue;
+            } elseif (($b & 0xE0) === 0xC0) {
+                $n = 1;
+            } elseif (($b & 0xF0) === 0xE0) {
+                $n = 2;
+            } elseif (($b & 0xF8) === 0xF0) {
+                $n = 3;
+            } elseif (($b & 0xFC) === 0xF8) {
+                $n = 4;
+            } elseif (($b & 0xFE) === 0xFC) {
+                $n = 5;
+            } else {
+                return false;
+            } # Does not match any model
 
             for ($j = 0; $j < $n; $j++) { # n bytes matching 10bbbbbb follow ?
-                if ((++$i === $len) || ((ord($str[$i]) & 0xC0) !== 0x80))
+                if ((++$i === $len) || ((ord($str[$i]) & 0xC0) !== 0x80)) {
                     return false;
+                }
             }
         }
         return true;
@@ -169,7 +178,9 @@ class Clean
      */
     public static function romanize($string)
     {
-        if (self::isASCII($string)) return $string; //nothing to do
+        if (self::isASCII($string)) {
+            return $string;
+        } //nothing to do
 
         return strtr($string, Table::romanization());
     }
@@ -187,10 +198,14 @@ class Clean
     public static function correctIdx($str, $i, $next = false)
     {
 
-        if ($i <= 0) return 0;
+        if ($i <= 0) {
+            return 0;
+        }
 
         $limit = strlen($str);
-        if ($i >= $limit) return $limit;
+        if ($i >= $limit) {
+            return $limit;
+        }
 
         if ($next) {
             while (($i < $limit) && ((ord($str[$i]) & 0xC0) === 0x80)) $i++;

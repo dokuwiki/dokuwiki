@@ -31,9 +31,12 @@ class Resendpwd extends AbstractAclAction
         /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
-        if (isset($conf['resendpasswd']) && !$conf['resendpasswd'])
-            throw new ActionDisabledException(); //legacy option
-        if (!$auth->canDo('modPass')) throw new ActionDisabledException();
+        if (isset($conf['resendpasswd']) && !$conf['resendpasswd']) {
+            throw new ActionDisabledException();
+        } //legacy option
+        if (!$auth->canDo('modPass')) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */
@@ -107,7 +110,9 @@ class Resendpwd extends AbstractAclAction
                 $pass = $INPUT->str('pass');
 
                 // password given correctly?
-                if (!$pass) return false;
+                if (!$pass) {
+                    return false;
+                }
                 if ($pass != $INPUT->str('passchk')) {
                     msg($lang['regbadpass'], -1);
                     return false;
@@ -137,7 +142,9 @@ class Resendpwd extends AbstractAclAction
         } else {
             // we're in request phase
 
-            if (!$INPUT->post->bool('save')) return false;
+            if (!$INPUT->post->bool('save')) {
+                return false;
+            }
 
             if (!$INPUT->post->str('login')) {
                 msg($lang['resendpwdmissing'], -1);

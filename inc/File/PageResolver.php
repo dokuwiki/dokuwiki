@@ -38,7 +38,9 @@ class PageResolver extends Resolver
 
         $id = cleanID($id); // FIXME always? or support parameter
         // readd hash if any
-        if ($hash !== '') $id .= "#$hash";
+        if ($hash !== '') {
+            $id .= "#$hash";
+        }
         return $id;
     }
 
@@ -54,7 +56,9 @@ class PageResolver extends Resolver
     {
         global $conf;
 
-        if ($id === '' || $id[-1] !== ':') return $id;
+        if ($id === '' || $id[-1] !== ':') {
+            return $id;
+        }
 
         if (page_exists($id . $conf['start'], $rev, true, $isDateAt)) {
             // start page inside namespace
@@ -81,7 +85,9 @@ class PageResolver extends Resolver
      */
     protected function resolveAutoPlural($id, $rev, $isDateAt)
     {
-        if (page_exists($id, $rev, $isDateAt)) return $id;
+        if (page_exists($id, $rev, $isDateAt)) {
+            return $id;
+        }
 
         if ($id[-1] === 's') {
             $try = substr($id, 0, -1);

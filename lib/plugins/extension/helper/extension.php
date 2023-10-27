@@ -119,7 +119,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function isGitControlled()
     {
-        if (!$this->isInstalled()) return false;
+        if (!$this->isInstalled()) {
+            return false;
+        }
         return file_exists($this->getInstallDir() . '/.git');
     }
 
@@ -130,7 +132,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function isBundled()
     {
-        if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
+        if (!empty($this->remoteInfo['bundled'])) {
+            return $this->remoteInfo['bundled'];
+        }
         return in_array(
             $this->id,
             [
@@ -163,7 +167,9 @@ class helper_plugin_extension_extension extends Plugin
     {
         // never allow deinstalling the current auth plugin:
         global $conf;
-        if ($this->id == $conf['authtype']) return true;
+        if ($this->id == $conf['authtype']) {
+            return true;
+        }
 
         /** @var PluginController $plugin_controller */
         global $plugin_controller;
@@ -205,12 +211,20 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function updateAvailable()
     {
-        if (!$this->isInstalled()) return false;
-        if ($this->isBundled()) return false;
+        if (!$this->isInstalled()) {
+            return false;
+        }
+        if ($this->isBundled()) {
+            return false;
+        }
         $lastupdate = $this->getLastUpdate();
-        if ($lastupdate === false) return false;
+        if ($lastupdate === false) {
+            return false;
+        }
         $installed  = $this->getInstalledVersion();
-        if ($installed === false || $installed === $this->getLang('unknownversion')) return true;
+        if ($installed === false || $installed === $this->getLang('unknownversion')) {
+            return true;
+        }
         return $this->getInstalledVersion() < $this->getLastUpdate();
     }
 
@@ -254,7 +268,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getBase()
     {
-        if (!empty($this->localInfo['base'])) return $this->localInfo['base'];
+        if (!empty($this->localInfo['base'])) {
+            return $this->localInfo['base'];
+        }
         return $this->base;
     }
 
@@ -265,8 +281,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getDisplayName()
     {
-        if (!empty($this->localInfo['name'])) return $this->localInfo['name'];
-        if (!empty($this->remoteInfo['name'])) return $this->remoteInfo['name'];
+        if (!empty($this->localInfo['name'])) {
+            return $this->localInfo['name'];
+        }
+        if (!empty($this->remoteInfo['name'])) {
+            return $this->remoteInfo['name'];
+        }
         return $this->base;
     }
 
@@ -277,8 +297,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getAuthor()
     {
-        if (!empty($this->localInfo['author'])) return $this->localInfo['author'];
-        if (!empty($this->remoteInfo['author'])) return $this->remoteInfo['author'];
+        if (!empty($this->localInfo['author'])) {
+            return $this->localInfo['author'];
+        }
+        if (!empty($this->remoteInfo['author'])) {
+            return $this->remoteInfo['author'];
+        }
         return false;
     }
 
@@ -290,7 +314,9 @@ class helper_plugin_extension_extension extends Plugin
     public function getEmail()
     {
         // email is only in the local data
-        if (!empty($this->localInfo['email'])) return $this->localInfo['email'];
+        if (!empty($this->localInfo['email'])) {
+            return $this->localInfo['email'];
+        }
         return false;
     }
 
@@ -301,8 +327,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getEmailID()
     {
-        if (!empty($this->remoteInfo['emailid'])) return $this->remoteInfo['emailid'];
-        if (!empty($this->localInfo['email'])) return md5($this->localInfo['email']);
+        if (!empty($this->remoteInfo['emailid'])) {
+            return $this->remoteInfo['emailid'];
+        }
+        if (!empty($this->localInfo['email'])) {
+            return md5($this->localInfo['email']);
+        }
         return false;
     }
 
@@ -313,8 +343,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getDescription()
     {
-        if (!empty($this->localInfo['desc'])) return $this->localInfo['desc'];
-        if (!empty($this->remoteInfo['description'])) return $this->remoteInfo['description'];
+        if (!empty($this->localInfo['desc'])) {
+            return $this->localInfo['desc'];
+        }
+        if (!empty($this->remoteInfo['description'])) {
+            return $this->remoteInfo['description'];
+        }
         return '';
     }
 
@@ -325,7 +359,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getURL()
     {
-        if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
+        if (!empty($this->localInfo['url'])) {
+            return $this->localInfo['url'];
+        }
         return 'https://www.dokuwiki.org/' .
             ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase();
     }
@@ -337,8 +373,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getInstalledVersion()
     {
-        if (!empty($this->localInfo['date'])) return $this->localInfo['date'];
-        if ($this->isInstalled()) return $this->getLang('unknownversion');
+        if (!empty($this->localInfo['date'])) {
+            return $this->localInfo['date'];
+        }
+        if ($this->isInstalled()) {
+            return $this->getLang('unknownversion');
+        }
         return false;
     }
 
@@ -349,7 +389,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getUpdateDate()
     {
-        if (!empty($this->managerData['updated'])) return $this->managerData['updated'];
+        if (!empty($this->managerData['updated'])) {
+            return $this->managerData['updated'];
+        }
         return $this->getInstallDate();
     }
 
@@ -360,7 +402,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getInstallDate()
     {
-        if (!empty($this->managerData['installed'])) return $this->managerData['installed'];
+        if (!empty($this->managerData['installed'])) {
+            return $this->managerData['installed'];
+        }
         return false;
     }
 
@@ -371,7 +415,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getDependencies()
     {
-        if (!empty($this->remoteInfo['dependencies'])) return $this->remoteInfo['dependencies'];
+        if (!empty($this->remoteInfo['dependencies'])) {
+            return $this->remoteInfo['dependencies'];
+        }
         return [];
     }
 
@@ -401,7 +447,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getConflicts()
     {
-        if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['conflicts'];
+        if (!empty($this->remoteInfo['conflicts'])) {
+            return $this->remoteInfo['conflicts'];
+        }
         return [];
     }
 
@@ -412,7 +460,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getSimilarExtensions()
     {
-        if (!empty($this->remoteInfo['similar'])) return $this->remoteInfo['similar'];
+        if (!empty($this->remoteInfo['similar'])) {
+            return $this->remoteInfo['similar'];
+        }
         return [];
     }
 
@@ -423,7 +473,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getTags()
     {
-        if (!empty($this->remoteInfo['tags'])) return $this->remoteInfo['tags'];
+        if (!empty($this->remoteInfo['tags'])) {
+            return $this->remoteInfo['tags'];
+        }
         return [];
     }
 
@@ -434,7 +486,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getPopularity()
     {
-        if (!empty($this->remoteInfo['popularity'])) return $this->remoteInfo['popularity'];
+        if (!empty($this->remoteInfo['popularity'])) {
+            return $this->remoteInfo['popularity'];
+        }
         return false;
     }
 
@@ -446,7 +500,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getSecurityWarning()
     {
-        if (!empty($this->remoteInfo['securitywarning'])) return $this->remoteInfo['securitywarning'];
+        if (!empty($this->remoteInfo['securitywarning'])) {
+            return $this->remoteInfo['securitywarning'];
+        }
         return false;
     }
 
@@ -457,7 +513,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getSecurityIssue()
     {
-        if (!empty($this->remoteInfo['securityissue'])) return $this->remoteInfo['securityissue'];
+        if (!empty($this->remoteInfo['securityissue'])) {
+            return $this->remoteInfo['securityissue'];
+        }
         return false;
     }
 
@@ -468,7 +526,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getScreenshotURL()
     {
-        if (!empty($this->remoteInfo['screenshoturl'])) return $this->remoteInfo['screenshoturl'];
+        if (!empty($this->remoteInfo['screenshoturl'])) {
+            return $this->remoteInfo['screenshoturl'];
+        }
         return false;
     }
 
@@ -479,7 +539,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getThumbnailURL()
     {
-        if (!empty($this->remoteInfo['thumbnailurl'])) return $this->remoteInfo['thumbnailurl'];
+        if (!empty($this->remoteInfo['thumbnailurl'])) {
+            return $this->remoteInfo['thumbnailurl'];
+        }
         return false;
     }
     /**
@@ -489,7 +551,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getLastDownloadURL()
     {
-        if (!empty($this->managerData['downloadurl'])) return $this->managerData['downloadurl'];
+        if (!empty($this->managerData['downloadurl'])) {
+            return $this->managerData['downloadurl'];
+        }
         return false;
     }
 
@@ -500,7 +564,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getDownloadURL()
     {
-        if (!empty($this->remoteInfo['downloadurl'])) return $this->remoteInfo['downloadurl'];
+        if (!empty($this->remoteInfo['downloadurl'])) {
+            return $this->remoteInfo['downloadurl'];
+        }
         return false;
     }
 
@@ -523,7 +589,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getBugtrackerURL()
     {
-        if (!empty($this->remoteInfo['bugtracker'])) return $this->remoteInfo['bugtracker'];
+        if (!empty($this->remoteInfo['bugtracker'])) {
+            return $this->remoteInfo['bugtracker'];
+        }
         return false;
     }
 
@@ -534,7 +602,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getSourcerepoURL()
     {
-        if (!empty($this->remoteInfo['sourcerepo'])) return $this->remoteInfo['sourcerepo'];
+        if (!empty($this->remoteInfo['sourcerepo'])) {
+            return $this->remoteInfo['sourcerepo'];
+        }
         return false;
     }
 
@@ -545,7 +615,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getDonationURL()
     {
-        if (!empty($this->remoteInfo['donationurl'])) return $this->remoteInfo['donationurl'];
+        if (!empty($this->remoteInfo['donationurl'])) {
+            return $this->remoteInfo['donationurl'];
+        }
         return false;
     }
 
@@ -556,8 +628,12 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getTypes()
     {
-        if (!empty($this->remoteInfo['types'])) return $this->remoteInfo['types'];
-        if ($this->isTemplate()) return [32 => 'template'];
+        if (!empty($this->remoteInfo['types'])) {
+            return $this->remoteInfo['types'];
+        }
+        if ($this->isTemplate()) {
+            return [32 => 'template'];
+        }
         return [];
     }
 
@@ -568,7 +644,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getCompatibleVersions()
     {
-        if (!empty($this->remoteInfo['compatible'])) return $this->remoteInfo['compatible'];
+        if (!empty($this->remoteInfo['compatible'])) {
+            return $this->remoteInfo['compatible'];
+        }
         return [];
     }
 
@@ -579,7 +657,9 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getLastUpdate()
     {
-        if (!empty($this->remoteInfo['lastupdate'])) return $this->remoteInfo['lastupdate'];
+        if (!empty($this->remoteInfo['lastupdate'])) {
+            return $this->remoteInfo['lastupdate'];
+        }
         return false;
     }
 
@@ -604,9 +684,15 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function getInstallType()
     {
-        if (!$this->isInstalled()) return 'none';
-        if (!empty($this->managerData)) return 'automatic';
-        if (is_dir($this->getInstallDir() . '/.git')) return 'git';
+        if (!$this->isInstalled()) {
+            return 'none';
+        }
+        if (!empty($this->managerData)) {
+            return 'automatic';
+        }
+        if (is_dir($this->getInstallDir() . '/.git')) {
+            return 'git';
+        }
         return 'manual';
     }
 
@@ -646,7 +732,9 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         $tmp = $this->mkTmpDir();
-        if (!$tmp) throw new Exception($this->getLang('error_dircreate'));
+        if (!$tmp) {
+            throw new Exception($this->getLang('error_dircreate'));
+        }
 
         // filename may contain the plugin name for old style plugins...
         $basename = basename($_FILES[$field]['name']);
@@ -722,9 +810,15 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function enable()
     {
-        if ($this->isTemplate()) return $this->getLang('notimplemented');
-        if (!$this->isInstalled()) return $this->getLang('notinstalled');
-        if ($this->isEnabled()) return $this->getLang('alreadyenabled');
+        if ($this->isTemplate()) {
+            return $this->getLang('notimplemented');
+        }
+        if (!$this->isInstalled()) {
+            return $this->getLang('notinstalled');
+        }
+        if ($this->isEnabled()) {
+            return $this->getLang('alreadyenabled');
+        }
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
@@ -743,12 +837,18 @@ class helper_plugin_extension_extension extends Plugin
      */
     public function disable()
     {
-        if ($this->isTemplate()) return $this->getLang('notimplemented');
+        if ($this->isTemplate()) {
+            return $this->getLang('notimplemented');
+        }
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
-        if (!$this->isInstalled()) return $this->getLang('notinstalled');
-        if (!$this->isEnabled()) return $this->getLang('alreadydisabled');
+        if (!$this->isInstalled()) {
+            return $this->getLang('notinstalled');
+        }
+        if (!$this->isEnabled()) {
+            return $this->getLang('alreadydisabled');
+        }
         if ($plugin_controller->disable($this->base)) {
             $this->purgeCache();
             return true;
@@ -789,17 +889,25 @@ class helper_plugin_extension_extension extends Plugin
             foreach (PluginController::PLUGIN_TYPES as $type) {
                 if (file_exists($path . $type . '.php')) {
                     $plugin = plugin_load($type, $this->base);
-                    if ($plugin instanceof PluginInterface) break;
+                    if ($plugin instanceof PluginInterface) {
+                        break;
+                    }
                 }
 
                 if ($dh = @opendir($path . $type . '/')) {
                     while (false !== ($cp = readdir($dh))) {
-                        if ($cp == '.' || $cp == '..' || !str_ends_with(strtolower($cp), '.php')) continue;
+                        if ($cp == '.' || $cp == '..' || !str_ends_with(strtolower($cp), '.php')) {
+                            continue;
+                        }
 
                         $plugin = plugin_load($type, $this->base . '_' . substr($cp, 0, -4));
-                        if ($plugin instanceof PluginInterface) break;
+                        if ($plugin instanceof PluginInterface) {
+                            break;
+                        }
                     }
-                    if ($plugin instanceof PluginInterface) break;
+                    if ($plugin instanceof PluginInterface) {
+                        break;
+                    }
                     closedir($dh);
                 }
             }
@@ -825,7 +933,9 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         foreach (array_keys($installed) as $ext) {
-            if ($this->getID() != $ext) $this->setExtension($ext);
+            if ($this->getID() != $ext) {
+                $this->setExtension($ext);
+            }
             if ($url) {
                 $this->managerData['downloadurl'] = $url;
             } elseif (isset($this->managerData['downloadurl'])) {
@@ -839,7 +949,9 @@ class helper_plugin_extension_extension extends Plugin
             $this->writeManagerData();
         }
 
-        if ($this->getID() != $origID) $this->setExtension($origID);
+        if ($this->getID() != $origID) {
+            $this->setExtension($origID);
+        }
     }
 
     /**
@@ -856,7 +968,9 @@ class helper_plugin_extension_extension extends Plugin
                     $key = trim($key);
                     $value = trim($value);
                     // backwards compatible with old plugin manager
-                    if ($key == 'url') $key = 'downloadurl';
+                    if ($key == 'url') {
+                        $key = 'downloadurl';
+                    }
                     $this->managerData[$key] = $value;
                 }
             }
@@ -886,7 +1000,9 @@ class helper_plugin_extension_extension extends Plugin
     protected function mkTmpDir()
     {
         $dir = io_mktmpdir();
-        if (!$dir) return false;
+        if (!$dir) {
+            return false;
+        }
         $this->temporary[] = $dir;
         return $dir;
     }
@@ -915,7 +1031,9 @@ class helper_plugin_extension_extension extends Plugin
         $http->agent = 'DokuWiki HTTP Client (Extension Manager)';
 
         $data = $http->get($url);
-        if ($data === false) return false;
+        if ($data === false) {
+            return false;
+        }
 
         $name = '';
         if (isset($http->resp_headers['content-disposition'])) {
@@ -930,7 +1048,9 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         if (!$name) {
-            if (!$defaultName) return false;
+            if (!$defaultName) {
+                return false;
+            }
             $name = $defaultName;
         }
 
@@ -938,10 +1058,14 @@ class helper_plugin_extension_extension extends Plugin
 
         $fileexists = file_exists($file);
         $fp = @fopen($file, "w");
-        if (!$fp) return false;
+        if (!$fp) {
+            return false;
+        }
         fwrite($fp, $data);
         fclose($fp);
-        if (!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
+        if (!$fileexists && $conf['fperm']) {
+            chmod($file, $conf['fperm']);
+        }
         return $name;
     }
 
@@ -1079,7 +1203,9 @@ class helper_plugin_extension_extension extends Plugin
         }
 
         // cleanup
-        if ($tmp) io_rmdir($tmp, true);
+        if ($tmp) {
+            io_rmdir($tmp, true);
+        }
         if (function_exists('opcache_reset')) {
             opcache_reset();
         }
@@ -1112,13 +1238,17 @@ class helper_plugin_extension_extension extends Plugin
     {
         $this_dir = "$directory$subdir";
         $dh       = @opendir($this_dir);
-        if (!$dh) return false;
+        if (!$dh) {
+            return false;
+        }
 
         $found_dirs           = [];
         $found_files          = 0;
         $found_template_parts = 0;
         while (false !== ($f = readdir($dh))) {
-            if ($f == '.' || $f == '..') continue;
+            if ($f == '.' || $f == '..') {
+                continue;
+            }
 
             if (is_dir("$this_dir/$f")) {
                 $found_dirs[] = "$subdir/$f";
@@ -1184,7 +1314,9 @@ class helper_plugin_extension_extension extends Plugin
     private function decompress($file, $target)
     {
         // decompression library doesn't like target folders ending in "/"
-        if (str_ends_with($target, '/')) $target = substr($target, 0, -1);
+        if (str_ends_with($target, '/')) {
+            $target = substr($target, 0, -1);
+        }
 
         $ext = $this->guessArchiveType($file);
         if (in_array($ext, ['tar', 'bz', 'gz'])) {
@@ -1227,13 +1359,21 @@ class helper_plugin_extension_extension extends Plugin
     private function guessArchiveType($file)
     {
         $fh = fopen($file, 'rb');
-        if (!$fh) return false;
+        if (!$fh) {
+            return false;
+        }
         $magic = fread($fh, 5);
         fclose($fh);
 
-        if (strpos($magic, "\x42\x5a") === 0) return 'bz';
-        if (strpos($magic, "\x1f\x8b") === 0) return 'gz';
-        if (strpos($magic, "\x50\x4b\x03\x04") === 0) return 'zip';
+        if (strpos($magic, "\x42\x5a") === 0) {
+            return 'bz';
+        }
+        if (strpos($magic, "\x1f\x8b") === 0) {
+            return 'gz';
+        }
+        if (strpos($magic, "\x50\x4b\x03\x04") === 0) {
+            return 'zip';
+        }
         return 'tar';
     }
 
@@ -1249,11 +1389,15 @@ class helper_plugin_extension_extension extends Plugin
         global $conf;
 
         if (is_dir($src)) {
-            if (!$dh = @opendir($src)) return false;
+            if (!$dh = @opendir($src)) {
+                return false;
+            }
 
             if ($ok = io_mkdir_p($dst)) {
                 while ($ok && (false !== ($f = readdir($dh)))) {
-                    if ($f == '..' || $f == '.') continue;
+                    if ($f == '..' || $f == '.') {
+                        continue;
+                    }
                     $ok = $this->dircopy("$src/$f", "$dst/$f");
                 }
             }
@@ -1263,8 +1407,12 @@ class helper_plugin_extension_extension extends Plugin
         } else {
             $existed = file_exists($dst);
 
-            if (!@copy($src, $dst)) return false;
-            if (!$existed && $conf['fperm']) chmod($dst, $conf['fperm']);
+            if (!@copy($src, $dst)) {
+                return false;
+            }
+            if (!$existed && $conf['fperm']) {
+                chmod($dst, $conf['fperm']);
+            }
             @touch($dst, filemtime($src));
         }
 
@@ -1280,7 +1428,9 @@ class helper_plugin_extension_extension extends Plugin
     {
         foreach ($installed as $extension) {
             // only on update
-            if ($extension['action'] == 'install') continue;
+            if ($extension['action'] == 'install') {
+                continue;
+            }
 
             // get definition file
             if ($extension['type'] == 'template') {
@@ -1290,16 +1440,22 @@ class helper_plugin_extension_extension extends Plugin
             }
             $extensiondir = $extensiondir . $extension['base'] . '/';
             $definitionfile = $extensiondir . 'deleted.files';
-            if (!file_exists($definitionfile)) continue;
+            if (!file_exists($definitionfile)) {
+                continue;
+            }
 
             // delete the old files
             $list = file($definitionfile);
 
             foreach ($list as $line) {
                 $line = trim(preg_replace('/#.*$/', '', $line));
-                if (!$line) continue;
+                if (!$line) {
+                    continue;
+                }
                 $file = $extensiondir . $line;
-                if (!file_exists($file)) continue;
+                if (!file_exists($file)) {
+                    continue;
+                }
 
                 io_rmdir($file, true);
             }

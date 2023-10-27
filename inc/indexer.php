@@ -16,7 +16,9 @@ use dokuwiki\Search\Indexer;
 define('INDEXER_VERSION', 8);
 
 // set the minimum token length to use in the index (note, this doesn't apply to numeric tokens)
-if (!defined('IDX_MINWORDLENGTH')) define('IDX_MINWORDLENGTH', 2);
+if (!defined('IDX_MINWORDLENGTH')) {
+    define('IDX_MINWORDLENGTH', 2);
+}
 
 /**
  * Version of the indexer taking into consideration the external tokenizer.
@@ -127,13 +129,17 @@ function idx_addPage($page, $verbose = false, $force = false)
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!file_exists($idxtag)) {
-            if ($verbose) echo "Indexer: $page does not exist, ignoring" . DOKU_LF;
+            if ($verbose) {
+                echo "Indexer: $page does not exist, ignoring" . DOKU_LF;
+            }
             return false;
         }
         $Indexer = idx_get_indexer();
         $result = $Indexer->deletePage($page);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked" . DOKU_LF;
+            if ($verbose) {
+                echo "Indexer: locked" . DOKU_LF;
+            }
             return false;
         }
         @unlink($idxtag);
@@ -145,7 +151,9 @@ function idx_addPage($page, $verbose = false, $force = false)
         if (trim(io_readFile($idxtag)) == idx_get_version()) {
             $last = @filemtime($idxtag);
             if ($last > @filemtime(wikiFN($page))) {
-                if ($verbose) echo "Indexer: index for $page up to date" . DOKU_LF;
+                if ($verbose) {
+                    echo "Indexer: index for $page up to date" . DOKU_LF;
+                }
                 return false;
             }
         }
@@ -158,55 +166,72 @@ function idx_addPage($page, $verbose = false, $force = false)
             $Indexer = idx_get_indexer();
             $result = $Indexer->deletePage($page);
             if ($result === "locked") {
-                if ($verbose) echo "Indexer: locked" . DOKU_LF;
+                if ($verbose) {
+                    echo "Indexer: locked" . DOKU_LF;
+                }
                 return false;
             }
             @unlink($idxtag);
         }
-        if ($verbose) echo "Indexer: index disabled for $page" . DOKU_LF;
+        if ($verbose) {
+            echo "Indexer: index disabled for $page" . DOKU_LF;
+        }
         return $result;
     }
 
     $Indexer = idx_get_indexer();
     $pid = $Indexer->getPID($page);
     if ($pid === false) {
-        if ($verbose) echo "Indexer: getting the PID failed for $page" . DOKU_LF;
+        if ($verbose) {
+            echo "Indexer: getting the PID failed for $page" . DOKU_LF;
+        }
         return false;
     }
     $body = '';
     $metadata = [];
     $metadata['title'] = p_get_metadata($page, 'title', METADATA_RENDER_UNLIMITED);
-    if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null)
+    if (($references = p_get_metadata($page, 'relation references', METADATA_RENDER_UNLIMITED)) !== null) {
         $metadata['relation_references'] = array_keys($references);
-    else $metadata['relation_references'] = [];
+    } else {
+        $metadata['relation_references'] = [];
+    }
 
-    if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null)
+    if (($media = p_get_metadata($page, 'relation media', METADATA_RENDER_UNLIMITED)) !== null) {
         $metadata['relation_media'] = array_keys($media);
-    else $metadata['relation_media'] = [];
+    } else {
+        $metadata['relation_media'] = [];
+    }
 
     $data = ['page' => $page, 'body' => $body, 'metadata' => $metadata, 'pid' => $pid];
     $evt = new Event('INDEXER_PAGE_ADD', $data);
-    if ($evt->advise_before()) $data['body'] = $data['body'] . " " . rawWiki($page);
+    if ($evt->advise_before()) {
+        $data['body'] = $data['body'] . " " . rawWiki($page);
+    }
     $evt->advise_after();
     unset($evt);
     extract($data);
 
     $result = $Indexer->addPageWords($page, $body);
     if ($result === "locked") {
-        if ($verbose) echo "Indexer: locked" . DOKU_LF;
+        if ($verbose) {
+            echo "Indexer: locked" . DOKU_LF;
+        }
         return false;
     }
 
     if ($result) {
         $result = $Indexer->addMetaKeys($page, $metadata);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked" . DOKU_LF;
+            if ($verbose) {
+                echo "Indexer: locked" . DOKU_LF;
+            }
             return false;
         }
     }
 
-    if ($result)
+    if ($result) {
         io_saveFile(metaFN($page, '.indexed'), idx_get_version());
+    }
     if ($verbose) {
         echo "Indexer: finished" . DOKU_LF;
         return true;
@@ -261,7 +286,9 @@ function idx_getIndex($idx, $suffix)
 {
     global $conf;
     $fn = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
-    if (!file_exists($fn)) return [];
+    if (!file_exists($fn)) {
+        return [];
+    }
     return file($fn);
 }
 
@@ -303,14 +330,16 @@ function idx_listIndexLengths()
 
     if ($conf['readdircache'] == 0 || $docache) {
         $dir = @opendir($conf['indexdir']);
-        if ($dir === false)
+        if ($dir === false) {
             return [];
+        }
         $idx = [];
         while (($f = readdir($dir)) !== false) {
             if (str_starts_with($f, 'i') && str_ends_with($f, '.idx')) {
                 $i = substr($f, 1, -4);
-                if (is_numeric($i))
+                if (is_numeric($i)) {
                     $idx[] = (int)$i;
+                }
             }
         }
         closedir($dir);
@@ -346,15 +375,17 @@ function idx_indexLengths($filter)
         // testing if index files exist only
         $path = $conf['indexdir'] . "/i";
         foreach (array_keys($filter) as $key) {
-            if (file_exists($path . $key . '.idx'))
+            if (file_exists($path . $key . '.idx')) {
                 $idx[] = $key;
+            }
         }
     } else {
         $lengths = idx_listIndexLengths();
         foreach ($lengths as $length) {
             // keep all the values equal or superior
-            if ((int)$length >= (int)$filter)
+            if ((int)$length >= (int)$filter) {
                 $idx[] = $length;
+            }
         }
     }
     return $idx;

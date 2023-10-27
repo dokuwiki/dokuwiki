@@ -10,7 +10,9 @@ class Externallink extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        if (count($this->patterns)) return;
+        if (count($this->patterns)) {
+            return;
+        }
 
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-\[\]';

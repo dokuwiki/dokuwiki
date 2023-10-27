@@ -41,11 +41,15 @@ class DebugHelper
      */
     public static function dbgDeprecatedFunction($alternative = '', $callerOffset = 1, $thing = '')
     {
-        if (!self::isEnabled()) return;
+        if (!self::isEnabled()) {
+            return;
+        }
 
         $backtrace = debug_backtrace();
         for ($i = 0; $i < $callerOffset; ++$i) {
-            if (count($backtrace) > 1) array_shift($backtrace);
+            if (count($backtrace) > 1) {
+                array_shift($backtrace);
+            }
         }
 
         [$self, $call] = $backtrace;
@@ -88,7 +92,9 @@ class DebugHelper
      */
     public static function dbgDeprecatedProperty($class, $propertyName)
     {
-        if (!self::isEnabled()) return;
+        if (!self::isEnabled()) {
+            return;
+        }
 
         $backtrace = debug_backtrace();
         array_shift($backtrace);
@@ -126,7 +132,9 @@ class DebugHelper
         $line,
         $callerOffset = 1
     ) {
-        if (!self::isEnabled()) return;
+        if (!self::isEnabled()) {
+            return;
+        }
 
         $backtrace = array_slice(debug_backtrace(), $callerOffset);
 

@@ -150,7 +150,9 @@ abstract class ChangeLog
     public function getRevisionInfo($rev, $retrieveCurrentRevInfo = true)
     {
         $rev = max(0, $rev);
-        if (!$rev) return false;
+        if (!$rev) {
+            return false;
+        }
 
         //ensure the external edits are cached as well
         if (!isset($this->currentRevision) && $retrieveCurrentRevInfo) {
@@ -167,7 +169,9 @@ abstract class ChangeLog
         if ($fp) {
             fclose($fp);
         }
-        if (empty($lines)) return false;
+        if (empty($lines)) {
+            return false;
+        }
 
         // parse and cache changelog lines
         foreach ($lines as $line) {
@@ -207,7 +211,9 @@ abstract class ChangeLog
         $count = 0;
 
         $logfile = $this->getChangelogFilename();
-        if (!file_exists($logfile)) return $revs;
+        if (!file_exists($logfile)) {
+            return $revs;
+        }
 
         $num = max($num, 0);
         if ($num == 0) {
@@ -332,7 +338,9 @@ abstract class ChangeLog
 
         //get lines from changelog
         [$fp, $lines, $head, $tail, $eof] = $this->readloglines($rev);
-        if (empty($lines)) return false;
+        if (empty($lines)) {
+            return false;
+        }
 
         // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
         // also parse and cache changelog lines for getRevisionInfo().
@@ -371,7 +379,9 @@ abstract class ChangeLog
             if ($checkOtherChunk) {
                 [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, $direction);
 
-                if (empty($lines)) break;
+                if (empty($lines)) {
+                    break;
+                }
             }
         }
         if ($fp) {
@@ -409,14 +419,18 @@ abstract class ChangeLog
         //collect revisions around rev2
         [$revs2, $allRevs, $fp, $lines, $head, $tail] = $this->retrieveRevisionsAround($rev2, $max);
 
-        if (empty($revs2)) return [[], []];
+        if (empty($revs2)) {
+            return [[], []];
+        }
 
         //collect revisions around rev1
         $index = array_search($rev1, $allRevs);
         if ($index === false) {
             //no overlapping revisions
             [$revs1, , , , , ] = $this->retrieveRevisionsAround($rev1, $max);
-            if (empty($revs1)) $revs1 = [];
+            if (empty($revs1)) {
+                $revs1 = [];
+            }
         } else {
             //revisions overlaps, reuse revisions around rev2
             $lastRev = array_pop($allRevs); //keep last entry that could be external edit
@@ -494,7 +508,9 @@ abstract class ChangeLog
 
         //get lines from changelog
         [$fp, $lines, $startHead, $startTail, $eof] = $this->readloglines($rev);
-        if (empty($lines)) return false;
+        if (empty($lines)) {
+            return false;
+        }
 
         //parse changelog lines in chunk, and read forward more chunks until $max/2 is reached
         $head = $startHead;

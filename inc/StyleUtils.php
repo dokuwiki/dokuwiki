@@ -84,7 +84,9 @@ class StyleUtils
         $combined['replacements'] = [];
 
         foreach (['default', 'local', 'protected'] as $config_group) {
-            if (empty($config_cascade['styleini'][$config_group])) continue;
+            if (empty($config_cascade['styleini'][$config_group])) {
+                continue;
+            }
 
             // set proper server dirs
             $webbase = $this->getWebbase($config_group);

@@ -96,7 +96,9 @@ trait ChangeLogTrait
      */
     public function setChunkSize($chunk_size)
     {
-        if (!is_numeric($chunk_size)) $chunk_size = 0;
+        if (!is_numeric($chunk_size)) {
+            $chunk_size = 0;
+        }
 
         $this->chunk_size = max($chunk_size, 0);
     }
@@ -232,7 +234,9 @@ trait ChangeLogTrait
      */
     protected function readAdjacentChunk($fp, $head, $tail, $direction)
     {
-        if (!$fp) return [[], $head, $tail];
+        if (!$fp) {
+            return [[], $head, $tail];
+        }
 
         if ($direction > 0) {
             //read forward

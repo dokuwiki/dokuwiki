@@ -13,10 +13,18 @@ use dokuwiki\Extension\Event;
 use splitbrain\JSStrip\Exception as JSStripException;
 use splitbrain\JSStrip\JSStrip;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
-if (!defined('NL')) define('NL', "\n");
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('NOSESSION')) {
+    define('NOSESSION', true);
+} // we do not use a session or authentication here (better caching)
+if (!defined('NL')) {
+    define('NL', "\n");
+}
+if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) {
+    define('DOKU_DISABLE_GZIP_OUTPUT', 1);
+} // we gzip ourself here
 require_once(DOKU_INC . 'inc/init.php');
 
 // Main (don't run when UNIT test)
@@ -42,7 +50,9 @@ function js_out()
 
     // decide from where to get the template
     $tpl = trim(preg_replace('/[^\w-]+/', '', $INPUT->str('t')));
-    if (!$tpl) $tpl = $conf['template'];
+    if (!$tpl) {
+        $tpl = $conf['template'];
+    }
 
     // array of core files
     $files = [
@@ -126,16 +136,26 @@ function js_out()
 
     // load files
     foreach ($files as $file) {
-        if (!file_exists($file)) continue;
+        if (!file_exists($file)) {
+            continue;
+        }
         $ismin = str_ends_with($file, '.min.js');
         $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
 
         echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
-        if ($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
-        if ($debugjs) echo "\ntry {\n";
+        if ($ismin) {
+            echo "\n/* BEGIN NOCOMPRESS */\n";
+        }
+        if ($debugjs) {
+            echo "\ntry {\n";
+        }
         js_load($file);
-        if ($debugjs) echo "\n} catch (e) {\n   logError(e, '" . str_replace(DOKU_INC, '', $file) . "');\n}\n";
-        if ($ismin) echo "\n/* END NOCOMPRESS */\n";
+        if ($debugjs) {
+            echo "\n} catch (e) {\n   logError(e, '" . str_replace(DOKU_INC, '', $file) . "');\n}\n";
+        }
+        if ($ismin) {
+            echo "\n/* END NOCOMPRESS */\n";
+        }
         echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
@@ -176,7 +196,9 @@ function js_out()
  */
 function js_load($file)
 {
-    if (!file_exists($file)) return;
+    if (!file_exists($file)) {
+        return;
+    }
     static $loaded = [];
 
     $data = io_readFile($file);
@@ -193,14 +215,20 @@ function js_load($file)
             $loaded[$base] = true;
         }
 
-        if ($ifile[0] != '/') $ifile = dirname($file) . '/' . $ifile;
+        if ($ifile[0] != '/') {
+            $ifile = dirname($file) . '/' . $ifile;
+        }
 
         $idata = '';
         if (file_exists($ifile)) {
             $ismin = str_ends_with($ifile, '.min.js');
-            if ($ismin) $idata .= "\n/* BEGIN NOCOMPRESS */\n";
+            if ($ismin) {
+                $idata .= "\n/* BEGIN NOCOMPRESS */\n";
+            }
             $idata .= io_readFile($ifile);
-            if ($ismin) $idata .= "\n/* END NOCOMPRESS */\n";
+            if ($ismin) {
+                $idata .= "\n/* END NOCOMPRESS */\n";
+            }
         }
         $data = str_replace($match[0], $idata, $data);
     }
@@ -242,7 +270,9 @@ function js_pluginstrings()
     foreach ($plugins as $p) {
         $path = DOKU_PLUGIN . $p . '/lang/';
 
-        if (isset($lang)) unset($lang);
+        if (isset($lang)) {
+            unset($lang);
+        }
         if (file_exists($path . "en/lang.php")) {
             include $path . "en/lang.php";
         }

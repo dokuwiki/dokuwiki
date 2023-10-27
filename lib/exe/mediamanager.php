@@ -2,7 +2,9 @@
 
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
 define('DOKU_MEDIAMANAGER', 1);
 
 // for multi uploader:
@@ -14,8 +16,12 @@ global $INPUT;
 global $lang;
 global $conf;
 // handle passed message
-if ($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')), 1);
-if ($INPUT->str('err')) msg(hsc($INPUT->str('err')), -1);
+if ($INPUT->str('msg1')) {
+    msg(hsc($INPUT->str('msg1')), 1);
+}
+if ($INPUT->str('err')) {
+    msg(hsc($INPUT->str('err')), -1);
+}
 
 global $DEL;
 // get namespace to display (either direct or from deletion order)
@@ -85,7 +91,9 @@ if (!empty($_FILES['upload']['error'])) {
 // handle upload
 if (!empty($_FILES['upload']['tmp_name'])) {
     $JUMPTO = media_upload($NS, $AUTH);
-    if ($JUMPTO) $NS = getNS($JUMPTO);
+    if ($JUMPTO) {
+        $NS = getNS($JUMPTO);
+    }
 }
 
 // handle meta saving
@@ -97,7 +105,9 @@ if ($IMG && ($INPUT->str('mediado') == 'save' || @array_key_exists('save', $INPU
     $JUMPTO = media_metasave($IMG, $AUTH, $INPUT->arr('meta'));
 }
 
-if ($INPUT->int('rev') && $conf['mediarevisions']) $REV = $INPUT->int('rev');
+if ($INPUT->int('rev') && $conf['mediarevisions']) {
+    $REV = $INPUT->int('rev');
+}
 
 if ($INPUT->str('mediado') == 'restore' && $conf['mediarevisions']) {
     $JUMPTO = media_restore($INPUT->str('image'), $REV, $AUTH);

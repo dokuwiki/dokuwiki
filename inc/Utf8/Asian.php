@@ -78,7 +78,9 @@ class Asian
     {
         // handle asian chars as single words (may fail on older PHP version)
         $asia = @preg_replace('/(' . self::REGEXP . ')/u', $sep . '\1' . $sep, $text);
-        if (!is_null($asia)) $text = $asia; // recover from regexp falure
+        if (!is_null($asia)) {
+            $text = $asia;
+        } // recover from regexp falure
 
         return $text;
     }

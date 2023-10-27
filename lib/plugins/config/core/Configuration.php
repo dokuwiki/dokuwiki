@@ -112,7 +112,9 @@ class Configuration
             if ($obj->update($value)) {
                 $this->changed = true;
             }
-            if ($obj->hasError()) $ok = false;
+            if ($obj->hasError()) {
+                $ok = false;
+            }
         }
 
         return $ok;
@@ -216,9 +218,13 @@ class Configuration
         if (is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));
             $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
-            if ($modern && class_exists($modern)) return $modern;
+            if ($modern && class_exists($modern)) {
+                return $modern;
+            }
             // try class as given
-            if (class_exists($class)) return $class;
+            if (class_exists($class)) {
+                return $class;
+            }
             // class wasn't found add to errors
             $this->undefined[$key] = new SettingNoKnownClass($key);
         } else {

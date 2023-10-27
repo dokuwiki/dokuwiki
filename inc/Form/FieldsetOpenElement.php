@@ -33,7 +33,9 @@ class FieldsetOpenElement extends TagOpenElement
     {
         $html = '<fieldset ' . buildAttributes($this->attrs()) . '>';
         $legend = $this->val();
-        if ($legend) $html .= DOKU_LF . '<legend>' . hsc($legend) . '</legend>';
+        if ($legend) {
+            $html .= DOKU_LF . '<legend>' . hsc($legend) . '</legend>';
+        }
         return $html;
     }
 }

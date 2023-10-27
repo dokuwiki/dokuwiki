@@ -42,7 +42,9 @@ class Block
     {
         global $DOKU_PLUGINS;
         //check if syntax plugins were loaded
-        if (empty($DOKU_PLUGINS['syntax'])) return;
+        if (empty($DOKU_PLUGINS['syntax'])) {
+            return;
+        }
         foreach ($DOKU_PLUGINS['syntax'] as $n => $p) {
             $ptype = $p->getPType();
             if ($ptype == 'block') {
@@ -57,7 +59,9 @@ class Block
 
     protected function openParagraph($pos)
     {
-        if ($this->inParagraph) return;
+        if ($this->inParagraph) {
+            return;
+        }
         $this->calls[] = ['p_open', [], $pos];
         $this->inParagraph = true;
         $this->skipEol = true;
@@ -74,7 +78,9 @@ class Block
      */
     protected function closeParagraph($pos)
     {
-        if (!$this->inParagraph) return;
+        if (!$this->inParagraph) {
+            return;
+        }
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
         $ccount = count($this->calls);
@@ -99,7 +105,9 @@ class Block
         } else {
             // remove ending linebreaks in the paragraph
             $i = count($this->calls) - 1;
-            if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], "\n");
+            if ($this->calls[$i][0] == 'cdata') {
+                $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], "\n");
+            }
             $this->calls[] = ['p_close', [], $pos];
         }
 

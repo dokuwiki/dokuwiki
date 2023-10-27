@@ -28,16 +28,24 @@ $config_cascade = [];
 
 // if available load a preload config file
 $preload = fullpath(__DIR__) . '/preload.php';
-if (file_exists($preload)) include($preload);
+if (file_exists($preload)) {
+    include($preload);
+}
 
 // define the include path
-if (!defined('DOKU_INC')) define('DOKU_INC', fullpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', fullpath(__DIR__ . '/../') . '/');
+}
 
 // define Plugin dir
-if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+if (!defined('DOKU_PLUGIN')) {
+    define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+}
 
 // define config path (packagers may want to change this to /etc/dokuwiki/)
-if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
+if (!defined('DOKU_CONF')) {
+    define('DOKU_CONF', DOKU_INC . 'conf/');
+}
 
 // check for error reporting override or set error reporting to sane values
 if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF . 'report_e_all')) {
@@ -74,7 +82,9 @@ $conf = [];
 
 // load the global config file(s)
 foreach (['default', 'local', 'protected'] as $config_group) {
-    if (empty($config_cascade['main'][$config_group])) continue;
+    if (empty($config_cascade['main'][$config_group])) {
+        continue;
+    }
     foreach ($config_cascade['main'][$config_group] as $config_file) {
         if (file_exists($config_file)) {
             include($config_file);
@@ -88,7 +98,9 @@ $license = [];
 
 // load the license file(s)
 foreach (['default', 'local'] as $config_group) {
-    if (empty($config_cascade['license'][$config_group])) continue;
+    if (empty($config_cascade['license'][$config_group])) {
+        continue;
+    }
     foreach ($config_cascade['license'][$config_group] as $config_file) {
         if (file_exists($config_file)) {
             include($config_file);
@@ -100,8 +112,12 @@ foreach (['default', 'local'] as $config_group) {
 date_default_timezone_set(@date_default_timezone_get());
 
 // define baseURL
-if (!defined('DOKU_REL')) define('DOKU_REL', getBaseURL(false));
-if (!defined('DOKU_URL')) define('DOKU_URL', getBaseURL(true));
+if (!defined('DOKU_REL')) {
+    define('DOKU_REL', getBaseURL(false));
+}
+if (!defined('DOKU_URL')) {
+    define('DOKU_URL', getBaseURL(true));
+}
 if (!defined('DOKU_BASE')) {
     if ($conf['canonical']) {
         define('DOKU_BASE', DOKU_URL);
@@ -111,9 +127,15 @@ if (!defined('DOKU_BASE')) {
 }
 
 // define whitespace
-if (!defined('NL')) define('NL', "\n");
-if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
+if (!defined('NL')) {
+    define('NL', "\n");
+}
+if (!defined('DOKU_LF')) {
+    define('DOKU_LF', "\n");
+}
+if (!defined('DOKU_TAB')) {
+    define('DOKU_TAB', "\t");
+}
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
 if (!defined('DOKU_COOKIE')) {
@@ -123,7 +145,9 @@ if (!defined('DOKU_COOKIE')) {
 }
 
 // define main script
-if (!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT', 'doku.php');
+if (!defined('DOKU_SCRIPT')) {
+    define('DOKU_SCRIPT', 'doku.php');
+}
 
 if (!defined('DOKU_TPL')) {
     /**
@@ -167,13 +191,19 @@ if (
 
 // init session
 if (!headers_sent() && !defined('NOSESSION')) {
-    if (!defined('DOKU_SESSION_NAME'))     define('DOKU_SESSION_NAME', "DokuWiki");
-    if (!defined('DOKU_SESSION_LIFETIME')) define('DOKU_SESSION_LIFETIME', 0);
+    if (!defined('DOKU_SESSION_NAME')) {
+        define('DOKU_SESSION_NAME', "DokuWiki");
+    }
+    if (!defined('DOKU_SESSION_LIFETIME')) {
+        define('DOKU_SESSION_LIFETIME', 0);
+    }
     if (!defined('DOKU_SESSION_PATH')) {
         $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
         define('DOKU_SESSION_PATH', $cookieDir);
     }
-    if (!defined('DOKU_SESSION_DOMAIN'))   define('DOKU_SESSION_DOMAIN', '');
+    if (!defined('DOKU_SESSION_DOMAIN')) {
+        define('DOKU_SESSION_DOMAIN', '');
+    }
 
     // start the session
     init_session();
@@ -189,7 +219,9 @@ if (!headers_sent() && !defined('NOSESSION')) {
 $_REQUEST = array_merge($_GET, $_POST);
 
 // we don't want a purge URL to be digged
-if (isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
+if (isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) {
+    unset($_REQUEST['purge']);
+}
 
 // precalculate file creation modes
 init_creationmodes();
@@ -200,7 +232,9 @@ init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
 global $plugin_controller_class, $plugin_controller;
-if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
+if (empty($plugin_controller_class)) {
+    $plugin_controller_class = PluginController::class;
+}
 
 // autoloader
 require_once(DOKU_INC . 'inc/load.php');
@@ -364,7 +398,9 @@ function init_files()
             $fh = @fopen($file, 'a');
             if ($fh) {
                 fclose($fh);
-                if ($conf['fperm']) chmod($file, $conf['fperm']);
+                if ($conf['fperm']) {
+                    chmod($file, $conf['fperm']);
+                }
             } else {
                 nice_die("$file is not writable. Check your permissions settings!");
             }
@@ -428,17 +464,23 @@ function init_creationmodes()
 
     // get system umask, fallback to 0 if none available
     $umask = @umask();
-    if (!$umask) $umask = 0000;
+    if (!$umask) {
+        $umask = 0000;
+    }
 
     // check what is set automatically by the system on file creation
     // and set the fperm param if it's not what we want
     $auto_fmode = 0666 & ~$umask;
-    if ($auto_fmode != $conf['fmode']) $conf['fperm'] = $conf['fmode'];
+    if ($auto_fmode != $conf['fmode']) {
+        $conf['fperm'] = $conf['fmode'];
+    }
 
     // check what is set automatically by the system on directory creation
     // and set the dperm param if it's not what we want.
     $auto_dmode = 0777 & ~$umask;
-    if ($auto_dmode != $conf['dmode']) $conf['dperm'] = $conf['dmode'];
+    if ($auto_dmode != $conf['dmode']) {
+        $conf['dperm'] = $conf['dmode'];
+    }
 }
 
 /**
@@ -488,10 +530,14 @@ function getBaseURL($abs = null)
     $dir = preg_replace('!lib/plugins/.*$!', '', $dir);
 
     //finish here for relative URLs
-    if (!$abs) return $dir;
+    if (!$abs) {
+        return $dir;
+    }
 
     //use config if available, trim any slash from end of baseurl to avoid multiple consecutive slashes in the path
-    if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
+    if (!empty($conf['baseurl'])) {
+        return rtrim($conf['baseurl'], '/') . $dir;
+    }
 
     //split hostheader into host and port
     if (isset($_SERVER['HTTP_HOST'])) {
@@ -519,7 +565,9 @@ function getBaseURL($abs = null)
         }
     }
 
-    if ($port !== '') $port = ':' . $port;
+    if ($port !== '') {
+        $port = ':' . $port;
+    }
 
     return $proto . $host . $port . $dir;
 }
@@ -632,7 +680,9 @@ function fullpath($path, $exists = false)
     $path = explode('/', $path);
     $newpath = [];
     foreach ($path as $p) {
-        if ($p === '' || $p === '.') continue;
+        if ($p === '' || $p === '.') {
+            continue;
+        }
         if ($p === '..') {
             array_pop($newpath);
             continue;

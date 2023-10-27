@@ -46,7 +46,9 @@ class Search extends AbstractAction
             send_redirect($url);
         }
 
-        if ($s === '') throw new ActionAbort();
+        if ($s === '') {
+            throw new ActionAbort();
+        }
         $this->adjustGlobalQuery();
     }
 

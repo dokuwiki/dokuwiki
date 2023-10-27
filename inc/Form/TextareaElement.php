@@ -47,7 +47,9 @@ class TextareaElement extends InputElement
      */
     protected function mainElementHTML()
     {
-        if ($this->useInput) $this->prefillInput();
+        if ($this->useInput) {
+            $this->prefillInput();
+        }
         return '<textarea ' . buildAttributes($this->attrs()) . '>' .
             formText($this->val()) . '</textarea>';
     }

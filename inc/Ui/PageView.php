@@ -54,7 +54,9 @@ class PageView extends Ui
             echo p_locale_xhtml('preview');
             echo '<div class="preview"><div class="pad">';
             $html = html_secedit(p_render('xhtml', p_get_instructions($this->text), $info), $secedit);
-            if ($INFO['prependTOC']) $html = tpl_toc(true) . $html;
+            if ($INFO['prependTOC']) {
+                $html = tpl_toc(true) . $html;
+            }
             echo $html;
             echo '<div class="clearer"></div>';
             echo '</div></div>';
@@ -66,7 +68,9 @@ class PageView extends Ui
             }
             $html = p_wiki_xhtml($ID, $REV, true, $DATE_AT);
             $html = html_secedit($html, $secedit);
-            if ($INFO['prependTOC']) $html = tpl_toc(true) . $html;
+            if ($INFO['prependTOC']) {
+                $html = tpl_toc(true) . $html;
+            }
             $html = html_hilight($html, $HIGH);
             echo $html;
         }

@@ -35,10 +35,14 @@ class action_plugin_styling extends ActionPlugin
     {
         global $ACT;
         global $INPUT;
-        if ($ACT != 'admin' || $INPUT->str('page') != 'styling') return;
+        if ($ACT != 'admin' || $INPUT->str('page') != 'styling') {
+            return;
+        }
         /** @var admin_plugin_styling $admin */
         $admin = plugin_load('admin', 'styling');
-        if (!$admin->isAccessibleByCurrentUser()) return;
+        if (!$admin->isAccessibleByCurrentUser()) {
+            return;
+        }
 
         // set preview
         $len = count($event->data['link']);

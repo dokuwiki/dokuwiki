@@ -48,7 +48,9 @@ class DisplayRow extends DisplayTile
         echo '<div class="example" id="ex_' . str_replace(':', '_', $id) . '">';
         echo $lang['mediausage'] . ' <code>{{:' . $id . '}}</code>';
         echo '</div>';
-        if ($this->mediaFile->isImage()) $this->showDetails();
+        if ($this->mediaFile->isImage()) {
+            $this->showDetails();
+        }
         echo '<div class="clearer"></div>' . NL;
         echo '</div>' . NL;
     }
@@ -75,15 +77,23 @@ class DisplayRow extends DisplayTile
             'EXIF.TIFFImageDescription',
             'EXIF.TIFFUserComment'
         ]);
-        if (PhpString::strlen($d) > 250) $d = PhpString::substr($d, 0, 250) . '...';
+        if (PhpString::strlen($d) > 250) {
+            $d = PhpString::substr($d, 0, 250) . '...';
+        }
         $k = $this->mediaFile->getMeta()->getField(['IPTC.Keywords', 'IPTC.Category', 'xmp.dc:subject']);
 
         // print EXIF/IPTC data
         if ($t || $d || $k) {
             echo '<p>';
-            if ($t) echo '<strong>' . hsc($t) . '</strong><br />';
-            if ($d) echo hsc($d) . '<br />';
-            if ($t) echo '<em>' . hsc($k) . '</em>';
+            if ($t) {
+                echo '<strong>' . hsc($t) . '</strong><br />';
+            }
+            if ($d) {
+                echo hsc($d) . '<br />';
+            }
+            if ($t) {
+                echo '<em>' . hsc($k) . '</em>';
+            }
             echo '</p>';
         }
         echo '</div>';

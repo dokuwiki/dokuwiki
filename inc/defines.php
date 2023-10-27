@@ -75,6 +75,8 @@ define('DOKU_MEDIA_EMPTY_NS', 8);
  * @file inc/Mailer.class.php
  */
 // phpcs:disable
-if (!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\r\n");
+if (!defined('MAILHEADER_EOL')) {
+    define('MAILHEADER_EOL', "\r\n");
+}
 // phpcs:enable
 // define('MAILHEADER_ASCIIONLY',1); // we currently don't use this

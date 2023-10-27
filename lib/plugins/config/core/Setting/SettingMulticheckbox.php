@@ -14,14 +14,18 @@ class SettingMulticheckbox extends SettingString
     /** @inheritdoc */
     public function update($input)
     {
-        if ($this->isProtected()) return false;
+        if ($this->isProtected()) {
+            return false;
+        }
 
         // split any combined values + convert from array to comma separated string
         $input = $input ?: [];
         $input = $this->array2str($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if ($value == $input) return false;
+        if ($value == $input) {
+            return false;
+        }
 
         if ($this->pattern && !preg_match($this->pattern, $input)) {
             $this->error = true;
@@ -73,8 +77,12 @@ class SettingMulticheckbox extends SettingString
             $input .= "</div>\n";
 
             // remove this action from the disabledactions array
-            if ($idx !== false) unset($value[$idx]);
-            if ($idx_default !== false) unset($default[$idx_default]);
+            if ($idx !== false) {
+                unset($value[$idx]);
+            }
+            if ($idx_default !== false) {
+                unset($default[$idx_default]);
+            }
         }
 
         // handle any remaining values
@@ -117,7 +125,9 @@ class SettingMulticheckbox extends SettingString
             foreach ($this->combine as $key => $combinators) {
                 $idx = [];
                 foreach ($combinators as $val) {
-                    if (($idx[] = array_search($val, $array)) === false) break;
+                    if (($idx[] = array_search($val, $array)) === false) {
+                        break;
+                    }
                 }
 
                 if (count($idx) && $idx[count($idx) - 1] !== false) {

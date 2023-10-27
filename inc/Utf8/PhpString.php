@@ -106,11 +106,17 @@ class PhpString
         // cast parameters to appropriate types to avoid multiple notices/warnings
         $str = (string)$str;                          // generates E_NOTICE for PHP4 objects, but not PHP5 objects
         $offset = (int)$offset;
-        if ($length !== null) $length = (int)$length;
+        if ($length !== null) {
+            $length = (int)$length;
+        }
 
         // handle trivial cases
-        if ($length === 0) return '';
-        if ($offset < 0 && $length < 0 && $length < $offset) return '';
+        if ($length === 0) {
+            return '';
+        }
+        if ($offset < 0 && $length < 0 && $length < $offset) {
+            return '';
+        }
 
         $offset_pattern = '';
         $length_pattern = '';
@@ -119,7 +125,9 @@ class PhpString
         if ($offset < 0) {
             $strlen = self::strlen($str);        // see notes
             $offset = $strlen + $offset;
-            if ($offset < 0) $offset = 0;
+            if ($offset < 0) {
+                $offset = 0;
+            }
         }
 
         // establish a pattern for offset, a non-captured group equal in length to offset
@@ -127,7 +135,9 @@ class PhpString
             $Ox = (int)($offset / 65535);
             $Oy = $offset % 65535;
 
-            if ($Ox) $offset_pattern = '(?:.{65535}){' . $Ox . '}';
+            if ($Ox) {
+                $offset_pattern = '(?:.{65535}){' . $Ox . '}';
+            }
             $offset_pattern = '^(?:' . $offset_pattern . '.{' . $Oy . '})';
         } else {
             $offset_pattern = '^';                      // offset == 0; just anchor the pattern
@@ -137,8 +147,12 @@ class PhpString
         if ($length === null) {
             $length_pattern = '(.*)$';                  // the rest of the string
         } else {
-            if (!isset($strlen)) $strlen = self::strlen($str);    // see notes
-            if ($offset > $strlen) return '';           // another trivial case
+            if (!isset($strlen)) {
+                $strlen = self::strlen($str);
+            }    // see notes
+            if ($offset > $strlen) {
+                return '';
+            }           // another trivial case
 
             if ($length > 0) {
                 // reduce any length that would go past the end of the string
@@ -146,20 +160,28 @@ class PhpString
                 $Lx = (int)($length / 65535);
                 $Ly = $length % 65535;
                 // +ve length requires ... a captured group of length characters
-                if ($Lx) $length_pattern = '(?:.{65535}){' . $Lx . '}';
+                if ($Lx) {
+                    $length_pattern = '(?:.{65535}){' . $Lx . '}';
+                }
                 $length_pattern = '(' . $length_pattern . '.{' . $Ly . '})';
             } elseif ($length < 0) {
-                if ($length < ($offset - $strlen)) return '';
+                if ($length < ($offset - $strlen)) {
+                    return '';
+                }
                 $Lx = (int)((-$length) / 65535);
                 $Ly = (-$length) % 65535;
                 // -ve length requires ... capture everything except a group of -length characters
                 //                         anchored at the tail-end of the string
-                if ($Lx) $length_pattern = '(?:.{65535}){' . $Lx . '}';
+                if ($Lx) {
+                    $length_pattern = '(?:.{65535}){' . $Lx . '}';
+                }
                 $length_pattern = '(.*)(?:' . $length_pattern . '.{' . $Ly . '})$';
             }
         }
 
-        if (!preg_match('#' . $offset_pattern . $length_pattern . '#us', $str, $match)) return '';
+        if (!preg_match('#' . $offset_pattern . $length_pattern . '#us', $str, $match)) {
+            return '';
+        }
         return $match[1];
     }
 
@@ -181,7 +203,9 @@ class PhpString
     public static function substr_replace($string, $replacement, $start, $length = 0)
     {
         $ret = '';
-        if ($start > 0) $ret .= self::substr($string, 0, $start);
+        if ($start > 0) {
+            $ret .= self::substr($string, 0, $start);
+        }
         $ret .= $replacement;
         $ret .= self::substr($string, $start + $length);
         return $ret;
@@ -200,7 +224,9 @@ class PhpString
      */
     public static function ltrim($str, $charlist = '')
     {
-        if ($charlist === '') return ltrim($str);
+        if ($charlist === '') {
+            return ltrim($str);
+        }
 
         //quote charlist for use in a characterclass
         $charlist = preg_replace('!([\\\\\\-\\]\\[/])!', '\\\${1}', $charlist);
@@ -220,7 +246,9 @@ class PhpString
      */
     public static function rtrim($str, $charlist = '')
     {
-        if ($charlist === '') return rtrim($str);
+        if ($charlist === '') {
+            return rtrim($str);
+        }
 
         //quote charlist for use in a characterclass
         $charlist = preg_replace('!([\\\\\\-\\]\\[/])!', '\\\${1}', $charlist);
@@ -240,7 +268,9 @@ class PhpString
      */
     public static function trim($str, $charlist = '')
     {
-        if ($charlist === '') return trim($str);
+        if ($charlist === '') {
+            return trim($str);
+        }
 
         return self::ltrim(self::rtrim($str, $charlist), $charlist);
     }
@@ -259,7 +289,9 @@ class PhpString
      */
     public static function strtolower($string)
     {
-        if ($string === null) return ''; // pre-8.1 behaviour
+        if ($string === null) {
+            return '';
+        } // pre-8.1 behaviour
         if (UTF8_MBSTRING) {
             if (class_exists('Normalizer', $autoload = false)) {
                 return \Normalizer::normalize(mb_strtolower($string, 'utf-8'));
@@ -283,7 +315,9 @@ class PhpString
      */
     public static function strtoupper($string)
     {
-        if (UTF8_MBSTRING) return mb_strtoupper($string, 'utf-8');
+        if (UTF8_MBSTRING) {
+            return mb_strtoupper($string, 'utf-8');
+        }
 
         return strtr($string, Table::lowerCaseToUpperCase());
     }
@@ -359,13 +393,15 @@ class PhpString
         while ($length === null || $length < $offset) {
             $pos = strpos($haystack, $needle, $offset + $comp);
 
-            if ($pos === false)
+            if ($pos === false) {
                 return false;
+            }
 
             $length = self::strlen(substr($haystack, 0, $pos));
 
-            if ($length < $offset)
+            if ($length < $offset) {
                 $comp = $pos - $length;
+            }
         }
 
         return $length;

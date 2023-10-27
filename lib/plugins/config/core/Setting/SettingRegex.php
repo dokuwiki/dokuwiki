@@ -16,7 +16,9 @@ class SettingRegex extends SettingString
 
         // let parent do basic checks, value, not changed, etc.
         $local = $this->local;
-        if (!parent::update($input)) return false;
+        if (!parent::update($input)) {
+            return false;
+        }
         $this->local = $local;
 
         // see if the regex compiles and runs (we don't check for effectiveness)

@@ -17,7 +17,9 @@ use dokuwiki\Utf8\Sort;
 /**
  * create snippets for the first few results only
  */
-if (!defined('FT_SNIPPET_NUMBER')) define('FT_SNIPPET_NUMBER', 15);
+if (!defined('FT_SNIPPET_NUMBER')) {
+    define('FT_SNIPPET_NUMBER', 15);
+}
 
 /**
  * The fulltext search
@@ -68,7 +70,9 @@ function _ft_pageSearch(&$data)
     $q = ft_queryParser($Indexer, $data['query']);
     $data['highlight'] = $q['highlight'];
 
-    if (empty($q['parsed_ary'])) return [];
+    if (empty($q['parsed_ary'])) {
+        return [];
+    }
 
     // lookup all words found in the query
     $lookup = $Indexer->lookup($q['words']);
@@ -146,7 +150,9 @@ function _ft_pageSearch(&$data)
     }
     $docs = array_pop($stack);
 
-    if (empty($docs)) return [];
+    if (empty($docs)) {
+        return [];
+    }
 
     // check: settings, acls, existence
     foreach (array_keys($docs) as $id) {
@@ -181,7 +187,9 @@ function ft_backlinks($id, $ignore_perms = false)
 {
     $result = idx_get_indexer()->lookupKey('relation_references', $id);
 
-    if ($result === []) return $result;
+    if ($result === []) {
+        return $result;
+    }
 
     // check ACL permissions
     foreach (array_keys($result) as $idx) {
@@ -215,7 +223,9 @@ function ft_mediause($id, $ignore_perms = false)
 {
     $result = idx_get_indexer()->lookupKey('relation_media', $id);
 
-    if ($result === []) return $result;
+    if ($result === []) {
+        return $result;
+    }
 
     // check ACL permissions
     foreach (array_keys($result) as $idx) {
@@ -299,14 +309,16 @@ function _ft_pageLookup(&$data)
     if ($id !== '' && $cleaned !== '') {
         foreach ($page_idx as $p_id) {
             if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
-                if (!isset($pages[$p_id]))
+                if (!isset($pages[$p_id])) {
                     $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
+                }
             }
         }
         if ($in_title) {
             foreach ($Indexer->lookupKey('title', $id, '_ft_pageLookupTitleCompare') as $p_id) {
-                if (!isset($pages[$p_id]))
+                if (!isset($pages[$p_id])) {
                     $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
+                }
             }
         }
     }
@@ -562,7 +574,9 @@ function ft_snippet($id, $highlight)
 function ft_snippet_re_preprocess($term)
 {
     // do not process asian terms where word boundaries are not explicit
-    if (Asian::isAsianWords($term)) return $term;
+    if (Asian::isAsianWords($term)) {
+        return $term;
+    }
 
     if (UTF8_PROPERTYSUPPORT) {
         // unicode word boundaries
@@ -587,7 +601,9 @@ function ft_snippet_re_preprocess($term)
         $term .= $BR;
     }
 
-    if ($term == $BL || $term == $BR || $term == $BL . $BR) $term = '';
+    if ($term == $BL || $term == $BR || $term == $BL . $BR) {
+        $term = '';
+    }
     return $term;
 }
 
@@ -671,7 +687,9 @@ function ft_resultComplement($args)
     $result = $args[0];
     foreach (array_keys($result) as $id) {
         for ($i = 1; $i !== $array_count; $i++) {
-            if (isset($args[$i][$id])) unset($result[$id]);
+            if (isset($args[$i][$id])) {
+                unset($result[$id]);
+            }
         }
     }
     return $result;
@@ -756,7 +774,9 @@ function ft_queryParser($Indexer, $query)
             // FIXME: some more separators?
             $term = preg_replace('/[ \x{3000}]+/u', ' ', $term);
             $term = trim($term);
-            if ($term === '') continue;
+            if ($term === '') {
+                continue;
+            }
 
             $tokens = explode(' ', $term);
             foreach ($tokens as $token) {
@@ -770,7 +790,9 @@ function ft_queryParser($Indexer, $query)
                     ++$parens_level;
                 } elseif ($token === ')') {
                     // parenthesis-any-close
-                    if ($parens_level === 0) continue;
+                    if ($parens_level === 0) {
+                        continue;
+                    }
                     $parsed .= ')';
                     $parens_level--;
                 } elseif ($token === 'and') {
@@ -819,7 +841,9 @@ function ft_queryParser($Indexer, $query)
         } elseif ($token === '(') {
             ++$parens_level;
         } elseif ($token === ')') {
-            if ($parens_level-- === end($notgrp_levels)) array_pop($notgrp_levels);
+            if ($parens_level-- === end($notgrp_levels)) {
+                array_pop($notgrp_levels);
+            }
         } elseif (count($notgrp_levels) % 2 === 1) {
             // turn highlight-flag off if terms are logically in "NOT" group
             $token = preg_replace('/([WPN])\+\:/u', '$1-:', $token);
@@ -878,7 +902,9 @@ function ft_queryParser($Indexer, $query)
     $q['parsed_ary'] = $parsed_ary;
 
     foreach ($q['parsed_ary'] as $token) {
-        if (strlen($token) < 3 || $token[2] !== ':') continue;
+        if (strlen($token) < 3 || $token[2] !== ':') {
+            continue;
+        }
         $body = substr($token, 3);
 
         switch (substr($token, 0, 3)) {

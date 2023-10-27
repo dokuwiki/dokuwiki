@@ -31,8 +31,12 @@ class Register extends AbstractAclAction
         /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
-        if (isset($conf['openregister']) && !$conf['openregister']) throw new ActionDisabledException();
-        if (!$auth->canDo('addUser')) throw new ActionDisabledException();
+        if (isset($conf['openregister']) && !$conf['openregister']) {
+            throw new ActionDisabledException();
+        }
+        if (!$auth->canDo('addUser')) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */

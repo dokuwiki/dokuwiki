@@ -109,7 +109,9 @@ class helper_plugin_extension_list extends Plugin
      */
     public function render($returnonly = false)
     {
-        if ($returnonly) return $this->form;
+        if ($returnonly) {
+            return $this->form;
+        }
         echo $this->form;
     }
 
@@ -184,10 +186,16 @@ class helper_plugin_extension_list extends Plugin
         if ($extension->isInstalled()) {
             $class .= ' installed';
             $class .= ($extension->isEnabled()) ? ' enabled' : ' disabled';
-            if ($extension->updateAvailable()) $class .= ' updatable';
+            if ($extension->updateAvailable()) {
+                $class .= ' updatable';
+            }
         }
-        if (!$extension->canModify()) $class .= ' notselect';
-        if ($extension->isProtected()) $class .=  ' protected';
+        if (!$extension->canModify()) {
+            $class .= ' notselect';
+        }
+        if ($extension->isProtected()) {
+            $class .=  ' protected';
+        }
         //if($this->showinfo) $class.= ' showinfo';
         return $class;
     }
@@ -422,9 +430,13 @@ class helper_plugin_extension_list extends Plugin
         $link = parse_url($url);
 
         $base = $link['host'];
-        if (!empty($link['port'])) $base .= $base . ':' . $link['port'];
+        if (!empty($link['port'])) {
+            $base .= $base . ':' . $link['port'];
+        }
         $long = $link['path'];
-        if (!empty($link['query'])) $long .= $link['query'];
+        if (!empty($link['query'])) {
+            $long .= $link['query'];
+        }
 
         $name = shorten($base, $long, 55);
 
@@ -659,8 +671,12 @@ class helper_plugin_extension_list extends Plugin
         } else {
             $status[] = $this->getLang('status_not_installed');
         }
-        if (!$extension->canModify()) $status[] = $this->getLang('status_unmodifiable');
-        if ($extension->isBundled()) $status[] = $this->getLang('status_bundled');
+        if (!$extension->canModify()) {
+            $status[] = $this->getLang('status_unmodifiable');
+        }
+        if ($extension->isBundled()) {
+            $status[] = $this->getLang('status_bundled');
+        }
         $status[] = $extension->isTemplate()
             ? $this->getLang('status_template')
             : $this->getLang('status_plugin');

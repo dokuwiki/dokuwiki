@@ -216,10 +216,16 @@ class admin_plugin_acl extends AdminPlugin
     protected function getLinkOptions($addopts = null)
     {
         $opts = ['do' => 'admin', 'page' => 'acl'];
-        if ($this->ns) $opts['ns'] = $this->ns;
-        if ($this->who) $opts['acl_w'] = $this->who;
+        if ($this->ns) {
+            $opts['ns'] = $this->ns;
+        }
+        if ($this->who) {
+            $opts['acl_w'] = $this->who;
+        }
 
-        if (is_null($addopts)) return $opts;
+        if (is_null($addopts)) {
+            return $opts;
+        }
         return array_merge($opts, $addopts);
     }
 
@@ -237,7 +243,9 @@ class admin_plugin_acl extends AdminPlugin
         $ns = $this->ns;
         if (empty($ns)) {
             $ns = dirname(str_replace(':', '/', $ID));
-            if ($ns == '.') $ns = '';
+            if ($ns == '.') {
+                $ns = '';
+            }
         } elseif ($ns == '*') {
             $ns = '';
         }
@@ -286,10 +294,12 @@ class admin_plugin_acl extends AdminPlugin
         // combine by sorting and removing duplicates
         usort($data, [$this, 'treeSort']);
         $count = count($data);
-        if ($count > 0) for ($i = 1; $i < $count; $i++) {
-            if ($data[$i - 1]['id'] == $data[$i]['id'] && $data[$i - 1]['type'] == $data[$i]['type']) {
-                unset($data[$i]);
-                $i++;  // duplicate found, next $i can't be a duplicate, so skip forward one
+        if ($count > 0) {
+            for ($i = 1; $i < $count; $i++) {
+                if ($data[$i - 1]['id'] == $data[$i]['id'] && $data[$i - 1]['type'] == $data[$i]['type']) {
+                    unset($data[$i]);
+                    $i++;  // duplicate found, next $i can't be a duplicate, so skip forward one
+                }
             }
         }
         return $data;
@@ -303,8 +313,12 @@ class admin_plugin_acl extends AdminPlugin
     public function treeSort($a, $b)
     {
         // handle the trivial cases first
-        if ($a['id'] == '') return -1;
-        if ($b['id'] == '') return 1;
+        if ($a['id'] == '') {
+            return -1;
+        }
+        if ($b['id'] == '') {
+            return 1;
+        }
         // split up the id into parts
         $a_ids = explode(':', $a['id']);
         $b_ids = explode(':', $b['id']);
@@ -317,24 +331,36 @@ class admin_plugin_acl extends AdminPlugin
                 // if one of the components is the last component and is a file
                 // and the other one is either of a deeper level or a directory,
                 // the file has to come after the deeper level or directory
-                if ($a_ids === [] && $a['type'] == 'f' && (count($b_ids) || $b['type'] == 'd')) return 1;
-                if ($b_ids === [] && $b['type'] == 'f' && (count($a_ids) || $a['type'] == 'd')) return -1;
+                if ($a_ids === [] && $a['type'] == 'f' && (count($b_ids) || $b['type'] == 'd')) {
+                    return 1;
+                }
+                if ($b_ids === [] && $b['type'] == 'f' && (count($a_ids) || $a['type'] == 'd')) {
+                    return -1;
+                }
                 return $cur_result;
             }
         }
         // The two ids seem to be equal. One of them might however refer
         // to a page, one to a namespace, the namespace needs to be first.
         if ($a_ids === [] && $b_ids === []) {
-            if ($a['type'] == $b['type']) return 0;
-            if ($a['type'] == 'f') return 1;
+            if ($a['type'] == $b['type']) {
+                return 0;
+            }
+            if ($a['type'] == 'f') {
+                return 1;
+            }
             return -1;
         }
         // Now the empty part is either a page in the parent namespace
         // that obviously needs to be after the namespace
         // Or it is the namespace that contains the other part and should be
         // before that other part.
-        if ($a_ids === []) return ($a['type'] == 'd') ? -1 : 1;
-        if ($b_ids === []) return ($b['type'] == 'd') ? 1 : -1;
+        if ($a_ids === []) {
+            return ($a['type'] == 'd') ? -1 : 1;
+        }
+        if ($b_ids === []) {
+            return ($b['type'] == 'd') ? 1 : -1;
+        }
         return 0; //shouldn't happen
     }
 
@@ -474,12 +500,22 @@ class admin_plugin_acl extends AdminPlugin
         $names = [];
         if ($perm) {
             if ($ns) {
-                if ($perm >= AUTH_DELETE) $names[] = $this->getLang('acl_perm16');
-                if ($perm >= AUTH_UPLOAD) $names[] = $this->getLang('acl_perm8');
-                if ($perm >= AUTH_CREATE) $names[] = $this->getLang('acl_perm4');
+                if ($perm >= AUTH_DELETE) {
+                    $names[] = $this->getLang('acl_perm16');
+                }
+                if ($perm >= AUTH_UPLOAD) {
+                    $names[] = $this->getLang('acl_perm8');
+                }
+                if ($perm >= AUTH_CREATE) {
+                    $names[] = $this->getLang('acl_perm4');
+                }
             }
-            if ($perm >= AUTH_EDIT) $names[] = $this->getLang('acl_perm2');
-            if ($perm >= AUTH_READ) $names[] = $this->getLang('acl_perm1');
+            if ($perm >= AUTH_EDIT) {
+                $names[] = $this->getLang('acl_perm2');
+            }
+            if ($perm >= AUTH_READ) {
+                $names[] = $this->getLang('acl_perm1');
+            }
             $names = array_reverse($names);
         } else {
             $names[] = $this->getLang('acl_perm0');
@@ -602,7 +638,9 @@ class admin_plugin_acl extends AdminPlugin
 
         foreach ($AUTH_ACL as $line) {
             $line = trim(preg_replace('/#.*$/', '', $line)); //ignore comments
-            if (!$line) continue;
+            if (!$line) {
+                continue;
+            }
 
             $acl = preg_split('/[ \t]+/', $line);
             //0 is pagename, 1 is user, 2 is acl
@@ -612,7 +650,9 @@ class admin_plugin_acl extends AdminPlugin
 
             // store non-special users and groups for later selection dialog
             $ug = $acl[1];
-            if (in_array($ug, $this->specials)) continue;
+            if (in_array($ug, $this->specials)) {
+                continue;
+            }
             $usersgroups[] = $ug;
         }
 
@@ -738,7 +778,9 @@ class admin_plugin_acl extends AdminPlugin
 
         // max level for pagenames is edit
         if (strpos($acl_scope, '*') === false) {
-            if ($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
+            if ($acl_level > AUTH_EDIT) {
+                $acl_level = AUTH_EDIT;
+            }
         }
 
         $new_acl = "$acl_scope\t$acl_user\t$acl_level\n";
@@ -774,7 +816,9 @@ class admin_plugin_acl extends AdminPlugin
         static $label = 0; //number labels
         $ret = '';
 
-        if ($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
+        if ($ispage && $setperm > AUTH_EDIT) {
+            $setperm = AUTH_EDIT;
+        }
 
         foreach ([AUTH_NONE, AUTH_READ, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
             ++$label;
@@ -787,7 +831,9 @@ class admin_plugin_acl extends AdminPlugin
                 'value' => $perm
             ];
             //dynamic attributes
-            if (!is_null($setperm) && $setperm == $perm) $atts['checked'] = 'checked';
+            if (!is_null($setperm) && $setperm == $perm) {
+                $atts['checked'] = 'checked';
+            }
             if ($ispage && $perm > AUTH_EDIT) {
                 $atts['disabled'] = 'disabled';
                 $class = ' class="disabled"';

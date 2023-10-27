@@ -46,7 +46,9 @@ class Input
      */
     protected function applyfilter($data)
     {
-        if (!$this->filter) return $data;
+        if (!$this->filter) {
+            return $data;
+        }
         return call_user_func($this->filter, $data);
     }
 
@@ -114,9 +116,13 @@ class Input
      */
     public function param($name, $default = null, $nonempty = false)
     {
-        if (!isset($this->access[$name])) return $default;
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
         $value = $this->applyfilter($this->access[$name]);
-        if ($nonempty && empty($value)) return $default;
+        if ($nonempty && empty($value)) {
+            return $default;
+        }
         return $value;
     }
 
@@ -161,11 +167,19 @@ class Input
      */
     public function int($name, $default = 0, $nonempty = false)
     {
-        if (!isset($this->access[$name])) return $default;
-        if (is_array($this->access[$name])) return $default;
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
+        if (is_array($this->access[$name])) {
+            return $default;
+        }
         $value = $this->applyfilter($this->access[$name]);
-        if ($value === '') return $default;
-        if ($nonempty && empty($value)) return $default;
+        if ($value === '') {
+            return $default;
+        }
+        if ($nonempty && empty($value)) {
+            return $default;
+        }
 
         return (int)$value;
     }
@@ -180,10 +194,16 @@ class Input
      */
     public function str($name, $default = '', $nonempty = false)
     {
-        if (!isset($this->access[$name])) return $default;
-        if (is_array($this->access[$name])) return $default;
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
+        if (is_array($this->access[$name])) {
+            return $default;
+        }
         $value = $this->applyfilter($this->access[$name]);
-        if ($nonempty && empty($value)) return $default;
+        if ($nonempty && empty($value)) {
+            return $default;
+        }
 
         return (string)$value;
     }
@@ -202,11 +222,17 @@ class Input
      */
     public function valid($name, $valids, $default = null)
     {
-        if (!isset($this->access[$name])) return $default;
-        if (is_array($this->access[$name])) return $default; // we don't allow arrays
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
+        if (is_array($this->access[$name])) {
+            return $default;
+        } // we don't allow arrays
         $value = $this->applyfilter($this->access[$name]);
         $found = array_search($value, $valids);
-        if ($found !== false) return $valids[$found]; // return the valid value for type safety
+        if ($found !== false) {
+            return $valids[$found];
+        } // return the valid value for type safety
         return $default;
     }
 
@@ -222,11 +248,19 @@ class Input
      */
     public function bool($name, $default = false, $nonempty = false)
     {
-        if (!isset($this->access[$name])) return $default;
-        if (is_array($this->access[$name])) return $default;
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
+        if (is_array($this->access[$name])) {
+            return $default;
+        }
         $value = $this->applyfilter($this->access[$name]);
-        if ($value === '') return $default;
-        if ($nonempty && empty($value)) return $default;
+        if ($value === '') {
+            return $default;
+        }
+        if ($nonempty && empty($value)) {
+            return $default;
+        }
 
         return (bool)$value;
     }
@@ -241,9 +275,15 @@ class Input
      */
     public function arr($name, $default = [], $nonempty = false)
     {
-        if (!isset($this->access[$name])) return $default;
-        if (!is_array($this->access[$name])) return $default;
-        if ($nonempty && empty($this->access[$name])) return $default;
+        if (!isset($this->access[$name])) {
+            return $default;
+        }
+        if (!is_array($this->access[$name])) {
+            return $default;
+        }
+        if ($nonempty && empty($this->access[$name])) {
+            return $default;
+        }
 
         return $this->access[$name];
     }
@@ -265,8 +305,12 @@ class Input
      */
     public function extract($name)
     {
-        if (!isset($this->access[$name])) return $this;
-        if (!is_array($this->access[$name])) return $this;
+        if (!isset($this->access[$name])) {
+            return $this;
+        }
+        if (!is_array($this->access[$name])) {
+            return $this;
+        }
         $keys = array_keys($this->access[$name]);
         if (!$keys) {
             // this was an empty array

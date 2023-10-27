@@ -36,8 +36,12 @@ class admin_plugin_styling extends AdminPlugin
     {
         global $INPUT;
         $run = $INPUT->extract('run')->str('run');
-        if (!$run) return;
-        if (!checkSecurityToken()) return;
+        if (!$run) {
+            return;
+        }
+        if (!checkSecurityToken()) {
+            return;
+        }
         $run = 'run' . ucfirst($run);
         $this->$run();
     }
@@ -48,7 +52,9 @@ class admin_plugin_styling extends AdminPlugin
     public function html()
     {
         $class = 'nopopup';
-        if ($this->ispopup) $class = 'ispopup page';
+        if ($this->ispopup) {
+            $class = 'ispopup page';
+        }
 
         echo '<div id="plugin__styling" class="' . $class . '">';
         echo '<h1>' . $this->getLang('menu') . '</h1>';
@@ -85,8 +91,12 @@ class admin_plugin_styling extends AdminPlugin
             echo '<table><tbody>';
             foreach ($replacements as $key => $value) {
                 $name = tpl_getLang($key);
-                if (empty($name)) $name = $this->getLang($key);
-                if (empty($name)) $name = $key;
+                if (empty($name)) {
+                    $name = $this->getLang($key);
+                }
+                if (empty($name)) {
+                    $name = $key;
+                }
 
                 echo '<tr>';
                 echo '<td><label for="tpl__' . hsc($key) . '">' . $name . '</label></td>';

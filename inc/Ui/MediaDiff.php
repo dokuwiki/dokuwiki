@@ -126,7 +126,9 @@ class MediaDiff extends Diff
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
-        if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return;
+        if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) {
+            return;
+        }
 
         // retrieve form parameters: rev, rev2, difftype
         $this->handle();
@@ -134,7 +136,9 @@ class MediaDiff extends Diff
         $this->preProcess();
 
         // display intro
-        if ($this->preference['showIntro']) echo p_locale_xhtml('diff');
+        if ($this->preference['showIntro']) {
+            echo p_locale_xhtml('diff');
+        }
 
         // print form to choose diff view type
         if ($this->is_img && !$this->preference['fromAjax']) {
@@ -302,16 +306,22 @@ class MediaDiff extends Diff
             echo '<dl class="img_tags">';
             foreach ($tags as $tag) {
                 $value = cleanText($tag['value']);
-                if (!$value) $value = '-';
+                if (!$value) {
+                    $value = '-';
+                }
                 echo '<dt>' . $lang[$tag['tag'][1]] . '</dt>';
                 echo '<dd>';
-                if (!empty($tag['highlighted'])) echo '<strong>';
+                if (!empty($tag['highlighted'])) {
+                    echo '<strong>';
+                }
                 if ($tag['tag'][2] == 'date') {
                     echo dformat($value);
                 } else {
                     echo hsc($value);
                 }
-                if (!empty($tag['highlighted'])) echo '</strong>';
+                if (!empty($tag['highlighted'])) {
+                    echo '</strong>';
+                }
                 echo '</dd>';
             }
             echo '</dl>';

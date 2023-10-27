@@ -168,9 +168,11 @@ class ParallelRegex
                             $pattern .= '\(';
                             break;
                         case ')':
-                            if ($level > 0)
-                                $level--; /* closing (? */
-                            else $pattern .= '\\';
+                            if ($level > 0) {
+                                $level--;
+                            } else {
+                                $pattern .= '\\';
+                            }
                             $pattern .= ')';
                             break;
                         case '(?':
@@ -178,9 +180,11 @@ class ParallelRegex
                             $pattern .= '(?';
                             break;
                         default:
-                            if (str_starts_with($elt, '\\'))
+                            if (str_starts_with($elt, '\\')) {
                                 $pattern .= $elt;
-                            else $pattern .= str_replace('/', '\/', $elt);
+                            } else {
+                                $pattern .= str_replace('/', '\/', $elt);
+                            }
                     }
                 }
                 $this->patterns[$i] = "($pattern)";

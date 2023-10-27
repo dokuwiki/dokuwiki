@@ -21,7 +21,9 @@ class Smiley extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        if (!count($this->smileys) || $this->pattern != '') return;
+        if (!count($this->smileys) || $this->pattern != '') {
+            return;
+        }
 
         $sep = '';
         foreach ($this->smileys as $smiley) {
@@ -33,7 +35,9 @@ class Smiley extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        if (!count($this->smileys)) return;
+        if (!count($this->smileys)) {
+            return;
+        }
 
         if (strlen($this->pattern) > 0) {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'smiley');

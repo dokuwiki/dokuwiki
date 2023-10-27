@@ -24,7 +24,9 @@ class PageRevisions extends Revisions
     public function __construct($id = null)
     {
         global $INFO;
-        if (!isset($id)) $id = $INFO['id'];
+        if (!isset($id)) {
+            $id = $INFO['id'];
+        }
         parent::__construct($id);
     }
 
@@ -51,7 +53,9 @@ class PageRevisions extends Revisions
         $changelog =& $this->changelog;
 
         // get revisions, and set correct pagination parameters (first, hasNext)
-        if ($first === null) $first = -1;
+        if ($first === null) {
+            $first = -1;
+        }
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
 

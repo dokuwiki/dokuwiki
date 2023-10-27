@@ -44,7 +44,9 @@ trait PluginTrait
             // check if all required fields are present
             $msg = 'Extension %s does not provide a valid %s in %s';
             foreach (array_keys($base) as $line) {
-                if (empty($raw[$line])) Logger::error(sprintf($msg, [$ext, $line, $file]));
+                if (empty($raw[$line])) {
+                    Logger::error(sprintf($msg, [$ext, $line, $file]));
+                }
             }
 
             return array_merge($base, $raw);
@@ -68,7 +70,9 @@ trait PluginTrait
     public function loadHelper($name, $msg = true)
     {
         $obj = plugin_load('helper', $name);
-        if (is_null($obj) && $msg) msg("Helper plugin $name is not available or invalid.", -1);
+        if (is_null($obj) && $msg) {
+            msg("Helper plugin $name is not available or invalid.", -1);
+        }
         return $obj;
     }
 
@@ -109,7 +113,9 @@ trait PluginTrait
      */
     public function getLang($id)
     {
-        if (!$this->localised) $this->setupLocale();
+        if (!$this->localised) {
+            $this->setupLocale();
+        }
 
         return ($this->lang[$id] ?? '');
     }
@@ -145,7 +151,9 @@ trait PluginTrait
      */
     public function setupLocale()
     {
-        if ($this->localised) return;
+        if ($this->localised) {
+            return;
+        }
 
         global $conf, $config_cascade; // definitely don't invoke "global $lang"
         $path = DOKU_PLUGIN . $this->getPluginName() . '/lang/';
@@ -204,7 +212,9 @@ trait PluginTrait
         $plugin = $this->getPluginName();
 
         foreach ($defaults as $key => $value) {
-            if (isset($conf['plugin'][$plugin][$key])) continue;
+            if (isset($conf['plugin'][$plugin][$key])) {
+                continue;
+            }
             $conf['plugin'][$plugin][$key] = $value;
         }
 
@@ -239,9 +249,13 @@ trait PluginTrait
      */
     public function email($email, $name = '', $class = '', $more = '')
     {
-        if (!$email) return $name;
+        if (!$email) {
+            return $name;
+        }
         $email = obfuscate($email);
-        if (!$name) $name = $email;
+        if (!$name) {
+            $name = $email;
+        }
         $class = "class='" . ($class ?: 'mail') . "'";
         return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
     }
@@ -254,13 +268,25 @@ trait PluginTrait
         global $conf;
 
         $link = htmlentities($link);
-        if (!$title) $title = $link;
-        if (!$target) $target = $conf['target']['extern'];
-        if ($conf['relnofollow']) $more .= ' rel="nofollow"';
+        if (!$title) {
+            $title = $link;
+        }
+        if (!$target) {
+            $target = $conf['target']['extern'];
+        }
+        if ($conf['relnofollow']) {
+            $more .= ' rel="nofollow"';
+        }
 
-        if ($class) $class = " class='$class'";
-        if ($target) $target = " target='$target'";
-        if ($more) $more = " " . trim($more);
+        if ($class) {
+            $class = " class='$class'";
+        }
+        if ($target) {
+            $target = " target='$target'";
+        }
+        if ($more) {
+            $more = " " . trim($more);
+        }
 
         return "<a href='$link'$class$target$more>$title</a>";
     }

@@ -32,7 +32,9 @@ class CheckableElement extends InputElement
         [$name, $key] = $this->getInputName();
         $myvalue = $this->val();
 
-        if (!$INPUT->has($name)) return;
+        if (!$INPUT->has($name)) {
+            return;
+        }
 
         if ($key === null) {
             // no key - single value

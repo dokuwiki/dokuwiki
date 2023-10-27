@@ -49,14 +49,18 @@ class UserProfile extends Ui
         $form->addHTML("<br>\n");
 
         $attr = ['size' => '50'];
-        if (!$auth->canDo('modName')) $attr['disabled'] = 'disabled';
+        if (!$auth->canDo('modName')) {
+            $attr['disabled'] = 'disabled';
+        }
         $input = $form->addTextInput('fullname', $lang['fullname'])->attrs($attr)->addClass('edit')
             ->val($fullname);
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 
         $attr = ['type' => 'email', 'size' => '50'];
-        if (!$auth->canDo('modMail')) $attr['disabled'] = 'disabled';
+        if (!$auth->canDo('modMail')) {
+            $attr['disabled'] = 'disabled';
+        }
         $input = $form->addTextInput('email', $lang['email'])->attrs($attr)->addClass('edit')
             ->val($email);
         $input->getLabel()->attr('class', 'block');

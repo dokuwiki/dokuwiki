@@ -28,7 +28,9 @@ class Save extends AbstractAction
     /** @inheritdoc */
     public function preProcess()
     {
-        if (!checkSecurityToken()) throw new ActionException('preview');
+        if (!checkSecurityToken()) {
+            throw new ActionException('preview');
+        }
 
         global $ID;
         global $DATE;

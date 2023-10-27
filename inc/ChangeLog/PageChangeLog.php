@@ -52,7 +52,9 @@ class PageChangeLog extends ChangeLog
     {
         global $conf;
 
-        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+        if (isset($timestamp)) {
+            unset($this->cache[$this->id][$info['date']]);
+        }
 
         // add changelog lines
         $logline = static::buildLogLine($info, $timestamp);

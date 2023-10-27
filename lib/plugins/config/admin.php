@@ -47,7 +47,9 @@ class admin_plugin_config extends AdminPlugin
         }
 
         // don't go any further if the configuration is locked
-        if ($this->configuration->isLocked()) return;
+        if ($this->configuration->isLocked()) {
+            return;
+        }
 
         // update settings and redirect of successful
         $ok = $this->configuration->updateSettings($INPUT->arr('config'));
@@ -208,7 +210,9 @@ class admin_plugin_config extends AdminPlugin
     public function setupLocale($prompts = false)
     {
         parent::setupLocale();
-        if (!$prompts || $this->promptsLocalized) return;
+        if (!$prompts || $this->promptsLocalized) {
+            return;
+        }
         $this->lang = array_merge($this->lang, $this->configuration->getLangs());
         $this->promptsLocalized = true;
     }
@@ -242,7 +246,9 @@ class admin_plugin_config extends AdminPlugin
 
         // main entries
         foreach (['dokuwiki', 'plugin', 'template'] as $section) {
-            if (empty($labels[$section])) continue; // no entries, skip
+            if (empty($labels[$section])) {
+                continue;
+            } // no entries, skip
 
             // create main header
             $toc[] = html_mktocitem(
@@ -286,7 +292,9 @@ class admin_plugin_config extends AdminPlugin
      */
     public function addLang($key, $value)
     {
-        if (!$this->localised) $this->setupLocale();
+        if (!$this->localised) {
+            $this->setupLocale();
+        }
         $this->lang[$key] = $value;
     }
 }

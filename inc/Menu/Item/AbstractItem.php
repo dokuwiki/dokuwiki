@@ -65,7 +65,9 @@ abstract class AbstractItem
         $this->type = $this->getType();
         $this->params['do'] = $this->type;
 
-        if (!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
+        if (!actionOK($this->type)) {
+            throw new \RuntimeException("action disabled: {$this->type}");
+        }
     }
 
     /**
@@ -79,7 +81,9 @@ abstract class AbstractItem
      */
     public function getLabel()
     {
-        if ($this->label !== '') return $this->label;
+        if ($this->label !== '') {
+            return $this->label;
+        }
 
         /** @var array $lang */
         global $lang;
@@ -87,7 +91,9 @@ abstract class AbstractItem
         if (strpos($label, '%s')) {
             $label = sprintf($label, $this->replacement);
         }
-        if ($label === '') $label = '[' . $this->type . ']';
+        if ($label === '') {
+            $label = '[' . $this->type . ']';
+        }
         return $label;
     }
 
@@ -101,7 +107,9 @@ abstract class AbstractItem
      */
     public function getTitle()
     {
-        if ($this->title === '') return $this->getLabel();
+        if ($this->title === '') {
+            return $this->getLabel();
+        }
         return $this->title;
     }
 
@@ -135,12 +143,16 @@ abstract class AbstractItem
     public function getLinkAttributes($classprefix = 'menuitem ')
     {
         $attr = ['href' => $this->getLink(), 'title' => $this->getTitle()];
-        if ($this->isNofollow()) $attr['rel'] = 'nofollow';
+        if ($this->isNofollow()) {
+            $attr['rel'] = 'nofollow';
+        }
         if ($this->getAccesskey()) {
             $attr['accesskey'] = $this->getAccesskey();
             $attr['title'] .= ' [' . $this->getAccesskey() . ']';
         }
-        if ($classprefix !== false) $attr['class'] = $classprefix . $this->getType();
+        if ($classprefix !== false) {
+            $attr['class'] = $classprefix . $this->getType();
+        }
 
         return $attr;
     }

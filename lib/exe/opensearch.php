@@ -9,9 +9,15 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
-if (!defined('NL')) define('NL', "\n");
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
+if (!defined('NOSESSION')) {
+    define('NOSESSION', true);
+} // we do not use a session or authentication here (better caching)
+if (!defined('NL')) {
+    define('NL', "\n");
+}
 require_once(DOKU_INC . 'inc/init.php');
 
 // try to be clever about the favicon location

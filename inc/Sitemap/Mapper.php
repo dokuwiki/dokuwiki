@@ -36,12 +36,16 @@ class Mapper
     public static function generate()
     {
         global $conf;
-        if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) return false;
+        if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
+            return false;
+        }
 
         $sitemap = Mapper::getFilePath();
 
         if (file_exists($sitemap)) {
-            if (!is_writable($sitemap)) return false;
+            if (!is_writable($sitemap)) {
+                return false;
+            }
         } elseif (!is_writable(dirname($sitemap))) {
             return false;
         }
@@ -63,11 +67,16 @@ class Mapper
         // build the sitemap items
         foreach ($pages as $id) {
             //skip hidden, non existing and restricted files
-            if (isHiddenPage($id)) continue;
-            if (auth_aclcheck($id, '', []) < AUTH_READ) continue;
+            if (isHiddenPage($id)) {
+                continue;
+            }
+            if (auth_aclcheck($id, '', []) < AUTH_READ) {
+                continue;
+            }
             $item = Item::createFromID($id);
-            if ($item instanceof Item)
+            if ($item instanceof Item) {
                 $items[] = $item;
+            }
         }
 
         $eventData = ['items' => &$items, 'sitemap' => &$sitemap];

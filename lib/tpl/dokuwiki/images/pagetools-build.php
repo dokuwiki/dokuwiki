@@ -17,7 +17,9 @@
 $GAMMA = 0.8;
 $OPTIPNG = '/usr/bin/optipng';
 
-if('cli' != PHP_SAPI) die('please run from commandline');
+if ('cli' != PHP_SAPI) {
+    die('please run from commandline');
+}
 
 // load input images
 $input = glob('pagetools/*.png');

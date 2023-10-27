@@ -34,7 +34,9 @@ class Logger
         // Should logging be disabled for this facility?
         $dontlog = explode(',', $conf['dontlog']);
         $dontlog = array_map('trim', $dontlog);
-        if (in_array($facility, $dontlog)) $this->isLogging = false;
+        if (in_array($facility, $dontlog)) {
+            $this->isLogging = false;
+        }
     }
 
     /**
@@ -121,7 +123,9 @@ class Logger
     public function log($message, $details = null, $file = '', $line = 0)
     {
         global $EVENT_HANDLER;
-        if (!$this->isLogging) return false;
+        if (!$this->isLogging) {
+            return false;
+        }
 
         $datetime = time();
         $data = [
@@ -192,7 +196,9 @@ class Logger
         $logline = gmdate('Y-m-d H:i:s', $datetime) . "\t";
         if ($file) {
             $logline .= $file;
-            if ($line) $logline .= "($line)";
+            if ($line) {
+                $logline .= "($line)";
+            }
         }
         $logline .= "\t" . $message;
         array_unshift($loglines, $logline);
@@ -213,7 +219,9 @@ class Logger
         if ($date !== null && !is_numeric($date)) {
             $date = strtotime($date);
         }
-        if (!$date) $date = time();
+        if (!$date) {
+            $date = time();
+        }
 
         return $conf['logdir'] . '/' . $this->facility . '/' . date('Y-m-d', $date) . '.log';
     }

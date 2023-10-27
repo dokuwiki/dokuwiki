@@ -65,12 +65,16 @@ function addLogEntry(
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) $flags = [];
+    if (!is_array($flags)) {
+        $flags = [];
+    }
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
 
-    if (!$date) $date = time(); //use current time if none supplied
+    if (!$date) {
+        $date = time();
+    } //use current time if none supplied
     $remote = ($flagExternalEdit) ? '127.0.0.1' : clientIP(true);
     $user   = ($flagExternalEdit) ? '' : $INPUT->server->str('REMOTE_USER');
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
@@ -123,12 +127,16 @@ function addMediaLogEntry(
     global $INPUT;
 
     // check for special flags as keys
-    if (!is_array($flags)) $flags = [];
+    if (!is_array($flags)) {
+        $flags = [];
+    }
     $flagExternalEdit = isset($flags['ExternalEdit']);
 
     $id = cleanid($id);
 
-    if (!$date) $date = time(); //use current time if none supplied
+    if (!$date) {
+        $date = time();
+    } //use current time if none supplied
     $remote = ($flagExternalEdit) ? '127.0.0.1' : clientIP(true);
     $user   = ($flagExternalEdit) ? '' : $INPUT->server->str('REMOTE_USER');
     $sizechange = ($sizechange === null) ? '' : (int)$sizechange;
@@ -237,7 +245,9 @@ function getRecents($first, $num, $ns = '', $flags = 0)
             }
             $rec = false;
         }
-        if (--$first >= 0) continue; // skip first entries
+        if (--$first >= 0) {
+            continue;
+        } // skip first entries
         $recent[] = $x;
         $count++;
         // break when we have enough entries
@@ -285,7 +295,9 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
     } else {
         $lines = @file($conf['changelog']);
     }
-    if (!$lines) return $recent;
+    if (!$lines) {
+        return $recent;
+    }
 
     // we start searching at the end of the list
     $lines = array_reverse($lines);
@@ -327,32 +339,48 @@ function getRecentsSince($from, $to = null, $ns = '', $flags = 0)
  */
 function _handleRecentLogLine($line, $ns, $flags, &$seen)
 {
-    if (empty($line)) return false;   //skip empty lines
+    if (empty($line)) {
+        return false;
+    }   //skip empty lines
 
     // split the line into parts
     $recent = ChangeLog::parseLogLine($line);
-    if ($recent === false) return false;
+    if ($recent === false) {
+        return false;
+    }
 
     // skip seen ones
-    if (isset($seen[$recent['id']])) return false;
+    if (isset($seen[$recent['id']])) {
+        return false;
+    }
 
     // skip changes, of only new items are requested
-    if ($recent['type'] !== DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
+    if ($recent['type'] !== DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) {
+        return false;
+    }
 
     // skip minors
-    if ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
+    if ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) {
+        return false;
+    }
 
     // remember in seen to skip additional sights
     $seen[$recent['id']] = 1;
 
     // check if it's a hidden page
-    if (isHiddenPage($recent['id'])) return false;
+    if (isHiddenPage($recent['id'])) {
+        return false;
+    }
 
     // filter namespace
-    if (($ns) && (strpos($recent['id'], $ns . ':') !== 0)) return false;
+    if (($ns) && (strpos($recent['id'], $ns . ':') !== 0)) {
+        return false;
+    }
 
     // exclude subnamespaces
-    if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) return false;
+    if (($flags & RECENTS_SKIP_SUBSPACES) && (getNS($recent['id']) != $ns)) {
+        return false;
+    }
 
     // check ACL
     if ($flags & RECENTS_MEDIA_CHANGES) {
@@ -360,12 +388,16 @@ function _handleRecentLogLine($line, $ns, $flags, &$seen)
     } else {
         $recent['perms'] = auth_quickaclcheck($recent['id']);
     }
-    if ($recent['perms'] < AUTH_READ) return false;
+    if ($recent['perms'] < AUTH_READ) {
+        return false;
+    }
 
     // check existence
     if ($flags & RECENTS_SKIP_DELETED) {
         $fn = (($flags & RECENTS_MEDIA_CHANGES) ? mediaFN($recent['id']) : wikiFN($recent['id']));
-        if (!file_exists($fn)) return false;
+        if (!file_exists($fn)) {
+            return false;
+        }
     }
 
     return $recent;

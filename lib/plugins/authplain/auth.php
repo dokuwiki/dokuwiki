@@ -68,7 +68,9 @@ class auth_plugin_authplain extends AuthPlugin
     public function checkPass($user, $pass)
     {
         $userinfo = $this->getUserData($user);
-        if ($userinfo === false) return false;
+        if ($userinfo === false) {
+            return false;
+        }
 
         return auth_verifyPassword($pass, $this->users[$user]['pass']);
     }
@@ -90,7 +92,9 @@ class auth_plugin_authplain extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
-        if ($this->users === null) $this->loadUserData();
+        if ($this->users === null) {
+            $this->loadUserData();
+        }
         return $this->users[$user] ?? false;
     }
 
@@ -149,7 +153,9 @@ class auth_plugin_authplain extends AuthPlugin
         $pass = auth_cryptPassword($pwd);
 
         // set default group if no groups specified
-        if (!is_array($grps)) $grps = [$conf['defaultgroup']];
+        if (!is_array($grps)) {
+            $grps = [$conf['defaultgroup']];
+        }
 
         // prepare user line
         $userline = $this->createUserLine($user, $pass, $name, $mail, $grps);
@@ -193,7 +199,9 @@ class auth_plugin_authplain extends AuthPlugin
             return false;
         }
 
-        if (!is_array($changes) || $changes === []) return true;
+        if (!is_array($changes) || $changes === []) {
+            return true;
+        }
 
         // update userinfo with new data, remembering to encrypt any password
         $newuser = $user;
@@ -202,7 +210,9 @@ class auth_plugin_authplain extends AuthPlugin
                 $newuser = $value;
                 continue;
             }
-            if ($field == 'pass') $value = auth_cryptPassword($value);
+            if ($field == 'pass') {
+                $value = auth_cryptPassword($value);
+            }
             $userinfo[$field] = $value;
         }
 
@@ -221,7 +231,9 @@ class auth_plugin_authplain extends AuthPlugin
             return false;
         }
 
-        if (isset($this->users[$user])) unset($this->users[$user]);
+        if (isset($this->users[$user])) {
+            unset($this->users[$user]);
+        }
         $this->users[$newuser] = $userinfo;
         return true;
     }
@@ -237,9 +249,13 @@ class auth_plugin_authplain extends AuthPlugin
     {
         global $config_cascade;
 
-        if (!is_array($users) || $users === []) return 0;
+        if (!is_array($users) || $users === []) {
+            return 0;
+        }
 
-        if ($this->users === null) $this->loadUserData();
+        if ($this->users === null) {
+            $this->loadUserData();
+        }
 
         $deleted = [];
         foreach ($users as $user) {
@@ -248,10 +264,14 @@ class auth_plugin_authplain extends AuthPlugin
                 msg(sprintf($this->getLang('protected'), hsc($user)), -1);
                 continue;
             }
-            if (isset($this->users[$user])) $deleted[] = preg_quote($user, '/');
+            if (isset($this->users[$user])) {
+                $deleted[] = preg_quote($user, '/');
+            }
         }
 
-        if ($deleted === []) return 0;
+        if ($deleted === []) {
+            return 0;
+        }
 
         $pattern = '/^(' . implode('|', $deleted) . '):/';
         if (!io_deleteFromFile($config_cascade['plainauth.users']['default'], $pattern, true)) {
@@ -277,9 +297,13 @@ class auth_plugin_authplain extends AuthPlugin
     public function getUserCount($filter = [])
     {
 
-        if ($this->users === null) $this->loadUserData();
+        if ($this->users === null) {
+            $this->loadUserData();
+        }
 
-        if ($filter === []) return count($this->users);
+        if ($filter === []) {
+            return count($this->users);
+        }
 
         $count = 0;
         $this->constructPattern($filter);
@@ -304,7 +328,9 @@ class auth_plugin_authplain extends AuthPlugin
     public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
 
-        if ($this->users === null) $this->loadUserData();
+        if ($this->users === null) {
+            $this->loadUserData();
+        }
 
         Sort::ksort($this->users);
 
@@ -318,7 +344,9 @@ class auth_plugin_authplain extends AuthPlugin
                 if ($i >= $start) {
                     $out[$user] = $info;
                     $count++;
-                    if (($limit > 0) && ($count >= $limit)) break;
+                    if (($limit > 0) && ($count >= $limit)) {
+                        break;
+                    }
                 }
                 $i++;
             }
@@ -339,7 +367,9 @@ class auth_plugin_authplain extends AuthPlugin
     {
         $groups = [];
 
-        if ($this->users === null) $this->loadUserData();
+        if ($this->users === null) {
+            $this->loadUserData();
+        }
         foreach ($this->users as $info) {
             $groups = array_merge($groups, array_diff($info['grps'], $groups));
         }
@@ -411,13 +441,17 @@ class auth_plugin_authplain extends AuthPlugin
     protected function readUserFile($file)
     {
         $users = [];
-        if (!file_exists($file)) return $users;
+        if (!file_exists($file)) {
+            return $users;
+        }
 
         $lines = file($file);
         foreach ($lines as $line) {
             $line = preg_replace('/#.*$/', '', $line); //ignore comments
             $line = trim($line);
-            if (empty($line)) continue;
+            if (empty($line)) {
+                continue;
+            }
 
             $row = $this->splitUserData($line);
             $row = str_replace('\\:', ':', $row);
@@ -462,9 +496,13 @@ class auth_plugin_authplain extends AuthPlugin
     {
         foreach ($this->pattern as $item => $pattern) {
             if ($item == 'user') {
-                if (!preg_match($pattern, $user)) return false;
+                if (!preg_match($pattern, $user)) {
+                    return false;
+                }
             } elseif ($item == 'grps') {
-                if (!count(preg_grep($pattern, $info['grps']))) return false;
+                if (!count(preg_grep($pattern, $info['grps']))) {
+                    return false;
+                }
             } elseif (!preg_match($pattern, $info[$item])) {
                 return false;
             }

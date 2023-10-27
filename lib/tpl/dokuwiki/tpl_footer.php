@@ -5,7 +5,9 @@
  */
 
 // must be run from within DokuWiki
-if (!defined('DOKU_INC')) die();
+if (!defined('DOKU_INC')) {
+    die();
+}
 ?>
 
 <!-- ********** FOOTER ********** -->

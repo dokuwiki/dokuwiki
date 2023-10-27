@@ -251,7 +251,9 @@ abstract class AuthPlugin extends Plugin
      */
     public function getUserData($user, $requireGroups = true)
     {
-        if (!$this->cando['external']) msg("no valid authorisation system in use", -1);
+        if (!$this->cando['external']) {
+            msg("no valid authorisation system in use", -1);
+        }
         return false;
     }
 

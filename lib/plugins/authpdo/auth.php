@@ -123,14 +123,18 @@ class auth_plugin_authpdo extends AuthPlugin
     {
 
         $userdata = $this->selectUser($user);
-        if ($userdata == false) return false;
+        if ($userdata == false) {
+            return false;
+        }
 
         // password checking done in SQL?
         if ($this->checkConfig(['check-pass'])) {
             $userdata['clear'] = $pass;
             $userdata['hash'] = auth_cryptPassword($pass);
             $result = $this->query($this->getConf('check-pass'), $userdata);
-            if ($result === false) return false;
+            if ($result === false) {
+                return false;
+            }
             return (count($result) == 1);
         }
 
@@ -162,14 +166,22 @@ class auth_plugin_authpdo extends AuthPlugin
     public function getUserData($user, $requireGroups = true)
     {
         $data = $this->selectUser($user);
-        if ($data == false) return false;
+        if ($data == false) {
+            return false;
+        }
 
-        if (isset($data['hash'])) unset($data['hash']);
-        if (isset($data['clean'])) unset($data['clean']);
+        if (isset($data['hash'])) {
+            unset($data['hash']);
+        }
+        if (isset($data['clean'])) {
+            unset($data['clean']);
+        }
 
         if ($requireGroups) {
             $data['grps'] = $this->selectUserGroups($data);
-            if ($data['grps'] === false) return false;
+            if ($data['grps'] === false) {
+                return false;
+            }
         }
 
         return $data;
@@ -203,7 +215,9 @@ class auth_plugin_authpdo extends AuthPlugin
         }
 
         // prepare data
-        if ($grps == null) $grps = [];
+        if ($grps == null) {
+            $grps = [];
+        }
         array_unshift($grps, $conf['defaultgroup']);
         $grps = array_unique($grps);
         $hash = auth_cryptPassword($clear);
@@ -214,16 +228,22 @@ class auth_plugin_authpdo extends AuthPlugin
         {
             // insert the user
             $ok = $this->query($this->getConf('insert-user'), $userdata);
-            if ($ok === false) goto FAIL;
+        if ($ok === false) {
+            goto FAIL;
+        }
             $userdata = $this->getUserData($user, false);
-            if ($userdata === false) goto FAIL;
+        if ($userdata === false) {
+            goto FAIL;
+        }
 
             // create all groups that do not exist, the refetch the groups
             $allgroups = $this->selectGroups();
         foreach ($grps as $group) {
             if (!isset($allgroups[$group])) {
                 $ok = $this->addGroup($group);
-                if ($ok === false) goto FAIL;
+                if ($ok === false) {
+                    goto FAIL;
+                }
             }
         }
             $allgroups = $this->selectGroups();
@@ -231,7 +251,9 @@ class auth_plugin_authpdo extends AuthPlugin
             // add user to the groups
         foreach ($grps as $group) {
             $ok = $this->joinGroup($userdata, $allgroups[$group]);
-            if ($ok === false) goto FAIL;
+            if ($ok === false) {
+                goto FAIL;
+            }
         }
         }
         $this->pdo->commit();
@@ -263,12 +285,16 @@ class auth_plugin_authpdo extends AuthPlugin
 
             // changing the user name?
         if (isset($changes['user'])) {
-            if ($this->getUserData($changes['user'], false)) goto FAIL;
+            if ($this->getUserData($changes['user'], false)) {
+                goto FAIL;
+            }
             $params = $olddata;
             $params['newlogin'] = $changes['user'];
 
             $ok = $this->query($this->getConf('update-user-login'), $params);
-            if ($ok === false) goto FAIL;
+            if ($ok === false) {
+                goto FAIL;
+            }
         }
 
             // changing the password?
@@ -278,17 +304,25 @@ class auth_plugin_authpdo extends AuthPlugin
             $params['hash'] = auth_cryptPassword($changes['pass']);
 
             $ok = $this->query($this->getConf('update-user-pass'), $params);
-            if ($ok === false) goto FAIL;
+            if ($ok === false) {
+                goto FAIL;
+            }
         }
 
             // changing info?
         if (isset($changes['mail']) || isset($changes['name'])) {
             $params = $olddata;
-            if (isset($changes['mail'])) $params['mail'] = $changes['mail'];
-            if (isset($changes['name'])) $params['name'] = $changes['name'];
+            if (isset($changes['mail'])) {
+                $params['mail'] = $changes['mail'];
+            }
+            if (isset($changes['name'])) {
+                $params['name'] = $changes['name'];
+            }
 
             $ok = $this->query($this->getConf('update-user-info'), $params);
-            if ($ok === false) goto FAIL;
+            if ($ok === false) {
+                goto FAIL;
+            }
         }
 
             // changing groups?
@@ -299,7 +333,9 @@ class auth_plugin_authpdo extends AuthPlugin
             foreach ($oldgroups as $group) {
                 if (!in_array($group, $changes['grps']) && isset($allgroups[$group])) {
                     $ok = $this->leaveGroup($olddata, $allgroups[$group]);
-                    if ($ok === false) goto FAIL;
+                    if ($ok === false) {
+                        goto FAIL;
+                    }
                 }
             }
 
@@ -308,18 +344,24 @@ class auth_plugin_authpdo extends AuthPlugin
             foreach ($changes['grps'] as $group) {
                 if (!isset($allgroups[$group])) {
                     $ok = $this->addGroup($group);
-                    if ($ok === false) goto FAIL;
+                    if ($ok === false) {
+                        goto FAIL;
+                    }
                     $added++;
                 }
             }
             // reload group info
-            if ($added > 0) $allgroups = $this->selectGroups();
+            if ($added > 0) {
+                $allgroups = $this->selectGroups();
+            }
 
             // add membership for new groups
             foreach ($changes['grps'] as $group) {
                 if (!in_array($group, $oldgroups)) {
                     $ok = $this->joinGroup($olddata, $allgroups[$group]);
-                    if ($ok === false) goto FAIL;
+                    if ($ok === false) {
+                        goto FAIL;
+                    }
                 }
             }
         }
@@ -348,7 +390,9 @@ class auth_plugin_authpdo extends AuthPlugin
     {
         $count = 0;
         foreach ($users as $user) {
-            if ($this->deleteUser($user)) $count++;
+            if ($this->deleteUser($user)) {
+                $count++;
+            }
         }
         return $count;
     }
@@ -365,10 +409,16 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     public function retrieveUsers($start = 0, $limit = -1, $filter = null)
     {
-        if ($limit < 0) $limit = 10000; // we don't support no limit
-        if (is_null($filter)) $filter = [];
+        if ($limit < 0) {
+            $limit = 10000;
+        } // we don't support no limit
+        if (is_null($filter)) {
+            $filter = [];
+        }
 
-        if (isset($filter['grps'])) $filter['group'] = $filter['grps'];
+        if (isset($filter['grps'])) {
+            $filter['group'] = $filter['grps'];
+        }
         foreach (['user', 'name', 'mail', 'group'] as $key) {
             if (!isset($filter[$key])) {
                 $filter[$key] = '%';
@@ -381,7 +431,9 @@ class auth_plugin_authpdo extends AuthPlugin
         $filter['limit'] = (int)$limit;
 
         $result = $this->query($this->getConf('list-users'), $filter);
-        if (!$result) return [];
+        if (!$result) {
+            return [];
+        }
         $users = [];
         if (is_array($result)) {
             foreach ($result as $row) {
@@ -405,9 +457,13 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     public function getUserCount($filter = [])
     {
-        if (is_null($filter)) $filter = [];
+        if (is_null($filter)) {
+            $filter = [];
+        }
 
-        if (isset($filter['grps'])) $filter['group'] = $filter['grps'];
+        if (isset($filter['grps'])) {
+            $filter['group'] = $filter['grps'];
+        }
         foreach (['user', 'name', 'mail', 'group'] as $key) {
             if (!isset($filter[$key])) {
                 $filter[$key] = '%';
@@ -435,7 +491,9 @@ class auth_plugin_authpdo extends AuthPlugin
 
         $result = $this->query($sql, [':group' => $group]);
         $this->clearGroupCache();
-        if ($result === false) return false;
+        if ($result === false) {
+            return false;
+        }
         return true;
     }
 
@@ -451,7 +509,9 @@ class auth_plugin_authpdo extends AuthPlugin
     public function retrieveGroups($start = 0, $limit = 0)
     {
         $groups = array_keys($this->selectGroups());
-        if ($groups === false) return [];
+        if ($groups === false) {
+            return [];
+        }
 
         if (!$limit) {
             return array_splice($groups, $start);
@@ -471,7 +531,9 @@ class auth_plugin_authpdo extends AuthPlugin
         $sql = $this->getConf('select-user');
 
         $result = $this->query($sql, [':user' => $user]);
-        if (!$result) return false;
+        if (!$result) {
+            return false;
+        }
 
         if (count($result) > 1) {
             $this->debugMsg('Found more than one matching user', -1, __LINE__);
@@ -498,7 +560,9 @@ class auth_plugin_authpdo extends AuthPlugin
             $dataok = false;
         }
 
-        if (!$dataok) return false;
+        if (!$dataok) {
+            return false;
+        }
         return $data;
     }
 
@@ -513,7 +577,9 @@ class auth_plugin_authpdo extends AuthPlugin
         $this->pdo->beginTransaction();
         {
             $userdata = $this->getUserData($user);
-            if ($userdata === false) goto FAIL;
+        if ($userdata === false) {
+            goto FAIL;
+        }
             $allgroups = $this->selectGroups();
 
             // remove group memberships (ignore errors)
@@ -524,7 +590,9 @@ class auth_plugin_authpdo extends AuthPlugin
         }
 
             $ok = $this->query($this->getConf('delete-user'), $userdata);
-            if ($ok === false) goto FAIL;
+        if ($ok === false) {
+            goto FAIL;
+        }
         }
         $this->pdo->commit();
         return true;
@@ -545,7 +613,9 @@ class auth_plugin_authpdo extends AuthPlugin
         global $conf;
         $sql = $this->getConf('select-user-groups');
         $result = $this->query($sql, $userdata);
-        if ($result === false) return false;
+        if ($result === false) {
+            return false;
+        }
 
         $groups = [$conf['defaultgroup']]; // always add default config
         if (is_array($result)) {
@@ -572,11 +642,15 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     protected function selectGroups()
     {
-        if ($this->groupcache) return $this->groupcache;
+        if ($this->groupcache) {
+            return $this->groupcache;
+        }
 
         $sql = $this->getConf('select-groups');
         $result = $this->query($sql);
-        if ($result === false) return false;
+        if ($result === false) {
+            return false;
+        }
 
         $groups = [];
         if (is_array($result)) {
@@ -618,7 +692,9 @@ class auth_plugin_authpdo extends AuthPlugin
         $data = array_merge($userdata, $groupdata);
         $sql = $this->getConf('join-group');
         $result = $this->query($sql, $data);
-        if ($result === false) return false;
+        if ($result === false) {
+            return false;
+        }
         return true;
     }
 
@@ -634,7 +710,9 @@ class auth_plugin_authpdo extends AuthPlugin
         $data = array_merge($userdata, $groupdata);
         $sql = $this->getConf('leave-group');
         $result = $this->query($sql, $data);
-        if ($result === false) return false;
+        if ($result === false) {
+            return false;
+        }
         return true;
     }
 
@@ -660,10 +738,18 @@ class auth_plugin_authpdo extends AuthPlugin
         try {
             // prepare parameters - we only use those that exist in the SQL
             foreach ($arguments as $key => $value) {
-                if (is_array($value)) continue;
-                if (is_object($value)) continue;
-                if ($key[0] != ':') $key = ":$key"; // prefix with colon if needed
-                if (strpos($sql, (string) $key) === false) continue; // skip if parameter is missing
+                if (is_array($value)) {
+                    continue;
+                }
+                if (is_object($value)) {
+                    continue;
+                }
+                if ($key[0] != ':') {
+                    $key = ":$key";
+                } // prefix with colon if needed
+                if (strpos($sql, (string) $key) === false) {
+                    continue;
+                } // skip if parameter is missing
 
                 if (is_int($value)) {
                     $sth->bindValue($key, $value, PDO::PARAM_INT);
@@ -715,11 +801,15 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     protected function debugMsg($message, $err = 0, $line = 0)
     {
-        if (!$this->getConf('debug')) return;
+        if (!$this->getConf('debug')) {
+            return;
+        }
         if (is_a($message, 'Exception')) {
             $err = -1;
             $msg = $message->getMessage();
-            if (!$line) $line = $message->getLine();
+            if (!$line) {
+                $line = $message->getLine();
+            }
         } else {
             $msg = $message;
         }
@@ -747,10 +837,14 @@ class auth_plugin_authpdo extends AuthPlugin
             $sql = trim($this->getConf($key));
 
             // check if sql is set
-            if (!$sql) return false;
+            if (!$sql) {
+                return false;
+            }
             // check if needed params are there
             foreach ($params as $param) {
-                if (strpos($sql, ":$param") === false) return false;
+                if (strpos($sql, ":$param") === false) {
+                    return false;
+                }
             }
         }
 
@@ -779,7 +873,9 @@ class auth_plugin_authpdo extends AuthPlugin
             }
             $sql = str_replace($key, $val, $sql);
         }
-        if ($htmlescape) $sql = hsc($sql);
+        if ($htmlescape) {
+            $sql = hsc($sql);
+        }
         return $sql;
     }
 }

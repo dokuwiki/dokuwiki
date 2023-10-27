@@ -32,7 +32,9 @@ class Draft extends AbstractAction
     {
         parent::checkPreconditions();
         global $INFO;
-        if (!file_exists($INFO['draft'])) throw new ActionException('edit');
+        if (!file_exists($INFO['draft'])) {
+            throw new ActionException('edit');
+        }
     }
 
     /** @inheritdoc */

@@ -48,7 +48,9 @@ class Admin extends Ui
      */
     protected function showMenu($type)
     {
-        if (!$this->menu[$type]) return;
+        if (!$this->menu[$type]) {
+            return;
+        }
 
         if ($type === 'other') {
             echo p_locale_xhtml('adminplugins');
@@ -88,7 +90,9 @@ class Admin extends Ui
     protected function showSecurityCheck()
     {
         global $conf;
-        if (!str_starts_with($conf['savedir'], './')) return;
+        if (!str_starts_with($conf['savedir'], './')) {
+            return;
+        }
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<div id="security__check" data-src="' . $img . '"></div>';
@@ -102,7 +106,9 @@ class Admin extends Ui
     protected function showMenuItem($item)
     {
         global $ID;
-        if (blank($item['prompt'])) return;
+        if (blank($item['prompt'])) {
+            return;
+        }
         echo '<li><div class="li">';
         echo '<a href="' . wl($ID, 'do=admin&amp;page=' . $item['plugin']) . '">';
         echo '<span class="icon">';
@@ -131,10 +137,14 @@ class Admin extends Ui
 
         foreach ($pluginlist as $p) {
             /** @var AdminPlugin $obj */
-            if (!($obj = plugin_load('admin', $p)) instanceof PluginInterface) continue;
+            if (!($obj = plugin_load('admin', $p)) instanceof PluginInterface) {
+                continue;
+            }
 
             // check permissions
-            if (!$obj->isAccessibleByCurrentUser()) continue;
+            if (!$obj->isAccessibleByCurrentUser()) {
+                continue;
+            }
 
             if (in_array($p, $this->forAdmins, true)) {
                 $type = 'admin';
@@ -172,7 +182,9 @@ class Admin extends Ui
     protected function menuSort($a, $b)
     {
         $strcmp = Sort::strcmp($a['prompt'], $b['prompt']);
-        if ($strcmp != 0) return $strcmp;
+        if ($strcmp != 0) {
+            return $strcmp;
+        }
         return $a['sort'] <=> $b['sort'];
     }
 }

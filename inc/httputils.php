@@ -122,7 +122,9 @@ function http_rangeRequest($fh, $size, $mime)
                 $p = explode('-', $x);
                 $start = (int)$p[0];
                 $end = (int)$p[1];
-                if (!$end) $end = $size - 1;
+                if (!$end) {
+                    $end = $size - 1;
+                }
                 if ($start > $end || $start > $size || $end > $size) {
                     header('HTTP/1.1 416 Requested Range Not Satisfiable');
                     echo 'Bad Range Request!';
@@ -180,7 +182,9 @@ function http_rangeRequest($fh, $size, $mime)
     }
 
     // everything should be done here, exit (or return if testing)
-    if (defined('SIMPLE_TEST')) return;
+    if (defined('SIMPLE_TEST')) {
+        return;
+    }
     exit;
 }
 
@@ -197,7 +201,9 @@ function http_rangeRequest($fh, $size, $mime)
  */
 function http_gzip_valid($uncompressed_file)
 {
-    if (!DOKU_HAS_GZIP) return false;
+    if (!DOKU_HAS_GZIP) {
+        return false;
+    }
 
     $gzip = $uncompressed_file . '.gz';
     if (filemtime($gzip) < filemtime($uncompressed_file)) {    // filemtime returns false (0) if file doesn't exist
@@ -227,7 +233,9 @@ function http_cached($cache, $cache_ok)
     header('Pragma: public');
     if ($cache_ok) {
         http_conditionalRequest(filemtime($cache));
-        if ($conf['allowdebug']) header("X-CacheUsed: $cache");
+        if ($conf['allowdebug']) {
+            header("X-CacheUsed: $cache");
+        }
 
         // finally send output
         if ($conf['gzip_output'] && http_gzip_valid($cache)) {
@@ -256,7 +264,9 @@ function http_cached_finish($file, $content)
 
     // save cache file
     io_saveFile($file, $content);
-    if (DOKU_HAS_GZIP) io_saveFile("$file.gz", $content);
+    if (DOKU_HAS_GZIP) {
+        io_saveFile("$file.gz", $content);
+    }
 
     // finally send output
     if ($conf['gzip_output'] && DOKU_HAS_GZIP) {

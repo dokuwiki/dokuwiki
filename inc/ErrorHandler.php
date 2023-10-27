@@ -60,7 +60,9 @@ class ErrorHandler
         $plugin = self::guessPlugin($e);
         $title = hsc(get_class($e) . ': ' . $e->getMessage());
         $msg = 'An unforeseen error has occured. This is most likely a bug somewhere.';
-        if ($plugin) $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
+        if ($plugin) {
+            $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
+        }
         $logged = self::logException($e)
             ? 'More info has been written to the DokuWiki error log.'
             : $e->getFile() . ':' . $e->getLine();
@@ -90,7 +92,9 @@ EOT;
     public static function showExceptionMsg($e, $intro = 'Error!')
     {
         $msg = hsc($intro) . '<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
-        if (self::logException($e)) $msg .= '<br />More info is available in the error log.';
+        if (self::logException($e)) {
+            $msg .= '<br />More info is available in the error log.';
+        }
         msg($msg, -1);
     }
 
@@ -154,7 +158,9 @@ EOT;
         global $conf;
 
         // ignore supressed warnings
-        if (!(error_reporting() & $errno)) return false;
+        if (!(error_reporting() & $errno)) {
+            return false;
+        }
 
         $ex = new \ErrorException(
             $errstr,

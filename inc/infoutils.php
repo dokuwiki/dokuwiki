@@ -32,8 +32,12 @@ function checkUpdateMessages()
     global $conf;
     global $INFO;
     global $updateVersion;
-    if (!$conf['updatecheck']) return;
-    if ($conf['useacl'] && !$INFO['ismanager']) return;
+    if (!$conf['updatecheck']) {
+        return;
+    }
+    if ($conf['useacl'] && !$INFO['ismanager']) {
+        return;
+    }
 
     $cf = getCacheName($updateVersion, '.updmsg');
     $lm = @filemtime($cf);
@@ -67,7 +71,9 @@ function checkUpdateMessages()
     // show messages through the usual message mechanism
     $msgs = explode("\n%\n", $data);
     foreach ($msgs as $msg) {
-        if ($msg) msg($msg, 2);
+        if ($msg) {
+            msg($msg, 2);
+        }
     }
 }
 
@@ -392,7 +398,9 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
             $msgdata['msg'] .= ' [' . $basename . ':' . $msgdata['line'] . ']';
         }
 
-        if (!isset($MSG)) $MSG = [];
+        if (!isset($MSG)) {
+            $MSG = [];
+        }
         $MSG[] = $msgdata;
         if (isset($MSG_shown) || headers_sent()) {
             if (function_exists('html_msgarea')) {
@@ -422,10 +430,14 @@ function info_msg_allowed($msg)
     global $INFO, $auth;
 
     // is the message public? - everyone and anyone can see it
-    if (empty($msg['allow']) || ($msg['allow'] == MSG_PUBLIC)) return true;
+    if (empty($msg['allow']) || ($msg['allow'] == MSG_PUBLIC)) {
+        return true;
+    }
 
     // restricted msg, but no authentication
-    if (!$auth instanceof AuthPlugin) return false;
+    if (!$auth instanceof AuthPlugin) {
+        return false;
+    }
 
     switch ($msg['allow']) {
         case MSG_USERS_ONLY:
@@ -571,6 +583,8 @@ function debug_guard(&$data)
             $data[$key] = '***';
             continue;
         }
-        if (is_array($value)) debug_guard($data[$key]);
+        if (is_array($value)) {
+            debug_guard($data[$key]);
+        }
     }
 }

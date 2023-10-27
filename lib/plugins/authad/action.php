@@ -37,7 +37,9 @@ class action_plugin_authad extends ActionPlugin
 
         /** @var auth_plugin_authad $auth */
         global $auth;
-        if (!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
+        if (!is_a($auth, 'auth_plugin_authad')) {
+            return;
+        } // AD not even used
 
         if ($INPUT->str('dom')) {
             $usr = $auth->cleanUser($event->data['user']);
@@ -61,16 +63,22 @@ class action_plugin_authad extends ActionPlugin
         global $INPUT;
         /** @var auth_plugin_authad $auth */
         global $auth;
-        if (!is_a($auth, 'auth_plugin_authad')) return; // AD not even used
+        if (!is_a($auth, 'auth_plugin_authad')) {
+            return;
+        } // AD not even used
         $domains = $auth->getConfiguredDomains();
-        if (count($domains) <= 1) return; // no choice at all
+        if (count($domains) <= 1) {
+            return;
+        } // no choice at all
 
         /** @var dokuwiki\Form\Form $form */
         $form =& $event->data;
 
         // find the username input box
         $pos = $form->findPositionByAttribute('name', 'u');
-        if ($pos === false) return;
+        if ($pos === false) {
+            return;
+        }
 
         // any default?
         if ($INPUT->has('u')) {

@@ -14,8 +14,12 @@ class SettingCompression extends SettingMultichoice
     {
 
         // populate _choices with the compression methods supported by this php installation
-        if (function_exists('gzopen')) $this->choices[] = 'gz';
-        if (function_exists('bzopen')) $this->choices[] = 'bz2';
+        if (function_exists('gzopen')) {
+            $this->choices[] = 'gz';
+        }
+        if (function_exists('bzopen')) {
+            $this->choices[] = 'bz2';
+        }
 
         parent::initialize($default, $local, $protected);
     }

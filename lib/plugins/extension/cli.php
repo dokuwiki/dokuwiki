@@ -341,8 +341,12 @@ class cli_plugin_extension extends CLIPlugin
                 } else {
                     $vcolor = Colors::C_GREEN;
                 }
-                if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) $status = 'b';
+                if ($ext->isGitControlled()) {
+                    $status = 'g';
+                }
+                if ($ext->isBundled()) {
+                    $status = 'b';
+                }
                 if ($ext->isEnabled()) {
                     $ecolor = Colors::C_BROWN;
                 } else {
@@ -379,7 +383,9 @@ class cli_plugin_extension extends CLIPlugin
                 ]
             );
 
-            if (!$details) continue;
+            if (!$details) {
+                continue;
+            }
 
             echo $tr->format(
                 [5, '*'],

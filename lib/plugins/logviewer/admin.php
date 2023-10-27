@@ -142,7 +142,9 @@ class admin_plugin_logviewer extends AdminPlugin
         $size = filesize($logfilePath);
         $fp = fopen($logfilePath, 'r');
 
-        if (!$fp) throw new Exception($lang['log_file_failed_to_open']);
+        if (!$fp) {
+            throw new Exception($lang['log_file_failed_to_open']);
+        }
 
         try {
             if ($size < self::MAX_READ_SIZE) {
@@ -153,7 +155,9 @@ class admin_plugin_logviewer extends AdminPlugin
             }
 
             $logData = fread($fp, $toread);
-            if (!$logData) throw new Exception($lang['log_file_failed_to_read']);
+            if (!$logData) {
+                throw new Exception($lang['log_file_failed_to_read']);
+            }
 
             $lines = explode("\n", $logData);
             unset($logData); // free memory early

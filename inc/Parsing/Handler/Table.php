@@ -106,8 +106,12 @@ class Table extends AbstractRewriter
         $td = $this->currentRow['tablecell'];
         $th = $this->currentRow['tableheader'];
 
-        if (!$th || $td > 2) return false;
-        if (2 * $td > $th) return false;
+        if (!$th || $td > 2) {
+            return false;
+        }
+        if (2 * $td > $th) {
+            return false;
+        }
 
         return true;
     }

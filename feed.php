@@ -16,7 +16,9 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/');
+}
 require_once(DOKU_INC . 'inc/init.php');
 
 //close session
@@ -51,7 +53,9 @@ header('Content-Type: application/xml; charset=utf-8');
 header('X-Robots-Tag: noindex');
 if ($cache->useCache($depends)) {
     http_conditionalRequest($cache->getTime());
-    if ($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
+    if ($conf['allowdebug']) {
+        header("X-CacheUsed: $cache->cache");
+    }
     echo $cache->retrieveCache();
     exit;
 } else {
@@ -241,7 +245,9 @@ function rss_buildItems(&$rss, &$data, $opt)
             } else {
                 $date = 0;
             }
-            if ($date) $item->date = date('r', $date);
+            if ($date) {
+                $item->date = date('r', $date);
+            }
 
             // add title
             if ($conf['useheading'] && $meta['title'] ?? '') {
@@ -471,7 +477,9 @@ function rss_buildItems(&$rss, &$data, $opt)
                 $item->category = $meta['subject'];
             } else {
                 $cat = getNS($id);
-                if ($cat) $item->category = $cat;
+                if ($cat) {
+                    $item->category = $cat;
+                }
             }
 
             // finally add the item to the feed object, after handing it to registered plugins
@@ -500,11 +508,21 @@ function rssRecentChanges($opt)
 {
     global $conf;
     $flags = 0;
-    if (!$conf['rss_show_deleted']) $flags += RECENTS_SKIP_DELETED;
-    if (!$opt['show_minor']) $flags += RECENTS_SKIP_MINORS;
-    if ($opt['only_new']) $flags += RECENTS_ONLY_CREATION;
-    if ($opt['content_type'] == 'media' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_CHANGES;
-    if ($opt['content_type'] == 'both' && $conf['mediarevisions']) $flags += RECENTS_MEDIA_PAGES_MIXED;
+    if (!$conf['rss_show_deleted']) {
+        $flags += RECENTS_SKIP_DELETED;
+    }
+    if (!$opt['show_minor']) {
+        $flags += RECENTS_SKIP_MINORS;
+    }
+    if ($opt['only_new']) {
+        $flags += RECENTS_ONLY_CREATION;
+    }
+    if ($opt['content_type'] == 'media' && $conf['mediarevisions']) {
+        $flags += RECENTS_MEDIA_CHANGES;
+    }
+    if ($opt['content_type'] == 'both' && $conf['mediarevisions']) {
+        $flags += RECENTS_MEDIA_PAGES_MIXED;
+    }
 
     $recents = getRecents(0, $opt['items'], $opt['namespace'], $flags);
     return $recents;
@@ -541,7 +559,9 @@ function rssListNamespace($opt)
  */
 function rssSearch($opt)
 {
-    if (!$opt['search_query'] || !actionOK('search')) return [];
+    if (!$opt['search_query'] || !actionOK('search')) {
+        return [];
+    }
 
     require_once(DOKU_INC . 'inc/fulltext.php');
     $data = ft_pageSearch($opt['search_query'], $poswords);

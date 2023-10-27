@@ -28,7 +28,9 @@ class Logout extends AbstractUserAction
 
         /** @var AuthPlugin $auth */
         global $auth;
-        if (!$auth->canDo('logout')) throw new ActionDisabledException();
+        if (!$auth->canDo('logout')) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */
@@ -37,7 +39,9 @@ class Logout extends AbstractUserAction
         global $ID;
         global $INPUT;
 
-        if (!checkSecurityToken()) throw new ActionException();
+        if (!checkSecurityToken()) {
+            throw new ActionException();
+        }
 
         // when logging out during an edit session, unlock the page
         $lockedby = checklock($ID);

@@ -53,7 +53,9 @@ class MediaRevisions extends Revisions
         $changelog =& $this->changelog;
 
         // get revisions, and set correct pagination parameters (first, hasNext)
-        if ($first === null) $first = -1;
+        if ($first === null) {
+            $first = -1;
+        }
         $hasNext = false;
         $revisions = $this->getRevisions($first, $hasNext);
 

@@ -103,8 +103,12 @@ function getID($param = 'id', $clean = true)
             send_redirect(wl($id, $urlParameters, true, '&'));
         }
     }
-    if ($clean) $id = cleanID($id);
-    if ($id === '' && $param == 'id') $id = $conf['start'];
+    if ($clean) {
+        $id = cleanID($id);
+    }
+    if ($id === '' && $param == 'id') {
+        $id = $conf['start'];
+    }
 
     return $id;
 }
@@ -135,8 +139,10 @@ function cleanID($raw_id, $ascii = false)
     }
 
     $sepchar = $conf['sepchar'];
-    if ($sepcharpat == null) // build string only once to save clock cycles
+    if ($sepcharpat == null) {
+        // build string only once to save clock cycles
         $sepcharpat = '#\\' . $sepchar . '+#';
+    }
 
     $id = trim((string)$raw_id);
     $id = PhpString::strtolower($id);
@@ -148,13 +154,19 @@ function cleanID($raw_id, $ascii = false)
         $id = strtr($id, ';/', ':' . $sepchar);
     }
 
-    if ($conf['deaccent'] == 2 || $ascii) $id = Clean::romanize($id);
-    if ($conf['deaccent'] || $ascii) $id = Clean::deaccent($id, -1);
+    if ($conf['deaccent'] == 2 || $ascii) {
+        $id = Clean::romanize($id);
+    }
+    if ($conf['deaccent'] || $ascii) {
+        $id = Clean::deaccent($id, -1);
+    }
 
     //remove specials
     $id = Clean::stripspecials($id, $sepchar, '\*');
 
-    if ($ascii) $id = Clean::strip($id);
+    if ($ascii) {
+        $id = Clean::strip($id);
+    }
 
     //clean up
     $id = preg_replace($sepcharpat, $sepchar, $id);
@@ -163,7 +175,9 @@ function cleanID($raw_id, $ascii = false)
     $id = preg_replace('#:[:\._\-]+#', ':', $id);
     $id = preg_replace('#[:\._\-]+:#', ':', $id);
 
-    if (!$ascii) $cache[(string)$raw_id] = $id;
+    if (!$ascii) {
+        $cache[(string)$raw_id] = $id;
+    }
     return($id);
 }
 
@@ -289,8 +303,9 @@ function page_exists($id, $rev = '', $clean = true, $date_at = false)
     if ($rev !== '' && $date_at) {
         $pagelog = new PageChangeLog($id);
         $pagelog_rev = $pagelog->getLastRevisionAt($rev);
-        if ($pagelog_rev !== false)
+        if ($pagelog_rev !== false) {
             $rev = $pagelog_rev;
+        }
     }
     return file_exists(wikiFN($id, $rev, $clean));
 }
@@ -338,7 +353,9 @@ function wikiFN($raw_id, $rev = '', $clean = true)
 
     $id = $raw_id;
 
-    if ($clean) $id = cleanID($id);
+    if ($clean) {
+        $id = cleanID($id);
+    }
     $id = str_replace(':', '/', $id);
 
     if (isset($cache[$id]) && isset($cache[$id][$rev])) {
@@ -456,7 +473,9 @@ function metaFiles($id)
 function mediaFN($id, $rev = '', $clean = true)
 {
     global $conf;
-    if ($clean) $id = cleanID($id);
+    if ($clean) {
+        $id = cleanID($id);
+    }
     $id = str_replace(':', '/', $id);
     if (empty($rev)) {
         $fn = $conf['mediadir'] . '/' . utf8_encodeFN($id);
@@ -513,7 +532,9 @@ function resolve_id($ns, $id, $clean = true)
     dbg_deprecated(Resolver::class . ' and its children');
 
     // some pre cleaning for useslash:
-    if ($conf['useslash']) $id = str_replace('/', ':', $id);
+    if ($conf['useslash']) {
+        $id = str_replace('/', ':', $id);
+    }
 
     // if the id starts with a dot we need to handle the
     // relative stuff
@@ -526,7 +547,9 @@ function resolve_id($ns, $id, $clean = true)
         // cleanup relatives
         $result = [];
         $pathA  = explode(':', $id);
-        if (!$pathA[0]) $result[] = '';
+        if (!$pathA[0]) {
+            $result[] = '';
+        }
         foreach ($pathA as $dir) {
             if ($dir == '..') {
                 if (end($result) == '..') {
@@ -538,14 +561,18 @@ function resolve_id($ns, $id, $clean = true)
                 $result[] = $dir;
             }
         }
-        if (!end($pathA)) $result[] = '';
+        if (!end($pathA)) {
+            $result[] = '';
+        }
         $id = implode(':', $result);
     } elseif ($ns !== false && strpos($id, ':') === false) {
         //if link contains no namespace. add current namespace (if any)
         $id = $ns . ':' . $id;
     }
 
-    if ($clean) $id = cleanID($id);
+    if ($clean) {
+        $id = cleanID($id);
+    }
     return $id;
 }
 
@@ -638,9 +665,15 @@ function _isHiddenPage(&$data)
     global $conf;
     global $ACT;
 
-    if ($data['hidden']) return;
-    if (empty($conf['hidepages'])) return;
-    if ($ACT == 'admin') return;
+    if ($data['hidden']) {
+        return;
+    }
+    if (empty($conf['hidepages'])) {
+        return;
+    }
+    if ($ACT == 'admin') {
+        return;
+    }
 
     if (preg_match('/' . $conf['hidepages'] . '/ui', ':' . $data['id'])) {
         $data['hidden'] = true;
@@ -702,7 +735,9 @@ function prettyprint_id($id)
 function utf8_encodeFN($file, $safe = true)
 {
     global $conf;
-    if ($conf['fnencode'] == 'utf-8') return $file;
+    if ($conf['fnencode'] == 'utf-8') {
+        return $file;
+    }
 
     if ($safe && preg_match('#^[a-zA-Z0-9/_\-\.%]+$#', $file)) {
         return $file;
@@ -731,7 +766,9 @@ function utf8_encodeFN($file, $safe = true)
 function utf8_decodeFN($file)
 {
     global $conf;
-    if ($conf['fnencode'] == 'utf-8') return $file;
+    if ($conf['fnencode'] == 'utf-8') {
+        return $file;
+    }
 
     if ($conf['fnencode'] == 'safe') {
         return SafeFN::decode($file);
@@ -755,7 +792,9 @@ function utf8_decodeFN($file)
  */
 function page_findnearest($page, $useacl = true)
 {
-    if ((string) $page === '') return false;
+    if ((string) $page === '') {
+        return false;
+    }
     global $ID;
 
     $ns = $ID;

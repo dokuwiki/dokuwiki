@@ -21,7 +21,9 @@ class Admin extends AbstractItem
     public function visibleInContext($ctx)
     {
         global $INFO;
-        if (!$INFO['ismanager']) return false;
+        if (!$INFO['ismanager']) {
+            return false;
+        }
 
         return parent::visibleInContext($ctx);
     }

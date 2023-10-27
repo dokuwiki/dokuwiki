@@ -5,7 +5,9 @@ use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 use dokuwiki\Utf8\PhpString;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+}
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -276,7 +278,9 @@ class PageCLI extends CLI
      */
     protected function obtainLock($wiki_id)
     {
-        if ($this->force) $this->deleteLock($wiki_id);
+        if ($this->force) {
+            $this->deleteLock($wiki_id);
+        }
 
         $_SERVER['REMOTE_USER'] = $this->username;
 
@@ -301,7 +305,9 @@ class PageCLI extends CLI
      */
     protected function clearLock($wiki_id)
     {
-        if ($this->force) $this->deleteLock($wiki_id);
+        if ($this->force) {
+            $this->deleteLock($wiki_id);
+        }
 
         $_SERVER['REMOTE_USER'] = $this->username;
         if (checklock($wiki_id)) {

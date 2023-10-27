@@ -70,8 +70,9 @@ class admin_plugin_usermanager extends AdminPlugin
     public function getMenuText($language)
     {
 
-        if (!is_null($this->auth))
+        if (!is_null($this->auth)) {
             return parent::getMenuText($language);
+        }
 
         return $this->getLang('menu') . ' ' . $this->disabled;
     }
@@ -118,7 +119,9 @@ class admin_plugin_usermanager extends AdminPlugin
     public function handle()
     {
         global $INPUT;
-        if (is_null($this->auth)) return false;
+        if (is_null($this->auth)) {
+            return false;
+        }
 
         // extract the command and any specific parameters
         // submit button name is of the form - fn[cmd][param(s)]
@@ -387,7 +390,9 @@ class admin_plugin_usermanager extends AdminPlugin
 
         if ($user) {
             extract($userdata);
-            if (!empty($grps)) $groups = implode(',', $grps);
+            if (!empty($grps)) {
+                $groups = implode(',', $grps);
+            }
         } else {
             $notes[] = sprintf($this->lang['note_group'], $conf['defaultgroup']);
         }
@@ -535,7 +540,9 @@ class admin_plugin_usermanager extends AdminPlugin
         echo '<td>';
         if ($cando) {
             $req = '';
-            if ($required) $req = 'required="required"';
+            if ($required) {
+                $req = 'required="required"';
+            }
             echo "<input type=\"$fieldtype\" id=\"$id\" name=\"$name\"
                   value=\"$value\" class=\"edit\" $autocomp $req />";
         } else {
@@ -555,7 +562,9 @@ class admin_plugin_usermanager extends AdminPlugin
      */
     protected function htmlFilter($key)
     {
-        if (empty($this->filter)) return '';
+        if (empty($this->filter)) {
+            return '';
+        }
         return (isset($this->filter[$key]) ? hsc($this->filter[$key]) : '');
     }
 
@@ -640,11 +649,17 @@ class admin_plugin_usermanager extends AdminPlugin
     protected function addUser()
     {
         global $INPUT;
-        if (!checkSecurityToken()) return false;
-        if (!$this->auth->canDo('addUser')) return false;
+        if (!checkSecurityToken()) {
+            return false;
+        }
+        if (!$this->auth->canDo('addUser')) {
+            return false;
+        }
 
         [$user, $pass, $name, $mail, $grps, $passconfirm] = $this->retrieveUser();
-        if (empty($user)) return false;
+        if (empty($user)) {
+            return false;
+        }
 
         if ($this->auth->canDo('modPass')) {
             if (empty($pass)) {
@@ -713,11 +728,17 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         global $conf, $INPUT;
 
-        if (!checkSecurityToken()) return false;
-        if (!$this->auth->canDo('delUser')) return false;
+        if (!checkSecurityToken()) {
+            return false;
+        }
+        if (!$this->auth->canDo('delUser')) {
+            return false;
+        }
 
         $selected = $INPUT->arr('delete');
-        if (empty($selected)) return false;
+        if (empty($selected)) {
+            return false;
+        }
         $selected = array_keys($selected);
 
         if (in_array($_SERVER['REMOTE_USER'], $selected)) {
@@ -749,8 +770,12 @@ class admin_plugin_usermanager extends AdminPlugin
      */
     protected function editUser($param)
     {
-        if (!checkSecurityToken()) return false;
-        if (!$this->auth->canDo('UserMod')) return false;
+        if (!checkSecurityToken()) {
+            return false;
+        }
+        if (!$this->auth->canDo('UserMod')) {
+            return false;
+        }
         $user = $this->auth->cleanUser(preg_replace('/.*[:\/]/', '', $param));
         $userdata = $this->auth->getUserData($user);
 
@@ -775,8 +800,12 @@ class admin_plugin_usermanager extends AdminPlugin
     {
         global $conf, $INPUT;
 
-        if (!checkSecurityToken()) return false;
-        if (!$this->auth->canDo('UserMod')) return false;
+        if (!checkSecurityToken()) {
+            return false;
+        }
+        if (!$this->auth->canDo('UserMod')) {
+            return false;
+        }
 
         // get currently valid  user data
         $olduser = $this->auth->cleanUser(preg_replace('/.*[:\/]/', '', $INPUT->str('userid_old')));
@@ -784,7 +813,9 @@ class admin_plugin_usermanager extends AdminPlugin
 
         // get new user data subject to change
         [$newuser, $newpass, $newname, $newmail, $newgrps, $passconfirm] = $this->retrieveUser();
-        if (empty($newuser)) return false;
+        if (empty($newuser)) {
+            return false;
+        }
 
         $changes = [];
         if ($newuser != $olduser) {
@@ -940,10 +971,18 @@ class admin_plugin_usermanager extends AdminPlugin
         if ($op == 'new') {
             [$user, /* pass */, $name, $mail, $grps] = $this->retrieveUser(false);
 
-            if (!empty($user)) $this->filter['user'] = $user;
-            if (!empty($name)) $this->filter['name'] = $name;
-            if (!empty($mail)) $this->filter['mail'] = $mail;
-            if (!empty($grps)) $this->filter['grps'] = implode('|', $grps);
+            if (!empty($user)) {
+                $this->filter['user'] = $user;
+            }
+            if (!empty($name)) {
+                $this->filter['name'] = $name;
+            }
+            if (!empty($mail)) {
+                $this->filter['mail'] = $mail;
+            }
+            if (!empty($grps)) {
+                $this->filter['grps'] = implode('|', $grps);
+            }
         }
     }
 
@@ -961,10 +1000,18 @@ class admin_plugin_usermanager extends AdminPlugin
         // messy, but this way we ensure we aren't getting any additional crap from malicious users
         $filter = [];
 
-        if (isset($t_filter['user'])) $filter['user'] = $t_filter['user'];
-        if (isset($t_filter['name'])) $filter['name'] = $t_filter['name'];
-        if (isset($t_filter['mail'])) $filter['mail'] = $t_filter['mail'];
-        if (isset($t_filter['grps'])) $filter['grps'] = $t_filter['grps'];
+        if (isset($t_filter['user'])) {
+            $filter['user'] = $t_filter['user'];
+        }
+        if (isset($t_filter['name'])) {
+            $filter['name'] = $t_filter['name'];
+        }
+        if (isset($t_filter['mail'])) {
+            $filter['mail'] = $t_filter['mail'];
+        }
+        if (isset($t_filter['grps'])) {
+            $filter['grps'] = $t_filter['grps'];
+        }
 
         return $filter;
     }
@@ -978,7 +1025,9 @@ class admin_plugin_usermanager extends AdminPlugin
         if ($this->start >= $this->users_total) {
             $this->start = $this->users_total - $this->pagesize;
         }
-        if ($this->start < 0) $this->start = 0;
+        if ($this->start < 0) {
+            $this->start = 0;
+        }
 
         $this->last = min($this->users_total, $this->start + $this->pagesize);
     }
@@ -1058,8 +1107,12 @@ class admin_plugin_usermanager extends AdminPlugin
     protected function importCSV()
     {
         // check we are allowed to add users
-        if (!checkSecurityToken()) return false;
-        if (!$this->auth->canDo('addUser')) return false;
+        if (!checkSecurityToken()) {
+            return false;
+        }
+        if (!$this->auth->canDo('addUser')) {
+            return false;
+        }
 
         // check file uploaded ok.
         if (
@@ -1084,7 +1137,9 @@ class admin_plugin_usermanager extends AdminPlugin
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
                 if (1 == ++$line) {
-                    if ($raw[0] == 'user_id' || $raw[0] == $this->lang['user_id']) continue;    // skip headers
+                    if ($raw[0] == 'user_id' || $raw[0] == $this->lang['user_id']) {
+                        continue;
+                    }    // skip headers
                 }
                 if (count($raw) < 4) {                                        // need at least four fields
                     $import_fail_count++;

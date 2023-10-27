@@ -140,7 +140,9 @@ class helper_plugin_extension_repository extends Plugin
 
         $httpclient = new DokuHTTPClient();
         $data = $httpclient->post(self::EXTENSION_REPOSITORY_API, $query);
-        if ($data === false) return [];
+        if ($data === false) {
+            return [];
+        }
         $result = unserialize($data);
 
         $ids = [];

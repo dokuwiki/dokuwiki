@@ -64,7 +64,9 @@ class MobileMenu implements MenuInterface
         $html = '<form action="' . script() . '" method="get" accept-charset="utf-8">';
         $html .= '<div class="no">';
         $html .= '<input type="hidden" name="id" value="' . $ID . '" />';
-        if ($REV) $html .= '<input type="hidden" name="rev" value="' . $REV . '" />';
+        if ($REV) {
+            $html .= '<input type="hidden" name="rev" value="' . $REV . '" />';
+        }
         if ($INPUT->server->str('REMOTE_USER')) {
             $html .= '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
         }

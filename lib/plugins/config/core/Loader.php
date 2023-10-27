@@ -201,19 +201,25 @@ class Loader
      */
     protected function loadExtensionMeta($file, $type, $extname)
     {
-        if (!file_exists($file)) return [];
+        if (!file_exists($file)) {
+            return [];
+        }
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include file
         $meta = [];
         include $file;
-        if ($meta === []) return [];
+        if ($meta === []) {
+            return [];
+        }
 
         // read data
         $data = [];
         $data[$prefix . $type . '_settings_name'] = ['fieldset'];
         foreach ($meta as $key => $value) {
-            if ($value[0] == 'fieldset') continue; //plugins only get one fieldset
+            if ($value[0] == 'fieldset') {
+                continue;
+            } //plugins only get one fieldset
             $data[$prefix . $key] = $value;
         }
 
@@ -232,12 +238,16 @@ class Loader
      */
     protected function loadExtensionConf($file, $type, $extname)
     {
-        if (!file_exists($file)) return [];
+        if (!file_exists($file)) {
+            return [];
+        }
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // parse file
         $conf = $this->parser->parse($file);
-        if (empty($conf)) return [];
+        if (empty($conf)) {
+            return [];
+        }
 
         // read data
         $data = [];

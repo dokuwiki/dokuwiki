@@ -4,7 +4,9 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+}
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
@@ -84,7 +86,9 @@ class GitToolCLI extends CLI
     {
         $command = $options->getCmd();
         $args = $options->getArgs();
-        if (!$command) $command = array_shift($args);
+        if (!$command) {
+            $command = array_shift($args);
+        }
 
         switch ($command) {
             case '':
@@ -129,8 +133,12 @@ class GitToolCLI extends CLI
         }
 
         echo "\n";
-        if ($succeeded) $this->success('successfully cloned the following extensions: ' . implode(', ', $succeeded));
-        if ($errors) $this->error('failed to clone the following extensions: ' . implode(', ', $errors));
+        if ($succeeded) {
+            $this->success('successfully cloned the following extensions: ' . implode(', ', $succeeded));
+        }
+        if ($errors) {
+            $this->error('failed to clone the following extensions: ' . implode(', ', $errors));
+        }
     }
 
     /**
@@ -161,8 +169,12 @@ class GitToolCLI extends CLI
         }
 
         echo "\n";
-        if ($succeeded) $this->success('successfully installed the following extensions: ' . implode(', ', $succeeded));
-        if ($errors) $this->error('failed to install the following extensions: ' . implode(', ', $errors));
+        if ($succeeded) {
+            $this->success('successfully installed the following extensions: ' . implode(', ', $succeeded));
+        }
+        if ($errors) {
+            $this->error('failed to install the following extensions: ' . implode(', ', $errors));
+        }
     }
 
     /**
@@ -218,7 +230,9 @@ class GitToolCLI extends CLI
     {
         /** @var helper_plugin_extension_extension $plugin */
         $plugin = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
+        if (!$ext) {
+            die("extension plugin not available, can't continue");
+        }
 
         $plugin->setExtension($ext);
 
@@ -307,12 +321,16 @@ class GitToolCLI extends CLI
     {
         /** @var helper_plugin_extension_extension $ext */
         $ext = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
+        if (!$ext) {
+            die("extension plugin not available, can't continue");
+        }
 
         $ext->setExtension($extension);
 
         $repourl = $ext->getSourcerepoURL();
-        if (!$repourl) return false;
+        if (!$repourl) {
+            return false;
+        }
 
         // match github repos
         if (preg_match('/github\.com\/([^\/]+)\/([^\/]+)/i', $repourl, $m)) {
@@ -325,7 +343,9 @@ class GitToolCLI extends CLI
         if (preg_match('/gitorious.org\/([^\/]+)\/([^\/]+)?/i', $repourl, $m)) {
             $user = $m[1];
             $repo = $m[2];
-            if (!$repo) $repo = $user;
+            if (!$repo) {
+                $repo = $user;
+            }
 
             return 'https://git.gitorious.org/' . $user . '/' . $repo . '.git';
         }

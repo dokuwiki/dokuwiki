@@ -120,7 +120,9 @@ class SafeFN
                 $converted = true;
             }
         }
-        if ($converted) $safe .= self::$post_indicator;
+        if ($converted) {
+            $safe .= self::$post_indicator;
+        }
         return $safe;
     }
 

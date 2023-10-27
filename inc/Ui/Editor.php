@@ -199,7 +199,9 @@ class Editor extends Ui
 
         // set textarea attributes
         $attr = ['tabindex' => '1'];
-        if (!$data['wr']) $attr['readonly'] = 'readonly';
+        if (!$data['wr']) {
+            $attr['readonly'] = 'readonly';
+        }
         $attr['dir'] = 'auto';
         $attr['cols'] = '80';
         $attr['rows'] = '10';

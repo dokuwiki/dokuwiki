@@ -38,7 +38,9 @@ class Form extends Element
         // use the current URL as default action
         if (!$this->attr('action')) {
             $get = $_GET;
-            if (isset($get['id'])) unset($get['id']);
+            if (isset($get['id'])) {
+                unset($get['id']);
+            }
             $self = wl($ID, $get, false, '&'); //attributes are escaped later
             $this->attr('action', $self);
         }
@@ -113,9 +115,15 @@ class Form extends Element
      */
     public function getElementAt($pos)
     {
-        if ($pos < 0) $pos = count($this->elements) + $pos;
-        if ($pos < 0) $pos = 0;
-        if ($pos >= count($this->elements)) $pos = count($this->elements) - 1;
+        if ($pos < 0) {
+            $pos = count($this->elements) + $pos;
+        }
+        if ($pos < 0) {
+            $pos = 0;
+        }
+        if ($pos >= count($this->elements)) {
+            $pos = count($this->elements) - 1;
+        }
         return $this->elements[$pos];
     }
 
@@ -169,9 +177,11 @@ class Form extends Element
      */
     public function addElement(Element $element, $pos = -1)
     {
-        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
-            'You can\'t add a form to a form'
-        );
+        if (is_a($element, '\dokuwiki\Form\Form')) {
+            throw new \InvalidArgumentException(
+                'You can\'t add a form to a form'
+            );
+        }
         if ($pos < 0) {
             $this->elements[] = $element;
         } else {
@@ -188,9 +198,11 @@ class Form extends Element
      */
     public function replaceElement(Element $element, $pos)
     {
-        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
-            'You can\'t add a form to a form'
-        );
+        if (is_a($element, '\dokuwiki\Form\Form')) {
+            throw new \InvalidArgumentException(
+                'You can\'t add a form to a form'
+            );
+        }
         array_splice($this->elements, $pos, 1, [$element]);
     }
 

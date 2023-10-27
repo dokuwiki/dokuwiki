@@ -31,7 +31,9 @@ class EventHandler
         foreach ($pluginlist as $plugin_name) {
             $plugin = plugin_load('action', $plugin_name);
 
-            if ($plugin instanceof PluginInterface) $plugin->register($this);
+            if ($plugin instanceof PluginInterface) {
+                $plugin->register($this);
+            }
         }
     }
 
@@ -80,7 +82,9 @@ class EventHandler
                         $obj->$method($event, $param);
                     }
 
-                    if (!$event->mayPropagate()) return;
+                    if (!$event->mayPropagate()) {
+                        return;
+                    }
                 }
             }
         }

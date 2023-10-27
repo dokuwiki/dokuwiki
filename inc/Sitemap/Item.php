@@ -46,7 +46,9 @@ class Item
     {
         $id = trim($id);
         $date = @filemtime(wikiFN($id));
-        if (!$date) return null;
+        if (!$date) {
+            return null;
+        }
         return new Item(wl($id, '', true), $date, $changefreq, $priority);
     }
 
@@ -60,10 +62,12 @@ class Item
         $result = '  <url>' . NL
             . '    <loc>' . hsc($this->url) . '</loc>' . NL
             . '    <lastmod>' . date_iso8601($this->lastmod) . '</lastmod>' . NL;
-        if ($this->changefreq !== null)
+        if ($this->changefreq !== null) {
             $result .= '    <changefreq>' . hsc($this->changefreq) . '</changefreq>' . NL;
-        if ($this->priority !== null)
+        }
+        if ($this->priority !== null) {
             $result .= '    <priority>' . hsc($this->priority) . '</priority>' . NL;
+        }
         $result .= '  </url>' . NL;
         return $result;
     }

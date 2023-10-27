@@ -95,8 +95,10 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data = $this->gather();
         $string = '';
         foreach ($data as $key => $val) {
-            if (is_array($val)) foreach ($val as $v) {
-                $string .=  hsc($key) . "\t" . hsc($v) . "\n";
+            if (is_array($val)) {
+                foreach ($val as $v) {
+                    $string .=  hsc($key) . "\t" . hsc($v) . "\n";
+                }
             } else {
                 $string .= hsc($key) . "\t" . hsc($val) . "\n";
             }
@@ -160,7 +162,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['page_smallest'] = $list['file_min'];
         $data['page_nscount']  = $list['dir_count'];
         $data['page_nsnest']   = $list['dir_nest'];
-        if ($list['file_count']) $data['page_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['page_avg'] = $list['file_size'] / $list['file_count'];
+        }
         $data['page_oldest']   = $list['file_oldest'];
         unset($list);
 
@@ -173,7 +177,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['media_smallest'] = $list['file_min'];
         $data['media_nscount']  = $list['dir_count'];
         $data['media_nsnest']   = $list['dir_nest'];
-        if ($list['file_count']) $data['media_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['media_avg'] = $list['file_size'] / $list['file_count'];
+        }
         unset($list);
 
         // number and size of cache
@@ -183,7 +189,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['cache_size']     = $list['file_size'];
         $data['cache_biggest']  = $list['file_max'];
         $data['cache_smallest'] = $list['file_min'];
-        if ($list['file_count']) $data['cache_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['cache_avg'] = $list['file_size'] / $list['file_count'];
+        }
         unset($list);
 
         // number and size of index
@@ -193,7 +201,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['index_size']     = $list['file_size'];
         $data['index_biggest']  = $list['file_max'];
         $data['index_smallest'] = $list['file_min'];
-        if ($list['file_count']) $data['index_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['index_avg'] = $list['file_size'] / $list['file_count'];
+        }
         unset($list);
 
         // number and size of meta
@@ -203,7 +213,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['meta_size']     = $list['file_size'];
         $data['meta_biggest']  = $list['file_max'];
         $data['meta_smallest'] = $list['file_min'];
-        if ($list['file_count']) $data['meta_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['meta_avg'] = $list['file_size'] / $list['file_count'];
+        }
         unset($list);
 
         // number and size of attic
@@ -213,7 +225,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['attic_size']     = $list['file_size'];
         $data['attic_biggest']  = $list['file_max'];
         $data['attic_smallest'] = $list['file_min'];
-        if ($list['file_count']) $data['attic_avg'] = $list['file_size'] / $list['file_count'];
+        if ($list['file_count']) {
+            $data['attic_avg'] = $list['file_size'] / $list['file_count'];
+        }
         $data['attic_oldest']   = $list['file_oldest'];
         unset($list);
 
@@ -237,7 +251,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $data['plugin'] = plugin_list();
 
         // pcre info
-        if (defined('PCRE_VERSION')) $data['pcre_version'] = PCRE_VERSION;
+        if (defined('PCRE_VERSION')) {
+            $data['pcre_version'] = PCRE_VERSION;
+        }
         $data['pcre_backtrack'] = ini_get('pcre.backtrack_limit');
         $data['pcre_recursion'] = ini_get('pcre.recursion_limit');
 
@@ -291,7 +307,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     {
         // traverse
         if ($type == 'd') {
-            if ($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
+            if ($data['dir_nest'] < $lvl) {
+                $data['dir_nest'] = $lvl;
+            }
             $data['dir_count']++;
             return true;
         }
@@ -302,9 +320,15 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
             $date = filemtime($base . '/' . $file);
             $data['file_count']++;
             $data['file_size'] += $size;
-            if (!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
-            if ($data['file_max'] < $size) $data['file_max'] = $size;
-            if (!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
+            if (!isset($data['file_min']) || $data['file_min'] > $size) {
+                $data['file_min'] = $size;
+            }
+            if ($data['file_max'] < $size) {
+                $data['file_max'] = $size;
+            }
+            if (!isset($data['file_oldest']) || $data['file_oldest'] > $date) {
+                $data['file_oldest'] = $date;
+            }
         }
 
         return false;

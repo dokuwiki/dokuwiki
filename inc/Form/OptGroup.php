@@ -56,8 +56,12 @@ class OptGroup extends Element
      */
     public function options($options = null)
     {
-        if ($options === null) return $this->options;
-        if (!is_array($options)) throw new \InvalidArgumentException('Options have to be an array');
+        if ($options === null) {
+            return $this->options;
+        }
+        if (!is_array($options)) {
+            throw new \InvalidArgumentException('Options have to be an array');
+        }
         $this->options = [];
         foreach ($options as $key => $val) {
             if (is_array($val)) {

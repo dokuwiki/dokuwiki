@@ -29,7 +29,9 @@ class SettingAuthtype extends SettingMultichoice
 
         // is an update possible/requested?
         $local = $this->local;                       // save this, parent::update() may change it
-        if (!parent::update($input)) return false;    // nothing changed or an error caught by parent
+        if (!parent::update($input)) {
+            return false;
+        }    // nothing changed or an error caught by parent
         $this->local = $local;                       // restore original, more error checking to come
 
         // attempt to load the plugin

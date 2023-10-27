@@ -13,12 +13,20 @@ class SettingOnoff extends SettingNumeric
      */
     protected function cleanValue($value)
     {
-        if ($value === null) return null;
+        if ($value === null) {
+            return null;
+        }
 
         if (is_string($value)) {
-            if (strtolower($value) === 'false') return 0;
-            if (strtolower($value) === 'off') return 0;
-            if (trim($value) === '') return 0;
+            if (strtolower($value) === 'false') {
+                return 0;
+            }
+            if (strtolower($value) === 'off') {
+                return 0;
+            }
+            if (trim($value) === '') {
+                return 0;
+            }
         }
 
         return (int) (bool) $value;
@@ -48,11 +56,15 @@ class SettingOnoff extends SettingNumeric
     /** @inheritdoc */
     public function update($input)
     {
-        if ($this->isProtected()) return false;
+        if ($this->isProtected()) {
+            return false;
+        }
 
         $input = ($input) ? 1 : 0;
         $value = is_null($this->local) ? $this->default : $this->local;
-        if ($value == $input) return false;
+        if ($value == $input) {
+            return false;
+        }
 
         $this->local = $input;
         return true;

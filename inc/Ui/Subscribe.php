@@ -45,7 +45,9 @@ class Subscribe extends Ui
                     echo '<code class="page">' . hsc(prettyprint_id($sub['target'])) . '</code>';
                 }
                 $sstl = sprintf($lang['subscr_style_' . $sub['style']], $stime_days);
-                if (!$sstl) $sstl = hsc($sub['style']);
+                if (!$sstl) {
+                    $sstl = hsc($sub['style']);
+                }
                 echo ' (' . $sstl . ') ';
 
                 echo '<a href="' . wl(

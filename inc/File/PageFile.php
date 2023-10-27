@@ -91,7 +91,9 @@ class PageFile
         global $INPUT;
 
         // prevent recursive call
-        if (isset($this->data)) return;
+        if (isset($this->data)) {
+            return;
+        }
 
         $pagefile = $this->getPath();
         $currentRevision = @filemtime($pagefile);       // int or false
@@ -136,10 +138,14 @@ class PageFile
         $data['page'] = $this; // allow event handlers to use this class methods
 
         $event = new Event('COMMON_WIKIPAGE_SAVE', $data);
-        if (!$event->advise_before()) return;
+        if (!$event->advise_before()) {
+            return;
+        }
 
         // if the content has not been changed, no save happens (plugins may override this)
-        if (!$data['contentChanged']) return;
+        if (!$data['contentChanged']) {
+            return;
+        }
 
         // Check whether the pagefile has modified during $event->advise_before()
         clearstatcache();
@@ -160,7 +166,9 @@ class PageFile
         // make change to the current file
         if ($data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
             // nothing to do when the file has already deleted
-            if (!file_exists($pagefile)) return;
+            if (!file_exists($pagefile)) {
+                return;
+            }
             // autoset summary on deletion
             if (blank($data['summary'])) {
                 $data['summary'] = $lang['deleted'];
@@ -228,7 +236,9 @@ class PageFile
         $revInfo = $this->changelog->getCurrentRevisionInfo();
 
         // only interested in external revision
-        if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
+        if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) {
+            return;
+        }
 
         if ($revInfo['type'] != DOKU_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
             // file is older than last revision, that is erroneous/incorrect occurence.
@@ -249,7 +259,9 @@ class PageFile
         }
 
         // keep at least 1 sec before new page save
-        if ($revInfo['date'] == time()) sleep(1); // wait a tick
+        if ($revInfo['date'] == time()) {
+            sleep(1);
+        } // wait a tick
 
         // store externally edited file to the attic folder
         $this->saveOldRevision();
@@ -270,7 +282,9 @@ class PageFile
     public function saveOldRevision()
     {
         $oldfile = $this->getPath();
-        if (!file_exists($oldfile)) return '';
+        if (!file_exists($oldfile)) {
+            return '';
+        }
         $date = filemtime($oldfile);
         $newfile = $this->getPath($date);
         io_writeWikiPage($newfile, $this->rawWikiText(), $this->id, $date);
@@ -295,7 +309,9 @@ class PageFile
 
         $createdDate = @filectime($this->getPath());
 
-        if ($wasRemoved) return;
+        if ($wasRemoved) {
+            return;
+        }
 
         $oldmeta = p_read_metadata($this->id)['persistent'];
         $meta    = [];

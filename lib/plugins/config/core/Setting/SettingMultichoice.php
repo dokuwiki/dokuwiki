@@ -45,7 +45,9 @@ class SettingMultichoice extends SettingString
             if (!$option && isset($this->lang[$this->key . '_o_' . $choice])) {
                 $option = $this->lang[$this->key . '_o_' . $choice];
             }
-            if (!$option) $option = $choice;
+            if (!$option) {
+                $option = $choice;
+            }
 
             $choice = htmlspecialchars($choice);
             $option = htmlspecialchars($option);
@@ -60,13 +62,21 @@ class SettingMultichoice extends SettingString
     /** @inheritdoc */
     public function update($input)
     {
-        if (is_null($input)) return false;
-        if ($this->isProtected()) return false;
+        if (is_null($input)) {
+            return false;
+        }
+        if ($this->isProtected()) {
+            return false;
+        }
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if ($value == $input) return false;
+        if ($value == $input) {
+            return false;
+        }
 
-        if (!in_array($input, $this->choices)) return false;
+        if (!in_array($input, $this->choices)) {
+            return false;
+        }
 
         $this->local = $input;
         return true;

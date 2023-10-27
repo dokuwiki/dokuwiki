@@ -27,7 +27,9 @@ class ConfigParser
      */
     public function parse($file)
     {
-        if (!file_exists($file)) return [];
+        if (!file_exists($file)) {
+            return [];
+        }
 
         $config = [];
         $contents = @php_strip_whitespace($file);

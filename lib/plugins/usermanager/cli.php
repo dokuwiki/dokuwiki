@@ -301,7 +301,9 @@ class cli_plugin_usermanager extends CLIPlugin
         global $MSG;
         if (isset($MSG)) {
             foreach ($MSG as $msg) {
-                if ($msg['lvl'] === 'error') $this->error($msg['msg']);
+                if ($msg['lvl'] === 'error') {
+                    $this->error($msg['msg']);
+                }
             }
         }
     }

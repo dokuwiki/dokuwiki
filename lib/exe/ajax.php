@@ -10,7 +10,9 @@
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Ajax;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/../../');
+}
 require_once(DOKU_INC . 'inc/init.php');
 
 //close session

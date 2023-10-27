@@ -44,7 +44,9 @@ class Mailer
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if (strpos($server, '.') === false) $server .= '.localhost';
+        if (strpos($server, '.') === false) {
+            $server .= '.localhost';
+        }
 
         $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8) . '@' . $server;
         $this->boundary = '__________' . md5(uniqid(random_int(0, mt_getrandmax()), true));
@@ -132,7 +134,9 @@ class Mailer
         $media = cleanID($matches[1]);
         [, $mime] = mimetype($media);
         $file = mediaFN($media);
-        if (!file_exists($file)) return $matches[0]; //bad reference, keep as is
+        if (!file_exists($file)) {
+            return $matches[0];
+        } //bad reference, keep as is
 
         // attach it and set placeholder
         $this->attachFile($file, $mime, '', 'autoembed' . $embeds);
@@ -160,12 +164,16 @@ class Mailer
         if (is_array($value)) {
             $value = array_map('trim', $value);
             $value = array_filter($value);
-            if (!$value) $value = '';
+            if (!$value) {
+                $value = '';
+            }
         } else {
             $value = trim($value);
         }
         if ($value === '') {
-            if (isset($this->headers[$header])) unset($this->headers[$header]);
+            if (isset($this->headers[$header])) {
+                unset($this->headers[$header]);
+            }
         } else {
             $this->headers[$header] = $value;
         }
@@ -225,7 +233,9 @@ class Mailer
 
         // copy over all replacements missing for HTML (autolink URLs)
         foreach ($textrep as $key => $value) {
-            if (isset($htmlrep[$key])) continue;
+            if (isset($htmlrep[$key])) {
+                continue;
+            }
             if (media_isexternal($value)) {
                 $htmlrep[$key] = '<a href="' . hsc($value) . '">' . hsc($value) . '</a>';
             } else {
@@ -441,7 +451,9 @@ class Mailer
         }
 
         $headers = trim($headers);
-        if (empty($headers)) return false;
+        if (empty($headers)) {
+            return false;
+        }
 
         return $headers;
     }
@@ -564,7 +576,9 @@ class Mailer
         global $conf;
 
         // clean up addresses
-        if (empty($this->headers['From'])) $this->from($conf['mailfrom']);
+        if (empty($this->headers['From'])) {
+            $this->from($conf['mailfrom']);
+        }
         $addrs = ['To', 'From', 'Cc', 'Bcc', 'Reply-To', 'Sender'];
         foreach ($addrs as $addr) {
             if (isset($this->headers[$addr])) {
@@ -619,7 +633,9 @@ class Mailer
     {
         $headers = '';
         foreach ($this->headers as $key => $val) {
-            if ($val === '' || $val === null) continue;
+            if ($val === '' || $val === null) {
+                continue;
+            }
             $headers .= $this->wrappedHeaderLine($key, $val);
         }
         return $headers;
@@ -637,7 +653,9 @@ class Mailer
     {
         $this->cleanHeaders();
         $body = $this->prepareBody();
-        if ($body === false) return false;
+        if ($body === false) {
+            return false;
+        }
         $headers = $this->prepareHeaders();
 
         return $headers . MAILHEADER_EOL . $body;
@@ -745,7 +763,9 @@ class Mailer
                 trim($this->headers['To']) === '' &&
                 trim($this->headers['Cc']) === '' &&
                 trim($this->headers['Bcc']) === ''
-            ) return false;
+            ) {
+                return false;
+            }
 
             // The To: header is special
             if (array_key_exists('To', $this->headers)) {
@@ -765,7 +785,9 @@ class Mailer
 
             // make the body
             $body = $this->prepareBody();
-            if ($body === false) return false;
+            if ($body === false) {
+                return false;
+            }
 
             // cook the headers
             $headers = $this->prepareHeaders();
@@ -783,7 +805,9 @@ class Mailer
             }
 
             // send the thing
-            if ($to === '') $to = '(undisclosed-recipients)'; // #1422
+            if ($to === '') {
+                $to = '(undisclosed-recipients)';
+            } // #1422
             if ($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {

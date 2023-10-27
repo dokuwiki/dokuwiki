@@ -76,12 +76,18 @@ class Setting
      */
     public function update($input)
     {
-        if (is_null($input)) return false;
-        if ($this->isProtected()) return false;
+        if (is_null($input)) {
+            return false;
+        }
+        if ($this->isProtected()) {
+            return false;
+        }
         $input = $this->cleanValue($input);
 
         $value = is_null($this->local) ? $this->default : $this->local;
-        if ($value == $input) return false;
+        if ($value == $input) {
+            return false;
+        }
 
         // validate new value
         if ($this->pattern && !preg_match($this->pattern, $input)) {
@@ -224,9 +230,15 @@ class Setting
      */
     public function shouldBeSaved()
     {
-        if ($this->isProtected()) return false;
-        if ($this->local === null) return false;
-        if ($this->default == $this->local) return false;
+        if ($this->isProtected()) {
+            return false;
+        }
+        if ($this->local === null) {
+            return false;
+        }
+        if ($this->default == $this->local) {
+            return false;
+        }
         return true;
     }
 
@@ -252,7 +264,9 @@ class Setting
      */
     public function out($var, $fmt = 'php')
     {
-        if ($fmt != 'php') return '';
+        if ($fmt != 'php') {
+            return '';
+        }
 
         if (is_array($this->local)) {
             $value = 'array(' . implode(', ', array_map([$this, 'escape'], $this->local)) . ')';
@@ -274,7 +288,9 @@ class Setting
     public function prompt(\admin_plugin_config $plugin)
     {
         $prompt = $plugin->getLang($this->key);
-        if (!$prompt) $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
+        if (!$prompt) {
+            $prompt = htmlspecialchars(str_replace(['____', '_'], ' ', $this->key));
+        }
         return $prompt;
     }
 
@@ -315,7 +331,9 @@ class Setting
      */
     public function caution()
     {
-        if (empty($this->caution)) return false;
+        if (empty($this->caution)) {
+            return false;
+        }
         if (!in_array($this->caution, Setting::$validCautions)) {
             throw new \RuntimeException(
                 'Invalid caution string (' . $this->caution . ') in metadata for setting "' . $this->key . '"'

@@ -116,7 +116,9 @@ class helper_plugin_extension_gui extends Plugin
         $form->addTagClose('div');
         echo $form->toHTML();
 
-        if (!$INPUT->bool('q')) return;
+        if (!$INPUT->bool('q')) {
+            return;
+        }
 
         /* @var helper_plugin_extension_repository $repository FIXME should we use some gloabl instance? */
         $repository = $this->loadHelper('extension_repository');
@@ -209,7 +211,9 @@ class helper_plugin_extension_gui extends Plugin
         global $INPUT;
 
         $tab = $INPUT->str('tab', 'plugins', true);
-        if (!in_array($tab, $this->tabs)) $tab = 'plugins';
+        if (!in_array($tab, $this->tabs)) {
+            $tab = 'plugins';
+        }
         return $tab;
     }
 
@@ -227,13 +231,17 @@ class helper_plugin_extension_gui extends Plugin
         global $ID;
         global $INPUT;
 
-        if (!$tab) $tab = $this->currentTab();
+        if (!$tab) {
+            $tab = $this->currentTab();
+        }
         $defaults = [
             'do' => 'admin',
             'page' => 'extension',
             'tab' => $tab
         ];
-        if ($tab == 'search') $defaults['q'] = $INPUT->str('q');
+        if ($tab == 'search') {
+            $defaults['q'] = $INPUT->str('q');
+        }
 
         return wl($ID, array_merge($defaults, $params), $absolute, $sep);
     }

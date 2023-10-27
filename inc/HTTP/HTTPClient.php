@@ -69,7 +69,9 @@ class HTTPClient
     public function __construct()
     {
         $this->agent = 'Mozilla/4.0 (compatible; DokuWiki HTTP Client; ' . PHP_OS . ')';
-        if (extension_loaded('zlib')) $this->headers['Accept-encoding'] = 'gzip';
+        if (extension_loaded('zlib')) {
+            $this->headers['Accept-encoding'] = 'gzip';
+        }
         $this->headers['Accept'] = 'text/xml,application/xml,application/xhtml+xml,' .
             'text/html,text/plain,image/png,image/jpeg,image/gif,*/*';
         $this->headers['Accept-Language'] = 'en-us';
@@ -89,9 +91,15 @@ class HTTPClient
      */
     public function get($url, $sloppy304 = false)
     {
-        if (!$this->sendRequest($url)) return false;
-        if ($this->status == 304 && $sloppy304) return $this->resp_body;
-        if ($this->status < 200 || $this->status > 206) return false;
+        if (!$this->sendRequest($url)) {
+            return false;
+        }
+        if ($this->status == 304 && $sloppy304) {
+            return $this->resp_body;
+        }
+        if ($this->status < 200 || $this->status > 206) {
+            return false;
+        }
         return $this->resp_body;
     }
 
@@ -133,8 +141,12 @@ class HTTPClient
      */
     public function post($url, $data)
     {
-        if (!$this->sendRequest($url, $data, 'POST')) return false;
-        if ($this->status < 200 || $this->status > 206) return false;
+        if (!$this->sendRequest($url, $data, 'POST')) {
+            return false;
+        }
+        if ($this->status < 200 || $this->status > 206) {
+            return false;
+        }
         return $this->resp_body;
     }
 
@@ -181,16 +193,24 @@ class HTTPClient
         $server = $uri['host'];
         $path = empty($uri['path']) ? '/' : $uri['path'];
         $uriPort = empty($uri['port']) ? null : $uri['port'];
-        if (!empty($uri['query'])) $path .= '?' . $uri['query'];
-        if (isset($uri['user'])) $this->user = $uri['user'];
-        if (isset($uri['pass'])) $this->pass = $uri['pass'];
+        if (!empty($uri['query'])) {
+            $path .= '?' . $uri['query'];
+        }
+        if (isset($uri['user'])) {
+            $this->user = $uri['user'];
+        }
+        if (isset($uri['pass'])) {
+            $this->pass = $uri['pass'];
+        }
 
         // proxy setup
         if ($this->useProxyForUrl($url)) {
             $request_url = $url;
             $server = $this->proxy_host;
             $port = $this->proxy_port;
-            if (empty($port)) $port = 8080;
+            if (empty($port)) {
+                $port = 8080;
+            }
             $use_tls = $this->proxy_ssl;
         } else {
             $request_url = $path;
@@ -267,7 +287,9 @@ class HTTPClient
                     // no keep alive for tunnels
                     $this->keep_alive = false;
                     // tunnel is authed already
-                    if (isset($headers['Proxy-Authentication'])) unset($headers['Proxy-Authentication']);
+                    if (isset($headers['Proxy-Authentication'])) {
+                        unset($headers['Proxy-Authentication']);
+                    }
                 }
             } catch (HTTPClientException $e) {
                 $this->status = $e->getCode();
@@ -319,15 +341,18 @@ class HTTPClient
             // check if expected body size exceeds allowance
             if ($this->max_bodysize && preg_match('/\r?\nContent-Length:\s*(\d+)\r?\n/i', $r_headers, $match)) {
                 if ($match[1] > $this->max_bodysize) {
-                    if ($this->max_bodysize_abort)
+                    if ($this->max_bodysize_abort) {
                         throw new HTTPClientException('Reported content length exceeds allowed response size');
-                    else $this->error = 'Reported content length exceeds allowed response size';
+                    } else {
+                        $this->error = 'Reported content length exceeds allowed response size';
+                    }
                 }
             }
 
             // get Status
-            if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/s', $r_headers, $m))
+            if (!preg_match('/^HTTP\/(\d\.\d)\s*(\d+).*?\n/s', $r_headers, $m)) {
                 throw new HTTPClientException('Server returned bad answer ' . $r_headers);
+            }
 
             $this->status = $m[2];
 
@@ -385,8 +410,9 @@ class HTTPClient
             }
 
             // check if headers are as expected
-            if ($this->header_regexp && !preg_match($this->header_regexp, $r_headers))
+            if ($this->header_regexp && !preg_match($this->header_regexp, $r_headers)) {
                 throw new HTTPClientException('The received headers did not match the given regexp');
+            }
 
             //read body (with chunked encoding if needed)
             $r_body = '';
@@ -405,15 +431,18 @@ class HTTPClient
                     while (preg_match('/^[a-zA-Z0-9]?$/', $byte = $this->readData($socket, 1, 'chunk'))) {
                         // read chunksize until \r
                         $chunk_size .= $byte;
-                        if (strlen($chunk_size) > 128) // set an abritrary limit on the size of chunks
+                        if (strlen($chunk_size) > 128) {
+                            // set an abritrary limit on the size of chunks
                             throw new HTTPClientException('Allowed response size exceeded');
+                        }
                     }
                     $this->readLine($socket, 'chunk');     // readtrailing \n
                     $chunk_size = hexdec($chunk_size);
 
                     if ($this->max_bodysize && $chunk_size + strlen($r_body) > $this->max_bodysize) {
-                        if ($this->max_bodysize_abort)
+                        if ($this->max_bodysize_abort) {
                             throw new HTTPClientException('Allowed response size exceeded');
+                        }
                         $this->error = 'Allowed response size exceeded';
                         $chunk_size = $this->max_bodysize - strlen($r_body);
                         $abort = true;
@@ -469,8 +498,9 @@ class HTTPClient
             }
         } catch (HTTPClientException $err) {
             $this->error = $err->getMessage();
-            if ($err->getCode())
+            if ($err->getCode()) {
                 $this->status = $err->getCode();
+            }
             unset(self::$connections[$connectionId]);
             fclose($socket);
             return false;
@@ -517,10 +547,16 @@ class HTTPClient
      */
     protected function ssltunnel(&$socket, &$requesturl)
     {
-        if (!$this->useProxyForUrl($requesturl)) return false;
+        if (!$this->useProxyForUrl($requesturl)) {
+            return false;
+        }
         $requestinfo = parse_url($requesturl);
-        if ($requestinfo['scheme'] != 'https') return false;
-        if (empty($requestinfo['port'])) $requestinfo['port'] = 443;
+        if ($requestinfo['scheme'] != 'https') {
+            return false;
+        }
+        if (empty($requestinfo['port'])) {
+            $requestinfo['port'] = 443;
+        }
 
         // build request
         $request = "CONNECT {$requestinfo['host']}:{$requestinfo['port']} HTTP/1.0" . HTTP_NL;
@@ -588,10 +624,12 @@ class HTTPClient
         while ($written < $towrite) {
             // check timeout
             $time_used = microtime(true) - $this->start;
-            if ($time_used > $this->timeout)
+            if ($time_used > $this->timeout) {
                 throw new HTTPClientException(sprintf('Timeout while sending %s (%.3fs)', $message, $time_used), -100);
-            if (feof($socket))
+            }
+            if (feof($socket)) {
                 throw new HTTPClientException("Socket disconnected while writing $message");
+            }
 
             // select parameters
             $sel_r = null;
@@ -605,8 +643,9 @@ class HTTPClient
 
             // write to stream
             $nbytes = fwrite($socket, substr($data, $written, 4096));
-            if ($nbytes === false)
+            if ($nbytes === false) {
                 throw new HTTPClientException("Failed writing to socket while sending $message", -100);
+            }
             $written += $nbytes;
         }
     }
@@ -630,11 +669,13 @@ class HTTPClient
     {
         $r_data = '';
         // Does not return immediately so timeout and eof can be checked
-        if ($nbytes < 0) $nbytes = 0;
+        if ($nbytes < 0) {
+            $nbytes = 0;
+        }
         $to_read = $nbytes;
         do {
             $time_used = microtime(true) - $this->start;
-            if ($time_used > $this->timeout)
+            if ($time_used > $this->timeout) {
                 throw new HTTPClientException(
                     sprintf(
                         'Timeout while reading %s after %d bytes (%.3fs)',
@@ -644,9 +685,11 @@ class HTTPClient
                     ),
                     -100
                 );
+            }
             if (feof($socket)) {
-                if (!$ignore_eof)
+                if (!$ignore_eof) {
                     throw new HTTPClientException("Premature End of File (socket) while reading $message");
+                }
                 break;
             }
 
@@ -662,8 +705,9 @@ class HTTPClient
                 }
 
                 $bytes = fread($socket, $to_read);
-                if ($bytes === false)
+                if ($bytes === false) {
                     throw new HTTPClientException("Failed reading from socket while reading $message", -100);
+                }
                 $r_data .= $bytes;
                 $to_read -= strlen($bytes);
             }
@@ -688,13 +732,15 @@ class HTTPClient
         $r_data = '';
         do {
             $time_used = microtime(true) - $this->start;
-            if ($time_used > $this->timeout)
+            if ($time_used > $this->timeout) {
                 throw new HTTPClientException(
                     sprintf('Timeout while reading %s (%.3fs) >%s<', $message, $time_used, $r_data),
                     -100
                 );
-            if (feof($socket))
+            }
+            if (feof($socket)) {
                 throw new HTTPClientException("Premature End of File (socket) while reading $message");
+            }
 
             // select parameters
             $sel_r = [$socket];
@@ -723,7 +769,9 @@ class HTTPClient
      */
     protected function debug($info, $var = null)
     {
-        if (!$this->debug) return;
+        if (!$this->debug) {
+            return;
+        }
         if (PHP_SAPI == 'cli') {
             $this->debugText($info, $var);
         } else {
@@ -758,7 +806,9 @@ class HTTPClient
     protected function debugText($info, $var = null)
     {
         echo '*' . $info . '* ' . (microtime(true) - $this->start) . "s\n";
-        if (!is_null($var)) print_r($var);
+        if (!is_null($var)) {
+            print_r($var);
+        }
         echo "\n-----------------------------------------------\n";
     }
 
@@ -782,7 +832,9 @@ class HTTPClient
             $key = trim($key);
             $val = trim($val);
             $key = strtolower($key);
-            if (!$key) continue;
+            if (!$key) {
+                continue;
+            }
             if (isset($headers[$key])) {
                 if (is_array($headers[$key])) {
                     $headers[$key][] = $val;
@@ -808,7 +860,9 @@ class HTTPClient
     {
         $string = '';
         foreach ($headers as $key => $value) {
-            if ($value === '') continue;
+            if ($value === '') {
+                continue;
+            }
             $string .= $key . ': ' . $value . HTTP_NL;
         }
         return $string;
@@ -828,7 +882,9 @@ class HTTPClient
             $headers .= "$key=$val; ";
         }
         $headers = substr($headers, 0, -2);
-        if ($headers) $headers = "Cookie: $headers" . HTTP_NL;
+        if ($headers) {
+            $headers = "Cookie: $headers" . HTTP_NL;
+        }
         return $headers;
     }
 
@@ -867,9 +923,13 @@ class HTTPClient
                 $out .= HTTP_NL;
             } else {
                 $out .= 'Content-Disposition: form-data; name="' . urlencode($key) . '"';
-                if ($val['filename']) $out .= '; filename="' . urlencode($val['filename']) . '"';
+                if ($val['filename']) {
+                    $out .= '; filename="' . urlencode($val['filename']) . '"';
+                }
                 $out .= HTTP_NL;
-                if ($val['mimetype']) $out .= 'Content-Type: ' . $val['mimetype'] . HTTP_NL;
+                if ($val['mimetype']) {
+                    $out .= 'Content-Type: ' . $val['mimetype'] . HTTP_NL;
+                }
                 $out .= HTTP_NL; // end of headers
                 $out .= $val['body'];
                 $out .= HTTP_NL;

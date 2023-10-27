@@ -34,8 +34,9 @@ class Indexer
      */
     public function addPageWords($page, $text)
     {
-        if (!$this->lock())
+        if (!$this->lock()) {
             return "locked";
+        }
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -138,13 +139,15 @@ class Indexer
                     $word_idx[] = $word;
                     $word_idx_modified = true;
                 }
-                if (!isset($index[$wlen]))
+                if (!isset($index[$wlen])) {
                     $index[$wlen] = [];
+                }
                 $index[$wlen][$wid] = $freq;
             }
             // save back the word index
-            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx))
+            if ($word_idx_modified && !$this->saveIndex('w', $wlen, $word_idx)) {
                 return false;
+            }
         }
 
         return $index;
@@ -175,8 +178,9 @@ class Indexer
             trigger_error("array passed to addMetaKeys but value is not null", E_USER_WARNING);
         }
 
-        if (!$this->lock())
+        if (!$this->lock()) {
             return "locked";
+        }
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -202,7 +206,9 @@ class Indexer
             $metawords = $this->getIndex($metaname . '_w', '');
             $addwords = false;
 
-            if (!is_array($values)) $values = [$values];
+            if (!is_array($values)) {
+                $values = [$values];
+            }
 
             $val_idx = $this->getIndexKey($metaname . '_p', '', $pid);
             if ($val_idx !== '') {
@@ -273,7 +279,9 @@ class Indexer
      */
     public function renamePage($oldpage, $newpage)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) {
+            return 'locked';
+        }
 
         $pages = $this->getPages();
 
@@ -319,7 +327,9 @@ class Indexer
      */
     public function renameMetaValue($key, $oldvalue, $newvalue)
     {
-        if (!$this->lock()) return 'locked';
+        if (!$this->lock()) {
+            return 'locked';
+        }
 
         // change the relation references index
         $metavalues = $this->getIndex($key, '_w');
@@ -379,8 +389,9 @@ class Indexer
      */
     public function deletePage($page)
     {
-        if (!$this->lock())
+        if (!$this->lock()) {
             return "locked";
+        }
 
         $result = $this->deletePageNoLock($page);
 
@@ -438,7 +449,9 @@ class Indexer
             $val_idx = explode(':', $this->getIndexKey($metaname . '_p', '', $pid));
             $meta_idx = $this->getIndex($metaname . '_i', '');
             foreach ($val_idx as $id) {
-                if ($id === '') continue;
+                if ($id === '') {
+                    continue;
+                }
                 $meta_idx[$id] = $this->updateTuple($meta_idx[$id], $pid, 0);
             }
             $this->saveIndex($metaname . '_i', '', $meta_idx);
@@ -457,7 +470,9 @@ class Indexer
     {
         global $conf;
 
-        if (!$this->lock()) return false;
+        if (!$this->lock()) {
+            return false;
+        }
 
         @unlink($conf['indexdir'] . '/page.idx');
         @unlink($conf['indexdir'] . '/title.idx');
@@ -469,12 +484,13 @@ class Indexer
                 if (
                     str_ends_with($f, '.idx') &&
                     (str_starts_with($f, 'i') ||
-                     str_starts_with($f, 'w') ||
-                     str_ends_with($f, '_w.idx') ||
-                     str_ends_with($f, '_i.idx') ||
-                     str_ends_with($f, '_p.idx'))
-                )
+                    str_starts_with($f, 'w') ||
+                    str_ends_with($f, '_w.idx') ||
+                    str_ends_with($f, '_i.idx') ||
+                    str_ends_with($f, '_p.idx'))
+                ) {
                     @unlink($conf['indexdir'] . "/$f");
+                }
             }
         }
         @unlink($conf['indexdir'] . '/lengths.idx');
@@ -521,8 +537,9 @@ class Indexer
             $text,
             ["\r" => ' ', "\n" => ' ', "\t" => ' ', "\xC2\xAD" => '']
         );
-        if (preg_match('/[^0-9A-Za-z ]/u', $text))
+        if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
             $text = Clean::stripspecials($text, ' ', '\._\-:' . $wc);
+        }
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
@@ -534,8 +551,9 @@ class Indexer
             if (
                 (!is_numeric($word) && strlen($word) < IDX_MINWORDLENGTH)
                 || in_array($word, $stopwords, true)
-            )
+            ) {
                 unset($wordlist[$i]);
+            }
         }
         return array_values($wordlist);
     }
@@ -549,10 +567,13 @@ class Indexer
     public function getPID($page)
     {
         // return PID without locking when it is in the cache
-        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+        if (isset($this->pidCache[$page])) {
+            return $this->pidCache[$page];
+        }
 
-        if (!$this->lock())
+        if (!$this->lock()) {
             return false;
+        }
 
         // load known documents
         $pid = $this->getPIDNoLock($page);
@@ -575,11 +596,15 @@ class Indexer
     protected function getPIDNoLock($page)
     {
         // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
-        if (isset($this->pidCache[$page])) return $this->pidCache[$page];
+        if (isset($this->pidCache[$page])) {
+            return $this->pidCache[$page];
+        }
         $pid = $this->addIndexKey('page', '', $page);
         // limit cache to 10 entries by discarding the oldest element as in DokuWiki usually only the most recently
         // added item will be requested again
-        if (count($this->pidCache) > 10) array_shift($this->pidCache);
+        if (count($this->pidCache) > 10) {
+            array_shift($this->pidCache);
+        }
         $this->pidCache[$page] = $pid;
         return $pid;
     }
@@ -615,7 +640,9 @@ class Indexer
     {
         $result = [];
         $wids = $this->getIndexWords($tokens, $result);
-        if (empty($wids)) return [];
+        if (empty($wids)) {
+            return [];
+        }
         // load known words and documents
         $page_idx = $this->getIndex('page', '');
         $docs = [];
@@ -623,8 +650,9 @@ class Indexer
             $wids[$wlen] = array_unique($wids[$wlen]);
             $index = $this->getIndex('i', $wlen);
             foreach ($wids[$wlen] as $ixid) {
-                if ($ixid < count($index))
+                if ($ixid < count($index)) {
                     $docs["$wlen*$ixid"] = $this->parseTuples($page_idx, $index[$ixid]);
+                }
             }
         }
         // merge found pages into final result array
@@ -634,14 +662,20 @@ class Indexer
             foreach ($res as $wid) {
                 // handle the case when ($ixid < count($index)) has been false
                 // and thus $docs[$wid] hasn't been set.
-                if (!isset($docs[$wid])) continue;
+                if (!isset($docs[$wid])) {
+                    continue;
+                }
                 $hits = &$docs[$wid];
                 foreach ($hits as $hitkey => $hitcnt) {
                     // make sure the document still exists
-                    if (!page_exists($hitkey, '', false)) continue;
-                    if (!isset($final[$word][$hitkey]))
+                    if (!page_exists($hitkey, '', false)) {
+                        continue;
+                    }
+                    if (!isset($final[$word][$hitkey])) {
                         $final[$word][$hitkey] = $hitcnt;
-                    else $final[$word][$hitkey] += $hitcnt;
+                    } else {
+                        $final[$word][$hitkey] += $hitcnt;
+                    }
                 }
             }
         }
@@ -668,9 +702,11 @@ class Indexer
      */
     public function lookupKey($key, &$value, $func = null)
     {
-        if (!is_array($value))
+        if (!is_array($value)) {
             $value_array = [$value];
-        else $value_array =& $value;
+        } else {
+            $value_array =& $value;
+        }
 
         // the matching ids for the provided value(s)
         $value_ids = [];
@@ -687,8 +723,9 @@ class Indexer
         if (!is_null($func)) {
             foreach ($value_array as $val) {
                 foreach ($words as $i => $word) {
-                    if (call_user_func_array($func, [$val, $word]))
+                    if (call_user_func_array($func, [$val, $word])) {
                         $value_ids[$i][] = $val;
+                    }
                 }
             }
         } else {
@@ -746,7 +783,9 @@ class Indexer
                 }
             }
         }
-        if (!is_array($value)) $result = $result[$value];
+        if (!is_array($value)) {
+            $result = $result[$value];
+        }
         return $result;
     }
 
@@ -787,15 +826,18 @@ class Indexer
                 $dollar = '';
                 --$wlen;
             }
-            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword))
+            if ($wlen < IDX_MINWORDLENGTH && $caret && $dollar && !is_numeric($xword)) {
                 continue;
-            if (!isset($tokens[$xword]))
+            }
+            if (!isset($tokens[$xword])) {
                 $tokenlength[$wlen][] = $xword;
+            }
             if (!$caret || !$dollar) {
                 $re = $caret . preg_quote($xword, '/') . $dollar;
                 $tokens[$xword][] = [$word, '/' . $re . '/'];
-                if (!isset($tokenwild[$xword]))
+                if (!isset($tokenwild[$xword])) {
                     $tokenwild[$xword] = $wlen;
+                }
             } else {
                 $tokens[$xword][] = [$word, null];
             }
@@ -806,7 +848,9 @@ class Indexer
         // $tokenwild = array( base word => base word length ... )
         $length_filter = $tokenwild === [] ? $tokenlength : min(array_keys($tokenlength));
         $indexes_known = $this->indexLengths($length_filter);
-        if ($tokenwild !== []) sort($indexes_known);
+        if ($tokenwild !== []) {
+            sort($indexes_known);
+        }
         // get word IDs
         $wids = [];
         foreach ($indexes_known as $ixlen) {
@@ -824,9 +868,13 @@ class Indexer
             }
             // handle wildcard search
             foreach ($tokenwild as $xword => $wlen) {
-                if ($wlen >= $ixlen) break;
+                if ($wlen >= $ixlen) {
+                    break;
+                }
                 foreach ($tokens[$xword] as $w) {
-                    if (is_null($w[1])) continue;
+                    if (is_null($w[1])) {
+                        continue;
+                    }
                     foreach (array_keys(preg_grep($w[1], $word_idx)) as $wid) {
                         $wids[$ixlen][] = $wid;
                         $result[$w[0]][] = "$ixlen*$wid";
@@ -849,7 +897,9 @@ class Indexer
     public function getPages($key = null)
     {
         $page_idx = $this->getIndex('page', '');
-        if (is_null($key)) return $page_idx;
+        if (is_null($key)) {
+            return $page_idx;
+        }
 
         $metaname = idx_cleanName($key);
 
@@ -858,7 +908,9 @@ class Indexer
             $title_idx = $this->getIndex('title', '');
             array_splice($page_idx, count($title_idx));
             foreach ($title_idx as $i => $title)
-                if ($title === "") unset($page_idx[$i]);
+            if ($title === "") {
+                unset($page_idx[$i]);
+            }
             return array_values($page_idx);
         }
 
@@ -883,10 +935,12 @@ class Indexer
      */
     public function histogram($min = 1, $max = 0, $minlen = 3, $key = null)
     {
-        if ($min < 1)
+        if ($min < 1) {
             $min = 1;
-        if ($max < $min)
+        }
+        if ($max < $min) {
             $max = 0;
+        }
 
         $result = [];
 
@@ -894,8 +948,9 @@ class Indexer
             $index = $this->getIndex('title', '');
             $index = array_count_values($index);
             foreach ($index as $val => $cnt) {
-                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen)
+                if ($cnt >= $min && (!$max || $cnt <= $max) && strlen($val) >= $minlen) {
                     $result[$val] = $cnt;
+                }
             }
         } elseif (!is_null($key)) {
             $metaname = idx_cleanName($key);
@@ -903,27 +958,32 @@ class Indexer
             $val_idx = [];
             foreach ($index as $wid => $line) {
                 $freq = $this->countTuples($line);
-                if ($freq >= $min && (!$max || $freq <= $max))
+                if ($freq >= $min && (!$max || $freq <= $max)) {
                     $val_idx[$wid] = $freq;
+                }
             }
             if (!empty($val_idx)) {
                 $words = $this->getIndex($metaname . '_w', '');
                 foreach ($val_idx as $wid => $freq) {
-                    if (strlen($words[$wid]) >= $minlen)
+                    if (strlen($words[$wid]) >= $minlen) {
                         $result[$words[$wid]] = $freq;
+                    }
                 }
             }
         } else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $length) {
-                if ($length < $minlen) continue;
+                if ($length < $minlen) {
+                    continue;
+                }
                 $index = $this->getIndex('i', $length);
                 $words = null;
                 foreach ($index as $wid => $line) {
                     $freq = $this->countTuples($line);
                     if ($freq >= $min && (!$max || $freq <= $max)) {
-                        if ($words === null)
+                        if ($words === null) {
                             $words = $this->getIndex('w', $length);
+                        }
                         $result[$words[$wid]] = $freq;
                     }
                 }
@@ -999,7 +1059,9 @@ class Indexer
     {
         global $conf;
         $fn = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
-        if (!file_exists($fn)) return [];
+        if (!file_exists($fn)) {
+            return [];
+        }
         return file($fn, FILE_IGNORE_NEW_LINES);
     }
 
@@ -1018,13 +1080,17 @@ class Indexer
         global $conf;
         $fn = $conf['indexdir'] . '/' . $idx . $suffix;
         $fh = @fopen($fn . '.tmp', 'w');
-        if (!$fh) return false;
+        if (!$fh) {
+            return false;
+        }
         fwrite($fh, implode("\n", $lines));
-        if (!empty($lines))
+        if (!empty($lines)) {
             fwrite($fh, "\n");
+        }
         fclose($fh);
-        if ($conf['fperm'])
+        if ($conf['fperm']) {
             chmod($fn . '.tmp', $conf['fperm']);
+        }
         io_rename($fn . '.tmp', $fn . '.idx');
         return true;
     }
@@ -1043,12 +1109,18 @@ class Indexer
     {
         global $conf;
         $fn = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
-        if (!file_exists($fn)) return '';
+        if (!file_exists($fn)) {
+            return '';
+        }
         $fh = @fopen($fn, 'r');
-        if (!$fh) return '';
+        if (!$fh) {
+            return '';
+        }
         $ln = -1;
         while (($line = fgets($fh)) !== false) {
-            if (++$ln == $id) break;
+            if (++$ln == $id) {
+                break;
+            }
         }
         fclose($fh);
         return rtrim((string)$line);
@@ -1068,11 +1140,14 @@ class Indexer
     protected function saveIndexKey($idx, $suffix, $id, $line)
     {
         global $conf;
-        if (!str_ends_with($line, "\n"))
+        if (!str_ends_with($line, "\n")) {
             $line .= "\n";
+        }
         $fn = $conf['indexdir'] . '/' . $idx . $suffix;
         $fh = @fopen($fn . '.tmp', 'w');
-        if (!$fh) return false;
+        if (!$fh) {
+            return false;
+        }
         $ih = @fopen($fn . '.idx', 'r');
         if ($ih) {
             $ln = -1;
@@ -1092,8 +1167,9 @@ class Indexer
             fwrite($fh, $line);
         }
         fclose($fh);
-        if ($conf['fperm'])
+        if ($conf['fperm']) {
             chmod($fn . '.tmp', $conf['fperm']);
+        }
         io_rename($fn . '.tmp', $fn . '.idx');
         return true;
     }
@@ -1157,15 +1233,17 @@ class Indexer
             // testing if index files exist only
             $path = $conf['indexdir'] . "/i";
             foreach (array_keys($filter) as $key) {
-                if (file_exists($path . $key . '.idx'))
+                if (file_exists($path . $key . '.idx')) {
                     $idx[] = $key;
+                }
             }
         } else {
             $lengths = idx_listIndexLengths();
             foreach ($lengths as $length) {
                 // keep all the values equal or superior
-                if ((int)$length >= (int)$filter)
+                if ((int)$length >= (int)$filter) {
                     $idx[] = $length;
+                }
             }
         }
         return $idx;
@@ -1210,15 +1288,23 @@ class Indexer
     protected function parseTuples(&$keys, $line)
     {
         $result = [];
-        if ($line == '') return $result;
+        if ($line == '') {
+            return $result;
+        }
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
-            if ($tuple === '') continue;
+            if ($tuple === '') {
+                continue;
+            }
             [$key, $cnt] = explode('*', $tuple);
-            if (!$cnt) continue;
+            if (!$cnt) {
+                continue;
+            }
             if (isset($keys[$key])) {
                 $key = $keys[$key];
-                if ($key === false || is_null($key)) continue;
+                if ($key === false || is_null($key)) {
+                    continue;
+                }
             }
             $result[$key] = $cnt;
         }
@@ -1238,7 +1324,9 @@ class Indexer
         $freq = 0;
         $parts = explode(':', $line);
         foreach ($parts as $tuple) {
-            if ($tuple === '') continue;
+            if ($tuple === '') {
+                continue;
+            }
             [/* pid */, $cnt] = explode('*', $tuple);
             $freq += (int)$cnt;
         }

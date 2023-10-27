@@ -27,7 +27,9 @@ class action_plugin_safefnrecode extends ActionPlugin
     public function handleIndexerTasksRun(Event $event, $param)
     {
         global $conf;
-        if ($conf['fnencode'] != 'safe') return;
+        if ($conf['fnencode'] != 'safe') {
+            return;
+        }
 
         if (!file_exists($conf['datadir'] . '_safefn.recoded')) {
             $this->recode($conf['datadir']);
@@ -57,13 +59,23 @@ class action_plugin_safefnrecode extends ActionPlugin
     private function recode($dir)
     {
         $dh = opendir($dir);
-        if (!$dh) return;
+        if (!$dh) {
+            return;
+        }
         while (($file = readdir($dh)) !== false) {
-            if ($file == '.' || $file == '..') continue;           # cur and upper dir
-            if (is_dir("$dir/$file")) $this->recode("$dir/$file"); #recurse
-            if (strpos($file, '%') === false) continue;             # no encoding used
+            if ($file == '.' || $file == '..') {
+                continue;
+            }           # cur and upper dir
+            if (is_dir("$dir/$file")) {
+                $this->recode("$dir/$file");
+            } #recurse
+            if (strpos($file, '%') === false) {
+                continue;
+            }             # no encoding used
             $new = preg_replace('/(%[^\]]*?)\./', '\1]', $file);    # new post indicator
-            if (preg_match('/%[^\]]+$/', $new)) $new .= ']';        # fix end FS#2122
+            if (preg_match('/%[^\]]+$/', $new)) {
+                $new .= ']';
+            }        # fix end FS#2122
             rename("$dir/$file", "$dir/$new");                     # rename it
         }
         closedir($dh);

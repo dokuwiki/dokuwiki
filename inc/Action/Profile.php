@@ -30,7 +30,9 @@ class Profile extends AbstractUserAction
 
         /** @var AuthPlugin $auth */
         global $auth;
-        if (!$auth->canDo('Profile')) throw new ActionDisabledException();
+        if (!$auth->canDo('Profile')) {
+            throw new ActionDisabledException();
+        }
     }
 
     /** @inheritdoc */

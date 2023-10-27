@@ -79,9 +79,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             // @deprecated 2018-04-14, backward compatibility
             $args = func_get_args();
             $data = [];
-            if (isset($args[1])) $data['target'] = $args[1];
-            if (isset($args[2])) $data['name'] = $args[2];
-            if (isset($args[3])) $data['hid'] = $args[3];
+            if (isset($args[1])) {
+                $data['target'] = $args[1];
+            }
+            if (isset($args[2])) {
+                $data['name'] = $args[2];
+            }
+            if (isset($args[3])) {
+                $data['hid'] = $args[3];
+            }
         }
         $data['secid'] = ++$this->lastsecid;
         $data['start'] = $start;
@@ -221,7 +227,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         global $conf;
 
-        if (blank($text)) return; //skip empty headlines
+        if (blank($text)) {
+            return;
+        } //skip empty headlines
 
         $hid = $this->_headerToLink($text, true);
 
@@ -504,7 +512,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         $class = '';
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class = " class=\"$classes\"";
         }
         $this->doc .= "<ul$class>" . DOKU_LF;
@@ -527,7 +537,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         $class = '';
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class = " class=\"$classes\"";
         }
         $this->doc .= "<ol$class>" . DOKU_LF;
@@ -691,7 +703,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $this->doc .= '<pre class="' . $type . '">' . $this->_xmlEntities($text) . '</pre>' . DOKU_LF;
         } else {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
-            if ($type != 'code') $class .= ' ' . $type;
+            if ($type != 'code') {
+                $class .= ' ' . $type;
+            }
 
             $this->doc .= "<pre class=\"$class $language\">" .
                 p_xhtml_cached_geshi($text, $language, '', $options) .
@@ -919,7 +933,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         //keep hash anchor
         [$id, $hash] = sexplode('#', $id, 2);
-        if (!empty($hash)) $hash = $this->_headerToLink($hash);
+        if (!empty($hash)) {
+            $hash = $this->_headerToLink($hash);
+        }
 
         //prepare for formating
         $link['target'] = $conf['target']['wiki'];
@@ -946,7 +962,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         //keep hash
-        if ($hash) $link['url'] .= '#' . $hash;
+        if ($hash) {
+            $link['url'] .= '#' . $hash;
+        }
 
         //output formatted
         if ($returnonly) {
@@ -971,10 +989,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $name = $this->_getLinkTitle($name, $url, $isImage);
 
         // url might be an attack vector, only allow registered protocols
-        if (is_null($this->schemes)) $this->schemes = getSchemes();
+        if (is_null($this->schemes)) {
+            $this->schemes = getSchemes();
+        }
         [$scheme] = explode('://', $url);
         $scheme = strtolower($scheme);
-        if (!in_array($scheme, $this->schemes)) $url = '';
+        if (!in_array($scheme, $this->schemes)) {
+            $url = '';
+        }
 
         // is there still an URL?
         if (!$url) {
@@ -1006,8 +1028,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         $link['name'] = $name;
         $link['title'] = $this->_xmlEntities($url);
-        if ($conf['relnofollow']) $link['rel'] .= ' ugc nofollow';
-        if ($conf['target']['extern']) $link['rel'] .= ' noopener';
+        if ($conf['relnofollow']) {
+            $link['rel'] .= ' ugc nofollow';
+        }
+        if ($conf['target']['extern']) {
+            $link['rel'] .= ' noopener';
+        }
 
         //output formatted
         if ($returnonly) {
@@ -1064,18 +1090,24 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 $link['rel'] .= ' nofollow';
             }
         }
-        if ($conf['target']['interwiki']) $link['rel'] .= ' noopener';
+        if ($conf['target']['interwiki']) {
+            $link['rel'] .= ' noopener';
+        }
 
         $link['url'] = $url;
         $link['title'] = $this->_xmlEntities($link['url']);
 
         // output formatted
         if ($returnonly) {
-            if ($url == '') return $link['name'];
+            if ($url == '') {
+                return $link['name'];
+            }
             return $this->_formatLink($link);
         } elseif ($url == '') {
             $this->doc .= $link['name'];
-        } else $this->doc .= $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -1154,7 +1186,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $name = $address;
         }
 
-        if ($conf['mailguard'] == 'visible') $address = rawurlencode($address);
+        if ($conf['mailguard'] == 'visible') {
+            $address = rawurlencode($address);
+        }
 
         $link['url'] = 'mailto:' . $address;
         $link['name'] = $name;
@@ -1229,10 +1263,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 ],
                 true
             );
-            if ($exists) $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))) . ')';
+            if ($exists) {
+                $link['title'] .= ' (' . filesize_h(filesize(mediaFN($src))) . ')';
+            }
         }
 
-        if (!empty($hash)) $link['url'] .= '#' . $hash;
+        if (!empty($hash)) {
+            $link['url'] .= '#' . $hash;
+        }
 
         //markup non existing files
         if (!$exists) {
@@ -1309,15 +1347,22 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $link['class'] .= ' mediafile mf_' . $class;
         }
 
-        if ($hash) $link['url'] .= '#' . $hash;
+        if ($hash) {
+            $link['url'] .= '#' . $hash;
+        }
 
         //output formatted
         if ($return) {
-            if ($linking == 'nolink' || $noLink) return $link['name'];
-            else return $this->_formatLink($link);
+            if ($linking == 'nolink' || $noLink) {
+                return $link['name'];
+            } else {
+                return $this->_formatLink($link);
+            }
         } elseif ($linking == 'nolink' || $noLink) {
             $this->doc .= $link['name'];
-        } else $this->doc .= $this->_formatLink($link);
+        } else {
+            $this->doc .= $this->_formatLink($link);
+        }
     }
 
     /**
@@ -1346,7 +1391,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             error_reporting($elvl);
         }
 
-        if ($params['nosort']) $feed->enable_order_by_date(false);
+        if ($params['nosort']) {
+            $feed->enable_order_by_date(false);
+        }
 
         //decide on start and end
         if ($params['reverse']) {
@@ -1380,8 +1427,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                     $author = $item->get_author(0);
                     if ($author instanceof Author) {
                         $name = $author->get_name();
-                        if (!$name) $name = $author->get_email();
-                        if ($name) $this->doc .= ' ' . $lang['by'] . ' ' . hsc($name);
+                        if (!$name) {
+                            $name = $author->get_email();
+                        }
+                        if ($name) {
+                            $this->doc .= ' ' . $lang['by'] . ' ' . hsc($name);
+                        }
                     }
                 }
                 if ($params['date']) {
@@ -1424,7 +1475,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $this->_counter['row_counter'] = 0;
         $class = 'table';
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class .= ' ' . $classes;
         }
         if ($pos !== null) {
@@ -1511,7 +1564,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $this->_counter['cell_counter'] = 0;
         $class = 'row' . $this->_counter['row_counter']++;
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class .= ' ' . $classes;
         }
         $this->doc .= DOKU_TAB . '<tr class="' . $class . '">' . DOKU_LF . DOKU_TAB . DOKU_TAB;
@@ -1540,7 +1595,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class .= ' ' . $align . 'align';
         }
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class .= ' ' . $classes;
         }
         $class .= '"';
@@ -1578,7 +1635,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class .= ' ' . $align . 'align';
         }
         if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
+            if (is_array($classes)) {
+                $classes = implode(' ', $classes);
+            }
             $class .= ' ' . $classes;
         }
         $class .= '"';
@@ -1642,12 +1701,24 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $ret = '';
         $ret .= $link['pre'];
         $ret .= '<a href="' . $link['url'] . '"';
-        if (!empty($link['class'])) $ret .= ' class="' . $link['class'] . '"';
-        if (!empty($link['target'])) $ret .= ' target="' . $link['target'] . '"';
-        if (!empty($link['title'])) $ret .= ' title="' . $link['title'] . '"';
-        if (!empty($link['style'])) $ret .= ' style="' . $link['style'] . '"';
-        if (!empty($link['rel'])) $ret .= ' rel="' . trim($link['rel']) . '"';
-        if (!empty($link['more'])) $ret .= ' ' . $link['more'];
+        if (!empty($link['class'])) {
+            $ret .= ' class="' . $link['class'] . '"';
+        }
+        if (!empty($link['target'])) {
+            $ret .= ' target="' . $link['target'] . '"';
+        }
+        if (!empty($link['title'])) {
+            $ret .= ' title="' . $link['title'] . '"';
+        }
+        if (!empty($link['style'])) {
+            $ret .= ' style="' . $link['style'] . '"';
+        }
+        if (!empty($link['rel'])) {
+            $ret .= ' rel="' . trim($link['rel']) . '"';
+        }
+        if (!empty($link['more'])) {
+            $ret .= ' ' . $link['more'];
+        }
         $ret .= '>';
         $ret .= $link['name'];
         $ret .= '</a>';
@@ -1768,8 +1839,12 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
             $att = [];
             $att['class'] = "media$align";
-            if ($align == 'right') $att['align'] = 'right';
-            if ($align == 'left') $att['align'] = 'left';
+            if ($align == 'right') {
+                $att['align'] = 'right';
+            }
+            if ($align == 'left') {
+                $att['align'] = 'left';
+            }
             $ret .= html_flashobject(
                 ml($src, ['cache' => $cache], true, '&'),
                 $width,
@@ -1886,7 +1961,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $link['suf'] = '';
         $link['more'] = '';
         $link['target'] = $conf['target']['media'];
-        if ($conf['target']['media']) $link['rel'] = 'noopener';
+        if ($conf['target']['media']) {
+            $link['rel'] = 'noopener';
+        }
         $link['title'] = $this->_xmlEntities($src);
         $link['name'] = $this->_media($src, $title, $align, $width, $height, $cache, $render);
 
@@ -1908,11 +1985,17 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     public function _video($src, $width, $height, $atts = null)
     {
         // prepare width and height
-        if (is_null($atts)) $atts = [];
+        if (is_null($atts)) {
+            $atts = [];
+        }
         $atts['width'] = (int)$width;
         $atts['height'] = (int)$height;
-        if (!$atts['width']) $atts['width'] = 320;
-        if (!$atts['height']) $atts['height'] = 240;
+        if (!$atts['width']) {
+            $atts['width'] = 320;
+        }
+        if (!$atts['height']) {
+            $atts['height'] = 240;
+        }
 
         $posterUrl = '';
         $files = [];
@@ -1937,7 +2020,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $out = '';
         // open video tag
         $out .= '<video ' . buildAttributes($atts) . ' controls="controls"';
-        if ($posterUrl) $out .= ' poster="' . hsc($posterUrl) . '"';
+        if ($posterUrl) {
+            $out .= ' poster="' . hsc($posterUrl) . '"';
+        }
         $out .= '>' . NL;
         $fallback = '';
 
@@ -2053,7 +2138,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     protected function _getLastMediaRevisionAt($media_id)
     {
-        if (!$this->date_at || media_isexternal($media_id)) return '';
+        if (!$this->date_at || media_isexternal($media_id)) {
+            return '';
+        }
         $changelog = new MediaChangeLog($media_id);
         return $changelog->getLastRevisionAt($this->date_at);
     }

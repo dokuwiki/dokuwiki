@@ -36,7 +36,9 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     header("Content-Type: $mime");
 
     // send security policy if given
-    if (!empty($csp)) Headers::contentSecurityPolicy($csp);
+    if (!empty($csp)) {
+        Headers::contentSecurityPolicy($csp);
+    }
 
     // calculate cache times
     if ($cache == -1) {
@@ -158,7 +160,9 @@ function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
             return [412, 'Precondition Failed'];
         }
         //handle external images
-        if (str_starts_with($MIME, 'image/')) $file = media_get_from_URL($media, $EXT, $CACHE);
+        if (str_starts_with($MIME, 'image/')) {
+            $file = media_get_from_URL($media, $EXT, $CACHE);
+        }
         if (!$file) {
             //download failed - redirect to original URL
             return [302, $media];
@@ -202,7 +206,11 @@ function calc_cache($cache)
 {
     global $conf;
 
-    if (strtolower($cache) == 'nocache') return 0; //never cache
-    if (strtolower($cache) == 'recache') return $conf['cachetime']; //use standard cache
+    if (strtolower($cache) == 'nocache') {
+        return 0;
+    } //never cache
+    if (strtolower($cache) == 'recache') {
+        return $conf['cachetime'];
+    } //use standard cache
     return -1; //cache endless
 }

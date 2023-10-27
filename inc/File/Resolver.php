@@ -34,7 +34,9 @@ abstract class Resolver
         global $conf;
 
         // some pre cleaning for useslash:
-        if ($conf['useslash']) $id = str_replace('/', ':', $id);
+        if ($conf['useslash']) {
+            $id = str_replace('/', ':', $id);
+        }
         // on some systems, semicolons might be used instead of colons:
         $id = str_replace(';', ':', $id);
 
@@ -50,7 +52,9 @@ abstract class Resolver
      */
     protected function resolvePrefix($id)
     {
-        if ($id === '') return $id;
+        if ($id === '') {
+            return $id;
+        }
 
         // relative to current page (makes the current page a start page)
         if ($id[0] === '~') {
@@ -81,15 +85,21 @@ abstract class Resolver
     protected function resolveRelatives($id)
     {
         $id = rtrim($id, '.'); // trailing dots are invalid
-        if ($id === '') return '';
+        if ($id === '') {
+            return '';
+        }
         $trail = ($id[-1] === ':') ? ':' : ''; // keep trailing colon
 
         $result = [];
         $parts = explode(':', $id);
 
         foreach ($parts as $dir) {
-            if ($dir === '.') continue;
-            if ($dir === '') continue;
+            if ($dir === '.') {
+                continue;
+            }
+            if ($dir === '') {
+                continue;
+            }
             if ($dir === '..') {
                 array_pop($result);
                 continue;

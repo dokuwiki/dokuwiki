@@ -34,12 +34,18 @@ class Writer
     public function save($settings)
     {
         global $conf;
-        if ($this->isLocked()) throw new \Exception('no save');
+        if ($this->isLocked()) {
+            throw new \Exception('no save');
+        }
 
         // backup current file (remove any existing backup)
         if (file_exists($this->savefile)) {
-            if (file_exists($this->savefile . '.bak.php')) @unlink($this->savefile . '.bak.php');
-            if (!io_rename($this->savefile, $this->savefile . '.bak.php')) throw new \Exception('no backup');
+            if (file_exists($this->savefile . '.bak.php')) {
+                @unlink($this->savefile . '.bak.php');
+            }
+            if (!io_rename($this->savefile, $this->savefile . '.bak.php')) {
+                throw new \Exception('no backup');
+            }
         }
 
         if (!$fh = @fopen($this->savefile, 'wb')) {
@@ -61,7 +67,9 @@ class Writer
 
         fwrite($fh, $out);
         fclose($fh);
-        if ($conf['fperm']) chmod($this->savefile, $conf['fperm']);
+        if ($conf['fperm']) {
+            chmod($this->savefile, $conf['fperm']);
+        }
         $this->opcacheUpdate($this->savefile);
     }
 
@@ -74,7 +82,9 @@ class Writer
      */
     public function touch()
     {
-        if ($this->isLocked()) throw new \Exception('no save');
+        if ($this->isLocked()) {
+            throw new \Exception('no save');
+        }
         @touch($this->savefile);
         $this->opcacheUpdate($this->savefile);
     }
@@ -87,7 +97,9 @@ class Writer
      */
     protected function opcacheUpdate($file)
     {
-        if (!function_exists('opcache_invalidate')) return;
+        if (!function_exists('opcache_invalidate')) {
+            return;
+        }
         set_error_handler(function ($errNo, $errMsg) {
             Logger::debug('Unable to invalidate opcache: ' . $errMsg);
         });
@@ -103,9 +115,15 @@ class Writer
      */
     public function isLocked()
     {
-        if (!$this->savefile) return true;
-        if (!is_writable(dirname($this->savefile))) return true;
-        if (file_exists($this->savefile) && !is_writable($this->savefile)) return true;
+        if (!$this->savefile) {
+            return true;
+        }
+        if (!is_writable(dirname($this->savefile))) {
+            return true;
+        }
+        if (file_exists($this->savefile) && !is_writable($this->savefile)) {
+            return true;
+        }
         return false;
     }
 

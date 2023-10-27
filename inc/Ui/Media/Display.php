@@ -57,7 +57,9 @@ class Display
     public function getIconUrl()
     {
         $link = 'lib/images/fileicons/svg/' . $this->mediaFile->getIcoClass() . '.svg';
-        if (!file_exists(DOKU_INC . $link)) $link = 'lib/images/fileicons/svg/file.svg';
+        if (!file_exists(DOKU_INC . $link)) {
+            $link = 'lib/images/fileicons/svg/file.svg';
+        }
         return DOKU_BASE . $link;
     }
 

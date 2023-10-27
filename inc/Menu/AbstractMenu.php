@@ -59,7 +59,9 @@ abstract class AbstractMenu implements MenuInterface
                 $class = "\\dokuwiki\\Menu\\Item\\$class";
                 /** @var AbstractItem $item */
                 $item = new $class();
-                if (!$item->visibleInContext($this->context)) continue;
+                if (!$item->visibleInContext($this->context)) {
+                    continue;
+                }
                 $data['items'][] = $item;
             } catch (\RuntimeException $ignored) {
                 // item not available

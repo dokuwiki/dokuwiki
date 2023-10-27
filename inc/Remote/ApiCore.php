@@ -371,7 +371,9 @@ class ApiCore
     {
         global $conf;
 
-        if (!is_array($opts)) $opts = [];
+        if (!is_array($opts)) {
+            $opts = [];
+        }
 
         $ns = cleanID($ns);
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
@@ -453,7 +455,9 @@ class ApiCore
 
         $ns = cleanID($ns);
 
-        if (!is_array($options)) $options = [];
+        if (!is_array($options)) {
+            $options = [];
+        }
         $options['skipacl'] = 0; // no ACL skipping for XMLRPC
 
         if (auth_quickaclcheck($ns . ':*') >= AUTH_READ) {
@@ -462,7 +466,9 @@ class ApiCore
             $data = [];
             search($data, $conf['mediadir'], 'search_media', $options, $dir);
             $len = count($data);
-            if (!$len) return [];
+            if (!$len) {
+                return [];
+            }
 
             for ($i = 0; $i < $len; $i++) {
                 unset($data[$i]['meta']);
@@ -645,9 +651,15 @@ class ApiCore
 
         $notify = (bool)$userStruct['notify'] ?? false;
 
-        if ($user === '') throw new RemoteException('empty or invalid user', 401);
-        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if ($user === '') {
+            throw new RemoteException('empty or invalid user', 401);
+        }
+        if ($name === '') {
+            throw new RemoteException('empty or invalid user name', 402);
+        }
+        if (!mail_isvalid($mail)) {
+            throw new RemoteException('empty or invalid mail address', 403);
+        }
 
         if ((string)$password === '') {
             $password = auth_pwgen($user);
@@ -887,8 +899,9 @@ class ApiCore
      */
     public function getRecentMediaChanges($timestamp)
     {
-        if (strlen($timestamp) != 10)
+        if (strlen($timestamp) != 10) {
             throw new RemoteException('The provided value is not a valid timestamp', 311);
+        }
 
         $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
 
@@ -1062,8 +1075,12 @@ class ApiCore
         /** @var AuthPlugin $auth */
         global $auth;
 
-        if (!$conf['useacl']) return 0;
-        if (!$auth instanceof AuthPlugin) return 0;
+        if (!$conf['useacl']) {
+            return 0;
+        }
+        if (!$auth instanceof AuthPlugin) {
+            return 0;
+        }
 
         @session_start(); // reopen session for login
         $ok = null;
@@ -1093,8 +1110,12 @@ class ApiCore
     {
         global $conf;
         global $auth;
-        if (!$conf['useacl']) return 0;
-        if (!$auth instanceof AuthPlugin) return 0;
+        if (!$conf['useacl']) {
+            return 0;
+        }
+        if (!$auth instanceof AuthPlugin) {
+            return 0;
+        }
 
         auth_logoff();
 

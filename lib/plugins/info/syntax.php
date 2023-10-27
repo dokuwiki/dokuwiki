@@ -134,7 +134,9 @@ class syntax_plugin_info extends SyntaxPlugin
         // remove subparts
         foreach ($plugins as $p) {
             $po = plugin_load($type, $p);
-            if (! $po instanceof PluginInterface) continue;
+            if (! $po instanceof PluginInterface) {
+                continue;
+            }
             [$name, /* part */] = explode('_', $p, 2);
             $plginfo[$name] = $po->getInfo();
         }
@@ -171,9 +173,13 @@ class syntax_plugin_info extends SyntaxPlugin
         $plugins = plugin_list('helper');
         foreach ($plugins as $p) {
             $po = plugin_load('helper', $p);
-            if (!$po instanceof PluginInterface) continue;
+            if (!$po instanceof PluginInterface) {
+                continue;
+            }
 
-            if (!method_exists($po, 'getMethods')) continue;
+            if (!method_exists($po, 'getMethods')) {
+                continue;
+            }
             $methods = $po->getMethods();
             $info = $po->getInfo();
 

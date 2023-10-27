@@ -78,7 +78,9 @@ class Edit extends AbstractAction
 
         // Use the date of the newest revision, not of the revision we edit
         // This is used for conflict detection
-        if (!$DATE) $DATE = @filemtime(wikiFN($ID));
+        if (!$DATE) {
+            $DATE = @filemtime(wikiFN($ID));
+        }
 
         //check if locked by anyone - if not lock for my self
         $lockedby = checklock($ID);

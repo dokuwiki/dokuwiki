@@ -168,7 +168,9 @@ class PluginController
      */
     public function disable($plugin)
     {
-        if (array_key_exists($plugin, $this->pluginCascade['protected'])) return false;
+        if (array_key_exists($plugin, $this->pluginCascade['protected'])) {
+            return false;
+        }
         $this->masterList[$plugin] = 0;
         return $this->saveList();
     }
@@ -181,7 +183,9 @@ class PluginController
      */
     public function enable($plugin)
     {
-        if (array_key_exists($plugin, $this->pluginCascade['protected'])) return false;
+        if (array_key_exists($plugin, $this->pluginCascade['protected'])) {
+            return false;
+        }
         $this->masterList[$plugin] = 1;
         return $this->saveList();
     }
@@ -204,8 +208,12 @@ class PluginController
         if ($dh = @opendir(DOKU_PLUGIN)) {
             $all_plugins = [];
             while (false !== ($plugin = readdir($dh))) {
-                if ($plugin[0] === '.') continue;               // skip hidden entries
-                if (is_file(DOKU_PLUGIN . $plugin)) continue;    // skip files, we're only interested in directories
+                if ($plugin[0] === '.') {
+                    continue;
+                }               // skip hidden entries
+                if (is_file(DOKU_PLUGIN . $plugin)) {
+                    continue;
+                }    // skip files, we're only interested in directories
 
                 if (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 0) {
                     $all_plugins[$plugin] = 0;
@@ -252,7 +260,9 @@ class PluginController
     {
         global $conf;
 
-        if (empty($this->masterList)) return false;
+        if (empty($this->masterList)) {
+            return false;
+        }
 
         // Rebuild list of local settings
         $local_plugins = $this->rebuildLocal();
@@ -269,9 +279,15 @@ class PluginController
             // backup current file (remove any existing backup)
             if (file_exists($file)) {
                 $backup = $file . '.bak';
-                if (file_exists($backup)) @unlink($backup);
-                if (!@copy($file, $backup)) return false;
-                if ($conf['fperm']) chmod($backup, $conf['fperm']);
+                if (file_exists($backup)) {
+                    @unlink($backup);
+                }
+                if (!@copy($file, $backup)) {
+                    return false;
+                }
+                if ($conf['fperm']) {
+                    chmod($backup, $conf['fperm']);
+                }
             }
             //check if can open for writing, else restore
             return io_saveFile($file, $out);
@@ -355,7 +371,9 @@ class PluginController
                         if (
                             str_starts_with($component, '.') ||
                             !str_ends_with(strtolower($component), '.php')
-                        ) continue;
+                        ) {
+                            continue;
+                        }
                         if (is_file($typedir . $component)) {
                             $plugins[] = $plugin . '_' . substr($component, 0, -4);
                         }

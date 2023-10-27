@@ -9,7 +9,9 @@
  */
 
 // must be run from within DokuWiki
-if (!defined('DOKU_INC')) die();
+if (!defined('DOKU_INC')) {
+    die();
+}
 
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
@@ -49,7 +51,9 @@ if (!defined('DOKU_INC')) die();
                     if ($ERROR) :
                         echo '<h1>' . $ERROR . '</h1>';
                     else : ?>
-                        <?php if ($REV) echo p_locale_xhtml('showrev');?>
+                        <?php if ($REV) {
+                            echo p_locale_xhtml('showrev');
+                        }?>
                         <h1><?php echo nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h1>
 
                         <?php tpl_img(900, 700); /* parameters: maximum width, maximum height (and more) */ ?>

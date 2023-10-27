@@ -893,7 +893,9 @@ abstract class Doku_Renderer extends Plugin
 
         //if there is a hash we use the ancor name only
         [$name, $hash] = sexplode('#', $name, 2);
-        if ($hash) return $hash;
+        if ($hash) {
+            return $hash;
+        }
 
         if ($conf['useslash']) {
             $name = strtr($name, ';/', ';:');
@@ -948,11 +950,21 @@ abstract class Doku_Renderer extends Plugin
                 $url
             );
             $parsed = parse_url($reference);
-            if (empty($parsed['scheme'])) $parsed['scheme'] = '';
-            if (empty($parsed['host'])) $parsed['host'] = '';
-            if (empty($parsed['port'])) $parsed['port'] = 80;
-            if (empty($parsed['path'])) $parsed['path'] = '';
-            if (empty($parsed['query'])) $parsed['query'] = '';
+            if (empty($parsed['scheme'])) {
+                $parsed['scheme'] = '';
+            }
+            if (empty($parsed['host'])) {
+                $parsed['host'] = '';
+            }
+            if (empty($parsed['port'])) {
+                $parsed['port'] = 80;
+            }
+            if (empty($parsed['path'])) {
+                $parsed['path'] = '';
+            }
+            if (empty($parsed['query'])) {
+                $parsed['query'] = '';
+            }
             $url = strtr($url, [
                 '{SCHEME}' => $parsed['scheme'],
                 '{HOST}' => $parsed['host'],
@@ -975,7 +987,9 @@ abstract class Doku_Renderer extends Plugin
             $url = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);
         }
-        if ($hash) $url .= '#' . rawurlencode($hash);
+        if ($hash) {
+            $url .= '#' . rawurlencode($hash);
+        }
 
         return $url;
     }

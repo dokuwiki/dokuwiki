@@ -22,7 +22,9 @@ class Acronym extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        if (!count($this->acronyms)) return;
+        if (!count($this->acronyms)) {
+            return;
+        }
 
         $bound = '[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]';
         $acronyms = array_map(['\\dokuwiki\\Parsing\\Lexer\\Lexer', 'escape'], $this->acronyms);
@@ -32,7 +34,9 @@ class Acronym extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        if (!count($this->acronyms)) return;
+        if (!count($this->acronyms)) {
+            return;
+        }
 
         if (strlen($this->pattern) > 0) {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'acronym');

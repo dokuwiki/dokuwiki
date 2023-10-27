@@ -17,7 +17,9 @@ $updateVersion = "55";
 
 //  xdebug_start_profiling();
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/');
+}
 
 // define all DokuWiki globals here (needed within test requests but also helps to keep track)
 global $ACT, $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
@@ -48,7 +50,9 @@ $IDX = $INPUT->str('idx');
 $DATE = $INPUT->int('date');
 $RANGE = $INPUT->str('range');
 $HIGH = $INPUT->param('s');
-if (empty($HIGH)) $HIGH = getGoogleQuery();
+if (empty($HIGH)) {
+    $HIGH = getGoogleQuery();
+}
 
 if ($INPUT->post->has('wikitext')) {
     $TEXT = cleanText($INPUT->post->str('wikitext'));
@@ -116,7 +120,9 @@ if (
 }
 
 //prepare breadcrumbs (initialize a static var)
-if ($conf['breadcrumbs']) breadcrumbs();
+if ($conf['breadcrumbs']) {
+    breadcrumbs();
+}
 
 // check upstream
 checkUpdateMessages();

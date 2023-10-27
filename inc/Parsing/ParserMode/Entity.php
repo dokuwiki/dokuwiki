@@ -22,7 +22,9 @@ class Entity extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        if (!count($this->entities) || $this->pattern != '') return;
+        if (!count($this->entities) || $this->pattern != '') {
+            return;
+        }
 
         $sep = '';
         foreach ($this->entities as $entity) {
@@ -34,7 +36,9 @@ class Entity extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        if (!count($this->entities)) return;
+        if (!count($this->entities)) {
+            return;
+        }
 
         if (strlen($this->pattern) > 0) {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'entity');

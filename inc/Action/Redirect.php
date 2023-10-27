@@ -56,7 +56,9 @@ class Redirect extends AbstractAliasAction
     public function redirect($opts)
     {
         $go = wl($opts['id'], '', true, '&');
-        if (isset($opts['fragment'])) $go .= '#' . $opts['fragment'];
+        if (isset($opts['fragment'])) {
+            $go .= '#' . $opts['fragment'];
+        }
 
         //show it
         send_redirect($go);

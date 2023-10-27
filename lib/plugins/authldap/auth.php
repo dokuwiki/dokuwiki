@@ -59,8 +59,12 @@ class auth_plugin_authldap extends AuthPlugin
     public function checkPass($user, $pass)
     {
         // reject empty password
-        if (empty($pass)) return false;
-        if (!$this->openLDAP()) return false;
+        if (empty($pass)) {
+            return false;
+        }
+        if (!$this->openLDAP()) {
+            return false;
+        }
 
         // indirect user bind
         if ($this->getConf('binddn') && $this->getConf('bindpw')) {
@@ -164,7 +168,9 @@ class auth_plugin_authldap extends AuthPlugin
     protected function fetchUserData($user, $inbind = false)
     {
         global $conf;
-        if (!$this->openLDAP()) return [];
+        if (!$this->openLDAP()) {
+            return [];
+        }
 
         // force superuser bind if wanted and not bound as superuser yet
         if ($this->getConf('binddn') && $this->getConf('bindpw') && $this->bound < 2) {
@@ -253,12 +259,14 @@ class auth_plugin_authldap extends AuthPlugin
                     // $key = array($key=>$regexp), only handles the first key-value
                     $regexp = current($key);
                     $key = key($key);
-                    if ($user_result[$key]) foreach ($user_result[$key] as $grpkey => $grp) {
-                        if ($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
-                            if ($localkey == 'grps') {
-                                $info[$localkey][] = $match[1];
-                            } else {
-                                $info[$localkey] = $match[1];
+                    if ($user_result[$key]) {
+                        foreach ($user_result[$key] as $grpkey => $grp) {
+                            if ($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
+                                if ($localkey == 'grps') {
+                                    $info[$localkey][] = $match[1];
+                                } else {
+                                    $info[$localkey] = $match[1];
+                                }
                             }
                         }
                     }
@@ -290,18 +298,22 @@ class auth_plugin_authldap extends AuthPlugin
             $result = ldap_get_entries($this->con, $sr);
             ldap_free_result($sr);
 
-            if (is_array($result)) foreach ($result as $grp) {
-                if (!empty($grp[$this->getConf('groupkey')])) {
-                    $group = $grp[$this->getConf('groupkey')];
-                    if (is_array($group)) {
-                        $group = $group[0];
-                    } else {
-                        $this->debug('groupkey did not return a detailled result', 0, __LINE__, __FILE__);
-                    }
-                    if ($group === '') continue;
+            if (is_array($result)) {
+                foreach ($result as $grp) {
+                    if (!empty($grp[$this->getConf('groupkey')])) {
+                        $group = $grp[$this->getConf('groupkey')];
+                        if (is_array($group)) {
+                            $group = $group[0];
+                        } else {
+                            $this->debug('groupkey did not return a detailled result', 0, __LINE__, __FILE__);
+                        }
+                        if ($group === '') {
+                            continue;
+                        }
 
-                    $this->debug('LDAP usergroup: ' . hsc($group), 0, __LINE__, __FILE__);
-                    $info['grps'][] = $group;
+                        $this->debug('LDAP usergroup: ' . hsc($group), 0, __LINE__, __FILE__);
+                        $info['grps'][] = $group;
+                    }
                 }
             }
         }
@@ -403,7 +415,9 @@ class auth_plugin_authldap extends AuthPlugin
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
-        if (!$this->openLDAP()) return [];
+        if (!$this->openLDAP()) {
+            return [];
+        }
 
         if (is_null($this->users)) {
             // Perform the search and grab all their details
@@ -421,7 +435,9 @@ class auth_plugin_authldap extends AuthPlugin
             }
             Sort::asort($users_array);
             $result = $users_array;
-            if (!$result) return [];
+            if (!$result) {
+                return [];
+            }
             $this->users = array_fill_keys($result, false);
         }
         $i = 0;
@@ -438,7 +454,9 @@ class auth_plugin_authldap extends AuthPlugin
             }
             if ($this->filter($user, $info)) {
                 $result[$user] = $info;
-                if (($limit > 0) && (++$count >= $limit)) break;
+                if (($limit > 0) && (++$count >= $limit)) {
+                    break;
+                }
             }
         }
         return $result;
@@ -485,9 +503,13 @@ class auth_plugin_authldap extends AuthPlugin
     {
         foreach ($this->pattern as $item => $pattern) {
             if ($item == 'user') {
-                if (!preg_match($pattern, $user)) return false;
+                if (!preg_match($pattern, $user)) {
+                    return false;
+                }
             } elseif ($item == 'grps') {
-                if (!count(preg_grep($pattern, $info['grps']))) return false;
+                if (!count(preg_grep($pattern, $info['grps']))) {
+                    return false;
+                }
             } elseif (!preg_match($pattern, $info[$item])) {
                 return false;
             }
@@ -538,7 +560,9 @@ class auth_plugin_authldap extends AuthPlugin
      */
     protected function openLDAP()
     {
-        if ($this->con) return true; // connection already established
+        if ($this->con) {
+            return true;
+        } // connection already established
 
         if ($this->getConf('debug')) {
             ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
@@ -654,7 +678,9 @@ class auth_plugin_authldap extends AuthPlugin
         $attrsonly = 0,
         $sizelimit = 0
     ) {
-        if (is_null($attributes)) $attributes = [];
+        if (is_null($attributes)) {
+            $attributes = [];
+        }
 
         if ($scope == 'base') {
             return @ldap_read(
@@ -697,7 +723,9 @@ class auth_plugin_authldap extends AuthPlugin
      */
     protected function debug($message, $err, $line, $file)
     {
-        if (!$this->getConf('debug')) return;
+        if (!$this->getConf('debug')) {
+            return;
+        }
         msg($message, $err, $line, $file);
     }
 }

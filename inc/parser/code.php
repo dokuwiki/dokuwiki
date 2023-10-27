@@ -24,9 +24,13 @@ class Doku_Renderer_code extends Doku_Renderer
     public function code($text, $language = null, $filename = '')
     {
         global $INPUT;
-        if (!$language) $language = 'txt';
+        if (!$language) {
+            $language = 'txt';
+        }
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
-        if (!$filename) $filename = 'snippet.' . $language;
+        if (!$filename) {
+            $filename = 'snippet.' . $language;
+        }
         $filename = PhpString::basename($filename);
         $filename = Clean::stripspecials($filename, '_');
 

@@ -12,9 +12,15 @@
 
 use dokuwiki\PassHash;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
-if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
-if (!defined('DOKU_LOCAL')) define('DOKU_LOCAL', DOKU_INC . 'conf/');
+if (!defined('DOKU_INC')) {
+    define('DOKU_INC', __DIR__ . '/');
+}
+if (!defined('DOKU_CONF')) {
+    define('DOKU_CONF', DOKU_INC . 'conf/');
+}
+if (!defined('DOKU_LOCAL')) {
+    define('DOKU_LOCAL', DOKU_INC . 'conf/');
+}
 
 // load and initialize the core system
 require_once(DOKU_INC . 'inc/init.php');
@@ -32,7 +38,9 @@ require_once(DOKU_INC . 'inc/lang/en/lang.php');
 if (isset($_REQUEST['l']) && !is_array($_REQUEST['l'])) {
     $LC = preg_replace('/[^a-z\-]+/', '', $_REQUEST['l']);
 }
-if (empty($LC)) $LC = 'en';
+if (empty($LC)) {
+    $LC = 'en';
+}
 if ($LC && $LC != 'en') {
     require_once(DOKU_INC . 'inc/lang/' . $LC . '/lang.php');
 }
@@ -184,11 +192,17 @@ function print_form($d)
 
     include(DOKU_CONF . 'license.php');
 
-    if (!is_array($d)) $d = [];
+    if (!is_array($d)) {
+        $d = [];
+    }
     $d = array_map('hsc', $d);
 
-    if (!isset($d['acl'])) $d['acl'] = 1;
-    if (!isset($d['pop'])) $d['pop'] = 1;
+    if (!isset($d['acl'])) {
+        $d['acl'] = 1;
+    }
+    if (!isset($d['pop'])) {
+        $d['pop'] = 1;
+    }
 
     ?>
     <form action="" method="post">
@@ -244,13 +258,17 @@ function print_form($d)
                 <p><?php echo $lang['i_license'] ?></p>
                 <?php
                 $license[] = ['name' => $lang['i_license_none'], 'url' => ''];
-                if (empty($d['license'])) $d['license'] = 'cc-by-sa';
+                if (empty($d['license'])) {
+                    $d['license'] = 'cc-by-sa';
+                }
                 foreach ($license as $key => $lic) {
                     echo '<label for="lic_' . $key . '">';
                     echo '<input type="radio" name="d[license]" value="' . hsc($key) . '" id="lic_' . $key . '"' .
                         (($d['license'] === $key) ? ' checked="checked"' : '') . '>';
                     echo hsc($lic['name']);
-                    if ($lic['url']) echo ' <a href="' . $lic['url'] . '" target="_blank"><sup>[?]</sup></a>';
+                    if ($lic['url']) {
+                        echo ' <a href="' . $lic['url'] . '" target="_blank"><sup>[?]</sup></a>';
+                    }
                     echo '</label>';
                 }
                 ?>
@@ -313,11 +331,15 @@ function check_data(&$d)
     global $lang;
     global $error;
 
-    if (!is_array($d)) $d = [];
+    if (!is_array($d)) {
+        $d = [];
+    }
     foreach ($d as $k => $v) {
-        if (is_array($v))
+        if (is_array($v)) {
             unset($d[$k]);
-        else $d[$k] = (string)$v;
+        } else {
+            $d[$k] = (string)$v;
+        }
     }
 
     //autolowercase the username
@@ -668,11 +690,15 @@ function langsel()
 
     $dir = DOKU_INC . 'inc/lang';
     $dh = opendir($dir);
-    if (!$dh) return;
+    if (!$dh) {
+        return;
+    }
 
     $langs = [];
     while (($file = readdir($dh)) !== false) {
-        if (preg_match('/^[._]/', $file)) continue;
+        if (preg_match('/^[._]/', $file)) {
+            continue;
+        }
         if (is_dir($dir . '/' . $file) && file_exists($dir . '/' . $file . '/lang.php')) {
             $langs[] = $file;
         }

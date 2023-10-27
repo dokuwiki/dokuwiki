@@ -33,7 +33,9 @@ class action_plugin_extension extends ActionPlugin
         global $USERINFO;
         global $INPUT;
 
-        if ($event->data != 'plugin_extension') return;
+        if ($event->data != 'plugin_extension') {
+            return;
+        }
         $event->preventDefault();
         $event->stopPropagation();
 
