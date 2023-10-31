@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author חפציה בן ארצי <chepti@gmail.com>
  * @author Guy Yakobovitch <guy.yakobovitch@gmail.com>
  * @author DoK <kamberd@yahoo.com>
  * @author Moshe Kaplan <mokplan@gmail.com>
