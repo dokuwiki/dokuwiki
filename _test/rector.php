@@ -9,6 +9,7 @@ use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\CodeQuality\Rector\If_\CompleteMissingIfElseBracketRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
@@ -101,6 +102,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/../lib/plugins/authad/adLDAP',
 
         // skip rules
+        CompleteMissingIfElseBracketRector::class, // keep one-line guardians
         SimplifyIfElseToTernaryRector::class,
         NewlineAfterStatementRector::class,
         CombineIfRector::class,
