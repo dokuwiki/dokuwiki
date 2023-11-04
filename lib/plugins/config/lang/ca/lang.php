@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pau <pau@estuditic.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author Joan <aseques@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>

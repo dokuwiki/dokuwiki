@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pau <pau@estuditic.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author Joan <aseques@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>
@@ -222,6 +223,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 's\'ha restaurat una versió anterior %s';
 $lang['external_edit']         = 'edició externa';
 $lang['summary']               = 'Resum d\'edició';
+$lang['unknowndate']           = 'Data desconeguda';
 $lang['noflash']               = 'Per a visualitzar aquest contingut necessiteu el <a href="http://get.adobe.com/flashplayer">connector d\'Adobe Flash</a>.';
 $lang['download']              = 'Baixa el fragment';
 $lang['tools']                 = 'Eines';
@@ -368,3 +370,4 @@ $lang['page_nonexist_rev']     = 'Pàgina no existeix a %s. Aixó es conseqüenc
 $lang['unable_to_parse_date']  = 'Impossible de esbrinar el paràmetre "%s".';
 $lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Fitxer de log massa gran. Linies anteriors ignorades!';

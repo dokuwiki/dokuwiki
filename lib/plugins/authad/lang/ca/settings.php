@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pau <pau@estuditic.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author Joan <aseques@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>
@@ -26,4 +27,5 @@ $lang['expirywarn']            = 'Dies per endavant en avisar l\'usuari sobre la
 $lang['additional']            = 'Una llista separada per comes d\'atributs AD addicionals per obtenir de les dades d\'usuari. Utilitzat per alguns connectors.';
 $lang['update_name']           = 'Voleu permetre als usuaris actualitzar el seu nom de visualització d\'AD?';
 $lang['update_mail']           = 'Permetre els usuaris actualitzar la seva adreça de correu electrònic?';
+$lang['update_pass']           = 'Permetre als usuaris actualitzar la seva clau? Es necessari SSL o TLS.';
 $lang['recursive_groups']      = 'Resoleu els grups imbricats als seus respectius membres (més lentament).';
