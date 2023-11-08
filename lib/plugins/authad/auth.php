@@ -696,7 +696,7 @@ class auth_plugin_authad extends AuthPlugin
         $opts['domain'] = $domain;
 
         // add possible domain specific configuration
-        if ($domain && is_array($this->conf[$domain])) foreach ($this->conf[$domain] as $key => $val) {
+        if ($domain && is_array($this->conf[$domain] ?? '')) foreach ($this->conf[$domain] as $key => $val) {
             $opts[$key] = $val;
         }
 
