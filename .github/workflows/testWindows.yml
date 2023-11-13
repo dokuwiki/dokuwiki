@@ -38,9 +38,10 @@ jobs:
 
             - name: Setup PHPUnit
               run: |
-                  php _test/fetchphpunit.php
+                  cd _test
+                  composer install --no-interaction --no-progress --no-suggest --prefer-dist
 
             - name: Run PHPUnit
               run: |
                 cd _test
-                php phpunit.phar --verbose --stderr
+                composer run test
