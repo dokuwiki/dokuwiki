@@ -1004,15 +1004,11 @@ function tpl_pagetitle($id = null, $ret = false)
         case 'profile':
         case 'register':
         case 'resendpwd':
-            $page_title = $lang['btn_' . $ACT];
-            break;
-
-        // wiki functions
-        case 'search':
         case 'index':
             $page_title = $lang['btn_' . $ACT];
             break;
-
+        // wiki functions
+        case 'search':
         // page functions
         case 'edit':
         case 'preview':
