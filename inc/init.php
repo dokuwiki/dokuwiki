@@ -495,7 +495,11 @@ function getBaseURL($abs = null)
 
     //split hostheader into host and port
     if (isset($_SERVER['HTTP_HOST'])) {
-        $parsed_host = parse_url('http://' . $_SERVER['HTTP_HOST']);
+    	$cur_host = $_SERVER['HTTP_HOST'];
+    	if(isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+    		$cur_host = $_SERVER['HTTP_X_FORWARDED_HOST'];
+    	}
+        $parsed_host = parse_url('http://' . $cur_host);
         $host = $parsed_host['host'] ?? '';
         $port = $parsed_host['port'] ?? '';
     } elseif (isset($_SERVER['SERVER_NAME'])) {
