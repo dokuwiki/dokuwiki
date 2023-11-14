@@ -53,7 +53,7 @@ trait PropertyDeprecationHelper
         $property,
         $class = null
     ) {
-        $this->deprecatedPublicProperties[$property] = $class ?: get_class();
+        $this->deprecatedPublicProperties[$property] = $class ?: get_class($this);
     }
 
     public function __get($name)
