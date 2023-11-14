@@ -21,7 +21,7 @@ jobs:
       - name: Update deleted files
         run: |
           for F in $(git diff origin/stable..HEAD --summary | awk '/^ delete/ && $4 !~ /^(VERSION)/ {print $4}'); do
-            if grep -q "^$F export-ignore" .gitattributes; then
+            if (git check-attr export-ignore "$F" | grep -q "export-ignore: set"); then
               continue
             fi
             if grep -q "^$F" data/deleted.files; then
