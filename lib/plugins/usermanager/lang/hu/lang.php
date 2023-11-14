@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Fekete Ádám Zsolt <fadam@egbcsoport.hu>
  * @author Hamp Gábor <gabor.hamp@gmail.com>
  * @author Sandor TIHANYI <stihanyi+dw@gmail.com>
  * @author Siaynoq Mage <siaynoqmage@gmail.com>
@@ -71,5 +72,11 @@ $lang['import_error_readfail'] = 'Sikertelen importálás. A feltöltött fájl 
 $lang['import_error_create']   = 'Ez a felhasználó nem hozható létre';
 $lang['import_notify_fail']    = 'Az értesítő e-mail nem küldhető el az alábbi importált felhasználónak: %s e-mailcíme: %s.';
 $lang['import_downloadfailures'] = 'Töltsd le a hibákat tartalmazó fájlt CSV formátumban, hogy ki tudd javítani a hibákat';
+$lang['addUser_error_missing_pass'] = 'Adj meg egy jelszót, vagy aktiváld a felhasználói értesítéseket, hogy engedélyezd a jelszógenerálást.';
 $lang['addUser_error_pass_not_identical'] = 'A begépelt jelszavak különböznek.';
 $lang['addUser_error_modPass_disabled'] = 'A jelszó megváltoztatása jelenleg nem lehetséges.';
+$lang['addUser_error_name_missing'] = 'Adj meg egy nevet az új felhasználónak.';
+$lang['addUser_error_modName_disabled'] = 'A nevek módosítása jelenleg nincs engedélyezve.';
+$lang['addUser_error_mail_missing'] = 'Add meg az e-mail címét az új felhasználónak.';
+$lang['addUser_error_modMail_disabled'] = 'Az e-mail cím módosítása jelenleg nincs engedélyezve.';
+$lang['addUser_error_create_event_failed'] = 'Egy bővítmény megakadályozta az új felhasználó létrehozását. Tekintsd át az esetleges további üzeneteket a további információkért.';
