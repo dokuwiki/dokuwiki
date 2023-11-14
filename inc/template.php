@@ -999,26 +999,28 @@ function tpl_pagetitle($id = null, $ret = false)
             }
             break;
 
-        // user functions
+        // show action as title
         case 'login':
         case 'profile':
         case 'register':
         case 'resendpwd':
         case 'index':
+        case 'search':
             $page_title = $lang['btn_' . $ACT];
             break;
-        // wiki functions
-        case 'search':
-        // page functions
+
+        // add pen during editing
         case 'edit':
         case 'preview':
             $page_title = "✎ " . $name;
             break;
 
+        // add action to page name
         case 'revisions':
             $page_title = $name . ' - ' . $lang['btn_revs'];
             break;
 
+        // add action to page name
         case 'backlink':
         case 'recent':
         case 'subscribe':
