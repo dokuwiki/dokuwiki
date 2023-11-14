@@ -2,8 +2,8 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
 use dokuwiki\Form\Form;
 
@@ -20,25 +20,25 @@ class Recent extends Ui
     /**
      * Recent Ui constructor
      *
-     * @param int $first  skip the first n changelog lines
-     * @param string $show_changes  type of changes to show; 'pages', 'mediafiles', or 'both'
+     * @param int $first skip the first n changelog lines
+     * @param string $show_changes type of changes to show; 'pages', 'mediafiles', or 'both'
      */
     public function __construct($first = 0, $show_changes = 'both')
     {
-        $this->first        = $first;
+        $this->first = $first;
         $this->show_changes = $show_changes;
     }
 
     /**
      * Display recent changes
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
+     * @return void
      * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Kate Arzamastseva <pshns@ukr.net>
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
-     * @return void
+     * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function show()
     {
@@ -51,16 +51,16 @@ class Recent extends Ui
         $recents = $this->getRecents($first, $hasNext);
 
         // print intro
-        print p_locale_xhtml('recent');
+        echo p_locale_xhtml('recent');
 
         if (getNS($ID) != '') {
-            print '<div class="level1"><p>'
+            echo '<div class="level1"><p>'
                 . sprintf($lang['recent_global'], getNS($ID), wl('', 'do=recent'))
-                .'</p></div>';
+                . '</p></div>';
         }
 
         // create the form
-        $form = new Form(['id'=>'dw__recent', 'method'=>'GET', 'action'=> wl($ID), 'class'=>'changes']);
+        $form = new Form(['id' => 'dw__recent', 'method' => 'GET', 'action' => wl($ID), 'class' => 'changes']);
         $form->addTagOpen('div')->addClass('no');
         $form->setHiddenField('sectok', null);
         $form->setHiddenField('do', 'recent');
@@ -79,7 +79,7 @@ class Recent extends Ui
 
             $RevInfo = new RevisionInfo($recent);
             $RevInfo->isCurrent(true);
-            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor': '';
+            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [
@@ -103,13 +103,13 @@ class Recent extends Ui
         // provide navigation for paginated recent list (of pages and/or media files)
         $form->addHTML($this->htmlNavigation($first, $hasNext));
 
-        print $form->toHTML('Recent');
+        echo $form->toHTML('Recent');
     }
 
     /**
      * Get recent items, and set correct pagination parameters (first, hasNext)
      *
-     * @param int  $first
+     * @param int $first
      * @param bool $hasNext
      * @return array  recent items to be shown in a paginated list
      *
@@ -155,8 +155,7 @@ class Recent extends Ui
      */
     protected function checkCurrentRevision(array &$info)
     {
-        $itemType = $info['media'] ? 'media' : 'page';
-        if ($itemType == 'page') {
+        if ($info['mode'] == RevisionInfo::MODE_PAGE) {
             $changelog = new PageChangelog($info['id']);
         } else {
             $changelog = new MediaChangelog($info['id']);
@@ -175,7 +174,7 @@ class Recent extends Ui
     /**
      * Navigation buttons for Pagination (prev/next)
      *
-     * @param int  $first
+     * @param int $first
      * @param bool $hasNext
      * @return string html
      */
@@ -187,22 +186,22 @@ class Recent extends Ui
         $html = '<div class="pagenav">';
         if ($first > 0) {
             $first = max($first - $conf['recent'], 0);
-            $html.= '<div class="pagenav-prev">';
-            $html.= '<button type="submit" name="first['.$first.']" accesskey="n"'
-                  . ' title="'.$lang['btn_newer'].' [N]" class="button show">'
-                  . $lang['btn_newer']
-                  . '</button>';
-            $html.= '</div>';
+            $html .= '<div class="pagenav-prev">';
+            $html .= '<button type="submit" name="first[' . $first . ']" accesskey="n"'
+                . ' title="' . $lang['btn_newer'] . ' [N]" class="button show">'
+                . $lang['btn_newer']
+                . '</button>';
+            $html .= '</div>';
         }
         if ($hasNext) {
-            $html.= '<div class="pagenav-next">';
-            $html.= '<button type="submit" name="first['.$last.']" accesskey="p"'
-                  . ' title="'.$lang['btn_older'].' [P]" class="button show">'
-                  . $lang['btn_older']
-                  . '</button>';
-            $html.= '</div>';
+            $html .= '<div class="pagenav-next">';
+            $html .= '<button type="submit" name="first[' . $last . ']" accesskey="p"'
+                . ' title="' . $lang['btn_older'] . ' [P]" class="button show">'
+                . $lang['btn_older']
+                . '</button>';
+            $html .= '</div>';
         }
-        $html.= '</div>';
+        $html .= '</div>';
         return $html;
     }
 
@@ -217,15 +216,14 @@ class Recent extends Ui
         global $lang;
 
         $form->addTagOpen('div')->addClass('changeType');
-        $options = array(
-                    'pages'      => $lang['pages_changes'],
-                    'mediafiles' => $lang['media_changes'],
-                    'both'       => $lang['both_changes'],
-        );
+        $options = [
+            'pages' => $lang['pages_changes'],
+            'mediafiles' => $lang['media_changes'],
+            'both' => $lang['both_changes']
+        ];
         $form->addDropdown('show_changes', $options, $lang['changes_type'])
-                ->val($this->show_changes)->addClass('quickselect');
-        $form->addButton('do[recent]', $lang['btn_apply'])->attr('type','submit');
+            ->val($this->show_changes)->addClass('quickselect');
+        $form->addButton('do[recent]', $lang['btn_apply'])->attr('type', 'submit');
         $form->addTagClose('div');
     }
-
 }

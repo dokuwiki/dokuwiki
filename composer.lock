@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00aee16ef6d6262e150632ca5e0db38d",
+    "content-hash": "794f2c88f3e346320887dba9fd7a9cd1",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -100,25 +100,30 @@
         },
         {
             "name": "kissifrot/php-ixr",
-            "version": "1.8.3",
+            "version": "1.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kissifrot/php-ixr.git",
-                "reference": "4477cd1a67416ce5b6a2080f9a79d9eb50a965c1"
+                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/4477cd1a67416ce5b6a2080f9a79d9eb50a965c1",
-                "reference": "4477cd1a67416ce5b6a2080f9a79d9eb50a965c1",
+                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
+                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
                 "shasum": ""
             },
             "require": {
+                "ext-xml": "*",
                 "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "IXR\\": "src/"
+                    "IXR\\": "src/",
+                    "IXR\\tests\\": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -141,9 +146,9 @@
             ],
             "support": {
                 "issues": "https://github.com/kissifrot/php-ixr/issues",
-                "source": "https://github.com/kissifrot/php-ixr/tree/master"
+                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.4"
             },
-            "time": "2016-11-17T12:00:18+00:00"
+            "time": "2023-04-15T08:50:43+00:00"
         },
         {
             "name": "marcusschwarz/lesserphp",
@@ -201,23 +206,23 @@
         },
         {
             "name": "openpsa/universalfeedcreator",
-            "version": "v1.8.4.1",
+            "version": "v1.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flack/UniversalFeedCreator.git",
-                "reference": "e4736a68eef454a83acd100230a2e15b424f899f"
+                "reference": "d07a9f54e4fe522d8fefaf99564efd675932a635"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/e4736a68eef454a83acd100230a2e15b424f899f",
-                "reference": "e4736a68eef454a83acd100230a2e15b424f899f",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/d07a9f54e4fe522d8fefaf99564efd675932a635",
+                "reference": "d07a9f54e4fe522d8fefaf99564efd675932a635",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.0"
+                "php": ">=5.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.5.32 || ^9.5.10"
             },
             "type": "library",
             "autoload": {
@@ -250,9 +255,9 @@
             ],
             "support": {
                 "issues": "https://github.com/flack/UniversalFeedCreator/issues",
-                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.4.1"
+                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.5"
             },
-            "time": "2022-04-04T10:02:43+00:00"
+            "time": "2023-04-17T12:24:35+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -666,12 +671,12 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.2"
+        "php": "7.4"
     },
     "plugin-api-version": "2.3.0"
 }

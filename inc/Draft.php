@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
+
 /**
  * Class Draft
  *
@@ -9,7 +11,6 @@ namespace dokuwiki;
  */
 class Draft
 {
-
     protected $errors = [];
     protected $cname;
     protected $id;
@@ -26,7 +27,7 @@ class Draft
         $this->id = $ID;
         $this->client = $client;
         $this->cname = getCacheName("$client\n$ID", '.draft');
-        if(file_exists($this->cname) && file_exists(wikiFN($ID))) {
+        if (file_exists($this->cname) && file_exists(wikiFN($ID))) {
             if (filemtime($this->cname) < filemtime(wikiFN($ID))) {
                 // remove stale draft
                 $this->deleteDraft();
@@ -72,8 +73,10 @@ class Draft
         if (!$conf['usedraft']) {
             return false;
         }
-        if (!$INPUT->post->has('wikitext') &&
-            !$EVENT_HANDLER->hasHandlerForEvent('DRAFT_SAVE')) {
+        if (
+            !$INPUT->post->has('wikitext') &&
+            !$EVENT_HANDLER->hasHandlerForEvent('DRAFT_SAVE')
+        ) {
             return false;
         }
         $draft = [
@@ -86,7 +89,7 @@ class Draft
             'cname' => $this->cname,
             'errors' => [],
         ];
-        $event = new Extension\Event('DRAFT_SAVE', $draft);
+        $event = new Event('DRAFT_SAVE', $draft);
         if ($event->advise_before()) {
             $draft['hasBeenSaved'] = io_saveFile($draft['cname'], serialize($draft));
             if ($draft['hasBeenSaved']) {
@@ -116,8 +119,8 @@ class Draft
                 "Draft for page $this->id and user $this->client doesn't exist at $this->cname."
             );
         }
-        $draft = unserialize(io_readFile($this->cname,false));
-        return cleanText(con($draft['prefix'],$draft['text'],$draft['suffix'],true));
+        $draft = unserialize(io_readFile($this->cname, false));
+        return cleanText(con($draft['prefix'], $draft['text'], $draft['suffix'], true));
     }
 
     /**

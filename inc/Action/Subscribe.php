@@ -30,7 +30,7 @@ class Subscribe extends AbstractUserAction
         parent::checkPreconditions();
 
         global $conf;
-        if(isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
+        if (isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
@@ -48,7 +48,7 @@ class Subscribe extends AbstractUserAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Subscribe)->show();
+        (new Ui\Subscribe())->show();
     }
 
     /**
@@ -65,8 +65,8 @@ class Subscribe extends AbstractUserAction
         global $INPUT;
 
         // get and preprocess data.
-        $params = array();
-        foreach (array('target', 'style', 'action') as $param) {
+        $params = [];
+        foreach (['target', 'style', 'action'] as $param) {
             if ($INPUT->has("sub_$param")) {
                 $params[$param] = $INPUT->str("sub_$param");
             }
@@ -76,7 +76,7 @@ class Subscribe extends AbstractUserAction
         if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);
 
         $target = $params['target'];
         $style = $params['style'];
@@ -93,9 +93,11 @@ class Subscribe extends AbstractUserAction
         if ($ok) {
             msg(
                 sprintf(
-                    $lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                    $lang["subscr_{$action}_success"],
+                    hsc($INFO['userinfo']['name']),
                     prettyprint_id($target)
-                ), 1
+                ),
+                1
             );
             throw new ActionAbort('redirect');
         }
@@ -131,18 +133,22 @@ class Subscribe extends AbstractUserAction
             throw new Exception('no subscription target given');
         }
         $target = $params['target'];
-        $valid_styles = array('every', 'digest');
-        if (substr($target, -1, 1) === ':') {
+        $valid_styles = ['every', 'digest'];
+        if (str_ends_with($target, ':')) {
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
         }
         $style = valid_input_set(
-            'style', $valid_styles, $params,
+            'style',
+            $valid_styles,
+            $params,
             'invalid subscription style given'
         );
         $action = valid_input_set(
-            'action', array('subscribe', 'unsubscribe'),
-            $params, 'invalid subscription action given'
+            'action',
+            ['subscribe', 'unsubscribe'],
+            $params,
+            'invalid subscription action given'
         );
 
         // Check other conditions.
@@ -170,7 +176,6 @@ class Subscribe extends AbstractUserAction
             $style = null;
         }
 
-        $params = compact('target', 'style', 'action');
+        $params = ['target' => $target, 'style' => $style, 'action' => $action];
     }
-
 }

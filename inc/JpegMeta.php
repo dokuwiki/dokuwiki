@@ -143,23 +143,24 @@ class JpegMeta {
         if(!is_array($fields)) $fields = array($fields);
         $info = false;
         foreach($fields as $field){
-            if(strtolower(substr($field,0,5)) == 'iptc.'){
+            $lower_field = strtolower($field);
+            if(str_starts_with($lower_field, 'iptc.')){
                 $info = $this->getIPTCField(substr($field,5));
-            }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+            }elseif(str_starts_with($lower_field, 'exif.')){
                 $info = $this->getExifField(substr($field,5));
-            }elseif(strtolower(substr($field,0,4)) == 'xmp.'){
+            }elseif(str_starts_with($lower_field, 'xmp.')){
                 $info = $this->getXmpField(substr($field,4));
-            }elseif(strtolower(substr($field,0,5)) == 'file.'){
+            }elseif(str_starts_with($lower_field, 'file.')){
                 $info = $this->getFileField(substr($field,5));
-            }elseif(strtolower(substr($field,0,5)) == 'date.'){
+            }elseif(str_starts_with($lower_field, 'date.')){
                 $info = $this->getDateField(substr($field,5));
-            }elseif(strtolower($field) == 'simple.camera'){
+            }elseif($lower_field == 'simple.camera'){
                 $info = $this->getCamera();
-            }elseif(strtolower($field) == 'simple.raw'){
+            }elseif($lower_field == 'simple.raw'){
                 return $this->getRawInfo();
-            }elseif(strtolower($field) == 'simple.title'){
+            }elseif($lower_field == 'simple.title'){
                 $info = $this->getTitle();
-            }elseif(strtolower($field) == 'simple.shutterspeed'){
+            }elseif($lower_field == 'simple.shutterspeed'){
                 $info = $this->getShutterSpeed();
             }else{
                 $info = $this->getExifField($field);
@@ -201,9 +202,10 @@ class JpegMeta {
      * @return bool success or fail
      */
     function setField($field, $value) {
-        if(strtolower(substr($field,0,5)) == 'iptc.'){
+        $lower_field = strtolower($field);
+        if(str_starts_with($lower_field, 'iptc.')){
             return $this->setIPTCField(substr($field,5),$value);
-        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+        }elseif(str_starts_with($lower_field, 'exif.')){
             return $this->setExifField(substr($field,5),$value);
         }else{
             return $this->setExifField($field,$value);
@@ -220,9 +222,10 @@ class JpegMeta {
      * @return bool
      */
     function deleteField($field) {
-        if(strtolower(substr($field,0,5)) == 'iptc.'){
+        $lower_field = strtolower($field);
+        if(str_starts_with($lower_field, 'iptc.')){
             return $this->deleteIPTCField(substr($field,5));
-        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+        }elseif(str_starts_with($lower_field, 'exif.')){
             return $this->deleteExifField(substr($field,5));
         }else{
             return $this->deleteExifField($field);
@@ -425,7 +428,7 @@ class JpegMeta {
         }
 
         // make sure datetimes are in correct format
-        if(strlen($field) >= 8 && strtolower(substr($field, 0, 8)) == 'datetime') {
+        if(strlen($field) >= 8 && str_starts_with(strtolower($field), 'datetime')) {
             if(strlen($value) < 8 || $value[4] != ':' || $value[7] != ':') {
                 $value = date('Y:m:d H:i:s', strtotime($value));
             }
@@ -2638,7 +2641,7 @@ class JpegMeta {
             if (isset($IPTCNames[$label])) {
                 $type = $IPTCNames[$label];
             }
-            elseif (substr($label, 0, 7) == "IPTC_0x") {
+            elseif (str_starts_with($label, 'IPTC_0x')) {
                 $type = hexdec(substr($label, 7, 2));
             }
 

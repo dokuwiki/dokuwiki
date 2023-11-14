@@ -7,7 +7,6 @@ namespace dokuwiki\Utf8;
  */
 class PhpString
 {
-
     /**
      * A locale independent basename() implementation
      *
@@ -29,7 +28,7 @@ class PhpString
         }
 
         $suflen = strlen($suffix);
-        if ($suflen && (substr($path, -$suflen) === $suffix)) {
+        if ($suflen && str_ends_with($path, $suffix)) {
             $path = substr($path, 0, -$suflen);
         }
 
@@ -138,29 +137,21 @@ class PhpString
         if ($length === null) {
             $length_pattern = '(.*)$';                  // the rest of the string
         } else {
-
             if (!isset($strlen)) $strlen = self::strlen($str);    // see notes
             if ($offset > $strlen) return '';           // another trivial case
 
             if ($length > 0) {
-
                 // reduce any length that would go past the end of the string
                 $length = min($strlen - $offset, $length);
-
                 $Lx = (int)($length / 65535);
                 $Ly = $length % 65535;
-
                 // +ve length requires ... a captured group of length characters
                 if ($Lx) $length_pattern = '(?:.{65535}){' . $Lx . '}';
                 $length_pattern = '(' . $length_pattern . '.{' . $Ly . '})';
-
-            } else if ($length < 0) {
-
+            } elseif ($length < 0) {
                 if ($length < ($offset - $strlen)) return '';
-
                 $Lx = (int)((-$length) / 65535);
                 $Ly = (-$length) % 65535;
-
                 // -ve length requires ... capture everything except a group of -length characters
                 //                         anchored at the tail-end of the string
                 if ($Lx) $length_pattern = '(?:.{65535}){' . $Lx . '}';
@@ -268,7 +259,7 @@ class PhpString
      */
     public static function strtolower($string)
     {
-        if($string === null) return ''; // pre-8.1 behaviour
+        if ($string === null) return ''; // pre-8.1 behaviour
         if (UTF8_MBSTRING) {
             if (class_exists('Normalizer', $autoload = false)) {
                 return \Normalizer::normalize(mb_strtolower($string, 'utf-8'));
@@ -379,6 +370,4 @@ class PhpString
 
         return $length;
     }
-
-
 }

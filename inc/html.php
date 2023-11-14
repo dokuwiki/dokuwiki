@@ -1,4 +1,5 @@
 <?php
+
 /**
  * HTML output functions
  *
@@ -6,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Ui\MediaRevisions;
+use dokuwiki\Form\Form;
 use dokuwiki\Action\Denied;
 use dokuwiki\Action\Locked;
 use dokuwiki\ChangeLog\PageChangeLog;
@@ -40,14 +43,15 @@ if (!defined('SEC_EDIT_PATTERN')) {
  * @param string|array  $search  search string(s) that shall be highlighted in the target page
  * @return string the HTML code of the link
  */
-function html_wikilink($id, $name = null, $search = '') {
+function html_wikilink($id, $name = null, $search = '')
+{
     /** @var Doku_Renderer_xhtml $xhtml_renderer */
     static $xhtml_renderer = null;
     if (is_null($xhtml_renderer)) {
         $xhtml_renderer = p_get_renderer('xhtml');
     }
 
-    return $xhtml_renderer->internallink($id,$name,$search,true,'navigation');
+    return $xhtml_renderer->internallink($id, $name, $search, true, 'navigation');
 }
 
 /**
@@ -58,9 +62,10 @@ function html_wikilink($id, $name = null, $search = '') {
  * @param bool $svg Whether to show svg icons in the register and resendpwd links or not
  * @deprecated 2020-07-18
  */
-function html_login($svg = false) {
-    dbg_deprecated(Login::class .'::show()');
-    (new dokuwiki\Ui\Login($svg))->show();
+function html_login($svg = false)
+{
+    dbg_deprecated(Login::class . '::show()');
+    (new Login($svg))->show();
 }
 
 
@@ -69,9 +74,10 @@ function html_login($svg = false) {
  *
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Denied::tplContent()
  */
-function html_denied() {
-    dbg_deprecated(Denied::class .'::showBanner()');
-    (new dokuwiki\Action\Denied())->showBanner();
+function html_denied()
+{
+    dbg_deprecated(Denied::class . '::showBanner()');
+    (new Denied())->showBanner();
 }
 
 /**
@@ -83,15 +89,19 @@ function html_denied() {
  * @param bool   $show show section edit buttons?
  * @return string
  */
-function html_secedit($text, $show = true) {
+function html_secedit($text, $show = true)
+{
     global $INFO;
 
     if ((isset($INFO) && !$INFO['writable']) || !$show || (isset($INFO) && $INFO['rev'])) {
-        return preg_replace(SEC_EDIT_PATTERN,'',$text);
+        return preg_replace(SEC_EDIT_PATTERN, '', $text);
     }
 
-    return preg_replace_callback(SEC_EDIT_PATTERN,
-                'html_secedit_button', $text);
+    return preg_replace_callback(
+        SEC_EDIT_PATTERN,
+        'html_secedit_button',
+        $text
+    );
 }
 
 /**
@@ -104,10 +114,13 @@ function html_secedit($text, $show = true) {
  * @return string
  * @triggers HTML_SECEDIT_BUTTON
  */
-function html_secedit_button($matches){
+function html_secedit_button($matches)
+{
     $json = htmlspecialchars_decode($matches[1], ENT_QUOTES);
-    $data = json_decode($json, true);
-    if ($data === null) {
+
+    try {
+        $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException $e) {
         return '';
     }
     $data['target'] = strtolower($data['target']);
@@ -129,7 +142,8 @@ function html_secedit_button($matches){
  * @param array $data name, section id and target
  * @return string html
  */
-function html_secedit_get_button($data) {
+function html_secedit_get_button($data)
+{
     global $ID;
     global $INFO;
 
@@ -142,13 +156,13 @@ function html_secedit_get_button($data) {
     unset($data['secid']);
 
     $params = array_merge(
-           array('do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '['.$name.'] '),
-           $data
+        ['do'  => 'edit', 'rev' => $INFO['lastmod'], 'summary' => '[' . $name . '] '],
+        $data
     );
 
-    $html = '<div class="secedit editbutton_'.$data['target'] .' editbutton_'.$secid .'">';
-    $html.= html_btn('secedit', $ID, '', $params, 'post', $name);
-    $html.= '</div>';
+    $html = '<div class="secedit editbutton_' . $data['target'] . ' editbutton_' . $secid . '">';
+    $html .= html_btn('secedit', $ID, '', $params, 'post', $name);
+    $html .= '</div>';
     return $html;
 }
 
@@ -159,13 +173,14 @@ function html_secedit_get_button($data) {
  *
  * @return string html
  */
-function html_topbtn() {
+function html_topbtn()
+{
     global $lang;
 
     return '<a class="nolink" href="#dokuwiki__top">'
-        .'<button class="button" onclick="window.scrollTo(0, 0)" title="'. $lang['btn_top'] .'">'
+        . '<button class="button" onclick="window.scrollTo(0, 0)" title="' . $lang['btn_top'] . '">'
         . $lang['btn_top']
-        .'</button></a>';
+        . '</button></a>';
 }
 
 /**
@@ -184,31 +199,32 @@ function html_topbtn() {
  * @param string         $svg (optional) svg code, inserted into the button
  * @return string
  */
-function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $label = false, $svg = null) {
+function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $label = false, $svg = null)
+{
     global $conf;
     global $lang;
 
     if (!$label)
-        $label = $lang['btn_'.$name];
+        $label = $lang['btn_' . $name];
 
     //filter id (without urlencoding)
-    $id = idfilter($id,false);
+    $id = idfilter($id, false);
 
     //make nice URLs even for buttons
     if ($conf['userewrite'] == 2) {
-        $script = DOKU_BASE.DOKU_SCRIPT.'/'.$id;
+        $script = DOKU_BASE . DOKU_SCRIPT . '/' . $id;
     } elseif ($conf['userewrite']) {
-        $script = DOKU_BASE.$id;
+        $script = DOKU_BASE . $id;
     } else {
-        $script = DOKU_BASE.DOKU_SCRIPT;
+        $script = DOKU_BASE . DOKU_SCRIPT;
         $params['id'] = $id;
     }
 
-    $html = '<form class="button btn_'.$name.'" method="'.$method.'" action="'.$script.'"><div class="no">';
+    $html = '<form class="button btn_' . $name . '" method="' . $method . '" action="' . $script . '"><div class="no">';
 
     if (is_array($params)) {
         foreach ($params as $key => $val) {
-            $html .= '<input type="hidden" name="'.$key.'" value="'.hsc($val).'" />';
+            $html .= '<input type="hidden" name="' . $key . '" value="' . hsc($val) . '" />';
         }
     }
 
@@ -216,12 +232,12 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
 
     $html .= '<button type="submit" ';
     if ($akey) {
-        $tip  .= ' ['.strtoupper($akey).']';
-        $html .= 'accesskey="'.$akey.'" ';
+        $tip  .= ' [' . strtoupper($akey) . ']';
+        $html .= 'accesskey="' . $akey . '" ';
     }
-    $html .= 'title="'.$tip.'">';
+    $html .= 'title="' . $tip . '">';
     if ($svg) {
-        $html .= '<span>'. hsc($label) .'</span>'. inlineSVG($svg);
+        $html .= '<span>' . hsc($label) . '</span>' . inlineSVG($svg);
     } else {
         $html .= hsc($label);
     }
@@ -236,8 +252,9 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
  * @author Szymon Olewniczak <dokuwiki@imz.re>
  * @deprecated 2020-07-18
  */
-function html_showrev() {
-    dbg_deprecated(PageView::class .'::showrev()');
+function html_showrev()
+{
+    dbg_deprecated(PageView::class . '::showrev()');
 }
 
 /**
@@ -248,9 +265,10 @@ function html_showrev() {
  * @param null|string $txt wiki text or null for showing $ID
  * @deprecated 2020-07-18
  */
-function html_show($txt=null) {
-    dbg_deprecated(PageView::class .'::show()');
-    (new dokuwiki\Ui\PageView($txt))->show();
+function html_show($txt = null)
+{
+    dbg_deprecated(PageView::class . '::show()');
+    (new PageView($txt))->show();
 }
 
 /**
@@ -259,9 +277,10 @@ function html_show($txt=null) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_draft() {
-    dbg_deprecated(PageDraft::class .'::show()');
-    (new dokuwiki\Ui\PageDraft)->show();
+function html_draft()
+{
+    dbg_deprecated(PageDraft::class . '::show()');
+    (new PageDraft())->show();
 }
 
 /**
@@ -274,12 +293,14 @@ function html_draft() {
  * @param array|string $phrases
  * @return string html
  */
-function html_hilight($html, $phrases) {
+function html_hilight($html, $phrases)
+{
     $phrases = (array) $phrases;
     $phrases = array_map('preg_quote_cb', $phrases);
     $phrases = array_map('ft_snippet_re_preprocess', $phrases);
     $phrases = array_filter($phrases);
-    $regex = join('|',$phrases);
+
+    $regex = implode('|', $phrases);
 
     if ($regex === '') return $html;
     if (!Clean::isUtf8($regex)) return $html;
@@ -287,7 +308,7 @@ function html_hilight($html, $phrases) {
     return @preg_replace_callback("/((<[^>]*)|$regex)/ui", function ($match) {
         $hlight = unslash($match[0]);
         if (!isset($match[2])) {
-            $hlight = '<span class="search_hit">'.$hlight.'</span>';
+            $hlight = '<span class="search_hit">' . $hlight . '</span>';
         }
         return $hlight;
     }, $html);
@@ -299,9 +320,10 @@ function html_hilight($html, $phrases) {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18 not called anymore, see inc/Action/Locked::tplContent()
  */
-function html_locked() {
-    dbg_deprecated(Locked::class .'::showBanner()');
-    (new dokuwiki\Action\Locked())->showBanner();
+function html_locked()
+{
+    dbg_deprecated(Locked::class . '::showBanner()');
+    (new Locked())->showBanner();
 }
 
 /**
@@ -315,13 +337,14 @@ function html_locked() {
  * @param string $media_id id of media, or empty for current page
  * @deprecated 2020-07-18
  */
-function html_revisions($first = -1, $media_id = '') {
-    dbg_deprecated(PageRevisions::class .'::show()');
+function html_revisions($first = -1, $media_id = '')
+{
+    dbg_deprecated(PageRevisions::class . '::show()');
     if ($media_id) {
-        (new dokuwiki\Ui\MediaRevisions($media_id))->show($first);
+        (new MediaRevisions($media_id))->show($first);
     } else {
         global $INFO;
-        (new dokuwiki\Ui\PageRevisions($INFO['id']))->show($first);
+        (new PageRevisions($INFO['id']))->show($first);
     }
 }
 
@@ -337,9 +360,10 @@ function html_revisions($first = -1, $media_id = '') {
  * @param string $show_changes
  * @deprecated 2020-07-18
  */
-function html_recent($first = 0, $show_changes = 'both') {
-    dbg_deprecated(Recent::class .'::show()');
-    (new dokuwiki\Ui\Recent($first, $show_changes))->show();
+function html_recent($first = 0, $show_changes = 'both')
+{
+    dbg_deprecated(Recent::class . '::show()');
+    (new Recent($first, $show_changes))->show();
 }
 
 /**
@@ -350,9 +374,10 @@ function html_recent($first = 0, $show_changes = 'both') {
  * @param string $ns
  * @deprecated 2020-07-18
  */
-function html_index($ns) {
-    dbg_deprecated(Index::class .'::show()');
-    (new dokuwiki\Ui\Index($ns))->show();
+function html_index($ns)
+{
+    dbg_deprecated(Index::class . '::show()');
+    (new Index($ns))->show();
 }
 
 /**
@@ -366,9 +391,10 @@ function html_index($ns) {
  * @return string
  * @deprecated 2020-07-18
  */
-function html_list_index($item) {
-    dbg_deprecated(Index::class .'::formatListItem()');
-    return (new dokuwiki\Ui\Index)->formatListItem($item);
+function html_list_index($item)
+{
+    dbg_deprecated(Index::class . '::formatListItem()');
+    return (new Index())->formatListItem($item);
 }
 
 /**
@@ -384,9 +410,10 @@ function html_list_index($item) {
  * @return string html
  * @deprecated 2020-07-18
  */
-function html_li_index($item) {
-    dbg_deprecated(Index::class .'::tagListItem()');
-    return (new dokuwiki\Ui\Index)->tagListItem($item);
+function html_li_index($item)
+{
+    dbg_deprecated(Index::class . '::tagListItem()');
+    return (new Index())->tagListItem($item);
 }
 
 /**
@@ -398,8 +425,9 @@ function html_li_index($item) {
  * @return string html
  * @deprecated 2020-07-18
  */
-function html_li_default($item){
-    return '<li class="level'.$item['level'].'">';
+function html_li_default($item)
+{
+    return '<li class="level' . $item['level'] . '">';
 }
 
 /**
@@ -425,8 +453,9 @@ function html_li_default($item){
  *                               0 (we have a root object) or 1 (just the root content)
  * @return string html of an unordered list
  */
-function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false) {
-    if (count($data) === 0) {
+function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = false)
+{
+    if ($data === []) {
         return '';
     }
 
@@ -438,9 +467,7 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
 
     // set callback function to build the <li> tag, formerly defined as html_li_default()
     if (!is_callable($lifunc)) {
-       $lifunc = function ($item) {
-           return '<li class="level'.$item['level'].'">';
-       };
+        $lifunc = static fn($item) => '<li class="level' . $item['level'] . '">';
     }
 
     foreach ($data as $item) {
@@ -448,23 +475,22 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
             //open new list
             for ($i = 0; $i < ($item['level'] - $level); $i++) {
                 if ($i) $html .= '<li class="clear">';
-                $html .= "\n".'<ul class="'.$class.'">'."\n";
+                $html .= "\n" . '<ul class="' . $class . '">' . "\n";
                 $open++;
             }
             $level = $item['level'];
-
         } elseif ($item['level'] < $level) {
             //close last item
-            $html .= '</li>'."\n";
-            while ($level > $item['level'] && $open > 0 ) {
+            $html .= '</li>' . "\n";
+            while ($level > $item['level'] && $open > 0) {
                 //close higher lists
-                $html .= '</ul>'."\n".'</li>'."\n";
+                $html .= '</ul>' . "\n" . '</li>' . "\n";
                 $level--;
                 $open--;
             }
         } elseif ($html !== '') {
             //close previous item
-            $html .= '</li>'."\n";
+            $html .= '</li>' . "\n";
         }
 
         //print item
@@ -476,15 +502,15 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
     }
 
     //close remaining items and lists
-    $html .= '</li>'."\n";
+    $html .= '</li>' . "\n";
     while ($open-- > 0) {
-        $html .= '</ul></li>'."\n";
+        $html .= '</ul></li>' . "\n";
     }
 
     if ($forcewrapper || $start_level < 2) {
         // Trigger building a wrapper ul if the first level is
         // 0 (we have a root object) or 1 (just the root content)
-        $html = "\n".'<ul class="'.$class.'">'."\n".$html.'</ul>'."\n";
+        $html = "\n" . '<ul class="' . $class . '">' . "\n" . $html . '</ul>' . "\n";
     }
 
     return $html;
@@ -497,9 +523,10 @@ function html_buildlist($data, $class, $func, $lifunc = null, $forcewrapper = fa
  * @author Michael Klier <chi@chimeric.de>
  * @deprecated 2020-07-18
  */
-function html_backlinks() {
-    dbg_deprecated(Backlinks::class .'::show()');
-    (new dokuwiki\Ui\Backlinks)->show();
+function html_backlinks()
+{
+    dbg_deprecated(Backlinks::class . '::show()');
+    (new Backlinks())->show();
 }
 
 /**
@@ -513,8 +540,9 @@ function html_backlinks() {
  * @return string[] HTML snippets for diff header
  * @deprecated 2020-07-18
  */
-function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false) {
-    dbg_deprecated('see '. PageDiff::class .'::buildDiffHead()');
+function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = false)
+{
+    dbg_deprecated('see ' . PageDiff::class . '::buildDiffHead()');
     return ['', '', '', ''];
 }
 
@@ -529,10 +557,11 @@ function html_diff_head($l_rev, $r_rev, $id = null, $media = false, $inline = fa
  * @param  string $type  type of the diff (inline or sidebyside)
  * @deprecated 2020-07-18
  */
-function html_diff($text = '', $intro = true, $type = null) {
-    dbg_deprecated(PageDiff::class .'::show()');
+function html_diff($text = '', $intro = true, $type = null)
+{
+    dbg_deprecated(PageDiff::class . '::show()');
     global $INFO;
-    (new dokuwiki\Ui\PageDiff($INFO['id']))->compareWith($text)->preference([
+    (new PageDiff($INFO['id']))->compareWith($text)->preference([
         'showIntro' => $intro,
         'difftype'  => $type,
     ])->show();
@@ -548,8 +577,9 @@ function html_diff($text = '', $intro = true, $type = null) {
  * @return string[] html of left and right navigation elements
  * @deprecated 2020-07-18
  */
-function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
-    dbg_deprecated('see '. PageDiff::class .'::buildRevisionsNavigation()');
+function html_diff_navigation($pagelog, $type, $l_rev, $r_rev)
+{
+    dbg_deprecated('see ' . PageDiff::class . '::buildRevisionsNavigation()');
     return ['', ''];
 }
 
@@ -563,8 +593,9 @@ function html_diff_navigation($pagelog, $type, $l_rev, $r_rev) {
  * @return string html of link to a diff
  * @deprecated 2020-07-18
  */
-function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
-    dbg_deprecated('see '. PageDiff::class .'::diffViewlink()');
+function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null)
+{
+    dbg_deprecated('see ' . PageDiff::class . '::diffViewlink()');
     return '';
 }
 
@@ -575,9 +606,10 @@ function html_diff_navigationlink($difftype, $linktype, $lrev, $rrev = null) {
  * @return string
  * @deprecated 2020-07-18
  */
-function html_insert_softbreaks($diffhtml) {
-    dbg_deprecated(PageDiff::class .'::insertSoftbreaks()');
-    return (new dokuwiki\Ui\PageDiff)->insertSoftbreaks($diffhtml);
+function html_insert_softbreaks($diffhtml)
+{
+    dbg_deprecated(PageDiff::class . '::insertSoftbreaks()');
+    return (new PageDiff())->insertSoftbreaks($diffhtml);
 }
 
 /**
@@ -589,9 +621,10 @@ function html_insert_softbreaks($diffhtml) {
  * @param string $summary
  * @deprecated 2020-07-18
  */
-function html_conflict($text, $summary) {
-    dbg_deprecated(PageConflict::class .'::show()');
-    (new dokuwiki\Ui\PageConflict($text, $summary))->show();
+function html_conflict($text, $summary)
+{
+    dbg_deprecated(PageConflict::class . '::show()');
+    (new PageConflict($text, $summary))->show();
 }
 
 /**
@@ -599,7 +632,8 @@ function html_conflict($text, $summary) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_msgarea() {
+function html_msgarea()
+{
     global $MSG, $MSG_shown;
     /** @var array $MSG */
     // store if the global $MSG has already been shown and thus HTML output has been started
@@ -607,14 +641,14 @@ function html_msgarea() {
 
     if (!isset($MSG)) return;
 
-    $shown = array();
+    $shown = [];
     foreach ($MSG as $msg) {
         $hash = md5($msg['msg']);
         if (isset($shown[$hash])) continue; // skip double messages
         if (info_msg_allowed($msg)) {
-            print '<div class="'.$msg['lvl'].'">';
-            print $msg['msg'];
-            print '</div>';
+            echo '<div class="' . $msg['lvl'] . '">';
+            echo $msg['msg'];
+            echo '</div>';
         }
         $shown[$hash] = 1;
     }
@@ -628,9 +662,10 @@ function html_msgarea() {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_register() {
-    dbg_deprecated(UserRegister::class .'::show()');
-    (new dokuwiki\Ui\UserRegister)->show();
+function html_register()
+{
+    dbg_deprecated(UserRegister::class . '::show()');
+    (new UserRegister())->show();
 }
 
 /**
@@ -640,9 +675,10 @@ function html_register() {
  * @author Andreas Gohr <andi@splitbrain.org>
  * @deprecated 2020-07-18
  */
-function html_updateprofile() {
-    dbg_deprecated(UserProfile::class .'::show()');
-    (new dokuwiki\Ui\UserProfile)->show();
+function html_updateprofile()
+{
+    dbg_deprecated(UserProfile::class . '::show()');
+    (new UserProfile())->show();
 }
 
 /**
@@ -652,9 +688,10 @@ function html_updateprofile() {
  *
  * @deprecated 2020-07-18
  */
-function html_edit() {
-    dbg_deprecated(Editor::class .'::show()');
-    (new dokuwiki\Ui\Editor)->show();
+function html_edit()
+{
+    dbg_deprecated(Editor::class . '::show()');
+    (new Editor())->show();
 }
 
 /**
@@ -665,9 +702,10 @@ function html_edit() {
  * @param array $param
  * @deprecated 2020-07-18
  */
-function html_edit_form($param) {
-    dbg_deprecated(Editor::class .'::addTextarea()');
-    (new dokuwiki\Ui\Editor)->addTextarea($param);
+function html_edit_form($param)
+{
+    dbg_deprecated(Editor::class . '::addTextarea()');
+    (new Editor())->addTextarea($param);
 }
 
 /**
@@ -675,7 +713,8 @@ function html_edit_form($param) {
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function html_debug() {
+function html_debug()
+{
     global $conf;
     global $lang;
     /** @var AuthPlugin $auth */
@@ -690,82 +729,82 @@ function html_debug() {
     $ses = $_SESSION;
     debug_guard($ses);
 
-    print '<html><body>';
+    echo '<html><body>';
 
-    print '<p>When reporting bugs please send all the following ';
-    print 'output as a mail to andi@splitbrain.org ';
-    print 'The best way to do this is to save this page in your browser</p>';
+    echo '<p>When reporting bugs please send all the following ';
+    echo 'output as a mail to andi@splitbrain.org ';
+    echo 'The best way to do this is to save this page in your browser</p>';
 
-    print '<b>$INFO:</b><pre>';
+    echo '<b>$INFO:</b><pre>';
     print_r($nfo);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>$_SERVER:</b><pre>';
+    echo '<b>$_SERVER:</b><pre>';
     print_r($_SERVER);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>$conf:</b><pre>';
+    echo '<b>$conf:</b><pre>';
     print_r($cnf);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>DOKU_BASE:</b><pre>';
-    print DOKU_BASE;
-    print '</pre>';
+    echo '<b>DOKU_BASE:</b><pre>';
+    echo DOKU_BASE;
+    echo '</pre>';
 
-    print '<b>abs DOKU_BASE:</b><pre>';
-    print DOKU_URL;
-    print '</pre>';
+    echo '<b>abs DOKU_BASE:</b><pre>';
+    echo DOKU_URL;
+    echo '</pre>';
 
-    print '<b>rel DOKU_BASE:</b><pre>';
-    print dirname($_SERVER['PHP_SELF']).'/';
-    print '</pre>';
+    echo '<b>rel DOKU_BASE:</b><pre>';
+    echo dirname($_SERVER['PHP_SELF']) . '/';
+    echo '</pre>';
 
-    print '<b>PHP Version:</b><pre>';
-    print phpversion();
-    print '</pre>';
+    echo '<b>PHP Version:</b><pre>';
+    echo phpversion();
+    echo '</pre>';
 
-    print '<b>locale:</b><pre>';
-    print setlocale(LC_ALL,0);
-    print '</pre>';
+    echo '<b>locale:</b><pre>';
+    echo setlocale(LC_ALL, 0);
+    echo '</pre>';
 
-    print '<b>encoding:</b><pre>';
-    print $lang['encoding'];
-    print '</pre>';
+    echo '<b>encoding:</b><pre>';
+    echo $lang['encoding'];
+    echo '</pre>';
 
-    if ($auth) {
-        print '<b>Auth backend capabilities:</b><pre>';
+    if ($auth instanceof AuthPlugin) {
+        echo '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
-            print '   '.str_pad($cando,16) .' => '. (int)$auth->canDo($cando) . DOKU_LF;
+            echo '   ' . str_pad($cando, 16) . ' => ' . (int)$auth->canDo($cando) . DOKU_LF;
         }
-        print '</pre>';
+        echo '</pre>';
     }
 
-    print '<b>$_SESSION:</b><pre>';
+    echo '<b>$_SESSION:</b><pre>';
     print_r($ses);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>Environment:</b><pre>';
+    echo '<b>Environment:</b><pre>';
     print_r($_ENV);
-    print '</pre>';
+    echo '</pre>';
 
-    print '<b>PHP settings:</b><pre>';
+    echo '<b>PHP settings:</b><pre>';
     $inis = ini_get_all();
     print_r($inis);
-    print '</pre>';
+    echo '</pre>';
 
     if (function_exists('apache_get_version')) {
-        $apache = array();
+        $apache = [];
         $apache['version'] = apache_get_version();
 
         if (function_exists('apache_get_modules')) {
             $apache['modules'] = apache_get_modules();
         }
-        print '<b>Apache</b><pre>';
+        echo '<b>Apache</b><pre>';
         print_r($apache);
-        print '</pre>';
+        echo '</pre>';
     }
 
-    print '</body></html>';
+    echo '</body></html>';
 }
 
 /**
@@ -775,9 +814,10 @@ function html_debug() {
  * @author Andreas Gohr <gohr@cosmocode.de>
  * @deprecated 2020-07-18
  */
-function html_resendpwd() {
-    dbg_deprecated(UserResendPwd::class .'::show()');
-    (new dokuwiki\Ui\UserResendPwd)->show();
+function html_resendpwd()
+{
+    dbg_deprecated(UserResendPwd::class . '::show()');
+    (new UserResendPwd())->show();
 }
 
 /**
@@ -788,18 +828,19 @@ function html_resendpwd() {
  * @param array $toc
  * @return string html
  */
-function html_TOC($toc) {
-    if (!count($toc)) return '';
+function html_TOC($toc)
+{
+    if ($toc === []) return '';
     global $lang;
-    $out  = '<!-- TOC START -->'.DOKU_LF;
-    $out .= '<div id="dw__toc" class="dw__toc">'.DOKU_LF;
+    $out  = '<!-- TOC START -->' . DOKU_LF;
+    $out .= '<div id="dw__toc" class="dw__toc">' . DOKU_LF;
     $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</h3>'.DOKU_LF;
-    $out .= '<div>'.DOKU_LF;
+    $out .= '</h3>' . DOKU_LF;
+    $out .= '<div>' . DOKU_LF;
     $out .= html_buildlist($toc, 'toc', 'html_list_toc', null, true);
-    $out .= '</div>'.DOKU_LF.'</div>'.DOKU_LF;
-    $out .= '<!-- TOC END -->'.DOKU_LF;
+    $out .= '</div>' . DOKU_LF . '</div>' . DOKU_LF;
+    $out .= '<!-- TOC END -->' . DOKU_LF;
     return $out;
 }
 
@@ -809,14 +850,15 @@ function html_TOC($toc) {
  * @param array $item
  * @return string html
  */
-function html_list_toc($item) {
-    if (isset($item['hid'])){
-        $link = '#'.$item['hid'];
+function html_list_toc($item)
+{
+    if (isset($item['hid'])) {
+        $link = '#' . $item['hid'];
     } else {
         $link = $item['link'];
     }
 
-    return '<a href="'.$link.'">'.hsc($item['title']).'</a>';
+    return '<a href="' . $link . '">' . hsc($item['title']) . '</a>';
 }
 
 /**
@@ -830,13 +872,14 @@ function html_list_toc($item) {
  * @param string $hash  - is prepended to the given $link, set blank if you want full links
  * @return array the toc item
  */
-function html_mktocitem($link, $text, $level, $hash='#') {
-    return  array(
-            'link'  => $hash.$link,
-            'title' => $text,
-            'type'  => 'ul',
-            'level' => $level
-    );
+function html_mktocitem($link, $text, $level, $hash = '#')
+{
+    return  [
+        'link'  => $hash . $link,
+        'title' => $text,
+        'type'  => 'ul',
+        'level' => $level
+    ];
 }
 
 /**
@@ -850,11 +893,12 @@ function html_mktocitem($link, $text, $level, $hash='#') {
  * @return void
  * @deprecated 2020-07-18
  */
-function html_form($name, $form) {
+function html_form($name, $form)
+{
     dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
     // Safety check in case the caller forgets.
     $form->endFieldset();
-    Event::createAndTrigger('HTML_'.strtoupper($name).'FORM_OUTPUT', $form, 'html_form_output', false);
+    Event::createAndTrigger('HTML_' . strtoupper($name) . 'FORM_OUTPUT', $form, 'html_form_output', false);
 }
 
 /**
@@ -865,8 +909,9 @@ function html_form($name, $form) {
  * @return void
  * @deprecated 2020-07-18
  */
-function html_form_output($form) {
-    dbg_deprecated('use dokuwiki\Form\Form::toHTML()');
+function html_form_output($form)
+{
+    dbg_deprecated('use ' . Form::class . '::toHTML()');
     $form->printForm();
 }
 
@@ -893,17 +938,18 @@ function html_form_output($form) {
  * @param string $alt      - alternative content (is NOT automatically escaped!)
  * @return string         - the XHTML markup
  */
-function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts=null,$alt=''){
+function html_flashobject($swf, $width, $height, $params = null, $flashvars = null, $atts = null, $alt = '')
+{
     global $lang;
 
     $out = '';
 
     // prepare the object attributes
-    if(is_null($atts)) $atts = array();
+    if (is_null($atts)) $atts = [];
     $atts['width']  = (int) $width;
     $atts['height'] = (int) $height;
-    if(!$atts['width'])  $atts['width']  = 425;
-    if(!$atts['height']) $atts['height'] = 350;
+    if (!$atts['width'])  $atts['width']  = 425;
+    if (!$atts['height']) $atts['height'] = 350;
 
     // add object attributes for standard compliant browsers
     $std = $atts;
@@ -915,34 +961,34 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
     $ie['classid'] = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
 
     // open object (with conditional comments)
-    $out .= '<!--[if !IE]> -->'.NL;
-    $out .= '<object '.buildAttributes($std).'>'.NL;
-    $out .= '<!-- <![endif]-->'.NL;
-    $out .= '<!--[if IE]>'.NL;
-    $out .= '<object '.buildAttributes($ie).'>'.NL;
-    $out .= '    <param name="movie" value="'.hsc($swf).'" />'.NL;
-    $out .= '<!--><!-- -->'.NL;
+    $out .= '<!--[if !IE]> -->' . NL;
+    $out .= '<object ' . buildAttributes($std) . '>' . NL;
+    $out .= '<!-- <![endif]-->' . NL;
+    $out .= '<!--[if IE]>' . NL;
+    $out .= '<object ' . buildAttributes($ie) . '>' . NL;
+    $out .= '    <param name="movie" value="' . hsc($swf) . '" />' . NL;
+    $out .= '<!--><!-- -->' . NL;
 
     // print params
-    if(is_array($params)) foreach($params as $key => $val){
-        $out .= '  <param name="'.hsc($key).'" value="'.hsc($val).'" />'.NL;
+    if (is_array($params)) foreach ($params as $key => $val) {
+        $out .= '  <param name="' . hsc($key) . '" value="' . hsc($val) . '" />' . NL;
     }
 
     // add flashvars
-    if(is_array($flashvars)){
-        $out .= '  <param name="FlashVars" value="'.buildURLparams($flashvars).'" />'.NL;
+    if (is_array($flashvars)) {
+        $out .= '  <param name="FlashVars" value="' . buildURLparams($flashvars) . '" />' . NL;
     }
 
     // alternative content
-    if($alt){
-        $out .= $alt.NL;
-    }else{
-        $out .= $lang['noflash'].NL;
+    if ($alt) {
+        $out .= $alt . NL;
+    } else {
+        $out .= $lang['noflash'] . NL;
     }
 
     // finish
-    $out .= '</object>'.NL;
-    $out .= '<!-- <![endif]-->'.NL;
+    $out .= '</object>' . NL;
+    $out .= '<!-- <![endif]-->' . NL;
 
     return $out;
 }
@@ -954,14 +1000,15 @@ function html_flashobject($swf,$width,$height,$params=null,$flashvars=null,$atts
  * @param string $current_tab the current tab id
  * @return void
  */
-function html_tabs($tabs, $current_tab = null) {
-    echo '<ul class="tabs">'.NL;
+function html_tabs($tabs, $current_tab = null)
+{
+    echo '<ul class="tabs">' . NL;
 
     foreach ($tabs as $id => $tab) {
         html_tab($tab['href'], $tab['caption'], $id === $current_tab);
     }
 
-    echo '</ul>'.NL;
+    echo '</ul>' . NL;
 }
 
 /**
@@ -976,7 +1023,8 @@ function html_tabs($tabs, $current_tab = null) {
  * @return void
  */
 
-function html_tab($href, $caption, $selected = false) {
+function html_tab($href, $caption, $selected = false)
+{
     $tab = '<li>';
     if ($selected) {
         $tab .= '<strong>';
@@ -985,7 +1033,7 @@ function html_tab($href, $caption, $selected = false) {
     }
     $tab .= hsc($caption)
          .  '</' . ($selected ? 'strong' : 'a') . '>'
-         .  '</li>'.NL;
+         .  '</li>' . NL;
     echo $tab;
 }
 
@@ -996,7 +1044,8 @@ function html_tab($href, $caption, $selected = false) {
  * @param Doku_Form $form - (optional) form to add elements to
  * @return void|string
  */
-function html_sizechange($sizechange, $form = null) {
+function html_sizechange($sizechange, $form = null)
+{
     if (isset($sizechange)) {
         $class = 'sizechange';
         $value = filesize_h(abs($sizechange));
@@ -1010,9 +1059,9 @@ function html_sizechange($sizechange, $form = null) {
             $value = '±' . $value;
         }
         if (!isset($form)) {
-            return '<span class="'.$class.'">'.$value.'</span>';
+            return '<span class="' . $class . '">' . $value . '</span>';
         } else { // Doku_Form
-            $form->addElement(form_makeOpenTag('span', array('class' => $class)));
+            $form->addElement(form_makeOpenTag('span', ['class' => $class]));
             $form->addElement($value);
             $form->addElement(form_makeCloseTag('span'));
         }

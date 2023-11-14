@@ -13,8 +13,7 @@ use ReflectionMethod;
  */
 abstract class RemotePlugin extends Plugin
 {
-
-    private $api;
+    private Api $api;
 
     /**
      * Constructor
@@ -35,7 +34,7 @@ abstract class RemotePlugin extends Plugin
      */
     public function _getMethods()
     {
-        $result = array();
+        $result = [];
 
         $reflection = new \ReflectionClass($this);
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
@@ -52,17 +51,17 @@ abstract class RemotePlugin extends Plugin
             // strip asterisks
             $doc = $method->getDocComment();
             $doc = preg_replace(
-                array('/^[ \t]*\/\*+[ \t]*/m', '/[ \t]*\*+[ \t]*/m', '/\*+\/\s*$/m', '/\s*\/\s*$/m'),
-                array('', '', '', ''),
+                ['/^[ \t]*\/\*+[ \t]*/m', '/[ \t]*\*+[ \t]*/m', '/\*+\/\s*$/m', '/\s*\/\s*$/m'],
+                ['', '', '', ''],
                 $doc
             );
 
             // prepare data
-            $data = array();
+            $data = [];
             $data['name'] = $method_name;
             $data['public'] = 0;
             $data['doc'] = $doc;
-            $data['args'] = array();
+            $data['args'] = [];
 
             // get parameter type from doc block type hint
             foreach ($method->getParameters() as $parameter) {
@@ -98,13 +97,13 @@ abstract class RemotePlugin extends Plugin
     {
         $types = explode('|', $hint);
         foreach ($types as $t) {
-            if (substr($t, -2) === '[]') {
+            if (str_ends_with($t, '[]')) {
                 return 'array';
             }
             if ($t === 'boolean') {
                 return 'bool';
             }
-            if (in_array($t, array('array', 'string', 'int', 'double', 'bool', 'null', 'date', 'file'))) {
+            if (in_array($t, ['array', 'string', 'int', 'double', 'bool', 'null', 'date', 'file'])) {
                 return $t;
             }
         }
@@ -118,5 +117,4 @@ abstract class RemotePlugin extends Plugin
     {
         return $this->api;
     }
-
 }

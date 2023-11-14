@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jérémy Just <jeremy@jejust.fr>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -111,6 +112,7 @@ $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['disableactions_rss']    = 'Syndication XML (RSS)';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies définis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Désactivez cette option lorsque seule la connexion à votre wiki est sécurisée avec SSL et que la navigation sur le wiki est effectuée de manière non sécurisée.';
+$lang['samesitecookie']        = 'Valeur de l\'attribut samesite des cookies. Vide pour laisser les navigateurs décider de leur politique samesite.';
 $lang['remote']                = 'Active l\'API système distante. Ceci permet à d\'autres applications d\'accéder au wiki via XML-RPC ou d\'autres mécanismes.';
 $lang['remoteuser']            = 'Restreindre l\'accès à l\'API à une liste de groupes ou d\'utilisateurs (séparés par une virgule). Laisser vide pour donner l\'accès tout le monde.';
 $lang['remotecors']            = 'Active le partage de ressources entre origines multiples (CORS) pour les interfaces distantes. Utiliser un astérisque (*) pour autoriser toutes les origines. Laisser vide pour interdire le CORS.';

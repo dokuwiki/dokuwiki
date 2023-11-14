@@ -12,22 +12,24 @@ use dokuwiki\Extension\AdminPlugin;
  *
  * @package dokuwiki\Action
  */
-class Admin extends AbstractUserAction {
-
+class Admin extends AbstractUserAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ; // let in check later
     }
 
     /** @inheritDoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INPUT;
 
         // retrieve admin plugin name from $_REQUEST['page']
-        if($INPUT->str('page', '', true) != '') {
+        if ($INPUT->str('page', '', true) != '') {
             /** @var AdminPlugin $plugin */
-            if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
-                if(!$plugin->isAccessibleByCurrentUser()) {
+            if ($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
+                if (!$plugin->isAccessibleByCurrentUser()) {
                     throw new ActionException('denied');
                 }
                 $plugin->handle();
@@ -36,7 +38,8 @@ class Admin extends AbstractUserAction {
     }
 
     /** @inheritDoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         tpl_admin();
     }
 }

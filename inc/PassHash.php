@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki;
@@ -12,7 +13,8 @@ namespace dokuwiki;
  * @author  Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @license LGPL2
  */
-class PassHash {
+class PassHash
+{
     /**
      * Verifies a cleartext password against a crypted hash
      *
@@ -27,92 +29,84 @@ class PassHash {
      * @param string $hash  Hash to compare against
      * @return  bool
      */
-    public function verify_hash($clear, $hash) {
+    public function verify_hash($clear, $hash)
+    {
         $method = '';
         $salt   = '';
         $magic  = '';
 
         //determine the used method and salt
-        if (substr($hash, 0, 2) == 'U$') {
+        if (str_starts_with($hash, 'U$')) {
             // This may be an updated password from user_update_7000(). Such hashes
             // have 'U' added as the first character and need an extra md5().
             $hash = substr($hash, 1);
             $clear = md5($clear);
         }
         $len = strlen($hash);
-        if(preg_match('/^\$1\$([^\$]{0,8})\$/', $hash, $m)) {
+        if (preg_match('/^\$1\$([^\$]{0,8})\$/', $hash, $m)) {
             $method = 'smd5';
             $salt   = $m[1];
             $magic  = '1';
-        } elseif(preg_match('/^\$apr1\$([^\$]{0,8})\$/', $hash, $m)) {
+        } elseif (preg_match('/^\$apr1\$([^\$]{0,8})\$/', $hash, $m)) {
             $method = 'apr1';
             $salt   = $m[1];
             $magic  = 'apr1';
-        } elseif(preg_match('/^\$S\$(.{52})$/', $hash, $m)) {
+        } elseif (preg_match('/^\$S\$(.{52})$/', $hash, $m)) {
             $method = 'drupal_sha512';
             $salt   = $m[1];
             $magic  = 'S';
-        } elseif(preg_match('/^\$P\$(.{31})$/', $hash, $m)) {
+        } elseif (preg_match('/^\$P\$(.{31})$/', $hash, $m)) {
             $method = 'pmd5';
             $salt   = $m[1];
             $magic  = 'P';
-        } elseif(preg_match('/^\$H\$(.{31})$/', $hash, $m)) {
+        } elseif (preg_match('/^\$H\$(.{31})$/', $hash, $m)) {
             $method = 'pmd5';
             $salt = $m[1];
             $magic = 'H';
-        } elseif(preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash, $m)) {
+        } elseif (preg_match('/^pbkdf2_(\w+?)\$(\d+)\$(.{12})\$/', $hash, $m)) {
             $method = 'djangopbkdf2';
-            $magic = array(
-                'algo' => $m[1],
-                'iter' => $m[2],
-            );
+            $magic = ['algo' => $m[1], 'iter' => $m[2]];
             $salt = $m[3];
-        } elseif(preg_match('/^PBKDF2(SHA\d+)\$(\d+)\$([[:xdigit:]]+)\$([[:xdigit:]]+)$/', $hash, $m)) {
+        } elseif (preg_match('/^PBKDF2(SHA\d+)\$(\d+)\$([[:xdigit:]]+)\$([[:xdigit:]]+)$/', $hash, $m)) {
             $method = 'seafilepbkdf2';
-            $magic = array(
-                'algo' => $m[1],
-                'iter' => $m[2],
-            );
+            $magic = ['algo' => $m[1], 'iter' => $m[2]];
             $salt = $m[3];
-        } elseif(preg_match('/^sha1\$(.{5})\$/', $hash, $m)) {
+        } elseif (preg_match('/^sha1\$(.{5})\$/', $hash, $m)) {
             $method = 'djangosha1';
             $salt   = $m[1];
-        } elseif(preg_match('/^md5\$(.{5})\$/', $hash, $m)) {
+        } elseif (preg_match('/^md5\$(.{5})\$/', $hash, $m)) {
             $method = 'djangomd5';
             $salt   = $m[1];
-        } elseif(preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
+        } elseif (preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
             $method = 'bcrypt';
             $salt   = $hash;
-        } elseif(substr($hash, 0, 6) == '{SSHA}') {
+        } elseif (str_starts_with($hash, '{SSHA}')) {
             $method = 'ssha';
             $salt   = substr(base64_decode(substr($hash, 6)), 20);
-        } elseif(substr($hash, 0, 6) == '{SMD5}') {
+        } elseif (str_starts_with($hash, '{SMD5}')) {
             $method = 'lsmd5';
             $salt   = substr(base64_decode(substr($hash, 6)), 16);
-        } elseif(preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
+        } elseif (preg_match('/^:B:(.+?):.{32}$/', $hash, $m)) {
             $method = 'mediawiki';
             $salt   = $m[1];
-        } elseif(preg_match('/^\$(5|6)\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
+        } elseif (preg_match('/^\$(5|6)\$(rounds=\d+)?\$?(.+?)\$/', $hash, $m)) {
             $method = 'sha2';
             $salt   = $m[3];
-            $magic  = array(
-                'prefix' => $m[1],
-                'rounds' => $m[2],
-            );
-        } elseif(preg_match('/^\$(argon2id?)/', $hash, $m)) {
-            if(!defined('PASSWORD_'.strtoupper($m[1]))) {
-                throw new \Exception('This PHP installation has no '.strtoupper($m[1]).' support');
+            $magic  = ['prefix' => $m[1], 'rounds' => $m[2]];
+        } elseif (preg_match('/^\$(argon2id?)/', $hash, $m)) {
+            if (!defined('PASSWORD_' . strtoupper($m[1]))) {
+                throw new \Exception('This PHP installation has no ' . strtoupper($m[1]) . ' support');
             }
-            return password_verify($clear,$hash);
-        } elseif($len == 32) {
+            return password_verify($clear, $hash);
+        } elseif ($len == 32) {
             $method = 'md5';
-        } elseif($len == 40) {
+        } elseif ($len == 40) {
             $method = 'sha1';
-        } elseif($len == 16) {
+        } elseif ($len == 16) {
             $method = 'mysql';
-        } elseif($len == 41 && $hash[0] == '*') {
+        } elseif ($len == 41 && $hash[0] == '*') {
             $method = 'my411';
-        } elseif($len == 34) {
+        } elseif ($len == 34) {
             $method = 'kmd5';
             $salt   = $hash;
         } else {
@@ -121,9 +115,9 @@ class PassHash {
         }
 
         //crypt and compare
-        $call = 'hash_'.$method;
+        $call = 'hash_' . $method;
         $newhash = $this->$call($clear, $salt, $magic);
-        if(\hash_equals($newhash, $hash)) {
+        if (\hash_equals($newhash, $hash)) {
             return true;
         }
         return false;
@@ -135,10 +129,11 @@ class PassHash {
      * @param int $len The length of the salt
      * @return string
      */
-    public function gen_salt($len = 32) {
+    public function gen_salt($len = 32)
+    {
         $salt  = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        for($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             $salt .= $chars[$this->random(0, 61)];
         }
         return $salt;
@@ -154,12 +149,13 @@ class PassHash {
      * @param int          $len   The length of the salt
      * @param bool         $cut   Apply length restriction to existing salt?
      */
-    public function init_salt(&$salt, $len = 32, $cut = true) {
-        if(is_null($salt)) {
+    public function init_salt(&$salt, $len = 32, $cut = true)
+    {
+        if (is_null($salt)) {
             $salt = $this->gen_salt($len);
             $cut  = true; // for new hashes we alway apply length restriction
         }
-        if(strlen($salt) > $len && $cut) $salt = substr($salt, 0, $len);
+        if (strlen($salt) > $len && $cut) $salt = substr($salt, 0, $len);
     }
 
     // Password hashing methods follow below
@@ -181,11 +177,12 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_smd5($clear, $salt = null) {
+    public function hash_smd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 8);
 
-        if(defined('CRYPT_MD5') && CRYPT_MD5 && $salt !== '') {
-            return crypt($clear, '$1$'.$salt.'$');
+        if (defined('CRYPT_MD5') && CRYPT_MD5 && $salt !== '') {
+            return crypt($clear, '$1$' . $salt . '$');
         } else {
             // Fall back to PHP-only implementation
             return $this->hash_apr1($clear, $salt, '1');
@@ -203,9 +200,10 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_lsmd5($clear, $salt = null) {
+    public function hash_lsmd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 8);
-        return "{SMD5}".base64_encode(md5($clear.$salt, true).$salt);
+        return "{SMD5}" . base64_encode(md5($clear . $salt, true) . $salt);
     }
 
     /**
@@ -223,40 +221,41 @@ class PassHash {
      * @param string $magic The hash identifier (apr1 or 1)
      * @return string Hashed password
      */
-    public function hash_apr1($clear, $salt = null, $magic = 'apr1') {
+    public function hash_apr1($clear, $salt = null, $magic = 'apr1')
+    {
         $this->init_salt($salt, 8);
 
         $len  = strlen($clear);
-        $text = $clear.'$'.$magic.'$'.$salt;
-        $bin  = pack("H32", md5($clear.$salt.$clear));
-        for($i = $len; $i > 0; $i -= 16) {
+        $text = $clear . '$' . $magic . '$' . $salt;
+        $bin  = pack("H32", md5($clear . $salt . $clear));
+        for ($i = $len; $i > 0; $i -= 16) {
             $text .= substr($bin, 0, min(16, $i));
         }
-        for($i = $len; $i > 0; $i >>= 1) {
+        for ($i = $len; $i > 0; $i >>= 1) {
             $text .= ($i & 1) ? chr(0) : $clear[0];
         }
         $bin = pack("H32", md5($text));
-        for($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $new = ($i & 1) ? $clear : $bin;
-            if($i % 3) $new .= $salt;
-            if($i % 7) $new .= $clear;
+            if ($i % 3) $new .= $salt;
+            if ($i % 7) $new .= $clear;
             $new .= ($i & 1) ? $bin : $clear;
             $bin = pack("H32", md5($new));
         }
         $tmp = '';
-        for($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $k = $i + 6;
             $j = $i + 12;
-            if($j == 16) $j = 5;
-            $tmp = $bin[$i].$bin[$k].$bin[$j].$tmp;
+            if ($j == 16) $j = 5;
+            $tmp = $bin[$i] . $bin[$k] . $bin[$j] . $tmp;
         }
-        $tmp = chr(0).chr(0).$bin[11].$tmp;
+        $tmp = chr(0) . chr(0) . $bin[11] . $tmp;
         $tmp = strtr(
             strrev(substr(base64_encode($tmp), 2)),
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
             "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
         );
-        return '$'.$magic.'$'.$salt.'$'.$tmp;
+        return '$' . $magic . '$' . $salt . '$' . $tmp;
     }
 
     /**
@@ -267,7 +266,8 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_md5($clear) {
+    public function hash_md5($clear)
+    {
         return md5($clear);
     }
 
@@ -279,7 +279,8 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_sha1($clear) {
+    public function hash_sha1($clear)
+    {
         return sha1($clear);
     }
 
@@ -292,9 +293,10 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_ssha($clear, $salt = null) {
+    public function hash_ssha($clear, $salt = null)
+    {
         $this->init_salt($salt, 4);
-        return '{SSHA}'.base64_encode(pack("H*", sha1($clear.$salt)).$salt);
+        return '{SSHA}' . base64_encode(pack("H*", sha1($clear . $salt)) . $salt);
     }
 
     /**
@@ -306,7 +308,8 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_crypt($clear, $salt = null) {
+    public function hash_crypt($clear, $salt = null)
+    {
         $this->init_salt($salt, 2);
         return crypt($clear, $salt);
     }
@@ -321,13 +324,14 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_mysql($clear) {
+    public function hash_mysql($clear)
+    {
         $nr      = 0x50305735;
         $nr2     = 0x12345671;
         $add     = 7;
         $charArr = preg_split("//", $clear);
-        foreach($charArr as $char) {
-            if(($char == '') || ($char == ' ') || ($char == '\t')) continue;
+        foreach ($charArr as $char) {
+            if (($char == '') || ($char == ' ') || ($char == '\t')) continue;
             $charVal = ord($char);
             $nr ^= ((($nr & 63) + $add) * $charVal) + ($nr << 8);
             $nr2 += ($nr2 << 8) ^ $nr;
@@ -344,8 +348,9 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_my411($clear) {
-        return '*'.strtoupper(sha1(pack("H*", sha1($clear))));
+    public function hash_my411($clear)
+    {
+        return '*' . strtoupper(sha1(pack("H*", sha1($clear))));
     }
 
     /**
@@ -360,12 +365,13 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_kmd5($clear, $salt = null) {
+    public function hash_kmd5($clear, $salt = null)
+    {
         $this->init_salt($salt);
 
         $key   = substr($salt, 16, 2);
-        $hash1 = strtolower(md5($key.md5($clear)));
-        $hash2 = substr($hash1, 0, 16).$key.substr($hash1, 16);
+        $hash1 = strtolower(md5($key . md5($clear)));
+        $hash2 = substr($hash1, 0, 16) . $key . substr($hash1, 16);
         return $hash2;
     }
 
@@ -395,28 +401,29 @@ class PassHash {
      * @throws \Exception
      * @return string Hashed password
      */
-    protected function stretched_hash($algo, $clear, $salt = null, $magic = 'P', $compute = 8) {
+    protected function stretched_hash($algo, $clear, $salt = null, $magic = 'P', $compute = 8)
+    {
         $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        if(is_null($salt)) {
+        if (is_null($salt)) {
             $this->init_salt($salt);
-            $salt = $itoa64[$compute].$salt; // prefix iteration count
+            $salt = $itoa64[$compute] . $salt; // prefix iteration count
         }
         $iterc = $salt[0]; // pos 0 of salt is log2(iteration count)
         $iter  = strpos($itoa64, $iterc);
 
-        if($iter > 30) {
-            throw new \Exception("Too high iteration count ($iter) in ".
-                                    __CLASS__.'::'.__FUNCTION__);
+        if ($iter > 30) {
+            throw new \Exception("Too high iteration count ($iter) in " .
+                                    self::class . '::' . __FUNCTION__);
         }
 
         $iter = 1 << $iter;
         $salt = substr($salt, 1, 8);
 
         // iterate
-        $hash = hash($algo, $salt . $clear, TRUE);
+        $hash = hash($algo, $salt . $clear, true);
         do {
-            $hash = hash($algo, $hash.$clear, true);
-        } while(--$iter);
+            $hash = hash($algo, $hash . $clear, true);
+        } while (--$iter);
 
         // encode
         $output = '';
@@ -425,20 +432,20 @@ class PassHash {
         do {
             $value = ord($hash[$i++]);
             $output .= $itoa64[$value & 0x3f];
-            if($i < $count)
+            if ($i < $count)
                 $value |= ord($hash[$i]) << 8;
             $output .= $itoa64[($value >> 6) & 0x3f];
-            if($i++ >= $count)
+            if ($i++ >= $count)
                 break;
-            if($i < $count)
+            if ($i < $count)
                 $value |= ord($hash[$i]) << 16;
             $output .= $itoa64[($value >> 12) & 0x3f];
-            if($i++ >= $count)
+            if ($i++ >= $count)
                 break;
             $output .= $itoa64[($value >> 18) & 0x3f];
-        } while($i < $count);
+        } while ($i < $count);
 
-        return '$'.$magic.'$'.$iterc.$salt.$output;
+        return '$' . $magic . '$' . $iterc . $salt . $output;
     }
 
     /**
@@ -459,7 +466,8 @@ class PassHash {
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8) {
+    public function hash_pmd5($clear, $salt = null, $magic = 'P', $compute = 8)
+    {
         return $this->stretched_hash('md5', $clear, $salt, $magic, $compute);
     }
 
@@ -480,8 +488,9 @@ class PassHash {
      * @throws Exception
      * @return string Hashed password
      */
-    public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15) {
-      return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
+    public function hash_drupal_sha512($clear, $salt = null, $magic = 'S', $compute = 15)
+    {
+        return substr($this->stretched_hash('sha512', $clear, $salt, $magic, $compute), 0, 55);
     }
 
     /**
@@ -495,7 +504,8 @@ class PassHash {
      * @return string
      * @throws \Exception
      */
-    public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8) {
+    public function hash_hmd5($clear, $salt = null, $magic = 'H', $compute = 8)
+    {
         return $this->hash_pmd5($clear, $salt, $magic, $compute);
     }
 
@@ -511,9 +521,10 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_djangosha1($clear, $salt = null) {
+    public function hash_djangosha1($clear, $salt = null)
+    {
         $this->init_salt($salt, 5);
-        return 'sha1$'.$salt.'$'.sha1($salt.$clear);
+        return 'sha1$' . $salt . '$' . sha1($salt . $clear);
     }
 
     /**
@@ -528,9 +539,10 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_djangomd5($clear, $salt = null) {
+    public function hash_djangomd5($clear, $salt = null)
+    {
         $this->init_salt($salt, 5);
-        return 'md5$'.$salt.'$'.md5($salt.$clear);
+        return 'md5$' . $salt . '$' . md5($salt . $clear);
     }
 
     /**
@@ -550,23 +562,24 @@ class PassHash {
      * @return string Hashed password
      * @throws Exception when PHP is missing support for the method/algo
      */
-    public function hash_seafilepbkdf2($clear, $salt=null, $opts=array()) {
+    public function hash_seafilepbkdf2($clear, $salt = null, $opts = [])
+    {
         $this->init_salt($salt, 64);
-        if(empty($opts['algo'])) {
-            $prefixalgo='SHA256';
+        if (empty($opts['algo'])) {
+            $prefixalgo = 'SHA256';
         } else {
-            $prefixalgo=$opts['algo'];
+            $prefixalgo = $opts['algo'];
         }
         $algo = strtolower($prefixalgo);
-        if(empty($opts['iter'])) {
+        if (empty($opts['iter'])) {
             $iter = 10000;
         } else {
             $iter = (int) $opts['iter'];
         }
-        if(!function_exists('hash_pbkdf2')) {
+        if (!function_exists('hash_pbkdf2')) {
             throw new Exception('This PHP installation has no PBKDF2 support');
         }
-        if(!in_array($algo, hash_algos())) {
+        if (!in_array($algo, hash_algos())) {
             throw new Exception("This PHP installation has no $algo support");
         }
 
@@ -586,22 +599,23 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2($clear, $salt = null, $opts = [])
+    {
         $this->init_salt($salt, 12);
-        if(empty($opts['algo'])) {
+        if (empty($opts['algo'])) {
             $algo = 'sha256';
         } else {
             $algo = $opts['algo'];
         }
-        if(empty($opts['iter'])) {
+        if (empty($opts['iter'])) {
             $iter = 24000;
         } else {
             $iter = (int) $opts['iter'];
         }
-        if(!function_exists('hash_pbkdf2')) {
+        if (!function_exists('hash_pbkdf2')) {
             throw new \Exception('This PHP installation has no PBKDF2 support');
         }
-        if(!in_array($algo, hash_algos())) {
+        if (!in_array($algo, hash_algos())) {
             throw new \Exception("This PHP installation has no $algo support");
         }
 
@@ -618,7 +632,8 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha256($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2_sha256($clear, $salt = null, $opts = [])
+    {
         $opts['algo'] = 'sha256';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -632,7 +647,8 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception when PHP is missing support for the method/algo
      */
-    public function hash_djangopbkdf2_sha1($clear, $salt=null, $opts=array()) {
+    public function hash_djangopbkdf2_sha1($clear, $salt = null, $opts = [])
+    {
         $opts['algo'] = 'sha1';
         return $this->hash_djangopbkdf2($clear, $salt, $opts);
     }
@@ -654,14 +670,15 @@ class PassHash {
      * @throws \Exception
      * @return string Hashed password
      */
-    public function hash_bcrypt($clear, $salt = null, $compute = 10) {
-        if(!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH != 1) {
+    public function hash_bcrypt($clear, $salt = null, $compute = 10)
+    {
+        if (!defined('CRYPT_BLOWFISH') || CRYPT_BLOWFISH !== 1) {
             throw new \Exception('This PHP installation has no bcrypt support');
         }
 
-        if(is_null($salt)) {
-            if($compute < 4 || $compute > 31) $compute = 8;
-            $salt = '$2y$'.str_pad($compute, 2, '0', STR_PAD_LEFT).'$'.
+        if (is_null($salt)) {
+            if ($compute < 4 || $compute > 31) $compute = 8;
+            $salt = '$2y$' . str_pad($compute, 2, '0', STR_PAD_LEFT) . '$' .
                 $this->gen_salt(22);
         }
 
@@ -684,39 +701,42 @@ class PassHash {
      * @return string Hashed password
      * @throws \Exception
      */
-    public function hash_sha2($clear, $salt = null, $opts = array()) {
-        if(empty($opts['prefix'])) {
+    public function hash_sha2($clear, $salt = null, $opts = [])
+    {
+        if (empty($opts['prefix'])) {
             $prefix = '6';
         } else {
             $prefix = $opts['prefix'];
         }
-        if(empty($opts['rounds'])) {
+        if (empty($opts['rounds'])) {
             $rounds = null;
         } else {
             $rounds = $opts['rounds'];
         }
-        if($prefix == '5' && (!defined('CRYPT_SHA256') || CRYPT_SHA256 != 1)) {
+        if ($prefix == '5' && (!defined('CRYPT_SHA256') || CRYPT_SHA256 !== 1)) {
             throw new \Exception('This PHP installation has no SHA256 support');
         }
-        if($prefix == '6' && (!defined('CRYPT_SHA512') || CRYPT_SHA512 != 1)) {
+        if ($prefix == '6' && (!defined('CRYPT_SHA512') || CRYPT_SHA512 !== 1)) {
             throw new \Exception('This PHP installation has no SHA512 support');
         }
         $this->init_salt($salt, 8, false);
-        if(empty($rounds)) {
-            return crypt($clear, '$'.$prefix.'$'.$salt.'$');
-        }else{
-            return crypt($clear, '$'.$prefix.'$'.$rounds.'$'.$salt.'$');
+        if (empty($rounds)) {
+            return crypt($clear, '$' . $prefix . '$' . $salt . '$');
+        } else {
+            return crypt($clear, '$' . $prefix . '$' . $rounds . '$' . $salt . '$');
         }
     }
 
     /** @see sha2 */
-    public function hash_sha512($clear, $salt = null, $opts=[]) {
+    public function hash_sha512($clear, $salt = null, $opts = [])
+    {
         $opts['prefix'] = 6;
         return $this->hash_sha2($clear, $salt, $opts);
     }
 
     /** @see sha2 */
-    public function hash_sha256($clear, $salt = null, $opts=[]) {
+    public function hash_sha256($clear, $salt = null, $opts = [])
+    {
         $opts['prefix'] = 5;
         return $this->hash_sha2($clear, $salt, $opts);
     }
@@ -733,9 +753,10 @@ class PassHash {
      * @param string $salt  The salt to use, null for random
      * @return string Hashed password
      */
-    public function hash_mediawiki($clear, $salt = null) {
+    public function hash_mediawiki($clear, $salt = null)
+    {
         $this->init_salt($salt, 8, false);
-        return ':B:'.$salt.':'.md5($salt.'-'.md5($clear));
+        return ':B:' . $salt . ':' . md5($salt . '-' . md5($clear));
     }
 
 
@@ -750,11 +771,12 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_argon2i($clear) {
-        if(!defined('PASSWORD_ARGON2I')) {
+    public function hash_argon2i($clear)
+    {
+        if (!defined('PASSWORD_ARGON2I')) {
             throw new \Exception('This PHP installation has no ARGON2I support');
         }
-        return password_hash($clear,PASSWORD_ARGON2I);
+        return password_hash($clear, PASSWORD_ARGON2I);
     }
 
     /**
@@ -768,11 +790,12 @@ class PassHash {
      * @param string $clear The clear text to hash
      * @return string Hashed password
      */
-    public function hash_argon2id($clear) {
-        if(!defined('PASSWORD_ARGON2ID')) {
+    public function hash_argon2id($clear)
+    {
+        if (!defined('PASSWORD_ARGON2ID')) {
             throw new \Exception('This PHP installation has no ARGON2ID support');
         }
-        return password_hash($clear,PASSWORD_ARGON2ID);
+        return password_hash($clear, PASSWORD_ARGON2ID);
     }
 
     /**
@@ -793,9 +816,10 @@ class PassHash {
      * @param bool $raw_output When set to TRUE, outputs raw binary data. FALSE outputs lowercase hexits.
      * @return string
      */
-    public static function hmac($algo, $data, $key, $raw_output = false) {
+    public static function hmac($algo, $data, $key, $raw_output = false)
+    {
         // use native function if available and not in unit test
-        if(function_exists('hash_hmac') && !defined('SIMPLE_TEST')){
+        if (function_exists('hash_hmac') && !defined('SIMPLE_TEST')) {
             return hash_hmac($algo, $data, $key, $raw_output);
         }
 
@@ -805,15 +829,17 @@ class PassHash {
         $opad = str_repeat(chr(0x5C), $size);
         $ipad = str_repeat(chr(0x36), $size);
 
-        if(strlen($key) > $size) {
+        if (strlen($key) > $size) {
             $key = str_pad(pack($pack, $algo($key)), $size, chr(0x00));
         } else {
             $key = str_pad($key, $size, chr(0x00));
         }
 
-        for($i = 0; $i < strlen($key) - 1; $i++) {
-            $opad[$i] = $opad[$i] ^ $key[$i];
-            $ipad[$i] = $ipad[$i] ^ $key[$i];
+        for ($i = 0; $i < strlen($key) - 1; $i++) {
+            $ochar = $opad[$i] ^ $key[$i];
+            $ichar = $ipad[$i] ^ $key[$i];
+            $opad[$i] = $ochar;
+            $ipad[$i] = $ichar;
         }
 
         $output = $algo($opad . pack($pack, $algo($ipad . $data)));
@@ -828,7 +854,8 @@ class PassHash {
      * @param int $max
      * @return int
      */
-    protected function random($min, $max){
+    protected function random($min, $max)
+    {
         try {
             return random_int($min, $max);
         } catch (\Exception $e) {

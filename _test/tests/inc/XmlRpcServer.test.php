@@ -64,6 +64,7 @@ EOD;
 </methodResponse>
 EOD;
 
+        $_SERVER['CONTENT_TYPE'] = 'text/xml';
         $this->server->serve($request);
         $this->assertXmlStringEqualsXmlString(trim($expected), trim($this->server->output));
     }

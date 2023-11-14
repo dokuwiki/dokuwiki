@@ -5,6 +5,7 @@ namespace dokuwiki\Remote;
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Utf8\Sort;
 
@@ -17,7 +18,7 @@ define('DOKU_API_VERSION', 11);
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    const API_VERSION = 11;
+    public const API_VERSION = 11;
 
 
     /** @var Api */
@@ -38,156 +39,183 @@ class ApiCore
      */
     public function getRemoteInfo()
     {
-        return array(
-            'dokuwiki.getVersion' => array(
-                'args' => array(),
+        return [
+            'dokuwiki.getVersion' => [
+                'args' => [],
                 'return' => 'string',
                 'doc' => 'Returns the running DokuWiki version.'
-            ), 'dokuwiki.login' => array(
-                'args' => array('string', 'string'),
+            ],
+            'dokuwiki.login' => [
+                'args' => ['string', 'string'],
                 'return' => 'int',
                 'doc' => 'Tries to login with the given credentials and sets auth cookies.',
                 'public' => '1'
-            ), 'dokuwiki.logoff' => array(
-                'args' => array(),
+            ],
+            'dokuwiki.logoff' => [
+                'args' => [],
                 'return' => 'int',
                 'doc' => 'Tries to logoff by expiring auth cookies and the associated PHP session.'
-            ), 'dokuwiki.getPagelist' => array(
-                'args' => array('string', 'array'),
+            ],
+            'dokuwiki.getPagelist' => [
+                'args' => ['string', 'array'],
                 'return' => 'array',
                 'doc' => 'List all pages within the given namespace.',
                 'name' => 'readNamespace'
-            ), 'dokuwiki.search' => array(
-                'args' => array('string'),
+            ],
+            'dokuwiki.search' => [
+                'args' => ['string'],
                 'return' => 'array',
                 'doc' => 'Perform a fulltext search and return a list of matching pages'
-            ), 'dokuwiki.getTime' => array(
-                'args' => array(),
+            ],
+            'dokuwiki.getTime' => [
+                'args' => [],
                 'return' => 'int',
-                'doc' => 'Returns the current time at the remote wiki server as Unix timestamp.',
-            ), 'dokuwiki.setLocks' => array(
-                'args' => array('array'),
+                'doc' => 'Returns the current time at the remote wiki server as Unix timestamp.'
+            ],
+            'dokuwiki.setLocks' => [
+                'args' => ['array'],
                 'return' => 'array',
                 'doc' => 'Lock or unlock pages.'
-            ), 'dokuwiki.getTitle' => array(
-                'args' => array(),
+            ],
+            'dokuwiki.getTitle' => [
+                'args' => [],
                 'return' => 'string',
                 'doc' => 'Returns the wiki title.',
                 'public' => '1'
-            ), 'dokuwiki.appendPage' => array(
-                'args' => array('string', 'string', 'array'),
+            ],
+            'dokuwiki.appendPage' => [
+                'args' => ['string', 'string', 'array'],
                 'return' => 'bool',
                 'doc' => 'Append text to a wiki page.'
-            ), 'dokuwiki.createUser' => array(
-                'args' => array('struct'),
+            ],
+            'dokuwiki.createUser' => [
+                'args' => ['struct'],
                 'return' => 'bool',
                 'doc' => 'Create a user. The result is boolean'
-            ),'dokuwiki.deleteUsers' => array(
-                'args' => array('array'),
+            ],
+            'dokuwiki.deleteUsers' => [
+                'args' => ['array'],
                 'return' => 'bool',
                 'doc' => 'Remove one or more users from the list of registered users.'
-            ),  'wiki.getPage' => array(
-                'args' => array('string'),
+            ],
+            'wiki.getPage' => [
+                'args' => ['string'],
                 'return' => 'string',
                 'doc' => 'Get the raw Wiki text of page, latest version.',
-                'name' => 'rawPage',
-            ), 'wiki.getPageVersion' => array(
-                'args' => array('string', 'int'),
+                'name' => 'rawPage'
+            ],
+            'wiki.getPageVersion' => [
+                'args' => ['string', 'int'],
                 'name' => 'rawPage',
                 'return' => 'string',
                 'doc' => 'Return a raw wiki page'
-            ), 'wiki.getPageHTML' => array(
-                'args' => array('string'),
+            ],
+            'wiki.getPageHTML' => [
+                'args' => ['string'],
                 'return' => 'string',
                 'doc' => 'Return page in rendered HTML, latest version.',
                 'name' => 'htmlPage'
-            ), 'wiki.getPageHTMLVersion' => array(
-                'args' => array('string', 'int'),
+            ],
+            'wiki.getPageHTMLVersion' => [
+                'args' => ['string', 'int'],
                 'return' => 'string',
                 'doc' => 'Return page in rendered HTML.',
                 'name' => 'htmlPage'
-            ), 'wiki.getAllPages' => array(
-                'args' => array(),
+            ],
+            'wiki.getAllPages' => [
+                'args' => [],
                 'return' => 'array',
                 'doc' => 'Returns a list of all pages. The result is an array of utf8 pagenames.',
                 'name' => 'listPages'
-            ), 'wiki.getAttachments' => array(
-                'args' => array('string', 'array'),
+            ],
+            'wiki.getAttachments' => [
+                'args' => ['string', 'array'],
                 'return' => 'array',
                 'doc' => 'Returns a list of all media files.',
                 'name' => 'listAttachments'
-            ), 'wiki.getBackLinks' => array(
-                'args' => array('string'),
+            ],
+            'wiki.getBackLinks' => [
+                'args' => ['string'],
                 'return' => 'array',
                 'doc' => 'Returns the pages that link to this page.',
                 'name' => 'listBackLinks'
-            ), 'wiki.getPageInfo' => array(
-                'args' => array('string'),
+            ],
+            'wiki.getPageInfo' => [
+                'args' => ['string'],
                 'return' => 'array',
                 'doc' => 'Returns a struct with info about the page, latest version.',
                 'name' => 'pageInfo'
-            ), 'wiki.getPageInfoVersion' => array(
-                'args' => array('string', 'int'),
+            ],
+            'wiki.getPageInfoVersion' => [
+                'args' => ['string', 'int'],
                 'return' => 'array',
                 'doc' => 'Returns a struct with info about the page.',
                 'name' => 'pageInfo'
-            ), 'wiki.getPageVersions' => array(
-                'args' => array('string', 'int'),
+            ],
+            'wiki.getPageVersions' => [
+                'args' => ['string', 'int'],
                 'return' => 'array',
                 'doc' => 'Returns the available revisions of the page.',
                 'name' => 'pageVersions'
-            ), 'wiki.putPage' => array(
-                'args' => array('string', 'string', 'array'),
+            ],
+            'wiki.putPage' => [
+                'args' => ['string', 'string', 'array'],
                 'return' => 'bool',
                 'doc' => 'Saves a wiki page.'
-            ), 'wiki.listLinks' => array(
-                'args' => array('string'),
+            ],
+            'wiki.listLinks' => [
+                'args' => ['string'],
                 'return' => 'array',
                 'doc' => 'Lists all links contained in a wiki page.'
-            ), 'wiki.getRecentChanges' => array(
-                'args' => array('int'),
+            ],
+            'wiki.getRecentChanges' => [
+                'args' => ['int'],
                 'return' => 'array',
                 'doc' => 'Returns a struct about all recent changes since given timestamp.'
-            ), 'wiki.getRecentMediaChanges' => array(
-                'args' => array('int'),
+            ],
+            'wiki.getRecentMediaChanges' => [
+                'args' => ['int'],
                 'return' => 'array',
                 'doc' => 'Returns a struct about all recent media changes since given timestamp.'
-            ), 'wiki.aclCheck' => array(
-                'args' => array('string', 'string', 'array'),
+            ],
+            'wiki.aclCheck' => ['args' => ['string', 'string', 'array'],
                 'return' => 'int',
                 'doc' => 'Returns the permissions of a given wiki page. By default, for current user/groups'
-            ), 'wiki.putAttachment' => array(
-                'args' => array('string', 'file', 'array'),
+            ],
+            'wiki.putAttachment' => ['args' => ['string', 'file', 'array'],
                 'return' => 'array',
                 'doc' => 'Upload a file to the wiki.'
-            ), 'wiki.deleteAttachment' => array(
-                'args' => array('string'),
+            ],
+            'wiki.deleteAttachment' => [
+                'args' => ['string'],
                 'return' => 'int',
                 'doc' => 'Delete a file from the wiki.'
-            ), 'wiki.getAttachment' => array(
-                'args' => array('string'),
+            ],
+            'wiki.getAttachment' => [
+                'args' => ['string'],
                 'doc' => 'Return a media file',
                 'return' => 'file',
-                'name' => 'getAttachment',
-            ), 'wiki.getAttachmentInfo' => array(
-                'args' => array('string'),
+                'name' => 'getAttachment'
+            ],
+            'wiki.getAttachmentInfo' => [
+                'args' => ['string'],
                 'return' => 'array',
                 'doc' => 'Returns a struct with info about the attachment.'
-            ), 'dokuwiki.getXMLRPCAPIVersion' => array(
-                'args' => array(),
+            ],
+            'dokuwiki.getXMLRPCAPIVersion' => [
+                'args' => [],
                 'name' => 'getAPIVersion',
                 'return' => 'int',
                 'doc' => 'Returns the XMLRPC API version.',
-                'public' => '1',
-            ), 'wiki.getRPCVersionSupported' => array(
-                'args' => array(),
+                'public' => '1'
+            ],
+            'wiki.getRPCVersionSupported' => [
+                'args' => [],
                 'name' => 'wikiRpcVersion',
                 'return' => 'int',
                 'doc' => 'Returns 2 with the supported RPC API version.',
-                'public' => '1'
-            ),
-
-        );
+                'public' => '1']
+        ];
     }
 
     /**
@@ -231,12 +259,12 @@ class ApiCore
     /**
      * Return a media file
      *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
      * @param string $id file id
      * @return mixed media file
      * @throws AccessDeniedException no permission for media
      * @throws RemoteException not exist
+     * @author Gina Haeussge <osd@foosel.net>
+     *
      */
     public function getAttachment($id)
     {
@@ -257,18 +285,15 @@ class ApiCore
     /**
      * Return info about a media file
      *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
      * @param string $id page id
      * @return array
+     * @author Gina Haeussge <osd@foosel.net>
+     *
      */
     public function getAttachmentInfo($id)
     {
         $id = cleanID($id);
-        $info = array(
-            'lastModified' => $this->api->toDate(0),
-            'size' => 0,
-        );
+        $info = ['lastModified' => $this->api->toDate(0), 'size' => 0];
 
         $file = mediaFN($id);
         if (auth_quickaclcheck(getNS($id) . ':*') >= AUTH_READ) {
@@ -312,7 +337,7 @@ class ApiCore
      */
     public function listPages()
     {
-        $list = array();
+        $list = [];
         $pages = idx_get_indexer()->getPages();
         $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
         Sort::ksort($pages);
@@ -322,7 +347,7 @@ class ApiCore
             if ($perm < AUTH_READ) {
                 continue;
             }
-            $page = array();
+            $page = [];
             $page['id'] = trim($pages[$idx]);
             $page['perms'] = $perm;
             $page['size'] = @filesize(wikiFN($pages[$idx]));
@@ -342,15 +367,15 @@ class ApiCore
      *    $opts['hash']    do md5 sum of content?
      * @return array
      */
-    public function readNamespace($ns, $opts = array())
+    public function readNamespace($ns, $opts = [])
     {
         global $conf;
 
-        if (!is_array($opts)) $opts = array();
+        if (!is_array($opts)) $opts = [];
 
         $ns = cleanID($ns);
         $dir = utf8_encodeFN(str_replace(':', '/', $ns));
-        $data = array();
+        $data = [];
         $opts['skipacl'] = 0; // no ACL skipping for XMLRPC
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
         return $data;
@@ -364,9 +389,9 @@ class ApiCore
      */
     public function search($query)
     {
-        $regex = array();
+        $regex = [];
         $data = ft_pageSearch($query, $regex);
-        $pages = array();
+        $pages = [];
 
         // prepare additional data
         $idx = 0;
@@ -380,15 +405,15 @@ class ApiCore
                 $snippet = '';
             }
 
-            $pages[] = array(
+            $pages[] = [
                 'id' => $id,
-                'score' => intval($score),
+                'score' => (int)$score,
                 'rev' => filemtime($file),
                 'mtime' => filemtime($file),
                 'size' => filesize($file),
                 'snippet' => $snippet,
                 'title' => useHeading('navigation') ? p_get_first_heading($id) : $id
-            );
+            ];
         }
         return $pages;
     }
@@ -411,8 +436,6 @@ class ApiCore
      * in the listing, and 'pattern' for filtering the returned files against
      * a regular expression matching their name.
      *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
      * @param string $ns
      * @param array $options
      *   $options['depth']     recursion level, 0 for all
@@ -421,23 +444,25 @@ class ApiCore
      *   $options['hash']      add hashes to result list
      * @return array
      * @throws AccessDeniedException no access to the media files
+     * @author Gina Haeussge <osd@foosel.net>
+     *
      */
-    public function listAttachments($ns, $options = array())
+    public function listAttachments($ns, $options = [])
     {
         global $conf;
 
         $ns = cleanID($ns);
 
-        if (!is_array($options)) $options = array();
+        if (!is_array($options)) $options = [];
         $options['skipacl'] = 0; // no ACL skipping for XMLRPC
 
         if (auth_quickaclcheck($ns . ':*') >= AUTH_READ) {
             $dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
-            $data = array();
+            $data = [];
             search($data, $conf['mediadir'], 'search_media', $options, $dir);
             $len = count($data);
-            if (!$len) return array();
+            if (!$len) return [];
 
             for ($i = 0; $i < $len; $i++) {
                 unset($data[$i]['meta']);
@@ -492,12 +517,12 @@ class ApiCore
         $pagelog = new PageChangeLog($id, 1024);
         $info = $pagelog->getRevisionInfo($rev);
 
-        $data = array(
+        $data = [
             'name' => $id,
             'lastModified' => $this->api->toDate($rev),
-            'author' => is_array($info) ? (($info['user']) ? $info['user'] : $info['ip']) : null,
+            'author' => is_array($info) ? ($info['user'] ?: $info['ip']) : null,
             'version' => $rev
-        );
+        ];
 
         return ($data);
     }
@@ -505,16 +530,16 @@ class ApiCore
     /**
      * Save a wiki page
      *
-     * @author Michael Klier <chi@chimeric.de>
-     *
      * @param string $id page id
      * @param string $text wiki text
      * @param array $params parameters: summary, minor edit
      * @return bool
      * @throws AccessDeniedException no write access for page
      * @throws RemoteException no id, empty new page or locked
+     * @author Michael Klier <chi@chimeric.de>
+     *
      */
-    public function putPage($id, $text, $params = array())
+    public function putPage($id, $text, $params = [])
     {
         global $TEXT;
         global $lang;
@@ -577,7 +602,7 @@ class ApiCore
      * @return bool|string
      * @throws RemoteException
      */
-    public function appendPage($id, $text, $params = array())
+    public function appendPage($id, $text, $params = [])
     {
         $currentpage = $this->rawPage($id);
         if (!is_string($currentpage)) {
@@ -602,10 +627,10 @@ class ApiCore
             throw new AccessDeniedException('Only admins are allowed to create users', 114);
         }
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
-        if(!$auth->canDo('addUser')) {
+        if (!$auth->canDo('addUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
                 114
@@ -624,22 +649,22 @@ class ApiCore
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
         if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
 
-        if(strlen($password) === 0) {
+        if ((string)$password === '') {
             $password = auth_pwgen($user);
         }
 
-        if (!is_array($groups) || count($groups) === 0) {
+        if (!is_array($groups) || $groups === []) {
             $groups = null;
         }
 
-        $ok = $auth->triggerUserMod('create', array($user, $password, $name, $mail, $groups));
+        $ok = $auth->triggerUserMod('create', [$user, $password, $name, $mail, $groups]);
 
         if ($ok !== false && $ok !== null) {
             $ok = true;
         }
 
-        if($ok) {
-            if($notify) {
+        if ($ok) {
+            if ($notify) {
                 auth_sendPassword($user, $password);
             }
         }
@@ -662,9 +687,9 @@ class ApiCore
         if (!auth_isadmin()) {
             throw new AccessDeniedException('Only admins are allowed to delete users', 114);
         }
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
-        return (bool)$auth->triggerUserMod('delete', array($usernames));
+        return (bool)$auth->triggerUserMod('delete', [$usernames]);
     }
 
     /**
@@ -678,7 +703,7 @@ class ApiCore
      * @return false|string
      * @throws RemoteException
      */
-    public function putAttachment($id, $file, $params = array())
+    public function putAttachment($id, $file, $params = [])
     {
         $id = cleanID($id);
         $auth = auth_quickaclcheck(getNS($id) . ':*');
@@ -695,7 +720,7 @@ class ApiCore
         @unlink($ftmp);
         io_saveFile($ftmp, $file);
 
-        $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
+        $res = media_save(['name' => $ftmp], $id, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
             throw new RemoteException($res[0], -$res[1]);
         } else {
@@ -706,12 +731,12 @@ class ApiCore
     /**
      * Deletes a file from the wiki.
      *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
      * @param string $id page id
      * @return int
      * @throws AccessDeniedException no permissions
      * @throws RemoteException file in use or not deleted
+     * @author Gina Haeussge <osd@foosel.net>
+     *
      */
     public function deleteAttachment($id)
     {
@@ -739,7 +764,7 @@ class ApiCore
      */
     public function aclCheck($id, $user = null, $groups = null)
     {
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         $id = $this->resolvePageId($id);
@@ -749,7 +774,7 @@ class ApiCore
             if ($groups === null) {
                 $userinfo = $auth->getUserData($user);
                 if ($userinfo === false) {
-                    $groups = array();
+                    $groups = [];
                 } else {
                     $groups = $userinfo['grps'];
                 }
@@ -761,11 +786,11 @@ class ApiCore
     /**
      * Lists all links contained in a wiki page
      *
-     * @author Michael Klier <chi@chimeric.de>
-     *
      * @param string $id page id
      * @return array
      * @throws AccessDeniedException  no read access for page
+     * @author Michael Klier <chi@chimeric.de>
+     *
      */
     public function listLinks($id)
     {
@@ -773,7 +798,7 @@ class ApiCore
         if (auth_quickaclcheck($id) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
-        $links = array();
+        $links = [];
 
         // resolve page instructions
         $ins = p_cached_instructions(wikiFN($id));
@@ -784,26 +809,26 @@ class ApiCore
 
         // parse parse instructions
         foreach ($ins as $in) {
-            $link = array();
+            $link = [];
             switch ($in[0]) {
                 case 'internallink':
                     $link['type'] = 'local';
                     $link['page'] = $in[1][0];
                     $link['href'] = wl($in[1][0]);
-                    array_push($links, $link);
+                    $links[] = $link;
                     break;
                 case 'externallink':
                     $link['type'] = 'extern';
                     $link['page'] = $in[1][0];
                     $link['href'] = $in[1][0];
-                    array_push($links, $link);
+                    $links[] = $link;
                     break;
                 case 'interwikilink':
                     $url = $Renderer->_resolveInterWiki($in[1][2], $in[1][3]);
                     $link['type'] = 'extern';
                     $link['page'] = $url;
                     $link['href'] = $url;
-                    array_push($links, $link);
+                    $links[] = $link;
                     break;
             }
         }
@@ -814,12 +839,12 @@ class ApiCore
     /**
      * Returns a list of recent changes since give timestamp
      *
-     * @author Michael Hamann <michael@content-space.de>
-     * @author Michael Klier <chi@chimeric.de>
-     *
      * @param int $timestamp unix timestamp
      * @return array
      * @throws RemoteException no valid timestamp
+     * @author Michael Klier <chi@chimeric.de>
+     *
+     * @author Michael Hamann <michael@content-space.de>
      */
     public function getRecentChanges($timestamp)
     {
@@ -829,20 +854,20 @@ class ApiCore
 
         $recents = getRecentsSince($timestamp);
 
-        $changes = array();
+        $changes = [];
 
         foreach ($recents as $recent) {
-            $change = array();
+            $change = [];
             $change['name'] = $recent['id'];
             $change['lastModified'] = $this->api->toDate($recent['date']);
             $change['author'] = $recent['user'];
             $change['version'] = $recent['date'];
             $change['perms'] = $recent['perms'];
             $change['size'] = @filesize(wikiFN($recent['id']));
-            array_push($changes, $change);
+            $changes[] = $change;
         }
 
-        if (!empty($changes)) {
+        if ($changes !== []) {
             return $changes;
         } else {
             // in case we still have nothing at this point
@@ -853,12 +878,12 @@ class ApiCore
     /**
      * Returns a list of recent media changes since give timestamp
      *
-     * @author Michael Hamann <michael@content-space.de>
-     * @author Michael Klier <chi@chimeric.de>
-     *
      * @param int $timestamp unix timestamp
      * @return array
      * @throws RemoteException no valid timestamp
+     * @author Michael Klier <chi@chimeric.de>
+     *
+     * @author Michael Hamann <michael@content-space.de>
      */
     public function getRecentMediaChanges($timestamp)
     {
@@ -867,20 +892,20 @@ class ApiCore
 
         $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
 
-        $changes = array();
+        $changes = [];
 
         foreach ($recents as $recent) {
-            $change = array();
+            $change = [];
             $change['name'] = $recent['id'];
             $change['lastModified'] = $this->api->toDate($recent['date']);
             $change['author'] = $recent['user'];
             $change['version'] = $recent['date'];
             $change['perms'] = $recent['perms'];
             $change['size'] = @filesize(mediaFN($recent['id']));
-            array_push($changes, $change);
+            $changes[] = $change;
         }
 
-        if (!empty($changes)) {
+        if ($changes !== []) {
             return $changes;
         } else {
             // in case we still have nothing at this point
@@ -893,8 +918,6 @@ class ApiCore
      * Number of returned pages is set by $conf['recent']
      * However not accessible pages are skipped, so less than $conf['recent'] could be returned
      *
-     * @author Michael Klier <chi@chimeric.de>
-     *
      * @param string $id page id
      * @param int $first skip the first n changelog lines
      *                      0 = from current(if exists)
@@ -903,6 +926,8 @@ class ApiCore
      * @return array
      * @throws AccessDeniedException no read access for page
      * @throws RemoteException empty id
+     * @author Michael Klier <chi@chimeric.de>
+     *
      */
     public function pageVersions($id, $first = 0)
     {
@@ -912,15 +937,16 @@ class ApiCore
         }
         global $conf;
 
-        $versions = array();
+        $versions = [];
 
         if (empty($id)) {
             throw new RemoteException('Empty page ID', 131);
         }
 
-        $first = (int) $first;
+        $first = (int)$first;
         $first_rev = $first - 1;
-        $first_rev = $first_rev < 0 ? 0 : $first_rev;
+        $first_rev = max(0, $first_rev);
+
         $pagelog = new PageChangeLog($id);
         $revisions = $pagelog->getRevisions($first_rev, $conf['recent']);
 
@@ -940,22 +966,22 @@ class ApiCore
                 // specified via $conf['recent']
                 if ($time) {
                     $pagelog->setChunkSize(1024);
-                    $info = $pagelog->getRevisionInfo($rev ? $rev : $time);
+                    $info = $pagelog->getRevisionInfo($rev ?: $time);
                     if (!empty($info)) {
-                        $data = array();
+                        $data = [];
                         $data['user'] = $info['user'];
                         $data['ip'] = $info['ip'];
                         $data['type'] = $info['type'];
                         $data['sum'] = $info['sum'];
                         $data['modified'] = $this->api->toDate($info['date']);
                         $data['version'] = $info['date'];
-                        array_push($versions, $data);
+                        $versions[] = $data;
                     }
                 }
             }
             return $versions;
         } else {
-            return array();
+            return [];
         }
     }
 
@@ -981,12 +1007,12 @@ class ApiCore
      */
     public function setLocks($set)
     {
-        $locked = array();
-        $lockfail = array();
-        $unlocked = array();
-        $unlockfail = array();
+        $locked = [];
+        $lockfail = [];
+        $unlocked = [];
+        $unlockfail = [];
 
-        foreach ((array) $set['lock'] as $id) {
+        foreach ($set['lock'] as $id) {
             $id = $this->resolvePageId($id);
             if (auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)) {
                 $lockfail[] = $id;
@@ -996,7 +1022,7 @@ class ApiCore
             }
         }
 
-        foreach ((array) $set['unlock'] as $id) {
+        foreach ($set['unlock'] as $id) {
             $id = $this->resolvePageId($id);
             if (auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)) {
                 $unlockfail[] = $id;
@@ -1005,12 +1031,12 @@ class ApiCore
             }
         }
 
-        return array(
+        return [
             'locked' => $locked,
             'lockfail' => $lockfail,
             'unlocked' => $unlocked,
-            'unlockfail' => $unlockfail,
-        );
+            'unlockfail' => $unlockfail
+        ];
     }
 
     /**
@@ -1033,24 +1059,24 @@ class ApiCore
     public function login($user, $pass)
     {
         global $conf;
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         @session_start(); // reopen session for login
         $ok = null;
         if ($auth->canDo('external')) {
             $ok = $auth->trustExternal($user, $pass, false);
         }
-        if ($ok === null){
-            $evdata = array(
+        if ($ok === null) {
+            $evdata = [
                 'user' => $user,
                 'password' => $pass,
                 'sticky' => false,
-                'silent' => true,
-            );
+                'silent' => true
+            ];
             $ok = Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
         session_write_close(); // we're done with the session
@@ -1068,7 +1094,7 @@ class ApiCore
         global $conf;
         global $auth;
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         auth_logoff();
 

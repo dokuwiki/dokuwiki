@@ -16,7 +16,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 require_once(DOKU_INC . 'inc/init.php');
 
 //close session
@@ -34,13 +34,13 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key   = join('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
+$key = implode('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
     . '$' . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT');
 $cache = new Cache($key, '.feed');
 
 // prepare cache depends
 $depends['files'] = getConfigFiles('main');
-$depends['age']   = $conf['rss_update'];
+$depends['age'] = $conf['rss_update'];
 $depends['purge'] = $INPUT->bool('purge');
 
 // check cacheage and deliver if nothing has changed since last
@@ -52,28 +52,28 @@ header('X-Robots-Tag: noindex');
 if ($cache->useCache($depends)) {
     http_conditionalRequest($cache->getTime());
     if ($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
-    print $cache->retrieveCache();
+    echo $cache->retrieveCache();
     exit;
 } else {
     http_conditionalRequest(time());
 }
 
 // create new feed
-$rss                 = new UniversalFeedCreator();
-$rss->title          = $conf['title'] . (($opt['namespace']) ? ' ' . $opt['namespace'] : '');
-$rss->link           = DOKU_URL;
+$rss = new UniversalFeedCreator();
+$rss->title = $conf['title'] . (($opt['namespace']) ? ' ' . $opt['namespace'] : '');
+$rss->link = DOKU_URL;
 $rss->syndicationURL = DOKU_URL . 'feed.php';
-$rss->cssStyleSheet  = DOKU_URL . 'lib/exe/css.php?s=feed';
+$rss->cssStyleSheet = DOKU_URL . 'lib/exe/css.php?s=feed';
 
-$image        = new FeedImage();
+$image = new FeedImage();
 $image->title = $conf['title'];
-$image->url   = tpl_getMediaFile([':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'], true);
-$image->link  = DOKU_URL;
-$rss->image   = $image;
+$image->url = tpl_getMediaFile([':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'], true);
+$image->link = DOKU_URL;
+$rss->image = $image;
 
-$data  = null;
+$data = null;
 $modes = [
-    'list'   => 'rssListNamespace',
+    'list' => 'rssListNamespace',
     'search' => 'rssSearch',
     'recent' => 'rssRecentChanges'
 ];
@@ -82,10 +82,10 @@ if (isset($modes[$opt['feed_mode']])) {
     $data = $modes[$opt['feed_mode']]($opt);
 } else {
     $eventData = [
-        'opt'  => &$opt,
+        'opt' => &$opt,
         'data' => &$data,
     ];
-    $event     = new Event('FEED_MODE_UNKNOWN', $eventData);
+    $event = new Event('FEED_MODE_UNKNOWN', $eventData);
     if ($event->advise_before(true)) {
         echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
         exit;
@@ -100,7 +100,7 @@ $feed = $rss->createFeed($opt['feed_type']);
 $cache->storeCache($feed);
 
 // finally deliver
-print $feed;
+echo $feed;
 
 // ---------------------------------------------------------------- //
 
@@ -123,9 +123,9 @@ function rss_parseOptions()
             // properties for implementing own feeds
 
             // One of: list, search, recent
-            'feed_mode'    => ['str', 'mode', 'recent'],
+            'feed_mode' => ['str', 'mode', 'recent'],
             // One of: diff, page, rev, current
-            'link_to'      => ['str', 'linkto', $conf['rss_linkto']],
+            'link_to' => ['str', 'linkto', $conf['rss_linkto']],
             // One of: abstract, diff, htmldiff, html
             'item_content' => ['str', 'content', $conf['rss_content']],
 
@@ -133,15 +133,15 @@ function rss_parseOptions()
             // These are only used by certain feed_modes
 
             // String, used for feed title, in list and rc mode
-            'namespace'    => ['str', 'ns', null],
+            'namespace' => ['str', 'ns', null],
             // Positive integer, only used in rc mode
-            'items'        => ['int', 'num', $conf['recent']],
+            'items' => ['int', 'num', $conf['recent']],
             // Boolean, only used in rc mode
-            'show_minor'   => ['bool', 'minor', false],
+            'show_minor' => ['bool', 'minor', false],
             // Boolean, only used in rc mode
-            'only_new'     => ['bool', 'onlynewpages', false],
+            'only_new' => ['bool', 'onlynewpages', false],
             // String, only used in list mode
-            'sort'         => ['str', 'sort', 'natural'],
+            'sort' => ['str', 'sort', 'natural'],
             // String, only used in search mode
             'search_query' => ['str', 'q', null],
             // One of: pages, media, both
@@ -152,10 +152,10 @@ function rss_parseOptions()
         $opt[$name] = $INPUT->{$val[0]}($val[1], $val[2], true);
     }
 
-    $opt['items']      = max(0, (int) $opt['items']);
-    $opt['show_minor'] = (bool) $opt['show_minor'];
-    $opt['only_new']   = (bool) $opt['only_new'];
-    $opt['sort']       = valid_input_set('sort', ['default' => 'natural', 'date'], $opt);
+    $opt['items'] = max(0, (int)$opt['items']);
+    $opt['show_minor'] = (bool)$opt['show_minor'];
+    $opt['only_new'] = (bool)$opt['only_new'];
+    $opt['sort'] = valid_input_set('sort', ['default' => 'natural', 'date'], $opt);
 
     $opt['guardmail'] = ($conf['mailguard'] != '' && $conf['mailguard'] != 'none');
 
@@ -196,9 +196,9 @@ function rss_parseOptions()
 /**
  * Add recent changed pages to a feed object
  *
- * @param FeedCreator $rss  the FeedCreator Object
- * @param array       $data the items to add
- * @param array       $opt  the feed options
+ * @param FeedCreator $rss the FeedCreator Object
+ * @param array $data the items to add
+ * @param array $opt the feed options
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rss_buildItems(&$rss, &$data, $opt)
@@ -209,11 +209,11 @@ function rss_buildItems(&$rss, &$data, $opt)
     global $auth;
 
     $eventData = [
-        'rss'  => &$rss,
+        'rss' => &$rss,
         'data' => &$data,
-        'opt'  => &$opt,
+        'opt' => &$opt,
     ];
-    $event     = new Event('FEED_DATA_PROCESS', $eventData);
+    $event = new Event('FEED_DATA_PROCESS', $eventData);
     if ($event->advise_before(false)) {
         foreach ($data as $ditem) {
             if (!is_array($ditem)) {
@@ -222,7 +222,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             }
 
             $item = new FeedItem();
-            $id   = $ditem['id'];
+            $id = $ditem['id'];
             if (empty($ditem['media'])) {
                 $meta = p_get_metadata($id);
             } else {
@@ -260,8 +260,8 @@ function rss_buildItems(&$rss, &$data, $opt)
                         $item->link = media_managerURL(
                             [
                                 'image' => $id,
-                                'ns'    => getNS($id),
-                                'rev'   => $date
+                                'ns' => getNS($id),
+                                'rev' => $date
                             ],
                             '&',
                             true
@@ -274,9 +274,9 @@ function rss_buildItems(&$rss, &$data, $opt)
                     if ($ditem['media']) {
                         $item->link = media_managerURL(
                             [
-                                'image'       => $id,
-                                'ns'          => getNS($id),
-                                'rev'         => $date,
+                                'image' => $id,
+                                'ns' => getNS($id),
+                                'rev' => $date,
                                 'tab_details' => 'history'
                             ],
                             '&',
@@ -291,7 +291,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                         $item->link = media_managerURL(
                             [
                                 'image' => $id,
-                                'ns'    => getNS($id)
+                                'ns' => getNS($id)
                             ],
                             '&',
                             true
@@ -305,11 +305,11 @@ function rss_buildItems(&$rss, &$data, $opt)
                     if ($ditem['media']) {
                         $item->link = media_managerURL(
                             [
-                                'image'       => $id,
-                                'ns'          => getNS($id),
-                                'rev'         => $date,
+                                'image' => $id,
+                                'ns' => getNS($id),
+                                'rev' => $date,
                                 'tab_details' => 'history',
-                                'mediado'     => 'diff'
+                                'mediado' => 'diff'
                             ],
                             '&',
                             true
@@ -325,17 +325,23 @@ function rss_buildItems(&$rss, &$data, $opt)
                 case 'htmldiff':
                     if ($ditem['media']) {
                         $medialog = new MediaChangeLog($id);
-                        $revs     = $medialog->getRevisions(0, 1);
-                        $rev      = $revs[0];
-                        $src_r    = '';
-                        $src_l    = '';
+                        $revs = $medialog->getRevisions(0, 1);
+                        $rev = $revs[0];
+                        $src_r = '';
+                        $src_l = '';
 
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)), 300)) {
-                            $more  = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
+                            $more = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src_r = ml($id, $more, true, '&amp;', true);
                         }
-                        if ($rev && $size = media_image_preview_size($id, $rev, new JpegMeta(mediaFN($id, $rev)),
-                                300)) {
+                        if (
+                            $rev && $size = media_image_preview_size(
+                                $id,
+                                $rev,
+                                new JpegMeta(mediaFN($id, $rev)),
+                                300
+                            )
+                        ) {
                             $more = 'rev=' . $rev . '&w=' . $size[0] . '&h=' . $size[1];
                             $src_l = ml($id, $more, true, '&amp;', true);
                         }
@@ -351,8 +357,8 @@ function rss_buildItems(&$rss, &$data, $opt)
                     } else {
                         require_once(DOKU_INC . 'inc/DifferenceEngine.php');
                         $pagelog = new PageChangeLog($id);
-                        $revs    = $pagelog->getRevisions(0, 1);
-                        $rev     = $revs[0];
+                        $revs = $pagelog->getRevisions(0, 1);
+                        $rev = $revs[0];
 
                         if ($rev) {
                             $df = new Diff(
@@ -368,7 +374,7 @@ function rss_buildItems(&$rss, &$data, $opt)
 
                         if ($opt['item_content'] == 'htmldiff') {
                             // note: no need to escape diff output, TableDiffFormatter provides 'safe' html
-                            $tdf     = new TableDiffFormatter();
+                            $tdf = new TableDiffFormatter();
                             $content = '<table>';
                             $content .= '<tr><th colspan="2" width="50%">' . $rev . '</th>';
                             $content .= '<th colspan="2" width="50%">' . $lang['current'] . '</th></tr>';
@@ -376,7 +382,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                             $content .= '</table>';
                         } else {
                             // note: diff output must be escaped, UnifiedDiffFormatter provides plain text
-                            $udf     = new UnifiedDiffFormatter();
+                            $udf = new UnifiedDiffFormatter();
                             $content = "<pre>\n" . hsc($udf->format($df)) . "\n</pre>";
                         }
                     }
@@ -384,8 +390,8 @@ function rss_buildItems(&$rss, &$data, $opt)
                 case 'html':
                     if ($ditem['media']) {
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
-                            $src  = ml($id, $more, true, '&amp;', true);
+                            $more = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
+                            $src = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="' . $src . '" alt="' . $id . '" />';
                         } else {
                             $content = '';
@@ -405,9 +411,10 @@ function rss_buildItems(&$rss, &$data, $opt)
 
                         // make URLs work when canonical is not set, regexp instead of rerendering!
                         if (!$conf['canonical']) {
-                            $base    = preg_quote(DOKU_REL, '/');
+                            $base = preg_quote(DOKU_REL, '/');
                             $content = preg_replace(
-                                '/(<a href|<img src)="(' . $base . ')/s', '$1="' . DOKU_URL,
+                                '/(<a href|<img src)="(' . $base . ')/s',
+                                '$1="' . DOKU_URL,
                                 $content
                             );
                         }
@@ -418,8 +425,8 @@ function rss_buildItems(&$rss, &$data, $opt)
                 default:
                     if (isset($ditem['media'])) {
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
-                            $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
-                            $src  = ml($id, $more, true, '&amp;', true);
+                            $more = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
+                            $src = ml($id, $more, true, '&amp;', true);
                             $content = '<img src="' . $src . '" alt="' . $id . '" />';
                         } else {
                             $content = '';
@@ -434,14 +441,14 @@ function rss_buildItems(&$rss, &$data, $opt)
             # FIXME should the user be pulled from metadata as well?
             $user = @$ditem['user']; // the @ spares time repeating lookup
             if (blank($user)) {
-                $item->author      = 'Anonymous';
+                $item->author = 'Anonymous';
                 $item->authorEmail = 'anonymous@undisclosed.example.com';
             } else {
-                $item->author      = $user;
+                $item->author = $user;
                 $item->authorEmail = $user . '@undisclosed.example.com';
 
                 // get real user name if configured
-                if ($conf['useacl'] && $auth) {
+                if ($conf['useacl'] && $auth instanceof AuthPlugin) {
                     $userInfo = $auth->getUserData($user);
                     if ($userInfo) {
                         switch ($conf['showuseras']) {
@@ -469,12 +476,12 @@ function rss_buildItems(&$rss, &$data, $opt)
 
             // finally add the item to the feed object, after handing it to registered plugins
             $evdata = [
-                'item'  => &$item,
-                'opt'   => &$opt,
+                'item' => &$item,
+                'opt' => &$opt,
                 'ditem' => &$ditem,
-                'rss'   => &$rss
+                'rss' => &$rss
             ];
-            $evt    = new Event('FEED_ITEM_ADD', $evdata);
+            $evt = new Event('FEED_ITEM_ADD', $evdata);
             if ($evt->advise_before()) {
                 $rss->addItem($item);
             }
@@ -516,9 +523,9 @@ function rssListNamespace($opt)
     $ns = ':' . cleanID($opt['namespace']);
     $ns = utf8_encodeFN(str_replace(':', '/', $ns));
 
-    $data        = [];
+    $data = [];
     $search_opts = [
-        'depth'     => 1,
+        'depth' => 1,
         'pagesonly' => true,
         'listfiles' => true
     ];

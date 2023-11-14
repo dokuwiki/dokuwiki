@@ -1,4 +1,8 @@
 <?php
+
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 use dokuwiki\Logger;
 
@@ -38,18 +42,17 @@ use dokuwiki\Logger;
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Jan Schumann <js@schumann-it.com>
  */
-class auth_plugin_authad extends DokuWiki_Auth_Plugin
+class auth_plugin_authad extends AuthPlugin
 {
-
     /**
      * @var array hold connection data for a specific AD domain
      */
-    protected $opts = array();
+    protected $opts = [];
 
     /**
      * @var array open connections for each AD domain, as adLDAP objects
      */
-    protected $adldap = array();
+    protected $adldap = [];
 
     /**
      * @var bool message state
@@ -59,14 +62,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     /**
      * @var array user listing cache
      */
-    protected $users = array();
+    protected $users = [];
 
     /**
      * @var array filter patterns for listing users
      */
-    protected $pattern = array();
+    protected $pattern = [];
 
-    protected $grpsusers = array();
+    protected $grpsusers = [];
 
     /**
      * Constructor
@@ -76,8 +79,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         global $INPUT;
         parent::__construct();
 
-        require_once(DOKU_PLUGIN.'authad/adLDAP/adLDAP.php');
-        require_once(DOKU_PLUGIN.'authad/adLDAP/classes/adLDAPUtils.php');
+        require_once(DOKU_PLUGIN . 'authad/adLDAP/adLDAP.php');
+        require_once(DOKU_PLUGIN . 'authad/adLDAP/classes/adLDAPUtils.php');
 
         // we load the config early to modify it a bit here
         $this->loadConfig();
@@ -86,7 +89,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         if (isset($this->conf['additional'])) {
             $this->conf['additional'] = str_replace(' ', '', $this->conf['additional']);
             $this->conf['additional'] = explode(',', $this->conf['additional']);
-        } else $this->conf['additional'] = array();
+        } else $this->conf['additional'] = [];
 
         // ldap extension is needed
         if (!function_exists('ldap_connect')) {
@@ -100,9 +103,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         if (!empty($INPUT->server->str('REMOTE_USER'))) {
             // make sure the right encoding is used
             if ($this->getConf('sso_charset')) {
-                $INPUT->server->set('REMOTE_USER',
-                    iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER')));
-            } elseif (!\dokuwiki\Utf8\Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
+                $INPUT->server->set(
+                    'REMOTE_USER',
+                    iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER'))
+                );
+            } elseif (!Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
                 $INPUT->server->set('REMOTE_USER', utf8_encode($INPUT->server->str('REMOTE_USER')));
             }
 
@@ -154,7 +159,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     public function checkPass($user, $pass)
     {
         global $INPUT;
-        if ($INPUT->server->str('REMOTE_USER') == $user &&
+        if (
+            $INPUT->server->str('REMOTE_USER') == $user &&
             $this->conf['sso']
         ) return true;
 
@@ -201,11 +207,11 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         global $ID;
         global $INPUT;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
-        if (!$adldap) return array();
+        if (!$adldap) return [];
 
-        if ($user == '') return array();
+        if ($user == '') return [];
 
-        $fields = array('mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol');
+        $fields = ['mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol'];
 
         // add additional fields to read
         $fields = array_merge($fields, $this->conf['additional']);
@@ -215,17 +221,17 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         //get info for given user
         $result = $adldap->user()->info($this->getUserName($user), $fields);
         if ($result == false) {
-            return array();
+            return [];
         }
 
         //general user info
-        $info = array();
+        $info = [];
         $info['name'] = $result[0]['displayname'][0];
         $info['mail'] = $result[0]['mail'][0];
         $info['uid']  = $result[0]['samaccountname'][0];
         $info['dn']   = $result[0]['dn'];
         //last password set (Windows counts from January 1st 1601)
-        $info['lastpwd'] = $result[0]['pwdlastset'][0] / 10000000 - 11644473600;
+        $info['lastpwd'] = $result[0]['pwdlastset'][0] / 10_000_000 - 11_644_473_600;
         //will it expire?
         $info['expires'] = !($result[0]['useraccountcontrol'][0] & 0x10000); //ADS_UF_DONT_EXPIRE_PASSWD
 
@@ -252,7 +258,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
 
         // add the user's domain to the groups
         $domain = $this->getUserDomain($user);
-        if ($domain && !in_array("domain-$domain", (array) $info['grps'])) {
+        if ($domain && !in_array("domain-$domain", $info['grps'])) {
             $info['grps'][] = $this->cleanGroup("domain-$domain");
         }
 
@@ -262,17 +268,18 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 $expiry = $adldap->user()->passwordExpiry($user);
                 if (is_array($expiry)) {
                     $info['expiresat'] = $expiry['expiryts'];
-                    $info['expiresin'] = round(($info['expiresat'] - time())/(24*60*60));
+                    $info['expiresin'] = round(($info['expiresat'] - time()) / (24 * 60 * 60));
 
                     // if this is the current user, warn him (once per request only)
-                    if (($INPUT->server->str('REMOTE_USER') == $user) &&
+                    if (
+                        ($INPUT->server->str('REMOTE_USER') == $user) &&
                         ($info['expiresin'] <= $this->conf['expirywarn']) &&
                         !$this->msgshown
                     ) {
                         $msg = sprintf($this->getLang('authpwdexpire'), $info['expiresin']);
                         if ($this->canDo('modPass')) {
-                            $url = wl($ID, array('do'=> 'profile'));
-                            $msg .= ' <a href="'.$url.'">'.$lang['btn_profile'].'</a>';
+                            $url = wl($ID, ['do' => 'profile']);
+                            $msg .= ' <a href="' . $url . '">' . $lang['btn_profile'] . '</a>';
                         }
                         msg($msg);
                         $this->msgshown = true;
@@ -300,7 +307,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $group = str_replace('\\', '', $group);
         $group = str_replace('#', '', $group);
         $group = preg_replace('[\s]', '_', $group);
-        $group = \dokuwiki\Utf8\PhpString::strtolower(trim($group));
+        $group = PhpString::strtolower(trim($group));
         return $group;
     }
 
@@ -318,19 +325,21 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $domain = '';
 
         // get NTLM or Kerberos domain part
-        list($dom, $user) = sexplode('\\', $user, 2, '');
+        [$dom, $user] = sexplode('\\', $user, 2, '');
         if (!$user) $user = $dom;
         if ($dom) $domain = $dom;
-        list($user, $dom) = sexplode('@', $user, 2, '');
+        [$user, $dom] = sexplode('@', $user, 2, '');
         if ($dom) $domain = $dom;
 
         // clean up both
-        $domain = \dokuwiki\Utf8\PhpString::strtolower(trim($domain));
-        $user   = \dokuwiki\Utf8\PhpString::strtolower(trim($user));
+        $domain = PhpString::strtolower(trim($domain));
+        $user   = PhpString::strtolower(trim($user));
 
         // is this a known, valid domain or do we work without account suffix? if not discard
-        if ((!isset($this->conf[$domain]) || !is_array($this->conf[$domain])) &&
-            $this->conf['account_suffix'] !== '') {
+        if (
+            (!isset($this->conf[$domain]) || !is_array($this->conf[$domain])) &&
+            $this->conf['account_suffix'] !== ''
+        ) {
             $domain = '';
         }
 
@@ -385,14 +394,14 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      * @param array $filter  $filter array of field/pattern pairs, empty array for no filter
      * @return int number of users
      */
-    public function getUserCount($filter = array())
+    public function getUserCount($filter = [])
     {
         $adldap = $this->initAdLdap(null);
         if (!$adldap) {
             Logger::debug("authad/auth.php getUserCount(): _adldap not set.");
             return -1;
         }
-        if ($filter == array()) {
+        if ($filter == []) {
             $result = $adldap->user()->all();
         } else {
             $searchString = $this->constructSearchString($filter);
@@ -403,14 +412,15 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 $usermanager = plugin_load("admin", "usermanager", false);
                 $usermanager->setLastdisabled(true);
                 if (!isset($this->grpsusers[$this->filterToString($filter)])) {
-                    $this->fillGroupUserArray($filter, $usermanager->getStart() + 3*$usermanager->getPagesize());
-                } elseif (count($this->grpsusers[$this->filterToString($filter)]) <
-                    $usermanager->getStart() + 3*$usermanager->getPagesize()
+                    $this->fillGroupUserArray($filter, $usermanager->getStart() + 3 * $usermanager->getPagesize());
+                } elseif (
+                    count($this->grpsusers[$this->filterToString($filter)]) <
+                    $usermanager->getStart() + 3 * $usermanager->getPagesize()
                 ) {
                     $this->fillGroupUserArray(
                         $filter,
                         $usermanager->getStart() +
-                        3*$usermanager->getPagesize() -
+                        3 * $usermanager->getPagesize() -
                         count($this->grpsusers[$this->filterToString($filter)])
                     );
                 }
@@ -471,7 +481,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             $actualstart = 0;
         }
 
-        $i=0;
+        $i = 0;
         $count = 0;
         $this->constructPattern($filter);
         foreach ($this->users as $user => &$info) {
@@ -499,21 +509,21 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      * @param   array $filter array of field/pattern pairs, null for no filter
      * @return array userinfo (refer getUserData for internal userinfo details)
      */
-    public function retrieveUsers($start = 0, $limit = 0, $filter = array())
+    public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
         $adldap = $this->initAdLdap(null);
-        if (!$adldap) return array();
+        if (!$adldap) return [];
 
         //if (!$this->users) {
             //get info for given user
             $result = $adldap->user()->all(false, $this->constructSearchString($filter));
-            if (!$result) return array();
+            if (!$result) return [];
             $this->users = array_fill_keys($result, false);
         //}
 
         $i     = 0;
         $count = 0;
-        $result = array();
+        $result = [];
 
         if (!isset($filter['grps'])) {
             /** @var admin_plugin_usermanager $usermanager */
@@ -534,19 +544,20 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             /** @var admin_plugin_usermanager $usermanager */
             $usermanager = plugin_load("admin", "usermanager", false);
             $usermanager->setLastdisabled(true);
-            if (!isset($this->grpsusers[$this->filterToString($filter)]) ||
-                count($this->grpsusers[$this->filterToString($filter)]) < ($start+$limit)
+            if (
+                !isset($this->grpsusers[$this->filterToString($filter)]) ||
+                count($this->grpsusers[$this->filterToString($filter)]) < ($start + $limit)
             ) {
-                if(!isset($this->grpsusers[$this->filterToString($filter)])) {
+                if (!isset($this->grpsusers[$this->filterToString($filter)])) {
                     $this->grpsusers[$this->filterToString($filter)] = [];
                 }
 
                 $this->fillGroupUserArray(
                     $filter,
-                    $start+$limit - count($this->grpsusers[$this->filterToString($filter)]) +1
+                    $start + $limit - count($this->grpsusers[$this->filterToString($filter)]) + 1
                 );
             }
-            if (!$this->grpsusers[$this->filterToString($filter)]) return array();
+            if (!$this->grpsusers[$this->filterToString($filter)]) return [];
             foreach ($this->grpsusers[$this->filterToString($filter)] as $user => &$info) {
                 if ($i++ < $start) {
                     continue;
@@ -579,29 +590,29 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             try {
                 $return = $adldap->user()->password($this->getUserName($user), $changes['pass']);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
                 $return = false;
             }
             if (!$return) msg($this->getLang('passchangefail'), -1);
         }
 
         // changing user data
-        $adchanges = array();
+        $adchanges = [];
         if (isset($changes['name'])) {
             // get first and last name
             $parts                     = explode(' ', $changes['name']);
             $adchanges['surname']      = array_pop($parts);
-            $adchanges['firstname']    = join(' ', $parts);
+            $adchanges['firstname']    = implode(' ', $parts);
             $adchanges['display_name'] = $changes['name'];
         }
         if (isset($changes['mail'])) {
             $adchanges['email'] = $changes['mail'];
         }
-        if (count($adchanges)) {
+        if ($adchanges !== []) {
             try {
-                $return = $return & $adldap->user()->modify($this->getUserName($user), $adchanges);
+                $return &= $adldap->user()->modify($this->getUserName($user), $adchanges);
             } catch (adLDAPException $e) {
-                if ($this->conf['debug']) msg('AD Auth: '.$e->getMessage(), -1);
+                if ($this->conf['debug']) msg('AD Auth: ' . $e->getMessage(), -1);
                 $return = false;
             }
             if (!$return) msg($this->getLang('userchangefail'), -1);
@@ -635,7 +646,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
             return $this->adldap[$domain];
         } catch (Exception $e) {
             if ($this->conf['debug']) {
-                msg('AD Auth: '.$e->getMessage(), -1);
+                msg('AD Auth: ' . $e->getMessage(), -1);
             }
             $this->success         = false;
             $this->adldap[$domain] = null;
@@ -651,7 +662,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     public function getUserDomain($user)
     {
-        list(, $domain) = sexplode('@', $user, 2, '');
+        [, $domain] = sexplode('@', $user, 2, '');
         return $domain;
     }
 
@@ -666,7 +677,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
     public function getUserName($user)
     {
         if ($this->conf['account_suffix'] !== '') {
-            list($user) = explode('@', $user, 2);
+            [$user] = explode('@', $user, 2);
         }
         return $user;
     }
@@ -685,7 +696,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
         $opts['domain'] = $domain;
 
         // add possible domain specific configuration
-        if ($domain && is_array($this->conf[$domain])) foreach ($this->conf[$domain] as $key => $val) {
+        if ($domain && is_array($this->conf[$domain] ?? '')) foreach ($this->conf[$domain] as $key => $val) {
             $opts[$key] = $val;
         }
 
@@ -733,7 +744,7 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     public function getConfiguredDomains()
     {
-        $domains = array();
+        $domains = [];
         if (empty($this->conf['account_suffix'])) return $domains; // not configured yet
 
         // add default domain, using the name from account suffix
@@ -768,8 +779,8 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
                 if (!preg_match($pattern, $user)) return false;
             } elseif ($item == 'grps') {
                 if (!count(preg_grep($pattern, $info['grps']))) return false;
-            } else {
-                if (!preg_match($pattern, $info[$item])) return false;
+            } elseif (!preg_match($pattern, $info[$item])) {
+                return false;
             }
         }
         return true;
@@ -784,9 +795,9 @@ class auth_plugin_authad extends DokuWiki_Auth_Plugin
      */
     protected function constructPattern($filter)
     {
-        $this->pattern = array();
+        $this->pattern = [];
         foreach ($filter as $item => $pattern) {
-            $this->pattern[$item] = '/'.str_replace('/', '\/', $pattern).'/i'; // allow regex characters
+            $this->pattern[$item] = '/' . str_replace('/', '\/', $pattern) . '/i'; // allow regex characters
         }
     }
 }

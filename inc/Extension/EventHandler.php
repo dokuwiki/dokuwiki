@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
@@ -8,11 +9,10 @@ namespace dokuwiki\Extension;
  */
 class EventHandler
 {
-
     // public properties:  none
 
     // private properties
-    protected $hooks = array();          // array of events and their registered handlers
+    protected $hooks = [];          // array of events and their registered handlers
 
     /**
      * event_handler
@@ -31,7 +31,7 @@ class EventHandler
         foreach ($pluginlist as $plugin_name) {
             $plugin = plugin_load('action', $plugin_name);
 
-            if ($plugin !== null) $plugin->register($this);
+            if ($plugin instanceof PluginInterface) $plugin->register($this);
         }
     }
 
@@ -51,7 +51,7 @@ class EventHandler
     {
         $seq = (int)$seq;
         $doSort = !isset($this->hooks[$event . '_' . $advise][$seq]);
-        $this->hooks[$event . '_' . $advise][$seq][] = array($obj, $method, $param);
+        $this->hooks[$event . '_' . $advise][$seq][] = [$obj, $method, $param];
 
         if ($doSort) {
             ksort($this->hooks[$event . '_' . $advise]);
@@ -72,7 +72,7 @@ class EventHandler
         if (!empty($this->hooks[$evt_name])) {
             foreach ($this->hooks[$evt_name] as $sequenced_hooks) {
                 foreach ($sequenced_hooks as $hook) {
-                    list($obj, $method, $param) = $hook;
+                    [$obj, $method, $param] = $hook;
 
                     if ($obj === null) {
                         $method($event, $param);

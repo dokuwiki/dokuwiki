@@ -17,15 +17,15 @@ class XmlRpcServer extends Server
     /**
      * Constructor. Register methods and run Server
      */
-    public function __construct($wait=false)
+    public function __construct($wait = false)
     {
         $this->remote = new Api();
-        $this->remote->setDateTransformation(array($this, 'toDate'));
-        $this->remote->setFileTransformation(array($this, 'toFile'));
+        $this->remote->setDateTransformation([$this, 'toDate']);
+        $this->remote->setFileTransformation([$this, 'toFile']);
         parent::__construct(false, false, $wait);
     }
 
-    /** @inheritdoc  */
+    /** @inheritdoc */
     public function serve($data = false)
     {
         global $conf;
@@ -35,6 +35,15 @@ class XmlRpcServer extends Server
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
         }
+        if (
+            !isset($_SERVER['CONTENT_TYPE']) ||
+            (
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'text/xml' &&
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'application/xml'
+            )
+        ) {
+            throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
+        }
 
         parent::serve($data);
     }
@@ -42,7 +51,7 @@ class XmlRpcServer extends Server
     /**
      * @inheritdoc
      */
-    public function call($methodname, $args)
+    protected function call($methodname, $args)
     {
         try {
             $result = $this->remote->call($methodname, $args);

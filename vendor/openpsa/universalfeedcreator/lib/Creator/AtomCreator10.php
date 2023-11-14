@@ -41,10 +41,10 @@ class AtomCreator10 extends FeedCreator
             $feed .= " xml:lang=\"".$this->language."\"";
         }
         $feed .= ">\n";
-        $feed .= "    <title>".htmlspecialchars($this->title)."</title>\n";
+        $feed .= "    <title>".htmlspecialchars((string) $this->title)."</title>\n";
         $feed .= "    <subtitle>".htmlspecialchars($this->description)."</subtitle>\n";
-        $feed .= "    <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars($this->link)."\"/>\n";
-        $feed .= "    <id>".htmlspecialchars($this->link)."</id>\n";
+        $feed .= "    <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars((string) $this->link)."\"/>\n";
+        $feed .= "    <id>".htmlspecialchars((string) $this->link)."</id>\n";
         $now = new FeedDate();
         $feed .= "    <updated>".htmlspecialchars($now->iso8601())."</updated>\n";
         if ($this->editor != "") {
@@ -65,14 +65,14 @@ class AtomCreator10 extends FeedCreator
         $feed .= "    <generator>".$this->version()."</generator>\n";
 
         $feed .= "    <link rel=\"self\" type=\"application/atom+xml\" href=\"".htmlspecialchars(
-                $this->syndicationURL
+                (string) $this->syndicationURL
             )."\" />\n";
         $feed .= $this->_createAdditionalElements($this->additionalElements, "    ");
         for ($i = 0; $i < count($this->items); $i++) {
             $feed .= "    <entry>\n";
-            $feed .= "        <title>".htmlspecialchars(strip_tags($this->items[$i]->title))."</title>\n";
+            $feed .= "        <title>".htmlspecialchars(strip_tags((string) $this->items[$i]->title))."</title>\n";
             $feed .= "        <link rel=\"alternate\" type=\"text/html\" href=\"".htmlspecialchars(
-                    $this->items[$i]->link
+                    (string) $this->items[$i]->link
                 )."\"/>\n";
             if ($this->items[$i]->date == "") {
                 $this->items[$i]->date = time();
@@ -86,7 +86,7 @@ class AtomCreator10 extends FeedCreator
                 $tempguid = $this->items[$i]->guid;
             }
 
-            $feed .= "        <id>".htmlspecialchars($tempguid)."</id>\n";
+            $feed .= "        <id>".htmlspecialchars((string) $tempguid)."</id>\n";
             $feed .= $this->_createAdditionalElements($this->items[$i]->additionalElements, "        ");
             if ($this->items[$i]->author != "") {
                 $feed .= "        <author>\n";

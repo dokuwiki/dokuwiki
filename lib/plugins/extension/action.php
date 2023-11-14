@@ -1,20 +1,23 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
+
 /** DokuWiki Plugin extension (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
-class action_plugin_extension extends DokuWiki_Action_Plugin
+class action_plugin_extension extends ActionPlugin
 {
-
     /**
      * Registers a callback function for a given event
      *
-     * @param Doku_Event_Handler $controller DokuWiki's event controller object
+     * @param EventHandler $controller DokuWiki's event controller object
      * @return void
      */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'info');
     }
@@ -22,10 +25,10 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
     /**
      * Create the detail info for a single plugin
      *
-     * @param Doku_Event $event
-     * @param            $param
+     * @param Event $event
+     * @param $param
      */
-    public function info(Doku_Event $event, $param)
+    public function info(Event $event, $param)
     {
         global $USERINFO;
         global $INPUT;
@@ -57,7 +60,7 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
         switch ($act) {
             case 'enable':
             case 'disable':
-                if(getSecurityToken() != $INPUT->str('sectok')) {
+                if (getSecurityToken() != $INPUT->str('sectok')) {
                     http_status(403);
                     echo 'Security Token did not match. Possible CSRF attack.';
                     return;
@@ -66,14 +69,14 @@ class action_plugin_extension extends DokuWiki_Action_Plugin
                 $extension->$act(); //enables/disables
                 $reverse = ($act == 'disable') ? 'enable' : 'disable';
 
-                $return = array(
-                    'state'   => $act.'d', // isn't English wonderful? :-)
+                $return = [
+                    'state'   => $act . 'd', // isn't English wonderful? :-)
                     'reverse' => $reverse,
-                    'label'   => $extension->getLang('btn_'.$reverse)
-                );
+                    'label'   => $extension->getLang('btn_' . $reverse),
+                ];
 
                 header('Content-Type: application/json');
-                echo json_encode($return);
+                echo json_encode($return, JSON_THROW_ON_ERROR);
                 break;
 
             case 'info':

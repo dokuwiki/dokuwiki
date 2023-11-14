@@ -1,12 +1,29 @@
 {
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "scotteh/php-dom-wrapper": "^2.0"
     },
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
         }
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "rector/rector": "^0.18.3",
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpunit/phpunit": "^8.5"
+    },
+    "scripts": {
+        "test": [
+            "phpunit --verbose --stderr"
+        ],
+        "autofix": [
+            "vendor/bin/rector process",
+            "phpcbf --standard=./phpcs_MigrationAdjustments.xml"
+        ],
+        "check": [
+            "phpcs --standard=./phpcs_MigrationAdjustments.xml"
+        ]
+    }
 }

@@ -1,13 +1,13 @@
 <?php
 
+use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Remote\AccessDeniedException;
 
 /**
  * Class remote_plugin_acl
  */
-class remote_plugin_acl extends DokuWiki_Remote_Plugin
+class remote_plugin_acl extends RemotePlugin
 {
-
     /**
      * Returns details about the remote plugin methods
      *
@@ -15,24 +15,26 @@ class remote_plugin_acl extends DokuWiki_Remote_Plugin
      */
     public function _getMethods()
     {
-        return array(
-            'listAcls' => array(
-                'args' => array(),
+        return [
+            'listAcls' => [
+                'args' => [],
                 'return' => 'Array of ACLs {scope, user, permission}',
                 'name' => 'listAcls',
-                'doc' => 'Get the list of all ACLs',
-            ),'addAcl' => array(
-                'args' => array('string','string','int'),
+                'doc' => 'Get the list of all ACLs'
+            ],
+            'addAcl' => [
+                'args' => ['string', 'string', 'int'],
                 'return' => 'int',
                 'name' => 'addAcl',
                 'doc' => 'Adds a new ACL rule.'
-            ), 'delAcl' => array(
-                'args' => array('string','string'),
+            ],
+            'delAcl' => [
+                'args' => ['string', 'string'],
                 'return' => 'int',
                 'name' => 'delAcl',
                 'doc' => 'Delete an existing ACL rule.'
-            ),
-        );
+            ]
+        ];
     }
 
     /**

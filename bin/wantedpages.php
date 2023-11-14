@@ -6,23 +6,23 @@ use dokuwiki\File\PageResolver;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
 /**
  * Find wanted pages
  */
-class WantedPagesCLI extends CLI {
-
-    const DIR_CONTINUE = 1;
-    const DIR_NS = 2;
-    const DIR_PAGE = 3;
+class WantedPagesCLI extends CLI
+{
+    protected const DIR_CONTINUE = 1;
+    protected const DIR_NS = 2;
+    protected const DIR_PAGE = 3;
 
     private $skip = false;
     private $sort = 'wanted';
 
-    private $result = array();
+    private $result = [];
 
     /**
      * Register options and arguments on the given $options object
@@ -30,7 +30,8 @@ class WantedPagesCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             'Outputs a list of wanted pages (pages that do not exist yet) and their origin pages ' .
             ' (the pages that are linkin to these missing pages).'
@@ -63,9 +64,10 @@ class WantedPagesCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $args = $options->getArgs();
-        if($args) {
+        if ($args) {
             $startdir = dirname(wikiFN($args[0] . ':xxx'));
         } else {
             $startdir = dirname(wikiFN('xxx'));
@@ -76,17 +78,17 @@ class WantedPagesCLI extends CLI {
 
         $this->info("searching $startdir");
 
-        foreach($this->getPages($startdir) as $page) {
+        foreach ($this->getPages($startdir) as $page) {
             $this->internalLinks($page);
         }
         Sort::ksort($this->result);
-        foreach($this->result as $main => $subs) {
-            if($this->skip) {
-                print "$main\n";
+        foreach ($this->result as $main => $subs) {
+            if ($this->skip) {
+                echo "$main\n";
             } else {
                 $subs = array_unique($subs);
                 Sort::sort($subs);
-                foreach($subs as $sub) {
+                foreach ($subs as $sub) {
                     printf("%-40s %s\n", $main, $sub);
                 }
             }
@@ -100,17 +102,18 @@ class WantedPagesCLI extends CLI {
      * @param string $basepath
      * @return int
      */
-    protected function dirFilter($entry, $basepath) {
-        if($entry == '.' || $entry == '..') {
+    protected function dirFilter($entry, $basepath)
+    {
+        if ($entry == '.' || $entry == '..') {
             return WantedPagesCLI::DIR_CONTINUE;
         }
-        if(is_dir($basepath . '/' . $entry)) {
-            if(strpos($entry, '_') === 0) {
+        if (is_dir($basepath . '/' . $entry)) {
+            if (strpos($entry, '_') === 0) {
                 return WantedPagesCLI::DIR_CONTINUE;
             }
             return WantedPagesCLI::DIR_NS;
         }
-        if(preg_match('/\.txt$/', $entry)) {
+        if (preg_match('/\.txt$/', $entry)) {
             return WantedPagesCLI::DIR_PAGE;
         }
         return WantedPagesCLI::DIR_CONTINUE;
@@ -123,30 +126,28 @@ class WantedPagesCLI extends CLI {
      * @return array
      * @throws DokuCLI_Exception
      */
-    protected function getPages($dir) {
+    protected function getPages($dir)
+    {
         static $trunclen = null;
-        if(!$trunclen) {
+        if (!$trunclen) {
             global $conf;
             $trunclen = strlen($conf['datadir'] . ':');
         }
 
-        if(!is_dir($dir)) {
+        if (!is_dir($dir)) {
             throw new DokuCLI_Exception("Unable to read directory $dir");
         }
 
-        $pages = array();
+        $pages = [];
         $dh = opendir($dir);
-        while(false !== ($entry = readdir($dh))) {
+        while (false !== ($entry = readdir($dh))) {
             $status = $this->dirFilter($entry, $dir);
-            if($status == WantedPagesCLI::DIR_CONTINUE) {
+            if ($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
-            } else if($status == WantedPagesCLI::DIR_NS) {
+            } elseif ($status == WantedPagesCLI::DIR_NS) {
                 $pages = array_merge($pages, $this->getPages($dir . '/' . $entry));
             } else {
-                $page = array(
-                    'id' => pathID(substr($dir . '/' . $entry, $trunclen)),
-                    'file' => $dir . '/' . $entry,
-                );
+                $page = ['id' => pathID(substr($dir . '/' . $entry, $trunclen)), 'file' => $dir . '/' . $entry];
                 $pages[] = $page;
             }
         }
@@ -159,18 +160,19 @@ class WantedPagesCLI extends CLI {
      *
      * @param array $page array with page id and file path
      */
-    protected function internalLinks($page) {
+    protected function internalLinks($page)
+    {
         global $conf;
         $instructions = p_get_instructions(file_get_contents($page['file']));
         $resolver = new PageResolver($page['id']);
         $pid = $page['id'];
-        foreach($instructions as $ins) {
-            if($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
+        foreach ($instructions as $ins) {
+            if ($ins[0] == 'internallink' || ($conf['camelcase'] && $ins[0] == 'camelcaselink')) {
                 $mid = $resolver->resolveId($ins[1][0]);
-                if(!page_exists($mid)) {
-                    list($mid) = explode('#', $mid); //record pages without hashes
+                if (!page_exists($mid)) {
+                    [$mid] = explode('#', $mid); //record pages without hashes
 
-                    if($this->sort == 'origin') {
+                    if ($this->sort == 'origin') {
                         $this->result[$pid][] = $mid;
                     } else {
                         $this->result[$mid][] = $pid;

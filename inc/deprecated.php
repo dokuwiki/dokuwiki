@@ -2,6 +2,8 @@
 // phpcs:ignoreFile -- this file violates PSR2 by definition
 /**
  * These classes and functions are deprecated and will be removed in future releases
+ *
+ * Note: when adding to this file, please also add appropriate actions to _test/rector.php
  */
 
 use dokuwiki\Debug\DebugHelper;
@@ -720,3 +722,19 @@ class IXR_Value extends \IXR\DataType\Value
     }
 }
 
+/**
+ * print a newline terminated string
+ *
+ * You can give an indention as optional parameter
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param string $string  line of text
+ * @param int    $indent  number of spaces indention
+ * @deprecated 2023-08-31 use echo instead
+ */
+function ptln($string, $indent = 0)
+{
+    DebugHelper::dbgDeprecatedFunction('echo');
+    echo str_repeat(' ', $indent) . "$string\n";
+}

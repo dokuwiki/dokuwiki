@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAclRequiredException;
+use dokuwiki\Extension\AuthPlugin;
 
 /**
  * Class AbstractAclAction
@@ -11,15 +12,15 @@ use dokuwiki\Action\Exception\ActionAclRequiredException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractAclAction extends AbstractAction {
-
+abstract class AbstractAclAction extends AbstractAction
+{
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
         global $conf;
         global $auth;
-        if(!$conf['useacl']) throw new ActionAclRequiredException();
-        if(!$auth) throw new ActionAclRequiredException();
+        if (!$conf['useacl']) throw new ActionAclRequiredException();
+        if (!$auth instanceof AuthPlugin) throw new ActionAclRequiredException();
     }
-
 }

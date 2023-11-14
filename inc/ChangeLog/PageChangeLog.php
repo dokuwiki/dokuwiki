@@ -7,7 +7,6 @@ namespace dokuwiki\ChangeLog;
  */
 class PageChangeLog extends ChangeLog
 {
-
     /**
      * Returns path to changelog
      *
@@ -29,6 +28,15 @@ class PageChangeLog extends ChangeLog
         return wikiFN($this->id, $rev);
     }
 
+    /**
+     * Returns mode
+     *
+     * @return string RevisionInfo::MODE_PAGE
+     */
+    protected function getMode()
+    {
+        return RevisionInfo::MODE_PAGE;
+    }
 
 
     /**
@@ -47,14 +55,14 @@ class PageChangeLog extends ChangeLog
         if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
 
         // add changelog lines
-        $logline = $this->buildLogLine($info, $timestamp);
-        io_saveFile(metaFN($this->id,'.changes'), $logline, true);
+        $logline = static::buildLogLine($info, $timestamp);
+        io_saveFile(metaFN($this->id, '.changes'), $logline, true);
         io_saveFile($conf['changelog'], $logline, true); //global changelog cache
 
         // update cache
         $this->currentRevision = $info['date'];
+        $info['mode'] = $this->getMode();
         $this->cache[$this->id][$this->currentRevision] = $info;
         return $info;
     }
-
 }

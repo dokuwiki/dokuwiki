@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki mainscript
  *
@@ -8,47 +9,48 @@
  * @global Input $INPUT
  */
 
-// update message version - always use a string to avoid localized floats!
+use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
 
+// update message version - always use a string to avoid localized floats!
 $updateVersion = "55";
 
 //  xdebug_start_profiling();
 
-if(!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__).'/');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 
 // define all DokuWiki globals here (needed within test requests but also helps to keep track)
-global  $ACT,  $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
-        $DATE, $RANGE, $HIGH, $TEXT, $PRE, $SUF, $SUM, $INFO, $JSINFO;
+global $ACT, $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
+       $DATE, $RANGE, $HIGH, $TEXT, $PRE, $SUF, $SUM, $INFO, $JSINFO;
 
 
-if(isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
+if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
     $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
-} elseif(!empty($_REQUEST['idx'])) {
+} elseif (!empty($_REQUEST['idx'])) {
     $ACT = 'index';
-} elseif(isset($_REQUEST['do'])) {
+} elseif (isset($_REQUEST['do'])) {
     $ACT = $_REQUEST['do'];
 } else {
     $ACT = 'show';
 }
 
 // load and initialize the core system
-require_once(DOKU_INC.'inc/init.php');
+require_once(DOKU_INC . 'inc/init.php');
 
 //import variables
 $INPUT->set('id', str_replace("\xC2\xAD", '', $INPUT->str('id'))); //soft-hyphen
-$QUERY          = trim($INPUT->str('q'));
-$ID             = getID();
+$QUERY = trim($INPUT->str('q'));
+$ID = getID();
 
-$REV   = $INPUT->int('rev');
+$REV = $INPUT->int('rev');
 $DATE_AT = $INPUT->str('at');
-$IDX   = $INPUT->str('idx');
-$DATE  = $INPUT->int('date');
+$IDX = $INPUT->str('idx');
+$DATE = $INPUT->int('date');
 $RANGE = $INPUT->str('range');
-$HIGH  = $INPUT->param('s');
-if(empty($HIGH)) $HIGH = getGoogleQuery();
+$HIGH = $INPUT->param('s');
+if (empty($HIGH)) $HIGH = getGoogleQuery();
 
-if($INPUT->post->has('wikitext')) {
+if ($INPUT->post->has('wikitext')) {
     $TEXT = cleanText($INPUT->post->str('wikitext'));
 }
 $PRE = cleanText(substr($INPUT->post->str('prefix'), 0, -1));
@@ -57,13 +59,13 @@ $SUM = $INPUT->post->str('summary');
 
 
 //parse DATE_AT
-if($DATE_AT) {
+if ($DATE_AT) {
     $date_parse = strtotime($DATE_AT);
-    if($date_parse) {
+    if ($date_parse) {
         $DATE_AT = $date_parse;
     } else { // check for UNIX Timestamp
-        $date_parse = @date('Ymd',$DATE_AT);
-        if(!$date_parse || $date_parse === '19700101') {
+        $date_parse = @date('Ymd', $DATE_AT);
+        if (!$date_parse || $date_parse === '19700101') {
             msg(sprintf($lang['unable_to_parse_date'], hsc($DATE_AT)));
             $DATE_AT = null;
         }
@@ -71,19 +73,21 @@ if($DATE_AT) {
 }
 
 //check for existing $REV related to $DATE_AT
-if($DATE_AT) {
-    $pagelog = new \dokuwiki\ChangeLog\PageChangeLog($ID);
+if ($DATE_AT) {
+    $pagelog = new PageChangeLog($ID);
     $rev_t = $pagelog->getLastRevisionAt($DATE_AT);
-    if($rev_t === '') { //current revision
+    if ($rev_t === '') {
+        //current revision
         $REV = null;
         $DATE_AT = null;
-    } else if ($rev_t === false) { //page did not exist
-        $rev_n = $pagelog->getRelativeRevision($DATE_AT,+1);
+    } elseif ($rev_t === false) {
+        //page did not exist
+        $rev_n = $pagelog->getRelativeRevision($DATE_AT, +1);
         msg(
             sprintf(
                 $lang['page_nonexist_rev'],
                 dformat($DATE_AT),
-                wl($ID, array('rev' => $rev_n)),
+                wl($ID, ['rev' => $rev_n]),
                 dformat($rev_n)
             )
         );
@@ -97,26 +101,27 @@ if($DATE_AT) {
 $INFO = pageinfo();
 
 // handle debugging
-if($conf['allowdebug'] && $ACT == 'debug') {
+if ($conf['allowdebug'] && $ACT == 'debug') {
     html_debug();
     exit;
 }
 
 //send 404 for missing pages if configured or ID has special meaning to bots
-if(!$INFO['exists'] &&
+if (
+    !$INFO['exists'] &&
     ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/', $ID)) &&
-    ($ACT == 'show' || (!is_array($ACT) && substr($ACT, 0, 7) == 'export_'))
+    ($ACT == 'show' || (!is_array($ACT) && str_starts_with($ACT, 'export_')))
 ) {
     header('HTTP/1.0 404 Not Found');
 }
 
 //prepare breadcrumbs (initialize a static var)
-if($conf['breadcrumbs']) breadcrumbs();
+if ($conf['breadcrumbs']) breadcrumbs();
 
 // check upstream
 checkUpdateMessages();
 
-$tmp = array(); // No event data
+$tmp = []; // No event data
 Event::createAndTrigger('DOKUWIKI_STARTED', $tmp);
 
 //close session
@@ -125,7 +130,7 @@ session_write_close();
 //do the work (picks up what to do from global env)
 act_dispatch();
 
-$tmp = array(); // No event data
+$tmp = []; // No event data
 Event::createAndTrigger('DOKUWIKI_DONE', $tmp);
 
 //  xdebug_dump_function_profile(1);

@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jérémy Just <jeremy@jejust.fr>
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -91,13 +92,13 @@ $lang['btn_deleteuser']        = 'Supprimer mon compte';
 $lang['btn_img_backto']        = 'Retour vers %s';
 $lang['btn_mediaManager']      = 'Voir dans le gestionnaire de médias';
 $lang['loggedinas']            = 'Connecté en tant que :';
-$lang['user']                  = 'Utilisateur';
+$lang['user']                  = 'Nom d\'utilisateur';
 $lang['pass']                  = 'Mot de passe';
 $lang['newpass']               = 'Nouveau mot de passe';
 $lang['oldpass']               = 'Mot de passe actuel';
 $lang['passchk']               = 'Répétez le mot de passe';
 $lang['remember']              = 'Mémoriser';
-$lang['fullname']              = 'Nom';
+$lang['fullname']              = 'Nom complet';
 $lang['email']                 = 'Adresse de courriel';
 $lang['profile']               = 'Profil utilisateur';
 $lang['badlogin']              = 'Le nom d\'utilisateur ou le mot de passe est incorrect.';
@@ -156,7 +157,7 @@ $lang['search_ends_with']      = 'Se termine par';
 $lang['search_contains']       = 'Contient';
 $lang['search_custom_match']   = 'personnalisé';
 $lang['search_any_ns']         = 'toute catégorie';
-$lang['search_any_time']       = 'toute date';
+$lang['search_any_time']       = 'N\'importe quelle date';
 $lang['search_past_7_days']    = 'la semaine dernière';
 $lang['search_past_month']     = 'le mois dernier';
 $lang['search_past_year']      = 'l\'année dernière';
@@ -166,7 +167,7 @@ $lang['regmissing']            = 'Désolé, vous devez remplir tous les champs.'
 $lang['reguexists']            = 'Désolé, ce nom d\'utilisateur est déjà pris.';
 $lang['regsuccess']            = 'L\'utilisateur a été créé. Le mot de passe a été expédié par courriel.';
 $lang['regsuccess2']           = 'L\'utilisateur a été créé.';
-$lang['regfail']               = 'L\'utilisateur n\'a pu être crée.';
+$lang['regfail']               = 'L\'utilisateur n\'a pas pu être créé.';
 $lang['regmailfail']           = 'On dirait qu\'il y a eu une erreur lors de l\'envoi du mot de passe de messagerie. Veuillez contacter l\'administrateur !';
 $lang['regbadmail']            = 'L\'adresse de courriel semble incorrecte. Si vous pensez que c\'est une erreur, contactez l\'administrateur.';
 $lang['regbadpass']            = 'Les deux mots de passe fournis sont différents, veuillez recommencez.';
@@ -188,7 +189,7 @@ $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
 $lang['resendpwdmissing']      = 'Désolé, vous devez remplir tous les champs.';
 $lang['resendpwdnouser']       = 'Désolé, cet utilisateur n\'existe pas dans notre base de données.';
 $lang['resendpwdbadauth']      = 'Désolé, ce code d\'authentification est invalide. Assurez-vous d\'avoir utilisé le lien de confirmation intégral.';
-$lang['resendpwdconfirm']      = 'Un lien de confirmation vient de partir par courriel.';
+$lang['resendpwdconfirm']      = 'Un lien de confirmation vient d\'être envoyé par courriel.';
 $lang['resendpwdsuccess']      = 'Votre nouveau mot de passe vous a été expédié par courriel.';
 $lang['license']               = 'Sauf mention contraire, le contenu de ce wiki est placé sous les termes de la licence suivante :';
 $lang['licenseok']             = 'Note : En modifiant cette page, vous acceptez que le contenu soit placé sous les termes de la licence suivante :';
@@ -399,3 +400,6 @@ $lang['page_nonexist_rev']     = 'La page n\'existait pas le %s. Elle a été cr
 $lang['unable_to_parse_date']  = 'Impossible d\'analyser le paramètre temporel at "%s".';
 $lang['email_signature_text']  = 'Courriel envoyé par DokuWiki depuis
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Fichier journal trop grand. Lignes précédentes sautées !';
+$lang['log_file_failed_to_open'] = 'Impossible d\'ouvrir le fichier journal.';
+$lang['log_file_failed_to_read'] = 'Une erreur s\'est produite lors de la lecture du journal.';

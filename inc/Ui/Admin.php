@@ -1,7 +1,9 @@
 <?php
+
 namespace dokuwiki\Ui;
 
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -13,10 +15,10 @@ use dokuwiki\Utf8\Sort;
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Håkan Sandell <hakan.sandell@home.se>
  */
-class Admin extends Ui {
-
-    protected $forAdmins = array('usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling');
-    protected $forManagers = array('revert', 'popularity');
+class Admin extends Ui
+{
+    protected $forAdmins = ['usermanager', 'acl', 'extension', 'config', 'logviewer', 'styling'];
+    protected $forManagers = ['revert', 'popularity'];
     /** @var array[] */
     protected $menu;
 
@@ -25,7 +27,8 @@ class Admin extends Ui {
      *
      * @return void
      */
-    public function show() {
+    public function show()
+    {
         $this->menu = $this->getPluginList();
         echo '<div class="ui-admin">';
         echo p_locale_xhtml('admin');
@@ -43,7 +46,8 @@ class Admin extends Ui {
      *
      * @param string $type admin|manager|other
      */
-    protected function showMenu($type) {
+    protected function showMenu($type)
+    {
         if (!$this->menu[$type]) return;
 
         if ($type === 'other') {
@@ -63,7 +67,8 @@ class Admin extends Ui {
     /**
      * Display the DokuWiki version
      */
-    protected function showVersion() {
+    protected function showVersion()
+    {
         echo '<div id="admin__version">';
         echo getVersion();
         echo '</div>';
@@ -80,9 +85,10 @@ class Admin extends Ui {
      *
      * The actual check is carried out via JavaScript. See behaviour.js
      */
-    protected function showSecurityCheck() {
+    protected function showSecurityCheck()
+    {
         global $conf;
-        if(substr($conf['savedir'], 0, 2) !== './') return;
+        if (!str_starts_with($conf['savedir'], './')) return;
         $img = DOKU_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<div id="security__check" data-src="' . $img . '"></div>';
@@ -93,9 +99,10 @@ class Admin extends Ui {
      *
      * @param array $item
      */
-    protected function showMenuItem($item) {
+    protected function showMenuItem($item)
+    {
         global $ID;
-        if(blank($item['prompt'])) return;
+        if (blank($item['prompt'])) return;
         echo '<li><div class="li">';
         echo '<a href="' . wl($ID, 'do=admin&amp;page=' . $item['plugin']) . '">';
         echo '<span class="icon">';
@@ -115,33 +122,34 @@ class Admin extends Ui {
      *
      * @return array list of plugins with their properties
      */
-    protected function getPluginList() {
+    protected function getPluginList()
+    {
         global $conf;
 
         $pluginlist = plugin_list('admin');
         $menu = ['admin' => [], 'manager' => [], 'other' => []];
 
-        foreach($pluginlist as $p) {
+        foreach ($pluginlist as $p) {
             /** @var AdminPlugin $obj */
-            if(($obj = plugin_load('admin', $p)) === null) continue;
+            if (!($obj = plugin_load('admin', $p)) instanceof PluginInterface) continue;
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;
 
             if (in_array($p, $this->forAdmins, true)) {
                 $type = 'admin';
-            } elseif (in_array($p, $this->forManagers, true)){
+            } elseif (in_array($p, $this->forManagers, true)) {
                 $type = 'manager';
             } else {
                 $type = 'other';
             }
 
-            $menu[$type][$p] = array(
+            $menu[$type][$p] = [
                 'plugin' => $p,
                 'prompt' => $obj->getMenuText($conf['lang']),
                 'icon' => $obj->getMenuIcon(),
-                'sort' => $obj->getMenuSort(),
-            );
+                'sort' => $obj->getMenuSort()
+            ];
         }
 
         // sort by name, then sort
@@ -161,10 +169,10 @@ class Admin extends Ui {
      * @param array $b
      * @return int
      */
-    protected function menuSort($a, $b) {
+    protected function menuSort($a, $b)
+    {
         $strcmp = Sort::strcmp($a['prompt'], $b['prompt']);
-        if($strcmp != 0) return $strcmp;
-        if($a['sort'] === $b['sort']) return 0;
-        return ($a['sort'] < $b['sort']) ? -1 : 1;
+        if ($strcmp != 0) return $strcmp;
+        return $a['sort'] <=> $b['sort'];
     }
 }

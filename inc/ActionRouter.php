@@ -2,6 +2,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Extension\Event;
 use dokuwiki\Action\AbstractAction;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
@@ -13,19 +14,19 @@ use dokuwiki\Action\Plugin;
  * Class ActionRouter
  * @package dokuwiki
  */
-class ActionRouter {
-
+class ActionRouter
+{
     /** @var  AbstractAction */
     protected $action;
 
     /** @var  ActionRouter */
-    protected static $instance = null;
+    protected static $instance;
 
     /** @var int transition counter */
     protected $transitions = 0;
 
     /** maximum loop */
-    const MAX_TRANSITIONS = 5;
+    protected const MAX_TRANSITIONS = 5;
 
     /** @var string[] the actions disabled in the configuration */
     protected $disabled;
@@ -36,13 +37,13 @@ class ActionRouter {
      * Sets up the correct action based on the $ACT global. Writes back
      * the selected action to $ACT
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         global $ACT;
         global $conf;
 
         $this->disabled = explode(',', $conf['disableactions']);
         $this->disabled = array_map('trim', $this->disabled);
-        $this->transitions = 0;
 
         $ACT = act_clean($ACT);
         $this->setupAction($ACT);
@@ -55,8 +56,9 @@ class ActionRouter {
      * @param bool $reinit
      * @return ActionRouter
      */
-    public static function getInstance($reinit = false) {
-        if((self::$instance === null) || $reinit) {
+    public static function getInstance($reinit = false)
+    {
+        if ((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
             self::$instance = new ActionRouter();
         }
         return self::$instance;
@@ -71,12 +73,13 @@ class ActionRouter {
      * @param string $actionname this is passed as a reference to $ACT, for plugin backward compatibility
      * @triggers ACTION_ACT_PREPROCESS
      */
-    protected function setupAction(&$actionname) {
+    protected function setupAction(&$actionname)
+    {
         $presetup = $actionname;
 
         try {
             // give plugins an opportunity to process the actionname
-            $evt = new Extension\Event('ACTION_ACT_PREPROCESS', $actionname);
+            $evt = new Event('ACTION_ACT_PREPROCESS', $actionname);
             if ($evt->advise_before()) {
                 $this->action = $this->loadAction($actionname);
                 $this->checkAction($this->action);
@@ -86,29 +89,27 @@ class ActionRouter {
                 $this->action = new Plugin($actionname);
             }
             $evt->advise_after();
-
-        } catch(ActionException $e) {
+        } catch (ActionException $e) {
             // we should have gotten a new action
             $actionname = $e->getNewAction();
 
             // this one should trigger a user message
-            if(is_a($e, ActionDisabledException::class)) {
+            if ($e instanceof ActionDisabledException) {
                 msg('Action disabled: ' . hsc($presetup), -1);
             }
 
             // some actions may request the display of a message
-            if($e->displayToUser()) {
+            if ($e->displayToUser()) {
                 msg(hsc($e->getMessage()), -1);
             }
 
             // do setup for new action
             $this->transitionAction($presetup, $actionname);
-
-        } catch(NoActionException $e) {
+        } catch (NoActionException $e) {
             msg('Action unknown: ' . hsc($actionname), -1);
             $actionname = 'show';
             $this->transitionAction($presetup, $actionname);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->handleFatalException($e);
         }
     }
@@ -122,16 +123,17 @@ class ActionRouter {
      * @param string $to new action name
      * @param null|ActionException $e any previous exception that caused the transition
      */
-    protected function transitionAction($from, $to, $e = null) {
+    protected function transitionAction($from, $to, $e = null)
+    {
         $this->transitions++;
 
         // no infinite recursion
-        if($from == $to) {
+        if ($from == $to) {
             $this->handleFatalException(new FatalException('Infinite loop in actions', 500, $e));
         }
 
         // larger loops will be caught here
-        if($this->transitions >= self::MAX_TRANSITIONS) {
+        if ($this->transitions >= self::MAX_TRANSITIONS) {
             $this->handleFatalException(new FatalException('Maximum action transitions reached', 500, $e));
         }
 
@@ -147,13 +149,14 @@ class ActionRouter {
      * @param \Exception|FatalException $e
      * @throws FatalException during unit testing
      */
-    protected function handleFatalException(\Exception $e) {
-        if(is_a($e, FatalException::class)) {
+    protected function handleFatalException(\Throwable $e)
+    {
+        if ($e instanceof FatalException) {
             http_status($e->getCode());
         } else {
             http_status(500);
         }
-        if(defined('DOKU_UNITTEST')) {
+        if (defined('DOKU_UNITTEST')) {
             throw $e;
         }
         ErrorHandler::logException($e);
@@ -175,13 +178,14 @@ class ActionRouter {
      * @return AbstractAction
      * @throws NoActionException
      */
-    public function loadAction($actionname) {
+    public function loadAction($actionname)
+    {
         $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
         $parts = explode('_', $actionname);
-        while(!empty($parts)) {
-            $load = join('_', $parts);
+        while ($parts !== []) {
+            $load = implode('_', $parts);
             $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
-            if(class_exists($class)) {
+            if (class_exists($class)) {
                 return new $class($actionname);
             }
             array_pop($parts);
@@ -197,23 +201,24 @@ class ActionRouter {
      * @throws ActionDisabledException
      * @throws ActionException
      */
-    public function checkAction(AbstractAction $action) {
+    public function checkAction(AbstractAction $action)
+    {
         global $INFO;
         global $ID;
 
-        if(in_array($action->getActionName(), $this->disabled)) {
+        if (in_array($action->getActionName(), $this->disabled)) {
             throw new ActionDisabledException();
         }
 
         $action->checkPreconditions();
 
-        if(isset($INFO)) {
+        if (isset($INFO)) {
             $perm = $INFO['perm'];
         } else {
             $perm = auth_quickaclcheck($ID);
         }
 
-        if($perm < $action->minimumPermission()) {
+        if ($perm < $action->minimumPermission()) {
             throw new ActionException('denied');
         }
     }
@@ -223,7 +228,8 @@ class ActionRouter {
      *
      * @return AbstractAction
      */
-    public function getAction() {
+    public function getAction()
+    {
         return $this->action;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *
@@ -6,13 +7,19 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
+use dokuwiki\Extension\Plugin;
+use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Utf8\PhpString;
+use splitbrain\PHPArchive\Tar;
+use splitbrain\PHPArchive\ArchiveIOException;
+use splitbrain\PHPArchive\Zip;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Extension\PluginController;
 
 /**
  * Class helper_plugin_extension_extension represents a single extension (plugin or template)
  */
-class helper_plugin_extension_extension extends DokuWiki_Plugin
+class helper_plugin_extension_extension extends Plugin
 {
     private $id;
     private $base;
@@ -21,10 +28,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     private $remoteInfo;
     private $managerData;
     /** @var helper_plugin_extension_repository $repository */
-    private $repository = null;
+    private $repository;
 
     /** @var array list of temporary directories */
-    private $temporary = array();
+    private $temporary = [];
 
     /** @var string where templates are installed to */
     private $tpllib = '';
@@ -34,7 +41,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function __construct()
     {
-        $this->tpllib = dirname(tpl_incdir()).'/';
+        $this->tpllib = dirname(tpl_incdir()) . '/';
     }
 
     /**
@@ -67,18 +74,19 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     {
         $id = cleanID($id);
         $this->id   = $id;
+
         $this->base = $id;
 
-        if (substr($id, 0, 9) == 'template:') {
+        if (str_starts_with($id, 'template:')) {
             $this->base = substr($id, 9);
             $this->is_template = true;
         } else {
             $this->is_template = false;
         }
 
-        $this->localInfo = array();
-        $this->managerData = array();
-        $this->remoteInfo = array();
+        $this->localInfo = [];
+        $this->managerData = [];
+        $this->remoteInfo = [];
 
         if ($this->isInstalled()) {
             $this->readLocalData();
@@ -112,7 +120,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function isGitControlled()
     {
         if (!$this->isInstalled()) return false;
-        return file_exists($this->getInstallDir().'/.git');
+        return file_exists($this->getInstallDir() . '/.git');
     }
 
     /**
@@ -125,12 +133,24 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (!empty($this->remoteInfo['bundled'])) return $this->remoteInfo['bundled'];
         return in_array(
             $this->id,
-            array(
-                'authad', 'authldap', 'authpdo', 'authplain',
-                'acl', 'config', 'extension', 'info', 'popularity', 'revert',
-                'safefnrecode', 'styling', 'testing', 'usermanager', 'logviewer',
-                'template:dokuwiki',
-            )
+            [
+                'authad',
+                'authldap',
+                'authpdo',
+                'authplain',
+                'acl',
+                'config',
+                'extension',
+                'info',
+                'popularity',
+                'revert',
+                'safefnrecode',
+                'styling',
+                'testing',
+                'usermanager',
+                'logviewer',
+                'template:dokuwiki'
+            ]
         );
     }
 
@@ -306,8 +326,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getURL()
     {
         if (!empty($this->localInfo['url'])) return $this->localInfo['url'];
-        return 'https://www.dokuwiki.org/'.
-            ($this->isTemplate() ? 'template' : 'plugin').':'.$this->getBase();
+        return 'https://www.dokuwiki.org/' .
+            ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase();
     }
 
     /**
@@ -352,7 +372,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getDependencies()
     {
         if (!empty($this->remoteInfo['dependencies'])) return $this->remoteInfo['dependencies'];
-        return array();
+        return [];
     }
 
     /**
@@ -365,7 +385,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
         $dependencies = $this->getDependencies();
-        $missing_dependencies = array();
+        $missing_dependencies = [];
         foreach ($dependencies as $dependency) {
             if (!$plugin_controller->isEnabled($dependency)) {
                 $missing_dependencies[] = $dependency;
@@ -382,7 +402,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getConflicts()
     {
         if (!empty($this->remoteInfo['conflicts'])) return $this->remoteInfo['conflicts'];
-        return array();
+        return [];
     }
 
     /**
@@ -393,7 +413,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getSimilarExtensions()
     {
         if (!empty($this->remoteInfo['similar'])) return $this->remoteInfo['similar'];
-        return array();
+        return [];
     }
 
     /**
@@ -404,7 +424,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getTags()
     {
         if (!empty($this->remoteInfo['tags'])) return $this->remoteInfo['tags'];
-        return array();
+        return [];
     }
 
     /**
@@ -537,8 +557,8 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getTypes()
     {
         if (!empty($this->remoteInfo['types'])) return $this->remoteInfo['types'];
-        if ($this->isTemplate()) return array(32 => 'template');
-        return array();
+        if ($this->isTemplate()) return [32 => 'template'];
+        return [];
     }
 
     /**
@@ -549,7 +569,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getCompatibleVersions()
     {
         if (!empty($this->remoteInfo['compatible'])) return $this->remoteInfo['compatible'];
-        return array();
+        return [];
     }
 
     /**
@@ -571,9 +591,9 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function getInstallDir()
     {
         if ($this->isTemplate()) {
-            return $this->tpllib.$this->base;
+            return $this->tpllib . $this->base;
         } else {
-            return DOKU_PLUGIN.$this->base;
+            return DOKU_PLUGIN . $this->base;
         }
     }
 
@@ -586,7 +606,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     {
         if (!$this->isInstalled()) return 'none';
         if (!empty($this->managerData)) return 'automatic';
-        if (is_dir($this->getInstallDir().'/.git')) return 'git';
+        if (is_dir($this->getInstallDir() . '/.git')) return 'git';
         return 'manual';
     }
 
@@ -622,7 +642,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     public function installFromUpload($field, $overwrite = true)
     {
         if ($_FILES[$field]['error']) {
-            throw new Exception($this->getLang('msg_upload_failed').' ('.$_FILES[$field]['error'].')');
+            throw new Exception($this->getLang('msg_upload_failed') . ' (' . $_FILES[$field]['error'] . ')');
         }
 
         $tmp = $this->mkTmpDir();
@@ -636,16 +656,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (!move_uploaded_file($_FILES[$field]['tmp_name'], "$tmp/upload.archive")) {
             throw new Exception($this->getLang('msg_upload_failed'));
         }
-
-        try {
-            $installed = $this->installArchive("$tmp/upload.archive", $overwrite, $basename);
-            $this->updateManagerData('', $installed);
-            $this->removeDeletedfiles($installed);
-            // purge cache
-            $this->purgeCache();
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $installed = $this->installArchive("$tmp/upload.archive", $overwrite, $basename);
+        $this->updateManagerData('', $installed);
+        $this->removeDeletedfiles($installed);
+        $this->purgeCache();
         return $installed;
     }
 
@@ -659,17 +673,11 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function installFromURL($url, $overwrite = true)
     {
-        try {
-            $path      = $this->download($url);
-            $installed = $this->installArchive($path, $overwrite);
-            $this->updateManagerData($url, $installed);
-            $this->removeDeletedfiles($installed);
-
-            // purge cache
-            $this->purgeCache();
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $path      = $this->download($url);
+        $installed = $this->installArchive($path, $overwrite);
+        $this->updateManagerData($url, $installed);
+        $this->removeDeletedfiles($installed);
+        $this->purgeCache();
         return $installed;
     }
 
@@ -767,37 +775,36 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     protected function readLocalData()
     {
         if ($this->isTemplate()) {
-            $infopath = $this->getInstallDir().'/template.info.txt';
+            $infopath = $this->getInstallDir() . '/template.info.txt';
         } else {
-            $infopath = $this->getInstallDir().'/plugin.info.txt';
+            $infopath = $this->getInstallDir() . '/plugin.info.txt';
         }
 
         if (is_readable($infopath)) {
             $this->localInfo = confToHash($infopath);
         } elseif (!$this->isTemplate() && $this->isEnabled()) {
-            $path   = $this->getInstallDir().'/';
+            $path   = $this->getInstallDir() . '/';
             $plugin = null;
 
             foreach (PluginController::PLUGIN_TYPES as $type) {
-                if (file_exists($path.$type.'.php')) {
+                if (file_exists($path . $type . '.php')) {
                     $plugin = plugin_load($type, $this->base);
-                    if ($plugin) break;
+                    if ($plugin instanceof PluginInterface) break;
                 }
 
-                if ($dh = @opendir($path.$type.'/')) {
+                if ($dh = @opendir($path . $type . '/')) {
                     while (false !== ($cp = readdir($dh))) {
-                        if ($cp == '.' || $cp == '..' || strtolower(substr($cp, -4)) != '.php') continue;
+                        if ($cp == '.' || $cp == '..' || !str_ends_with(strtolower($cp), '.php')) continue;
 
-                        $plugin = plugin_load($type, $this->base.'_'.substr($cp, 0, -4));
-                        if ($plugin) break;
+                        $plugin = plugin_load($type, $this->base . '_' . substr($cp, 0, -4));
+                        if ($plugin instanceof PluginInterface) break;
                     }
-                    if ($plugin) break;
+                    if ($plugin instanceof PluginInterface) break;
                     closedir($dh);
                 }
             }
 
-            if ($plugin) {
-                /* @var DokuWiki_Plugin $plugin */
+            if ($plugin instanceof PluginInterface) {
                 $this->localInfo = $plugin->getInfo();
             }
         }
@@ -814,10 +821,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $origID = $this->getID();
 
         if (is_null($installed)) {
-            $installed = array($origID);
+            $installed = [$origID];
         }
 
-        foreach ($installed as $ext => $info) {
+        foreach (array_keys($installed) as $ext) {
             if ($this->getID() != $ext) $this->setExtension($ext);
             if ($url) {
                 $this->managerData['downloadurl'] = $url;
@@ -840,12 +847,12 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     protected function readManagerData()
     {
-        $managerpath = $this->getInstallDir().'/manager.dat';
+        $managerpath = $this->getInstallDir() . '/manager.dat';
         if (is_readable($managerpath)) {
             $file = @file($managerpath);
             if (!empty($file)) {
                 foreach ($file as $line) {
-                    list($key, $value) = sexplode('=', trim($line, DOKU_LF), 2, '');
+                    [$key, $value] = sexplode('=', trim($line, DOKU_LF), 2, '');
                     $key = trim($key);
                     $value = trim($value);
                     // backwards compatible with old plugin manager
@@ -861,10 +868,10 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     protected function writeManagerData()
     {
-        $managerpath = $this->getInstallDir().'/manager.dat';
+        $managerpath = $this->getInstallDir() . '/manager.dat';
         $data = '';
         foreach ($this->managerData as $k => $v) {
-            $data .= $k.'='.$v.DOKU_LF;
+            $data .= $k . '=' . $v . DOKU_LF;
         }
         io_saveFile($managerpath, $data);
     }
@@ -913,13 +920,13 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $name = '';
         if (isset($http->resp_headers['content-disposition'])) {
             $content_disposition = $http->resp_headers['content-disposition'];
-            $match = array();
-            if (is_string($content_disposition) &&
+            $match = [];
+            if (
+                is_string($content_disposition) &&
                 preg_match('/attachment;\s*filename\s*=\s*"([^"]*)"/i', $content_disposition, $match)
             ) {
-                $name = \dokuwiki\Utf8\PhpString::basename($match[1]);
+                $name = PhpString::basename($match[1]);
             }
-
         }
 
         if (!$name) {
@@ -927,14 +934,14 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             $name = $defaultName;
         }
 
-        $file = $file.$name;
+        $file .= $name;
 
         $fileexists = file_exists($file);
-        $fp = @fopen($file,"w");
+        $fp = @fopen($file, "w");
         if (!$fp) return false;
         fwrite($fp, $data);
         fclose($fp);
-        if (!$fileexists and $conf['fperm']) chmod($file, $conf['fperm']);
+        if (!$fileexists && $conf['fperm']) chmod($file, $conf['fperm']);
         return $name;
     }
 
@@ -957,7 +964,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         if (is_null($file)) {
             $file = md5($url);
         } else {
-            $file = \dokuwiki\Utf8\PhpString::basename($file);
+            $file = PhpString::basename($file);
         }
 
         // create tmp directory for download
@@ -966,14 +973,15 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         }
 
         // download
-        if (!$file = $this->downloadToFile($url, $tmp.'/', $file)) {
+        if (!$file = $this->downloadToFile($url, $tmp . '/', $file)) {
             io_rmdir($tmp, true);
-            throw new Exception(sprintf($this->getLang('error_download'),
-                '<bdi>'.hsc($url).'</bdi>')
-            );
+            throw new Exception(sprintf(
+                $this->getLang('error_download'),
+                '<bdi>' . hsc($url) . '</bdi>'
+            ));
         }
 
-        return $tmp.'/'.$file;
+        return $tmp . '/' . $file;
     }
 
     /**
@@ -985,7 +993,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     public function installArchive($file, $overwrite = false, $base = '')
     {
-        $installed_extensions = array();
+        $installed_extensions = [];
 
         // create tmp directory for decompression
         if (!($tmp = $this->mkTmpDir())) {
@@ -993,18 +1001,18 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         }
 
         // add default base folder if specified to handle case where zip doesn't contain this
-        if ($base && !@mkdir($tmp.'/'.$base)) {
+        if ($base && !@mkdir($tmp . '/' . $base)) {
             throw new Exception($this->getLang('error_dircreate'));
         }
 
         // decompress
-        $this->decompress($file, "$tmp/".$base);
+        $this->decompress($file, "$tmp/" . $base);
 
         // search $tmp/$base for the folder(s) that has been created
         // move the folder(s) to lib/..
-        $result = array('old'=>array(), 'new'=>array());
+        $result = ['old' => [], 'new' => []];
         $default = ($this->isTemplate() ? 'template' : 'plugin');
-        if (!$this->findFolders($result, $tmp.'/'.$base, $default)) {
+        if (!$this->findFolders($result, $tmp . '/' . $base, $default)) {
             throw new Exception($this->getLang('error_findfolder'));
         }
 
@@ -1040,7 +1048,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             }
 
             // check to make sure we aren't overwriting anything
-            $target = $target_base_dir.$item['base'];
+            $target = $target_base_dir . $item['base'];
             if (!$overwrite && file_exists($target)) {
                 // this info message is not being exposed via exception,
                 // so that it's not interrupting the installation
@@ -1055,17 +1063,18 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
                 // return info
                 $id = $item['base'];
                 if ($item['type'] == 'template') {
-                    $id = 'template:'.$id;
+                    $id = 'template:' . $id;
                 }
-                $installed_extensions[$id] = array(
+                $installed_extensions[$id] = [
                     'base' => $item['base'],
                     'type' => $item['type'],
                     'action' => $action
-                );
+                ];
             } else {
-                throw new Exception(sprintf($this->getLang('error_copy').DOKU_LF,
-                    '<bdi>'.$item['base'].'</bdi>')
-                );
+                throw new Exception(sprintf(
+                    $this->getLang('error_copy') . DOKU_LF,
+                    '<bdi>' . $item['base'] . '</bdi>'
+                ));
             }
         }
 
@@ -1105,7 +1114,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
         $dh       = @opendir($this_dir);
         if (!$dh) return false;
 
-        $found_dirs           = array();
+        $found_dirs           = [];
         $found_files          = 0;
         $found_template_parts = 0;
         while (false !== ($f = readdir($dh))) {
@@ -1120,7 +1129,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
                     case 'plugin.info.txt':
                     case 'template.info.txt':
                         // we have  found a clear marker, save and return
-                        $info = array();
+                        $info = [];
                         $type = explode('.', $f, 2);
                         $info['type'] = $type[0];
                         $info['tmp']  = $this_dir;
@@ -1142,7 +1151,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         // files where found but no info.txt - use old method
         if ($found_files) {
-            $info        = array();
+            $info        = [];
             $info['tmp'] = $this_dir;
             // does this look like a template or should we use the default type?
             if ($found_template_parts >= 2) {
@@ -1175,26 +1184,26 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
     private function decompress($file, $target)
     {
         // decompression library doesn't like target folders ending in "/"
-        if (substr($target, -1) == "/") $target = substr($target, 0, -1);
+        if (str_ends_with($target, '/')) $target = substr($target, 0, -1);
 
         $ext = $this->guessArchiveType($file);
-        if (in_array($ext, array('tar', 'bz', 'gz'))) {
+        if (in_array($ext, ['tar', 'bz', 'gz'])) {
             try {
-                $tar = new \splitbrain\PHPArchive\Tar();
+                $tar = new Tar();
                 $tar->open($file);
                 $tar->extract($target);
-            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
-                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
+            } catch (ArchiveIOException $e) {
+                throw new Exception($this->getLang('error_decompress') . ' ' . $e->getMessage(), $e->getCode(), $e);
             }
 
             return true;
         } elseif ($ext == 'zip') {
             try {
-                $zip = new \splitbrain\PHPArchive\Zip();
+                $zip = new Zip();
                 $zip->open($file);
                 $zip->extract($target);
-            } catch (\splitbrain\PHPArchive\ArchiveIOException $e) {
-                throw new Exception($this->getLang('error_decompress').' '.$e->getMessage());
+            } catch (ArchiveIOException $e) {
+                throw new Exception($this->getLang('error_decompress') . ' ' . $e->getMessage(), $e->getCode(), $e);
             }
 
             return true;
@@ -1202,7 +1211,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
 
         // the only case when we don't get one of the recognized archive types is
         // when the archive file can't be read
-        throw new Exception($this->getLang('error_decompress').' Couldn\'t read archive file');
+        throw new Exception($this->getLang('error_decompress') . ' Couldn\'t read archive file');
     }
 
     /**
@@ -1269,7 +1278,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
      */
     private function removeDeletedfiles($installed)
     {
-        foreach ($installed as $id => $extension) {
+        foreach ($installed as $extension) {
             // only on update
             if ($extension['action'] == 'install') continue;
 
@@ -1279,7 +1288,7 @@ class helper_plugin_extension_extension extends DokuWiki_Plugin
             } else {
                 $extensiondir = DOKU_PLUGIN;
             }
-            $extensiondir = $extensiondir . $extension['base'] .'/';
+            $extensiondir = $extensiondir . $extension['base'] . '/';
             $definitionfile = $extensiondir . 'deleted.files';
             if (!file_exists($definitionfile)) continue;
 
