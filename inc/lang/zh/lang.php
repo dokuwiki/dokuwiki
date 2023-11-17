@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author 林晓东 <lin_xd@126.com>
  * @author alair <Mail@alair.top>
  * @author better <betterzhubo@live.com>
  * @author 小李 <szsd5257@foxmail.com>
@@ -59,7 +60,7 @@ $lang['btn_preview']           = '预览';
 $lang['btn_top']               = '回到顶部';
 $lang['btn_newer']             = '<< 较新的';
 $lang['btn_older']             = '较旧的 >>';
-$lang['btn_revs']              = '修订记录';
+$lang['btn_revs']              = '过去修订';
 $lang['btn_recent']            = '最近更改';
 $lang['btn_upload']            = '上传';
 $lang['btn_cancel']            = '取消';
