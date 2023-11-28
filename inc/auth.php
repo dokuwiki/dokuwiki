@@ -10,6 +10,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\JWT;
 use phpseclib\Crypt\AES;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
@@ -91,7 +92,7 @@ function auth_setup()
         $INPUT->set('p', stripctl($INPUT->str('p')));
     }
 
-    if(!auth_tokenlogin()) {
+    if (!auth_tokenlogin()) {
         $ok = null;
 
         if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
@@ -173,29 +174,30 @@ function auth_loadACL()
  *
  * @return bool true if token login succeeded
  */
-function auth_tokenlogin() {
+function auth_tokenlogin()
+{
     global $USERINFO;
     global $INPUT;
     /** @var DokuWiki_Auth_Plugin $auth */
     global $auth;
-    if(!$auth) return false;
+    if (!$auth) return false;
 
     // see if header has token
     $header = '';
-    if(function_exists('getallheaders')) {
+    if (function_exists('getallheaders')) {
         // Authorization headers are not in $_SERVER for mod_php
         $headers = array_change_key_case(getallheaders());
-        if(isset($headers['authorization'])) $header = $headers['authorization'];
+        if (isset($headers['authorization'])) $header = $headers['authorization'];
     } else {
         $header = $INPUT->server->str('HTTP_AUTHORIZATION');
     }
-    if(!$header) return false;
-    list($type, $token) = sexplode(' ', $header, 2);
-    if($type !== 'Bearer') return false;
+    if (!$header) return false;
+    [$type, $token] = sexplode(' ', $header, 2);
+    if ($type !== 'Bearer') return false;
 
     // check token
     try {
-        $authtoken = \dokuwiki\JWT::validate($token);
+        $authtoken = JWT::validate($token);
     } catch (Exception $e) {
         msg(hsc($e->getMessage()), -1);
         return false;
@@ -204,7 +206,7 @@ function auth_tokenlogin() {
     // fetch user info from backend
     $user = $authtoken->getUser();
     $USERINFO = $auth->getUserData($user);
-    if(!$USERINFO) return false;
+    if (!$USERINFO) return false;
 
     // the code is correct, set up user
     $INPUT->server->set('REMOTE_USER', $user);
