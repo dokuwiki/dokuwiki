@@ -7,7 +7,6 @@ namespace dokuwiki;
  */
 class JWT
 {
-
     protected $user;
     protected $issued;
     protected $secret;
@@ -56,7 +55,7 @@ class JWT
             $header = json_decode(base64_decode($header), true, 512, JSON_THROW_ON_ERROR);
             $payload = json_decode(base64_decode($payload), true, 512, JSON_THROW_ON_ERROR);
         } catch (\Exception $e) {
-            throw new \Exception('Invalid JWT');
+            throw new \Exception('Invalid JWT', $e->getCode(), $e);
         }
 
         if (!$header || !$payload || !$signature) {
@@ -82,7 +81,7 @@ class JWT
             throw new \Exception('JWT not found, maybe it expired?');
         }
 
-        if(file_get_contents($file) !== $token) {
+        if (file_get_contents($file) !== $token) {
             throw new \Exception('JWT invalid, maybe it expired?');
         }
 
@@ -126,12 +125,14 @@ class JWT
             'typ' => 'JWT',
         ];
         $header = base64_encode(json_encode($header));
+
         $payload = [
             'iss' => 'dokuwiki',
             'sub' => $this->user,
             'iat' => $this->issued,
         ];
-        $payload = base64_encode(json_encode($payload));
+        $payload = base64_encode(json_encode($payload, JSON_THROW_ON_ERROR));
+
         $signature = hash_hmac('sha256', "$header.$payload", self::getSecret(), true);
         $signature = base64_encode($signature);
         return "$header.$payload.$signature";

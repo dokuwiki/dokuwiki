@@ -7,7 +7,6 @@ namespace dokuwiki\Remote;
  */
 class JsonRpcServer
 {
-
     protected $remote;
 
     /**
@@ -16,7 +15,7 @@ class JsonRpcServer
     public function __construct()
     {
         $this->remote = new Api();
-        $this->remote->setFileTransformation(array($this, 'toFile'));
+        $this->remote->setFileTransformation([$this, 'toFile']);
     }
 
     /**
@@ -94,5 +93,4 @@ class JsonRpcServer
     {
         return base64_encode($data);
     }
-
 }

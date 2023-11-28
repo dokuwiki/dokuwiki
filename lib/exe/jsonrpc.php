@@ -28,4 +28,4 @@ try {
     ];
 }
 
-echo json_encode($result);
+echo json_encode($result, JSON_THROW_ON_ERROR);
