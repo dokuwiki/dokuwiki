@@ -51,9 +51,15 @@ class JsonRpcServer
         }
 
         try {
-            $data = json_decode(file_get_contents('php://input'), true, 512, JSON_THROW_ON_ERROR);
+            $body = file_get_contents('php://input');
+            if($body !== '') {
+                $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+            } else {
+                $data = [];
+            }
         } catch (\Exception $e) {
-            $data = [];
+            http_status(400);
+            throw new RemoteException("JSON-RPC server only accepts valid JSON.", -32700);
         }
 
         return $this->createResponse($data);
