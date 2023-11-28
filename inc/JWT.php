@@ -52,8 +52,12 @@ class JWT
             throw new \Exception('Invalid JWT signature');
         }
 
-        $header = json_decode(base64_decode($header), true);
-        $payload = json_decode(base64_decode($payload), true);
+        try {
+            $header = json_decode(base64_decode($header), true, 512, JSON_THROW_ON_ERROR);
+            $payload = json_decode(base64_decode($payload), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Exception $e) {
+            throw new \Exception('Invalid JWT');
+        }
 
         if (!$header || !$payload || !$signature) {
             throw new \Exception('Invalid JWT');
