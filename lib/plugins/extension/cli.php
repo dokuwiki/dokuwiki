@@ -1,5 +1,6 @@
 <?php
 
+use splitbrain\phpcli\Exception;
 use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
@@ -265,7 +266,7 @@ class cli_plugin_extension extends CLIPlugin
      * @param bool $showdetails
      * @param int $max
      * @return int
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function cmdSearch($query, $showdetails, $max)
     {
@@ -284,7 +285,7 @@ class cli_plugin_extension extends CLIPlugin
      * @param bool $showdetails
      * @param string $filter
      * @return int
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function cmdList($showdetails, $filter)
     {
@@ -318,7 +319,7 @@ class cli_plugin_extension extends CLIPlugin
      * @param string[] $list
      * @param bool $details display details
      * @param string $filter filter for this status
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function listExtensions($list, $details, $filter = '')
     {

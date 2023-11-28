@@ -1,6 +1,0 @@
-composer.lock
-composer.phar
-phpunit.xml
-vendor/
-build/
-.phpunit.result.cache
