@@ -51,7 +51,7 @@ class JsonRpcServer
 
         try {
             $body = file_get_contents('php://input');
-            if($body !== '') {
+            if ($body !== '') {
                 $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
             } else {
                 $data = [];
