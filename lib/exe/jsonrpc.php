@@ -11,21 +11,9 @@ header('Content-Type: application/json');
 
 $server = new JsonRpcServer();
 try {
-    $result = [
-        'error' => [
-            'code' => 0,
-            'message' => 'success'
-        ],
-        'data' => $server->serve(),
-    ];
+    $result = $server->serve();
 } catch (\Exception $e) {
-    $result = [
-        'error' => [
-            'code' => $e->getCode(),
-            'message' => $e->getMessage()
-        ],
-        'data' => null,
-    ];
+    $result = $server->returnError($e);
 }
 
 echo json_encode($result, JSON_THROW_ON_ERROR);
