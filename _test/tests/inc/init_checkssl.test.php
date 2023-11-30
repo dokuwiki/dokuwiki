@@ -10,6 +10,8 @@ class init_checkssl_test extends DokuWikiTest {
 	 * set to https
 	 */
 	function test1a() {
+        global $conf;
+        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
 
@@ -24,6 +26,8 @@ class init_checkssl_test extends DokuWikiTest {
 	 * set to https
 	 */
 	function test1b() {
+        global $conf;
+        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
 		$_SERVER['REMOTE_ADDR'] = '8.8.8.8';
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
 
@@ -36,6 +40,8 @@ class init_checkssl_test extends DokuWikiTest {
 	 * HTTP_X_FORWARDED_PROTO set to http
 	 */
 	function test2() {
+        global $conf;
+        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'http';
 
@@ -48,6 +54,8 @@ class init_checkssl_test extends DokuWikiTest {
 	 * HTTP_X_FORWARDED_PROTO set to https
 	 */
 	function test3() {
+        global $conf;
+        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
 		$_SERVER['HTTPS'] = 'off';
@@ -91,6 +99,8 @@ class init_checkssl_test extends DokuWikiTest {
 	 * HTTP_X_FORWARDED_PROTO set to https
 	 */
 	function test7() {
+        global $conf;
+        $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
 		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
 		$_SERVER['HTTPS'] = 'on';
