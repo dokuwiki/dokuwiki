@@ -169,16 +169,8 @@ class JsonRpcServer
      */
     public function call($methodname, $args)
     {
-        if (!array_is_list($args)) {
-            throw new RemoteException(
-                "server error. arguments need to passed as list. named arguments not supported",
-                -32602
-            );
-        }
-
         try {
-            $result = $this->remote->call($methodname, $args);
-            return $result;
+            return $this->remote->call($methodname, $args);
         } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
