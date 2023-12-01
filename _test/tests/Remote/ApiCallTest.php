@@ -13,12 +13,13 @@ class ApiCallTest extends \DokuWikiTest
      * in several lines
      * @param string $foo First variable
      * @param int $bar
+     * @param string[] $baz
      * @something else
      * @something other
      * @another tag
      * @return string  The return
      */
-    public function dummyMethod1($foo, $bar)
+    public function dummyMethod1($foo, $bar, $baz)
     {
         return 'dummy';
     }
@@ -39,7 +40,11 @@ class ApiCallTest extends \DokuWikiTest
                 'bar' => [
                     'type' => 'int',
                     'description' => '',
-                ]
+                ],
+                'baz' => [
+                    'type' => 'array',
+                    'description' => '',
+                ],
             ],
             $call->getArgs()
         );
