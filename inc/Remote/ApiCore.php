@@ -54,18 +54,18 @@ class ApiCore
             'dokuwiki.createUser' => new ApiCall([$this, 'createUser']),
             'dokuwiki.deleteUsers' => new ApiCall([$this, 'deleteUsers']),
             'wiki.getPage' => (new ApiCall([$this, 'rawPage']))
-                ->limitArgs(['id']),
+                ->limitArgs(['page']),
             'wiki.getPageVersion' => (new ApiCall([$this, 'rawPage']))
                 ->setSummary('Get a specific revision of a wiki page'),
             'wiki.getPageHTML' => (new ApiCall([$this, 'htmlPage']))
-                ->limitArgs(['id']),
+                ->limitArgs(['page']),
             'wiki.getPageHTMLVersion' => (new ApiCall([$this, 'htmlPage']))
                 ->setSummary('Get the HTML for a specific revision of a wiki page'),
             'wiki.getAllPages' => new ApiCall([$this, 'listPages']),
             'wiki.getAttachments' => new ApiCall([$this, 'listAttachments']),
             'wiki.getBackLinks' => new ApiCall([$this, 'listBackLinks']),
             'wiki.getPageInfo' => (new ApiCall([$this, 'pageInfo']))
-                ->limitArgs(['id']),
+                ->limitArgs(['page']),
             'wiki.getPageInfoVersion' => (new ApiCall([$this, 'pageInfo']))
                 ->setSummary('Get some basic data about a specific revison of a wiki page'),
             'wiki.getPageVersions' => new ApiCall([$this, 'pageVersions']),
@@ -97,20 +97,20 @@ class ApiCore
     /**
      * Return a raw wiki page
      *
-     * @param string $id wiki page id
+     * @param string $page wiki page id
      * @param int $rev revision timestamp of the page
      * @return string the syntax of the page
      * @throws AccessDeniedException if no permission for page
      */
-    public function rawPage($id, $rev = '')
+    public function rawPage($page, $rev = '')
     {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        $page = $this->resolvePageId($page);
+        if (auth_quickaclcheck($page) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this file', 111);
         }
-        $text = rawWiki($id, $rev);
+        $text = rawWiki($page, $rev);
         if (!$text) {
-            return pageTemplate($id);
+            return pageTemplate($page);
         } else {
             return $text;
         }
@@ -119,21 +119,21 @@ class ApiCore
     /**
      * Return a media file
      *
-     * @param string $id file id
+     * @param string $media file id
      * @return mixed media file
      * @throws AccessDeniedException no permission for media
      * @throws RemoteException not exist
      * @author Gina Haeussge <osd@foosel.net>
      *
      */
-    public function getAttachment($id)
+    public function getAttachment($media)
     {
-        $id = cleanID($id);
-        if (auth_quickaclcheck(getNS($id) . ':*') < AUTH_READ) {
+        $media = cleanID($media);
+        if (auth_quickaclcheck(getNS($media) . ':*') < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this file', 211);
         }
 
-        $file = mediaFN($id);
+        $file = mediaFN($media);
         if (!@ file_exists($file)) {
             throw new RemoteException('The requested file does not exist', 221);
         }
@@ -145,24 +145,24 @@ class ApiCore
     /**
      * Return info about a media file
      *
-     * @param string $id page id
+     * @param string $media page id
      * @return array
      * @author Gina Haeussge <osd@foosel.net>
      *
      */
-    public function getAttachmentInfo($id)
+    public function getAttachmentInfo($media)
     {
-        $id = cleanID($id);
+        $media = cleanID($media);
         $info = ['lastModified' => $this->api->toDate(0), 'size' => 0];
 
-        $file = mediaFN($id);
-        if (auth_quickaclcheck(getNS($id) . ':*') >= AUTH_READ) {
+        $file = mediaFN($media);
+        if (auth_quickaclcheck(getNS($media) . ':*') >= AUTH_READ) {
             if (file_exists($file)) {
                 $info['lastModified'] = $this->api->toDate(filemtime($file));
                 $info['size'] = filesize($file);
             } else {
                 //Is it deleted media with changelog?
-                $medialog = new MediaChangeLog($id);
+                $medialog = new MediaChangeLog($media);
                 $revisions = $medialog->getRevisions(0, 1);
                 if (!empty($revisions)) {
                     $info['lastModified'] = $this->api->toDate($revisions[0]);
@@ -176,18 +176,18 @@ class ApiCore
     /**
      * Return a wiki page rendered to HTML
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param string $rev revision timestamp
      * @return string Rendered HTML for the page
      * @throws AccessDeniedException no access to page
      */
-    public function htmlPage($id, $rev = '')
+    public function htmlPage($page, $rev = '')
     {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        $page = $this->resolvePageId($page);
+        if (auth_quickaclcheck($page) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
-        return p_wiki_xhtml($id, $rev, false);
+        return p_wiki_xhtml($page, $rev, false);
     }
 
     /**
@@ -343,30 +343,30 @@ class ApiCore
     /**
      * Return a list of backlinks
      *
-     * @param string $id page id
+     * @param string $page page id
      * @return array
      */
-    public function listBackLinks($id)
+    public function listBackLinks($page)
     {
-        return ft_backlinks($this->resolvePageId($id));
+        return ft_backlinks($this->resolvePageId($page));
     }
 
     /**
      * Return some basic data about a page
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param string|int $rev revision timestamp or empty string
      * @return array
      * @throws AccessDeniedException no access for page
      * @throws RemoteException page not exist
      */
-    public function pageInfo($id, $rev = '')
+    public function pageInfo($page, $rev = '')
     {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        $page = $this->resolvePageId($page);
+        if (auth_quickaclcheck($page) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
-        $file = wikiFN($id, $rev);
+        $file = wikiFN($page, $rev);
         $time = @filemtime($file);
         if (!$time) {
             throw new RemoteException('The requested page does not exist', 121);
@@ -378,11 +378,11 @@ class ApiCore
             $rev = $time;
         }
 
-        $pagelog = new PageChangeLog($id, 1024);
+        $pagelog = new PageChangeLog($page, 1024);
         $info = $pagelog->getRevisionInfo($rev);
 
         $data = [
-            'name' => $id,
+            'name' => $page,
             'lastModified' => $this->api->toDate($rev),
             'author' => is_array($info) ? ($info['user'] ?: $info['ip']) : null,
             'version' => $rev
@@ -394,7 +394,7 @@ class ApiCore
     /**
      * Save a wiki page
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param string $text wiki text
      * @param array $params parameters: summary, minor edit
      * @return bool
@@ -403,30 +403,30 @@ class ApiCore
      * @author Michael Klier <chi@chimeric.de>
      *
      */
-    public function putPage($id, $text, $params = [])
+    public function putPage($page, $text, $params = [])
     {
         global $TEXT;
         global $lang;
 
-        $id = $this->resolvePageId($id);
+        $page = $this->resolvePageId($page);
         $TEXT = cleanText($text);
         $sum = $params['sum'] ?? '';
         $minor = $params['minor'] ?? false;
 
-        if (empty($id)) {
+        if (empty($page)) {
             throw new RemoteException('Empty page ID', 131);
         }
 
-        if (!page_exists($id) && trim($TEXT) == '') {
+        if (!page_exists($page) && trim($TEXT) == '') {
             throw new RemoteException('Refusing to write an empty new wiki page', 132);
         }
 
-        if (auth_quickaclcheck($id) < AUTH_EDIT) {
+        if (auth_quickaclcheck($page) < AUTH_EDIT) {
             throw new AccessDeniedException('You are not allowed to edit this page', 112);
         }
 
         // Check, if page is locked
-        if (checklock($id)) {
+        if (checklock($page)) {
             throw new RemoteException('The page is currently locked', 133);
         }
 
@@ -436,23 +436,23 @@ class ApiCore
         }
 
         // autoset summary on new pages
-        if (!page_exists($id) && empty($sum)) {
+        if (!page_exists($page) && empty($sum)) {
             $sum = $lang['created'];
         }
 
         // autoset summary on deleted pages
-        if (page_exists($id) && empty($TEXT) && empty($sum)) {
+        if (page_exists($page) && empty($TEXT) && empty($sum)) {
             $sum = $lang['deleted'];
         }
 
-        lock($id);
+        lock($page);
 
-        saveWikiText($id, $TEXT, $sum, $minor);
+        saveWikiText($page, $TEXT, $sum, $minor);
 
-        unlock($id);
+        unlock($page);
 
         // run the indexer if page wasn't indexed yet
-        idx_addPage($id);
+        idx_addPage($page);
 
         return true;
     }
@@ -460,19 +460,19 @@ class ApiCore
     /**
      * Appends text to a wiki page.
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param string $text wiki text
      * @param array $params such as summary,minor
      * @return bool|string
      * @throws RemoteException
      */
-    public function appendPage($id, $text, $params = [])
+    public function appendPage($page, $text, $params = [])
     {
-        $currentpage = $this->rawPage($id);
+        $currentpage = $this->rawPage($page);
         if (!is_string($currentpage)) {
             return $currentpage;
         }
-        return $this->putPage($id, $currentpage . $text, $params);
+        return $this->putPage($page, $currentpage . $text, $params);
     }
 
     /**
@@ -561,30 +561,30 @@ class ApiCore
      *
      * Michael Klier <chi@chimeric.de>
      *
-     * @param string $id page id
+     * @param string $media media id
      * @param string $file
      * @param array $params such as overwrite
      * @return false|string
      * @throws RemoteException
      */
-    public function putAttachment($id, $file, $params = [])
+    public function putAttachment($media, $file, $params = [])
     {
-        $id = cleanID($id);
-        $auth = auth_quickaclcheck(getNS($id) . ':*');
+        $media = cleanID($media);
+        $auth = auth_quickaclcheck(getNS($media) . ':*');
 
-        if (!isset($id)) {
+        if (!isset($media)) {
             throw new RemoteException('Filename not given.', 231);
         }
 
         global $conf;
 
-        $ftmp = $conf['tmpdir'] . '/' . md5($id . clientIP());
+        $ftmp = $conf['tmpdir'] . '/' . md5($media . clientIP());
 
         // save temporary file
         @unlink($ftmp);
         io_saveFile($ftmp, $file);
 
-        $res = media_save(['name' => $ftmp], $id, $params['ow'], $auth, 'rename');
+        $res = media_save(['name' => $ftmp], $media, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
             throw new RemoteException($res[0], -$res[1]);
         } else {
@@ -595,18 +595,18 @@ class ApiCore
     /**
      * Deletes a file from the wiki.
      *
-     * @param string $id page id
+     * @param string $media media id
      * @return int
      * @throws AccessDeniedException no permissions
      * @throws RemoteException file in use or not deleted
      * @author Gina Haeussge <osd@foosel.net>
      *
      */
-    public function deleteAttachment($id)
+    public function deleteAttachment($media)
     {
-        $id = cleanID($id);
-        $auth = auth_quickaclcheck(getNS($id) . ':*');
-        $res = media_delete($id, $auth);
+        $media = cleanID($media);
+        $auth = auth_quickaclcheck(getNS($media) . ':*');
+        $res = media_delete($media, $auth);
         if ($res & DOKU_MEDIA_DELETED) {
             return 0;
         } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
@@ -621,19 +621,19 @@ class ApiCore
     /**
      * Returns the permissions of a given wiki page for the current user or another user
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param string|null $user username
      * @param array|null $groups array of groups
      * @return int permission level
      */
-    public function aclCheck($id, $user = null, $groups = null)
+    public function aclCheck($page, $user = null, $groups = null)
     {
         /** @var AuthPlugin $auth */
         global $auth;
 
-        $id = $this->resolvePageId($id);
+        $page = $this->resolvePageId($page);
         if ($user === null) {
-            return auth_quickaclcheck($id);
+            return auth_quickaclcheck($page);
         } else {
             if ($groups === null) {
                 $userinfo = $auth->getUserData($user);
@@ -643,29 +643,29 @@ class ApiCore
                     $groups = $userinfo['grps'];
                 }
             }
-            return auth_aclcheck($id, $user, $groups);
+            return auth_aclcheck($page, $user, $groups);
         }
     }
 
     /**
      * Lists all links contained in a wiki page
      *
-     * @param string $id page id
+     * @param string $page page id
      * @return array
      * @throws AccessDeniedException  no read access for page
      * @author Michael Klier <chi@chimeric.de>
      *
      */
-    public function listLinks($id)
+    public function listLinks($page)
     {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        $page = $this->resolvePageId($page);
+        if (auth_quickaclcheck($page) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
         $links = [];
 
         // resolve page instructions
-        $ins = p_cached_instructions(wikiFN($id));
+        $ins = p_cached_instructions(wikiFN($page));
 
         // instantiate new Renderer - needed for interwiki links
         $Renderer = new Doku_Renderer_xhtml();
@@ -782,7 +782,7 @@ class ApiCore
      * Number of returned pages is set by $conf['recent']
      * However not accessible pages are skipped, so less than $conf['recent'] could be returned
      *
-     * @param string $id page id
+     * @param string $page page id
      * @param int $first skip the first n changelog lines
      *                      0 = from current(if exists)
      *                      1 = from 1st old rev
@@ -793,17 +793,17 @@ class ApiCore
      * @author Michael Klier <chi@chimeric.de>
      *
      */
-    public function pageVersions($id, $first = 0)
+    public function pageVersions($page, $first = 0)
     {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        $page = $this->resolvePageId($page);
+        if (auth_quickaclcheck($page) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
         global $conf;
 
         $versions = [];
 
-        if (empty($id)) {
+        if (empty($page)) {
             throw new RemoteException('Empty page ID', 131);
         }
 
@@ -811,7 +811,7 @@ class ApiCore
         $first_rev = $first - 1;
         $first_rev = max(0, $first_rev);
 
-        $pagelog = new PageChangeLog($id);
+        $pagelog = new PageChangeLog($page);
         $revisions = $pagelog->getRevisions($first_rev, $conf['recent']);
 
         if ($first == 0) {
@@ -823,7 +823,7 @@ class ApiCore
 
         if (!empty($revisions)) {
             foreach ($revisions as $rev) {
-                $file = wikiFN($id, $rev);
+                $file = wikiFN($page, $rev);
                 $time = @filemtime($file);
                 // we check if the page actually exists, if this is not the
                 // case this can lead to less pages being returned than
