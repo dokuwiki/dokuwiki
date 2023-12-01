@@ -17,10 +17,19 @@ class OpenAPIGenerator
         $this->documentation['openapi'] = '3.1.0';
         $this->documentation['info'] = [
             'title' => 'DokuWiki API',
-            'description' => 'The DokuWiki API',
-            'version' => '1.0.0',
+            'description' => 'The DokuWiki API OpenAPI specification',
+            'version' => ((string)ApiCore::API_VERSION),
         ];
-        $this->documentation['paths'] = [];
+
+    }
+
+    public function generate()
+    {
+        $this->addServers();
+        $this->addSecurity();
+        $this->addMethods();
+
+        return json_encode($this->documentation, JSON_PRETTY_PRINT);
     }
 
     protected function addServers()
@@ -32,134 +41,152 @@ class OpenAPIGenerator
         ];
     }
 
-    /**
-     * Parses the description of a method
-     *
-     * @param string $desc
-     * @return array with keys 'summary', 'desc', 'args' and 'return'
-     */
-    protected function parseMethodDescription($desc)
+    protected function addSecurity()
     {
-        $data = [
-            'summary' => '',
-            'desc' => '',
-            'args' => [],
-            'return' => '',
+        $this->documentation['components']['securitySchemes'] = [
+            'basicAuth' => [
+                'type' => 'http',
+                'scheme' => 'basic',
+            ],
+            'jwt' => [
+                'type' => 'http',
+                'scheme' => 'bearer',
+                'bearerFormat' => 'JWT',
+            ]
         ];
-
-        $lines = explode("\n", trim($desc));
-        foreach ($lines as $line) {
-            $line = trim($line);
-
-            if ($line && $line[0] === '@') {
-                // this is a doc block tag
-                if (str_starts_with('@param', $line)) {
-                    $parts = sexplode(' ', $line, 4); // @param type $name description
-                    $data['args'][] = [ltrim($parts[1], '$'), $parts[3]]; // assumes params are in the right order
-                    continue;
-                }
-
-                if (str_starts_with('@return', $line)) {
-                    $parts = sexplode(' ', $line, 3); // @return type description
-                    $data['return'] = $parts[2];
-                    continue;
-                }
-
-                // ignore all other tags
-                continue;
-            }
-
-            if (empty($data['summary'])) {
-                $data['summary'] = $line;
-            } else {
-                $data['desc'] .= $line . "\n";
-            }
-        }
-
-        $data['desc'] = trim($data['desc']);
-        return $data;
-    }
-
-    protected function getMethodDefinition($method, $info)
-    {
-        $desc = $this->parseMethodDescription($info['doc']);
-
-        $docs = [
-            'summary' => $desc['summary'],
-            'description' => $desc['desc'],
-            'operationId' => $method,
-        ];
-
-        $body = $this->getMethodArguments($info['args'], $desc['args']);
-        if ($body) $docs['requestBody'] = $body;
-
-        return $docs;
-    }
-
-    public function getMethodArguments($args, $info)
-    {
-        if (!$args) return null;
-
-        $docs = [
-            'required' => true,
-            'description' => 'The positional arguments for the method',
-            'content' => [
-                'application/json' => [
-                    'schema' => [
-                        'type' => 'array',
-                        'prefixItems' => [],
-                        'unevaluatedItems' => false,
-                    ],
-                ],
+        $this->documentation['security'] = [
+            [
+                'basicAuth' => [],
+            ],
+            [
+                'jwt' => [],
             ],
         ];
-
-        foreach ($args as $pos => $type) {
-
-            switch ($type) {
-                case 'int':
-                    $type= 'integer';
-                    break;
-                case 'bool':
-                    $type = 'boolean';
-                    break;
-                case 'file':
-                    $type = 'string';
-                    break;
-
-            }
-
-            $item = [
-                'type' => $type,
-                'name' => 'arg' . $pos,
-            ];
-            if (isset($info[$pos])) {
-                if (isset($info[$pos][0])) $item['name'] = $info[$pos][0];
-                if (isset($info[$pos][1])) $item['description'] = $info[$pos][1];
-            }
-
-            $docs['content']['application/json']['schema']['prefixItems'][] = $item;
-        }
-        return $docs;
     }
 
     protected function addMethods()
     {
         $methods = $this->api->getMethods();
 
-        foreach ($methods as $method => $info) {
+        $this->documentation['paths'] = [];
+        foreach ($methods as $method => $call) {
             $this->documentation['paths']['/' . $method] = [
-                'post' => $this->getMethodDefinition($method, $info),
+                'post' => $this->getMethodDefinition($method, $call),
             ];
         }
     }
 
-    public function generate()
+    protected function getMethodDefinition(string $method, ApiCall $call)
     {
-        $this->addServers();
-        $this->addMethods();
+        $retType = $this->fixTypes($call->getReturn()['type']);
+        $retExample = $this->generateExample('result', $retType);
 
-        return json_encode($this->documentation, JSON_PRETTY_PRINT);
+        return [
+            'operationId' => $method,
+            'summary' => $call->getSummary(),
+            'description' => $call->getDescription(),
+            'requestBody' => [
+                'required' => true,
+                'content' => [
+                    'application/json' => $this->getMethodArguments($call->getArgs()),
+                ]
+            ],
+            'responses' => [
+                200 => [
+                    'description' => 'Result',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'result' => [
+                                        'type' => $retType,
+                                        'description' => $call->getReturn()['description'],
+                                        'examples' => [$retExample],
+                                    ],
+                                    'error' => [
+                                        'type' => 'object',
+                                        'description' => 'Error object in case of an error',
+                                        'properties' => [
+                                            'code' => [
+                                                'type' => 'integer',
+                                                'description' => 'The error code',
+                                                'examples' => [0],
+                                            ],
+                                            'message' => [
+                                                'type' => 'string',
+                                                'description' => 'The error message',
+                                                'examples' => ['Success'],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        ];
     }
 
+    protected function getMethodArguments($args)
+    {
+        if (!$args) {
+            // even if no arguments are needed, we need to define a body
+            // this is to ensure the openapi spec knows that a application/json header is needed
+            return ['schema' => ['type' => 'null']];
+        }
+
+        $props = [];
+        $schema = [
+            'schema' => [
+                'type' => 'object',
+                'properties' => &$props
+            ]
+        ];
+
+        foreach ($args as $name => $info) {
+            $type = $this->fixTypes($info['type']);
+            $example = $this->generateExample($name, $type);
+            $props[$name] = [
+                'type' => $type,
+                'description' => $info['description'],
+                'examples' => [ $example ],
+            ];
+        }
+        return $schema;
+    }
+
+    protected function fixTypes($type)
+    {
+        switch ($type) {
+            case 'int':
+                $type = 'integer';
+                break;
+            case 'bool':
+                $type = 'boolean';
+                break;
+            case 'file':
+                $type = 'string';
+                break;
+
+        }
+        return $type;
+    }
+
+    protected function generateExample($name, $type)
+    {
+        switch ($type) {
+            case 'integer':
+                return 42;
+            case 'boolean':
+                return true;
+            case 'string':
+                return 'some-'.$name;
+            case 'array':
+                return ['some-'.$name, 'other-'.$name];
+            default:
+                return new \stdClass();
+        }
+    }
 }
