@@ -395,8 +395,8 @@ class ApiCore
 
         $id = $this->resolvePageId($id);
         $TEXT = cleanText($text);
-        $sum = $params['sum'];
-        $minor = $params['minor'];
+        $sum = $params['sum'] ?? '';
+        $minor = $params['minor'] ?? false;
 
         if (empty($id)) {
             throw new RemoteException('Empty page ID', 131);

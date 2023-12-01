@@ -13,7 +13,7 @@ class remote_plugin_acl extends RemotePlugin
      *
      * @return array Information about all provided methods. {@see dokuwiki\Remote\RemoteAPI}
      */
-    public function _getMethods()
+    public function getMethods()
     {
         return [
             'listAcls' => [
