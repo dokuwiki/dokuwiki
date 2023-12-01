@@ -296,7 +296,7 @@ class ApiCall
 
         if (isset($tags['return'])) {
             $return = $tags['return'][0];
-            if (preg_match('/^(\w+)(\s+(.*))$/m', $return, $m)) {
+            if (preg_match('/^(\w+)(\s+(.*))?$/m', $return, $m)) {
                 $result['return'] = [
                     'type' => $this->cleanTypeHint($m[1]),
                     'description' => trim($m[2] ?? '')
