@@ -30,7 +30,7 @@ abstract class RemotePlugin extends Plugin
      * By default it exports all public methods of a remote plugin. Methods beginning
      * with an underscore are skipped.
      *
-     * @return ApiCall[] Information about all provided methods.
+     * @return ApiCall[] Information about all provided methods. ('methodname' => ApiCall)
      * @throws ReflectionException
      */
     public function getMethods()

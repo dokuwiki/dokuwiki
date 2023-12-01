@@ -158,11 +158,11 @@ class Api
      * @return void
      * @throws RemoteException thrown when the API is disabled
      */
-    protected function ensureApiIsEnabled()
+    public function ensureApiIsEnabled()
     {
         global $conf;
         if (!$conf['remote'] || trim($conf['remoteuser']) == '!!not set!!') {
-            throw new RemoteException('Server Error. API is not enabled in config.', -32604);
+            throw new AccessDeniedException('Server Error. API is not enabled in config.', -32604);
         }
     }
 
@@ -173,7 +173,7 @@ class Api
      * @return void
      * @throws AccessDeniedException Thrown when the user is not allowed to call the method
      */
-    protected function ensureAccessIsAllowed(ApiCall $method)
+    public function ensureAccessIsAllowed(ApiCall $method)
     {
         global $conf;
         global $INPUT;
