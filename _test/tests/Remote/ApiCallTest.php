@@ -93,8 +93,8 @@ class ApiCallTest extends \DokuWikiTest
     public function testExecution()
     {
         $call = new ApiCall([$this, 'dummyMethod1']);
-        $this->assertEquals('dummy', $call(['bar', 1]), 'positional parameters');
-        $this->assertEquals('dummy', $call(['foo' => 'bar', 'bar' => 1]), 'named parameters');
+        $this->assertEquals('dummy', $call(['bar', 1, ['molf']]), 'positional parameters');
+        $this->assertEquals('dummy', $call(['foo' => 'bar', 'bar' => 1, 'baz' =>['molf']]), 'named parameters');
 
         $call = new ApiCall('date');
         $this->assertEquals('2023-11-30', $call(['Y-m-d', 1701356591]), 'positional parameters');
