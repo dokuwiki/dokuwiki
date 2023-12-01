@@ -283,25 +283,25 @@ class ApiCall
 
         if (isset($tags['param'])) {
             foreach ($tags['param'] as $param) {
-                if (preg_match('/^(\w+)\s+\$(\w+)(\s+(.*))?$/m', $param, $m)) {
-                    $result['args'][$m[2]] = [
-                        'type' => $this->cleanTypeHint($m[1]),
-                        'description' => trim($m[3] ?? ''),
-                    ];
-                }
+                [$type, $name, $description] = array_map('trim', sexplode(' ', $param, 3, ''));
+                if ($name[0] !== '$') continue;
+                $name = substr($name, 1);
+
+                $result['args'][$name] = [
+                    'type' => $this->cleanTypeHint($type),
+                    'description' => $description,
+                ];
             }
             unset($tags['param']);
         }
 
-
         if (isset($tags['return'])) {
             $return = $tags['return'][0];
-            if (preg_match('/^(\w+)(\s+(.*))?$/m', $return, $m)) {
-                $result['return'] = [
-                    'type' => $this->cleanTypeHint($m[1]),
-                    'description' => trim($m[2] ?? '')
-                ];
-            }
+            [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
+            $result['return'] = [
+                'type' => $this->cleanTypeHint($type),
+                'description' => $description
+            ];
             unset($tags['return']);
         }
 
