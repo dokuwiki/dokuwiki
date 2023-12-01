@@ -1,24 +1,28 @@
 <?php
 
+namespace dokuwiki\test\Remote;
+
 use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\RemoteException;
-use dokuwiki\test\mock\AuthPlugin;
 use dokuwiki\test\mock\AuthCreatePlugin;
+use dokuwiki\test\mock\AuthPlugin;
 
 /**
  * Class remoteapicore_test
  */
-class remoteapicore_createuser_test extends DokuWikiTest {
+class ApiCoreCreateUserTest extends \DokuWikiTest
+{
 
     protected $userinfo;
     protected $oldAuthAcl;
     /** @var  Api */
     protected $remote;
 
-    public function setUp() : void {
+    public function setUp(): void
+    {
         // we need a clean setup before each single test:
-        DokuWikiTest::setUpBeforeClass();
+        \DokuWikiTest::setUpBeforeClass();
 
         parent::setUp();
         global $conf;
@@ -36,7 +40,8 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->remote = new Api();
     }
 
-    public function tearDown() : void {
+    public function tearDown(): void
+    {
         parent::tearDown();
 
         global $USERINFO;
@@ -46,7 +51,7 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $AUTH_ACL = $this->oldAuthAcl;
     }
 
-    public function test_createUser()
+    public function testCreateUser()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
@@ -77,25 +82,25 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->assertFalse($actualCallResult);
     }
 
-    public function test_createUserAuthPlain()
+    public function testCreateUserAuthPlain()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
-        $auth = new auth_plugin_authplain();
+        $auth = new \auth_plugin_authplain();
         $params = [
-                [
-                    'user' => 'user1',
-                    'password' => 'password1',
-                    'name' => 'user1',
-                    'mail' => 'user1@localhost',
-                    'groups' => [
-                        'user',
-                        'test'
-                    ],
-                    'notify' => false
-                ]
+            [
+                'user' => 'user1',
+                'password' => 'password1',
+                'name' => 'user1',
+                'mail' => 'user1@localhost',
+                'groups' => [
+                    'user',
+                    'test'
+                ],
+                'notify' => false
+            ]
 
         ];
 
@@ -103,17 +108,17 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->assertTrue($callResult);
     }
 
-    public function test_createUserAuthPlainUndefinedUser()
+    public function testCreateUserAuthPlainUndefinedUser()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
-        $auth = new auth_plugin_authplain();
+        $auth = new \auth_plugin_authplain();
         $params = [
-                [
-                    'user' => ''
-                ],
+            [
+                'user' => ''
+            ],
         ];
 
         $this->expectException(RemoteException::class);
@@ -121,13 +126,13 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->remote->call('dokuwiki.createUser', $params);
     }
 
-    public function test_createUserAuthPlainUndefinedName()
+    public function testCreateUserAuthPlainUndefinedName()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
-        $auth = new auth_plugin_authplain();
+        $auth = new \auth_plugin_authplain();
         $params = [
             [
                 'user' => 'hello'
@@ -139,13 +144,13 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->remote->call('dokuwiki.createUser', $params);
     }
 
-    public function test_createUserAuthPlainBadEmail()
+    public function testCreateUserAuthPlainBadEmail()
     {
         global $conf, $auth;
         $conf['remote'] = 1;
         $conf['remoteuser'] = 'testuser';
         $_SERVER['REMOTE_USER'] = 'testuser';
-        $auth = new auth_plugin_authplain();
+        $auth = new \auth_plugin_authplain();
         $params = [
             [
                 'user' => 'hello',
@@ -159,7 +164,7 @@ class remoteapicore_createuser_test extends DokuWikiTest {
         $this->remote->call('dokuwiki.createUser', $params);
     }
 
-    public function test_createUserAuthCanNotDoAddUser()
+    public function testCreateUserAuthCanNotDoAddUser()
     {
         $this->expectException(AccessDeniedException::class);
         $this->expectExceptionMessageMatches('/can\'t do addUser/');
@@ -170,17 +175,17 @@ class remoteapicore_createuser_test extends DokuWikiTest {
 
         $auth = new AuthCreatePlugin(false);
         $params = [
-                [
-                    'user' => 'user1',
-                    'password' => 'password1',
-                    'name' => 'user1',
-                    'mail' => 'user1@localhost',
-                    'groups' => [
-                        'user',
-                        'test'
-                    ],
-                    'notify' => false
+            [
+                'user' => 'user1',
+                'password' => 'password1',
+                'name' => 'user1',
+                'mail' => 'user1@localhost',
+                'groups' => [
+                    'user',
+                    'test'
                 ],
+                'notify' => false
+            ],
         ];
         $this->remote->call('dokuwiki.createUser', $params);
     }

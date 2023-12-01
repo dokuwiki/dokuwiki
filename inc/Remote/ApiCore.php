@@ -492,7 +492,7 @@ class ApiCore
         $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
         $groups = $userStruct['groups'] ?? [];
 
-        $notify = (bool)$userStruct['notify'] ?? false;
+        $notify = (bool) ($userStruct['notify'] ?? false);
 
         if ($user === '') throw new RemoteException('empty or invalid user', 401);
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
