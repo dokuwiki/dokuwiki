@@ -44,7 +44,7 @@ class ApiCore
             'dokuwiki.logoff' => new ApiCall([$this, 'logoff']),
             'dokuwiki.getPagelist' => new ApiCall([$this, 'readNamespace']),
             'dokuwiki.search' => new ApiCall([$this, 'search']),
-            'dokuwiki.getTime' => (new ApiCall('time'))
+            'dokuwiki.getTime' => (new ApiCall([$this, 'time']))
                 ->setSummary('Returns the current server time')
                 ->setReturnDescription('unix timestamp'),
             'dokuwiki.setLocks' => new ApiCall([$this, 'setLocks']),
@@ -81,6 +81,17 @@ class ApiCore
             'dokuwiki.getXMLRPCAPIVersion' => (new ApiCall([$this, 'getAPIVersion']))->setPublic(),
             'wiki.getRPCVersionSupported' => (new ApiCall([$this, 'wikiRpcVersion']))->setPublic(),
         ];
+    }
+
+    /**
+     * Return the current server time
+     *
+     * Uses a Unix timestamp (seconds since 1970-01-01 00:00:00 UTC)
+     *
+     * @return int A unix timestamp
+     */
+    public function time() {
+        return time();
     }
 
     /**
