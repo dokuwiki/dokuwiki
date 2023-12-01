@@ -16,6 +16,7 @@ if ($INPUT->has('spec')) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <title>DokuWiki API Explorer</title>
     <script src="https://unpkg.com/openapi-explorer/dist/browser/openapi-explorer.min.js" type="module"
             defer=""></script>
     <style>
