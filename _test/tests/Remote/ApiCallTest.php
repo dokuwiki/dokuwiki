@@ -67,18 +67,18 @@ class ApiCallTest extends \DokuWikiTest
 
     public function testFunctionDocBlock()
     {
-        $call = new ApiCall('date');
-        $call->setArgDescription('format', 'The format');
+        $call = new ApiCall('inlineSVG');
+        $call->setArgDescription('file', 'overwritten description');
 
         $this->assertEquals(
             [
-                'format' => [
+                'file' => [
                     'type' => 'string',
-                    'description' => 'The format',
+                    'description' => 'overwritten description',
                 ],
-                'timestamp' => [
+                'maxsize' => [
                     'type' => 'int',
-                    'description' => '',
+                    'description' => 'maximum allowed size for the SVG to be embedded',
                 ]
             ],
             $call->getArgs()
