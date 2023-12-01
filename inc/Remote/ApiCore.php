@@ -98,8 +98,8 @@ class ApiCore
      * Return a raw wiki page
      *
      * @param string $id wiki page id
-     * @param int|string $rev revision timestamp of the page or empty string
-     * @return string page text.
+     * @param int $rev revision timestamp of the page
+     * @return string the syntax of the page
      * @throws AccessDeniedException if no permission for page
      */
     public function rawPage($id, $rev = '')
@@ -174,11 +174,11 @@ class ApiCore
     }
 
     /**
-     * Return a wiki page rendered to html
+     * Return a wiki page rendered to HTML
      *
      * @param string $id page id
-     * @param string|int $rev revision timestamp or empty string
-     * @return null|string html
+     * @param string $rev revision timestamp
+     * @return string Rendered HTML for the page
      * @throws AccessDeniedException no access to page
      */
     public function htmlPage($id, $rev = '')
@@ -191,7 +191,9 @@ class ApiCore
     }
 
     /**
-     * List all pages - we use the indexer list here
+     * List all pages
+     *
+     * This use the search index and only returns pages that have been indexed already
      *
      * @return array
      */
@@ -242,10 +244,12 @@ class ApiCore
     }
 
     /**
-     * List all pages in the given namespace (and below)
+     * Do a fulltext search
      *
-     * @param string $query
-     * @return array
+     * This executes a full text search and returns the results. Snippets are provided for the first 15 results
+     *
+     * @param string $query The search query as supported by the DokuWiki search
+     * @return array associative array with matching pages.
      */
     public function search($query)
     {
@@ -697,7 +701,7 @@ class ApiCore
     }
 
     /**
-     * Returns a list of recent changes since give timestamp
+     * Returns a list of recent changes since given timestamp
      *
      * @param int $timestamp unix timestamp
      * @return array
@@ -736,7 +740,7 @@ class ApiCore
     }
 
     /**
-     * Returns a list of recent media changes since give timestamp
+     * Returns a list of recent media changes since given timestamp
      *
      * @param int $timestamp unix timestamp
      * @return array
@@ -869,8 +873,8 @@ class ApiCore
      * Returns an associative array with the keys locked, lockfail, unlocked and
      * unlockfail, each containing lists of pages.
      *
-     * @param array[] $set list pages with array('lock' => array, 'unlock' => array)
-     * @return array
+     * @param array[] $set list pages with ['lock' => [], 'unlock' => []]
+     * @return array[] list of pages with ['locked' => [], 'lockfail' => [], 'unlocked' => [], 'unlockfail' => []]
      */
     public function setLocks($set)
     {
@@ -907,7 +911,11 @@ class ApiCore
     }
 
     /**
-     * Return API version
+     * Return the API version
+     *
+     * This is the version of the DokuWiki API. It increases whenever the API definition changes.
+     *
+     * When developing a client, you should check this version and make sure you can handle it.
      *
      * @return int
      */
@@ -919,8 +927,11 @@ class ApiCore
     /**
      * Login
      *
-     * @param string $user
-     * @param string $pass
+     * This will use the given credentials and attempt to login the user. This will set the
+     * appropriate cookies, which can be used for subsequent requests.
+     *
+     * @param string $user The user name
+     * @param string $pass The password
      * @return int
      */
     public function login($user, $pass)
@@ -954,7 +965,9 @@ class ApiCore
     /**
      * Log off
      *
-     * @return int
+     * Attempt to log out the current user, deleting the appropriate cookies
+     *
+     * @return int 0 on failure, 1 on success
      */
     public function logoff()
     {
