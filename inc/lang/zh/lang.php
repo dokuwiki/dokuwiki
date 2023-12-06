@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author 粗音未来 <miku39@onsei.fans>
  * @author 林晓东 <lin_xd@126.com>
  * @author alair <Mail@alair.top>
  * @author better <betterzhubo@live.com>
@@ -181,6 +182,9 @@ $lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
 $lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
 $lang['profconfdeletemissing'] = '确认框未勾选';
 $lang['proffail']              = '用户设置没有更新。';
+$lang['proftokenlegend']       = '认证Token';
+$lang['proftokengenerate']     = '重置Token';
+$lang['proftokeninfo']         = '第三方应用可以利用认证Token来代表您进行登入和操作。重置Token会使旧的Token失效，并且所有使用该Token的应用都会登出。';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';
