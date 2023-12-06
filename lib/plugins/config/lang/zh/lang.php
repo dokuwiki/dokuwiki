@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Zhenzhe Huang <1991419264@qq.com>
  * @author 林晓东 <lin_xd@126.com>
  * @author alair <Mail@alair.top>
  * @author better <betterzhubo@live.com>
@@ -112,6 +113,7 @@ $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
 $lang['disableactions_rss']    = 'XML 同步 (RSS)';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
+$lang['samesitecookie']        = '要使用的SameSite Cookie属性。将其留空将由浏览器决定SameSite策略。';
 $lang['remote']                = '激活远程 API 系统。这允许其他程序通过 XML-RPC 或其他机制来访问维基。';
 $lang['remoteuser']            = '将远程 API 的访问权限限制在指定的组或用户中，以逗号分隔。留空则允许任何人访问。';
 $lang['remotecors']            = '为远程接口启用跨源资源共享 （CORS）。星号 （*） 表示允许所有来源。留空以拒绝 CORS。';
