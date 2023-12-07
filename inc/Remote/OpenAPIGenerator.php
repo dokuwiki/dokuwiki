@@ -3,6 +3,8 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\Utf8\PhpString;
+
 class OpenAPIGenerator
 {
 
@@ -81,10 +83,19 @@ class OpenAPIGenerator
         $retType = $this->fixTypes($call->getReturn()['type']);
         $retExample = $this->generateExample('result', $retType);
 
+        $description = $call->getDescription();
+        $links = $call->getTag('link');
+        if ($links) {
+            $description .= "\n\n**See also:**";
+            foreach ($links as $link) {
+                $description .= "\n\n* " . $this->generateLink($link);
+            }
+        }
+
         return [
             'operationId' => $method,
             'summary' => $call->getSummary(),
-            'description' => $call->getDescription(),
+            'description' => $description,
             'requestBody' => [
                 'required' => true,
                 'content' => [
@@ -151,7 +162,7 @@ class OpenAPIGenerator
             $props[$name] = [
                 'type' => $type,
                 'description' => $info['description'],
-                'examples' => [ $example ],
+                'examples' => [$example],
             ];
         }
         return $schema;
@@ -182,11 +193,33 @@ class OpenAPIGenerator
             case 'boolean':
                 return true;
             case 'string':
-                return 'some-'.$name;
+                if($name === 'page') return 'playground:playground';
+                if($name === 'media') return 'wiki:dokuwiki-128.png';
+                return 'some-' . $name;
             case 'array':
-                return ['some-'.$name, 'other-'.$name];
+                return ['some-' . $name, 'other-' . $name];
             default:
                 return new \stdClass();
+        }
+    }
+
+    /**
+     * Generates a markdown link from a dokuwiki.org URL
+     *
+     * @param $url
+     * @return mixed|string
+     */
+    protected function generateLink($url)
+    {
+        if (preg_match('/^https?:\/\/(www\.)?dokuwiki\.org\/(.+)$/', $url, $match)) {
+            $name = $match[2];
+
+            $name = str_replace(['_', '#', ':'], [' ', ' ', ' '], $name);
+            $name = PhpString::ucwords($name);
+
+            return "[$name]($url)";
+        } else {
+            return $url;
         }
     }
 }
