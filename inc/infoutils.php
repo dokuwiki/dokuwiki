@@ -144,9 +144,20 @@ function getVersionData()
 }
 
 /**
- * Return DokuWiki's version (as a string)
+ * Return DokuWiki's version
+ *
+ * This returns the version in the form "Type Date (SHA)". Where type is either
+ * "Release" or "Git" and date is the date of the release or the date of the
+ * last commit. SHA is the short SHA of the last commit - this is only added on
+ * git checkouts.
+ *
+ * If no version can be determined "snapshot? update version XX" is returned.
+ * Where XX represents the update version number set in doku.php.
+ *
+ * For checking API compatibility, you should rather rely on dokuwiki.getXMLRPCAPIVersion
  *
  * @author Anika Henke <anika@selfthinker.org>
+ * @return string The version string e.g. "Release 2023-04-04a"
  */
 function getVersion()
 {
