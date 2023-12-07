@@ -26,6 +26,9 @@ class ApiCall
     /** @var string The description of the method */
     protected string $description = '';
 
+    /** @var array[] The parsed tags */
+    protected $tags;
+
     /**
      * Make the given method available as an API call
      *
@@ -176,6 +179,30 @@ class ApiCall
     }
 
     /**
+     * Returns the docblock tags that have not been processed specially
+     *
+     * @return array[]
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Returns any data that is available in the given docblock tag
+     *
+     * @param string $tag
+     * @return string[] returns an empty array if no such tags exists
+     */
+    public function getTag($tag)
+    {
+        if(isset($this->tags[$tag])) {
+            return $this->tags[$tag];
+        }
+        return [];
+    }
+
+    /**
      * Fill in the metadata
      *
      * This uses Reflection to inspect the method signature and doc block
@@ -193,6 +220,7 @@ class ApiCall
         $docInfo = $this->parseDocBlock($reflect->getDocComment());
         $this->summary = $docInfo['summary'];
         $this->description = $docInfo['description'];
+        $this->tags = $docInfo['tags'];
 
         foreach ($reflect->getParameters() as $parameter) {
             $name = $parameter->name;
