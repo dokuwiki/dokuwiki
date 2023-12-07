@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b9c0aa944039e87220b6ec1e4e3f10a",
+    "content-hash": "76bfa04eee307c81e4853091e3406874",
     "packages": [
         {
             "name": "scotteh/php-dom-wrapper",
@@ -916,16 +916,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "0.18.7",
+            "version": "0.18.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "caba0e294a1228f64f8a9cfd0d715cc8af47c4da"
+                "reference": "ed8d5352a3faa69e4a5e315896abffd4bc29c828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/caba0e294a1228f64f8a9cfd0d715cc8af47c4da",
-                "reference": "caba0e294a1228f64f8a9cfd0d715cc8af47c4da",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ed8d5352a3faa69e4a5e315896abffd4bc29c828",
+                "reference": "ed8d5352a3faa69e4a5e315896abffd4bc29c828",
                 "shasum": ""
             },
             "require": {
@@ -960,7 +960,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/0.18.7"
+                "source": "https://github.com/rectorphp/rector/tree/0.18.12"
             },
             "funding": [
                 {
@@ -968,7 +968,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-13T10:11:05+00:00"
+            "time": "2023-12-04T08:47:30+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

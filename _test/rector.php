@@ -15,7 +15,6 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
-use Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
@@ -30,7 +29,6 @@ use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
-use Rector\Php71\Rector\FuncCall\CountOnNullRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Identical\StrEndsWithRector;
 use Rector\Php80\Rector\Identical\StrStartsWithRector;
@@ -117,12 +115,10 @@ return static function (RectorConfig $rectorConfig): void {
         PostIncDecToPreIncDecRector::class,
         RemoveUselessParamTagRector::class,
         DisallowedEmptyRuleFixerRector::class,
-        CountOnNullRector::class, // adds unwanted is_countable checks?
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         SimplifyIfReturnBoolRector::class,
         StrictArraySearchRector::class, // we cannot assume strict search is always wanted
-        AddArrayDefaultToArrayPropertyRector::class, // may break code differentiating between null and empty array
         RemoveUselessVarTagRector::class,
         TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
