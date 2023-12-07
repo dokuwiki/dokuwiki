@@ -44,9 +44,7 @@ class ApiCore
             'dokuwiki.logoff' => new ApiCall([$this, 'logoff']),
             'dokuwiki.getPagelist' => new ApiCall([$this, 'readNamespace']),
             'dokuwiki.search' => new ApiCall([$this, 'search']),
-            'dokuwiki.getTime' => (new ApiCall([$this, 'time']))
-                ->setSummary('Returns the current server time')
-                ->setReturnDescription('unix timestamp'),
+            'dokuwiki.getTime' => (new ApiCall([$this, 'time'])),
             'dokuwiki.setLocks' => new ApiCall([$this, 'setLocks']),
             'dokuwiki.getTitle' => (new ApiCall([$this, 'getTitle']))
                 ->setPublic(),
@@ -86,11 +84,15 @@ class ApiCore
     /**
      * Return the current server time
      *
-     * Uses a Unix timestamp (seconds since 1970-01-01 00:00:00 UTC)
+     * Returns a Unix timestamp (seconds since 1970-01-01 00:00:00 UTC).
+     *
+     * You can use this to compensate for differences between your client's time and the
+     * server's time when working with last modified timestamps (revisions).
      *
      * @return int A unix timestamp
      */
-    public function time() {
+    public function time()
+    {
         return time();
     }
 
@@ -120,7 +122,7 @@ class ApiCore
      * Return a media file
      *
      * @param string $media file id
-     * @return mixed media file
+     * @return string media file contents
      * @throws AccessDeniedException no permission for media
      * @throws RemoteException not exist
      * @author Gina Haeussge <osd@foosel.net>
@@ -145,7 +147,7 @@ class ApiCore
     /**
      * Return info about a media file
      *
-     * @param string $media page id
+     * @param string $media file id
      * @return array
      * @author Gina Haeussge <osd@foosel.net>
      *
@@ -193,9 +195,9 @@ class ApiCore
     /**
      * List all pages
      *
-     * This use the search index and only returns pages that have been indexed already
+     * This uses the search index and only returns pages that have been indexed already
      *
-     * @return array
+     * @return array[] A list of all pages with id, perms, size, lastModified
      */
     public function listPages()
     {
@@ -227,7 +229,7 @@ class ApiCore
      * @param array $opts
      *    $opts['depth']   recursion level, 0 for all
      *    $opts['hash']    do md5 sum of content?
-     * @return array
+     * @return array[] A list of matching pages with id, rev, mtime, size, (hash)
      */
     public function readNamespace($ns, $opts = [])
     {
@@ -246,10 +248,15 @@ class ApiCore
     /**
      * Do a fulltext search
      *
-     * This executes a full text search and returns the results. Snippets are provided for the first 15 results
+     * This executes a full text search and returns the results. The query uses the standard
+     * DokuWiki search syntax.
      *
+     * Snippets are provided for the first 15 results only. The title is either the first heading
+     * or the page id depending on the wiki's configuration.
+     *
+     * @link https://www.dokuwiki.org/search#syntax
      * @param string $query The search query as supported by the DokuWiki search
-     * @return array associative array with matching pages.
+     * @return array[] A list of matching pages with id, score, rev, mtime, size, snippet, title
      */
     public function search($query)
     {
@@ -283,8 +290,9 @@ class ApiCore
     }
 
     /**
-     * Returns the wiki title.
+     * Returns the wiki title
      *
+     * @link https://www.dokuwiki.org/config:title
      * @return string
      */
     public function getTitle()
@@ -344,7 +352,7 @@ class ApiCore
      * Return a list of backlinks
      *
      * @param string $page page id
-     * @return array
+     * @return string[]
      */
     public function listBackLinks($page)
     {
@@ -394,6 +402,10 @@ class ApiCore
     /**
      * Save a wiki page
      *
+     * Saves the given wiki text to the given page. If the page does not exist, it will be created.
+     *
+     * You need write permissions for the given page.
+     *
      * @param string $page page id
      * @param string $text wiki text
      * @param array $params parameters: summary, minor edit
@@ -401,7 +413,6 @@ class ApiCore
      * @throws AccessDeniedException no write access for page
      * @throws RemoteException no id, empty new page or locked
      * @author Michael Klier <chi@chimeric.de>
-     *
      */
     public function putPage($page, $text, $params = [])
     {
@@ -458,7 +469,11 @@ class ApiCore
     }
 
     /**
-     * Appends text to a wiki page.
+     * Appends text to the end of a wiki page
+     *
+     * If the page does not exist, it will be created. The call will create a new page revision.
+     *
+     * You need write permissions for the given page.
      *
      * @param string $page page id
      * @param string $text wiki text
@@ -476,12 +491,14 @@ class ApiCore
     }
 
     /**
-     * Create one or more users
+     * Create a new user
      *
-     * @param array[] $userStruct User struct
+     * If no password is provided, a password is auto generated.
      *
-     * @return boolean Create state
+     * You need to be a superuser to create users.
      *
+     * @param array[] $userStruct User struct with user, password, name, mail, groups, notify
+     * @return boolean Was the user successfully created?
      * @throws AccessDeniedException
      * @throws RemoteException
      */
@@ -507,7 +524,7 @@ class ApiCore
         $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
         $groups = $userStruct['groups'] ?? [];
 
-        $notify = (bool) ($userStruct['notify'] ?? false);
+        $notify = (bool)($userStruct['notify'] ?? false);
 
         if ($user === '') throw new RemoteException('empty or invalid user', 401);
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
@@ -540,10 +557,10 @@ class ApiCore
     /**
      * Remove one or more users from the list of registered users
      *
+     * You need to be a superuser to delete users.
+     *
      * @param string[] $usernames List of usernames to remove
-     *
-     * @return bool
-     *
+     * @return bool if the users were successfully deleted
      * @throws AccessDeniedException
      */
     public function deleteUsers($usernames)
@@ -557,17 +574,16 @@ class ApiCore
     }
 
     /**
-     * Uploads a file to the wiki.
-     *
-     * Michael Klier <chi@chimeric.de>
+     * Uploads a file to the wiki
      *
      * @param string $media media id
-     * @param string $file
+     * @param string $data file contents
      * @param array $params such as overwrite
      * @return false|string
      * @throws RemoteException
+     * @author Michael Klier <chi@chimeric.de>
      */
-    public function putAttachment($media, $file, $params = [])
+    public function putAttachment($media, $data, $params = [])
     {
         $media = cleanID($media);
         $auth = auth_quickaclcheck(getNS($media) . ':*');
@@ -582,7 +598,7 @@ class ApiCore
 
         // save temporary file
         @unlink($ftmp);
-        io_saveFile($ftmp, $file);
+        io_saveFile($ftmp, $data);
 
         $res = media_save(['name' => $ftmp], $media, $params['ow'], $auth, 'rename');
         if (is_array($res)) {
@@ -593,7 +609,9 @@ class ApiCore
     }
 
     /**
-     * Deletes a file from the wiki.
+     * Deletes a file from the wiki
+     *
+     * You need to have delete permissions for the file.
      *
      * @param string $media media id
      * @return int
@@ -703,6 +721,9 @@ class ApiCore
     /**
      * Returns a list of recent changes since given timestamp
      *
+     * The results are limited to date range configured in $conf['recent']
+     *
+     * @link https://www.dokuwiki.org/config:recent
      * @param int $timestamp unix timestamp
      * @return array
      * @throws RemoteException no valid timestamp
@@ -930,9 +951,11 @@ class ApiCore
      * This will use the given credentials and attempt to login the user. This will set the
      * appropriate cookies, which can be used for subsequent requests.
      *
+     * Use of this mechanism is discouraged. Using token authentication is preferred.
+     *
      * @param string $user The user name
      * @param string $pass The password
-     * @return int
+     * @return int If the login was successful
      */
     public function login($user, $pass)
     {
