@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Růžička <martinr@post.cz>
  * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
@@ -23,7 +24,6 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
- * @author Martin Růžička <martinr@post.cz>
  * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -149,7 +149,7 @@ $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistr
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
 $lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
 $lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
-$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
+$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání e-mailu s heslem. Zkuste kontaktovat správce.';
 $lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
 $lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
 $lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
@@ -164,6 +164,9 @@ $lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki sm
 $lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
 $lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
 $lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
+$lang['proftokenlegend']       = 'Ověřovací token';
+$lang['proftokengenerate']     = 'Resetovat token';
+$lang['proftokeninfo']         = 'Ověřovací token lze použít k tomu, aby se aplikace třetích stran mohly přihlásit a jednat vaším jménem. Resetováním tokenu dojde ke zneplatnění starého tokenu a odhlášení všech aplikací, které používaly předchozí token.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
@@ -276,7 +279,7 @@ $lang['qb_media']              = 'Vložit obrázky nebo jiné soubory';
 $lang['qb_sig']                = 'Vložit podpis';
 $lang['qb_smileys']            = 'Emotikony';
 $lang['qb_chars']              = 'Speciální znaky';
-$lang['upperns']               = 'skočit do nadřazeného jmenného prostoru';
+$lang['upperns']               = 'přejít do nadřazeného jmenného prostoru';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
@@ -354,7 +357,7 @@ $lang['media_file']            = 'Soubor';
 $lang['media_viewtab']         = 'Zobrazit';
 $lang['media_edittab']         = 'Upravit';
 $lang['media_historytab']      = 'Historie';
-$lang['media_list_thumbs']     = 'Zmenšeniny';
+$lang['media_list_thumbs']     = 'Miniatury';
 $lang['media_list_rows']       = 'Řádky';
 $lang['media_sort_name']       = 'Jméno';
 $lang['media_sort_date']       = 'Datum';

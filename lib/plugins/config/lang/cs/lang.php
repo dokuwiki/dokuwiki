@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Růžička <martinr@post.cz>
  * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
@@ -19,7 +20,6 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
- * @author Martin Růžička <martinr@post.cz>
  * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['menu']                  = 'Správa nastavení';
@@ -134,12 +134,12 @@ $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';
 $lang['fetchsize']             = 'Maximální velikost souboru (v bajtech), co ještě fetch.php bude stahovat z externích zdrojů';
 $lang['subscribers']           = 'Možnost přihlásit se k odběru novinek stránky';
 $lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jsou posílány změny a souhrny změn. Interval by neměl být kratší než čas uvedený v recent_days.';
-$lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
-$lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
-$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['notify']                = 'Posílat oznámení o změnách na následující e-mailovou adresu';
+$lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto e-mailovou adresu';
+$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické e-maily';
 $lang['mailreturnpath']        = 'E-mailová adresa příjemce pro oznámení o nedoručení';
-$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
-$lang['htmlmail']              = 'Posílat emaily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové emaily.';
+$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické e-maily';
+$lang['htmlmail']              = 'Posílat e-maily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové e-maily.';
 $lang['dontlog']               = 'Zakázat protokolování pro tyto typy záznamů.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
 $lang['rss_type']              = 'Typ XML kanálu';
