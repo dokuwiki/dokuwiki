@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jérémy Just <jeremy@jejust.fr>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
  * @author Nicolas Friedli <nicolas@theologique.ch>
@@ -183,6 +183,9 @@ $lang['profdeleted']           = 'Votre compte utilisateur a été supprimé de 
 $lang['profconfdelete']        = 'Je veux supprimer mon compte sur ce wiki. </br> Cette action est irréversible.';
 $lang['profconfdeletemissing'] = 'La case de confirmation n\'est pas cochée';
 $lang['proffail']              = 'Le profil utilisateur n\'a pas été mis à jour.';
+$lang['proftokenlegend']       = 'Jeton d\'authentification';
+$lang['proftokengenerate']     = 'Réinitialiser le jeton';
+$lang['proftokeninfo']         = 'Le jeton d\'authentification permet à des applications tierces de se connecter et d\'agir en votre nom. Le réinitialiser invalide le précédent jeton et déconnecte toutes les applications qui l\'utilisent.';
 $lang['pwdforget']             = 'Mot de passe oublié ? Obtenez-en un nouveau';
 $lang['resendna']              = 'Ce wiki ne permet pas le renvoi de mot de passe.';
 $lang['resendpwd']             = 'Définir un nouveau mot de passe pour';
