@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author G <klapinklapin@gmail.com>
  * @author jan lapere <jan@lapere.nl>
  * @author Mark Prins <mprins@users.sf.net>
  * @author PBU <pbu@xs4all.nl>
- * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author François Kooman <fkooman.tuxed.net>
@@ -187,6 +187,7 @@ $lang['txt_upload']            = 'Selecteer een bestand om te uploaden:';
 $lang['txt_filename']          = 'Vul nieuwe naam in (optioneel):';
 $lang['txt_overwrt']           = 'Overschrijf bestaand bestand';
 $lang['maxuploadsize']         = 'Max %s per bestand';
+$lang['allowedmime']           = 'Lijst van toegestane bestandsextensies';
 $lang['lockedby']              = 'Momenteel in gebruik door:';
 $lang['lockexpire']            = 'Exclusief gebruiksrecht vervalt op:';
 $lang['rssfailed']             = 'Er is een fout opgetreden bij het ophalen van de feed: ';
