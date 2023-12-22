@@ -78,6 +78,38 @@ class OpenAPIGenerator
         }
     }
 
+    protected function addComponents()
+    {
+        $schemas = [];
+
+        $files = glob(DOKU_INC . 'inc/Remote/Response/*.php');
+        foreach ($files as $file) {
+            $name = basename($file, '.php');
+            $class = 'dokuwiki\\Remote\\Response\\' . $name;
+            $reflection = new \ReflectionClass($class);
+            if($reflection->isAbstract()) continue;
+
+            $classDoc = new OpenApiDoc\DocBlockClass($reflection);
+
+
+            $schemas[$name] = [
+                'type' => 'object',
+                'summary' => $classDoc->getSummary(),
+                'description' => $classDoc->getDescription(),
+                'properties' => [],
+            ];
+
+            foreach ($classDoc->getPropertyDocs() as $property => $doc) {
+                $schemas[$name]['properties'][$property] = [
+                    'type' => $this->fixTypes($doc->getTag('type')),
+                    'description' => $doc->getSummary(),
+                ];
+
+            }
+
+        }
+    }
+
     protected function getMethodDefinition(string $method, ApiCall $call)
     {
         $retType = $this->fixTypes($call->getReturn()['type']);
@@ -167,6 +199,9 @@ class OpenAPIGenerator
         }
         return $schema;
     }
+
+
+
 
     protected function fixTypes($type)
     {

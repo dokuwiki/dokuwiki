@@ -254,6 +254,10 @@ class ApiCall
             $this->return['type'] = 'string';
         }
 
+        if (isset($docInfo['return']['response'])) {
+            $this->return['response'] = $docInfo['return']['response'];
+        }
+
         if (isset($docInfo['return']['description'])) {
             $this->return['description'] = $docInfo['return']['description'];
         }
@@ -328,6 +332,7 @@ class ApiCall
             [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
             $result['return'] = [
                 'type' => $this->cleanTypeHint($type),
+                'response' => $type, // uncleaned
                 'description' => $description
             ];
             unset($tags['return']);

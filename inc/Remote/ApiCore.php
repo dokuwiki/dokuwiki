@@ -7,6 +7,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Remote\Response\Page;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -211,12 +212,7 @@ class ApiCore
             if ($perm < AUTH_READ) {
                 continue;
             }
-            $page = [];
-            $page['id'] = trim($pages[$idx]);
-            $page['perms'] = $perm;
-            $page['size'] = @filesize(wikiFN($pages[$idx]));
-            $page['lastModified'] = $this->api->toDate(@filemtime(wikiFN($pages[$idx])));
-            $list[] = $page;
+            $list[] = new Page(['id' => $pages[$idx], 'perm' => $perm]);
         }
 
         return $list;
@@ -229,7 +225,7 @@ class ApiCore
      * @param array $opts
      *    $opts['depth']   recursion level, 0 for all
      *    $opts['hash']    do md5 sum of content?
-     * @return array[] A list of matching pages with id, rev, mtime, size, (hash)
+     * @return Page[] A list of matching pages with id, rev, mtime, size, (hash)
      */
     public function readNamespace($ns, $opts = [])
     {
@@ -242,7 +238,11 @@ class ApiCore
         $data = [];
         $opts['skipacl'] = 0; // no ACL skipping for XMLRPC
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
-        return $data;
+
+        $result = array_map(fn($item) => new Page($item), $data);
+
+
+        return $result;
     }
 
     /**
