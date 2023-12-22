@@ -112,6 +112,7 @@ $conf['mailreturnpath']    = '';         //use this email as returnpath for boun
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
 $conf['dontlog'] = 'debug';              //logging facilities that should be disabled
+$conf['logretain'] = 3;                  //how many days of logs to keep
 
 /* Syndication Settings */
 $conf['sitemap']     = 0;                //Create a Google sitemap? How often? In days.

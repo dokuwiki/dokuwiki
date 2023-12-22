@@ -148,6 +148,7 @@ $lang['mailreturnpath']    = 'Recipient email address for non delivery notificat
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 $lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
 $lang['dontlog'] = 'Disable logging for these types of logs.';
+$lang['logretain'] = 'How many days of logs to keep.';
 
 /* Syndication Settings */
 $lang['sitemap']           = 'Generate Google sitemap this often (in days). 0 to disable';

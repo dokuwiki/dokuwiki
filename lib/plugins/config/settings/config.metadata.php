@@ -216,6 +216,7 @@ $meta['mailreturnpath'] = ['email', '_placeholders' => true];
 $meta['mailprefix'] = ['string'];
 $meta['htmlmail'] = ['onoff'];
 $meta['dontlog'] = ['disableactions', '_choices' => ['error', 'debug', 'deprecated']];
+$meta['logretain'] = ['numeric', '_min' => 0, '_pattern' => '/^\d+$/'];
 
 $meta['_syndication'] = ['fieldset'];
 $meta['sitemap'] = ['numeric'];
