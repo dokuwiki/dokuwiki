@@ -131,6 +131,7 @@ $lang['mailreturnpath']        = 'Adres e-mail odbiorcy dla powiadomień o niedo
 $lang['mailprefix']            = 'Prefiks tematu e-mail do automatycznych wiadomości';
 $lang['htmlmail']              = 'Wysyłaj wiadomości e-mail w formacie HTML, które wyglądają lepiej, lecz ich rozmiar jest większy. Wyłącz wysyłanie wiadomości zawierających tekst niesformatowany.';
 $lang['dontlog']               = 'Wyłącz logowanie dla tego typu logów.';
+$lang['logretain']             = 'Liczba dni przechowywania logów.';
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
 $lang['rss_type']              = 'Typ RSS';
 $lang['rss_linkto']            = 'Odnośniki w RSS';
