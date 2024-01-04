@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Jérémy Just <jeremy@jejust.fr>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
  * @author Nicolas Friedli <nicolas@theologique.ch>
@@ -144,6 +144,7 @@ $lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les n
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriels multipart HTML (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel en texte seul.';
 $lang['dontlog']               = 'Désactiver l\'enregistrement pour ces types de journaux.';
+$lang['logretain']             = 'Nombre de jours à garder dans le journal.';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
 $lang['rss_type']              = 'Type de flux XML (RSS)';
 $lang['rss_linkto']            = 'Lien du flux XML vers';
