@@ -18,6 +18,16 @@ class Type
     }
 
     /**
+     * Return the typehint as read from the docblock
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->typehint;
+    }
+
+    /**
      * Return a primitive PHP type
      *
      * @param string $typehint
