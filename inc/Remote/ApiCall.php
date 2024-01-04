@@ -3,6 +3,8 @@
 namespace dokuwiki\Remote;
 
 
+use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+
 class ApiCall
 {
     /** @var callable The method to be called for this endpoint */
@@ -11,29 +13,13 @@ class ApiCall
     /** @var bool Whether this call can be called without authentication */
     protected bool $isPublic = false;
 
-    /** @var array Metadata on the accepted parameters */
-    protected array $args = [];
-
-    /** @var array Metadata on the return value */
-    protected array $return = [
-        'type' => 'string',
-        'description' => '',
-    ];
-
-    /** @var string The summary of the method */
-    protected string $summary = '';
-
-    /** @var string The description of the method */
-    protected string $description = '';
-
-    /** @var array[] The parsed tags */
-    protected $tags;
+    /** @var DocBlockMethod The meta data of this call as parsed from its doc block */
+    protected $docs;
 
     /**
      * Make the given method available as an API call
      *
      * @param string|array $method Either [object,'method'] or 'function'
-     * @throws \ReflectionException
      */
     public function __construct($method)
     {
@@ -42,7 +28,6 @@ class ApiCall
         }
 
         $this->method = $method;
-        $this->parseData();
     }
 
     /**
@@ -60,6 +45,32 @@ class ApiCall
         }
         return call_user_func_array($this->method, $args);
     }
+
+    /**
+     * Access the method documentation
+     *
+     * This lazy loads the docs only when needed
+     *
+     * @return DocBlockMethod
+     */
+    public function getDocs()
+    {
+        if ($this->docs === null) {
+            try {
+                if (is_array($this->method)) {
+                    $reflect = new \ReflectionMethod($this->method[0], $this->method[1]);
+                } else {
+                    $reflect = new \ReflectionFunction($this->method);
+                }
+                $this->docs = new DocBlockMethod($reflect);
+            } catch (\ReflectionException $e) {
+                throw new \RuntimeException('Failed to parse API method documentation', 0, $e);
+            }
+
+        }
+        return $this->docs;
+    }
+
 
     /**
      * @return bool
@@ -85,41 +96,7 @@ class ApiCall
      */
     public function getArgs(): array
     {
-        return $this->args;
-    }
-
-    /**
-     * Limit the arguments to the given ones
-     *
-     * @param string[] $args
-     * @return $this
-     */
-    public function limitArgs($args): self
-    {
-        foreach ($args as $arg) {
-            if (!isset($this->args[$arg])) {
-                throw new \InvalidArgumentException("Unknown argument $arg");
-            }
-        }
-        $this->args = array_intersect_key($this->args, array_flip($args));
-
-        return $this;
-    }
-
-    /**
-     * Set the description for an argument
-     *
-     * @param string $arg
-     * @param string $description
-     * @return $this
-     */
-    public function setArgDescription(string $arg, string $description): self
-    {
-        if (!isset($this->args[$arg])) {
-            throw new \InvalidArgumentException('Unknown argument');
-        }
-        $this->args[$arg]['description'] = $description;
-        return $this;
+        return $this->getDocs()->getParameters();
     }
 
     /**
@@ -127,19 +104,7 @@ class ApiCall
      */
     public function getReturn(): array
     {
-        return $this->return;
-    }
-
-    /**
-     * Set the description for the return value
-     *
-     * @param string $description
-     * @return $this
-     */
-    public function setReturnDescription(string $description): self
-    {
-        $this->return['description'] = $description;
-        return $this;
+        return $this->getDocs()->getReturn();
     }
 
     /**
@@ -147,17 +112,7 @@ class ApiCall
      */
     public function getSummary(): string
     {
-        return $this->summary;
-    }
-
-    /**
-     * @param string $summary
-     * @return $this
-     */
-    public function setSummary(string $summary): self
-    {
-        $this->summary = $summary;
-        return $this;
+        return $this->getDocs()->getSummary();
     }
 
     /**
@@ -165,203 +120,7 @@ class ApiCall
      */
     public function getDescription(): string
     {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return $this
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * Returns the docblock tags that have not been processed specially
-     *
-     * @return array[]
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Returns any data that is available in the given docblock tag
-     *
-     * @param string $tag
-     * @return string[] returns an empty array if no such tags exists
-     */
-    public function getTag($tag)
-    {
-        if(isset($this->tags[$tag])) {
-            return $this->tags[$tag];
-        }
-        return [];
-    }
-
-    /**
-     * Fill in the metadata
-     *
-     * This uses Reflection to inspect the method signature and doc block
-     *
-     * @throws \ReflectionException
-     */
-    protected function parseData()
-    {
-        if (is_array($this->method)) {
-            $reflect = new \ReflectionMethod($this->method[0], $this->method[1]);
-        } else {
-            $reflect = new \ReflectionFunction($this->method);
-        }
-
-        $docInfo = $this->parseDocBlock($reflect->getDocComment());
-        $this->summary = $docInfo['summary'];
-        $this->description = $docInfo['description'];
-        $this->tags = $docInfo['tags'];
-
-        foreach ($reflect->getParameters() as $parameter) {
-            $name = $parameter->name;
-            $realType = $parameter->getType();
-            if ($realType) {
-                $type = $realType->getName();
-            } elseif (isset($docInfo['args'][$name]['type'])) {
-                $type = $docInfo['args'][$name]['type'];
-            } else {
-                $type = 'string';
-            }
-
-            if (isset($docInfo['args'][$name]['description'])) {
-                $description = $docInfo['args'][$name]['description'];
-            } else {
-                $description = '';
-            }
-
-            $this->args[$name] = [
-                'type' => $type,
-                'description' => trim($description),
-            ];
-        }
-
-        $returnType = $reflect->getReturnType();
-        if ($returnType) {
-            $this->return['type'] = $returnType->getName();
-        } elseif (isset($docInfo['return']['type'])) {
-            $this->return['type'] = $docInfo['return']['type'];
-        } else {
-            $this->return['type'] = 'string';
-        }
-
-        if (isset($docInfo['return']['response'])) {
-            $this->return['response'] = $docInfo['return']['response'];
-        }
-
-        if (isset($docInfo['return']['description'])) {
-            $this->return['description'] = $docInfo['return']['description'];
-        }
-    }
-
-    /**
-     * Parse a doc block
-     *
-     * @param string $doc
-     * @return array
-     */
-    protected function parseDocBlock($doc)
-    {
-        // strip asterisks and leading spaces
-        $doc = preg_replace(
-            ['/^[ \t]*\/\*+[ \t]*/m', '/[ \t]*\*+[ \t]*/m', '/\*+\/\s*$/m', '/\s*\/\s*$/m'],
-            ['', '', '', ''],
-            $doc
-        );
-
-        $doc = trim($doc);
-
-        // get all tags
-        $tags = [];
-        if (preg_match_all('/^@(\w+)\s+(.*)$/m', $doc, $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $match) {
-                $tags[$match[1]][] = trim($match[2]);
-            }
-        }
-        $params = $this->extractDocTags($tags);
-
-        // strip the tags from the doc
-        $doc = preg_replace('/^@(\w+)\s+(.*)$/m', '', $doc);
-
-        [$summary, $description] = sexplode("\n\n", $doc, 2, '');
-        return array_merge(
-            [
-                'summary' => trim($summary),
-                'description' => trim($description),
-                'tags' => $tags,
-            ],
-            $params
-        );
-    }
-
-    /**
-     * Process the param and return tags
-     *
-     * @param array $tags
-     * @return array
-     */
-    protected function extractDocTags(&$tags)
-    {
-        $result = [];
-
-        if (isset($tags['param'])) {
-            foreach ($tags['param'] as $param) {
-                [$type, $name, $description] = array_map('trim', sexplode(' ', $param, 3, ''));
-                if ($name[0] !== '$') continue;
-                $name = substr($name, 1);
-
-                $result['args'][$name] = [
-                    'type' => $this->cleanTypeHint($type),
-                    'description' => $description,
-                ];
-            }
-            unset($tags['param']);
-        }
-
-        if (isset($tags['return'])) {
-            $return = $tags['return'][0];
-            [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
-            $result['return'] = [
-                'type' => $this->cleanTypeHint($type),
-                'response' => $type, // uncleaned
-                'description' => $description
-            ];
-            unset($tags['return']);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Matches the given type hint against the valid options for the remote API
-     *
-     * @param string $hint
-     * @return string
-     */
-    protected function cleanTypeHint($hint)
-    {
-        $types = explode('|', $hint);
-        foreach ($types as $t) {
-            if (str_ends_with($t, '[]')) {
-                return 'array';
-            }
-            if ($t === 'boolean' || $t === 'true' || $t === 'false') {
-                return 'bool';
-            }
-            if (in_array($t, ['array', 'string', 'int', 'double', 'bool', 'null', 'date', 'file'])) {
-                return $t;
-            }
-        }
-        return 'string';
+        return $this->getDocs()->getDescription();
     }
 
     /**
@@ -375,7 +134,7 @@ class ApiCall
     {
         $args = [];
 
-        foreach (array_keys($this->args) as $arg) {
+        foreach (array_keys($this->docs->getParameters()) as $arg) {
             if (isset($params[$arg])) {
                 $args[] = $params[$arg];
             } else {

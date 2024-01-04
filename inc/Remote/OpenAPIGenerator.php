@@ -3,6 +3,8 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\Remote\OpenApiDoc\DocBlockClass;
+use dokuwiki\Remote\OpenApiDoc\Type;
 use dokuwiki\Utf8\PhpString;
 
 class OpenAPIGenerator
@@ -78,51 +80,25 @@ class OpenAPIGenerator
         }
     }
 
-    protected function addComponents()
-    {
-        $schemas = [];
-
-        $files = glob(DOKU_INC . 'inc/Remote/Response/*.php');
-        foreach ($files as $file) {
-            $name = basename($file, '.php');
-            $class = 'dokuwiki\\Remote\\Response\\' . $name;
-            $reflection = new \ReflectionClass($class);
-            if($reflection->isAbstract()) continue;
-
-            $classDoc = new OpenApiDoc\DocBlockClass($reflection);
-
-
-            $schemas[$name] = [
-                'type' => 'object',
-                'summary' => $classDoc->getSummary(),
-                'description' => $classDoc->getDescription(),
-                'properties' => [],
-            ];
-
-            foreach ($classDoc->getPropertyDocs() as $property => $doc) {
-                $schemas[$name]['properties'][$property] = [
-                    'type' => $this->fixTypes($doc->getTag('type')),
-                    'description' => $doc->getSummary(),
-                ];
-
-            }
-
-        }
-    }
-
     protected function getMethodDefinition(string $method, ApiCall $call)
     {
-        $retType = $this->fixTypes($call->getReturn()['type']);
-        $retExample = $this->generateExample('result', $retType);
-
         $description = $call->getDescription();
-        $links = $call->getTag('link');
+        $links = $call->getDocs()->getTag('link');
         if ($links) {
             $description .= "\n\n**See also:**";
             foreach ($links as $link) {
                 $description .= "\n\n* " . $this->generateLink($link);
             }
         }
+
+        $retType = $call->getReturn()['type'];
+        $result = array_merge(
+            [
+                'description' => $call->getReturn()['description'],
+                'examples' => [$this->generateExample('result', $retType->getOpenApiType())],
+            ],
+            $this->typeToSchema($retType)
+        );
 
         return [
             'operationId' => $method,
@@ -142,11 +118,7 @@ class OpenAPIGenerator
                             'schema' => [
                                 'type' => 'object',
                                 'properties' => [
-                                    'result' => [
-                                        'type' => $retType,
-                                        'description' => $call->getReturn()['description'],
-                                        'examples' => [$retExample],
-                                    ],
+                                    'result' => $result,
                                     'error' => [
                                         'type' => 'object',
                                         'description' => 'Error object in case of an error',
@@ -189,35 +161,16 @@ class OpenAPIGenerator
         ];
 
         foreach ($args as $name => $info) {
-            $type = $this->fixTypes($info['type']);
-            $example = $this->generateExample($name, $type);
-            $props[$name] = [
-                'type' => $type,
-                'description' => $info['description'],
-                'examples' => [$example],
-            ];
+            $example = $this->generateExample($name, $info['type']->getOpenApiType());
+            $props[$name] = array_merge(
+                [
+                    'description' => $info['description'],
+                    'examples' => [$example],
+                ],
+                $this->typeToSchema($info['type'])
+            );
         }
         return $schema;
-    }
-
-
-
-
-    protected function fixTypes($type)
-    {
-        switch ($type) {
-            case 'int':
-                $type = 'integer';
-                break;
-            case 'bool':
-                $type = 'boolean';
-                break;
-            case 'file':
-                $type = 'string';
-                break;
-
-        }
-        return $type;
     }
 
     protected function generateExample($name, $type)
@@ -257,4 +210,46 @@ class OpenAPIGenerator
             return $url;
         }
     }
+
+
+    /**
+     * Generate the OpenAPI schema for the given type
+     *
+     * @param Type $type
+     * @return array
+     * @todo add example generation here
+     */
+    public function typeToSchema(Type $type)
+    {
+        $schema = [
+            'type' => $type->getOpenApiType(),
+        ];
+
+        // if a sub type is known, define the items
+        if($schema['type'] === 'array' && $type->getSubType()) {
+            $schema['items'] = $this->typeToSchema($type->getSubType());
+        }
+
+        // if this is an object, define the properties
+        if($schema['type'] === 'object') {
+            try {
+                $baseType = $type->getBaseType();
+                $doc = new DocBlockClass(new \ReflectionClass($baseType));
+                $schema['properties'] = [];
+                foreach ($doc->getPropertyDocs() as $property => $propertyDoc) {
+                    $schema['properties'][$property] = array_merge(
+                        [
+                            'description' => $propertyDoc->getSummary(),
+                        ],
+                        $this->typeToSchema($propertyDoc->getType())
+                    );
+                }
+            } catch (\ReflectionException $e) {
+                // The class is not available, so we cannot generate a schema
+            }
+        }
+
+        return $schema;
+    }
+
 }

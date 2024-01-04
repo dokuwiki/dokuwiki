@@ -28,13 +28,16 @@ class Type
     }
 
     /**
-     * Return a primitive PHP type
+     * Return the base type
      *
-     * @param string $typehint
+     * This is the type this variable is. Eg. a string[] is an array.
+     *
      * @return string
      */
-    protected function toPrimitiveType($typehint)
+    public function getBaseType()
     {
+        $typehint = $this->typehint;
+
         if (str_ends_with($typehint, '[]')) {
             return 'array';
         }
@@ -72,8 +75,37 @@ class Type
      */
     public function getJSONRPCType()
     {
-        return $this->toPrimitiveType($this->typehint);
+        return $this->getBaseType();
     }
+
+    /**
+     * Get the base type as one of the supported OpenAPI types
+     *
+     * Formats (eg. int32 or double) are not supported
+     *
+     * @link https://swagger.io/docs/specification/data-models/data-types/
+     * @return string
+     */
+    public function getOpenApiType()
+    {
+        switch ($this->getBaseType()) {
+            case 'int':
+                return 'integer';
+            case 'bool':
+                return 'boolean';
+            case 'array':
+                return 'array';
+            case 'string':
+            case 'mixed':
+                return 'string';
+            case 'double':
+            case 'float':
+                return 'number';
+            default:
+                return 'object';
+        }
+    }
+
 
     /**
      * If this is an array, return the type of the array elements
@@ -104,7 +136,7 @@ class Type
             return $type;
         }
 
-        $type = $this->toPrimitiveType($this->typehint);
+        $type = $this->getBaseType($this->typehint);
 
         // primitive types
         if (in_array($type, ['int', 'string', 'double', 'bool', 'array'])) {

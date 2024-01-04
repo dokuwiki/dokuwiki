@@ -52,21 +52,21 @@ class ApiCore
             'dokuwiki.appendPage' => new ApiCall([$this, 'appendPage']),
             'dokuwiki.createUser' => new ApiCall([$this, 'createUser']),
             'dokuwiki.deleteUsers' => new ApiCall([$this, 'deleteUsers']),
-            'wiki.getPage' => (new ApiCall([$this, 'rawPage']))
-                ->limitArgs(['page']),
-            'wiki.getPageVersion' => (new ApiCall([$this, 'rawPage']))
-                ->setSummary('Get a specific revision of a wiki page'),
-            'wiki.getPageHTML' => (new ApiCall([$this, 'htmlPage']))
-                ->limitArgs(['page']),
-            'wiki.getPageHTMLVersion' => (new ApiCall([$this, 'htmlPage']))
-                ->setSummary('Get the HTML for a specific revision of a wiki page'),
+//            'wiki.getPage' => (new ApiCall([$this, 'rawPage']))
+//                ->limitArgs(['page']),
+//            'wiki.getPageVersion' => (new ApiCall([$this, 'rawPage']))
+//                ->setSummary('Get a specific revision of a wiki page'),
+//            'wiki.getPageHTML' => (new ApiCall([$this, 'htmlPage']))
+//                ->limitArgs(['page']),
+//            'wiki.getPageHTMLVersion' => (new ApiCall([$this, 'htmlPage']))
+//                ->setSummary('Get the HTML for a specific revision of a wiki page'),
             'wiki.getAllPages' => new ApiCall([$this, 'listPages']),
             'wiki.getAttachments' => new ApiCall([$this, 'listAttachments']),
             'wiki.getBackLinks' => new ApiCall([$this, 'listBackLinks']),
-            'wiki.getPageInfo' => (new ApiCall([$this, 'pageInfo']))
-                ->limitArgs(['page']),
-            'wiki.getPageInfoVersion' => (new ApiCall([$this, 'pageInfo']))
-                ->setSummary('Get some basic data about a specific revison of a wiki page'),
+//            'wiki.getPageInfo' => (new ApiCall([$this, 'pageInfo']))
+//                ->limitArgs(['page']),
+//            'wiki.getPageInfoVersion' => (new ApiCall([$this, 'pageInfo']))
+//                ->setSummary('Get some basic data about a specific revison of a wiki page'),
             'wiki.getPageVersions' => new ApiCall([$this, 'pageVersions']),
             'wiki.putPage' => new ApiCall([$this, 'putPage']),
             'wiki.listLinks' => new ApiCall([$this, 'listLinks']),
@@ -198,7 +198,7 @@ class ApiCore
      *
      * This uses the search index and only returns pages that have been indexed already
      *
-     * @return array[] A list of all pages with id, perms, size, lastModified
+     * @return Page[] A list of all pages with id, perms, size, lastModified
      */
     public function listPages()
     {

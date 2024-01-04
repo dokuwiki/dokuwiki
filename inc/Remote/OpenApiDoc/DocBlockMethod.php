@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote\OpenApiDoc;
 
+use ReflectionFunction;
 use ReflectionMethod;
 
 class DocBlockMethod extends DocBlock
@@ -12,16 +13,42 @@ class DocBlockMethod extends DocBlock
      *
      * The docblock can be of a method, class or property.
      *
-     * @param ReflectionMethod $reflector
+     * @param ReflectionMethod|ReflectionFunction $reflector
      */
-    public function __construct(ReflectionMethod $reflector)
+    public function __construct($reflector)
     {
         parent::__construct($reflector);
         $this->refineParam();
         $this->refineReturn();
     }
 
+    protected function getContext()
+    {
+        if($this->reflector instanceof ReflectionFunction) {
+            return null;
+        }
+        return parent::getContext();
+    }
 
+    /**
+     * Convenience method to access the method parameters
+     *
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->getTag('param');
+    }
+
+    /**
+     * Convenience method to access the method return
+     *
+     * @return array
+     */
+    public function getReturn()
+    {
+        return $this->getTag('return');
+    }
 
     /**
      * Parse the param tag into its components
@@ -77,7 +104,7 @@ class DocBlockMethod extends DocBlock
         // refine from doc tag
         foreach ($this->tags['return'] ?? [] as $return) {
             [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
-            $result['type'] = new Type($type);
+            $result['type'] = new Type($type, $this->getContext());
             $result['description'] = $description;
 
         }
