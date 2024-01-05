@@ -154,8 +154,6 @@ function getVersionData()
  * If no version can be determined "snapshot? update version XX" is returned.
  * Where XX represents the update version number set in doku.php.
  *
- * For checking API compatibility, you should rather rely on dokuwiki.getXMLRPCAPIVersion
- *
  * @author Anika Henke <anika@selfthinker.org>
  * @return string The version string e.g. "Release 2023-04-04a"
  */

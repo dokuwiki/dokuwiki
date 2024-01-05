@@ -53,7 +53,7 @@ abstract class RemotePlugin extends Plugin
             }
 
             // add to result
-            $result[$method_name] = new ApiCall([$this, $method_name]);
+            $result[$method_name] = new ApiCall([$this, $method_name], 'plugins');
         }
 
         return $result;

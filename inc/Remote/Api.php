@@ -76,9 +76,9 @@ class Api
     {
         if (!$this->coreMethods) {
             if ($apiCore === null) {
-                $this->coreMethods = (new ApiCore($this))->getRemoteInfo();
+                $this->coreMethods = (new ApiCore($this))->getMethods();
             } else {
-                $this->coreMethods = $apiCore->getRemoteInfo();
+                $this->coreMethods = $apiCore->getMethods();
             }
         }
         return $this->coreMethods;

@@ -100,10 +100,11 @@ class OpenAPIGenerator
             $this->typeToSchema($retType)
         );
 
-        return [
+        $definition = [
             'operationId' => $method,
             'summary' => $call->getSummary(),
             'description' => $description,
+            'tags' => [PhpString::ucwords($call->getCategory())],
             'requestBody' => [
                 'required' => true,
                 'content' => [
@@ -142,6 +143,22 @@ class OpenAPIGenerator
                 ],
             ]
         ];
+
+        if ($call->isPublic()) {
+            $definition['security'] = [
+                new \stdClass(),
+            ];
+            $definition['description'] = 'This method is public and does not require authentication. ' .
+                "\n\n" . $definition['description'];
+        }
+
+        if ($call->getDocs()->getTag('deprecated')) {
+            $definition['deprecated'] = true;
+            $definition['description'] = '**This method is deprecated.** ' . $call->getDocs()->getTag('deprecated')[0] .
+                "\n\n" . $definition['description'];
+        }
+
+        return $definition;
     }
 
     protected function getMethodArguments($args)
@@ -153,23 +170,35 @@ class OpenAPIGenerator
         }
 
         $props = [];
+        $reqs = [];
         $schema = [
             'schema' => [
                 'type' => 'object',
+                'required' => &$reqs,
                 'properties' => &$props
             ]
         ];
 
         foreach ($args as $name => $info) {
             $example = $this->generateExample($name, $info['type']->getOpenApiType());
+
+            $description = $info['description'];
+            if ($info['optional'] && isset($info['default'])) {
+                $description .= ' [_default: `' . json_encode($info['default']) . '`_]';
+            }
+
             $props[$name] = array_merge(
                 [
-                    'description' => $info['description'],
+                    'description' => $description,
                     'examples' => [$example],
+                    'required' => !$info['optional'],
                 ],
                 $this->typeToSchema($info['type'])
             );
+            if (!$info['optional']) $reqs[] = $name;
         }
+
+
         return $schema;
     }
 
@@ -177,12 +206,15 @@ class OpenAPIGenerator
     {
         switch ($type) {
             case 'integer':
+                if ($name === 'rev') return 0;
+                if ($name === 'revision') return 0;
+                if ($name === 'timestamp') return time() - 60 * 24 * 30 * 2;
                 return 42;
             case 'boolean':
                 return true;
             case 'string':
-                if($name === 'page') return 'playground:playground';
-                if($name === 'media') return 'wiki:dokuwiki-128.png';
+                if ($name === 'page') return 'playground:playground';
+                if ($name === 'media') return 'wiki:dokuwiki-128.png';
                 return 'some-' . $name;
             case 'array':
                 return ['some-' . $name, 'other-' . $name];
@@ -226,12 +258,12 @@ class OpenAPIGenerator
         ];
 
         // if a sub type is known, define the items
-        if($schema['type'] === 'array' && $type->getSubType()) {
+        if ($schema['type'] === 'array' && $type->getSubType()) {
             $schema['items'] = $this->typeToSchema($type->getSubType());
         }
 
         // if this is an object, define the properties
-        if($schema['type'] === 'object') {
+        if ($schema['type'] === 'object') {
             try {
                 $baseType = $type->getBaseType();
                 $doc = new DocBlockClass(new \ReflectionClass($baseType));

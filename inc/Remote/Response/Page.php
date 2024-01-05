@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Remote\Response;
 
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Represents a single page revision in the wiki.
  */
@@ -17,8 +19,10 @@ class Page extends ApiResponse
     public $title;
     /** @var int The current user's permissions for this page */
     public $perms;
-    /** @var string MD5 sum over the page's content (only if requested) */
+    /** @var string MD5 sum over the page's content (if available and requested) */
     public $hash;
+    /** @var string The author of this page revision (if available and requested) */
+    public $author;
 
     /** @inheritdoc */
     public function __construct($data)
@@ -27,12 +31,18 @@ class Page extends ApiResponse
         if ($this->id === '') {
             throw new \InvalidArgumentException('Missing id');
         }
+        if (!page_exists($this->id)) {
+            throw new \InvalidArgumentException('Page does not exist');
+        }
 
-        $this->revision = (int)($data['rev'] ?? $data['lastModified'] ?? @filemtime(wikiFN($this->id)));
+        // FIXME this isn't really managing the difference between old and current revs correctly
+
+        $this->revision = (int)($data['rev'] ?? @filemtime(wikiFN($this->id)));
         $this->size = (int)($data['size'] ?? @filesize(wikiFN($this->id)));
         $this->title = $data['title'] ?? $this->retrieveTitle();
         $this->perms = $data['perm'] ?? auth_quickaclcheck($this->id);
         $this->hash = $data['hash'] ?? '';
+        $this->author = $data['author'] ?? '';
     }
 
     /**
@@ -55,4 +65,26 @@ class Page extends ApiResponse
         return $this->id;
     }
 
+    /**
+     * Calculate the hash for this page
+     *
+     * This is a heavy operation and should only be called when needed.
+     */
+    public function calculateHash()
+    {
+        if (!page_exists($this->id)) return;
+        $this->hash = md5(io_readFile(wikiFN($this->id)));
+    }
+
+    /**
+     * Retrieve the author of this page
+     */
+    public function retrieveAuthor()
+    {
+        if (!page_exists($this->id)) return;
+
+        $pagelog = new PageChangeLog($this->id, 1024);
+        $info = $pagelog->getRevisionInfo($this->revision);
+        $this->author = is_array($info) ? ($info['user'] ?: $info['ip']) : null;
+    }
 }

@@ -4,6 +4,11 @@ namespace dokuwiki\Remote;
 
 
 use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+use InvalidArgumentException;
+use ReflectionException;
+use ReflectionFunction;
+use ReflectionMethod;
+use RuntimeException;
 
 class ApiCall
 {
@@ -13,6 +18,9 @@ class ApiCall
     /** @var bool Whether this call can be called without authentication */
     protected bool $isPublic = false;
 
+    /** @var string The category this call belongs to */
+    protected string $category;
+
     /** @var DocBlockMethod The meta data of this call as parsed from its doc block */
     protected $docs;
 
@@ -20,14 +28,16 @@ class ApiCall
      * Make the given method available as an API call
      *
      * @param string|array $method Either [object,'method'] or 'function'
+     * @param string $category The category this call belongs to
      */
-    public function __construct($method)
+    public function __construct($method, $category = '')
     {
         if (!is_callable($method)) {
-            throw new \InvalidArgumentException('Method is not callable');
+            throw new InvalidArgumentException('Method is not callable');
         }
 
         $this->method = $method;
+        $this->category = $category;
     }
 
     /**
@@ -58,13 +68,13 @@ class ApiCall
         if ($this->docs === null) {
             try {
                 if (is_array($this->method)) {
-                    $reflect = new \ReflectionMethod($this->method[0], $this->method[1]);
+                    $reflect = new ReflectionMethod($this->method[0], $this->method[1]);
                 } else {
-                    $reflect = new \ReflectionFunction($this->method);
+                    $reflect = new ReflectionFunction($this->method);
                 }
                 $this->docs = new DocBlockMethod($reflect);
-            } catch (\ReflectionException $e) {
-                throw new \RuntimeException('Failed to parse API method documentation', 0, $e);
+            } catch (ReflectionException $e) {
+                throw new RuntimeException('Failed to parse API method documentation', 0, $e);
             }
 
         }
@@ -124,6 +134,14 @@ class ApiCall
     }
 
     /**
+     * @return string
+     */
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    /**
      * Converts named arguments to positional arguments
      *
      * @fixme with PHP 8 we can use named arguments directly using the spread operator
@@ -134,7 +152,7 @@ class ApiCall
     {
         $args = [];
 
-        foreach (array_keys($this->docs->getParameters()) as $arg) {
+        foreach (array_keys($this->getDocs()->getParameters()) as $arg) {
             if (isset($params[$arg])) {
                 $args[] = $params[$arg];
             } else {
