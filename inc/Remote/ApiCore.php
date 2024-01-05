@@ -392,12 +392,12 @@ class ApiCore
      * Read access is required for the page.
      *
      * @param string $page wiki page id
-     * @param string $rev Revision timestamp to access an older revision
+     * @param int $rev Revision timestamp to access an older revision
      * @return string the syntax of the page
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function getPage($page, $rev = '')
+    public function getPage($page, $rev = 0)
     {
         $page = $this->checkPage($page, false);
 
@@ -421,12 +421,12 @@ class ApiCore
      *
      * @link https://www.dokuwiki.org/config:canonical
      * @param string $page page id
-     * @param string $rev revision timestamp
+     * @param int $rev revision timestamp
      * @return string Rendered HTML for the page
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function getPageHTML($page, $rev = '')
+    public function getPageHTML($page, $rev = 0)
     {
         $page = $this->checkPage($page);
 
@@ -441,7 +441,7 @@ class ApiCore
      * Read access is required for the page.
      *
      * @param string $page page id
-     * @param string $rev revision timestamp
+     * @param int $rev revision timestamp
      * @param bool $author whether to include the author information
      * @param bool $hash whether to include the MD5 hash of the page content
      * @return Page
@@ -823,7 +823,7 @@ class ApiCore
      * @author Gina Haeussge <osd@foosel.net>
      *
      */
-    public function getMedia($media, $rev = '')
+    public function getMedia($media, $rev = 0)
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
