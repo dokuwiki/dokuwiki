@@ -191,7 +191,6 @@ class OpenAPIGenerator
                 [
                     'description' => $description,
                     'examples' => [$example],
-                    'required' => !$info['optional'],
                 ],
                 $this->typeToSchema($info['type'])
             );
