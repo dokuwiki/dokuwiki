@@ -1,23 +1,42 @@
 <?php
 
+namespace dokuwiki\Remote\OpenApiDoc;
 
-namespace dokuwiki\Remote;
-
-use dokuwiki\Remote\OpenApiDoc\DocBlockClass;
-use dokuwiki\Remote\OpenApiDoc\Type;
+use dokuwiki\Remote\Api;
+use dokuwiki\Remote\ApiCall;
+use dokuwiki\Remote\ApiCore;
 use dokuwiki\Utf8\PhpString;
+use ReflectionClass;
+use ReflectionException;
+use stdClass;
 
+/**
+ * Generates the OpenAPI documentation for the DokuWiki API
+ */
 class OpenAPIGenerator
 {
-
+    /** @var Api */
     protected $api;
 
+    /** @var array Holds the documentation tree while building */
     protected $documentation = [];
 
+    /**
+     * OpenAPIGenerator constructor.
+     */
     public function __construct()
     {
         $this->api = new Api();
+    }
 
+    /**
+     * Generate the OpenAPI documentation
+     *
+     * @return string JSON encoded OpenAPI specification
+     */
+    public function generate()
+    {
+        $this->documentation = [];
         $this->documentation['openapi'] = '3.1.0';
         $this->documentation['info'] = [
             'title' => 'DokuWiki API',
@@ -25,10 +44,6 @@ class OpenAPIGenerator
             'version' => ((string)ApiCore::API_VERSION),
         ];
 
-    }
-
-    public function generate()
-    {
         $this->addServers();
         $this->addSecurity();
         $this->addMethods();
@@ -36,6 +51,11 @@ class OpenAPIGenerator
         return json_encode($this->documentation, JSON_PRETTY_PRINT);
     }
 
+    /**
+     * Add the current DokuWiki instance as a server
+     *
+     * @return void
+     */
     protected function addServers()
     {
         $this->documentation['servers'] = [
@@ -45,6 +65,11 @@ class OpenAPIGenerator
         ];
     }
 
+    /**
+     * Define the default security schemes
+     *
+     * @return void
+     */
     protected function addSecurity()
     {
         $this->documentation['components']['securitySchemes'] = [
@@ -68,6 +93,11 @@ class OpenAPIGenerator
         ];
     }
 
+    /**
+     * Add all methods available in the API to the documentation
+     *
+     * @return void
+     */
     protected function addMethods()
     {
         $methods = $this->api->getMethods();
@@ -80,6 +110,13 @@ class OpenAPIGenerator
         }
     }
 
+    /**
+     * Create the schema definition for a single API method
+     *
+     * @param string $method API method name
+     * @param ApiCall $call The call definition
+     * @return array
+     */
     protected function getMethodDefinition(string $method, ApiCall $call)
     {
         $description = $call->getDescription();
@@ -146,7 +183,7 @@ class OpenAPIGenerator
 
         if ($call->isPublic()) {
             $definition['security'] = [
-                new \stdClass(),
+                new stdClass(),
             ];
             $definition['description'] = 'This method is public and does not require authentication. ' .
                 "\n\n" . $definition['description'];
@@ -154,13 +191,20 @@ class OpenAPIGenerator
 
         if ($call->getDocs()->getTag('deprecated')) {
             $definition['deprecated'] = true;
-            $definition['description'] = '**This method is deprecated.** ' . $call->getDocs()->getTag('deprecated')[0] .
+            $definition['description'] = '**This method is deprecated.** ' .
+                $call->getDocs()->getTag('deprecated')[0] .
                 "\n\n" . $definition['description'];
         }
 
         return $definition;
     }
 
+    /**
+     * Create the schema definition for the arguments of a single API method
+     *
+     * @param array $args The arguments of the method as returned by ApiCall::getArgs()
+     * @return array
+     */
     protected function getMethodArguments($args)
     {
         if (!$args) {
@@ -201,6 +245,13 @@ class OpenAPIGenerator
         return $schema;
     }
 
+    /**
+     * Generate an example value for the given parameter
+     *
+     * @param string $name The parameter's name
+     * @param string $type The parameter's type
+     * @return mixed
+     */
     protected function generateExample($name, $type)
     {
         switch ($type) {
@@ -218,7 +269,7 @@ class OpenAPIGenerator
             case 'array':
                 return ['some-' . $name, 'other-' . $name];
             default:
-                return new \stdClass();
+                return new stdClass();
         }
     }
 
@@ -265,7 +316,7 @@ class OpenAPIGenerator
         if ($schema['type'] === 'object') {
             try {
                 $baseType = $type->getBaseType();
-                $doc = new DocBlockClass(new \ReflectionClass($baseType));
+                $doc = new DocBlockClass(new ReflectionClass($baseType));
                 $schema['properties'] = [];
                 foreach ($doc->getPropertyDocs() as $property => $propertyDoc) {
                     $schema['properties'][$property] = array_merge(
@@ -275,7 +326,7 @@ class OpenAPIGenerator
                         $this->typeToSchema($propertyDoc->getType())
                     );
                 }
-            } catch (\ReflectionException $e) {
+            } catch (ReflectionException $e) {
                 // The class is not available, so we cannot generate a schema
             }
         }

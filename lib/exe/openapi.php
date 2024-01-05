@@ -7,7 +7,7 @@ global $INPUT;
 
 if ($INPUT->has('spec')) {
     header('Content-Type: application/json');
-    $apigen = new \dokuwiki\Remote\OpenAPIGenerator();
+    $apigen = new \dokuwiki\Remote\OpenApiDoc\OpenAPIGenerator();
     echo $apigen->generate();
     exit();
 }

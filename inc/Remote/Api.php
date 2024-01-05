@@ -58,7 +58,6 @@ class Api
      * Get all available methods with remote access.
      *
      * @return ApiCall[] with information to all available methods
-     * @throws RemoteException
      */
     public function getMethods()
     {
@@ -76,7 +75,7 @@ class Api
     {
         if (!$this->coreMethods) {
             if ($apiCore === null) {
-                $this->coreMethods = (new ApiCore($this))->getMethods();
+                $this->coreMethods = (new ApiCore())->getMethods();
             } else {
                 $this->coreMethods = $apiCore->getMethods();
             }
