@@ -60,7 +60,6 @@ class ApiCore
             'core.appendPage' => new ApiCall([$this, 'appendPage'], 'pages'),
 
             'core.listMedia' => new ApiCall([$this, 'listMedia'], 'media'),
-            // todo: implement searchMedia
             'core.getRecentMediaChanges' => new ApiCall([$this, 'getRecentMediaChanges'], 'media'),
 
             'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
@@ -679,7 +678,7 @@ class ApiCore
 
         // SPAM check
         if (checkwordblock()) {
-            throw new RemoteException('Positive wordblock check', 134);
+            throw new RemoteException('The page content was blocked', 134);
         }
 
         // autoset summary on new pages
@@ -759,10 +758,6 @@ class ApiCore
 
         $namespace = cleanID($namespace);
 
-        if (auth_quickaclcheck($namespace . ':*') < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to list media files.', 215);
-        }
-
         $options = [
             'skipacl' => 0,
             'depth' => $depth,
@@ -830,12 +825,12 @@ class ApiCore
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this file', 211);
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
         $file = mediaFN($media, $rev);
         if (!@ file_exists($file)) {
-            throw new RemoteException('The requested file does not exist', 221);
+            throw new RemoteException('The requested media file does not exist', 221);
         }
 
         $data = io_readFile($file, false);
@@ -861,7 +856,7 @@ class ApiCore
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this file', 211);
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media, $rev)) {
             throw new RemoteException('The requested media file does not exist', 221);
@@ -898,7 +893,7 @@ class ApiCore
         $auth = auth_quickaclcheck(getNS($media) . ':*');
 
         if ($media === '') {
-            throw new RemoteException('Media ID not given.', 231);
+            throw new RemoteException('Empty or invalid media ID given', 231);
         }
 
         // clean up base64 encoded data
@@ -912,7 +907,7 @@ class ApiCore
 
         $data = base64_decode($base64, true);
         if ($data === false) {
-            throw new RemoteException('Invalid base64 encoded data.', 231); // FIXME adjust code
+            throw new RemoteException('Invalid base64 encoded data', 234);
         }
 
         // save temporary file
@@ -923,7 +918,7 @@ class ApiCore
 
         $res = media_save(['name' => $ftmp], $media, $overwrite, $auth, 'rename');
         if (is_array($res)) {
-            throw new RemoteException($res[0], -$res[1]); // FIXME adjust code -1 * -1 = 1, we want a 23x code
+            throw new RemoteException('Failed to save media: ' . $res[0], 235);
         }
         return (bool)$res; // should always be true at this point
     }
@@ -948,11 +943,11 @@ class ApiCore
         if ($res & DOKU_MEDIA_DELETED) {
             return true;
         } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            throw new AccessDeniedException('You don\'t have permissions to delete files.', 212);
+            throw new AccessDeniedException('You are not allowed to delete this media file', 212);
         } elseif ($res & DOKU_MEDIA_INUSE) {
-            throw new RemoteException('File is still referenced', 232);
+            throw new RemoteException('Media file is still referenced', 232);
         } else {
-            throw new RemoteException('Could not delete file', 233);
+            throw new RemoteException('Failed to delete media file', 233);
         }
     }
 
@@ -978,15 +973,15 @@ class ApiCore
     {
         $id = cleanID($id);
         if ($id === '') {
-            throw new RemoteException('Empty or invalid page ID given', 131); // FIXME check code
+            throw new RemoteException('Empty or invalid page ID given', 131);
         }
 
         if ($existCheck && !page_exists($id)) {
-            throw new RemoteException('The requested page does not exist', 121); // FIXME check code
+            throw new RemoteException('The requested page does not exist', 121);
         }
 
         if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111); // FIXME check code
+            throw new AccessDeniedException('You are not allowed to read this page', 111);
         }
 
         return $id;

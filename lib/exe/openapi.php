@@ -1,13 +1,14 @@
 <?php
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+use dokuwiki\Remote\OpenApiDoc\OpenAPIGenerator;
 
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
 require_once(DOKU_INC . 'inc/init.php');
 global $INPUT;
 
 if ($INPUT->has('spec')) {
     header('Content-Type: application/json');
-    $apigen = new \dokuwiki\Remote\OpenApiDoc\OpenAPIGenerator();
+    $apigen = new OpenAPIGenerator();
     echo $apigen->generate();
     exit();
 }
@@ -43,6 +44,26 @@ if ($INPUT->has('spec')) {
                 the API Spec</a>
         </p>
 
+        <h3>Error Codes</h3>
+
+        <p>
+            The following error codes are currently used in the core methods. This list may be incomplete
+            or change in the future.
+        </p>
+
+        <table>
+            <tr><th>Code</th><th>Message</th></tr>
+            <tr><td>0</td><td>Success</td></tr>
+            <?php
+            $apigen = new OpenAPIGenerator();
+            $last = 0;
+            foreach ($apigen->getErrorCodes() as $code) {
+                // duplicate codes are only shown with debug
+                if($code['code'] === $last && !$INPUT->has('debug')) continue;
+                echo '<tr><td>' . $code['code'] . '</td><td>' . hsc($code['message']) . '</td></tr>';
+            }
+            ?>
+        </table>
     </div>
 
     <div slot="authentication-footer">

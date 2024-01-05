@@ -53,6 +53,54 @@ class OpenAPIGenerator
     }
 
     /**
+     * Read all error codes used in ApiCore.php
+     *
+     * This is useful for the documentation, but also for checking if the error codes are unique
+     *
+     * @return array
+     * @todo Getting all classes/methods registered with the API and reading their error codes would be even better
+     * @todo This is super crude. Using the PHP Tokenizer would be more sensible
+     */
+    public function getErrorCodes()
+    {
+        $lines = file(DOKU_INC . 'inc/Remote/ApiCore.php');
+
+        $codes = [];
+        $method = '';
+
+        foreach ($lines as $no => $line) {
+            if (preg_match('/ *function (\w+)/', $line, $match)) {
+                $method = $match[1];
+            }
+            if (preg_match('/^ *throw new RemoteException\(\'([^\']+)\'.*?, (\d+)/', $line, $match)) {
+                $codes[] = [
+                    'line' => $no,
+                    'exception' => 'RemoteException',
+                    'method' => $method,
+                    'code' => $match[2],
+                    'message' => $match[1],
+                ];
+            }
+            if (preg_match('/^ *throw new AccessDeniedException\(\'([^\']+)\'.*?, (\d+)/', $line, $match)) {
+                $codes[] = [
+                    'line' => $no,
+                    'exception' => 'AccessDeniedException',
+                    'method' => $method,
+                    'code' => $match[2],
+                    'message' => $match[1],
+                ];
+            }
+        }
+
+        usort($codes, function ($a, $b) {
+            return $a['code'] <=> $b['code'];
+        });
+
+        return $codes;
+    }
+
+
+    /**
      * Add the current DokuWiki instance as a server
      *
      * @return void
