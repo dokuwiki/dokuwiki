@@ -42,6 +42,7 @@ class OpenAPIGenerator
             'title' => 'DokuWiki API',
             'description' => 'The DokuWiki API OpenAPI specification',
             'version' => ((string)ApiCore::API_VERSION),
+            'x-locale' => 'en-US',
         ];
 
         $this->addServers();
