@@ -348,7 +348,6 @@ class OpenAPIGenerator
      *
      * @param Type $type
      * @return array
-     * @todo add example generation here
      */
     public function typeToSchema(Type $type)
     {

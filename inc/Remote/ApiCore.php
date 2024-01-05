@@ -254,11 +254,16 @@ class ApiCore
             return $this->getAllPages($hash);
         }
 
+        // search_allpages handles depth weird, we need to add the given namespace depth
+        if($depth) {
+            $depth += substr_count($namespace, ':') + 1;
+        }
+
         // run our search iterator to get the pages
         $dir = utf8_encodeFN(str_replace(':', '/', $namespace));
         $data = [];
         $opts['skipacl'] = 0;
-        $opts['depth'] = $depth; // FIXME depth needs to be calculated relative to $dir
+        $opts['depth'] = $depth;
         $opts['hash'] = $hash;
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
 
