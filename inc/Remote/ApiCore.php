@@ -204,13 +204,15 @@ class ApiCore
      * @param string $user username
      * @param string[] $groups array of groups
      * @return int permission level
+     * @throws RemoteException
      */
     public function aclCheck($page, $user = '', $groups = [])
     {
         /** @var AuthPlugin $auth */
         global $auth;
 
-        $page = $this->resolvePageId($page);
+        $page = $this->checkPage($page, false, AUTH_NONE);
+
         if ($user === '') {
             return auth_quickaclcheck($page);
         } else {
@@ -384,16 +386,15 @@ class ApiCore
      * Read access is required for the page.
      *
      * @param string $page wiki page id
-     * @param int $rev Revision timestamp to access an older revision
+     * @param string $rev Revision timestamp to access an older revision
      * @return string the syntax of the page
-     * @throws AccessDeniedException if no permission for page
+     * @throws AccessDeniedException
+     * @throws RemoteException
      */
     public function getPage($page, $rev = '')
     {
-        $page = $this->resolvePageId($page);
-        if (auth_quickaclcheck($page) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this file', 111);
-        }
+        $page = $this->checkPage($page, false);
+
         $text = rawWiki($page, $rev);
         if (!$text && !$rev) {
             return pageTemplate($page);
@@ -410,20 +411,19 @@ class ApiCore
      *
      * References in the HTML are relative to the wiki base URL unless the `canonical` configuration is set.
      *
-     * If the page does not exist, an empty string is returned.
+     * If the page does not exist, an error is returned.
      *
      * @link https://www.dokuwiki.org/config:canonical
      * @param string $page page id
-     * @param int $rev revision timestamp
+     * @param string $rev revision timestamp
      * @return string Rendered HTML for the page
-     * @throws AccessDeniedException no access to page
+     * @throws AccessDeniedException
+     * @throws RemoteException
      */
     public function getPageHTML($page, $rev = '')
     {
-        $page = $this->resolvePageId($page);
-        if (auth_quickaclcheck($page) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
+        $page = $this->checkPage($page);
+
         return (string)p_wiki_xhtml($page, $rev, false);
     }
 
@@ -435,22 +435,16 @@ class ApiCore
      * Read access is required for the page.
      *
      * @param string $page page id
-     * @param int $rev revision timestamp
+     * @param string $rev revision timestamp
      * @param bool $author whether to include the author information
      * @param bool $hash whether to include the MD5 hash of the page content
      * @return Page
-     * @throws AccessDeniedException no access for page
-     * @throws RemoteException page not exist
+     * @throws AccessDeniedException
+     * @throws RemoteException
      */
     public function getPageInfo($page, $rev = '', $author = false, $hash = false)
     {
-        $page = $this->resolvePageId($page);
-        if (auth_quickaclcheck($page) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
-        if (!page_exists($page)) {
-            throw new RemoteException('The requested page does not exist', 121);
-        }
+        $page = $this->checkPage($page);
 
         $result = new Page(['id' => $page, 'rev' => $rev]);
         if ($author) $result->retrieveAuthor();
@@ -469,21 +463,15 @@ class ApiCore
      * @param string $page page id
      * @param int $first skip the first n changelog lines, 0 starts at the current revision
      * @return PageRevision[]
-     * @throws AccessDeniedException no read access for page
-     * @throws RemoteException empty id
+     * @throws AccessDeniedException
+     * @throws RemoteException
      * @author Michael Klier <chi@chimeric.de>
      */
     public function getPageVersions($page, $first = 0)
     {
-        $page = $this->resolvePageId($page);
-        if (auth_quickaclcheck($page) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
         global $conf;
 
-        if (empty($page)) {
-            throw new RemoteException('Empty page ID', 131);
-        }
+        $page = $this->checkPage($page, false);
 
         $pagelog = new PageChangeLog($page);
         $pagelog->setChunkSize(1024);
@@ -514,21 +502,19 @@ class ApiCore
      *
      * This returns a list of links found in the given page. This includes internal, external and interwiki links
      *
-     * Read access for the given page is needed
+     * Read access for the given page is needed and page has to exist.
      *
      * @param string $page page id
      * @return Link[] A list of links found on the given page
-     * @throws AccessDeniedException  no read access for page
-     * @author Michael Klier <chi@chimeric.de>
+     * @throws AccessDeniedException
+     * @throws RemoteException
      * @todo returning link titles would be a nice addition
      * @todo hash handling seems not to be correct
+     * @author Michael Klier <chi@chimeric.de>
      */
     public function getPageLinks($page)
     {
-        $page = $this->resolvePageId($page);
-        if (auth_quickaclcheck($page) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
+        $page = $this->checkPage($page);
 
         // resolve page instructions
         $ins = p_cached_instructions(wikiFN($page));
@@ -574,14 +560,19 @@ class ApiCore
      *
      * A backlink is a wiki link on another page that links to the given page.
      *
-     * Only links from pages readable by the current user are returned.
+     * Only links from pages readable by the current user are returned. The page itself
+     * needs to be readable. Otherwise an error is returned.
      *
      * @param string $page page id
      * @return string[] A list of pages linking to the given page
+     * @throws AccessDeniedException
+     * @throws RemoteException
      */
     public function getPageBackLinks($page)
     {
-        return ft_backlinks($this->resolvePageId($page));
+        $page = $this->checkPage($page, false);
+
+        return ft_backlinks($page);
     }
 
     /**
@@ -609,7 +600,7 @@ class ApiCore
         $locked = [];
 
         foreach ($pages as $id) {
-            $id = $this->resolvePageId($id);
+            $id = cleanID($id);
             if ($id === '') continue;
             if (auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)) {
                 continue;
@@ -640,7 +631,7 @@ class ApiCore
         $unlocked = [];
 
         foreach ($pages as $id) {
-            $id = $this->resolvePageId($id);
+            $id = cleanID($id);
             if ($id === '') continue;
             if (auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)) {
                 continue;
@@ -673,19 +664,12 @@ class ApiCore
         global $TEXT;
         global $lang;
 
-        $page = $this->resolvePageId($page);
+        $page = $this->checkPage($page, false, AUTH_EDIT);
         $TEXT = cleanText($text);
 
-        if (empty($page)) {
-            throw new RemoteException('Empty page ID', 131);
-        }
 
         if (!page_exists($page) && trim($TEXT) == '') {
             throw new RemoteException('Refusing to write an empty new wiki page', 132);
-        }
-
-        if (auth_quickaclcheck($page) < AUTH_EDIT) {
-            throw new AccessDeniedException('You are not allowed to edit this page', 112);
         }
 
         // Check, if page is locked
@@ -707,6 +691,8 @@ class ApiCore
         if (page_exists($page) && empty($TEXT) && empty($summary)) {
             $summary = $lang['deleted'];
         }
+
+        // FIXME auto set a summary in other cases "API Edit" might be a good idea?
 
         lock($page);
         saveWikiText($page, $TEXT, $summary, $isminor);
@@ -974,18 +960,35 @@ class ApiCore
 
 
     /**
-     * Resolve page id
+     * Convenience method for page checks
+     *
+     * This method will perform multiple tasks:
+     *
+     * - clean the given page id
+     * - disallow an empty page id
+     * - check if the page exists (unless disabled)
+     * - check if the user has the required access level (pass AUTH_NONE to skip)
      *
      * @param string $id page id
-     * @return string
+     * @return string the cleaned page id
+     * @throws RemoteException
+     * @throws AccessDeniedException
      */
-    private function resolvePageId($id)
+    private function checkPage($id, $existCheck = true, $minAccess = AUTH_READ)
     {
         $id = cleanID($id);
-        if (empty($id)) {
-            global $conf;
-            $id = cleanID($conf['start']); // FIXME I dont think we want that!
+        if ($id === '') {
+            throw new RemoteException('Empty or invalid page ID given', 131); // FIXME check code
         }
+
+        if ($existCheck && !page_exists($id)) {
+            throw new RemoteException('The requested page does not exist', 121); // FIXME check code
+        }
+
+        if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
+            throw new AccessDeniedException('You are not allowed to read this page', 111); // FIXME check code
+        }
+
         return $id;
     }
 }
