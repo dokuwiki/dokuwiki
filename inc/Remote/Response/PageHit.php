@@ -19,12 +19,19 @@ class PageHit extends Page
     /** @var string Not available for search results */
     public $author;
 
-    /** @inheritdoc */
-    public function __construct($data)
+    /**
+     * PageHit constructor.
+     *
+     * @param string $id
+     * @param string $snippet
+     * @param int $score
+     * @param string $title
+     */
+    public function __construct($id, $snippet = '', $score = 0, $title = '')
     {
-        parent::__construct($data);
+        parent::__construct($id, 0, 0, $title);
 
-        $this->snippet = $data['snippet'] ?? '';
-        $this->score = (int)($data['score'] ?? 0);
+        $this->snippet = $snippet;
+        $this->score = $score;
     }
 }

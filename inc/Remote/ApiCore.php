@@ -8,10 +8,10 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Remote\Response\Link;
 use dokuwiki\Remote\Response\Media;
-use dokuwiki\Remote\Response\MediaRevision;
+use dokuwiki\Remote\Response\MediaChange;
 use dokuwiki\Remote\Response\Page;
+use dokuwiki\Remote\Response\PageChange;
 use dokuwiki\Remote\Response\PageHit;
-use dokuwiki\Remote\Response\PageRevision;
 use dokuwiki\Remote\Response\User;
 use dokuwiki\Utf8\Sort;
 
@@ -187,7 +187,7 @@ class ApiCore
      */
     public function whoAmI()
     {
-        return new User([]);
+        return new User();
     }
 
     /**
@@ -236,6 +236,8 @@ class ApiCore
      *
      * Setting the `depth` to `0` and the `namespace` to `""` will return all pages in the wiki.
      *
+     * Note: author information is not available in this call.
+     *
      * @param string $namespace The namespace to search. Empty string for root namespace
      * @param int $depth How deep to search. 0 for all subnamespaces
      * @param bool $hash Whether to include a MD5 hash of the page content
@@ -260,7 +262,15 @@ class ApiCore
         $opts['hash'] = $hash;
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
 
-        return array_map(fn($item) => new Page($item), $data);
+        return array_map(fn($item) => new Page(
+            $item['id'],
+            0, // we're searching current revisions only
+            $item['mtime'],
+            $item['title'],
+            $item['size'],
+            $item['perm'],
+            $item['hash'] ?? ''
+        ), $data);
     }
 
     /**
@@ -283,10 +293,7 @@ class ApiCore
                 continue;
             }
 
-            $page = new Page([
-                'id' => $pages[$idx],
-                'perm' => $perm,
-            ]);
+            $page = new Page($pages[$idx], 0, 0, '', null, $perm);
             if ($hash) $page->calculateHash();
 
             $list[] = $page;
@@ -317,8 +324,6 @@ class ApiCore
         // prepare additional data
         $idx = 0;
         foreach ($data as $id => $score) {
-            $file = wikiFN($id);
-
             if ($idx < FT_SNIPPET_NUMBER) {
                 $snippet = ft_snippet($id, $regex);
                 $idx++;
@@ -326,15 +331,12 @@ class ApiCore
                 $snippet = '';
             }
 
-            $pages[] = new PageHit([
-                'id' => $id,
-                'score' => (int)$score,
-                'rev' => filemtime($file),
-                'mtime' => filemtime($file),
-                'size' => filesize($file),
-                'snippet' => $snippet,
-                'title' => useHeading('navigation') ? p_get_first_heading($id) : $id
-            ]);
+            $pages[] = new PageHit(
+                $id,
+                $snippet,
+                $score,
+                useHeading('navigation') ? p_get_first_heading($id) : $id
+            );
         }
         return $pages;
     }
@@ -350,7 +352,7 @@ class ApiCore
      *
      * @link https://www.dokuwiki.org/config:recent
      * @param int $timestamp Only show changes newer than this unix timestamp
-     * @return PageRevision[]
+     * @return PageChange[]
      * @author Michael Klier <chi@chimeric.de>
      * @author Michael Hamann <michael@content-space.de>
      */
@@ -360,15 +362,15 @@ class ApiCore
 
         $changes = [];
         foreach ($recents as $recent) {
-            $changes[] = new PageRevision([
-                'id' => $recent['id'],
-                'revision' => $recent['date'],
-                'author' => $recent['user'],
-                'ip' => $recent['ip'],
-                'summary' => $recent['sum'],
-                'type' => $recent['type'],
-                'sizechange' => $recent['sizechange'],
-            ]);
+            $changes[] = new PageChange(
+                $recent['id'],
+                $recent['date'],
+                $recent['user'],
+                $recent['ip'],
+                $recent['sum'],
+                $recent['type'],
+                $recent['sizechange']
+            );
         }
 
         return $changes;
@@ -441,11 +443,11 @@ class ApiCore
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function getPageInfo($page, $rev = '', $author = false, $hash = false)
+    public function getPageInfo($page, $rev = 0, $author = false, $hash = false)
     {
         $page = $this->checkPage($page);
 
-        $result = new Page(['id' => $page, 'rev' => $rev]);
+        $result = new Page($page, $rev);
         if ($author) $result->retrieveAuthor();
         if ($hash) $result->calculateHash();
 
@@ -461,7 +463,7 @@ class ApiCore
      * @link https://www.dokuwiki.org/config:recent
      * @param string $page page id
      * @param int $first skip the first n changelog lines, 0 starts at the current revision
-     * @return PageRevision[]
+     * @return PageChange[]
      * @throws AccessDeniedException
      * @throws RemoteException
      * @author Michael Klier <chi@chimeric.de>
@@ -482,15 +484,15 @@ class ApiCore
             if (!page_exists($page, $rev)) continue; // skip non-existing revisions
             $info = $pagelog->getRevisionInfo($rev);
 
-            $result[] = new PageRevision([
-                'id' => $page,
-                'revision' => $rev,
-                'author' => $info['user'],
-                'ip' => $info['ip'],
-                'summary' => $info['sum'],
-                'type' => $info['type'],
-                'sizechange' => $info['sizechange'],
-            ]);
+            $result[] = new PageChange(
+                $page,
+                $rev,
+                $info['user'],
+                $info['ip'],
+                $info['sum'],
+                $info['type'],
+                $info['sizechange']
+            );
         }
 
         return $result;
@@ -527,26 +529,14 @@ class ApiCore
         foreach ($ins as $in) {
             switch ($in[0]) {
                 case 'internallink':
-                    $links[] = new Link([
-                        'type' => 'local',
-                        'page' => $in[1][0],
-                        'href' => wl($in[1][0]),
-                    ]);
+                    $links[] = new Link('local', $in[1][0], wl($in[1][0]));
                     break;
                 case 'externallink':
-                    $links[] = new Link([
-                        'type' => 'extern',
-                        'page' => $in[1][0],
-                        'href' => $in[1][0],
-                    ]);
+                    $links[] = new Link('extern', $in[1][0], $in[1][0]);
                     break;
                 case 'interwikilink':
                     $url = $Renderer->_resolveInterWiki($in[1][2], $in[1][3]);
-                    $links[] = new Link([
-                        'type' => 'interwiki',
-                        'page' => $in[1][0],
-                        'href' => $url,
-                    ]);
+                    $links[] = new Link('interwiki', $in[1][0], $url);
                     break;
             }
         }
@@ -749,7 +739,6 @@ class ApiCore
      * @param int $depth How deep to search. 0 for all subnamespaces
      * @param bool $hash Whether to include a MD5 hash of the media content
      * @return Media[]
-     * @throws AccessDeniedException no access to the media files
      * @author Gina Haeussge <osd@foosel.net>
      */
     public function listMedia($namespace = '', $pattern = '', $depth = 1, $hash = false)
@@ -768,7 +757,15 @@ class ApiCore
         $dir = utf8_encodeFN(str_replace(':', '/', $namespace));
         $data = [];
         search($data, $conf['mediadir'], 'search_media', $options, $dir);
-        return array_map(fn($item) => new Media($item), $data);
+        return array_map(fn($item) => new Media(
+            $item['id'],
+            0, // we're searching current revisions only
+            $item['mtime'],
+            $item['size'],
+            $item['perm'],
+            $item['isimg'],
+            $item['hash'] ?? ''
+        ), $data);
     }
 
     /**
@@ -782,7 +779,7 @@ class ApiCore
      *
      * @link https://www.dokuwiki.org/config:recent
      * @param int $timestamp Only show changes newer than this unix timestamp
-     * @return MediaRevision[]
+     * @return MediaChange[]
      * @author Michael Klier <chi@chimeric.de>
      * @author Michael Hamann <michael@content-space.de>
      */
@@ -793,15 +790,15 @@ class ApiCore
 
         $changes = [];
         foreach ($recents as $recent) {
-            $changes[] = new MediaRevision([
-                'id' => $recent['id'],
-                'revision' => $recent['date'],
-                'author' => $recent['user'],
-                'ip' => $recent['ip'],
-                'summary' => $recent['sum'],
-                'type' => $recent['type'],
-                'sizechange' => $recent['sizechange'],
-            ]);
+            $changes[] = new MediaChange(
+                $recent['id'],
+                $recent['date'],
+                $recent['user'],
+                $recent['ip'],
+                $recent['sum'],
+                $recent['type'],
+                $recent['sizechange']
+            );
         }
 
         return $changes;
@@ -852,7 +849,7 @@ class ApiCore
      * @throws RemoteException if not exist
      * @author Gina Haeussge <osd@foosel.net>
      */
-    public function getMediaInfo($media, $rev = '', $hash = false)
+    public function getMediaInfo($media, $rev = 0, $hash = false)
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
@@ -862,13 +859,7 @@ class ApiCore
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
-        $file = mediaFN($media, $rev);
-
-        $info = new Media([
-            'id' => $media,
-            'mtime' => filemtime($file),
-            'size' => filesize($file),
-        ]);
+        $info = new Media($media, $rev);
         if ($hash) $info->calculateHash();
 
         return $info;

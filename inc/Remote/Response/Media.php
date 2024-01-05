@@ -14,30 +14,43 @@ class Media extends ApiResponse
     /** @var int The page size in bytes */
     public $size;
     /** @var int The current user's permissions for this file */
-    public $perms;
+    public $permission;
     /** @var bool Wether this is an image file */
     public $isimage;
     /** @var string MD5 sum over the file's content (if available and requested) */
     public $hash;
 
-    /** @inheritdoc */
-    public function __construct($data)
+    /** @var string The file path to this media revision */
+    protected $file;
+
+    /**
+     * Media constructor.
+     *
+     * @param string $id The media ID
+     * @param int $revision The media revision aka last modified timestamp
+     * @param int $mtime The media revision aka last modified timestamp
+     * @param int|null $size The page size in bytes
+     * @param int|null $perms The current user's permissions for this file
+     * @param bool|null $isimage Wether this is an image file
+     * @param string $hash MD5 sum over the file's content
+     */
+    public function __construct(
+        $id,
+        $revision = 0,
+        $mtime = 0,
+        $size = null,
+        $perms = null,
+        $isimage = null,
+        $hash = ''
+    )
     {
-        $this->id = cleanID($data['id'] ?? '');
-        if ($this->id === '') {
-            throw new \InvalidArgumentException('Missing id');
-        }
-        if (!media_exists($this->id)) {
-            throw new \InvalidArgumentException('Media does not exist');
-        }
-
-        // FIXME this isn't really managing the difference between old and current revs correctly
-
-        $this->revision = (int)($data['rev'] ?? $data['mtime'] ?? @filemtime(mediaFN($this->id)));
-        $this->size = (int)($data['size'] ?? @filesize(mediaFN($this->id)));
-        $this->perms = $data['perm'] ?? auth_quickaclcheck($this->id);
-        $this->isimage = (bool)($data['isimg'] ?? false);
-        $this->hash = $data['hash'] ?? '';
+        $this->id = $id;
+        $this->file = mediaFN($this->id, $revision);
+        $this->revision = $revision ?: $mtime ?: filemtime($this->file);
+        $this->size = $size ?? filesize($this->file);
+        $this->permission = $perms ?? auth_quickaclcheck($this->id);;
+        $this->isimage = (bool)($isimage ?? false);
+        $this->hash = $hash;
     }
 
     /**
@@ -47,7 +60,6 @@ class Media extends ApiResponse
      */
     public function calculateHash()
     {
-        if (!media_exists($this->id)) return;
-        $this->hash = md5(io_readFile(mediaFN($this->id)));
+        $this->hash = md5(io_readFile($this->file, false));
     }
 }

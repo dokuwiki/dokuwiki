@@ -16,21 +16,50 @@ class User extends ApiResponse
     /** @var array The groups the user is in */
     public $groups;
     /** @var bool Whether the user is a super user */
-    public bool $isAdmin;
+    public bool $isadmin;
     /** @var bool Whether the user is a manager */
-    public bool $isManager;
+    public bool $ismanager;
 
-    /** @inheritdoc */
-    public function __construct($data)
+    /**
+     * @param string $login defaults to the current user
+     * @param string $name
+     * @param string $mail
+     * @param string $groups
+     */
+    public function __construct($login = '', $name = '', $mail = '', $groups = [])
     {
-        global $USERINFO;
         global $INPUT;
-        $this->login = $INPUT->server->str('REMOTE_USER');
-        $this->name = $USERINFO['name'];
-        $this->mail = $USERINFO['mail'];
-        $this->groups = $USERINFO['grps'];
+        global $USERINFO;
+        global $auth;
 
-        $this->isAdmin = auth_isAdmin($this->login, $this->groups);
-        $this->isManager = auth_isManager($this->login, $this->groups);
+        $this->login = $login;
+        $this->name = $name;
+        $this->mail = $mail;
+        $this->groups = $groups;
+
+        if ($this->login === '') {
+            $this->login = $INPUT->server->str('REMOTE_USER');
+        }
+
+        if ($this->login === '') {
+            throw new \RuntimeException('No user available');
+        }
+
+        // for current user, use $USERINFO to fill up
+        if ($this->login === $INPUT->server->str('REMOTE_USER')) {
+            $this->name = $this->name ?: $USERINFO['name'];
+            $this->mail = $this->mail ?: $USERINFO['mail'];
+            $this->groups = $this->mail ?: $USERINFO['grps'];
+        } else {
+            // for other users, use auth_getUserData to fill up
+            $userData = $auth->getUserData($this->login);
+            $this->name = $this->name ?: $userData['name'];
+            $this->mail = $this->mail ?: $userData['mail'];
+            $this->groups = $this->mail ?: $userData['grps'];
+        }
+
+        // check for admin and manager
+        $this->isadmin = auth_isAdmin($this->login, $this->groups);
+        $this->ismanager = auth_isManager($this->login, $this->groups);
     }
 }

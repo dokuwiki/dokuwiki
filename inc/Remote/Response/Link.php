@@ -11,12 +11,15 @@ class Link extends ApiResponse
     /** @var string A hyperlink pointing to the linked target */
     public $href;
 
-
-
-    public function __construct($data)
+    /**
+     * @param string $type One of `internal`, `external` or `interwiki`
+     * @param string $page The wiki page this link points to, same as `href` for external links
+     * @param string $href A hyperlink pointing to the linked target
+     */
+    public function __construct($type, $page, $href)
     {
-        $this->type = $data['type'] ?? '';
-        $this->page = $data['page'] ?? '';
-        $this->href = $data['href'] ?? '';
+        $this->type = $type;
+        $this->page = $page;
+        $this->href = $href;
     }
 }
