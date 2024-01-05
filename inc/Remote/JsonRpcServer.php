@@ -18,7 +18,6 @@ class JsonRpcServer
     public function __construct()
     {
         $this->remote = new Api();
-        $this->remote->setFileTransformation([$this, 'toFile']);
     }
 
     /**
@@ -182,14 +181,5 @@ class JsonRpcServer
             http_status(400);
             throw $e;
         }
-    }
-
-    /**
-     * @param string $data
-     * @return string
-     */
-    public function toFile($data)
-    {
-        return base64_encode($data);
     }
 }

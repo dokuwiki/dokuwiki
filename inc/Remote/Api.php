@@ -4,6 +4,7 @@ namespace dokuwiki\Remote;
 
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Logger;
+use dokuwiki\test\Remote\MockApiCore;
 
 /**
  * This class provides information about remote access to the wiki.
@@ -42,18 +43,6 @@ class Api
     /** @var ApiCall[] remote methods provided by dokuwiki plugins */
     protected $pluginMethods;
 
-    private $dateTransformation;
-    private $fileTransformation;
-
-    /**
-     * constructor
-     */
-    public function __construct()
-    {
-        $this->dateTransformation = [$this, 'dummyTransformation'];
-        $this->fileTransformation = [$this, 'dummyTransformation'];
-    }
-
     /**
      * Get all available methods with remote access.
      *
@@ -67,7 +56,7 @@ class Api
     /**
      * Collects all the core methods
      *
-     * @param ApiCore|\RemoteAPICoreTest $apiCore this parameter is used for testing.
+     * @param ApiCore|MockApiCore $apiCore this parameter is used for testing.
      *        Here you can pass a non-default RemoteAPICore instance. (for mocking)
      * @return ApiCall[] all core methods.
      */
@@ -188,58 +177,4 @@ class Api
         // still here? no can do
         throw new AccessDeniedException('server error. not authorized to call method', -32604);
     }
-
-    /**
-     * Transform file to xml
-     *
-     * @param mixed $data
-     * @return mixed
-     */
-    public function toFile($data)
-    {
-        return call_user_func($this->fileTransformation, $data);
-    }
-
-    /**
-     * Transform date to xml
-     *
-     * @param mixed $data
-     * @return mixed
-     */
-    public function toDate($data)
-    {
-        return call_user_func($this->dateTransformation, $data);
-    }
-
-    /**
-     * A simple transformation
-     *
-     * @param mixed $data
-     * @return mixed
-     */
-    public function dummyTransformation($data)
-    {
-        return $data;
-    }
-
-    /**
-     * Set the transformer function
-     *
-     * @param callback $dateTransformation
-     */
-    public function setDateTransformation($dateTransformation)
-    {
-        $this->dateTransformation = $dateTransformation;
-    }
-
-    /**
-     * Set the transformer function
-     *
-     * @param callback $fileTransformation
-     */
-    public function setFileTransformation($fileTransformation)
-    {
-        $this->fileTransformation = $fileTransformation;
-    }
-
 }

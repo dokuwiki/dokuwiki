@@ -20,8 +20,6 @@ class XmlRpcServer extends Server
     public function __construct($wait = false)
     {
         $this->remote = new Api();
-        $this->remote->setDateTransformation([$this, 'toDate']);
-        $this->remote->setFileTransformation([$this, 'toFile']);
         parent::__construct(false, false, $wait);
     }
 
@@ -67,23 +65,5 @@ class XmlRpcServer extends Server
         } catch (RemoteException $e) {
             return new ServerException($e->getMessage(), $e->getCode());
         }
-    }
-
-    /**
-     * @param string|int $data iso date(yyyy[-]mm[-]dd[ hh:mm[:ss]]) or timestamp
-     * @return Date
-     */
-    public function toDate($data)
-    {
-        return new Date($data);
-    }
-
-    /**
-     * @param string $data
-     * @return Base64
-     */
-    public function toFile($data)
-    {
-        return new Base64($data);
     }
 }
