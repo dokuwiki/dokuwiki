@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Remote\Response;
 
+use dokuwiki\ChangeLog\MediaChangeLog;
+
 /**
  * Represents a single media revision in the wiki.
  */
@@ -19,6 +21,8 @@ class Media extends ApiResponse
     public $isimage;
     /** @var string MD5 sum over the file's content (if available and requested) */
     public $hash;
+    /** @var string The author of this page revision (if available and requested) */
+    public $author;
 
     /** @var string The file path to this media revision */
     protected $file;
@@ -41,7 +45,8 @@ class Media extends ApiResponse
         $size = null,
         $perms = null,
         $isimage = null,
-        $hash = ''
+        $hash = '',
+        $author = ''
     )
     {
         $this->id = $id;
@@ -49,8 +54,9 @@ class Media extends ApiResponse
         $this->revision = $revision ?: $mtime ?: filemtime($this->file);
         $this->size = $size ?? filesize($this->file);
         $this->permission = $perms ?? auth_quickaclcheck($this->id);;
-        $this->isimage = (bool)($isimage ?? false);
+        $this->isimage = (bool)($isimage ?? preg_match("/\.(jpe?g|gif|png)$/", $id));
         $this->hash = $hash;
+        $this->author = $author;
     }
 
     /**
@@ -61,6 +67,16 @@ class Media extends ApiResponse
     public function calculateHash()
     {
         $this->hash = md5(io_readFile($this->file, false));
+    }
+
+    /**
+     * Retrieve the author of this page
+     */
+    public function retrieveAuthor()
+    {
+        $pagelog = new MediaChangeLog($this->id, 1024);
+        $info = $pagelog->getRevisionInfo($this->revision);
+        $this->author = is_array($info) ? ($info['user'] ?: $info['ip']) : '';
     }
 
     /** @inheritdoc */

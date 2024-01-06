@@ -256,7 +256,7 @@ class ApiCore
         }
 
         // search_allpages handles depth weird, we need to add the given namespace depth
-        if($depth) {
+        if ($depth) {
             $depth += substr_count($namespace, ':') + 1;
         }
 
@@ -509,6 +509,8 @@ class ApiCore
      *
      * This returns a list of links found in the given page. This includes internal, external and interwiki links
      *
+     * If a link occurs multiple times on the page, it will be returned multiple times.
+     *
      * Read access for the given page is needed and page has to exist.
      *
      * @param string $page page id
@@ -517,6 +519,7 @@ class ApiCore
      * @throws RemoteException
      * @todo returning link titles would be a nice addition
      * @todo hash handling seems not to be correct
+     * @todo maybe return the same link only once?
      * @author Michael Klier <chi@chimeric.de>
      */
     public function getPageLinks($page)
@@ -717,7 +720,7 @@ class ApiCore
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function appendPage($page, $text, $summary, $isminor)
+    public function appendPage($page, $text, $summary='', $isminor=false)
     {
         $currentpage = $this->getPage($page);
         if (!is_string($currentpage)) {
@@ -833,7 +836,7 @@ class ApiCore
 
         $file = mediaFN($media, $rev);
         if (!@ file_exists($file)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         $data = io_readFile($file, false);
@@ -849,13 +852,14 @@ class ApiCore
      *
      * @param string $media file id
      * @param int $rev revision timestamp
+     * @param bool $author whether to include the author information
      * @param bool $hash whether to include the MD5 hash of the media content
      * @return Media
      * @throws AccessDeniedException no permission for media
      * @throws RemoteException if not exist
      * @author Gina Haeussge <osd@foosel.net>
      */
-    public function getMediaInfo($media, $rev = 0, $hash = false)
+    public function getMediaInfo($media, $rev = 0, $author = false, $hash = false)
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
@@ -867,6 +871,7 @@ class ApiCore
 
         $info = new Media($media, $rev);
         if ($hash) $info->calculateHash();
+        if ($author) $info->retrieveAuthor();
 
         return $info;
     }
@@ -907,6 +912,10 @@ class ApiCore
             throw new RemoteException('Invalid base64 encoded data', 234);
         }
 
+        if ($data === '') {
+            throw new RemoteException('Empty file given', 235);
+        }
+
         // save temporary file
         global $conf;
         $ftmp = $conf['tmpdir'] . '/' . md5($media . clientIP());
@@ -915,7 +924,7 @@ class ApiCore
 
         $res = media_save(['name' => $ftmp], $media, $overwrite, $auth, 'rename');
         if (is_array($res)) {
-            throw new RemoteException('Failed to save media: ' . $res[0], 235);
+            throw new RemoteException('Failed to save media: ' . $res[0], 236);
         }
         return (bool)$res; // should always be true at this point
     }
@@ -935,6 +944,7 @@ class ApiCore
     public function deleteMedia($media)
     {
         $media = cleanID($media);
+
         $auth = auth_quickaclcheck($media);
         $res = media_delete($media, $auth);
         if ($res & DOKU_MEDIA_DELETED) {
@@ -943,6 +953,8 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to delete this media file', 212);
         } elseif ($res & DOKU_MEDIA_INUSE) {
             throw new RemoteException('Media file is still referenced', 232);
+        } elseif (!media_exists($media)) {
+            throw new RemoteException('The media file requested to delete does not exist', 221);
         } else {
             throw new RemoteException('Failed to delete media file', 233);
         }
@@ -969,7 +981,7 @@ class ApiCore
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    private function checkPage($id, $rev=0, $existCheck = true, $minAccess = AUTH_READ)
+    private function checkPage($id, $rev = 0, $existCheck = true, $minAccess = AUTH_READ)
     {
         $id = cleanID($id);
         if ($id === '') {

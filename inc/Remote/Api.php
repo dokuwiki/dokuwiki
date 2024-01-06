@@ -135,8 +135,10 @@ class Api
         // invoke the ApiCall
         try {
             return $methods[$method]($args);
-        } catch (\ArgumentCountError $th) {
-            throw new RemoteException('Method does not exist - wrong parameter count.', -32603);
+        } catch (\InvalidArgumentException $e) {
+            throw new RemoteException($e->getMessage(), -32602);
+        } catch (\ArgumentCountError $e) {
+            throw new RemoteException($e->getMessage(), -32602);
         }
     }
 

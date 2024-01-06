@@ -5,6 +5,7 @@ namespace dokuwiki\test\Remote\OpenApiDoc;
 use dokuwiki\Remote\OpenApiDoc\DocBlockClass;
 use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
 use dokuwiki\Remote\OpenApiDoc\DocBlockProperty;
+use dokuwiki\Remote\OpenApiDoc\Type;
 
 /**
  * Test cases for DocBlockClass
@@ -21,7 +22,7 @@ class DocBlockClassTest extends \DokuWikiTest
      *
      * Also tests property and method access
      *
-     * @return void
+     * @return void Tests don't return anything
      */
     public function testClass()
     {
@@ -31,10 +32,20 @@ class DocBlockClassTest extends \DokuWikiTest
         $this->assertStringContainsString('Test cases for DocBlockClass', $doc->getSummary());
         $this->assertStringContainsString('used in the tests itself', $doc->getDescription());
 
-        $this->assertInstanceOf(DocBlockProperty::class, $doc->getPropertyDocs()['dummyProperty1']);
-        $this->assertEquals('This is a dummy', $doc->getPropertyDocs()['dummyProperty1']->getSummary());
+        $property = $doc->getPropertyDocs()['dummyProperty1'];
+        $this->assertInstanceOf(DocBlockProperty::class, $property);
+        $this->assertEquals('This is a dummy', $property->getSummary());
 
-        $this->assertInstanceOf(DocBlockMethod::class, $doc->getMethodDocs()['testClass']);
+        $propertyType = $property->getType();
+        $this->assertInstanceOf(Type::class, $propertyType);
+        $this->assertEquals('string', $propertyType->getBaseType());
+
+        $method = $doc->getMethodDocs()['testClass'];
+        $this->assertInstanceOf(DocBlockMethod::class, $method);
+
+        $methodReturn = $method->getReturn();
+        $this->assertInstanceOf(Type::class, $methodReturn['type']);
+        $this->assertEquals('Tests don\'t return anything', $methodReturn['description']);
     }
 
 }

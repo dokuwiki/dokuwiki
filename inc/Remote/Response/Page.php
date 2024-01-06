@@ -95,11 +95,9 @@ class Page extends ApiResponse
      */
     public function retrieveAuthor()
     {
-        if (!page_exists($this->id)) return;
-
         $pagelog = new PageChangeLog($this->id, 1024);
         $info = $pagelog->getRevisionInfo($this->revision);
-        $this->author = is_array($info) ? ($info['user'] ?: $info['ip']) : null;
+        $this->author = is_array($info) ? ($info['user'] ?: $info['ip']) : '';
     }
 
     /** @inheritdoc */

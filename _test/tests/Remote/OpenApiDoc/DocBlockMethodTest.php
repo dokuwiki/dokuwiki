@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Remote\OpenApiDoc;
 
 use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+use dokuwiki\Remote\OpenApiDoc\Type;
 
 class DocBlockMethodTest extends \DokuWikiTest {
 
@@ -55,6 +56,11 @@ class DocBlockMethodTest extends \DokuWikiTest {
             $doc->getTag('param')
         );
 
+        $params = $doc->getParameters();
+        $this->assertInstanceOf(Type::class, $params['foo']['type']);
+        $this->assertInstanceOf(Type::class, $params['bar']['type']);
+        $this->assertInstanceOf(Type::class, $params['baz']['type']);
+
         $this->assertEquals(
             [
                 'type' => 'string',
@@ -62,6 +68,9 @@ class DocBlockMethodTest extends \DokuWikiTest {
             ],
             $doc->getTag('return')
         );
+
+        $return = $doc->getReturn();
+        $this->assertInstanceOf(Type::class, $return['type']);
 
         $this->assertEquals(
             [
@@ -77,5 +86,7 @@ class DocBlockMethodTest extends \DokuWikiTest {
             ],
             $doc->getTag('another')
         );
+
+
     }
 }

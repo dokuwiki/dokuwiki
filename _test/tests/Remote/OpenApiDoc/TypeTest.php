@@ -10,6 +10,7 @@ class TypeTest extends \DokuWikiTest
     public function provideBaseTypes()
     {
         return [
+            // [hint, jsonrpc, xmlrpc, context]
             ['string', 'string', 'string'],
             ['string', 'string', 'string', self::class],
             ['int', 'int', 'int'],
