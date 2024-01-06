@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Remote;
 
 use dokuwiki\Remote\ApiCall;
+use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
 
 class ApiCallTest extends \DokuWikiTest
 {
@@ -26,68 +27,39 @@ class ApiCallTest extends \DokuWikiTest
 
     public function testMethodDocBlock()
     {
-        $call = new ApiCall([$this, 'dummyMethod1']);
+        $call = new ApiCall([$this, 'dummyMethod1'], 'cat1');
 
+        // basic doc block tests. More tests are done in the docblock parser class tests
         $this->assertEquals('This is a test', $call->getSummary());
         $this->assertEquals("With more information\nin several lines", $call->getDescription());
+        $args = $call->getArgs();
+        $this->assertIsArray($args);
+        $this->assertArrayHasKey('foo', $args);
+        $docs = $call->getDocs();
+        $this->assertInstanceOf(DocBlockMethod::class, $docs);
 
-        $this->assertEquals(
-            [
-                'foo' => [
-                    'type' => 'string',
-                    'description' => 'First variable',
-                ],
-                'bar' => [
-                    'type' => 'int',
-                    'description' => '',
-                ],
-                'baz' => [
-                    'type' => 'array',
-                    'description' => '',
-                ],
-            ],
-            $call->getArgs()
-        );
+        // test public access
+        $this->assertFalse($call->isPublic());
+        $call->setPublic();
+        $this->assertTrue($call->isPublic());
 
-        $this->assertEquals(
-            [
-                'type' => 'string',
-                'description' => 'The return'
-            ],
-            $call->getReturn()
-        );
-
-        // remove one parameter
-        $call->limitArgs(['foo']);
-        $this->assertEquals(
-            [
-                'foo' => [
-                    'type' => 'string',
-                    'description' => 'First variable',
-                ],
-            ],
-            $call->getArgs()
-        );
+        // check category
+        $this->assertEquals('cat1', $call->getCategory());
     }
 
     public function testFunctionDocBlock()
     {
         $call = new ApiCall('inlineSVG');
-        $call->setArgDescription('file', 'overwritten description');
 
-        $this->assertEquals(
-            [
-                'file' => [
-                    'type' => 'string',
-                    'description' => 'overwritten description',
-                ],
-                'maxsize' => [
-                    'type' => 'int',
-                    'description' => 'maximum allowed size for the SVG to be embedded',
-                ]
-            ],
-            $call->getArgs()
-        );
+        // basic doc block tests. More tests are done in the docblock parser class tests
+        $args = $call->getArgs();
+        $this->assertIsArray($args);
+        $this->assertArrayHasKey('file', $args);
+        $docs = $call->getDocs();
+        $this->assertInstanceOf(DocBlockMethod::class, $docs);
+
+        // check category (not set)
+        $this->assertEquals('', $call->getCategory());
     }
 
     public function testExecution()
