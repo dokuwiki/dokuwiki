@@ -242,6 +242,7 @@ class ApiCore
      * @param int $depth How deep to search. 0 for all subnamespaces
      * @param bool $hash Whether to include a MD5 hash of the page content
      * @return Page[] A list of matching pages
+     * @todo might be a good idea to replace search_allpages with search_universal
      */
     public function listPages($namespace = '', $depth = 1, $hash = false)
     {
@@ -271,9 +272,9 @@ class ApiCore
             $item['id'],
             0, // we're searching current revisions only
             $item['mtime'],
-            $item['title'],
+            '', // not returned by search_allpages
             $item['size'],
-            $item['perm'],
+            null, // not returned by search_allpages
             $item['hash'] ?? ''
         ), $data);
     }
