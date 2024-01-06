@@ -210,7 +210,7 @@ class ApiCore
         /** @var AuthPlugin $auth */
         global $auth;
 
-        $page = $this->checkPage($page, false, AUTH_NONE);
+        $page = $this->checkPage($page, 0, false, AUTH_NONE);
 
         if ($user === '') {
             return auth_quickaclcheck($page);
@@ -399,7 +399,7 @@ class ApiCore
      */
     public function getPage($page, $rev = 0)
     {
-        $page = $this->checkPage($page, false);
+        $page = $this->checkPage($page, $rev, false);
 
         $text = rawWiki($page, $rev);
         if (!$text && !$rev) {
@@ -428,7 +428,7 @@ class ApiCore
      */
     public function getPageHTML($page, $rev = 0)
     {
-        $page = $this->checkPage($page);
+        $page = $this->checkPage($page, $rev);
 
         return (string)p_wiki_xhtml($page, $rev, false);
     }
@@ -450,7 +450,7 @@ class ApiCore
      */
     public function getPageInfo($page, $rev = 0, $author = false, $hash = false)
     {
-        $page = $this->checkPage($page);
+        $page = $this->checkPage($page, $rev);
 
         $result = new Page($page, $rev);
         if ($author) $result->retrieveAuthor();
@@ -477,7 +477,7 @@ class ApiCore
     {
         global $conf;
 
-        $page = $this->checkPage($page, false);
+        $page = $this->checkPage($page, 0, false);
 
         $pagelog = new PageChangeLog($page);
         $pagelog->setChunkSize(1024);
@@ -564,7 +564,7 @@ class ApiCore
      */
     public function getPageBackLinks($page)
     {
-        $page = $this->checkPage($page, false);
+        $page = $this->checkPage($page, 0, false);
 
         return ft_backlinks($page);
     }
@@ -658,7 +658,7 @@ class ApiCore
         global $TEXT;
         global $lang;
 
-        $page = $this->checkPage($page, false, AUTH_EDIT);
+        $page = $this->checkPage($page, 0, false, AUTH_EDIT);
         $TEXT = cleanText($text);
 
 
@@ -961,19 +961,22 @@ class ApiCore
      * - check if the user has the required access level (pass AUTH_NONE to skip)
      *
      * @param string $id page id
+     * @param int $rev page revision
+     * @param bool $existCheck
+     * @param int $minAccess
      * @return string the cleaned page id
-     * @throws RemoteException
      * @throws AccessDeniedException
+     * @throws RemoteException
      */
-    private function checkPage($id, $existCheck = true, $minAccess = AUTH_READ)
+    private function checkPage($id, $rev=0, $existCheck = true, $minAccess = AUTH_READ)
     {
         $id = cleanID($id);
         if ($id === '') {
             throw new RemoteException('Empty or invalid page ID given', 131);
         }
 
-        if ($existCheck && !page_exists($id)) {
-            throw new RemoteException('The requested page does not exist', 121);
+        if ($existCheck && !page_exists($id, $rev)) {
+            throw new RemoteException('The requested page (revision) does not exist', 121);
         }
 
         if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
