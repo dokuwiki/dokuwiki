@@ -19,9 +19,9 @@ class ApiCallTest extends \DokuWikiTest
      * @another tag
      * @return string  The return
      */
-    public function dummyMethod1($foo, $bar, $baz)
+    public function dummyMethod1($foo, $bar, $baz, $boink = 'boink')
     {
-        return 'dummy';
+        return $foo . $bar . implode('', $baz) . $boink;
     }
 
     public function testMethodDocBlock()
@@ -93,11 +93,49 @@ class ApiCallTest extends \DokuWikiTest
     public function testExecution()
     {
         $call = new ApiCall([$this, 'dummyMethod1']);
-        $this->assertEquals('dummy', $call(['bar', 1, ['molf']]), 'positional parameters');
-        $this->assertEquals('dummy', $call(['foo' => 'bar', 'bar' => 1, 'baz' =>['molf']]), 'named parameters');
+        $this->assertEquals(
+            'bar1molfhaha',
+            $call(['bar', 1, ['molf'], 'haha']),
+            'positional parameters'
+        );
+        $this->assertEquals(
+            'bar1molfhaha',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'], 'boink' => 'haha']),
+            'named parameters'
+        );
+
+        $this->assertEquals(
+            'bar1molfboink',
+            $call(['bar', 1, ['molf']]),
+            'positional parameters, missing optional'
+        );
+        $this->assertEquals(
+            'bar1molfboink',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf']]),
+            'named parameters, missing optional'
+        );
+        $this->assertEquals(
+            'bar1molfboink',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'],'nope' => 'egal']),
+            'named parameters, missing optional, additional unknown'
+        );
 
         $call = new ApiCall('date');
         $this->assertEquals('2023-11-30', $call(['Y-m-d', 1701356591]), 'positional parameters');
         $this->assertEquals('2023-11-30', $call(['format' => 'Y-m-d', 'timestamp' => 1701356591]), 'named parameters');
+    }
+
+    public function testCallMissingPositionalParameter()
+    {
+        $call = new ApiCall([$this, 'dummyMethod1']);
+        $this->expectException(\ArgumentCountError::class);
+        $call(['bar']);
+    }
+
+    public function testCallMissingNamedParameter()
+    {
+        $call = new ApiCall([$this, 'dummyMethod1']);
+        $this->expectException(\ArgumentCountError::class);
+        $call(['foo' => 'bar', 'baz'=> ['molf']]); // missing bar
     }
 }

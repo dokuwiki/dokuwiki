@@ -156,7 +156,7 @@ class ApiCall
             if (isset($params[$arg])) {
                 $args[] = $params[$arg];
             } else {
-                $args[] = null;
+                break;
             }
         }
 
