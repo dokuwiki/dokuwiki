@@ -152,11 +152,15 @@ class ApiCall
     {
         $args = [];
 
-        foreach (array_keys($this->getDocs()->getParameters()) as $arg) {
+        foreach ($this->getDocs()->getParameters() as $arg => $arginfo) {
             if (isset($params[$arg])) {
                 $args[] = $params[$arg];
             } else {
-                break;
+                if ($arginfo['optional'] && array_key_exists('default', $arginfo)) {
+                    $args[] = $arginfo['default'];
+                } else {
+                    throw new InvalidArgumentException("Missing argument $arg");
+                }
             }
         }
 

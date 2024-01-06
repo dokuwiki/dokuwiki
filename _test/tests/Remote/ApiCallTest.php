@@ -2,8 +2,10 @@
 
 namespace dokuwiki\test\Remote;
 
+use ArgumentCountError;
 use dokuwiki\Remote\ApiCall;
 use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+use InvalidArgumentException;
 
 class ApiCallTest extends \DokuWikiTest
 {
@@ -15,14 +17,16 @@ class ApiCallTest extends \DokuWikiTest
      * @param string $foo First variable
      * @param int $bar
      * @param string[] $baz
+     * @param string $boink
+     * @param string $bonk
+     * @return string  The return
      * @something else
      * @something other
      * @another tag
-     * @return string  The return
      */
-    public function dummyMethod1($foo, $bar, $baz, $boink = 'boink')
+    public function dummyMethod1($foo, $bar, $baz, $boink = 'boink', $bonk = 'bonk')
     {
-        return $foo . $bar . implode('', $baz) . $boink;
+        return $foo . $bar . implode('', $baz) . $boink . $bonk;
     }
 
     public function testMethodDocBlock()
@@ -66,30 +70,35 @@ class ApiCallTest extends \DokuWikiTest
     {
         $call = new ApiCall([$this, 'dummyMethod1']);
         $this->assertEquals(
-            'bar1molfhaha',
-            $call(['bar', 1, ['molf'], 'haha']),
+            'bar1molfhahahuhu',
+            $call(['bar', 1, ['molf'], 'haha', 'huhu']),
             'positional parameters'
         );
         $this->assertEquals(
-            'bar1molfhaha',
-            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'], 'boink' => 'haha']),
+            'bar1molfhahahuhu',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'], 'boink' => 'haha', 'bonk' => 'huhu']),
             'named parameters'
         );
 
         $this->assertEquals(
-            'bar1molfboink',
+            'bar1molfboinkbonk',
             $call(['bar', 1, ['molf']]),
             'positional parameters, missing optional'
         );
         $this->assertEquals(
-            'bar1molfboink',
+            'bar1molfboinkbonk',
             $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf']]),
             'named parameters, missing optional'
         );
         $this->assertEquals(
-            'bar1molfboink',
-            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'],'nope' => 'egal']),
+            'bar1molfboinkbonk',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'], 'nope' => 'egal']),
             'named parameters, missing optional, additional unknown'
+        );
+        $this->assertEquals(
+            'bar1molfboinkhuhu',
+            $call(['foo' => 'bar', 'bar' => 1, 'baz' => ['molf'], 'bonk' => 'huhu']),
+            'named parameters, missing optional inbetween'
         );
 
         $call = new ApiCall('date');
@@ -100,14 +109,14 @@ class ApiCallTest extends \DokuWikiTest
     public function testCallMissingPositionalParameter()
     {
         $call = new ApiCall([$this, 'dummyMethod1']);
-        $this->expectException(\ArgumentCountError::class);
+        $this->expectException(ArgumentCountError::class);
         $call(['bar']);
     }
 
     public function testCallMissingNamedParameter()
     {
         $call = new ApiCall([$this, 'dummyMethod1']);
-        $this->expectException(\ArgumentCountError::class);
-        $call(['foo' => 'bar', 'baz'=> ['molf']]); // missing bar
+        $this->expectException(InvalidArgumentException::class);
+        $call(['foo' => 'bar', 'baz' => ['molf']]); // missing bar
     }
 }
