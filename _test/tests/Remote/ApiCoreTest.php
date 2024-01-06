@@ -2,12 +2,10 @@
 
 namespace dokuwiki\test\Remote;
 
-use dokuwiki\Extension\Event;
 use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
 use dokuwiki\Remote\RemoteException;
-use dokuwiki\test\mock\AuthDeletePlugin;
 use dokuwiki\test\mock\AuthPlugin;
 
 

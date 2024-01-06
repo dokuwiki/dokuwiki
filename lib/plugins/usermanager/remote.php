@@ -46,7 +46,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!$auth->canDo('addUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
-                114
+                404
             );
         }
 
@@ -62,7 +62,7 @@ class remote_plugin_usermanager extends RemotePlugin
             try {
                 $password = auth_pwgen($user);
             } catch (\Exception $e) {
-                throw new RemoteException('Could not generate password', 404); // FIXME adjust code
+                throw new RemoteException('Could not generate password', 405);
             }
         }
 
@@ -95,6 +95,15 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!auth_isadmin()) {
             throw new AccessDeniedException('Only admins are allowed to delete users', 114);
         }
+
+        global $auth;
+        if (!$auth->canDo('delUser')) {
+            throw new AccessDeniedException(
+                sprintf('Authentication backend %s can\'t do delUser', $auth->getPluginName()),
+                404
+            );
+        }
+
         /** @var AuthPlugin $auth */
         global $auth;
         return (bool)$auth->triggerUserMod('delete', [[$user]]);
