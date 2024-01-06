@@ -101,4 +101,10 @@ class Page extends ApiResponse
         $info = $pagelog->getRevisionInfo($this->revision);
         $this->author = is_array($info) ? ($info['user'] ?: $info['ip']) : null;
     }
+
+    /** @inheritdoc */
+    public function __toString()
+    {
+        return $this->id . '@' . $this->revision;
+    }
 }

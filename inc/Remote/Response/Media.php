@@ -62,4 +62,10 @@ class Media extends ApiResponse
     {
         $this->hash = md5(io_readFile($this->file, false));
     }
+
+    /** @inheritdoc */
+    public function __toString()
+    {
+        return $this->id . '@' . $this->revision;
+    }
 }

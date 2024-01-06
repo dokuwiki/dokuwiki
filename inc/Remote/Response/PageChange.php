@@ -43,4 +43,10 @@ class PageChange extends ApiResponse
         $this->type = $type;
         $this->sizechange = $sizechange;
     }
+
+    /** @inheritdoc */
+    public function __toString()
+    {
+        return $this->id . '@' . $this->revision;
+    }
 }

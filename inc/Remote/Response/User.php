@@ -62,4 +62,10 @@ class User extends ApiResponse
         $this->isadmin = auth_isAdmin($this->login, $this->groups);
         $this->ismanager = auth_isManager($this->login, $this->groups);
     }
+
+    /** @inheritdoc */
+    public function __toString()
+    {
+        return $this->login;
+    }
 }

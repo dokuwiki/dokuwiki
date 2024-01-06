@@ -22,4 +22,10 @@ class Link extends ApiResponse
         $this->page = $page;
         $this->href = $href;
     }
+
+    /** @inheritdoc */
+    public function __toString()
+    {
+        return $this->href;
+    }
 }

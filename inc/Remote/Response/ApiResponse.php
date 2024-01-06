@@ -10,4 +10,13 @@ namespace dokuwiki\Remote\Response;
  */
 abstract class ApiResponse
 {
+
+    /**
+     * A string representation of this object
+     *
+     * Used for sorting and debugging
+     *
+     * @return string
+     */
+    abstract public function __toString();
 }
