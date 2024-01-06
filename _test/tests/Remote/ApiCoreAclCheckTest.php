@@ -77,7 +77,7 @@ class ApiCoreAclCheckTest extends \DokuWikiTest {
         ];
 
         $params = ['nice_page'];
-        $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
 
         $auth->createUser("user1", "54321", "a User", "you@example.com");
         $auth->createUser("user2", "543210", "You", "he@example.com");
@@ -87,59 +87,63 @@ class ApiCoreAclCheckTest extends \DokuWikiTest {
             'nice_page',
             'user1'
         ];
-        $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
-
-        $params = [
-            'nice_page',
-            'mwuser' // member of group 'more'
-        ];
-        $this->assertEquals(AUTH_CREATE, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
 
         $params = [
             'nice_page',
             'mwuser',
-            [] //groups not retrieved
+            // member of group 'more' (automatically retrieved)
         ];
-        $this->assertEquals(AUTH_NONE, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_CREATE, $this->remote->call('core.aclCheck', $params));
+
+        $params = [
+            'nice_page',
+            'mwuser',
+            [] // member of group 'more' (automatically retrieved)
+        ];
+        $this->assertEquals(AUTH_CREATE, $this->remote->call('core.aclCheck', $params));
 
         $params = [
             'nice_page',
             'notexistinguser',
             ['more']
         ];
-        $this->assertEquals(AUTH_CREATE, $this->remote->call('wiki.aclCheck', $params));
-
-        $params = [
-            'nice_page',
-            'user2'
-        ];
-        $this->assertEquals(AUTH_UPLOAD, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_CREATE, $this->remote->call('core.aclCheck', $params));
 
         $params = [
             'nice_page',
             'user2',
-            [] //groups not retrieved
+            // (automatically retrieved)
         ];
-        $this->assertEquals(AUTH_UPLOAD, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_UPLOAD, $this->remote->call('core.aclCheck', $params));
 
         $params = [
-            'unknown_page',
-            'user2'
+            'nice_page',
+            'user2',
+            [] // (automatically retrieved)
         ];
-        $this->assertEquals(AUTH_EDIT, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_UPLOAD, $this->remote->call('core.aclCheck', $params));
 
         $params = [
             'unknown_page',
             'user2',
-            [] //groups not retrieved
+            // (automatically retrieved)
         ];
-        $this->assertEquals(AUTH_NONE, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
+
+        $params = [
+            'unknown_page',
+            'user2',
+            [] // (automatically retrieved)
+        ];
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
 
         $params = array(
             'nice_page',
-            'testuser' // superuser set via conf
+            'testuser', // superuser set via conf
+            // (automatically retrieved)
         );
-        $this->assertEquals(AUTH_ADMIN, $this->remote->call('wiki.aclCheck', $params));
+        $this->assertEquals(AUTH_ADMIN, $this->remote->call('core.aclCheck', $params));
     }
 
 }
