@@ -60,6 +60,7 @@ if ($INPUT->has('spec')) {
             foreach ($apigen->getErrorCodes() as $code) {
                 // duplicate codes are only shown with debug
                 if($code['code'] === $last && !$INPUT->has('debug')) continue;
+                $last = $code['code'];
                 echo '<tr><td>' . $code['code'] . '</td><td>' . hsc($code['message']) . '</td></tr>';
             }
             ?>
