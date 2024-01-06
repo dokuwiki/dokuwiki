@@ -50,7 +50,7 @@ class ApiCore
             'core.getPage' => (new ApiCall([$this, 'getPage'], 'pages')),
             'core.getPageHTML' => (new ApiCall([$this, 'getPageHTML'], 'pages')),
             'core.getPageInfo' => (new ApiCall([$this, 'getPageInfo'], 'pages')),
-            'core.getPageVersions' => new ApiCall([$this, 'getPageVersions'], 'pages'),
+            'core.getPageHistory' => new ApiCall([$this, 'getPageHistory'], 'pages'),
             'core.getPageLinks' => new ApiCall([$this, 'getPageLinks'], 'pages'),
             'core.getPageBackLinks' => new ApiCall([$this, 'getPageBackLinks'], 'pages'),
 
@@ -64,7 +64,7 @@ class ApiCore
 
             'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
             'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
-            // todo: implement getMediaVersions
+            // todo: implement getMediaHistory
             // todo: implement getMediaUsage
 
             'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
@@ -473,7 +473,7 @@ class ApiCore
      * @throws RemoteException
      * @author Michael Klier <chi@chimeric.de>
      */
-    public function getPageVersions($page, $first = 0)
+    public function getPageHistory($page, $first = 0)
     {
         global $conf;
 
