@@ -10,7 +10,6 @@ namespace dokuwiki\Remote\Response;
  */
 abstract class ApiResponse
 {
-
     /**
      * A string representation of this object
      *

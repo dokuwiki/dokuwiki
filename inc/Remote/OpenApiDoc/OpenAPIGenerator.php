@@ -92,9 +92,7 @@ class OpenAPIGenerator
             }
         }
 
-        usort($codes, function ($a, $b) {
-            return $a['code'] <=> $b['code'];
-        });
+        usort($codes, static fn($a, $b) => $a['code'] <=> $b['code']);
 
         return $codes;
     }
@@ -277,7 +275,7 @@ class OpenAPIGenerator
 
             $description = $info['description'];
             if ($info['optional'] && isset($info['default'])) {
-                $description .= ' [_default: `' . json_encode($info['default']) . '`_]';
+                $description .= ' [_default: `' . json_encode($info['default'], JSON_THROW_ON_ERROR) . '`_]';
             }
 
             $props[$name] = array_merge(
@@ -381,5 +379,4 @@ class OpenAPIGenerator
 
         return $schema;
     }
-
 }

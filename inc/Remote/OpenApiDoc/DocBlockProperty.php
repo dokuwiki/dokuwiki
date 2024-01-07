@@ -4,7 +4,6 @@ namespace dokuwiki\Remote\OpenApiDoc;
 
 class DocBlockProperty extends DocBlock
 {
-
     /** @var Type */
     protected $type;
 

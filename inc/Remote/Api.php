@@ -135,9 +135,7 @@ class Api
         // invoke the ApiCall
         try {
             return $methods[$method]($args);
-        } catch (\InvalidArgumentException $e) {
-            throw new RemoteException($e->getMessage(), -32602);
-        } catch (\ArgumentCountError $e) {
+        } catch (\InvalidArgumentException | \ArgumentCountError $e) {
             throw new RemoteException($e->getMessage(), -32602);
         }
     }

@@ -68,17 +68,21 @@ class DocBlock
     }
 
     /**
+     * Get the first line of the description
+     *
      * @return string
      */
-    public function getSummary(): string
+    public function getSummary()
     {
         return $this->summary;
     }
 
     /**
+     * Get the full description
+     *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }

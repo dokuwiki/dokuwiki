@@ -7,7 +7,6 @@ use ReflectionMethod;
 
 class DocBlockMethod extends DocBlock
 {
-
     /**
      * Parse the given docblock
      *
@@ -22,9 +21,10 @@ class DocBlockMethod extends DocBlock
         $this->refineReturn();
     }
 
+    /** @inheritdoc */
     protected function getContext()
     {
-        if($this->reflector instanceof ReflectionFunction) {
+        if ($this->reflector instanceof ReflectionFunction) {
             return null;
         }
         return parent::getContext();
@@ -67,7 +67,7 @@ class DocBlockMethod extends DocBlock
                 'optional' => $parameter->isOptional(),
                 'description' => '',
             ];
-            if($parameter->isDefaultValueAvailable()) {
+            if ($parameter->isDefaultValueAvailable()) {
                 $result[$parameter->getName()]['default'] = $parameter->getDefaultValue();
             }
         }
@@ -106,7 +106,6 @@ class DocBlockMethod extends DocBlock
             [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
             $result['type'] = new Type($type, $this->getContext());
             $result['description'] = $description;
-
         }
         $this->tags['return'] = $result;
     }

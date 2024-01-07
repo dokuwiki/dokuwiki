@@ -13,7 +13,6 @@ use dokuwiki\Remote\RemoteException;
  */
 class remote_plugin_usermanager extends RemotePlugin
 {
-
     /**
      * Create a new user
      *

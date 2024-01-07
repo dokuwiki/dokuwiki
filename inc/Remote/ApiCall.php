@@ -2,7 +2,6 @@
 
 namespace dokuwiki\Remote;
 
-
 use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
 use InvalidArgumentException;
 use ReflectionException;
@@ -76,67 +75,80 @@ class ApiCall
             } catch (ReflectionException $e) {
                 throw new RuntimeException('Failed to parse API method documentation', 0, $e);
             }
-
         }
         return $this->docs;
     }
 
-
     /**
+     * Is this a public method?
+     *
+     * Public methods can be called without authentication
+     *
      * @return bool
      */
-    public function isPublic(): bool
+    public function isPublic()
     {
         return $this->isPublic;
     }
 
     /**
+     * Set the public flag
+     *
      * @param bool $isPublic
      * @return $this
      */
-    public function setPublic(bool $isPublic = true): self
+    public function setPublic(bool $isPublic = true)
     {
         $this->isPublic = $isPublic;
         return $this;
     }
 
-
     /**
+     * Get information about the argument of this call
+     *
      * @return array
      */
-    public function getArgs(): array
+    public function getArgs()
     {
         return $this->getDocs()->getParameters();
     }
 
     /**
+     * Get information about the return value of this call
+     *
      * @return array
      */
-    public function getReturn(): array
+    public function getReturn()
     {
         return $this->getDocs()->getReturn();
     }
 
     /**
+     * Get the summary of this call
+     *
      * @return string
      */
-    public function getSummary(): string
+    public function getSummary()
     {
         return $this->getDocs()->getSummary();
     }
 
     /**
+     * Get the description of this call
+     *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->getDocs()->getDescription();
     }
 
     /**
+     * Get the category of this call
+     *
      * @return string
      */
-    public function getCategory(): string
+    public function getCategory()
     {
         return $this->category;
     }
@@ -155,16 +167,13 @@ class ApiCall
         foreach ($this->getDocs()->getParameters() as $arg => $arginfo) {
             if (isset($params[$arg])) {
                 $args[] = $params[$arg];
+            } elseif ($arginfo['optional'] && array_key_exists('default', $arginfo)) {
+                $args[] = $arginfo['default'];
             } else {
-                if ($arginfo['optional'] && array_key_exists('default', $arginfo)) {
-                    $args[] = $arginfo['default'];
-                } else {
-                    throw new InvalidArgumentException("Missing argument $arg");
-                }
+                throw new InvalidArgumentException("Missing argument $arg");
             }
         }
 
         return $args;
     }
-
 }

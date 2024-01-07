@@ -67,5 +67,4 @@ class DocBlockClass extends DocBlock
 
         return $this->properties;
     }
-
 }

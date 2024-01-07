@@ -48,7 +48,7 @@ abstract class RemotePlugin extends Plugin
             if ($method_name[0] ===  '_') {
                 continue;
             }
-            if($method_name === 'getMethods') {
+            if ($method_name === 'getMethods') {
                 continue; // skip self, if overridden
             }
 

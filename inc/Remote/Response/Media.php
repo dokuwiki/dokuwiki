@@ -47,13 +47,13 @@ class Media extends ApiResponse
         $isimage = null,
         $hash = '',
         $author = ''
-    )
-    {
+    ) {
         $this->id = $id;
         $this->file = mediaFN($this->id, $revision);
         $this->revision = $revision ?: $mtime ?: filemtime($this->file);
         $this->size = $size ?? filesize($this->file);
-        $this->permission = $perms ?? auth_quickaclcheck($this->id);;
+        $this->permission = $perms ?? auth_quickaclcheck($this->id);
+        ;
         $this->isimage = (bool)($isimage ?? preg_match("/\.(jpe?g|gif|png)$/", $id));
         $this->hash = $hash;
         $this->author = $author;

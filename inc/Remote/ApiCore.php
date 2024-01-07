@@ -268,7 +268,7 @@ class ApiCore
         $opts['hash'] = $hash;
         search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
 
-        return array_map(fn($item) => new Page(
+        return array_map(static fn($item) => new Page(
             $item['id'],
             0, // we're searching current revisions only
             $item['mtime'],
@@ -720,7 +720,7 @@ class ApiCore
      * @throws AccessDeniedException
      * @throws RemoteException
      */
-    public function appendPage($page, $text, $summary='', $isminor=false)
+    public function appendPage($page, $text, $summary = '', $isminor = false)
     {
         $currentpage = $this->getPage($page);
         if (!is_string($currentpage)) {
@@ -766,7 +766,7 @@ class ApiCore
         $dir = utf8_encodeFN(str_replace(':', '/', $namespace));
         $data = [];
         search($data, $conf['mediadir'], 'search_media', $options, $dir);
-        return array_map(fn($item) => new Media(
+        return array_map(static fn($item) => new Media(
             $item['id'],
             0, // we're searching current revisions only
             $item['mtime'],

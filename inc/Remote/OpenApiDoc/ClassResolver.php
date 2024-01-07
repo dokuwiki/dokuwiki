@@ -2,22 +2,13 @@
 
 namespace dokuwiki\Remote\OpenApiDoc;
 
-
 class ClassResolver
 {
-
     /** @var ClassResolver */
     private static $instance;
 
     protected $classUses = [];
     protected $classDocs = [];
-
-    /**
-     * @internal Use ClassResolver::getInstance() instead
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Get a singleton instance
@@ -50,11 +41,7 @@ class ClassResolver
         }
         $classinfo = $this->getClassUses($context);
 
-        if (isset($classinfo['uses'][$classalias])) {
-            return $classinfo['uses'][$classalias];
-        }
-
-        return $classinfo['ownNS'] . '\\' . $classalias;
+        return $classinfo['uses'][$classalias] ?? $classinfo['ownNS'] . '\\' . $classalias;
     }
 
     /**
@@ -69,9 +56,9 @@ class ClassResolver
     public function document($classalias, $context)
     {
         $class = $this->resolve($classalias, $context);
-        if(!class_exists($class)) return null;
+        if (!class_exists($class)) return null;
 
-        if(isset($this->classDocs[$class])) {
+        if (isset($this->classDocs[$class])) {
             $reflector = new \ReflectionClass($class);
             $this->classDocs[$class] = new DocBlockClass($reflector);
         }
@@ -196,5 +183,4 @@ class ClassResolver
 
         return $source;
     }
-
 }

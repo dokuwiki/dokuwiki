@@ -48,8 +48,7 @@ class Page extends ApiResponse
         $perms = null,
         $hash = '',
         $author = ''
-    )
-    {
+    ) {
         $this->id = $id;
         $this->file = wikiFN($this->id, $revision);
         $this->revision = $revision ?: $mtime ?: @filemtime($this->file);
