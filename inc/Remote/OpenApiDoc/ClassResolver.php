@@ -153,7 +153,7 @@ class ClassResolver
                 switch ($token[0]) {
                     case T_STRING:
                     case T_NS_SEPARATOR:
-                    case T_NAME_QUALIFIED:
+                    case defined('T_NAME_QUALIFIED') ? T_NAME_QUALIFIED : -1: // PHP 7.4 compatibility
                         $currentUse[$record] .= $token[1];
                         break;
                 }
