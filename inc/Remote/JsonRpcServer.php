@@ -23,10 +23,11 @@ class JsonRpcServer
     /**
      * Serve the request
      *
+     * @param string $body Should only be set for testing, otherwise the request body is read from php://input
      * @return mixed
      * @throws RemoteException
      */
-    public function serve()
+    public function serve($body = '')
     {
         global $conf;
         global $INPUT;
@@ -49,8 +50,10 @@ class JsonRpcServer
         }
 
         try {
-            $body = file_get_contents('php://input');
-            if ($body !== '') {
+            if($body === '') {
+                $body = file_get_contents('php://input');
+            }
+            if($body !== '') {
                 $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
             } else {
                 $data = [];
