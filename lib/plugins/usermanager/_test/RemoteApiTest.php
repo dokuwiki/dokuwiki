@@ -30,8 +30,10 @@ class RemoteApiTest extends DokuWikiTest
 
         global $conf;
         $conf['remote'] = 1;
-        $conf['remoteuser'] = 'testuser, admin';
+        $conf['useacl'] = 1;
+        $conf['remoteuser'] = 'umtestuser, admin';
         $conf['superuser'] = 'admin';
+        $_SERVER['REMOTE_USER'] = '';
     }
 
     public function testCreateUserSuccess()
@@ -80,7 +82,7 @@ class RemoteApiTest extends DokuWikiTest
             'notify' => false
         ];
 
-        $_SERVER['REMOTE_USER'] = 'testuser';
+        $_SERVER['REMOTE_USER'] = 'umtestuser';
 
         $this->expectException(AccessDeniedException::class);
         $this->expectExceptionCode(114);
@@ -215,6 +217,19 @@ class RemoteApiTest extends DokuWikiTest
         $this->assertArrayNotHasKey('user1', $auth->users);
         $this->assertArrayHasKey('user2', $auth->users);
     }
+
+    public function testDeleteUserFailAccess()
+    {
+        global $auth;
+        $auth = new AuthPlugin();
+
+        $_SERVER['REMOTE_USER'] = 'umtestuser';
+
+        $this->expectException(AccessDeniedException::class);
+        $this->expectExceptionCode(114);
+        $this->remote->call('plugin.usermanager.deleteUser', ['user' => 'user1']);
+    }
+
 
     public function testDeleteUserFailNoExist()
     {
