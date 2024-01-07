@@ -4,7 +4,7 @@ namespace dokuwiki\Remote;
 
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Logger;
-use dokuwiki\test\Remote\MockApiCore;
+use dokuwiki\test\Remote\Mock\ApiCore as MockApiCore;
 
 /**
  * This class provides information about remote access to the wiki.

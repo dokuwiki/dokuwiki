@@ -4,6 +4,7 @@ namespace dokuwiki\test\Remote\Mock;
 
 
 use dokuwiki\Remote\ApiCall;
+use dokuwiki\Remote\Response\Link;
 
 class ApiCore
 {
@@ -21,64 +22,8 @@ class ApiCore
             'wiki.twoArgMethod' => new ApiCall([$this, 'twoArgMethod']),
             'wiki.twoArgWithDefaultArg' => new ApiCall([$this, 'twoArgWithDefaultArg']),
             'wiki.publicCall' => (new ApiCall([$this, 'publicCall']))->setPublic(),
+            'wiki.getStructuredData' => (new ApiCall([$this, 'getStructuredData'])),
         ];
-
-        /*
-           array(
-           'wiki.stringTestMethod' => array(
-               'args' => array(),
-               'return' => 'string',
-               'doc' => 'Test method',
-               'name' => 'stringTestMethod',
-           ), 'wiki.intTestMethod' => array(
-               'args' => array(),
-               'return' => 'int',
-               'doc' => 'Test method',
-               'name' => 'intTestMethod',
-           ), 'wiki.floatTestMethod' => array(
-               'args' => array(),
-               'return' => 'float',
-               'doc' => 'Test method',
-               'name' => 'floatTestMethod',
-           ), 'wiki.dateTestMethod' => array(
-               'args' => array(),
-               'return' => 'date',
-               'doc' => 'Test method',
-               'name' => 'dateTestMethod',
-           ), 'wiki.fileTestMethod' => array(
-               'args' => array(),
-               'return' => 'file',
-               'doc' => 'Test method',
-               'name' => 'fileTestMethod',
-           ), 'wiki.voidTestMethod' => array(
-               'args' => array(),
-               'return' => 'void',
-               'doc' => 'Test method',
-               'name' => 'voidTestMethod',
-           ),  'wiki.oneStringArgMethod' => array(
-               'args' => array('string'),
-               'return' => 'string',
-               'doc' => 'Test method',
-               'name' => 'oneStringArgMethod',
-           ), 'wiki.twoArgMethod' => array(
-               'args' => array('string', 'int'),
-               'return' => 'array',
-               'doc' => 'Test method',
-               'name' => 'twoArgMethod',
-           ), 'wiki.twoArgWithDefaultArg' => array(
-               'args' => array('string', 'string'),
-               'return' => 'string',
-               'doc' => 'Test method',
-               'name' => 'twoArgWithDefaultArg',
-           ), 'wiki.publicCall' => array(
-               'args' => array(),
-               'return' => 'boolean',
-               'doc' => 'testing for public access',
-               'name' => 'publicCall',
-               'public' => 1
-           )
-       );
-           */
     }
 
     function stringTestMethod()
@@ -131,4 +76,8 @@ class ApiCore
         return true;
     }
 
+    function getStructuredData()
+    {
+        return new Link('internal', 'wiki:dokuwiki', 'https://www.dokuwiki.org/wiki:dokuwiki');
+    }
 }
