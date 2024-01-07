@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace dokuwiki\test\Remote\Mock;
 
 
 use dokuwiki\Remote\ApiCall;
 
-class MockApiCore
+class ApiCore
 {
 
-    function getRemoteInfo()
+    function getMethods()
     {
         return [
             'wiki.stringTestMethod' => new ApiCall([$this, 'stringTestMethod']),
