@@ -112,6 +112,7 @@ class auth_plugin_authplain extends AuthPlugin
         $userline = [$user, $pass, $name, $mail, $groups];
         $userline = str_replace('\\', '\\\\', $userline); // escape \ as \\
         $userline = str_replace(':', '\\:', $userline); // escape : as \:
+        $userline = str_replace('#', '\\#', $userline); // escape # as \
         $userline = implode(':', $userline) . "\n";
         return $userline;
     }
@@ -415,13 +416,14 @@ class auth_plugin_authplain extends AuthPlugin
 
         $lines = file($file);
         foreach ($lines as $line) {
-            $line = preg_replace('/#.*$/', '', $line); //ignore comments
+            $line = preg_replace('/(?<!\\\\)#.*$/', '', $line); //ignore comments (unless escaped)
             $line = trim($line);
             if (empty($line)) continue;
 
             $row = $this->splitUserData($line);
             $row = str_replace('\\:', ':', $row);
             $row = str_replace('\\\\', '\\', $row);
+            $row = str_replace('\\#', '#', $row);
 
             $groups = array_values(array_filter(explode(",", $row[4])));
 
