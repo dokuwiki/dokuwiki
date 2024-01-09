@@ -186,7 +186,7 @@ class OpenAPIGenerator
 
         $definition = [
             'operationId' => $method,
-            'summary' => $call->getSummary(),
+            'summary' => $call->getSummary() ?: $method,
             'description' => $description,
             'tags' => [PhpString::ucwords($call->getCategory())],
             'requestBody' => [

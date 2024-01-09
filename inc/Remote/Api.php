@@ -64,7 +64,7 @@ class Api
     {
         if (!$this->coreMethods) {
             if ($apiCore === null) {
-                $this->coreMethods = (new ApiCore())->getMethods();
+                $this->coreMethods = (new LegacyApiCore())->getMethods();
             } else {
                 $this->coreMethods = $apiCore->getMethods();
             }
