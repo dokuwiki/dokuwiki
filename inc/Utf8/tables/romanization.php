@@ -299,7 +299,6 @@ return [
     // Japanese hiragana
 
     // 3 character syllables, っ doubles the consonant after
-    'っちゃ' => 'ccha',
     'っびゃ' => 'bbya',
     'っびぇ' => 'bbye',
     'っびぃ' => 'bbyi',
@@ -641,7 +640,7 @@ return [
     'ファー' => 'faa',
     'フォー' => 'foo',
     'フャー' => 'fyaa',
-    'フェー' => 'fyee',
+    'フェー' => 'fee',
     'フィー' => 'fyii',
     'フョー' => 'fyoo',
     'フュー' => 'fyuu',
