@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author pavulondit <pavloo@vp.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
@@ -95,5 +96,6 @@ $lang['git']                   = 'To rozszerzenie zostało zainstalowane przez g
 $lang['auth']                  = 'Ta wtyczka autoryzacji nie jest włączona w konfiguracji, rozważ jej wyłączenie.';
 $lang['install_url']           = 'Instaluj z URL:';
 $lang['install_upload']        = 'Załaduj Rozszerzenie ';
+$lang['repo_badresponse']      = 'Repozytorium wtyczek zwróciło nieprawidłową odpowiedź.';
 $lang['repo_error']            = 'Nie można skontaktować się z repozytorium wtyczek. Upewnij się, że twój serwer może skontaktować się z www.dokuwiki.org i sprawdzić ustawienia serwera proxy.';
 $lang['nossl']                 = 'Twój PHP wydaje się nie obsługiwać protokołu SSL. Pobieranie nie zadziała dla wielu rozszerzeń DokuWiki.';
