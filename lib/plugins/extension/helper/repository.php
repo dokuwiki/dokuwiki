@@ -7,10 +7,10 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-use dokuwiki\Extension\Plugin;
 use dokuwiki\Cache\Cache;
-use dokuwiki\HTTP\DokuHTTPClient;
+use dokuwiki\Extension\Plugin;
 use dokuwiki\Extension\PluginController;
+use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
  * Class helper_plugin_extension_repository provides access to the extension repository on dokuwiki.org
@@ -31,7 +31,7 @@ class helper_plugin_extension_repository extends Plugin
         global $plugin_controller;
         if ($this->hasAccess()) {
             $list = $plugin_controller->getList('', true);
-            $request_data = ['fmt' => 'php'];
+            $request_data = ['fmt' => 'json'];
             $request_needed = false;
             foreach ($list as $name) {
                 $cache = new Cache('##extension_manager##' . $name, '.repo');
@@ -51,10 +51,15 @@ class helper_plugin_extension_repository extends Plugin
                 $httpclient = new DokuHTTPClient();
                 $data = $httpclient->post(self::EXTENSION_REPOSITORY_API, $request_data);
                 if ($data !== false) {
-                    $extensions = unserialize($data);
-                    foreach ($extensions as $extension) {
-                        $cache = new Cache('##extension_manager##' . $extension['plugin'], '.repo');
-                        $cache->storeCache(serialize($extension));
+                    try {
+                        $extensions = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+                        foreach ($extensions as $extension) {
+                            $cache = new Cache('##extension_manager##' . $extension['plugin'], '.repo');
+                            $cache->storeCache(serialize($extension));
+                        }
+                    } catch (JsonException $e) {
+                        msg($this->getLang('repo_badresponse'), -1);
+                        $this->has_access = false;
                     }
                 } else {
                     $this->has_access = false;
@@ -78,12 +83,16 @@ class helper_plugin_extension_repository extends Plugin
                 $httpclient = new DokuHTTPClient();
                 $httpclient->timeout = 5;
                 $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?cmd=ping');
-                if ($data !== false) {
-                    $this->has_access = true;
-                    $cache->storeCache(1);
-                } else {
+                if ($data === false) {
                     $this->has_access = false;
                     $cache->storeCache(0);
+                } elseif ($data !== '1') {
+                    msg($this->getLang('repo_badresponse'), -1);
+                    $this->has_access = false;
+                    $cache->storeCache(0);
+                } else {
+                    $this->has_access = true;
+                    $cache->storeCache(1);
                 }
             } else {
                 $this->has_access = ($cache->retrieveCache(false) == 1);
@@ -95,7 +104,7 @@ class helper_plugin_extension_repository extends Plugin
     /**
      * Get the remote data of an individual plugin or template
      *
-     * @param string $name  The plugin name to get the data for, template names need to be prefix by 'template:'
+     * @param string $name The plugin name to get the data for, template names need to be prefix by 'template:'
      * @return array The data or null if nothing was found (possibly no repository access)
      */
     public function getData($name)
@@ -109,14 +118,18 @@ class helper_plugin_extension_repository extends Plugin
         ) {
             $this->loaded_extensions[$name] = true;
             $httpclient = new DokuHTTPClient();
-            $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?fmt=php&ext[]=' . urlencode($name));
+            $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?fmt=json&ext[]=' . urlencode($name));
             if ($data !== false) {
-                $result = unserialize($data);
-                if (count($result)) {
-                    $cache->storeCache(serialize($result[0]));
-                    return $result[0];
+                try {
+                    $result = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+                    if (count($result)) {
+                        $cache->storeCache(serialize($result[0]));
+                        return $result[0];
+                    }
+                } catch (JsonException $e) {
+                    msg($this->getLang('repo_badresponse'), -1);
+                    $this->has_access = false;
                 }
-                return [];
             } else {
                 $this->has_access = false;
             }
@@ -136,12 +149,17 @@ class helper_plugin_extension_repository extends Plugin
     public function search($q)
     {
         $query = $this->parseQuery($q);
-        $query['fmt'] = 'php';
+        $query['fmt'] = 'json';
 
         $httpclient = new DokuHTTPClient();
         $data = $httpclient->post(self::EXTENSION_REPOSITORY_API, $query);
         if ($data === false) return [];
-        $result = unserialize($data);
+        try {
+            $result = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            msg($this->getLang('repo_badresponse'), -1);
+            return [];
+        }
 
         $ids = [];
 
@@ -164,7 +182,7 @@ class helper_plugin_extension_repository extends Plugin
      */
     protected function parseQuery($q)
     {
-        $parameters = ['tag'  => [], 'mail' => [], 'type' => [], 'ext'  => []];
+        $parameters = ['tag' => [], 'mail' => [], 'type' => [], 'ext' => []];
 
         // extract tags
         if (preg_match_all('/(^|\s)(tag:([\S]+))/', $q, $matches, PREG_SET_ORDER)) {

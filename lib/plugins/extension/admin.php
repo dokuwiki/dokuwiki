@@ -57,7 +57,7 @@ class admin_plugin_extension extends AdminPlugin
         if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
             $url = $this->gui->tabURL('', ['purge' => 1], '&');
             msg($this->getLang('repo_error') .
-                ' [<a href="' . $url . '">' . $this->getLang('repo_retry') . '</a>]', -1);
+                ' [<a href="' . $url . '" rel="noreferrer">' . $this->getLang('repo_retry') . '</a>]', -1);
         }
 
         if (!in_array('ssl', stream_get_transports())) {
