@@ -24,6 +24,7 @@ use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
@@ -38,6 +39,7 @@ use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -113,19 +115,21 @@ return static function (RectorConfig $rectorConfig): void {
         StaticClosureRector::class,
         SimplifyUselessVariableRector::class, // seems to strip constructor property initializations
         PostIncDecToPreIncDecRector::class,
-        RemoveUselessParamTagRector::class,
         DisallowedEmptyRuleFixerRector::class,
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         SimplifyIfReturnBoolRector::class,
         StrictArraySearchRector::class, // we cannot assume strict search is always wanted
-        RemoveUselessVarTagRector::class,
         TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
         RemoveExtraParametersRector::class, // this actually broke code
         RemoveUnusedNonEmptyArrayBeforeForeachRector::class, // seems unreliable when checking on array keys
         RemoveAlwaysTrueIfConditionRector::class, // fails with if(defined(...)) constructs
         RemoveUnreachableStatementRector::class, // fails GOTO in authpdo -> should be rewritten with exceptions
+        ReturnNeverTypeRector::class,
+        RemoveUselessParamTagRector::class, // keep doc blocks
+        RemoveUselessVarTagRector::class, // keep doc blocks
+        RemoveUselessReturnTagRector::class, // keep doc blocks
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
