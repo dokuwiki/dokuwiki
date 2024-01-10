@@ -3,6 +3,7 @@
 namespace dokuwiki\Remote;
 
 use dokuwiki\Utf8\PhpString;
+use IXR\DataType\Base64;
 use IXR\DataType\Date;
 
 /**
@@ -110,7 +111,7 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyGetAttachment($id)
     {
-        return $this->getMedia($id);
+        return new Base64(base64_decode($this->getMedia($id)));
     }
 
     /**
@@ -369,7 +370,7 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyPutAttachment($id, $file, $params = [])
     {
-        $ok = $this->saveMedia($id, $file, $params['ow'] ?? false);
+        $ok = $this->saveMedia($id, base64_encode($file), $params['ow'] ?? false);
         if ($ok === true) {
             return cleanID($id);
         } else {
