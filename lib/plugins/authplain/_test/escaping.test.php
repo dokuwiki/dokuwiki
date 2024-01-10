@@ -66,6 +66,14 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         $this->assertEquals($name,$user['name']);
     }
 
+    public function testNameWithHash() {
+        $name = "Hash # User";
+        $this->auth->createUser("slashuser", "password", $name, "me@example.com");
+        $this->reloadUsers();
+        $user = $this->auth->getUserData("slashuser");
+        $this->assertEquals($name,$user['name']);
+    }
+
     public function testModifyUser() {
         global $conf;
         $conf['passcrypt'] = 'mediawiki';
