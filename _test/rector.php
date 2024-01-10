@@ -47,6 +47,9 @@ return static function (RectorConfig $rectorConfig): void {
     require_once __DIR__ . '/rector/DokuWikiPtlnRector.php';
     require_once __DIR__ . '/rector/DokuWikiRenamePrintToEcho.php';
 
+    // tune parallel task settings (see rectorphp/rector#8396)
+    $rectorConfig->parallel(120, 16, 10);
+
     $rectorConfig->paths([
         __DIR__ . '/../inc/',
         __DIR__ . '/../lib/',
