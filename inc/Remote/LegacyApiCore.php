@@ -95,7 +95,14 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyGetPage($id)
     {
-        return $this->getPage($id);
+        try {
+            return $this->getPage($id);
+        } catch (RemoteException $e) {
+            if ($e->getCode() === 121) {
+                return '';
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -103,7 +110,14 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyGetPageVersion($id, $rev = '')
     {
-        return $this->getPage($id, $rev);
+        try {
+            return $this->getPage($id, $rev);
+        } catch (RemoteException $e) {
+            if ($e->getCode() === 121) {
+                return '';
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -131,7 +145,14 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyGetPageHTML($id)
     {
-        return $this->getPageHTML($id);
+        try {
+            return $this->getPageHTML($id);
+        } catch (RemoteException $e) {
+            if ($e->getCode() === 121) {
+                return '';
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -139,7 +160,14 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyGetPageHTMLVersion($id, $rev = '')
     {
-        return $this->getPageHTML($id, (int)$rev);
+        try {
+            return $this->getPageHTML($id, (int)$rev);
+        } catch (RemoteException $e) {
+            if ($e->getCode() === 121) {
+                return '';
+            }
+            throw $e;
+        }
     }
 
     /**
