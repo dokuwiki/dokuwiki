@@ -11,13 +11,14 @@
  */
 
 use dokuwiki\JWT;
-use phpseclib\Crypt\AES;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\PassHash;
 use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
+use phpseclib3\Crypt\AES;
+use phpseclib3\Crypt\Common\SymmetricKey;
 
 /**
  * Initialize the auth system.
@@ -434,8 +435,9 @@ function auth_random($min, $max)
 function auth_encrypt($data, $secret)
 {
     $iv     = auth_randombytes(16);
-    $cipher = new AES();
-    $cipher->setPassword($secret);
+    $cipher = new AES('cbc');
+    $cipher->setPassword($secret, 'pbkdf2', 'sha1', 'phpseclib');
+    $cipher->setIV($iv);
 
     /*
     this uses the encrypted IV as IV as suggested in
@@ -458,8 +460,8 @@ function auth_encrypt($data, $secret)
 function auth_decrypt($ciphertext, $secret)
 {
     $iv     = substr($ciphertext, 0, 16);
-    $cipher = new AES();
-    $cipher->setPassword($secret);
+    $cipher = new AES('cbc');
+    $cipher->setPassword($secret, 'pbkdf2', 'sha1', 'phpseclib');
     $cipher->setIV($iv);
 
     return $cipher->decrypt(substr($ciphertext, 16));

@@ -23,11 +23,15 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         ),
         'p' => 
         array (
-            'phpseclib\\' => 10,
+            'phpseclib3\\' => 11,
         ),
         'S' => 
         array (
             'SimplePie\\' => 10,
+        ),
+        'P' => 
+        array (
+            'ParagonIE\\ConstantTime\\' => 23,
         ),
         'I' => 
         array (
@@ -61,13 +65,17 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/src',
         ),
-        'phpseclib\\' => 
+        'phpseclib3\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
         'SimplePie\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
         'IXR\\tests\\' => 
         array (
