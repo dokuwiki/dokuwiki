@@ -9,39 +9,10 @@ use dokuwiki\Remote\AccessDeniedException;
 class remote_plugin_acl extends RemotePlugin
 {
     /**
-     * Returns details about the remote plugin methods
+     * Get the list all ACL config entries
      *
-     * @return array Information about all provided methods. {@see dokuwiki\Remote\RemoteAPI}
-     */
-    public function _getMethods()
-    {
-        return [
-            'listAcls' => [
-                'args' => [],
-                'return' => 'Array of ACLs {scope, user, permission}',
-                'name' => 'listAcls',
-                'doc' => 'Get the list of all ACLs'
-            ],
-            'addAcl' => [
-                'args' => ['string', 'string', 'int'],
-                'return' => 'int',
-                'name' => 'addAcl',
-                'doc' => 'Adds a new ACL rule.'
-            ],
-            'delAcl' => [
-                'args' => ['string', 'string'],
-                'return' => 'int',
-                'name' => 'delAcl',
-                'doc' => 'Delete an existing ACL rule.'
-            ]
-        ];
-    }
-
-    /**
-     * List all ACL config entries
-     *
+     * @return array {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
      * @throws AccessDeniedException
-     * @return dictionary {Scope: ACL}, where ACL = dictionnary {user/group: permissions_int}
      */
     public function listAcls()
     {
@@ -58,13 +29,13 @@ class remote_plugin_acl extends RemotePlugin
     }
 
     /**
-     * Add a new entry to ACL config
+     * Add a new ACL rule to the config
      *
-     * @param string $scope
-     * @param string $user
-     * @param int    $level see also inc/auth.php
+     * @param string $scope The page or namespace to apply the ACL to
+     * @param string $user The user or group to apply the ACL to
+     * @param int $level The permission level to set
+     * @return bool  If adding the ACL rule was successful
      * @throws AccessDeniedException
-     * @return bool
      */
     public function addAcl($scope, $user, $level)
     {
@@ -83,10 +54,10 @@ class remote_plugin_acl extends RemotePlugin
     /**
      * Remove an entry from ACL config
      *
-     * @param string $scope
-     * @param string $user
+     * @param string $scope The page or namespace the ACL applied to
+     * @param string $user The user or group the ACL applied to
+     * @return bool If removing the ACL rule was successful
      * @throws AccessDeniedException
-     * @return bool
      */
     public function delAcl($scope, $user)
     {

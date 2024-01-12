@@ -18,16 +18,16 @@ class JsonRpcServer
     public function __construct()
     {
         $this->remote = new Api();
-        $this->remote->setFileTransformation([$this, 'toFile']);
     }
 
     /**
      * Serve the request
      *
+     * @param string $body Should only be set for testing, otherwise the request body is read from php://input
      * @return mixed
      * @throws RemoteException
      */
-    public function serve()
+    public function serve($body = '')
     {
         global $conf;
         global $INPUT;
@@ -50,7 +50,9 @@ class JsonRpcServer
         }
 
         try {
-            $body = file_get_contents('php://input');
+            if ($body === '') {
+                $body = file_get_contents('php://input');
+            }
             if ($body !== '') {
                 $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
             } else {
@@ -168,16 +170,8 @@ class JsonRpcServer
      */
     public function call($methodname, $args)
     {
-        if (!array_is_list($args)) {
-            throw new RemoteException(
-                "server error. arguments need to passed as list. named arguments not supported",
-                -32602
-            );
-        }
-
         try {
-            $result = $this->remote->call($methodname, $args);
-            return $result;
+            return $this->remote->call($methodname, $args);
         } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
@@ -190,14 +184,5 @@ class JsonRpcServer
             http_status(400);
             throw $e;
         }
-    }
-
-    /**
-     * @param string $data
-     * @return string
-     */
-    public function toFile($data)
-    {
-        return base64_encode($data);
     }
 }
