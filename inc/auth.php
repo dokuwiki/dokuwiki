@@ -436,7 +436,7 @@ function auth_encrypt($data, $secret)
 {
     $iv     = auth_randombytes(16);
     $cipher = new AES('cbc');
-    $cipher->setPassword($secret);
+    $cipher->setPassword($secret, 'pbkdf2', 'sha1', 'phpseclib');
     $cipher->setIV($iv);
 
     /*
@@ -461,7 +461,7 @@ function auth_decrypt($ciphertext, $secret)
 {
     $iv     = substr($ciphertext, 0, 16);
     $cipher = new AES('cbc');
-    $cipher->setPassword($secret);
+    $cipher->setPassword($secret, 'pbkdf2', 'sha1', 'phpseclib');
     $cipher->setIV($iv);
 
     return $cipher->decrypt(substr($ciphertext, 16));
