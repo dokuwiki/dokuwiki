@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author chuachua <oceanynh@gmail.com>
  * @author Zhenzhe Huang <1991419264@qq.com>
  * @author 林晓东 <lin_xd@126.com>
  * @author alair <Mail@alair.top>
@@ -146,6 +147,7 @@ $lang['mailreturnpath']        = '非投递通知的收件人邮箱地址';
 $lang['mailprefix']            = '自动发送邮件时使用的邮件地址前缀';
 $lang['htmlmail']              = '发送更加美观，但体积更大的 HTML 多部分邮件。禁用则发送纯文本邮件。';
 $lang['dontlog']               = '为这些种类的日志禁用日志记录。';
+$lang['logretain']             = '日志要保留多少天。';
 $lang['sitemap']               = '生成 Google sitemap（天）';
 $lang['rss_type']              = 'XML feed 类型';
 $lang['rss_linkto']            = 'XML feed 链接到';

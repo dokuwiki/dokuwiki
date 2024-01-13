@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author chuachua <oceanynh@gmail.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author lempel <riverlempel@hotmail.com>
  * @author Cupen <Cupenoruler@foxmail.com>
@@ -100,5 +101,6 @@ $lang['git']                   = '这个扩展是通过 Git 安装的，您可�
 $lang['auth']                  = '这个认证插件没有在配置中启用，请考虑禁用它。';
 $lang['install_url']           = '从 URL 安装：';
 $lang['install_upload']        = '上传扩展：';
+$lang['repo_badresponse']      = '插件库返回无效响应。';
 $lang['repo_error']            = '无法连接到扩展库。请确定您的服务器可以连接 www.dokuwiki.org 并检查您的代理设置。';
 $lang['nossl']                 = '您的 PHP 似乎不支持 SSL，这将导致无法下载多数 DokuWiki 扩展。';
