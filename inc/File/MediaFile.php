@@ -7,6 +7,7 @@ use JpegMeta;
 class MediaFile
 {
     protected $id;
+    protected $rev;
     protected $path;
 
     protected $mime;
@@ -26,6 +27,7 @@ class MediaFile
     {
         $this->id = $id; //FIXME should it be cleaned?
         $this->path = mediaFN($id, $rev);
+        $this->rev = $rev;
 
         [$this->ext, $this->mime, $this->downloadable] = mimetype($this->path, false);
     }
@@ -34,6 +36,12 @@ class MediaFile
     public function getId()
     {
         return $this->id;
+    }
+
+    /** @return string|int Empty string for current version */
+    public function getRev()
+    {
+        return $this->rev;
     }
 
     /** @return string */

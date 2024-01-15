@@ -29,13 +29,16 @@ if (!actionOK('rss')) {
     exit;
 }
 
-// get params
-$opt = rss_parseOptions();
+$options = new \dokuwiki\Feed\FeedCreatorOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key = implode('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
-    . '$' . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT');
+$key = implode('$', [
+    $options->getCacheKey(),
+    $INPUT->server->str('REMOTE_USER'),
+    $INPUT->server->str('HTTP_HOST'),
+    $INPUT->server->str('SERVER_PORT')
+]);
 $cache = new Cache($key, '.feed');
 
 // prepare cache depends
@@ -47,7 +50,7 @@ $depends['purge'] = $INPUT->bool('purge');
 // time or the update interval has not passed, also handles conditional requests
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
-header('Content-Type: application/xml; charset=utf-8');
+header('Content-Type: ' . $options->get('mime_type'));
 header('X-Robots-Tag: noindex');
 if ($cache->useCache($depends)) {
     http_conditionalRequest($cache->getTime());
@@ -59,48 +62,16 @@ if ($cache->useCache($depends)) {
 }
 
 // create new feed
-$rss = new UniversalFeedCreator();
-$rss->title = $conf['title'] . (($opt['namespace']) ? ' ' . $opt['namespace'] : '');
-$rss->link = DOKU_URL;
-$rss->syndicationURL = DOKU_URL . 'feed.php';
-$rss->cssStyleSheet = DOKU_URL . 'lib/exe/css.php?s=feed';
-
-$image = new FeedImage();
-$image->title = $conf['title'];
-$image->url = tpl_getMediaFile([':wiki:favicon.ico', ':favicon.ico', 'images/favicon.ico'], true);
-$image->link = DOKU_URL;
-$rss->image = $image;
-
-$data = null;
-$modes = [
-    'list' => 'rssListNamespace',
-    'search' => 'rssSearch',
-    'recent' => 'rssRecentChanges'
-];
-
-if (isset($modes[$opt['feed_mode']])) {
-    $data = $modes[$opt['feed_mode']]($opt);
-} else {
-    $eventData = [
-        'opt' => &$opt,
-        'data' => &$data,
-    ];
-    $event = new Event('FEED_MODE_UNKNOWN', $eventData);
-    if ($event->advise_before(true)) {
-        echo sprintf('<error>Unknown feed mode %s</error>', hsc($opt['feed_mode']));
-        exit;
-    }
-    $event->advise_after();
+try {
+    $feed = (new \dokuwiki\Feed\FeedCreator($options))->build();
+    $cache->storeCache($feed);
+    echo $feed;
+} catch (Exception $e) {
+    http_status(500);
+    echo '<error>' . hsc($e->getMessage()) . '</error>';
+    exit;
 }
 
-rss_buildItems($rss, $data, $opt);
-$feed = $rss->createFeed($opt['feed_type']);
-
-// save cachefile
-$cache->storeCache($feed);
-
-// finally deliver
-echo $feed;
 
 // ---------------------------------------------------------------- //
 
