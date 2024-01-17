@@ -475,7 +475,7 @@ function getBaseURL($abs = null)
         );
         $dir = dirname('/' . $dir);
     } else {
-        $dir = '.'; //probably wrong
+        $dir = ''; //probably wrong, but we assume it's in the root
     }
 
     $dir = str_replace('\\', '/', $dir);             // bugfix for weird WIN behaviour
