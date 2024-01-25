@@ -97,5 +97,6 @@ $lang['git']                   = 'Cette extension a été installé via git, vou
 $lang['auth']                  = 'Votre configuration n\'utilise pas ce greffon d\'authentification. Vous devriez songer à le désactiver.';
 $lang['install_url']           = 'Installez depuis l\'URL :';
 $lang['install_upload']        = 'Téléversez l\'extension :';
-$lang['repo_error']            = 'Le dépôt d\'extensions est injoignable. Veuillez vous assurer que le server web est autorisé à contacter www.dokuwiki.org et vérifier les réglages de proxy.';
+$lang['repo_badresponse']      = 'Le référentiel d\'extensions a retourné une réponse invalide.';
+$lang['repo_error']            = 'Le référentiel d\'extensions est injoignable. Veuillez vous assurer que votre serveur web est autorisé à contacter www.dokuwiki.org et vérifier ses paramètres de proxy.';
 $lang['nossl']                 = 'Votre version de PHP semble ne pas prendre en charge SSL. Le téléchargement de nombreuses extensions va échouer.';
