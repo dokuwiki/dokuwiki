@@ -94,7 +94,7 @@ abstract class AsymmetricKey
 
     /**
      * @param string $type
-     * @return string
+     * @return array|string
      */
     abstract public function toString($type, array $options = []);
 
@@ -382,7 +382,7 @@ abstract class AsymmetricKey
             $shortname = $meta->getShortName();
             self::$plugins[static::ALGORITHM]['Keys'][strtolower($shortname)] = $fullname;
             if ($meta->hasConstant('IS_INVISIBLE')) {
-                self::$invisiblePlugins[static::ALGORITHM] = strtolower($name);
+                self::$invisiblePlugins[static::ALGORITHM][] = strtolower($shortname);
             }
         }
     }

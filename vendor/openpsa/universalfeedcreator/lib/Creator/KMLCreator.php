@@ -59,7 +59,6 @@ class KMLCreator extends FeedCreator
         $feed .= "  <name>".FeedCreator::iTrunc(htmlspecialchars($this->title), 100)."</name>
         <description>".$this->getDescription()."</description>
         <visibility>1</visibility>\n";
-        $this->truncSize = 500;
 
         for ($i = 0; $i < count($this->items); $i++) {
             //added here beucase description gets auto surrounded by cdata

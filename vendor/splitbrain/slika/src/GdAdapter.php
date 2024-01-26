@@ -231,30 +231,54 @@ class GdAdapter extends Adapter
         }
 
         //keep gif transparent color if possible
-        if ($this->extension == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
-            if (function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
-                $transcolorindex = @imagecolortransparent($this->image);
-                if ($transcolorindex >= 0) { //transparent color exists
-                    $transcolor = @imagecolorsforindex($this->image, $transcolorindex);
-                    $transcolorindex = @imagecolorallocate(
-                        $canvas,
-                        $transcolor['red'],
-                        $transcolor['green'],
-                        $transcolor['blue']
-                    );
-                    @imagefill($canvas, 0, 0, $transcolorindex);
-                    @imagecolortransparent($canvas, $transcolorindex);
-                } else { //filling with white
-                    $whitecolorindex = @imagecolorallocate($canvas, 255, 255, 255);
-                    @imagefill($canvas, 0, 0, $whitecolorindex);
-                }
-            } else { //filling with white
-                $whitecolorindex = @imagecolorallocate($canvas, 255, 255, 255);
-                @imagefill($canvas, 0, 0, $whitecolorindex);
-            }
+        if ($this->extension == 'gif') {
+            $this->keepGifTransparency($this->image, $canvas);
         }
 
         return $canvas;
+    }
+
+    /**
+     * Copy transparency from gif to gif
+     *
+     * If no transparency is found or the PHP does not support it, the canvas is filled with white
+     *
+     * @param resource $image Original image
+     * @param resource $canvas New, empty image
+     * @return void
+     */
+    protected function keepGifTransparency($image, $canvas)
+    {
+        if (!function_exists('imagefill') || !function_exists('imagecolorallocate')) {
+            return;
+        }
+
+        try {
+            if (!function_exists('imagecolorsforindex') || !function_exists('imagecolortransparent')) {
+                throw new \Exception('missing alpha methods');
+            }
+
+            $transcolorindex = @imagecolortransparent($image);
+            $transcolor = @imagecolorsforindex($image, $transcolorindex);
+            if (!$transcolor) {
+                // pre-PHP8 false is returned, in PHP8 an exception is thrown
+                throw new \ValueError('no valid alpha color');
+            }
+
+            $transcolorindex = @imagecolorallocate(
+                $canvas,
+                $transcolor['red'],
+                $transcolor['green'],
+                $transcolor['blue']
+            );
+            @imagefill($canvas, 0, 0, $transcolorindex);
+            @imagecolortransparent($canvas, $transcolorindex);
+
+        } catch (\Throwable $ignored) {
+            //filling with white
+            $whitecolorindex = @imagecolorallocate($canvas, 255, 255, 255);
+            @imagefill($canvas, 0, 0, $whitecolorindex);
+        }
     }
 
     /**
