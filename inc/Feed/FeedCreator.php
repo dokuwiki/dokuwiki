@@ -22,6 +22,7 @@ class FeedCreator
 
         $this->feed = new \UniversalFeedCreator();
         $this->feed->title = $this->options->get('title');
+        $this->feed->description = $this->options->get('subtitle');
         $this->feed->link = DOKU_URL;
         $this->feed->syndicationURL = DOKU_URL . 'feed.php';
         $this->feed->cssStyleSheet = DOKU_URL . 'lib/exe/css.php?s=feed';

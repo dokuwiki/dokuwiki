@@ -98,6 +98,7 @@ class FeedCreatorOptions
         if ($this->options['namespace']) {
             $this->options['title'] .= ' - ' . $this->options['namespace'];
         }
+        $this->options['subtitle'] = $conf['tagline'];
 
         $this->options = array_merge($this->options, $options);
 
