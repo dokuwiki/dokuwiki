@@ -57,61 +57,60 @@ class FeedPageProcessorTest extends \DokuWikiTest
         ]);
     }
 
-
-    /**
-     * @dataProvider provideData
-     */
-    public function testProcessing($data, $expectedMtime, $expectedAuthor, $expectedSummary)
+    public function testProcessing()
     {
         global $conf;
-        $conf['useacl'] = 1;
-        $conf['showuseras'] = 'username';
-        $conf['useheading'] = 1;
+        foreach ($this->provideData() as $data) {
+            [$data, $expectedMtime, $expectedAuthor, $expectedSummary] = $data;
+            $conf['useacl'] = 1;
+            $conf['showuseras'] = 'username';
+            $conf['useheading'] = 1;
 
-        $proc = new FeedPageProcessor($data);
+            $proc = new FeedPageProcessor($data);
 
-        $this->assertEquals('wiki:dokuwiki', $proc->getId());
-        $this->assertEquals('DokuWiki', $proc->getTitle());
-        $this->assertEquals($expectedAuthor, $proc->getAuthor());
-        $this->assertEquals($expectedMtime, $proc->getRev());
-        $this->assertEquals(null, $proc->getPrev());
-        $this->assertTrue($proc->isExisting());
-        $this->assertEquals(['wiki'], $proc->getCategory());
-        $this->assertStringContainsString('standards compliant', $proc->getAbstract());
-        $this->assertEquals($expectedSummary, $proc->getSummary());
+            $this->assertEquals('wiki:dokuwiki', $proc->getId());
+            $this->assertEquals('DokuWiki', $proc->getTitle());
+            $this->assertEquals($expectedAuthor, $proc->getAuthor());
+            $this->assertEquals($expectedMtime, $proc->getRev());
+            $this->assertEquals(null, $proc->getPrev());
+            $this->assertTrue($proc->isExisting());
+            $this->assertEquals(['wiki'], $proc->getCategory());
+            $this->assertStringContainsString('standards compliant', $proc->getAbstract());
+            $this->assertEquals($expectedSummary, $proc->getSummary());
 
-        $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime",
-            $proc->getURL('page')
-        );
-        $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=revisions",
-            $proc->getURL('rev')
-        );
-        $this->assertEquals(
-            'http://wiki.example.com/doku.php?id=wiki:dokuwiki',
-            $proc->getURL('current')
-        );
-        $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=diff",
-            $proc->getURL('diff')
-        );
+            $this->assertEquals(
+                "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime",
+                $proc->getURL('page')
+            );
+            $this->assertEquals(
+                "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=revisions",
+                $proc->getURL('rev')
+            );
+            $this->assertEquals(
+                'http://wiki.example.com/doku.php?id=wiki:dokuwiki',
+                $proc->getURL('current')
+            );
+            $this->assertEquals(
+                "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=diff",
+                $proc->getURL('diff')
+            );
 
-        $diff = explode("\n", $proc->getBody('diff'));
-        $this->assertEquals('<pre>', $diff[0]);
-        $this->assertStringStartsWith('@@', $diff[1]);
+            $diff = explode("\n", $proc->getBody('diff'));
+            $this->assertEquals('<pre>', $diff[0]);
+            $this->assertStringStartsWith('@@', $diff[1]);
 
-        $doc = new Document();
-        $doc->html($proc->getBody('htmldiff'));
-        $th = $doc->find('table th');
-        $this->assertGreaterThanOrEqual(2, $th->count());
+            $doc = new Document();
+            $doc->html($proc->getBody('htmldiff'));
+            $th = $doc->find('table th');
+            $this->assertGreaterThanOrEqual(2, $th->count());
 
-        $doc = new Document();
-        $doc->html($proc->getBody('html'));
-        $home = $doc->find('a[href^="https://www.dokuwiki.org/manual"]');
-        $this->assertGreaterThanOrEqual(1, $home->count());
+            $doc = new Document();
+            $doc->html($proc->getBody('html'));
+            $home = $doc->find('a[href^="https://www.dokuwiki.org/manual"]');
+            $this->assertGreaterThanOrEqual(1, $home->count());
 
-        $this->assertStringContainsString('standards compliant', $proc->getBody('abstract'));
+            $this->assertStringContainsString('standards compliant', $proc->getBody('abstract'));
+        }
     }
 
 }
