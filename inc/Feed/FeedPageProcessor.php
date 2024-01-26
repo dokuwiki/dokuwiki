@@ -112,7 +112,10 @@ class FeedPageProcessor extends FeedItemProcessor
         if ($rev) return $rev;
 
         if (page_exists($this->id)) {
-            $this->data['rev'] = filemtime(wikiFN($this->id));
+            $filename = wikiFN($this->id);
+            // See #4156
+            clearstatcache(true, $filename);
+            $this->data['rev'] = filemtime($filename);
             $this->data['exists'] = true;
         } else {
             $this->loadRevisions();
