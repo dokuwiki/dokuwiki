@@ -115,6 +115,7 @@ class FeedCreator
 
         $ns = ':' . cleanID($this->options->get('namespace'));
         $ns = utf8_encodeFN(str_replace(':', '/', $ns));
+
         $data = [];
         $search_opts = [
             'depth' => 1,
