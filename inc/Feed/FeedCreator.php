@@ -82,6 +82,7 @@ class FeedCreator
         if ($this->options->get('show_summary') && $proc->getSummary()) {
             $item->title .= ' - ' . $proc->getSummary();
         }
+        $item->date = $proc->getRev();
         [$item->authorEmail, $item->author] = $proc->getAuthor();
         $item->link = $proc->getURL($this->options->get('link_to'));
         $item->description = $proc->getBody($this->options->get('item_content'));
