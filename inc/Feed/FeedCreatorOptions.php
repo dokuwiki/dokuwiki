@@ -130,10 +130,7 @@ class FeedCreatorOptions
      */
     public function get($option, $default = null)
     {
-        if (isset($this->options[$option])) {
-            return $this->options[$option];
-        }
-        return $default;
+        return $this->options[$option] ?? $default;
     }
 
     /**

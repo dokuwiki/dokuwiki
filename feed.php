@@ -10,6 +10,7 @@
  * @global Input $INPUT
  */
 
+use dokuwiki\Feed\FeedCreatorOptions;
 use dokuwiki\Cache\Cache;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
@@ -29,7 +30,7 @@ if (!actionOK('rss')) {
     exit;
 }
 
-$options = new \dokuwiki\Feed\FeedCreatorOptions();
+$options = new FeedCreatorOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
