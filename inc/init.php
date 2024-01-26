@@ -542,6 +542,8 @@ function getBaseURL($abs = null)
  */
 function is_ssl()
 {
+    global $conf;
+
     // check if we are behind a reverse proxy
     if (
         (!empty($conf['trustedproxy'])) && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
