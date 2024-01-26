@@ -30,7 +30,6 @@ class FeedPageProcessorTest extends \DokuWikiTest
         ]);
 
         // an Item returned by FeedCreator::fetchItemsFromNamespace()
-        clearstatcache();
         yield ([
             [
                 'id' => 'wiki:dokuwiki',
@@ -40,18 +39,17 @@ class FeedPageProcessorTest extends \DokuWikiTest
                 'level' => 1,
                 'open' => true,
             ],
-            filemtime(wikiFN('wiki:dokuwiki')), // current revision
+            null, // current revision
             ['anonymous@undisclosed.example.com', 'Anonymous'], // unknown author
             '', // no summary
         ]);
 
         // an Item returned by FeedCreator::fetchItemsFromSearch()
-        clearstatcache();
         yield ([
             [
                 'id' => 'wiki:dokuwiki',
             ],
-            filemtime(wikiFN('wiki:dokuwiki')), // current revision
+            null, // current revision
             ['anonymous@undisclosed.example.com', 'Anonymous'], // unknown author
             '', // no summary
         ]);
@@ -67,6 +65,13 @@ class FeedPageProcessorTest extends \DokuWikiTest
         $conf['useacl'] = 1;
         $conf['showuseras'] = 'username';
         $conf['useheading'] = 1;
+
+        // if no expected mtime is given, we expect the filemtime of the page
+        // see https://github.com/dokuwiki/dokuwiki/pull/4156#issuecomment-1911842452 why we can't
+        // create this in the data provider
+        if ($expectedMtime === null) {
+            $expectedMtime = filemtime(wikiFN($data['id']));
+        }
 
         $proc = new FeedPageProcessor($data);
 
