@@ -17,7 +17,8 @@
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
         "kissifrot/php-ixr": "^1.8",
-        "splitbrain/php-jsstrip": "^1.0"
+        "splitbrain/php-jsstrip": "^1.0",
+        "php81_bc/strftime": "dev-fallback-intl"
     },
     "config": {
         "platform": {

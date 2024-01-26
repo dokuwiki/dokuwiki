@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki;
+namespace dokuwiki\Feed;
 
+use dokuwiki\HTTP\DokuHTTPClient;
 use SimplePie\File;
 use SimplePie\SimplePie;
-use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
  * Fetch an URL using our own HTTPClient

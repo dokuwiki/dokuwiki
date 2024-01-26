@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\ChangeLog\MediaChangeLog;
+use dokuwiki\Feed\FeedParser;
 use dokuwiki\File\MediaResolver;
 use dokuwiki\File\PageResolver;
 use dokuwiki\Utf8\PhpString;
@@ -1333,7 +1334,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         global $lang;
         global $conf;
 
-        require_once(DOKU_INC . 'inc/FeedParser.php');
         $feed = new FeedParser();
         $feed->set_feed_url($url);
 
