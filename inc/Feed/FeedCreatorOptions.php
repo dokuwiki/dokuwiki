@@ -157,5 +157,4 @@ class FeedCreatorOptions
     {
         return $this->types[$this->options['type']]['mime'];
     }
-
 }

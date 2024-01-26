@@ -13,7 +13,6 @@ use UnifiedDiffFormatter;
  */
 class FeedPageProcessor extends FeedItemProcessor
 {
-
     /** @var array[] metadata */
     protected $meta;
 
@@ -110,7 +109,7 @@ class FeedPageProcessor extends FeedItemProcessor
     public function getRev()
     {
         $rev = parent::getRev();
-        if($rev) return $rev;
+        if ($rev) return $rev;
 
         if (page_exists($this->id)) {
             $this->data['rev'] = filemtime(wikiFN($this->id));
@@ -213,5 +212,4 @@ class FeedPageProcessor extends FeedItemProcessor
         }
         return new Diff([''], explode("\n", rawWiki($this->getId(), '')));
     }
-
 }

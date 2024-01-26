@@ -6,7 +6,6 @@ use dokuwiki\Extension\Event;
 
 class FeedCreator
 {
-
     /** @var \UniversalFeedCreator */
     protected $feed;
 
