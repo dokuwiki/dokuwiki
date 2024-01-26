@@ -415,7 +415,7 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
  */
 function io_deleteFromFile($file, $badline, $regex = false)
 {
-    return io_replaceInFile($file, $badline, null, $regex, 0);
+    return io_replaceInFile($file, $badline, '', $regex, 0);
 }
 
 /**
