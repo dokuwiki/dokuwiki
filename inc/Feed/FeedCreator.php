@@ -214,6 +214,8 @@ class FeedCreator
             ':logo.jpg',
             ':wiki:favicon.ico',
             ':favicon.ico',
+            ':wiki:dokuwiki.svg',
+            ':wiki:dokuwiki-128.png',
             'images/favicon.ico'
         ], true);
     }
