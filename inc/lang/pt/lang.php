@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
@@ -160,6 +161,8 @@ $lang['profdeleted']           = 'A sua conta de utilizador foi removida deste w
 $lang['profconfdelete']        = 'Quero remover a minha conta deste wiki. <br/> Esta ação não pode ser desfeita.';
 $lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
 $lang['proffail']              = 'O perfil do usuário não foi atualizado.';
+$lang['proftokenlegend']       = 'Token de autenticação';
+$lang['proftokengenerate']     = 'Token para limpar';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Peça uma nova';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
 $lang['resendpwd']             = 'Definir nova senha para';
@@ -377,5 +380,6 @@ $lang['page_nonexist_rev']     = 'Página não existia no %s. Posteriormente, fo
 $lang['unable_to_parse_date']  = 'Não é possível analisar o parâmetro "%s".';
 $lang['email_signature_text']  = 'Este email foi gerado por DokuWiki em
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Arquivo de log muito grande. Linhas antigas foram ocultadas.';
 $lang['log_file_failed_to_open'] = 'Falha na abertura do arquivo de log.';
 $lang['log_file_failed_to_read'] = 'Um erro ocorreu na leitura do log.';

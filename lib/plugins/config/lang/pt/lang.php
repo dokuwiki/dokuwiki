@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
@@ -98,6 +99,7 @@ $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
 $lang['disableactions_rss']    = 'Sindicação XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo Limite para Autenticações (segundos)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS deverão ser enviados para o navegador somente via HTTPS? Desative essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação de maneira insegura.';
+$lang['samesitecookie']        = 'Outro site usa este cookie. Deixe vazio e permita que o navagador decida a política';
 $lang['remote']                = 'Ativar o sistema de API remota. Isso permite que outros aplicativos acessem o wiki via XML-RPC ou outros mecanismos.';
 $lang['remoteuser']            = 'Restringe o acesso remoto da API aos grupos separados por vírgula ou aos usuários fornecidos aqui. Deixe em branco para dar acesso a todos.';
 $lang['remotecors']            = 'Habilitar Cross-Origin Resource Sharing (CORS) para interfaces remotas. Asterisco (*) permite todas as origens. Deixe em branco para negar CORS.';
@@ -129,6 +131,7 @@ $lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para noti
 $lang['mailprefix']            = 'Prefixo de e-mail a ser utilizado para mensagens automáticas. Deixe em branco para usar o título do wiki';
 $lang['htmlmail']              = 'Envie e-mails multipartes em HTML para uma melhor aparência, mas maiores em tamanho. Desative para mensagens em texto simples.';
 $lang['dontlog']               = 'Desabilite a gravação de relatórios para estes tipos de relatórios.';
+$lang['logretain']             = 'Quantos dias manter no log.';
 $lang['sitemap']               = 'Gerar sitemap Google frequentemente (dias). 0 para desativar';
 $lang['rss_type']              = 'Tipo de feed XML';
 $lang['rss_linkto']            = 'Links de feed XML para';
