@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author NiteNeal <niteneal@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Nikita <obraztsov568@gmail.com>
  * @author Анатолий <anatol_m@mail.ru>
@@ -146,6 +147,7 @@ $lang['js']['media_done_btn']  = 'Готово';
 $lang['js']['media_drop']      = 'Переместите файлы сюда для загрузки';
 $lang['js']['media_cancel']    = 'убрать';
 $lang['js']['media_overwrt']   = 'Перезаписать существующие файлы';
+$lang['js']['data_insecure']   = 'ВНИМАНИЕ: Похоже, ваш каталог данных не защищен должным образом.  Пожалуйста, прочитайте о <a href="https://www.dokuwiki.org/security#web_access_security">безопасности веб-доступа в DokuWiki</a>. ';
 $lang['search_exact_match']    = 'Точное совпадение';
 $lang['search_starts_with']    = 'Начинается на';
 $lang['search_ends_with']      = 'Заканчивается';
@@ -178,6 +180,9 @@ $lang['profdeleted']           = 'Ваш аккаунт был удалён из
 $lang['profconfdelete']        = 'Я хочу удалить свой аккаунт из этой вики.<br />Это действие необратимо.';
 $lang['profconfdeletemissing'] = 'Флажок подтверждения не установлен';
 $lang['proffail']              = 'Профиль пользователя не обновлён.';
+$lang['proftokenlegend']       = 'Токен аутентификации ';
+$lang['proftokengenerate']     = 'Сбросить токен ';
+$lang['proftokeninfo']         = 'Токен аутентификации можно использовать, чтобы позволить сторонним приложениям входить в систему и действовать от вашего имени.  Сброс токена приведет к аннулированию старого и выходу из системы всех приложений, использовавших предыдущий токен. ';
 $lang['pwdforget']             = 'Забыли пароль? Получите новый';
 $lang['resendna']              = 'Вики не поддерживает повторную отправку пароля.';
 $lang['resendpwd']             = 'Установить новый пароль для';
@@ -399,3 +404,6 @@ $lang['page_nonexist_rev']     = 'Эта страница ещё не сущес
 $lang['unable_to_parse_date']  = 'Невозможно обработать параметр "%s".';
 $lang['email_signature_text']  = 'Это письмо создано «Докувики» с сайта
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Файл журнала слишком большой. Предыдущие строки пропущены! ';
+$lang['log_file_failed_to_open'] = 'Не удалось открыть файл журнала. ';
+$lang['log_file_failed_to_read'] = 'Произошла ошибка при чтении журнала. ';
