@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author CodyMaster007 <lazorenkoda1@gmail.com>
  * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  */
 $lang['menu']                  = 'Менеджер розширень';
@@ -33,6 +34,18 @@ $lang['search_for']            = 'Пошук розширень:';
 $lang['search']                = 'Пошук';
 $lang['bugs_features']         = 'Помилки';
 $lang['tags']                  = 'Теги:';
+$lang['installed']             = 'Встановлено:';
+$lang['repository']            = 'Репозиторій:';
+$lang['installed_version']     = 'Встановлена версія:';
+$lang['available_version']     = 'Доступна версія:';
+$lang['compatible']            = 'Сумісний з:';
 $lang['repo_retry']            = 'Спробувати знову';
+$lang['status']                = 'Статус:';
 $lang['status_installed']      = 'Статус:';
+$lang['status_not_installed']  = 'не встановлено';
+$lang['status_protected']      = 'захищений';
+$lang['status_enabled']        = 'увімкнено';
+$lang['status_disabled']       = 'вимкнено';
+$lang['status_plugin']         = 'плагін';
+$lang['status_template']       = 'шаблон';
 $lang['install_url']           = 'Встановити з URL-адреси:';
