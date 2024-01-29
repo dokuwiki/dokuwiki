@@ -975,13 +975,13 @@ function tpl_pagetitle($id = null, $ret = false)
 {
     global $AUTH, $ACT, $conf, $lang;
 
-    if(is_null($id)) {
+    if (is_null($id)) {
         global $ID;
         $id = $ID;
     }
 
     $name = $id;
-    if(useHeading('navigation')) {
+    if (useHeading('navigation')) {
         $first_heading = p_get_first_heading($id);
         if($first_heading) $name = $first_heading;
     }
