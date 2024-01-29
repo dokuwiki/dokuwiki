@@ -986,7 +986,7 @@ function tpl_pagetitle($id = null, $ret = false)
         if ($first_heading) $name = $first_heading;
     }
     if (auth_quickaclcheck($id) < AUTH_READ) {
-        $name = str_replace('.', '', $lang['accessdenied']);
+        $name = preg_replace('/(^\.|\.$)/', '', $lang['accessdenied']);
     }
 
     // default page title is the page name, modify with the current action
