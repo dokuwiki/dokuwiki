@@ -973,7 +973,7 @@ function tpl_pageinfo($ret = false)
  */
 function tpl_pagetitle($id = null, $ret = false)
 {
-    global $AUTH, $ACT, $conf, $lang;
+    global $ACT, $conf, $lang;
 
     if (is_null($id)) {
         global $ID;
