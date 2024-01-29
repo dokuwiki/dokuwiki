@@ -1414,7 +1414,7 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
         'ns'    => $ns,
         'data'  => [],
         'query' => (!blank($query)) ? $query : "*"
-    );
+    ];
     $evt = new Event('MEDIA_SEARCH', $evdata);
     if ($evt->advise_before()) {
         $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
