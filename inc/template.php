@@ -983,7 +983,7 @@ function tpl_pagetitle($id = null, $ret = false)
     $name = $id;
     if (useHeading('navigation')) {
         $first_heading = p_get_first_heading($id);
-        if($first_heading) $name = $first_heading;
+        if ($first_heading) $name = $first_heading;
     }
     if ($AUTH < AUTH_READ) {
         $name = str_replace('.', '', $lang['accessdenied']);
