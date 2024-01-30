@@ -438,6 +438,16 @@ class helper_plugin_extension_extension extends Plugin
         return false;
     }
 
+    /**
+     * Get the text of the update message if there is any
+     *
+     * @return string|bool The update message if there is any, false otherwise
+     */
+    public function getUpdateMessage()
+    {
+        if (!empty($this->remoteInfo['updatemessage'])) return $this->remoteInfo['updatemessage'];
+        return false;
+    }
 
     /**
      * Get the text of the security warning if there is any

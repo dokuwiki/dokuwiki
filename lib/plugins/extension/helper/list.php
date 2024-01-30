@@ -392,6 +392,11 @@ class helper_plugin_extension_list extends Plugin
                 sprintf($this->getLang('security_warning'), '<bdi>' . hsc($securitywarning) . '</bdi>') .
                 '</div>';
         }
+        if (($updateMessage = $extension->getUpdateMessage()) !== false) {
+            $html .=  '<div class="msg notify">' .
+                sprintf($this->getLang('update_message'), '<bdi>' . hsc($updateMessage) . '</bdi>') .
+                '</div>';
+        }
         if ($extension->updateAvailable()) {
             $html .=  '<div class="msg notify">' .
                 sprintf($this->getLang('update_available'), hsc($extension->getLastUpdate())) .

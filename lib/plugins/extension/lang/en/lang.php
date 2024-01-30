@@ -81,6 +81,7 @@ $lang['msg_nooverwrite']              = 'Extension %s already exists so it is no
 $lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
 $lang['security_issue']               = '<strong>Security Issue:</strong> %s';
 $lang['security_warning']             = '<strong>Security Warning:</strong> %s';
+$lang['update_message']               = '<strong>Update Message:</strong> %s';
 $lang['update_available']             = '<strong>Update:</strong> New version %s is available.';
 $lang['wrong_folder']                 = '<strong>Plugin installed incorrectly:</strong> Rename plugin directory "%s" to "%s".';
 $lang['url_change']                   = '<strong>URL changed:</strong> Download URL has changed since last download. Check if the new URL is valid before updating the extension.<br />New: %s<br />Old: %s';
