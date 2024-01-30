@@ -80,6 +80,7 @@ $lang['msg_nooverwrite']       = 'Rozszerzenie %s już istnieje więc nie zostan
 $lang['missing_dependency']    = '<strong>Brakująca lub wyłączona zależność:</strong> %s';
 $lang['security_issue']        = '<strong>Problemy bezpieczeństwa:</strong> %s';
 $lang['security_warning']      = '<strong>Alert Bezpieczeństwa:</strong>%s';
+$lang['update_message']        = '<strong>Wiadomość o aktualizacji:</strong> %s';
 $lang['update_available']      = '<strong>Uaktualnij</strong> Nowa wersja %s jest dostępna.';
 $lang['wrong_folder']          = '<strong>Nieprawidłowo zainstalowana wtyczka:</strong> Zmień nazwę katalogu wtyczek z "%s" na "%s".';
 $lang['url_change']            = '<strong>URL został zmieniony:</strong>URL zmienił się od czasu ostatniego pobrania. Przed aktualizacją rozszerzenia, sprawdź czy nowy adres URL jest prawidłowy.<br />Nowy: %s<br />Stary: %s';
