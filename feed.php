@@ -10,6 +10,7 @@
  * @global Input $INPUT
  */
 
+use dokuwiki\Feed\FeedCreator;
 use dokuwiki\Feed\FeedCreatorOptions;
 use dokuwiki\Cache\Cache;
 use dokuwiki\ChangeLog\MediaChangeLog;
@@ -64,7 +65,7 @@ if ($cache->useCache($depends)) {
 
 // create new feed
 try {
-    $feed = (new \dokuwiki\Feed\FeedCreator($options))->build();
+    $feed = (new FeedCreator($options))->build();
     $cache->storeCache($feed);
     echo $feed;
 } catch (Exception $e) {
