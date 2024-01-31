@@ -8,6 +8,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
         'fdc0e9724ddc47859c8bf0c1ea0a623a' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/constants.php',
+        '9e71c1459ef1226520e4b26dac3a180d' => __DIR__ . '/..' . '/php81_bc/strftime/src/php-8.1-strftime.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
@@ -32,6 +33,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'P' => 
         array (
             'ParagonIE\\ConstantTime\\' => 23,
+            'PHP81_BC\\strftime\\' => 18,
         ),
         'I' => 
         array (
@@ -76,6 +78,10 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'ParagonIE\\ConstantTime\\' => 
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'PHP81_BC\\strftime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php81_bc/strftime/src',
         ),
         'IXR\\tests\\' => 
         array (

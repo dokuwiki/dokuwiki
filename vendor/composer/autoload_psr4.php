@@ -15,6 +15,7 @@ return array(
     'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'SimplePie\\' => array($vendorDir . '/simplepie/simplepie/src'),
     'ParagonIE\\ConstantTime\\' => array($vendorDir . '/paragonie/constant_time_encoding/src'),
+    'PHP81_BC\\strftime\\' => array($vendorDir . '/php81_bc/strftime/src'),
     'IXR\\tests\\' => array($vendorDir . '/kissifrot/php-ixr/tests'),
     'IXR\\' => array($vendorDir . '/kissifrot/php-ixr/src'),
 );

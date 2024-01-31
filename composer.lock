@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fdb13c8abdf5a5c4124687e6f8d3b16",
+    "content-hash": "1de4c8b78078ad40a0b052e224c5a023",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -375,6 +375,55 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "php81_bc/strftime",
+            "version": "dev-fallback-intl",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alphp/strftime.git",
+                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alphp/strftime/zipball/88e98f00b5d9247e8168c1eb528ab138fbf743d2",
+                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "suggest": {
+                "ext-intl": "For proper locale aware output"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/php-8.1-strftime.php"
+                ],
+                "psr-4": {
+                    "PHP81_BC\\strftime\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fernando Herrero",
+                    "homepage": "https://github.com/alphp/strftime/graphs/contributors"
+                }
+            ],
+            "description": "Locale-formatted strftime using IntlDateFormatter (PHP 8.1 compatible)",
+            "support": {
+                "issues": "https://github.com/alphp/strftime/issues",
+                "source": "https://github.com/alphp/strftime"
+            },
+            "time": "2024-01-26T18:19:38+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -786,7 +835,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "geshi/geshi": 20
+        "geshi/geshi": 20,
+        "php81_bc/strftime": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

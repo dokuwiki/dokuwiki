@@ -388,6 +388,58 @@
             "install-path": "../paragonie/random_compat"
         },
         {
+            "name": "php81_bc/strftime",
+            "version": "dev-fallback-intl",
+            "version_normalized": "dev-fallback-intl",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alphp/strftime.git",
+                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alphp/strftime/zipball/88e98f00b5d9247e8168c1eb528ab138fbf743d2",
+                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "suggest": {
+                "ext-intl": "For proper locale aware output"
+            },
+            "time": "2024-01-26T18:19:38+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/php-8.1-strftime.php"
+                ],
+                "psr-4": {
+                    "PHP81_BC\\strftime\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fernando Herrero",
+                    "homepage": "https://github.com/alphp/strftime/graphs/contributors"
+                }
+            ],
+            "description": "Locale-formatted strftime using IntlDateFormatter (PHP 8.1 compatible)",
+            "support": {
+                "issues": "https://github.com/alphp/strftime/issues",
+                "source": "https://github.com/alphp/strftime"
+            },
+            "install-path": "../php81_bc/strftime"
+        },
+        {
             "name": "phpseclib/phpseclib",
             "version": "3.0.35",
             "version_normalized": "3.0.35.0",

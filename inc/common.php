@@ -1500,7 +1500,7 @@ function dformat($dt = null, $format = '')
     if (!$format) $format = $conf['dformat'];
 
     $format = str_replace('%f', datetime_h($dt), $format);
-    return strftime($format, $dt);
+    return \PHP81_BC\strftime($format, $dt);
 }
 
 /**

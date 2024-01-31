@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'fdc0e9724ddc47859c8bf0c1ea0a623a' => $vendorDir . '/openpsa/universalfeedcreator/lib/constants.php',
+    '9e71c1459ef1226520e4b26dac3a180d' => $vendorDir . '/php81_bc/strftime/src/php-8.1-strftime.php',
     'decc78cc4436b1292c6c0d151b19445c' => $vendorDir . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
 );
