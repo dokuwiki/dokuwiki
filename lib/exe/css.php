@@ -208,12 +208,12 @@ function css_parseless($css)
 {
     global $conf;
 
-    $less = new lessc();
-    $less->importDir = [DOKU_INC];
+    $less = new LesserPHP\Lessc();
+    $less->setImportDir([DOKU_INC]);
     $less->setPreserveComments(!$conf['compress']);
 
     if (defined('DOKU_UNITTEST')) {
-        $less->importDir[] = TMP_DIR;
+        $less->addImportDir(TMP_DIR);
     }
 
     try {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fdb13c8abdf5a5c4124687e6f8d3b16",
+    "content-hash": "34c61e4640c708005e450f6b5caa5cf8",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -149,60 +149,6 @@
                 "source": "https://github.com/kissifrot/php-ixr/tree/1.8.4"
             },
             "time": "2023-04-15T08:50:43+00:00"
-        },
-        {
-            "name": "marcusschwarz/lesserphp",
-            "version": "v0.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarcusSchwarz/lesserphp.git",
-                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MarcusSchwarz/lesserphp/zipball/64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
-                "reference": "64ece57ad81ab1fe4d2a1894729e0d293fce09ef",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2|^7.3|^7.4|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0|^9.0"
-            },
-            "bin": [
-                "plessc"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lessc.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                },
-                {
-                    "name": "Marcus Schwarz",
-                    "email": "github@maswaba.de",
-                    "homepage": "https://www.maswaba.de"
-                }
-            ],
-            "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
-            "homepage": "https://www.maswaba.de/lesserphpdocs/",
-            "support": {
-                "issues": "https://github.com/MarcusSchwarz/lesserphp/issues",
-                "source": "https://github.com/MarcusSchwarz/lesserphp/tree/v0.6.0"
-            },
-            "time": "2021-03-10T19:14:23+00:00"
         },
         {
             "name": "openpsa/universalfeedcreator",
@@ -561,6 +507,67 @@
                 "source": "https://github.com/simplepie/simplepie/tree/1.8.0"
             },
             "time": "2023-01-20T08:37:35+00:00"
+        },
+        {
+            "name": "splitbrain/lesserphp",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/splitbrain/lesserphp.git",
+                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/2e5d20c4ce9186a34554a137a4a1784fc5c29505",
+                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5",
+                "rector/rector": "^0.19",
+                "squizlabs/php_codesniffer": "^3.8"
+            },
+            "suggest": {
+                "ext-fileinfo": "For mime type guessing of embedded files"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LesserPHP\\": "src",
+                    "LesserPHP\\tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                },
+                {
+                    "name": "Marcus Schwarz",
+                    "email": "github@maswaba.de",
+                    "homepage": "https://www.maswaba.de"
+                },
+                {
+                    "name": "Andreas Gohr",
+                    "email": "andi@splitbrain.org",
+                    "homepage": "https://www.splitbrain.org"
+                }
+            ],
+            "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
+            "support": {
+                "issues": "https://github.com/splitbrain/lesserphp/issues",
+                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.0"
+            },
+            "time": "2024-02-02T11:47:26+00:00"
         },
         {
             "name": "splitbrain/php-archive",

@@ -28,9 +28,4 @@ return array(
     'RSSCreator10' => $vendorDir . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator10.php',
     'RSSCreator20' => $vendorDir . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator20.php',
     'UniversalFeedCreator' => $vendorDir . '/openpsa/universalfeedcreator/lib/UniversalFeedCreator.php',
-    'lessc' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
-    'lessc_formatter_classic' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
-    'lessc_formatter_compressed' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
-    'lessc_formatter_lessjs' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
-    'lessc_parser' => $vendorDir . '/marcusschwarz/lesserphp/lessc.inc.php',
 );
