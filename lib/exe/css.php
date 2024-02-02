@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use LesserPHP\Lessc;
 use dokuwiki\StyleUtils;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
@@ -208,7 +209,7 @@ function css_parseless($css)
 {
     global $conf;
 
-    $less = new LesserPHP\Lessc();
+    $less = new Lessc();
     $less->setImportDir([DOKU_INC]);
     $less->setPreserveComments(!$conf['compress']);
 
