@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mr_Fang <klxf@vip.qq.com>
  * @author chuachua <oceanynh@gmail.com>
  * @author Xin <chenxin1034@gmail.com>
  * @author lempel <riverlempel@hotmail.com>
@@ -85,6 +86,7 @@ $lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖
 $lang['missing_dependency']    = '<strong>缺少或者被禁用的依赖：</strong> %s';
 $lang['security_issue']        = '<strong>安全问题：</strong> %s';
 $lang['security_warning']      = '<strong>安全警告：</strong> %s';
+$lang['update_message']        = '<strong>更新提醒：</strong>%s';
 $lang['update_available']      = '<strong>更新：</strong>新版本 %s 已经可用。';
 $lang['wrong_folder']          = '<strong>扩展安装错误：</strong>请将扩展目录 "%s" 重命名为 "%s"。';
 $lang['url_change']            = '<strong>URL 已改变：</strong>自上次下载以来的下载 URL 已经改变。请在更新扩展前检查新 URL 是否有效。<br />新的：%s<br />旧的：%s';
