@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author mod <modex@mail.ru>
  * @author Impeck <impeck@ya.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Анатолий <anatol_m@mail.ru>
@@ -83,6 +84,7 @@ $lang['msg_nooverwrite']       = 'Расширение %s уже существ�
 $lang['missing_dependency']    = '<strong>Отсутствует или отключена зависимость:</strong> %s';
 $lang['security_issue']        = '<strong>Проблема безопасности:</strong> %s';
 $lang['security_warning']      = '<strong>Предупреждение безопасности:</strong> %s';
+$lang['update_message']        = '<strong>Сообщение об обновлении:</strong> %s';
 $lang['update_available']      = '<strong>Обновление:</strong> доступна новая версия %s';
 $lang['wrong_folder']          = '<strong>Плагин установлен неправильно:</strong> переименуйте директорию плагина из %s в %s';
 $lang['url_change']            = '<strong>Ссылка изменилась:</strong> ссылка для загрузки изменилась с&nbsp;прошлого раза. Проверьте новую ссылку прежде, чем обновлять дополнение.<br />Новая: %s<br />Старая: %s';
