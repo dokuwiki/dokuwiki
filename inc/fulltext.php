@@ -131,12 +131,18 @@ function _ft_pageSearch(&$data)
                 $stack[] = $pages_matched;
                 break;
             case 'AND': // and operation
-                [$pages1, $pages2] = array_splice($stack, -2);
-                $stack[] = ft_resultCombine([$pages1, $pages2]);
+                $pages = array_splice($stack, -2);
+                if (empty($pages)) {
+                    break;
+                }
+                $stack[] = ft_resultCombine($pages);
                 break;
             case 'OR':  // or operation
-                [$pages1, $pages2] = array_splice($stack, -2);
-                $stack[] = ft_resultUnite([$pages1, $pages2]);
+                $pages = array_splice($stack, -2);
+                if (empty($pages)) {
+                    break;
+                }
+                $stack[] = ft_resultUnite($pages);
                 break;
             case 'NOT': // not operation (unary)
                 $pages   = array_pop($stack);
