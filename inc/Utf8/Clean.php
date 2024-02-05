@@ -171,7 +171,22 @@ class Clean
     {
         if (self::isASCII($string)) return $string; //nothing to do
 
-        return strtr($string, Table::romanization());
+        $romanized = array();
+        $length = mb_strlen($string, 'UTF-8');
+        $romanizationTable = Table::romanization();
+        for ($i = 0; $i < $length; $i++) {
+            $char = mb_substr($string, $i, 1, 'UTF-8');
+            $code = mb_ord($char, 'UTF-8');
+            if (array_key_exists($char, $romanizationTable)) {
+                $romanized[] = $romanizationTable[$char];
+            } else if ($code >= Korean::KOREAN_START && $code <= Korean::KOREAN_END) {
+                $romanized[] = Korean::romanize_korean_character($char);
+            } else {
+                $romanized[] = $char;
+            }
+        }
+
+        return implode($romanized);
     }
 
     /**
