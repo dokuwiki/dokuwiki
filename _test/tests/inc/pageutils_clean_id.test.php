@@ -33,7 +33,7 @@ class init_clean_id_test extends DokuWikiTest
             ['foo bar', 'foo_bar'],
             ['PÄGÖ', 'paegoe'],
             ['Faß', 'fass'],
-            ['ښ侧化并곦  β', 'ښ侧化并곦_β'],
+            ['ښ侧化并곦  β', 'ښ侧化并gon_b'],
             ['page:page', 'page:page'],
             ['page;page', 'page:page'],
             ['page:page 1.2', 'page:page_1.2'],
@@ -73,7 +73,7 @@ class init_clean_id_test extends DokuWikiTest
             ['pagĖ', 'page', ['deaccent' => 2]],
             ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 2]],
             ['ښ', 'ښ', ['deaccent' => 2]],
-            ['ښ侧化并곦ঝഈ', 'ښ侧化并곦ঝഈ', ['deaccent' => 2]],
+            ['ښ侧化并곦ঝഈ', 'ښ侧化并gonঝഈ', ['deaccent' => 2]],
 
             // deaccent and force ascii
             ['pàge', 'page', ['deaccent' => 1, 'ascii' => true]],
