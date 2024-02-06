@@ -27,6 +27,9 @@ trait PluginTrait
             throw new \RuntimeException('Class does not follow the plugin naming convention');
         }
 
+        // class like action_plugin_myplugin_ajax belongs to plugin 'myplugin'
+        $ext = strtok($ext, '_');
+
         $base = [
             'base' => $ext,
             'author' => 'Unknown',
