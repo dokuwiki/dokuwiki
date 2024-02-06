@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
  * @author Paul Nizan <paul_nizan@hormail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
@@ -240,6 +241,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'a revisão anterior foi restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
+$lang['unknowndate']           = 'data desconhecida';
 $lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar o snippet';
 $lang['tools']                 = 'Ferramentas';

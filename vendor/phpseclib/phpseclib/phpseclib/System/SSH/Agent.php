@@ -133,9 +133,20 @@ class Agent
             }
         }
 
-        $this->fsock = fsockopen('unix://' . $address, 0, $errno, $errstr);
-        if (!$this->fsock) {
-            user_error("Unable to connect to ssh-agent (Error $errno: $errstr)");
+        if (in_array('unix', stream_get_transports())) {
+            $this->fsock = fsockopen('unix://' . $address, 0, $errno, $errstr);
+            if (!$this->fsock) {
+                user_error("Unable to connect to ssh-agent (Error $errno: $errstr)");
+            }
+        } else {
+            if (substr($address, 0, 9) != '\\\\.\\pipe\\' || strpos(substr($address, 9), '\\') !== false) {
+                user_error('Address is not formatted as a named pipe should be');
+            } else {
+                $this->fsock = fopen($address, 'r+b');
+                if (!$this->fsock) {
+                    user_error('Unable to open address');
+                }
+            }
         }
     }
 
@@ -234,11 +245,10 @@ class Agent
      * Signal that agent forwarding should
      * be requested when a channel is opened
      *
-     * @param Net_SSH2 $ssh
      * @return bool
      * @access public
      */
-    function startSSHForwarding($ssh)
+    function startSSHForwarding()
     {
         if ($this->forward_status == self::FORWARD_NONE) {
             $this->forward_status = self::FORWARD_REQUEST;

@@ -1,5 +1,5 @@
 {
-    "name": "splitbrain/dokuwiki",
+    "name": "dokuwiki/dokuwiki",
     "description": "DokuWiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database",
     "homepage": "https://www.dokuwiki.org",
     "type": "project",
@@ -13,10 +13,11 @@
         "geshi/geshi": "dev-master as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
-        "marcusschwarz/lesserphp": "^0.5.1",
+        "marcusschwarz/lesserphp": "^0.6",
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
-        "kissifrot/php-ixr": "^1.8"
+        "kissifrot/php-ixr": "^1.8",
+        "splitbrain/php-jsstrip": "^1.0"
     },
     "config": {
         "platform": {
@@ -24,7 +25,7 @@
         }
     },
     "suggest": {
-        "ext-mbstring": "The mbstring extension is highly reccomended to speed up all UTF-8 handling",
+        "ext-mbstring": "The mbstring extension is highly recommended to speed up all UTF-8 handling",
         "ext-intl": "The intl extension allows for better locale specific sorting",
         "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
         "phpunit/phpunit": "Allows automated tests to be run without system-wide install (only version 4-7 are supported)."

@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author cadetill <cadetill@gmail.com>
+ * @author Guillermo Romero <drirr.gato@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Liliana <lilianasaidon@gmail.com>
@@ -108,10 +110,10 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = 'Si no encontró lo que estaba buscando, puede crear o editar la página %s, nombrada después de su consulta.';
+$lang['searchcreatepage']      = 'Si no econtraste lo que estabas buscando, puedes crear o editar la página %s, nombrada después de tu consulta.';
 $lang['search_fullresults']    = 'Resultados de texto completo';
 $lang['js']['search_toggle_tools'] = 'Alternar herramientas de búsqueda';
-$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos uso el botón Previsualizar para restaurar el contador de bloqueo.';
+$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos usa el botón Previsualizar para restaurar el contador de bloqueo.';
 $lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
 ¿Realmente quieres continuar?';
 $lang['js']['searchmedia']     = 'Buscar archivos';
@@ -154,6 +156,7 @@ $lang['js']['media_done_btn']  = 'Hecho';
 $lang['js']['media_drop']      = 'Arrastra los ficheros aquí para cargar';
 $lang['js']['media_cancel']    = 'Eliminar';
 $lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
+$lang['js']['data_insecure']   = 'ADVERTENCIA: Parece que su directorio de datos no está debidamente protegido. Por favor, lea sobre <a href="https://www.dokuwiki.org/security#web_access_security">Seguridad de acceso web en DokuWiki</a>.';
 $lang['search_exact_match']    = 'Coincidencia exacta';
 $lang['search_starts_with']    = 'Comienza con';
 $lang['search_ends_with']      = 'Termina con';
@@ -256,6 +259,7 @@ $lang['created']               = 'creado';
 $lang['restored']              = 'se ha restaurado la vieja versión (%s)';
 $lang['external_edit']         = 'editor externo';
 $lang['summary']               = 'Resumen de la edición';
+$lang['unknowndate']           = 'Fecha desconocida';
 $lang['noflash']               = 'Para mostrar este contenido es necesario el <a href="http://get.adobe.com/flashplayer">Plugin Adobe Flash</a>.';
 $lang['download']              = 'Descargar trozo de código fuente';
 $lang['tools']                 = 'Herramientas';

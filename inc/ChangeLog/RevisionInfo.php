@@ -36,7 +36,7 @@ class RevisionInfo
     {
         if (is_array($info) && isset($info['id'])) {
             // define strategy context
-            $info['mode'] = strrpos($info['id'], '.') ? 'media' : 'page';
+            $info['mode'] = $info['media'] ? 'media' : 'page';
         } else {
             $info = [
                 'mode' => 'page',

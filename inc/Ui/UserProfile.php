@@ -107,7 +107,7 @@ class UserProfile extends Ui
             if ($conf['profileconfirm']) {
                 $form->addHTML("<br>\n");
                 $attr = array('size' => '50', 'required' => 'required');
-                $input = $form->addPasswordInput('oldppass', $lang['oldpass'])->attrs($attr)
+                $input = $form->addPasswordInput('oldpass', $lang['oldpass'])->attrs($attr)
                     ->addClass('edit');
                 $input->getLabel()->attr('class', 'block');
                 $form->addHTML("<br>\n");

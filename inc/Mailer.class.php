@@ -11,11 +11,6 @@
 
 use dokuwiki\Extension\Event;
 
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\n");
-#define('MAILHEADER_ASCIIONLY',1);
-
 /**
  * Mail Handling
  */
@@ -52,6 +47,7 @@ class Mailer {
 
         $listid = implode('.', array_reverse(explode('/', DOKU_BASE))).$server;
         $listid = strtolower(trim($listid, '.'));
+        $messageid = uniqid(mt_rand(), true) . "@$server";
 
         $this->allowhtml = (bool)$conf['htmlmail'];
 
@@ -66,6 +62,7 @@ class Mailer {
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'].' <'.$listid.'>');
         $this->setHeader('Date', date('r'), false);
+        $this->setHeader('Message-Id', "<$messageid>");
 
         $this->prepareTokenReplacements();
     }
@@ -332,7 +329,7 @@ class Mailer {
      * @see cleanAddress
      */
     public function getCleanName($name) {
-        $name = trim($name, ' \t"');
+        $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
         if ($count > 0 || strpos($name, ',') !== false) {
             $name = '"'.$name.'"';
@@ -636,8 +633,8 @@ class Mailer {
 
         $ip   = clientIP();
         $cip  = gethostsbyaddrs($ip);
-        $name = isset($INFO) ? $INFO['userinfo']['name'] : '';
-        $mail = isset($INFO) ? $INFO['userinfo']['mail'] : '';
+        $name = $INFO['userinfo']['name'] ?? '';
+        $mail = $INFO['userinfo']['mail'] ?? '';
 
         $this->replacements['text'] = array(
             'DATE' => dformat(),
@@ -764,6 +761,7 @@ class Mailer {
             }
 
             // send the thing
+            if($to === '') $to = '(undisclosed-recipients)'; // #1422
             if($this->sendparam === null) {
                 $success = @mail($to, $subject, $body, $headers);
             } else {

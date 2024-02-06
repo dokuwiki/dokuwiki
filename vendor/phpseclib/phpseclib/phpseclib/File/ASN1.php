@@ -144,6 +144,16 @@ class ASN1
     var $filters;
 
     /**
+     * Current Location of most recent ASN.1 encode process
+     *
+     * Useful for debug purposes
+     *
+     * @var array
+     * @see self::encode_der()
+     */
+    var $location;
+
+    /**
      * Type mapping table for the ANY type.
      *
      * Structured or unknown types are mapped to a \phpseclib\File\ASN1\Element.
@@ -234,6 +244,9 @@ class ASN1
     {
         $current = array('start' => $start);
 
+        if (!isset($encoded[$encoded_pos])) {
+            return false;
+        }
         $type = ord($encoded[$encoded_pos++]);
         $startOffset = 1;
 
@@ -244,6 +257,9 @@ class ASN1
             $tag = 0;
             // process septets (since the eighth bit is ignored, it's not an octet)
             do {
+                if (!isset($encoded[$encoded_pos])) {
+                    return false;
+                }
                 $temp = ord($encoded[$encoded_pos++]);
                 $startOffset++;
                 $loop = $temp >> 7;
@@ -260,6 +276,9 @@ class ASN1
         $start+= $startOffset;
 
         // Length, as discussed in paragraph 8.1.3 of X.690-0207.pdf#page=13
+        if (!isset($encoded[$encoded_pos])) {
+            return false;
+        }
         $length = ord($encoded[$encoded_pos++]);
         $start++;
         if ($length == 0x80) { // indefinite length
@@ -993,7 +1012,10 @@ class ASN1
             case self::TYPE_GENERALIZED_TIME:
                 $format = $mapping['type'] == self::TYPE_UTC_TIME ? 'y' : 'Y';
                 $format.= 'mdHis';
+                // if $source does _not_ include timezone information within it then assume that the timezone is GMT
                 $date = new DateTime($source, new DateTimeZone('GMT'));
+                // if $source _does_ include timezone information within it then convert the time to GMT
+                $date->setTimezone(new DateTimeZone('GMT'));
                 $value = $date->format($format) . 'Z';
                 break;
             case self::TYPE_BIT_STRING:

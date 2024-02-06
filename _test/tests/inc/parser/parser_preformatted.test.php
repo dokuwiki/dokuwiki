@@ -182,41 +182,6 @@ class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 
-    // test for php
-    function testPHP() {
-
-        $this->P->addMode('php',new Php());
-        $this->P->parse('Foo <php>testing</php> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('php',array('testing')),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-    // test with for HTML
-    function testHTML() {
-
-        $this->P->addMode('html',new Html());
-        $this->P->parse('Foo <html>testing</html> Bar');
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('cdata',array("\n".'Foo ')),
-            array('html',array('testing')),
-            array('cdata',array(' Bar')),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
-    }
-
-
 
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!

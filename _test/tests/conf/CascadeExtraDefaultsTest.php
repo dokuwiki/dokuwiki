@@ -1,6 +1,8 @@
 <?php
 
-class CascadeExtraDefaultsTest extends DokuWikiTest
+namespace dokuwiki\test\conf;
+
+class CascadeExtraDefaultsTest extends \DokuWikiTest
 {
 
     protected $oldSetting = [];

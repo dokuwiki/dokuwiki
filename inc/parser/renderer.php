@@ -41,6 +41,8 @@ abstract class Doku_Renderer extends Plugin {
     public $acronyms = array();
     /** @var array contains the interwiki configuration, set in p_render() */
     public $interwiki = array();
+    /** @var string|int link pages and media against this revision */
+    public $date_at = '';
 
     /** @var array the list of headers used to create unique link ids */
     protected $headers = array();
@@ -387,48 +389,6 @@ abstract class Doku_Renderer extends Plugin {
      */
     public function unformatted($text) {
         $this->cdata($text);
-    }
-
-    /**
-     * Output inline PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function php($text) {
-    }
-
-    /**
-     * Output block level PHP code
-     *
-     * If $conf['phpok'] is true this should evaluate the given code and append the result
-     * to $doc
-     *
-     * @param string $text The PHP code
-     */
-    public function phpblock($text) {
-    }
-
-    /**
-     * Output raw inline HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function html($text) {
-    }
-
-    /**
-     * Output raw block-level HTML
-     *
-     * If $conf['htmlok'] is true this should add the code as is to $doc
-     *
-     * @param string $text The HTML
-     */
-    public function htmlblock($text) {
     }
 
     /**
@@ -821,7 +781,7 @@ abstract class Doku_Renderer extends Plugin {
         global $conf;
 
         //if there is a hash we use the ancor name only
-        @list($name, $hash) = explode('#', $name, 2);
+        list($name, $hash) = sexplode('#', $name, 2);
         if($hash) return $hash;
 
         if($conf['useslash']) {
@@ -890,10 +850,10 @@ abstract class Doku_Renderer extends Plugin {
         }
         //handle as wiki links
         if($url && $url[0] === ':') {
-            $urlparam = null;
+            $urlparam = '';
             $id = $url;
             if (strpos($url, '?') !== false) {
-                list($id, $urlparam) = explode('?', $url, 2);
+                list($id, $urlparam) = sexplode('?', $url, 2, '');
             }
             $url    = wl(cleanID($id), $urlparam);
             $exists = page_exists($id);

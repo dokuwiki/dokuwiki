@@ -6,10 +6,6 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
-#define('MAILHEADER_ASCIIONLY',1);
 
 /**
  * Patterns for use in email detection and validation

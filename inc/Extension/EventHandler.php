@@ -40,13 +40,12 @@ class EventHandler
      *
      * register a hook for an event
      *
-     * @param  string $event string   name used by the event, (incl '_before' or '_after' for triggers)
-     * @param  string $advise
-     * @param  object $obj object in whose scope method is to be executed,
-     *                             if NULL, method is assumed to be a globally available function
-     * @param  string $method event handler function
-     * @param  mixed $param data passed to the event handler
-     * @param  int $seq sequence number for ordering hook execution (ascending)
+     * @param string $event name used by the event
+     * @param string $advise BEFORE|AFTER
+     * @param object $obj scope for the method be executed on, NULL for global function or callable
+     * @param string|callable $method event handler function
+     * @param mixed $param data passed to the event handler
+     * @param int $seq sequence number for ordering hook execution (ascending)
      */
     public function register_hook($event, $advise, $obj, $method, $param = null, $seq = 0)
     {
@@ -104,5 +103,17 @@ class EventHandler
         }
 
         return isset($this->hooks[$name . '_BEFORE']) || isset($this->hooks[$name . '_AFTER']);
+    }
+
+    /**
+     * Get all hooks and their currently registered handlers
+     *
+     * The handlers are sorted by sequence, then by register time
+     *
+     * @return array
+     */
+    public function getEventHandlers()
+    {
+        return $this->hooks;
     }
 }

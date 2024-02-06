@@ -34,8 +34,8 @@ $opt = rss_parseOptions();
 
 // the feed is dynamic - we need a cache for each combo
 // (but most people just use the default feed so it's still effective)
-$key   = join('', array_values($opt)) . '$' . $_SERVER['REMOTE_USER']
-    . '$' . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'];
+$key   = join('', array_values($opt)) . '$' . $INPUT->server->str('REMOTE_USER')
+    . '$' . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT');
 $cache = new Cache($key, '.feed');
 
 // prepare cache depends
@@ -223,14 +223,14 @@ function rss_buildItems(&$rss, &$data, $opt)
 
             $item = new FeedItem();
             $id   = $ditem['id'];
-            if (!$ditem['media']) {
+            if (empty($ditem['media'])) {
                 $meta = p_get_metadata($id);
             } else {
                 $meta = [];
             }
 
             // add date
-            if ($ditem['date']) {
+            if (isset($ditem['date'])) {
                 $date = $ditem['date'];
             } elseif ($ditem['media']) {
                 $date = @filemtime(mediaFN($id));
@@ -244,7 +244,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             if ($date) $item->date = date('r', $date);
 
             // add title
-            if ($conf['useheading'] && $meta['title']) {
+            if ($conf['useheading'] && $meta['title'] ?? '') {
                 $item->title = $meta['title'];
             } else {
                 $item->title = $ditem['id'];
@@ -256,7 +256,7 @@ function rss_buildItems(&$rss, &$data, $opt)
             // add item link
             switch ($opt['link_to']) {
                 case 'page':
-                    if ($ditem['media']) {
+                    if (isset($ditem['media'])) {
                         $item->link = media_managerURL(
                             [
                                 'image' => $id,
@@ -416,7 +416,7 @@ function rss_buildItems(&$rss, &$data, $opt)
                     break;
                 case 'abstract':
                 default:
-                    if ($ditem['media']) {
+                    if (isset($ditem['media'])) {
                         if ($size = media_image_preview_size($id, '', new JpegMeta(mediaFN($id)))) {
                             $more    = 'w=' . $size[0] . '&h=' . $size[1] . '&t=' . @filemtime(mediaFN($id));
                             $src  = ml($id, $more, true, '&amp;', true);

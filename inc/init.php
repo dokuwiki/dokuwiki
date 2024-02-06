@@ -289,11 +289,13 @@ function init_paths(){
     foreach($paths as $c => $p) {
         $path = empty($conf[$c]) ? $conf['savedir'].'/'.$p : $conf[$c];
         $conf[$c] = init_path($path);
-        if(empty($conf[$c]))
+        if(empty($conf[$c])) {
+            $path = fullpath($path);
             nice_die("The $c ('$p') at $path is not found, isn't accessible or writable.
                 You should check your config and permission settings.
                 Or maybe you want to <a href=\"install.php\">run the
                 installer</a>?");
+        }
     }
 
     // path to old changelog only needed for upgrading

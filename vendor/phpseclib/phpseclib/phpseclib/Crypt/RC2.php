@@ -72,7 +72,7 @@ class RC2 extends Base
      * @var string
      * @access private
      */
-    var $orig_key;
+    var $orig_key = '';
 
     /**
      * Don't truncate / null pad key
@@ -273,6 +273,12 @@ class RC2 extends Base
     {
         switch ($engine) {
             case self::ENGINE_OPENSSL:
+                // quoting https://www.openssl.org/news/openssl-3.0-notes.html, OpenSSL 3.0.1
+                // "Moved all variations of the EVP ciphers CAST5, BF, IDEA, SEED, RC2, RC4, RC5, and DES to the legacy provider"
+                // in theory openssl_get_cipher_methods() should catch this but, on GitHub Actions, at least, it does not
+                if (defined('OPENSSL_VERSION_TEXT') && version_compare(preg_replace('#OpenSSL (\d+\.\d+\.\d+) .*#', '$1', OPENSSL_VERSION_TEXT), '3.0.1', '>=')) {
+                    return false;
+                }
                 if ($this->current_key_length != 128 || strlen($this->orig_key) < 16) {
                     return false;
                 }

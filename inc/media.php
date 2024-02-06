@@ -308,7 +308,7 @@ function media_upload_xhr($ns,$auth){
     $realSize = stream_copy_to_stream($input, $target);
     fclose($target);
     fclose($input);
-    if (isset($_SERVER["CONTENT_LENGTH"]) && ($realSize != (int)$_SERVER["CONTENT_LENGTH"])){
+    if ($INPUT->server->has('CONTENT_LENGTH') && ($realSize != $INPUT->server->int('CONTENT_LENGTH'))) {
         unlink($path);
         return false;
     }
@@ -810,7 +810,7 @@ function media_tab_files_options() {
     foreach (array('list' => array('listType', array('thumbs', 'rows')),
                   'sort' => array('sortBy', array('name', 'date')))
             as $group => $content) {
-        $checked = "_media_get_${group}_type";
+        $checked = "_media_get_{$group}_type";
         $checked = $checked();
 
         $form->addHTML('<li class="'. $content[0] .'">');
@@ -1004,7 +1004,7 @@ function media_tab_history($image, $ns, $auth=null) {
         if ($do == 'diff'){
             (new dokuwiki\Ui\MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {
-            $first = $INPUT->int('first');
+            $first = $INPUT->int('first',-1);
             (new dokuwiki\Ui\MediaRevisions($image))->show($first);
         }
     } else {

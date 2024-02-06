@@ -10,7 +10,7 @@ class mail_quotedprintable_encode extends DokuWikiTest {
 
     function test_spaceend(){
         $in  = "hello \nhello";
-        $out = "hello=20\nhello";
+        $out = "hello=20\r\nhello";
         $this->assertEquals(mail_quotedprintable_encode($in),$out);
     }
 
@@ -22,7 +22,7 @@ class mail_quotedprintable_encode extends DokuWikiTest {
 
     function test_wrap(){
         $in  = '123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789';
-        $out = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 1234=\n56789 123456789";
+        $out = "123456789 123456789 123456789 123456789 123456789 123456789 123456789 1234=\r\n56789 123456789";
         $this->assertEquals(mail_quotedprintable_encode($in,74),$out);
     }
 

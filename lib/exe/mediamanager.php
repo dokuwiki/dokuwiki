@@ -40,6 +40,10 @@ use dokuwiki\Extension\Event;
     $JSINFO['namespace'] = '';
     $AUTH = $INFO['perm'];    // shortcut for historical reasons
 
+    // If this page is directly opened it means we are in popup mode not fullscreen
+    // $fullscreen isn't defined by default it might lead to some PHP warnings
+    $fullscreen = isset($fullscreen) ? $fullscreen : false;
+
     $tmp = array();
     Event::createAndTrigger('MEDIAMANAGER_STARTED', $tmp);
     session_write_close();  //close session
@@ -112,9 +116,7 @@ use dokuwiki\Extension\Event;
             }
             msg($msg,1);
         } elseif ($res & DOKU_MEDIA_INUSE) {
-            if(!$conf['refshow']) {
-                msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
-            }
+            msg(sprintf($lang['mediainuse'],noNS($DEL)),0);
         } else {
             msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }

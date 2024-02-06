@@ -1,0 +1,30 @@
+{
+    "name": "splitbrain/php-jsstrip",
+    "description": "PHP based JavaScript minimizer",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "splitbrain\\JSStrip\\tests\\": "tests/",
+            "splitbrain\\JSStrip\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andreas Gohr",
+            "email": "andi@splitbrain.org"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "funding": [
+        {
+            "url": "https://github.com/sponsors/splitbrain",
+            "type": "github"
+        }
+    ]
+}

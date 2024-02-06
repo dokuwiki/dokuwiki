@@ -81,8 +81,6 @@ $conf['iexssprotect']= 1;                // check for JavaScript and HTML in upl
 
 /* Editing Settings */
 $conf['usedraft']    = 1;                //automatically save a draft while editing (0|1)
-$conf['htmlok']      = 0;                //may raw HTML be embedded? This may break layout and XHTML validity 0|1
-$conf['phpok']       = 0;                //may PHP code be embedded? Never do this on the internet! 0|1
 $conf['locktime']    = 15*60;            //maximum age for lockfiles (defaults to 15 minutes)
 $conf['cachetime']   = 60*60*24;         //maximum age for cachefile in seconds (defaults to a day)
 
@@ -112,10 +110,10 @@ $conf['mailfrom']    = '';               //use this email when sending mails
 $conf['mailreturnpath']    = '';         //use this email as returnpath for bounce mails
 $conf['mailprefix']  = '';               //use this as prefix of outgoing mails
 $conf['htmlmail']    = 1;                //send HTML multipart mails
-$conf['dontlog'] = 'debug';              //logging facilites that should be disabled
+$conf['dontlog'] = 'debug';              //logging facilities that should be disabled
 
 /* Syndication Settings */
-$conf['sitemap']     = 0;                //Create a google sitemap? How often? In days.
+$conf['sitemap']     = 0;                //Create a Google sitemap? How often? In days.
 $conf['rss_type']    = 'rss1';           //type of RSS feed to provide, by default:
                                          //  'rss'  - RSS 0.91
                                          //  'rss1' - RSS 1.0
@@ -148,13 +146,13 @@ $conf['sepchar']     = '_';              //word separator character in page name
                                          //  letter, a digit, '_', '-', or '.'.
 $conf['canonical']   = 0;                //Should all URLs use full canonical http://... style?
 $conf['fnencode']    = 'url';            //encode filenames (url|safe|utf-8)
-$conf['autoplural']  = 0;                //try (non)plural form of nonexisting files?
+$conf['autoplural']  = 0;                //try (non)plural form of nonexistent files?
 $conf['compression'] = 'gz';             //compress old revisions: (0: off) ('gz': gnuzip) ('bz2': bzip)
                                          //  bz2 generates smaller files, but needs more cpu-power
-$conf['gzip_output'] = 0;                //use gzip content encodeing for the output xhtml (if allowed by browser)
+$conf['gzip_output'] = 0;                //use gzip content encoding for the output xhtml (if allowed by browser)
 $conf['compress']    = 1;                //Strip whitespaces and comments from Styles and JavaScript? 1|0
 $conf['cssdatauri']  = 512;              //Maximum byte size of small images to embed into CSS, won't work on IE<8
-$conf['send404']     = 0;                //Send a HTTP 404 status for non existing pages?
+$conf['send404']     = 0;                //Send an HTTP 404 status for nonexistent pages?
 $conf['broken_iua']  = 0;                //Platform with broken ignore_user_abort (IIS+CGI) 0|1
 $conf['xsendfile']   = 0;                //Use X-Sendfile (1 = lighttpd, 2 = standard)
 $conf['renderer_xhtml'] = 'xhtml';       //renderer to use for main page generation
@@ -167,6 +165,7 @@ $conf['trustedproxy'] = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|
 
 /* Feature Flags */
 $conf['defer_js'] = 1;                   // Defer javascript to be executed after the page's HTML has been parsed. Setting will be removed in the next release.
+$conf['hidewarnings'] = 0;               // Hide warnings
 
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups

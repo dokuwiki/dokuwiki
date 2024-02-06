@@ -10,6 +10,9 @@ return array(
     'splitbrain\\slika\\' => array($vendorDir . '/splitbrain/slika/src'),
     'splitbrain\\phpcli\\' => array($vendorDir . '/splitbrain/php-cli/src'),
     'splitbrain\\PHPArchive\\' => array($vendorDir . '/splitbrain/php-archive/src'),
+    'splitbrain\\JSStrip\\tests\\' => array($vendorDir . '/splitbrain/php-jsstrip/tests'),
+    'splitbrain\\JSStrip\\' => array($vendorDir . '/splitbrain/php-jsstrip/src'),
     'phpseclib\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'SimplePie\\' => array($vendorDir . '/simplepie/simplepie/src'),
     'IXR\\' => array($vendorDir . '/kissifrot/php-ixr/src'),
 );

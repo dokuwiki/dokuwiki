@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Olivier Humbert <trebmuh@tuxfamily.org>
+ * @author Philippe Verbeke <ph.verbeke@gmail.com>
  * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Momo50 <c.brothelande@gmail.com>
@@ -22,4 +24,5 @@ $lang['expirywarn']            = 'Jours d\'avance pour l\'avertissement envoyé 
 $lang['additional']            = 'Une liste séparée par des virgules d\'attributs AD supplémentaires à récupérer dans les données utilisateur. Utilisée par certains modules.';
 $lang['update_name']           = 'Autoriser les utilisateurs à modifier leur nom affiché de l\'AD ?';
 $lang['update_mail']           = 'Autoriser les utilisateurs à modifier leur adresse de courriel ?';
+$lang['update_pass']           = 'Autoriser les utilisateurs à mettre à jour leur mot de passe ? Nécessite SSL ou TLS ci-dessus.';
 $lang['recursive_groups']      = 'Résoudre les groupes imbriqués à leur membres respectifs (plus lent).';

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * lessphp v0.5.5
+ * lessphp v0.6.0
  * http://leafo.net/lessphp
  *
  * LESS CSS compiler, adapted from http://lesscss.org
@@ -39,7 +39,7 @@
  * handling things like indentation.
  */
 class lessc {
-	static public $VERSION = "v0.5.5";
+	static public $VERSION = "v0.6.0";
 
 	static public $TRUE = array("keyword", "true");
 	static public $FALSE = array("keyword", "false");
@@ -148,7 +148,7 @@ class lessc {
 		$pi = pathinfo($realPath);
 		$dir = $pi["dirname"];
 
-		list($top, $bottom) = $this->sortProps($root->props, true);
+		[$top, $bottom] = $this->sortProps($root->props, true);
 		$this->compileImportedProps($top, $parentBlock, $out, $parser, $dir);
 
 		return array(true, $bottom, $parser, $dir);
@@ -484,7 +484,7 @@ class lessc {
 
 		foreach ($selectors as $s) {
 			if (is_array($s)) {
-				list(, $value) = $s;
+				[, $value] = $s;
 				$out[] = trim($this->compileValue($this->reduce($value)));
 			} else {
 				$out[] = $s;
@@ -684,7 +684,7 @@ class lessc {
 
 		switch ($prop[0]) {
 		case 'assign':
-			list(, $name, $value) = $prop;
+			[, $name, $value] = $prop;
 			if ($name[0] == $this->vPrefix) {
 				$this->set($name, $value);
 			} else {
@@ -693,12 +693,12 @@ class lessc {
 			}
 			break;
 		case 'block':
-			list(, $child) = $prop;
+			[, $child] = $prop;
 			$this->compileBlock($child);
 			break;
 		case 'ruleset':
 		case 'mixin':
-			list(, $path, $args, $suffix) = $prop;
+			[, $path, $args, $suffix] = $prop;
 
 			$orderedArgs = array();
 			$keywordArgs = array();
@@ -780,14 +780,14 @@ class lessc {
 			$out->lines[] = $prop[1];
 			break;
 		case "directive":
-			list(, $name, $value) = $prop;
+			[, $name, $value] = $prop;
 			$out->lines[] = "@$name " . $this->compileValue($this->reduce($value)).';';
 			break;
 		case "comment":
 			$out->lines[] = $prop[1];
 			break;
 		case "import";
-			list(, $importPath, $importId) = $prop;
+			[, $importPath, $importId] = $prop;
 			$importPath = $this->reduce($importPath);
 
 			if (!isset($this->env->imports)) {
@@ -802,14 +802,14 @@ class lessc {
 
 			break;
 		case "import_mixin":
-			list(,$importId) = $prop;
+			[,$importId] = $prop;
 			$import = $this->env->imports[$importId];
 			if ($import[0] === false) {
 				if (isset($import[1])) {
 					$out->lines[] = $import[1];
 				}
 			} else {
-				list(, $bottom, $parser, $importDir) = $import;
+				[, $bottom, $parser, $importDir] = $import;
 				$this->compileImportedProps($bottom, $block, $out, $parser, $importDir);
 			}
 
@@ -846,7 +846,7 @@ class lessc {
 			// [1] - the keyword
 			return $value[1];
 		case 'number':
-			list(, $num, $unit) = $value;
+			[, $num, $unit] = $value;
 			// [1] - the number
 			// [2] - the unit
 			if ($this->numberPrecision !== null) {
@@ -855,7 +855,7 @@ class lessc {
 			return $num . $unit;
 		case 'string':
 			// [1] - contents of string (includes quotes)
-			list(, $delim, $content) = $value;
+			[, $delim, $content] = $value;
 			foreach ($content as &$part) {
 				if (is_array($part)) {
 					$part = $this->compileValue($part);
@@ -867,7 +867,7 @@ class lessc {
 			// [2] - green component
 			// [3] - blue component
 			// [4] - optional alpha component
-			list(, $r, $g, $b) = $value;
+			[, $r, $g, $b] = $value;
 			$r = round($r);
 			$g = round($g);
 			$b = round($b);
@@ -888,7 +888,7 @@ class lessc {
 			return $h;
 
 		case 'function':
-			list(, $name, $args) = $value;
+			[, $name, $args] = $value;
 			return $name.'('.$this->compileValue($args).')';
 		default: // assumed to be unit
 			$this->throwError("unknown value type: $value[0]");
@@ -896,7 +896,7 @@ class lessc {
 	}
 
 	protected function lib_pow($args) {
-		list($base, $exp) = $this->assertArgs($args, 2, "pow");
+		[$base, $exp] = $this->assertArgs($args, 2, "pow");
         return array( "number", pow($this->assertNumber($base), $this->assertNumber($exp)), $args[2][0][2] );
 	}
 
@@ -905,12 +905,12 @@ class lessc {
 	}
 
 	protected function lib_mod($args) {
-		list($a, $b) = $this->assertArgs($args, 2, "mod");
+		[$a, $b] = $this->assertArgs($args, 2, "mod");
         return array( "number", $this->assertNumber($a) % $this->assertNumber($b), $args[2][0][2] );
  	}
 
 	protected function lib_convert($args) {
-        list($value, $to) = $this->assertArgs($args, 2, "convert");
+        [$value, $to] = $this->assertArgs($args, 2, "convert");
 
         // If it's a keyword, grab the string version instead
         if( is_array( $to ) && $to[0] == "keyword" )
@@ -999,7 +999,7 @@ class lessc {
 	}
 
 	protected function lib_extract($value) {
-		list($list, $idx) = $this->assertArgs($value, 2, "extract");
+		[$list, $idx] = $this->assertArgs($value, 2, "extract");
 		$idx = $this->assertNumber($idx);
 		// 1 indexed
 		if ($list[0] == "list" && isset($list[2][$idx - 1])) {
@@ -1156,7 +1156,7 @@ class lessc {
 
 	protected function lib_unit($arg) {
 		if ($arg[0] == "list") {
-			list($number, $newUnit) = $arg[2];
+			[$number, $newUnit] = $arg[2];
 			return array("number", $this->assertNumber($number),
 				$this->compileValue($this->lib_e($newUnit)));
 		} else {
@@ -1172,7 +1172,7 @@ class lessc {
 		if ($args[0] != 'list' || count($args[2]) < 2) {
 			return array(array('color', 0, 0, 0), 0);
 		}
-		list($color, $delta) = $args[2];
+		[$color, $delta] = $args[2];
 		$color = $this->assertColor($color);
 		$delta = floatval($delta[1]);
 
@@ -1180,7 +1180,7 @@ class lessc {
 	}
 
 	protected function lib_darken($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 
 		$hsl = $this->toHSL($color);
 		$hsl[3] = $this->clamp($hsl[3] - $delta, 100);
@@ -1188,7 +1188,7 @@ class lessc {
 	}
 
 	protected function lib_lighten($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 
 		$hsl = $this->toHSL($color);
 		$hsl[3] = $this->clamp($hsl[3] + $delta, 100);
@@ -1196,7 +1196,7 @@ class lessc {
 	}
 
 	protected function lib_saturate($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 
 		$hsl = $this->toHSL($color);
 		$hsl[2] = $this->clamp($hsl[2] + $delta, 100);
@@ -1204,7 +1204,7 @@ class lessc {
 	}
 
 	protected function lib_desaturate($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 
 		$hsl = $this->toHSL($color);
 		$hsl[2] = $this->clamp($hsl[2] - $delta, 100);
@@ -1212,7 +1212,7 @@ class lessc {
 	}
 
 	protected function lib_spin($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 
 		$hsl = $this->toHSL($color);
 
@@ -1223,13 +1223,13 @@ class lessc {
 	}
 
 	protected function lib_fadeout($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 		$color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) - $delta/100);
 		return $color;
 	}
 
 	protected function lib_fadein($args) {
-		list($color, $delta) = $this->colorArgs($args);
+		[$color, $delta] = $this->colorArgs($args);
 		$color[4] = $this->clamp((isset($color[4]) ? $color[4] : 1) + $delta/100);
 		return $color;
 	}
@@ -1259,7 +1259,7 @@ class lessc {
 
 	// set the alpha of the color
 	protected function lib_fade($args) {
-		list($color, $alpha) = $this->colorArgs($args);
+		[$color, $alpha] = $this->colorArgs($args);
 		$color[4] = $this->clamp($alpha / 100.0);
 		return $color;
 	}
@@ -1276,7 +1276,7 @@ class lessc {
 		if ($args[0] != "list" || count($args[2]) < 2)
 			$this->throwError("mix expects (color1, color2, weight)");
 
-		list($first, $second) = $args[2];
+		[$first, $second] = $args[2];
 		$first = $this->assertColor($first);
 		$second = $this->assertColor($second);
 
@@ -1583,13 +1583,13 @@ class lessc {
 			}
 			return $value;
 		case "escape":
-			list(,$inner) = $value;
+			[,$inner] = $value;
 			return $this->lib_e($this->reduce($inner));
 		case "function":
 			$color = $this->funcToColor($value);
 			if ($color) return $color;
 
-			list(, $name, $args) = $value;
+			[, $name, $args] = $value;
 			if ($name == "%") $name = "_sprintf";
 
 			$f = isset($this->libFunctions[$name]) ?
@@ -1618,7 +1618,7 @@ class lessc {
 			$value[2] = $this->reduce($value[2]);
 			return $value;
 		case "unary":
-			list(, $op, $exp) = $value;
+			[, $op, $exp] = $value;
 			$exp = $this->reduce($exp);
 
 			if ($exp[0] == "number") {
@@ -1707,7 +1707,7 @@ class lessc {
 
 	// evaluate an expression
 	protected function evaluate($exp) {
-		list(, $op, $left, $right, $whiteBefore, $whiteAfter) = $exp;
+		[, $op, $left, $right, $whiteBefore, $whiteAfter] = $exp;
 
 		$left = $this->reduce($left, true);
 		$right = $this->reduce($right, true);
@@ -3409,16 +3409,18 @@ class lessc_parser {
 				if ($this->stringValue($str)) {
 					// escape parent selector, (yuck)
 					foreach ($str[2] as &$chunk) {
-						$chunk = str_replace($this->lessc->parentSelector, "$&$", $chunk);
+                        if (is_string($chunk)) {
+						    $chunk = str_replace($this->lessc->parentSelector, "$&$", $chunk);
+						}
 					}
 
 					$attrParts[] = $str;
 					$hasInterpolation = true;
-					continue;
-				}
+                    continue;
+                }
 
-				if ($this->keyword($word)) {
-					$attrParts[] = $word;
+                if ($this->keyword($word)) {
+                    $attrParts[] = $word;
 					continue;
 				}
 
