@@ -132,14 +132,14 @@ function _ft_pageSearch(&$data)
                 break;
             case 'AND': // and operation
                 $pages = array_splice($stack, -2);
-                if (empty($pages)) {
+                if ($pages === []) {
                     break;
                 }
                 $stack[] = ft_resultCombine($pages);
                 break;
             case 'OR':  // or operation
                 $pages = array_splice($stack, -2);
-                if (empty($pages)) {
+                if ($pages === []) {
                     break;
                 }
                 $stack[] = ft_resultUnite($pages);
