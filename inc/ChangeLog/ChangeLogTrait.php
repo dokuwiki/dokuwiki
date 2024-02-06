@@ -17,26 +17,26 @@ trait ChangeLogTrait
     abstract public function addLogEntry(array $info, $timestamp = null);
 
     /**
-     * Parses a changelog line into it's components
-     *
-     * @author Ben Coburn <btcoburn@silicodon.net>
+     * Parses a changelog line into its components
      *
      * @param string $line changelog line
      * @return array|bool parsed line or false
+     * @author Ben Coburn <btcoburn@silicodon.net>
+     *
      */
     public static function parseLogLine($line)
     {
-        $info = explode("\t", rtrim($line, "\n"));
-        if ($info !== false && count($info) > 1) {
+        $info = sexplode("\t", rtrim($line, "\n"), 8);
+        if ($info[3]) { // we need at least the page id to consider it a valid line
             return [
-                'date'  => (int)$info[0], // unix timestamp
-                'ip'    => $info[1], // IPv4 address (127.0.0.1)
-                'type'  => $info[2], // log line type
-                'id'    => $info[3], // page id
-                'user'  => $info[4], // user name
-                'sum'   => $info[5], // edit summary (or action reason)
+                'date' => (int)$info[0], // unix timestamp
+                'ip' => $info[1], // IP address (127.0.0.1)
+                'type' => $info[2], // log line type
+                'id' => $info[3], // page id
+                'user' => $info[4], // user name
+                'sum' => $info[5], // edit summary (or action reason)
                 'extra' => $info[6], // extra data (varies by line type)
-                'sizechange' => (isset($info[7]) && $info[7] !== '') ? (int)$info[7] : null, //
+                'sizechange' => ($info[7] != '') ? (int)$info[7] : null, // size difference in bytes
             ];
         } else {
             return false;
@@ -44,7 +44,7 @@ trait ChangeLogTrait
     }
 
     /**
-     * Build a changelog line from it's components
+     * Build a changelog line from its components
      *
      * @param array $info Revision info structure
      * @param int $timestamp log line date (optional)
@@ -53,18 +53,18 @@ trait ChangeLogTrait
     public static function buildLogLine(array &$info, $timestamp = null)
     {
         $strip = ["\t", "\n"];
-        $entry = array(
-            'date'  => $timestamp ?? $info['date'],
-            'ip'    => $info['ip'],
-            'type'  => str_replace($strip, '', $info['type']),
-            'id'    => $info['id'],
-            'user'  => $info['user'],
-            'sum'   => PhpString::substr(str_replace($strip, '', $info['sum']), 0, 255),
+        $entry = [
+            'date' => $timestamp ?? $info['date'],
+            'ip' => $info['ip'],
+            'type' => str_replace($strip, '', $info['type']),
+            'id' => $info['id'],
+            'user' => $info['user'],
+            'sum' => PhpString::substr(str_replace($strip, '', $info['sum'] ?? ''), 0, 255),
             'extra' => str_replace($strip, '', $info['extra']),
-            'sizechange' => $info['sizechange'],
-        );
+            'sizechange' => $info['sizechange']
+        ];
         $info = $entry;
-        return implode("\t", $entry) ."\n";
+        return implode("\t", $entry) . "\n";
     }
 
     /**
@@ -98,7 +98,7 @@ trait ChangeLogTrait
     {
         if (!is_numeric($chunk_size)) $chunk_size = 0;
 
-        $this->chunk_size = (int)max($chunk_size, 0);
+        $this->chunk_size = max($chunk_size, 0);
     }
 
     /**
@@ -145,7 +145,7 @@ trait ChangeLogTrait
 
             // find chunk
             while ($tail - $head > $this->chunk_size) {
-                $finger = $head + intval(($tail - $head) / 2);
+                $finger = $head + (int)(($tail - $head) / 2);
                 $finger = $this->getNewlinepointer($fp, $finger);
                 $tmp = fgets($fp);
                 if ($finger == $head || $finger == $tail) {
@@ -169,13 +169,7 @@ trait ChangeLogTrait
 
             $lines = $this->readChunk($fp, $head, $tail);
         }
-        return array(
-            $fp,
-            $lines,
-            $head,
-            $tail,
-            $eof,
-        );
+        return [$fp, $lines, $head, $tail, $eof];
     }
 
     /**
@@ -238,12 +232,12 @@ trait ChangeLogTrait
      */
     protected function readAdjacentChunk($fp, $head, $tail, $direction)
     {
-        if (!$fp) return array(array(), $head, $tail);
+        if (!$fp) return [[], $head, $tail];
 
         if ($direction > 0) {
             //read forward
             $head = $tail;
-            $tail = $head + intval($this->chunk_size * (2 / 3));
+            $tail = $head + (int)($this->chunk_size * (2 / 3));
             $tail = $this->getNewlinepointer($fp, $tail);
         } else {
             //read backward
@@ -263,7 +257,6 @@ trait ChangeLogTrait
 
         //load next chunk
         $lines = $this->readChunk($fp, $head, $tail);
-        return array($lines, $head, $tail);
+        return [$lines, $head, $tail];
     }
-
 }

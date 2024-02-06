@@ -5,6 +5,7 @@ namespace dokuwiki\Remote;
 use IXR\DataType\Base64;
 use IXR\DataType\Date;
 use IXR\Exception\ServerException;
+use IXR\Message\Error;
 use IXR\Server\Server;
 
 /**
@@ -17,15 +18,13 @@ class XmlRpcServer extends Server
     /**
      * Constructor. Register methods and run Server
      */
-    public function __construct($wait=false)
+    public function __construct($wait = false)
     {
         $this->remote = new Api();
-        $this->remote->setDateTransformation(array($this, 'toDate'));
-        $this->remote->setFileTransformation(array($this, 'toFile'));
         parent::__construct(false, false, $wait);
     }
 
-    /** @inheritdoc  */
+    /** @inheritdoc */
     public function serve($data = false)
     {
         global $conf;
@@ -35,6 +34,15 @@ class XmlRpcServer extends Server
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
         }
+        if (
+            !isset($_SERVER['CONTENT_TYPE']) ||
+            (
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'text/xml' &&
+                strtolower($_SERVER['CONTENT_TYPE']) !== 'application/xml'
+            )
+        ) {
+            throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
+        }
 
         parent::serve($data);
     }
@@ -42,7 +50,7 @@ class XmlRpcServer extends Server
     /**
      * @inheritdoc
      */
-    public function call($methodname, $args)
+    protected function call($methodname, $args)
     {
         try {
             $result = $this->remote->call($methodname, $args);
@@ -50,31 +58,13 @@ class XmlRpcServer extends Server
         } catch (AccessDeniedException $e) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
-                return new ServerException("server error. not authorized to call method $methodname", -32603);
+                return new Error(-32603, "server error. not authorized to call method $methodname");
             } else {
                 http_status(403);
-                return new ServerException("server error. forbidden to call the method $methodname", -32604);
+                return new Error(-32604, "server error. forbidden to call the method $methodname");
             }
         } catch (RemoteException $e) {
-            return new ServerException($e->getMessage(), $e->getCode());
+            return new Error($e->getCode(), $e->getMessage());
         }
-    }
-
-    /**
-     * @param string|int $data iso date(yyyy[-]mm[-]dd[ hh:mm[:ss]]) or timestamp
-     * @return Date
-     */
-    public function toDate($data)
-    {
-        return new Date($data);
-    }
-
-    /**
-     * @param string $data
-     * @return Base64
-     */
-    public function toFile($data)
-    {
-        return new Base64($data);
     }
 }

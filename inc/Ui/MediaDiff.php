@@ -29,7 +29,7 @@ class MediaDiff extends Diff
     /**
      * MediaDiff Ui constructor
      *
-     * @param string $id  media id
+     * @param string $id media id
      */
     public function __construct($id)
     {
@@ -79,10 +79,9 @@ class MediaDiff extends Diff
         // create revision info object for older and newer sides
         // RevInfo1 : older, left side
         // RevInfo2 : newer, right side
-        
+
         $changelogRev1 = $changelog->getRevisionInfo($this->rev1);
         $changelogRev2 = $changelog->getRevisionInfo($this->rev2);
-        $changelogRev1['media'] = $changelogRev2['media'] = true;
 
         $this->RevInfo1 = new RevisionInfo($changelogRev1);
         $this->RevInfo2 = new RevisionInfo($changelogRev2);
@@ -214,15 +213,15 @@ class MediaDiff extends Diff
         $rev2Src = ml($this->id, ['rev' => $rev2, 'h' => $rev1Size[1], 'w' => $rev1Size[0]]);
 
         // slider
-        echo '<div class="slider" style="max-width: '.($rev1Size[0]-20).'px;" ></div>';
+        echo '<div class="slider" style="max-width: ' . ($rev1Size[0] - 20) . 'px;" ></div>';
 
         // two images in divs
-        echo '<div class="imageDiff '.$type.'">';
-        echo '<div class="image1" style="max-width: '.$rev1Size[0].'px;">';
-        echo '<img src="'.$rev1Src.'" alt="" />';
+        echo '<div class="imageDiff ' . $type . '">';
+        echo '<div class="image1" style="max-width: ' . $rev1Size[0] . 'px;">';
+        echo '<img src="' . $rev1Src . '" alt="" />';
         echo '</div>';
-        echo '<div class="image2" style="max-width: '.$rev1Size[0].'px;">';
-        echo '<img src="'.$rev2Src.'" alt="" />';
+        echo '<div class="image2" style="max-width: ' . $rev1Size[0] . 'px;">';
+        echo '<img src="' . $rev2Src . '" alt="" />';
         echo '</div>';
         echo '</div>';
     }
@@ -243,13 +242,13 @@ class MediaDiff extends Diff
         $rev2 = $this->RevInfo2->isCurrent() ? '' : (int)$this->RevInfo2->val('date');
 
         // revision title
-        $rev1Title = trim($this->RevInfo1->showRevisionTitle() .' '. $this->RevInfo1->showCurrentIndicator());
+        $rev1Title = trim($this->RevInfo1->showRevisionTitle() . ' ' . $this->RevInfo1->showCurrentIndicator());
         $rev1Summary = ($this->RevInfo1->val('date'))
-            ? $this->RevInfo1->showEditSummary() .' '. $this->RevInfo1->showEditor()
+            ? $this->RevInfo1->showEditSummary() . ' ' . $this->RevInfo1->showEditor()
             : '';
-        $rev2Title = trim($this->RevInfo2->showRevisionTitle() .' '. $this->RevInfo2->showCurrentIndicator());
+        $rev2Title = trim($this->RevInfo2->showRevisionTitle() . ' ' . $this->RevInfo2->showCurrentIndicator());
         $rev2Summary = ($this->RevInfo2->val('date'))
-            ? $this->RevInfo2->showEditSummary() .' '. $this->RevInfo2->showEditor()
+            ? $this->RevInfo2->showEditSummary() . ' ' . $this->RevInfo2->showEditor()
             : '';
 
         $rev1Meta = new JpegMeta(mediaFN($this->id, $rev1));
@@ -259,8 +258,8 @@ class MediaDiff extends Diff
         echo '<div class="table">';
         echo '<table>';
         echo '<tr>';
-        echo '<th>'. $rev1Title .' '. $rev1Summary .'</th>';
-        echo '<th>'. $rev2Title .' '. $rev2Summary .'</th>';
+        echo '<th>' . $rev1Title . ' ' . $rev1Summary . '</th>';
+        echo '<th>' . $rev2Title . ' ' . $rev2Summary . '</th>';
         echo '</tr>';
 
         echo '<tr class="image">';
@@ -304,7 +303,7 @@ class MediaDiff extends Diff
             foreach ($tags as $tag) {
                 $value = cleanText($tag['value']);
                 if (!$value) $value = '-';
-                echo '<dt>'.$lang[$tag['tag'][1]].'</dt>';
+                echo '<dt>' . $lang[$tag['tag'][1]] . '</dt>';
                 echo '<dd>';
                 if (!empty($tag['highlighted'])) echo '<strong>';
                 if ($tag['tag'][2] == 'date') {
@@ -324,5 +323,4 @@ class MediaDiff extends Diff
         echo '</table>';
         echo '</div>';
     }
-
 }

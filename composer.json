@@ -5,15 +5,15 @@
     "type": "project",
     "license": "GPL v2",
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "splitbrain/php-archive": "~1.0",
-        "phpseclib/phpseclib": "~2.0",
+        "phpseclib/phpseclib": "^3.0",
         "simplepie/simplepie": "^1.4",
         "geshi/geshi": "dev-master as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
-        "marcusschwarz/lesserphp": "^0.6",
+        "splitbrain/lesserphp": "^0.10",
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
         "kissifrot/php-ixr": "^1.8",
@@ -21,7 +21,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2"
+            "php": "7.4"
         }
     },
     "suggest": {

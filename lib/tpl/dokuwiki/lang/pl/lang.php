@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  */
+$lang['home']                  = 'Główna';
 $lang['__background_site__']   = 'Kolor tła za polem zawartości';
 $lang['__link__']              = 'Kolor łącza';
 $lang['__existing__']          = 'Kolor łącza do istniejącej strony';

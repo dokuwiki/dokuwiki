@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author pavulondit <pavloo@vp.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
@@ -79,6 +80,7 @@ $lang['msg_nooverwrite']       = 'Rozszerzenie %s już istnieje więc nie zostan
 $lang['missing_dependency']    = '<strong>Brakująca lub wyłączona zależność:</strong> %s';
 $lang['security_issue']        = '<strong>Problemy bezpieczeństwa:</strong> %s';
 $lang['security_warning']      = '<strong>Alert Bezpieczeństwa:</strong>%s';
+$lang['update_message']        = '<strong>Wiadomość o aktualizacji:</strong> %s';
 $lang['update_available']      = '<strong>Uaktualnij</strong> Nowa wersja %s jest dostępna.';
 $lang['wrong_folder']          = '<strong>Nieprawidłowo zainstalowana wtyczka:</strong> Zmień nazwę katalogu wtyczek z "%s" na "%s".';
 $lang['url_change']            = '<strong>URL został zmieniony:</strong>URL zmienił się od czasu ostatniego pobrania. Przed aktualizacją rozszerzenia, sprawdź czy nowy adres URL jest prawidłowy.<br />Nowy: %s<br />Stary: %s';
@@ -95,5 +97,6 @@ $lang['git']                   = 'To rozszerzenie zostało zainstalowane przez g
 $lang['auth']                  = 'Ta wtyczka autoryzacji nie jest włączona w konfiguracji, rozważ jej wyłączenie.';
 $lang['install_url']           = 'Instaluj z URL:';
 $lang['install_upload']        = 'Załaduj Rozszerzenie ';
+$lang['repo_badresponse']      = 'Repozytorium wtyczek zwróciło nieprawidłową odpowiedź.';
 $lang['repo_error']            = 'Nie można skontaktować się z repozytorium wtyczek. Upewnij się, że twój serwer może skontaktować się z www.dokuwiki.org i sprawdzić ustawienia serwera proxy.';
 $lang['nossl']                 = 'Twój PHP wydaje się nie obsługiwać protokołu SSL. Pobieranie nie zadziała dla wielu rozszerzeń DokuWiki.';

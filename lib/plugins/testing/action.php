@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
 
 /**
@@ -9,16 +11,18 @@ use dokuwiki\Extension\Event;
  *
  * @author Tobias Sarnowski <tobias@trustedco.de>
  */
-class action_plugin_testing extends DokuWiki_Action_Plugin {
-
+class action_plugin_testing extends ActionPlugin
+{
     /** @inheritdoc */
-    public function register(Doku_Event_Handler $controller) {
+    public function register(EventHandler $controller)
+    {
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'dokuwikiStarted');
     }
 
-    public function dokuwikiStarted() {
-        $param = array();
+    public function dokuwikiStarted()
+    {
+        $param = [];
         Event::createAndTrigger('TESTING_PLUGIN_INSTALLED', $param);
-        msg('The testing plugin is enabled and should be disabled.',-1);
+        msg('The testing plugin is enabled and should be disabled.', -1);
     }
 }

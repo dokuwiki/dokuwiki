@@ -8,7 +8,7 @@ namespace splitbrain\slika;
  */
 abstract class Adapter
 {
-    /** @var string path tot he image */
+    /** @var string path to the image */
     protected $imagepath;
 
     /** @var array Adapter Options */

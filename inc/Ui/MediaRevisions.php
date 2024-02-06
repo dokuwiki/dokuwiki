@@ -20,7 +20,7 @@ class MediaRevisions extends Revisions
     /**
      * MediaRevisions Ui constructor
      *
-     * @param string $id  id of media
+     * @param string $id id of media
      */
     public function __construct($id)
     {
@@ -39,13 +39,13 @@ class MediaRevisions extends Revisions
     /**
      * Display a list of Media Revisions in the MediaManager
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @author Ben Coburn <btcoburn@silicodon.net>
+     * @param int $first skip the first n changelog lines
+     * @return void
      * @author Kate Arzamastseva <pshns@ukr.net>
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
-     * @param int $first  skip the first n changelog lines
-     * @return void
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Ben Coburn <btcoburn@silicodon.net>
      */
     public function show($first = -1)
     {
@@ -59,9 +59,9 @@ class MediaRevisions extends Revisions
 
         // create the form
         $form = new Form([
-                'id' => 'page__revisions', // must not be "media__revisions"
-                'action' => media_managerURL(['image' => $this->id], '&'),
-                'class'  => 'changes',
+            'id' => 'page__revisions', // must not be "media__revisions"
+            'action' => media_managerURL(['image' => $this->id], '&'),
+            'class' => 'changes',
         ]);
         $form->setHiddenField('mediado', 'diff'); // required for media revisions
         $form->addTagOpen('div')->addClass('no');
@@ -70,7 +70,6 @@ class MediaRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
-            $info['media'] = true;
             $RevInfo = new RevisionInfo($info);
             $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
@@ -83,7 +82,7 @@ class MediaRevisions extends Revisions
             } elseif (file_exists(mediaFN($this->id, $rev))) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } else {
-                $form->addCheckbox('')->val($rev)->attr('disabled','disabled');
+                $form->addCheckbox('')->val($rev)->attr('disabled', 'disabled');
             }
             $form->addHTML(' ');
 
@@ -110,12 +109,13 @@ class MediaRevisions extends Revisions
 
         $form->addTagClose('div'); // close div class=no
 
-        print $form->toHTML('Revisions');
+        echo $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation($first, $hasNext, function ($n) {
-            return media_managerURL(['first' => $n], '&', false, true);
-        });
+        echo $this->navigation(
+            $first,
+            $hasNext,
+            static fn($n) => media_managerURL(['first' => $n], '&', false, true)
+        );
     }
-
 }

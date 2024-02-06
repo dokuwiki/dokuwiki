@@ -9,7 +9,6 @@ namespace dokuwiki;
  */
 class Info
 {
-
     /**
      * Parse the given version string into its parts
      *
@@ -17,7 +16,7 @@ class Info
      * @return array
      * @throws \Exception
      */
-    static public function parseVersionString($version)
+    public static function parseVersionString($version)
     {
         $return = [
             'type' => '', // stable, rc
@@ -50,5 +49,4 @@ class Info
 
         return $return;
     }
-
 }

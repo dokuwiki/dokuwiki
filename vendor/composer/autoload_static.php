@@ -23,14 +23,24 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         ),
         'p' => 
         array (
-            'phpseclib\\' => 10,
+            'phpseclib3\\' => 11,
         ),
         'S' => 
         array (
             'SimplePie\\' => 10,
         ),
+        'P' => 
+        array (
+            'ParagonIE\\ConstantTime\\' => 23,
+        ),
+        'L' => 
+        array (
+            'LesserPHP\\tests\\' => 16,
+            'LesserPHP\\' => 10,
+        ),
         'I' => 
         array (
+            'IXR\\tests\\' => 10,
             'IXR\\' => 4,
         ),
     );
@@ -60,13 +70,29 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/src',
         ),
-        'phpseclib\\' => 
+        'phpseclib3\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
         'SimplePie\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'LesserPHP\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/lesserphp/tests',
+        ),
+        'LesserPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/lesserphp/src',
+        ),
+        'IXR\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kissifrot/php-ixr/tests',
         ),
         'IXR\\' => 
         array (
@@ -114,11 +140,6 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'RSSCreator10' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator10.php',
         'RSSCreator20' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator20.php',
         'UniversalFeedCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/UniversalFeedCreator.php',
-        'lessc' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_classic' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_compressed' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_lessjs' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_parser' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

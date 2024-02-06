@@ -19,7 +19,7 @@ class PageRevisions extends Revisions
     /**
      * PageRevisions Ui constructor
      *
-     * @param string $id  id of page
+     * @param string $id id of page
      */
     public function __construct($id = null)
     {
@@ -37,13 +37,13 @@ class PageRevisions extends Revisions
     /**
      * Display list of old revisions of the page
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @author Ben Coburn <btcoburn@silicodon.net>
+     * @param int $first skip the first n changelog lines
+     * @return void
      * @author Kate Arzamastseva <pshns@ukr.net>
      * @author Satoshi Sahara <sahara.satoshi@gmail.com>
      *
-     * @param int $first  skip the first n changelog lines
-     * @return void
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @author Ben Coburn <btcoburn@silicodon.net>
      */
     public function show($first = -1)
     {
@@ -56,12 +56,12 @@ class PageRevisions extends Revisions
         $revisions = $this->getRevisions($first, $hasNext);
 
         // print intro
-        print p_locale_xhtml('revisions');
+        echo p_locale_xhtml('revisions');
 
         // create the form
         $form = new Form([
-                'id' => 'page__revisions',
-                'class' => 'changes',
+            'id' => 'page__revisions',
+            'class' => 'changes',
         ]);
         $form->addTagOpen('div')->addClass('no');
 
@@ -69,7 +69,7 @@ class PageRevisions extends Revisions
         $form->addTagOpen('ul');
         foreach ($revisions as $info) {
             $rev = $info['date'];
-            $info['media'] = false;
+
             $RevInfo = new RevisionInfo($info);
             $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
@@ -80,11 +80,11 @@ class PageRevisions extends Revisions
             if ($RevInfo->isCurrent()) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } elseif ($rev == $REV) {
-                $form->addCheckbox('rev2[]')->val($rev)->attr('checked','checked');
+                $form->addCheckbox('rev2[]')->val($rev)->attr('checked', 'checked');
             } elseif (page_exists($this->id, $rev)) {
                 $form->addCheckbox('rev2[]')->val($rev);
             } else {
-                $form->addCheckbox('')->val($rev)->attr('disabled','disabled');
+                $form->addCheckbox('')->val($rev)->attr('disabled', 'disabled');
             }
             $form->addHTML(' ');
 
@@ -108,11 +108,9 @@ class PageRevisions extends Revisions
 
         $form->addTagClose('div'); // close div class=no
 
-        print $form->toHTML('Revisions');
+        echo $form->toHTML('Revisions');
 
         // provide navigation for paginated revision list (of pages and/or media files)
-        print $this->navigation($first, $hasNext, function ($n) {
-            return array('do' => 'revisions', 'first' => $n);
-        });
+        echo $this->navigation($first, $hasNext, static fn($n) => ['do' => 'revisions', 'first' => $n]);
     }
 }

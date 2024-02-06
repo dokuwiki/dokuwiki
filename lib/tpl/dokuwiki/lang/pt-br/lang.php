@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  */
 $lang['home']                  = 'Início';

@@ -14,7 +14,7 @@ abstract class Element
     /**
      * @var array the attributes of this element
      */
-    protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * @var string The type of this element
@@ -25,7 +25,7 @@ abstract class Element
      * @param string $type The type of this element
      * @param array $attributes
      */
-    public function __construct($type, $attributes = array())
+    public function __construct($type, $attributes = [])
     {
         $this->type = $type;
         $this->attributes = $attributes;
@@ -117,7 +117,7 @@ abstract class Element
         $classes[] = $class;
         $classes = array_unique($classes);
         $classes = array_filter($classes);
-        $this->attr('class', join(' ', $classes));
+        $this->attr('class', implode(' ', $classes));
         return $this;
     }
 

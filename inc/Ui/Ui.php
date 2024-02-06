@@ -17,5 +17,4 @@ abstract class Ui
      * @return void
      */
     abstract public function show();
-
 }

@@ -5,9 +5,8 @@ namespace dokuwiki\Cache;
 /**
  * Caching of parser instructions
  */
-class CacheInstructions extends \dokuwiki\Cache\CacheParser
+class CacheInstructions extends CacheParser
 {
-
     /**
      * @param string $id page id
      * @param string $file source file for cache
@@ -26,7 +25,7 @@ class CacheInstructions extends \dokuwiki\Cache\CacheParser
     public function retrieveCache($clean = true)
     {
         $contents = io_readFile($this->cache, false);
-        return !empty($contents) ? unserialize($contents) : array();
+        return empty($contents) ? [] : unserialize($contents);
     }
 
     /**

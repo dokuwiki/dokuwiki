@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lexer adapted from Simple Test: http://sourceforge.net/projects/simpletest/
  * For an intro to the Lexer see:
@@ -22,7 +23,7 @@ class StateStack
      */
     public function __construct($start)
     {
-        $this->stack = array($start);
+        $this->stack = [$start];
     }
 
     /**
@@ -41,7 +42,7 @@ class StateStack
      */
     public function enter($state)
     {
-        array_push($this->stack, $state);
+        $this->stack[] = $state;
     }
 
     /**

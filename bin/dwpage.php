@@ -3,16 +3,17 @@
 
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
+use dokuwiki\Utf8\PhpString;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
 /**
  * Checkout and commit pages from the command line while maintaining the history
  */
-class PageCLI extends CLI {
-
+class PageCLI extends CLI
+{
     protected $force = false;
     protected $username = '';
 
@@ -22,7 +23,8 @@ class PageCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         /* global */
         $options->registerOption(
             'force',
@@ -133,7 +135,7 @@ class PageCLI extends CLI {
         $options->registerArgument(
             'key',
             'The name of the metadata item to be retrieved.' . "\n" .
-            'If empty, an array of all the metadata items is returned.' ."\n" .
+            'If empty, an array of all the metadata items is returned.' . "\n" .
             'For retrieving items that are stored in sub-arrays, separate the ' .
             'keys of the different levels by spaces, in quotes, eg "date modified".',
             false,
@@ -149,13 +151,14 @@ class PageCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $this->force = $options->getOpt('force', false);
         $this->username = $options->getOpt('user', $this->getUser());
 
         $command = $options->getCmd();
         $args = $options->getArgs();
-        switch($command) {
+        switch ($command) {
             case 'checkout':
                 $wiki_id = array_shift($args);
                 $localfile = array_shift($args);
@@ -199,31 +202,32 @@ class PageCLI extends CLI {
      * @param string $wiki_id
      * @param string $localfile
      */
-    protected function commandCheckout($wiki_id, $localfile) {
+    protected function commandCheckout($wiki_id, $localfile)
+    {
         global $conf;
 
         $wiki_id = cleanID($wiki_id);
         $wiki_fn = wikiFN($wiki_id);
 
-        if(!file_exists($wiki_fn)) {
+        if (!file_exists($wiki_fn)) {
             $this->fatal("$wiki_id does not yet exist");
         }
 
-        if(empty($localfile)) {
-            $localfile = getcwd() . '/' . \dokuwiki\Utf8\PhpString::basename($wiki_fn);
+        if (empty($localfile)) {
+            $localfile = getcwd() . '/' . PhpString::basename($wiki_fn);
         }
 
-        if(!file_exists(dirname($localfile))) {
+        if (!file_exists(dirname($localfile))) {
             $this->fatal("Directory " . dirname($localfile) . " does not exist");
         }
 
-        if(stristr(realpath(dirname($localfile)), realpath($conf['datadir'])) !== false) {
+        if (stristr(realpath(dirname($localfile)), (string) realpath($conf['datadir'])) !== false) {
             $this->fatal("Attempt to check out file into data directory - not allowed");
         }
 
         $this->obtainLock($wiki_id);
 
-        if(!copy($wiki_fn, $localfile)) {
+        if (!copy($wiki_fn, $localfile)) {
             $this->clearLock($wiki_id);
             $this->fatal("Unable to copy $wiki_fn to $localfile");
         }
@@ -239,19 +243,20 @@ class PageCLI extends CLI {
      * @param string $message
      * @param bool $minor
      */
-    protected function commandCommit($localfile, $wiki_id, $message, $minor) {
+    protected function commandCommit($localfile, $wiki_id, $message, $minor)
+    {
         $wiki_id = cleanID($wiki_id);
         $message = trim($message);
 
-        if(!file_exists($localfile)) {
+        if (!file_exists($localfile)) {
             $this->fatal("$localfile does not exist");
         }
 
-        if(!is_readable($localfile)) {
+        if (!is_readable($localfile)) {
             $this->fatal("Cannot read from $localfile");
         }
 
-        if(!$message) {
+        if (!$message) {
             $this->fatal("Summary message required");
         }
 
@@ -269,19 +274,20 @@ class PageCLI extends CLI {
      *
      * @param string $wiki_id
      */
-    protected function obtainLock($wiki_id) {
-        if($this->force) $this->deleteLock($wiki_id);
+    protected function obtainLock($wiki_id)
+    {
+        if ($this->force) $this->deleteLock($wiki_id);
 
         $_SERVER['REMOTE_USER'] = $this->username;
 
-        if(checklock($wiki_id)) {
+        if (checklock($wiki_id)) {
             $this->error("Page $wiki_id is already locked by another user");
             exit(1);
         }
 
         lock($wiki_id);
 
-        if(checklock($wiki_id)) {
+        if (checklock($wiki_id)) {
             $this->error("Unable to obtain lock for $wiki_id ");
             var_dump(checklock($wiki_id));
             exit(1);
@@ -293,18 +299,19 @@ class PageCLI extends CLI {
      *
      * @param string $wiki_id
      */
-    protected function clearLock($wiki_id) {
-        if($this->force) $this->deleteLock($wiki_id);
+    protected function clearLock($wiki_id)
+    {
+        if ($this->force) $this->deleteLock($wiki_id);
 
         $_SERVER['REMOTE_USER'] = $this->username;
-        if(checklock($wiki_id)) {
+        if (checklock($wiki_id)) {
             $this->error("Page $wiki_id is locked by another user");
             exit(1);
         }
 
         unlock($wiki_id);
 
-        if(file_exists(wikiLockFN($wiki_id))) {
+        if (file_exists(wikiLockFN($wiki_id))) {
             $this->error("Unable to clear lock for $wiki_id");
             exit(1);
         }
@@ -315,11 +322,12 @@ class PageCLI extends CLI {
      *
      * @param string $wiki_id
      */
-    protected function deleteLock($wiki_id) {
+    protected function deleteLock($wiki_id)
+    {
         $wikiLockFN = wikiLockFN($wiki_id);
 
-        if(file_exists($wikiLockFN)) {
-            if(!unlink($wikiLockFN)) {
+        if (file_exists($wikiLockFN)) {
+            if (!unlink($wikiLockFN)) {
                 $this->error("Unable to delete $wikiLockFN");
                 exit(1);
             }
@@ -331,14 +339,15 @@ class PageCLI extends CLI {
      *
      * @return string
      */
-    protected function getUser() {
+    protected function getUser()
+    {
         $user = getenv('USER');
-        if(empty ($user)) {
+        if (empty($user)) {
             $user = getenv('USERNAME');
         } else {
             return $user;
         }
-        if(empty ($user)) {
+        if (empty($user)) {
             $user = 'admin';
         }
         return $user;

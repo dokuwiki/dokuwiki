@@ -3,9 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -111,6 +112,7 @@ $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['disableactions_rss']    = 'Syndication XML (RSS)';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies définis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Désactivez cette option lorsque seule la connexion à votre wiki est sécurisée avec SSL et que la navigation sur le wiki est effectuée de manière non sécurisée.';
+$lang['samesitecookie']        = 'Valeur de l\'attribut samesite des cookies. Vide pour laisser les navigateurs décider de leur politique samesite.';
 $lang['remote']                = 'Active l\'API système distante. Ceci permet à d\'autres applications d\'accéder au wiki via XML-RPC ou d\'autres mécanismes.';
 $lang['remoteuser']            = 'Restreindre l\'accès à l\'API à une liste de groupes ou d\'utilisateurs (séparés par une virgule). Laisser vide pour donner l\'accès tout le monde.';
 $lang['remotecors']            = 'Active le partage de ressources entre origines multiples (CORS) pour les interfaces distantes. Utiliser un astérisque (*) pour autoriser toutes les origines. Laisser vide pour interdire le CORS.';
@@ -142,6 +144,7 @@ $lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les n
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriels multipart HTML (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel en texte seul.';
 $lang['dontlog']               = 'Désactiver l\'enregistrement pour ces types de journaux.';
+$lang['logretain']             = 'Nombre de jours à garder dans le journal.';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
 $lang['rss_type']              = 'Type de flux XML (RSS)';
 $lang['rss_linkto']            = 'Lien du flux XML vers';

@@ -16,9 +16,9 @@ class PageDraft extends Ui
      * Display the Page Draft Form
      * ask the user about how to handle an exisiting draft
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
@@ -26,10 +26,10 @@ class PageDraft extends Ui
         global $lang;
 
         $draft = new Draft($INFO['id'], $INFO['client']);
-        $text  = $draft->getDraftText();
+        $text = $draft->getDraftText();
 
         // print intro
-        print p_locale_xhtml('draft');
+        echo p_locale_xhtml('draft');
 
         // print difference
         (new PageDiff($INFO['id']))->compareWith($text)->preference('showIntro', false)->show();
@@ -44,12 +44,11 @@ class PageDraft extends Ui
         $form->addTagOpen('div')->id('draft__status');
         $form->addHTML($draft->getDraftMessage());
         $form->addTagClose('div');
-        $form->addButton('do[recover]',  $lang['btn_recover'] )->attrs(['type' => 'submit', 'tabindex' => '1']);
+        $form->addButton('do[recover]', $lang['btn_recover'])->attrs(['type' => 'submit', 'tabindex' => '1']);
         $form->addButton('do[draftdel]', $lang['btn_draftdel'])->attrs(['type' => 'submit', 'tabindex' => '2']);
-        $form->addButton('do[show]',     $lang['btn_cancel']  )->attrs(['type' => 'submit', 'tabindex' => '3']);
+        $form->addButton('do[show]', $lang['btn_cancel'])->attrs(['type' => 'submit', 'tabindex' => '3']);
         $form->addTagClose('div');
 
-        print $form->toHTML('Draft');
+        echo $form->toHTML('Draft');
     }
-
 }

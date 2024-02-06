@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author KAWASHIMA,Y <darknmatta@gmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
@@ -218,6 +219,7 @@ $lang['created']               = '作成';
 $lang['restored']              = '以前のリビジョンを復元 (%s)';
 $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
+$lang['unknowndate']           = '不明な日付';
 $lang['noflash']               = 'この内容を表示するには <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> が必要です。';
 $lang['download']              = 'この部分をダウンロード';
 $lang['tools']                 = 'ツール';
@@ -366,3 +368,6 @@ $lang['page_nonexist_rev']     = '指定ページ %s はありません。この
 $lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
 $lang['email_signature_text']  = 'このメールは次のDokuWikiより自動的に送信されています。
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'ログファイルが大きすぎます．前の行をスキップしました！';
+$lang['log_file_failed_to_open'] = 'ログファイルを開けませんでした．';
+$lang['log_file_failed_to_read'] = 'ログの読み込み中にエラーが発生しました．';

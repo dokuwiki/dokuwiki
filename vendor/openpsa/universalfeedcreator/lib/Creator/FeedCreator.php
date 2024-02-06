@@ -27,6 +27,7 @@ abstract class FeedCreator extends HtmlDescribable
      */
     public $xslStyleSheet = "";
 
+    public $cssStyleSheet = "";
 
     /** @var FeedItem[] */
     public $items = Array();
@@ -50,6 +51,8 @@ abstract class FeedCreator extends HtmlDescribable
      * @since 1.6.1
      */
     protected $encoding = "UTF-8"; //"ISO-8859-1";
+
+    protected $_timeout;  # lib/Creator/FeedCreator.php  line 238
 
     /**
      * Any additional elements to include as an associated array. All $key => $value pairs

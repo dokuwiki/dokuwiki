@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilities for accessing the parser
  *
@@ -7,6 +8,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
@@ -91,17 +93,15 @@ function p_wiki_xhtml($id, $rev = '', $excuse = true, $date_at = '')
         } elseif ($excuse) {
             $ret = p_locale_xhtml('norev');
         }
-    } else {
-        if (file_exists($file)) {
-            $ret = p_cached_output($file, 'xhtml', $id);
-        } elseif ($excuse) {
-            //check if the page once existed
-            $changelog = new PageChangeLog($id);
-            if ($changelog->hasRevisions()) {
-                $ret = p_locale_xhtml('onceexisted');
-            } else {
-                $ret = p_locale_xhtml('newpage');
-            }
+    } elseif (file_exists($file)) {
+        $ret = p_cached_output($file, 'xhtml', $id);
+    } elseif ($excuse) {
+        //check if the page once existed
+        $changelog = new PageChangeLog($id);
+        if ($changelog->hasRevisions()) {
+            $ret = p_locale_xhtml('onceexisted');
+        } else {
+            $ret = p_locale_xhtml('newpage');
         }
     }
 
@@ -193,7 +193,7 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 
     if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } else if (file_exists($file)) {
+    } elseif (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file, $id));
         if ($cache->storeCache($ins)) {
@@ -310,7 +310,7 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
         $recursion = false;
     }
 
-    $val = $meta['current'];
+    $val = $meta['current'] ?? null;
 
     // filter by $key
     foreach (preg_split('/\s+/', $key, 2, PREG_SPLIT_NO_EMPTY) as $cur_key) {
@@ -359,10 +359,8 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
     // now add the passed metadata
     $protected = ['description', 'date', 'contributor'];
     foreach ($data as $key => $value) {
-
         // be careful with sub-arrays of $meta['relation']
         if ($key == 'relation') {
-
             foreach ($value as $subkey => $subvalue) {
                 if (isset($meta['current'][$key][$subkey]) && is_array($meta['current'][$key][$subkey])) {
                     $meta['current'][$key][$subkey] = array_replace($meta['current'][$key][$subkey], (array)$subvalue);
@@ -383,17 +381,16 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
 
             // be careful with some senisitive arrays of $meta
         } elseif (in_array($key, $protected)) {
-
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
-                $meta['current'][$key] = !empty($meta['current'][$key]) ?
-                    array_replace((array)$meta['current'][$key], $value) :
-                    $value;
+                $meta['current'][$key] = empty($meta['current'][$key]) ?
+                    $value :
+                    array_replace((array)$meta['current'][$key], $value);
 
                 if ($persistent) {
-                    $meta['persistent'][$key] = !empty($meta['persistent'][$key]) ?
-                        array_replace((array)$meta['persistent'][$key], $value) :
-                        $value;
+                    $meta['persistent'][$key] = empty($meta['persistent'][$key]) ?
+                        $value :
+                        array_replace((array)$meta['persistent'][$key], $value);
                 }
             }
 
@@ -435,7 +432,6 @@ function p_purge_metadata($id)
         } else {
             $meta['current'][$key] = '';
         }
-
     }
     return p_save_metadata($id, $meta);
 }
@@ -520,7 +516,6 @@ function p_render_metadata($id, $orig)
     $orig['page'] = $id;
     $evt = new Event('PARSER_METADATA_RENDER', $orig);
     if ($evt->advise_before()) {
-
         // get instructions
         $instructions = p_cached_instructions(wikiFN($id), false, $id);
         if (is_null($instructions)) {
@@ -576,11 +571,12 @@ function p_get_parsermodes()
 
     // add syntax plugins
     $pluginlist = plugin_list('syntax');
-    if (count($pluginlist)) {
+    if ($pluginlist !== []) {
         global $PARSER_MODES;
         foreach ($pluginlist as $p) {
             /** @var SyntaxPlugin $obj */
-            if (!$obj = plugin_load('syntax', $p)) continue; //attempt to load plugin into $obj
+            $obj = plugin_load('syntax', $p);
+            if (!$obj instanceof PluginInterface) continue;
             $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
             //add to modes
             $modes[] = [
@@ -605,11 +601,7 @@ function p_get_parsermodes()
     foreach ($std_modes as $m) {
         $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($m);
         $obj = new $class();
-        $modes[] = array(
-            'sort' => $obj->getSort(),
-            'mode' => $m,
-            'obj' => $obj
-        );
+        $modes[] = ['sort' => $obj->getSort(), 'mode' => $m, 'obj' => $obj];
     }
 
     // add formatting modes
@@ -618,11 +610,11 @@ function p_get_parsermodes()
     ];
     foreach ($fmt_modes as $m) {
         $obj = new Formatting($m);
-        $modes[] = array(
+        $modes[] = [
             'sort' => $obj->getSort(),
             'mode' => $m,
             'obj' => $obj
-        );
+        ];
     }
 
     // add modes which need files
@@ -656,8 +648,7 @@ function p_get_parsermodes()
  */
 function p_sort_modes($a, $b)
 {
-    if ($a['sort'] == $b['sort']) return 0;
-    return ($a['sort'] < $b['sort']) ? -1 : 1;
+    return $a['sort'] <=> $b['sort'];
 }
 
 /**
@@ -724,7 +715,7 @@ function p_get_renderer($mode)
     /** @var PluginController $plugin_controller */
     global $conf, $plugin_controller;
 
-    $rname = !empty($conf['renderer_' . $mode]) ? $conf['renderer_' . $mode] : $mode;
+    $rname = empty($conf['renderer_' . $mode]) ? $mode : $conf['renderer_' . $mode];
     $rclass = "Doku_Renderer_$rname";
 
     // if requested earlier or a bundled renderer
@@ -751,7 +742,7 @@ function p_get_renderer($mode)
         $msg .= ".<br/>Attempting to fallback to the bundled renderer.";
         msg($msg, -1, '', '', MSG_ADMINS_ONLY);
 
-        $Renderer = new $rclass;
+        $Renderer = new $rclass();
         $Renderer->nocache();     // fallback only (and may include admin alerts), don't cache
         return $Renderer;
     }
@@ -803,12 +794,13 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options
     $optionsmd5 = md5(serialize($options));
     $cache = getCacheName($language . $code . $optionsmd5, ".code");
     $ctime = @filemtime($cache);
-    if ($ctime && !$INPUT->bool('purge') &&
+    if (
+        $ctime && !$INPUT->bool('purge') &&
         $ctime > filemtime(DOKU_INC . 'vendor/composer/installed.json') &&  // libraries changed
-        $ctime > filemtime(reset($config_cascade['main']['default']))) { // dokuwiki changed
+        $ctime > filemtime(reset($config_cascade['main']['default']))
+    ) { // dokuwiki changed
         $highlighted_code = io_readFile($cache, false);
     } else {
-
         $geshi = new GeSHi($code, $language);
         $geshi->set_encoding('utf-8');
         $geshi->enable_classes();
@@ -835,4 +827,3 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options
         return $highlighted_code;
     }
 }
-

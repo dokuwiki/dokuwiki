@@ -978,3 +978,11 @@ _test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-in.js
 _test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-out.js
 _test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-in.js
 _test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-out.js
+vendor/kissifrot/php-ixr/.editorconfig
+vendor/kissifrot/php-ixr/.gitignore
+_test/tests/inc/pageutils_resolve_mediaid.test.php
+_test/tests/inc/pageutils_resolve_pageid.test.php
+vendor/phpseclib/phpseclib/phpseclib/Net/SCP.php
+vendor/phpseclib/phpseclib/phpseclib/Net/SSH1.php
+vendor/marcusschwarz/lesserphp/README.md
+vendor/marcusschwarz/lesserphp/lessc.inc.php

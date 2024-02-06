@@ -7,6 +7,7 @@ use JpegMeta;
 class MediaFile
 {
     protected $id;
+    protected $rev;
     protected $path;
 
     protected $mime;
@@ -26,14 +27,21 @@ class MediaFile
     {
         $this->id = $id; //FIXME should it be cleaned?
         $this->path = mediaFN($id, $rev);
+        $this->rev = $rev;
 
-        list($this->ext, $this->mime, $this->downloadable) = mimetype($this->path, false);
+        [$this->ext, $this->mime, $this->downloadable] = mimetype($this->path, false);
     }
 
     /** @return string */
     public function getId()
     {
         return $this->id;
+    }
+
+    /** @return string|int Empty string for current version */
+    public function getRev()
+    {
+        return $this->rev;
     }
 
     /** @return string */
@@ -108,7 +116,7 @@ class MediaFile
     /** @return bool */
     public function isImage()
     {
-        return (substr($this->mime, 0, 6) === 'image/');
+        return (str_starts_with($this->mime, 'image/'));
     }
 
     /**
@@ -121,7 +129,7 @@ class MediaFile
         if (!$this->isImage()) return;
         $info = getimagesize($this->path);
         if ($info === false) return;
-        list($this->width, $this->height) = $info;
+        [$this->width, $this->height] = $info;
     }
 
     /**
@@ -154,13 +162,13 @@ class MediaFile
      */
     public function userPermission()
     {
-        return auth_quickaclcheck(getNS($this->id).':*');
+        return auth_quickaclcheck(getNS($this->id) . ':*');
     }
 
     /** @return JpegMeta */
     public function getMeta()
     {
-        if($this->meta === null) $this->meta = new JpegMeta($this->path);
+        if ($this->meta === null) $this->meta = new JpegMeta($this->path);
         return $this->meta;
     }
 }

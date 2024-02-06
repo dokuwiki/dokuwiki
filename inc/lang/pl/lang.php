@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Marek Adamski <fevbew@wp.pl>
+ * @author Michał <kamykowsky@gmail.com>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
@@ -164,6 +165,9 @@ $lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
 $lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
 $lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
 $lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
+$lang['proftokenlegend']       = 'Token uwierzytelniający';
+$lang['proftokengenerate']     = 'Zresetuj token';
+$lang['proftokeninfo']         = 'Token uwierzytelniający może być używany do umożliwienia aplikacjom innych dostawców logowania się i działania w Twoim imieniu. Zresetowanie tokena spowoduje unieważnienie starego i wylogowanie wszystkich aplikacji, które korzystały z poprzedniego tokena.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd']             = 'Podaj nowe hasło dla';
@@ -234,6 +238,7 @@ $lang['created']               = 'utworzono';
 $lang['restored']              = 'przywrócono poprzednią wersję (%s)';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
+$lang['unknowndate']           = 'Nieznana data';
 $lang['noflash']               = 'Plugin <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
 $lang['tools']                 = 'Narzędzia';
@@ -381,3 +386,6 @@ $lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie 
 $lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Plik log jest zbyt duży. Poprzednie wiersze zostały pominięte!';
+$lang['log_file_failed_to_open'] = 'Nie udało się otworzyć pliku log.';
+$lang['log_file_failed_to_read'] = 'Wystąpił błąd podczas odczytywania pliku log.';

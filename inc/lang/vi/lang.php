@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hoàng Vịnh <hoangdangvinh.vn@gmail.com>
  * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author James Do <jdo@myrealbox.com>
@@ -143,6 +144,9 @@ $lang['profdeleted']           = 'Tài khoản thành viên của bạn đã b�
 $lang['profconfdelete']        = 'Tôi muốn xóa tài khoản của tôi khỏi wiki này. <br/> Hành động này không thể hoàn tác.';
 $lang['profconfdeletemissing'] = 'Hộp kiểm xác nhận chưa được đánh dấu';
 $lang['proffail']              = 'Hồ sơ thành viên chưa được cập nhật.';
+$lang['proftokenlegend']       = 'Mã xác thực';
+$lang['proftokengenerate']     = 'Đặt lại mã thông báo';
+$lang['proftokeninfo']         = 'Mã thông báo xác thực có thể được sử dụng để cho phép các ứng dụng của bên thứ 3 đăng nhập và hành động thay mặt bạn. Việc đặt lại mã thông báo sẽ làm mất hiệu lực mã cũ và đăng xuất tất cả các ứng dụng đã sử dụng mã thông báo trước đó.';
 $lang['pwdforget']             = 'Bạn quên mật khẩu? Tạo một cái mới';
 $lang['resendna']              = 'Wiki này không hỗ trợ gửi lại mật khẩu.';
 $lang['resendpwd']             = 'Đặt mật khẩu mới cho';
@@ -364,3 +368,6 @@ $lang['page_nonexist_rev']     = 'Trang không tồn tại tại %s. Sau đó, n
 $lang['unable_to_parse_date']  = 'Không thể phân tích cú pháp tại tham số "%s".';
 $lang['email_signature_text']  = 'Thư này được tạo bởi DokuWiki tại
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Tệp nhật ký quá lớn. Những dòng trước đã bị bỏ qua!';
+$lang['log_file_failed_to_open'] = 'Không thể mở tệp nhật ký.';
+$lang['log_file_failed_to_read'] = 'Đã xảy ra lỗi khi đọc nhật ký.';

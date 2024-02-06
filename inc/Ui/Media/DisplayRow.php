@@ -32,7 +32,7 @@ class DisplayRow extends DisplayTile
             'alt="' . $lang['mediaview'] . '" title="' . $lang['mediaview'] . '" class="btn" /></a>';
 
         // mediamanager button
-        $link = wl('', array('do' => 'media', 'image' => $id, 'ns' => getNS($id)));
+        $link = wl('', ['do' => 'media', 'image' => $id, 'ns' => getNS($id)]);
         echo ' <a href="' . $link . '" target="_blank"><img src="' . DOKU_BASE . 'lib/images/mediamanager.png" ' .
             'alt="' . $lang['btn_media'] . '" title="' . $lang['btn_media'] . '" class="btn" /></a>';
 
@@ -51,7 +51,6 @@ class DisplayRow extends DisplayTile
         if ($this->mediaFile->isImage()) $this->showDetails();
         echo '<div class="clearer"></div>' . NL;
         echo '</div>' . NL;
-
     }
 
     /**
@@ -69,15 +68,15 @@ class DisplayRow extends DisplayTile
         echo '</div>';
 
         // read EXIF/IPTC data
-        $t = $this->mediaFile->getMeta()->getField(array('IPTC.Headline', 'xmp.dc:title'));
-        $d = $this->mediaFile->getMeta()->getField(array(
+        $t = $this->mediaFile->getMeta()->getField(['IPTC.Headline', 'xmp.dc:title']);
+        $d = $this->mediaFile->getMeta()->getField([
             'IPTC.Caption',
             'EXIF.UserComment',
             'EXIF.TIFFImageDescription',
-            'EXIF.TIFFUserComment',
-        ));
+            'EXIF.TIFFUserComment'
+        ]);
         if (PhpString::strlen($d) > 250) $d = PhpString::substr($d, 0, 250) . '...';
-        $k = $this->mediaFile->getMeta()->getField(array('IPTC.Keywords', 'IPTC.Category', 'xmp.dc:subject'));
+        $k = $this->mediaFile->getMeta()->getField(['IPTC.Keywords', 'IPTC.Category', 'xmp.dc:subject']);
 
         // print EXIF/IPTC data
         if ($t || $d || $k) {
@@ -89,5 +88,4 @@ class DisplayRow extends DisplayTile
         }
         echo '</div>';
     }
-
 }
