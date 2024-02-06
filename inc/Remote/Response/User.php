@@ -13,7 +13,7 @@ class User extends ApiResponse
     public $name;
     /** @var string The email address of the user */
     public $mail;
-    /** @var array The groups the user is in */
+    /** @var string[] The groups the user is in */
     public $groups;
     /** @var bool Whether the user is a super user */
     public bool $isadmin;
@@ -24,7 +24,7 @@ class User extends ApiResponse
      * @param string $login defaults to the current user
      * @param string $name
      * @param string $mail
-     * @param string $groups
+     * @param string[] $groups
      */
     public function __construct($login = '', $name = '', $mail = '', $groups = [])
     {
