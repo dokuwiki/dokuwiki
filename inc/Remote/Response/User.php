@@ -49,13 +49,13 @@ class User extends ApiResponse
         if ($this->login === $INPUT->server->str('REMOTE_USER')) {
             $this->name = $this->name ?: $USERINFO['name'];
             $this->mail = $this->mail ?: $USERINFO['mail'];
-            $this->groups = $this->mail ?: $USERINFO['grps'];
+            $this->groups = $this->groups ?: $USERINFO['grps'];
         } else {
             // for other users, use auth_getUserData to fill up
             $userData = $auth->getUserData($this->login);
             $this->name = $this->name ?: $userData['name'];
             $this->mail = $this->mail ?: $userData['mail'];
-            $this->groups = $this->mail ?: $userData['grps'];
+            $this->groups = $this->groups ?: $userData['grps'];
         }
 
         // check for admin and manager
