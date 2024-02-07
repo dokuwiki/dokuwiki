@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\AdminPlugin;
+
 /**
  * DokuWiki Plugin extension (Admin Component)
  *
@@ -9,9 +12,9 @@
 /**
  * Admin part of the extension manager
  */
-class admin_plugin_extension extends DokuWiki_Admin_Plugin
+class admin_plugin_extension extends AdminPlugin
 {
-    protected $infoFor = null;
+    protected $infoFor;
     /** @var  helper_plugin_extension_gui */
     protected $gui;
 
@@ -53,9 +56,8 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
 
         if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
             $url = $this->gui->tabURL('', ['purge' => 1], '&');
-            msg($this->getLang('repo_error').
-                ' [<a href="'.$url.'">'.$this->getLang('repo_retry').'</a>]', -1
-            );
+            msg($this->getLang('repo_error') .
+                ' [<a href="' . $url . '" rel="noreferrer">' . $this->getLang('repo_retry') . '</a>]', -1);
         }
 
         if (!in_array('ssl', stream_get_transports())) {
@@ -76,11 +78,11 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                             case 'update':
                                 $extension->setExtension($extname);
                                 $installed = $extension->installOrUpdate();
-                                foreach ($installed as $ext => $info) {
+                                foreach ($installed as $info) {
                                     msg(sprintf(
-                                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                                        $info['base']), 1
-                                    );
+                                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                                        $info['base']
+                                    ), 1);
                                 }
                                 break;
                             case 'uninstall':
@@ -89,13 +91,13 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 if ($status) {
                                     msg(sprintf(
                                         $this->getLang('msg_delete_success'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_delete_failed'),
-                                        hsc($extension->getDisplayName())), -1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), -1);
                                 }
                                 break;
                             case 'enable':
@@ -106,8 +108,8 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_enabled'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 }
                                 break;
                             case 'disable':
@@ -118,8 +120,8 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                                 } else {
                                     msg(sprintf(
                                         $this->getLang('msg_disabled'),
-                                        hsc($extension->getDisplayName())), 1
-                                    );
+                                        hsc($extension->getDisplayName())
+                                    ), 1);
                                 }
                                 break;
                         }
@@ -129,21 +131,22 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
             } elseif ($INPUT->post->str('installurl') && checkSecurityToken()) {
                 $installed = $extension->installFromURL(
                     $INPUT->post->str('installurl'),
-                    $INPUT->post->bool('overwrite'));
-                foreach ($installed as $ext => $info) {
+                    $INPUT->post->bool('overwrite')
+                );
+                foreach ($installed as $info) {
                     msg(sprintf(
-                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                        $info['base']), 1
-                    );
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                        $info['base']
+                    ), 1);
                 }
                 send_redirect($this->gui->tabURL('', [], '&', true));
             } elseif (isset($_FILES['installfile']) && checkSecurityToken()) {
                 $installed = $extension->installFromUpload('installfile', $INPUT->post->bool('overwrite'));
-                foreach ($installed as $ext => $info) {
+                foreach ($installed as $info) {
                     msg(sprintf(
-                        $this->getLang('msg_'.$info['type'].'_'.$info['action'].'_success'),
-                        $info['base']), 1
-                    );
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                        $info['base']
+                    ), 1);
                 }
                 send_redirect($this->gui->tabURL('', [], '&', true));
             }
@@ -158,8 +161,8 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
      */
     public function html()
     {
-        echo '<h1>'.$this->getLang('menu').'</h1>'.DOKU_LF;
-        echo '<div id="extension__manager">'.DOKU_LF;
+        echo '<h1>' . $this->getLang('menu') . '</h1>' . DOKU_LF;
+        echo '<div id="extension__manager">' . DOKU_LF;
 
         $this->gui->tabNavigation();
 
@@ -178,7 +181,7 @@ class admin_plugin_extension extends DokuWiki_Admin_Plugin
                 $this->gui->tabPlugins();
         }
 
-        echo '</div>'.DOKU_LF;
+        echo '</div>' . DOKU_LF;
     }
 }
 

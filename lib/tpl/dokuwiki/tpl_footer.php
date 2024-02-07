@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template footer, included in the main and detail files
  */
@@ -14,7 +15,7 @@ if (!defined('DOKU_INC')) die();
     <div class="buttons">
         <?php
             tpl_license('button', true, false, false); // license button, no wrapper
-            $target = ($conf['target']['extern']) ? 'target="'.$conf['target']['extern'].'"' : '';
+            $target = ($conf['target']['extern']) ? 'target="' . $conf['target']['extern'] . '"' : '';
         ?>
         <a href="https://www.dokuwiki.org/donate" title="Donate" <?php echo $target?>><img
             src="<?php echo tpl_basedir(); ?>images/button-donate.gif" width="80" height="15" alt="Donate" /></a>

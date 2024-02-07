@@ -4,11 +4,10 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Eol extends AbstractMode
 {
-
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $badModes = array('listblock','table');
+        $badModes = ['listblock', 'table'];
         if (in_array($mode, $badModes)) {
             return;
         }

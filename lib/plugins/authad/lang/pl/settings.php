@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
+ * @author Michał <kamykowsky@gmail.com>
+ * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
@@ -29,4 +32,5 @@ $lang['expirywarn']            = 'Dni poprzedzających powiadomienie użytkownik
 $lang['additional']            = 'Oddzielona przecinkami lista dodatkowych atrybutów AD do pobrania z danych użytkownika. Używane przez niektóre wtyczki.';
 $lang['update_name']           = 'Zezwól użytkownikom na uaktualnianie nazwy wyświetlanej w AD?';
 $lang['update_mail']           = 'Zezwól użytkownikom na uaktualnianie ich adresu email?';
+$lang['update_pass']           = 'Zezwolić użytkownikom na aktualizację hasła? Wymaga SSL lub TLS powyżej.';
 $lang['recursive_groups']      = 'Rozpatrz grupy zagnieżdżone dla odpowiednich członków (wolniej).';

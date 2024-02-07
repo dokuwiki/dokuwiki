@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Utf8;
 
+use dokuwiki\Logger;
+
 /**
  * DokuWiki sort functions
  *
@@ -49,9 +51,14 @@ class Sort
             $collator = \Collator::create($lc);
             if (!isset($collator)) return null; // check needed as stated in the docs
             $collator->setAttribute(\Collator::NUMERIC_COLLATION, \Collator::ON);
-            dbglog('Collator created with locale "' . $lc . '": numeric collation on, ' .
-                   'valid locale "' . $collator->getLocale(\Locale::VALID_LOCALE) . '", ' .
-                   'actual locale "' . $collator->getLocale(\Locale::ACTUAL_LOCALE) . '"');
+            Logger::getInstance(Logger::LOG_DEBUG)->log(
+                'Collator created with locale "' . $lc . '": numeric collation on, ' .
+                'valid locale "' . $collator->getLocale(\Locale::VALID_LOCALE) . '", ' .
+                'actual locale "' . $collator->getLocale(\Locale::ACTUAL_LOCALE) . '"',
+                null,
+                __FILE__,
+                __LINE__
+            );
             self::$collators[$lc] = $collator;
         }
 
@@ -123,7 +130,7 @@ class Sort
     {
         $collator = self::getCollator();
         if (isset($collator)) {
-            return uksort($array, array($collator, 'compare'));
+            return uksort($array, [$collator, 'compare']);
         } else {
             return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }

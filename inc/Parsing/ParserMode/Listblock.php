@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Listblock extends AbstractMode
 {
-
     /**
      * Listblock constructor.
      */

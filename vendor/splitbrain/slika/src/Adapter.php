@@ -3,10 +3,12 @@
 
 namespace splitbrain\slika;
 
-
+/**
+ * Base class for image adapters. Defines what image processing adapters need to provide
+ */
 abstract class Adapter
 {
-    /** @var string path tot he image */
+    /** @var string path to the image */
     protected $imagepath;
 
     /** @var array Adapter Options */

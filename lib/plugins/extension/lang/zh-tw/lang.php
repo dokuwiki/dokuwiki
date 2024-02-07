@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
  * @author June-Hao Hou <junehao@gmail.com>

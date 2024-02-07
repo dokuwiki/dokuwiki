@@ -6,4 +6,4 @@ Cette page vous permet d'ajouter ou de supprimer des autorisations pour les cat�
   * Le formulaire ci-dessus permet d'afficher et de modifier les autorisations d'un utilisateur ou d'un groupe sélectionné.
   * Le tableau ci-dessous présente la liste de contrôle d'accès (ACL) actuelle. Vous pouvez l'utiliser pour supprimer ou modifier rapidement plusieurs contrôles d'accès.
 
-La lecture de [[doku>fr:acl|la documentation officielle des contrôles d'accès]] pourra vous permettre de mieux comprendre le fonctionnement du contrôle d'accès dans DokuWiki.
+La lecture de [[doku>fr:acl|la documentation officielle du contrôle d'accès]] pourra vous permettre de mieux comprendre le fonctionnement du contrôle d'accès dans DokuWiki.

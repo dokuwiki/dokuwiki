@@ -16,7 +16,7 @@ class InputElement extends Element
     /**
      * @var LabelElement
      */
-    protected $label = null;
+    protected $label;
 
     /**
      * @var bool if the element should reflect posted values
@@ -30,7 +30,7 @@ class InputElement extends Element
      */
     public function __construct($type, $name, $label = '')
     {
-        parent::__construct($type, array('name' => $name));
+        parent::__construct($type, ['name' => $name]);
         $this->attr('name', $name);
         $this->attr('type', $type);
         if ($label) $this->label = new LabelElement($label);
@@ -114,7 +114,7 @@ class InputElement extends Element
             $key = null;
         }
 
-        return array($name, $key);
+        return [$name, $key];
     }
 
     /**
@@ -124,7 +124,7 @@ class InputElement extends Element
     {
         global $INPUT;
 
-        list($name, $key) = $this->getInputName();
+        [$name, $key] = $this->getInputName();
         if (!$INPUT->has($name)) return;
 
         if ($key === null) {
@@ -148,7 +148,7 @@ class InputElement extends Element
     protected function mainElementHTML()
     {
         if ($this->useInput) $this->prefillInput();
-        return '<input '. buildAttributes($this->attrs()) .' />';
+        return '<input ' . buildAttributes($this->attrs()) . ' />';
     }
 
     /**
@@ -159,10 +159,10 @@ class InputElement extends Element
     public function toHTML()
     {
         if ($this->label) {
-            return '<label '. buildAttributes($this->label->attrs()) .'>'.DOKU_LF
-                .'<span>'. hsc($this->label->val()) .'</span>'.DOKU_LF
-                . $this->mainElementHTML() .DOKU_LF
-                .'</label>';
+            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF
+                . '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF
+                . $this->mainElementHTML() . DOKU_LF
+                . '</label>';
         } else {
             return $this->mainElementHTML();
         }

@@ -136,12 +136,12 @@ Resize to given width:            {{wiki:dokuwiki-128.png?50}}
 
 Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:dokuwiki-128.png?200x50}}
 
-Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
+Resized external image:           {{https://www.php.net/images/php.gif?200x50}}
 
   Real size:                        {{wiki:dokuwiki-128.png}}
   Resize to given width:            {{wiki:dokuwiki-128.png?50}}
   Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
-  Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
+  Resized external image:           {{https://www.php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment.
@@ -437,57 +437,6 @@ When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might wan
 
 If you don't want any highlighting but want a downloadable file, specify a dash (''-'') as the language code: ''%%<code - myfile.foo>%%''.
 
-
-===== Embedding HTML and PHP =====
-
-You can embed raw HTML or PHP code into your documents by using the ''%%<html>%%'' or ''%%<php>%%'' tags. (Use uppercase tags if you need to enclose block level elements.)
-
-HTML example:
-
-<code>
-<html>
-This is some <span style="color:red;font-size:150%;">inline HTML</span>
-</html>
-<HTML>
-<p style="border:2px dashed red;">And this is some block HTML</p>
-</HTML>
-</code>
-
-<html>
-This is some <span style="color:red;font-size:150%;">inline HTML</span>
-</html>
-<HTML>
-<p style="border:2px dashed red;">And this is some block HTML</p>
-</HTML>
-
-PHP example:
-
-<code>
-<php>
-echo 'The PHP version: ';
-echo phpversion();
-echo ' (generated inline HTML)';
-</php>
-<PHP>
-echo '<table class="inline"><tr><td>The same, but inside a block level element:</td>';
-echo '<td>'.phpversion().'</td>';
-echo '</tr></table>';
-</PHP>
-</code>
-
-<php>
-echo 'The PHP version: ';
-echo phpversion();
-echo ' (inline HTML)';
-</php>
-<PHP>
-echo '<table class="inline"><tr><td>The same, but inside a block level element:</td>';
-echo '<td>'.phpversion().'</td>';
-echo '</tr></table>';
-</PHP>
-
-**Please Note**: HTML and PHP embedding is disabled by default in the configuration. If disabled, the code is displayed instead of executed.
-
 ===== RSS/ATOM Feed Aggregation =====
 [[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
 
@@ -496,7 +445,7 @@ echo '</tr></table>';
 | reverse    | display the last items in the feed first |
 | author     | show item authors names |
 | date       | show item dates |
-| description| show the item description. If [[doku>config:htmlok|HTML]] is disabled all tags will be stripped |
+| description| show the item description. All HTML tags will be stripped |
 | nosort     | do not sort the items in the feed |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 

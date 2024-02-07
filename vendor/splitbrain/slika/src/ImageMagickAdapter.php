@@ -3,7 +3,9 @@
 
 namespace splitbrain\slika;
 
-
+/**
+ * Image Processing Adapter for ImageMagick's command line utility `convert`
+ */
 class ImageMagickAdapter extends Adapter
 {
     /** @var array the CLI arguments to run imagemagick */
@@ -86,10 +88,14 @@ class ImageMagickAdapter extends Adapter
         if ($width == 0) $width = $height;
         if ($height == 0) $height = $width;
 
+        $size = $width . 'x' . $height;
+
+        $this->args[] = '-resize';
+        $this->args[] = "$size^";
         $this->args[] = '-gravity';
         $this->args[] = 'center';
         $this->args[] = '-crop';
-        $this->args[] = $width . 'x' . $height . '+0+0';
+        $this->args[] = "$size+0+0";
         $this->args[] = '+repage';
         return $this;
     }

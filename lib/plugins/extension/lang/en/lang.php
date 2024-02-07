@@ -81,6 +81,7 @@ $lang['msg_nooverwrite']              = 'Extension %s already exists so it is no
 $lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
 $lang['security_issue']               = '<strong>Security Issue:</strong> %s';
 $lang['security_warning']             = '<strong>Security Warning:</strong> %s';
+$lang['update_message']               = '<strong>Update Message:</strong> %s';
 $lang['update_available']             = '<strong>Update:</strong> New version %s is available.';
 $lang['wrong_folder']                 = '<strong>Plugin installed incorrectly:</strong> Rename plugin directory "%s" to "%s".';
 $lang['url_change']                   = '<strong>URL changed:</strong> Download URL has changed since last download. Check if the new URL is valid before updating the extension.<br />New: %s<br />Old: %s';
@@ -101,6 +102,7 @@ $lang['auth']                         = 'This auth plugin is not enabled in conf
 $lang['install_url']                  = 'Install from URL:';
 $lang['install_upload']               = 'Upload Extension:';
 
+$lang['repo_badresponse']             = 'The plugin repository returned an invalid response.';
 $lang['repo_error']                   = 'The plugin repository could not be contacted. Make sure your server is allowed to contact www.dokuwiki.org and check your proxy settings.';
 $lang['nossl']                        = 'Your PHP seems to miss SSL support. Downloading will not work for many DokuWiki extensions.';
 

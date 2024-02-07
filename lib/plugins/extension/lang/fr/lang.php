@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Damien Regad <dregad@mantisbt.org>
  * @author Yves Grandvalet <Yves.Grandvalet@laposte.net>
  * @author Carbain Frédéric <fcarbain@yahoo.fr>
@@ -48,7 +48,7 @@ $lang['downloadurl']           = 'Téléchargement :';
 $lang['repository']            = 'Dépôt : ';
 $lang['unknown']               = '<em>inconnu</em>';
 $lang['installed_version']     = 'Version installée :';
-$lang['install_date']          = 'Dernière mise à jour :';
+$lang['install_date']          = 'Dernière mise à jour :';
 $lang['available_version']     = 'Version disponible :';
 $lang['compatible']            = 'Compatible avec :';
 $lang['depends']               = 'Dépend de :';
@@ -97,5 +97,6 @@ $lang['git']                   = 'Cette extension a été installé via git, vou
 $lang['auth']                  = 'Votre configuration n\'utilise pas ce greffon d\'authentification. Vous devriez songer à le désactiver.';
 $lang['install_url']           = 'Installez depuis l\'URL :';
 $lang['install_upload']        = 'Téléversez l\'extension :';
-$lang['repo_error']            = 'Le dépôt d\'extensions est injoignable. Veuillez vous assurer que le server web est autorisé à contacter www.dokuwiki.org et vérifier les réglages de proxy.';
+$lang['repo_badresponse']      = 'Le référentiel d\'extensions a retourné une réponse invalide.';
+$lang['repo_error']            = 'Le référentiel d\'extensions est injoignable. Veuillez vous assurer que votre serveur web est autorisé à contacter www.dokuwiki.org et vérifier ses paramètres de proxy.';
 $lang['nossl']                 = 'Votre version de PHP semble ne pas prendre en charge SSL. Le téléchargement de nombreuses extensions va échouer.';

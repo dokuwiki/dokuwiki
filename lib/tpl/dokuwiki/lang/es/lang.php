@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author cadetill <cadetill@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  */
+$lang['home']                  = 'Inicio';
 $lang['__background_site__']   = 'Color para el fondo (detrás de la caja de contenido)';
 $lang['__link__']              = 'El color de los enlaces en general';
 $lang['__existing__']          = 'El color de los enlaces a páginas existentes';

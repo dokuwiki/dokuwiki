@@ -3,6 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Zhenzhe Huang <1991419264@qq.com>
+ * @author 林晓东 <lin_xd@126.com>
+ * @author alair <Mail@alair.top>
+ * @author better <betterzhubo@live.com>
+ * @author 小李 <szsd5257@foxmail.com>
+ * @author VinnieChow <zsz33@qq.com>
  * @author Lakejason0 <lakesarchive@outlook.com>
  * @author Phy <dokuwiki@phy25.com>
  * @author Jenxi <seow@jenxi.com>
@@ -55,7 +61,7 @@ $lang['btn_preview']           = '预览';
 $lang['btn_top']               = '回到顶部';
 $lang['btn_newer']             = '<< 较新的';
 $lang['btn_older']             = '较旧的 >>';
-$lang['btn_revs']              = '修订记录';
+$lang['btn_revs']              = '过去修订';
 $lang['btn_recent']            = '最近更改';
 $lang['btn_upload']            = '上传';
 $lang['btn_cancel']            = '取消';
@@ -143,6 +149,7 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拽文件到此处来上传';
 $lang['js']['media_cancel']    = '删除';
 $lang['js']['media_overwrt']   = '覆盖已存在的文件';
+$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>。';
 $lang['search_exact_match']    = '精确匹配';
 $lang['search_starts_with']    = '开始于';
 $lang['search_ends_with']      = '结束于';
@@ -175,6 +182,9 @@ $lang['profdeleted']           = '你的用户已经从这个 wiki 中删除';
 $lang['profconfdelete']        = '我希望删除我的账户。<br/>这项操作无法撤销。';
 $lang['profconfdeletemissing'] = '确认框未勾选';
 $lang['proffail']              = '用户设置没有更新。';
+$lang['proftokenlegend']       = '认证令牌';
+$lang['proftokengenerate']     = '重置令牌';
+$lang['proftokeninfo']         = '认证令牌可用于让第三方应用登录并代表您进行操作。重置令牌将使旧令牌失效，并注销使用先前令牌的所有应用。';
 $lang['pwdforget']             = '忘记密码？立即获取新密码';
 $lang['resendna']              = '本维基不支持二次发送密码。';
 $lang['resendpwd']             = '设置新密码用于';
@@ -190,7 +200,7 @@ $lang['searchmedia_in']        = '在%s中查找';
 $lang['txt_upload']            = '选择要上传的文件:';
 $lang['txt_filename']          = '上传并重命名为（可选）:';
 $lang['txt_overwrt']           = '覆盖已存在的同名文件';
-$lang['maxuploadsize']         = '上传限制。每个文件 %s';
+$lang['maxuploadsize']         = '上传限制：每个文件最大 %s';
 $lang['allowedmime']           = '允许文件扩展名列表';
 $lang['lockedby']              = '目前已被下列人员锁定:';
 $lang['lockexpire']            = '预计锁定解除于:';
@@ -245,6 +255,7 @@ $lang['created']               = '创建';
 $lang['restored']              = '已恢复为旧版 (%s)';
 $lang['external_edit']         = '外部编辑';
 $lang['summary']               = '编辑摘要';
+$lang['unknowndate']           = '未知日期';
 $lang['noflash']               = '需要 <a href="https://get.adobe.com/flashplayer">Adobe Flash 插件</a> 来播放本内容。 ';
 $lang['download']              = '下载片段';
 $lang['tools']                 = '工具';
@@ -395,3 +406,6 @@ $lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a hr
 $lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
 $lang['email_signature_text']  = '本邮件由 DokuWiki 自动创建
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = '日志文件太大。跳过前几行!';
+$lang['log_file_failed_to_open'] = '日志文件打开失败。';
+$lang['log_file_failed_to_read'] = '读取日志时发生错误。';

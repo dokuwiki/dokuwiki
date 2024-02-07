@@ -1,5 +1,9 @@
 <?php
 
+use splitbrain\phpcli\Exception;
+use dokuwiki\Extension\CLIPlugin;
+use splitbrain\phpcli\Options;
+use splitbrain\phpcli\TableFormatter;
 use splitbrain\phpcli\Colors;
 
 /**
@@ -10,10 +14,10 @@ use splitbrain\phpcli\Colors;
  * @license GPL2
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class cli_plugin_extension extends DokuWiki_CLI_Plugin
+class cli_plugin_extension extends CLIPlugin
 {
     /** @inheritdoc */
-    protected function setup(\splitbrain\phpcli\Options $options)
+    protected function setup(Options $options)
     {
         // general setup
         $options->setHelp(
@@ -42,7 +46,12 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
-        $options->registerArgument('extensions...', 'One or more extensions to install', true, 'install');
+        $options->registerArgument(
+            'extensions...',
+            'One or more extensions to install. Either by name or download URL',
+            true,
+            'install'
+        );
 
         // uninstall
         $options->registerCommand('uninstall', 'Uninstall a new extension');
@@ -55,12 +64,10 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
         // disable
         $options->registerCommand('disable', 'Disable installed extensions');
         $options->registerArgument('extensions...', 'One or more extensions to disable', true, 'disable');
-
-
     }
 
     /** @inheritdoc */
-    protected function main(\splitbrain\phpcli\Options $options)
+    protected function main(Options $options)
     {
         /** @var helper_plugin_extension_repository $repo */
         $repo = plugin_load('helper', 'extension_repository');
@@ -143,7 +150,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             if (!$ext->isInstalled()) {
                 $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                $ok += 1;
+                ++$ok;
                 continue;
             }
 
@@ -157,7 +164,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
             if ($status !== true) {
                 $this->error($status);
-                $ok += 1;
+                ++$ok;
                 continue;
             } else {
                 $this->success(sprintf($this->getLang($msg), $ext->getID()));
@@ -183,7 +190,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
             $ext->setExtension($extname);
             if (!$ext->isInstalled()) {
                 $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                $ok += 1;
+                ++$ok;
                 continue;
             }
 
@@ -212,27 +219,41 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
 
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
+            $installed = [];
 
-            if (!$ext->getDownloadURL()) {
-                $ok += 1;
-                $this->error(
-                    sprintf('Could not find download for %s', $ext->getID())
-                );
-                continue;
+            if (preg_match("/^https?:\/\//i", $extname)) {
+                try {
+                    $installed = $ext->installFromURL($extname, true);
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    ++$ok;
+                }
+            } else {
+                $ext->setExtension($extname);
+
+                if (!$ext->getDownloadURL()) {
+                    ++$ok;
+                    $this->error(
+                        sprintf('Could not find download for %s', $ext->getID())
+                    );
+                    continue;
+                }
+
+                try {
+                    $installed = $ext->installOrUpdate();
+                } catch (Exception $e) {
+                    $this->error($e->getMessage());
+                    ++$ok;
+                }
             }
 
-            try {
-                $installed = $ext->installOrUpdate();
-                foreach ($installed as $name => $info) {
-                    $this->success(sprintf(
-                            $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                            $info['base'])
-                    );
-                }
-            } catch (Exception $e) {
-                $this->error($e->getMessage());
-                $ok += 1;
+            foreach ($installed as $info) {
+                $this->success(
+                    sprintf(
+                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
+                        $info['base']
+                    )
+                );
             }
         }
         return $ok;
@@ -245,7 +266,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
      * @param bool $showdetails
      * @param int $max
      * @return int
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function cmdSearch($query, $showdetails, $max)
     {
@@ -264,7 +285,7 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
      * @param bool $showdetails
      * @param string $filter
      * @return int
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function cmdList($showdetails, $filter)
     {
@@ -285,9 +306,8 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
         global $plugin_controller;
         $pluginlist = $plugin_controller->getList('', true);
         $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
-        $tpllist = array_map(function ($path) {
-            return 'template:' . basename($path);
-        }, $tpllist);
+        $tpllist = array_map(static fn($path) => 'template:' . basename($path), $tpllist);
+
         $list = array_merge($pluginlist, $tpllist);
         sort($list);
         return $list;
@@ -299,13 +319,13 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
      * @param string[] $list
      * @param bool $details display details
      * @param string $filter filter for this status
-     * @throws \splitbrain\phpcli\Exception
+     * @throws Exception
      */
     protected function listExtensions($list, $details, $filter = '')
     {
         /** @var helper_plugin_extension_extension $ext */
         $ext = $this->loadHelper('extension_extension');
-        $tr = new \splitbrain\phpcli\TableFormatter($this->colors);
+        $tr = new TableFormatter($this->colors);
 
 
         foreach ($list as $name) {
@@ -347,10 +367,10 @@ class cli_plugin_extension extends DokuWiki_CLI_Plugin
                     $status,
                     $date,
                     strip_tags(sprintf(
-                            $this->getLang('extensionby'),
-                            $ext->getDisplayName(),
-                            $this->colors->wrap($ext->getAuthor(), Colors::C_PURPLE))
-                    )
+                        $this->getLang('extensionby'),
+                        $ext->getDisplayName(),
+                        $this->colors->wrap($ext->getAuthor(), Colors::C_PURPLE)
+                    ))
                 ],
                 [
                     $ecolor,

@@ -214,7 +214,7 @@ $lang['created']               = 'stvoreno';
 $lang['restored']              = 'vraćeno na prijašnju izmjenu (%s)';
 $lang['external_edit']         = 'vanjsko uređivanje';
 $lang['summary']               = 'Sažetak izmjena';
-$lang['noflash']               = 'Za prikazivanje ovog sadržaja potreban je <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>';
+$lang['noflash']               = 'Za prikazivanje ovog sadržaja potreban je <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>';
 $lang['download']              = 'Preuzmi isječak';
 $lang['tools']                 = 'Alati';
 $lang['user_tools']            = 'Korisnički alati';
@@ -295,7 +295,7 @@ $lang['i_enableacl']           = 'Omogući ACL (preporučeno)';
 $lang['i_superuser']           = 'Superkorisnik';
 $lang['i_problems']            = 'Instalacija je pronašla probleme koji su naznačeni ispod. Nije moguće nastaviti dok se ti problemi ne riješe.';
 $lang['i_modified']            = 'Zbog sigurnosnih razlog, ova skripta raditi će samo sa novim i neizmijenjenim DokuWiki instalacijama.
-      Molimo ponovno prekopirajte datoteke iz preuzetoga paketa ili pogledajte detaljno <a href="http://dokuwiki.org/install">Uputstvo za postavljanje DokuWiki-a</a>';
+      Molimo ponovno prekopirajte datoteke iz preuzetoga paketa ili pogledajte detaljno <a href="https://www.dokuwiki.org/install">Uputstvo za postavljanje DokuWiki-a</a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nije dostupna. Možda ju je vaš pružatelj hostinga onemogućio iz nekog razloga?';
 $lang['i_phpver']              = 'Vaša PHP inačica <code>%s</code> je niža od potrebne <code>%s</code>. Trebate nadograditi vašu PHP instalaciju.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload mora biti onemogućena u php.ini da bi ste pokrenuli DokuWiki.';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Růžička <martinr@post.cz>
  * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
@@ -19,7 +20,6 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
- * @author Martin Růžička <martinr@post.cz>
  * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['menu']                  = 'Správa nastavení';
@@ -109,16 +109,16 @@ $lang['disableactions_other']  = 'Další akce (oddělené čárkou)';
 $lang['disableactions_rss']    = 'XMS syndikace (RSS)';
 $lang['auth_security_timeout'] = 'Časový limit pro autentikaci (v sekundách)';
 $lang['securecookie']          = 'Má prohlížeč posílat cookies nastavené přes HTTPS opět jen přes HTTPS? Vypněte tuto volbu, pokud chcete, aby bylo pomocí SSL zabezpečeno pouze přihlašování do wiki, ale obsah budete prohlížet nezabezpečeně.';
+$lang['samesitecookie']        = 'Atribut samesite cookie, který se má použít. Pokud pole ponecháte prázdné, prohlížeč rozhodne o zásadách samesite.';
 $lang['remote']                = 'Zapne API systému, umožňující jiným aplikacím vzdálený přístup k wiki pomoci XML-RPC nebo jiných mechanizmů.';
 $lang['remoteuser']            = 'Omezit přístup k API na tyto uživatelské skupiny či uživatele (seznam oddělený čárkami). Prázdné pole povolí přístup všem.';
+$lang['remotecors']            = 'Povolit sdílené zdroje odjinud (CORS) pro vzdálená rozhraní. Hvězdičkou (*) povolíte všechny zdroje. Ponechte prázdné, chcete-li zakázat CORS.';
 $lang['usewordblock']          = 'Blokovat spam za použití seznamu známých spamových slov';
 $lang['relnofollow']           = 'Používat rel="nofollow" na externí odkazy';
 $lang['indexdelay']            = 'Časová prodleva před indexací (v sekundách)';
 $lang['mailguard']             = 'Metoda "zamaskování" emailových adres';
 $lang['iexssprotect']          = 'Zkontrolovat nahrané soubory vůči možnému škodlivému JavaScriptu či HTML';
 $lang['usedraft']              = 'Během editace ukládat koncept automaticky';
-$lang['htmlok']                = 'Povolit vložené HTML';
-$lang['phpok']                 = 'Povolit vložené PHP';
 $lang['locktime']              = 'Maximální životnost zámkových souborů (v sekundách)';
 $lang['cachetime']             = 'Maximální životnost cache (v sekundách)';
 $lang['target____wiki']        = 'Cílové okno pro interní odkazy';
@@ -134,12 +134,12 @@ $lang['jpg_quality']           = 'Kvalita komprese JPEG (0-100)';
 $lang['fetchsize']             = 'Maximální velikost souboru (v bajtech), co ještě fetch.php bude stahovat z externích zdrojů';
 $lang['subscribers']           = 'Možnost přihlásit se k odběru novinek stránky';
 $lang['subscribe_time']        = 'Časový interval v sekundách, ve kterém jsou posílány změny a souhrny změn. Interval by neměl být kratší než čas uvedený v recent_days.';
-$lang['notify']                = 'Posílat oznámení o změnách na následující emailovou adresu';
-$lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto mailovou adresu';
-$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické maily';
+$lang['notify']                = 'Posílat oznámení o změnách na následující e-mailovou adresu';
+$lang['registernotify']        = 'Posílat informace o nově registrovaných uživatelích na tuto e-mailovou adresu';
+$lang['mailfrom']              = 'E-mailová adresa, která se bude používat pro automatické e-maily';
 $lang['mailreturnpath']        = 'E-mailová adresa příjemce pro oznámení o nedoručení';
-$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické maily';
-$lang['htmlmail']              = 'Posílat emaily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové emaily.';
+$lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické e-maily';
+$lang['htmlmail']              = 'Posílat e-maily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové e-maily.';
 $lang['dontlog']               = 'Zakázat protokolování pro tyto typy záznamů.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
 $lang['rss_type']              = 'Typ XML kanálu';
@@ -178,6 +178,7 @@ $lang['search_fragment_o_contains'] = 'obsahuje';
 $lang['trustedproxy']          = 'Důvěřovat proxy serverům odpovídajícím tomuto regulárním výrazu ohledně skutečné IP adresy klienta, kterou hlásí. Výchozí hodnota odpovídá místním sítím. Ponechejte prázdné, pokud nechcete důvěřovat žádné proxy.';
 $lang['_feature_flags']        = 'Feature flags';
 $lang['defer_js']              = 'Odložit spuštění javascriptu až po zpracování HTML kódu stránky. Zlepšuje vnímanou rychlost načtení stránky, ale může narušit funkci některých zásuvných modulů.';
+$lang['hidewarnings']          = 'Nezobrazovat žádná varování PHP. To může usnadnit přechod na PHP8+. Varování budou stále zaznamenána v protokolu chyb a měla by být hlášena.';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';

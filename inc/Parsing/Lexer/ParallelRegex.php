@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Lexer adapted from Simple Test: http://sourceforge.net/projects/simpletest/
  * For an intro to the Lexer see:
@@ -17,9 +18,9 @@ namespace dokuwiki\Parsing\Lexer;
 class ParallelRegex
 {
     /** @var string[] patterns to match */
-    protected $patterns;
+    protected $patterns = [];
     /** @var string[] labels for above patterns */
-    protected $labels;
+    protected $labels = [];
     /** @var string the compound regex matching all patterns */
     protected $regex;
     /** @var bool case sensitive matching? */
@@ -34,9 +35,6 @@ class ParallelRegex
     public function __construct($case)
     {
         $this->case = $case;
-        $this->patterns = array();
-        $this->labels = array();
-        $this->regex = null;
     }
 
     /**
@@ -121,15 +119,15 @@ class ParallelRegex
                 }
             }
 
-            $split = array($subject, "", "");
+            $split = [$subject, "", ""];
             return false;
         }
 
-        $idx = count($matches)-2;
-        list($pre, $post) = preg_split($this->patterns[$idx].$this->getPerlMatchingFlags(), $subject, 2);
-        $split = array($pre, $matches[0], $post);
+        $idx = count($matches) - 2;
+        [$pre, $post] = preg_split($this->patterns[$idx] . $this->getPerlMatchingFlags(), $subject, 2);
+        $split = [$pre, $matches[0], $post];
 
-        return isset($this->labels[$idx]) ? $this->labels[$idx] : true;
+        return $this->labels[$idx] ?? true;
     }
 
     /**
@@ -180,7 +178,7 @@ class ParallelRegex
                             $pattern .= '(?';
                             break;
                         default:
-                            if (substr($elt, 0, 1) == '\\')
+                            if (str_starts_with($elt, '\\'))
                                 $pattern .= $elt;
                             else $pattern .= str_replace('/', '\/', $elt);
                     }
