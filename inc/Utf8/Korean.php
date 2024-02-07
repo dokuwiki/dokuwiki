@@ -10,8 +10,9 @@ class Korean
     /**
      * Korean codepoint.
      */
-    const KOREAN_START = 0xAC00;
-    const KOREAN_END = 0xD7AF;
+    const START = 0xAC00;
+    const END = 0xD7AF;
+    const REGEX = '/[\x{AC00}-\x{D7AF}]/u';
 
     /**
      * Define Korean romanization table.
@@ -27,7 +28,7 @@ class Korean
      * Return romanization of single character.
      */
     public static function romanize_korean_character($char) {
-        $code = mb_ord($char, 'UTF-8') - self::KOREAN_START;
+        $code = mb_ord($char, 'UTF-8') - self::START;
         $result = [];
 
         $part1_index = intdiv($code, 21 * 28);
