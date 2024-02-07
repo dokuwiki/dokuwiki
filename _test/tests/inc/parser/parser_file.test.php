@@ -56,4 +56,3 @@ class TestOfDoku_Parser_File extends TestOfDoku_Parser {
     }
 
 }
-

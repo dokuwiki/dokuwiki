@@ -3,6 +3,7 @@
 namespace dokuwiki\Extension;
 
 use dokuwiki\Remote\Api;
+use dokuwiki\Remote\ApiCall;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -13,8 +14,7 @@ use ReflectionMethod;
  */
 abstract class RemotePlugin extends Plugin
 {
-
-    private $api;
+    private Api $api;
 
     /**
      * Constructor
@@ -30,12 +30,12 @@ abstract class RemotePlugin extends Plugin
      * By default it exports all public methods of a remote plugin. Methods beginning
      * with an underscore are skipped.
      *
-     * @return array Information about all provided methods. {@see dokuwiki\Remote\RemoteAPI}.
+     * @return ApiCall[] Information about all provided methods. ('methodname' => ApiCall)
      * @throws ReflectionException
      */
-    public function _getMethods()
+    public function getMethods()
     {
-        $result = array();
+        $result = [];
 
         $reflection = new \ReflectionClass($this);
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
@@ -45,71 +45,29 @@ abstract class RemotePlugin extends Plugin
                 continue;
             }
             $method_name = $method->name;
-            if (strpos($method_name, '_') === 0) {
+            if ($method_name[0] ===  '_') {
                 continue;
             }
-
-            // strip asterisks
-            $doc = $method->getDocComment();
-            $doc = preg_replace(
-                array('/^[ \t]*\/\*+[ \t]*/m', '/[ \t]*\*+[ \t]*/m', '/\*+\/\s*$/m', '/\s*\/\s*$/m'),
-                array('', '', '', ''),
-                $doc
-            );
-
-            // prepare data
-            $data = array();
-            $data['name'] = $method_name;
-            $data['public'] = 0;
-            $data['doc'] = $doc;
-            $data['args'] = array();
-
-            // get parameter type from doc block type hint
-            foreach ($method->getParameters() as $parameter) {
-                $name = $parameter->name;
-                $type = 'string'; // we default to string
-                if (preg_match('/^@param[ \t]+([\w|\[\]]+)[ \t]\$' . $name . '/m', $doc, $m)) {
-                    $type = $this->cleanTypeHint($m[1]);
-                }
-                $data['args'][] = $type;
-            }
-
-            // get return type from doc block type hint
-            if (preg_match('/^@return[ \t]+([\w|\[\]]+)/m', $doc, $m)) {
-                $data['return'] = $this->cleanTypeHint($m[1]);
-            } else {
-                $data['return'] = 'string';
+            if ($method_name === 'getMethods') {
+                continue; // skip self, if overridden
             }
 
             // add to result
-            $result[$method_name] = $data;
+            $result[$method_name] = new ApiCall([$this, $method_name], 'plugins');
         }
 
         return $result;
     }
 
     /**
-     * Matches the given type hint against the valid options for the remote API
-     *
-     * @param string $hint
-     * @return string
+     * @deprecated 2023-11-30
      */
-    protected function cleanTypeHint($hint)
+    public function _getMethods()
     {
-        $types = explode('|', $hint);
-        foreach ($types as $t) {
-            if (substr($t, -2) === '[]') {
-                return 'array';
-            }
-            if ($t === 'boolean') {
-                return 'bool';
-            }
-            if (in_array($t, array('array', 'string', 'int', 'double', 'bool', 'null', 'date', 'file'))) {
-                return $t;
-            }
-        }
-        return 'string';
+        dbg_deprecated('getMethods()');
     }
+
+
 
     /**
      * @return Api
@@ -118,5 +76,4 @@ abstract class RemotePlugin extends Plugin
     {
         return $this->api;
     }
-
 }

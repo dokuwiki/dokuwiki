@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
+ * @author Michał <kamykowsky@gmail.com>
+ * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
  * @author Przemek <p_kudriawcew@o2.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
@@ -129,6 +132,7 @@ $lang['js']['media_done_btn']  = 'Zrobione';
 $lang['js']['media_drop']      = 'Upuść tutaj pliki do przesłania';
 $lang['js']['media_cancel']    = 'usuń';
 $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
+$lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalog z danymi nie jest odpowiednio zabezpieczony. Proszę przeczytaj <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Dokładne dopasowanie';
 $lang['search_starts_with']    = 'Zaczyna się na';
 $lang['search_ends_with']      = 'Kończy się na';
@@ -161,6 +165,9 @@ $lang['profdeleted']           = 'Twoje konto zostało usunięte z tej wiki';
 $lang['profconfdelete']        = 'Chcę usunąć moje konto z tej wiki. <br/> Decyzja nie może być cofnięta.';
 $lang['profconfdeletemissing'] = 'Pole potwierdzenia nie zostało zaznaczone';
 $lang['proffail']              = 'Profil użytkownika nie został uaktualniony.';
+$lang['proftokenlegend']       = 'Token uwierzytelniający';
+$lang['proftokengenerate']     = 'Zresetuj token';
+$lang['proftokeninfo']         = 'Token uwierzytelniający może być używany do umożliwienia aplikacjom innych dostawców logowania się i działania w Twoim imieniu. Zresetowanie tokena spowoduje unieważnienie starego i wylogowanie wszystkich aplikacji, które korzystały z poprzedniego tokena.';
 $lang['pwdforget']             = 'Nie pamiętasz hasła? Zdobądź nowe!';
 $lang['resendna']              = 'To wiki nie pozwala na powtórne przesyłanie hasła.';
 $lang['resendpwd']             = 'Podaj nowe hasło dla';
@@ -231,7 +238,8 @@ $lang['created']               = 'utworzono';
 $lang['restored']              = 'przywrócono poprzednią wersję (%s)';
 $lang['external_edit']         = 'edycja zewnętrzna';
 $lang['summary']               = 'Opis zmian';
-$lang['noflash']               = 'Plugin <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
+$lang['unknowndate']           = 'Nieznana data';
+$lang['noflash']               = 'Plugin <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> jest niezbędny do obejrzenia tej zawartości.';
 $lang['download']              = 'Pobierz zrzut';
 $lang['tools']                 = 'Narzędzia';
 $lang['user_tools']            = 'Narzędzia użytkownika';
@@ -312,10 +320,13 @@ $lang['i_enableacl']           = 'Włącz mechanizm uprawnień ACL (zalecane)';
 $lang['i_superuser']           = 'Administrator';
 $lang['i_problems']            = 'Instalator napotkał poniższe problemy. Nie można kontynuować póki nie zostaną usunięte.';
 $lang['i_modified']            = 'Ze względów bezpieczeństwa, ten skrypt działa tylko z nową i niezmodyfikowaną instalacją DokuWiki.
-Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="http://dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
+Aby uruchomić instalator ponownie, rozpakuj archiwum DokuWiki lub zapoznaj się z <a href="https://www.dokuwiki.org/install">instrukcją instalacji Dokuwiki</a>';
 $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.';
+$lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
+$lang['i_funcnmail']           = '<b>Uwaga:</b> funkcja poczty PHP nie jest dostępna. %s, jeśli pozostanie niedostępna, możesz zainstalować <a href="https://www.dokuwiki.org/plugin:smtp">wtyczkę smtp</a>.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nie może tworzyć kryptograficznie bezpiecznych liczb dla plików cookie. Możesz sprawdzić ustawienia open_basedir w php.ini pod kątem prawidłowego dostępu do <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
 $lang['i_confexists']          = '<code>%s</code> już istnieje';
 $lang['i_writeerr']            = 'Nie można utworzyć <code>%s</code>. Sprawdź uprawnienia do katalogu lub pliku i stwórz plik ręcznie.';
@@ -366,6 +377,7 @@ $lang['media_perm_upload']     = 'Przepraszamy, nie masz wystarczających uprawn
 $lang['media_update']          = 'Prześlij nową wersję';
 $lang['media_restore']         = 'Odtwórz tą wersję';
 $lang['media_acl_warning']     = 'Ta lista może nie być kompletna ze względu na ograniczenia ACL oraz ukryte strony.';
+$lang['email_fail']            = 'Brak lub wyłączone PHP mail(). Następujący e-mail nie został wysłany:';
 $lang['currentns']             = 'Obecny katalog';
 $lang['searchresult']          = 'Wyniki wyszukiwania';
 $lang['plainhtml']             = 'Czysty HTML';
@@ -374,3 +386,6 @@ $lang['page_nonexist_rev']     = 'Strona nie istnieje w %s. Została następnie 
 $lang['unable_to_parse_date']  = 'Nie można przeanalizować parametru "%s".';
 $lang['email_signature_text']  = 'List został wygenerowany przez DokuWiki pod adresem
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Plik log jest zbyt duży. Poprzednie wiersze zostały pominięte!';
+$lang['log_file_failed_to_open'] = 'Nie udało się otworzyć pliku log.';
+$lang['log_file_failed_to_read'] = 'Wystąpił błąd podczas odczytywania pliku log.';

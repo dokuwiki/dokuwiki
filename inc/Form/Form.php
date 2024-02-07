@@ -16,12 +16,12 @@ class Form extends Element
     /**
      * @var array name value pairs for hidden values
      */
-    protected $hidden = array();
+    protected $hidden = [];
 
     /**
      * @var Element[] the elements of the form
      */
-    protected $elements = array();
+    protected $elements = [];
 
     /**
      * Creates a new, empty form with some default attributes
@@ -29,7 +29,7 @@ class Form extends Element
      * @param array $attributes
      * @param bool  $unsafe     if true, then the security token is ommited
      */
-    public function __construct($attributes = array(), $unsafe = false)
+    public function __construct($attributes = [], $unsafe = false)
     {
         global $ID;
 
@@ -175,7 +175,7 @@ class Form extends Element
         if ($pos < 0) {
             $this->elements[] = $element;
         } else {
-            array_splice($this->elements, $pos, 0, array($element));
+            array_splice($this->elements, $pos, 0, [$element]);
         }
         return $element;
     }
@@ -191,7 +191,7 @@ class Form extends Element
         if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
             'You can\'t add a form to a form'
         );
-        array_splice($this->elements, $pos, 1, array($element));
+        array_splice($this->elements, $pos, 1, [$element]);
     }
 
     /**
@@ -321,7 +321,7 @@ class Form extends Element
      * @param int $pos
      * @return Element
      */
-    public function addLabel($label, $for='', $pos = -1)
+    public function addLabel($label, $for = '', $pos = -1)
     {
         return $this->addLabelHTML(hsc($label), $for, $pos);
     }
@@ -334,9 +334,9 @@ class Form extends Element
      * @param int $pos
      * @return Element
      */
-    public function addLabelHTML($content, $for='', $pos = -1)
+    public function addLabelHTML($content, $for = '', $pos = -1)
     {
-        $element = new LabelElement(hsc($content));
+        $element = new LabelElement($content);
 
         if (is_a($for, '\dokuwiki\Form\Element')) {
             /** @var Element $for */
@@ -478,14 +478,14 @@ class Form extends Element
 
         // trigger event to provide an opportunity to modify this form
         if (isset($eventName)) {
-            $eventName = 'FORM_'.strtoupper($eventName).'_OUTPUT';
+            $eventName = 'FORM_' . strtoupper($eventName) . '_OUTPUT';
             Event::createAndTrigger($eventName, $this, null, false);
         }
 
-        $html = '<form '. buildAttributes($this->attrs()) .'>';
+        $html = '<form ' . buildAttributes($this->attrs()) . '>';
 
         foreach ($this->hidden as $name => $value) {
-            $html .= '<input type="hidden" name="'. $name .'" value="'. formText($value) .'" />';
+            $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />';
         }
 
         foreach ($this->elements as $element) {

@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Parsing\ParserMode\Plugin;
 use Doku_Handler;
 use Doku_Renderer;
 
@@ -14,10 +15,8 @@ use Doku_Renderer;
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-abstract class SyntaxPlugin extends \dokuwiki\Parsing\ParserMode\Plugin
+abstract class SyntaxPlugin extends Plugin
 {
-    use PluginTrait;
-
     protected $allowedModesSetup = false;
 
     /**
@@ -40,7 +39,7 @@ abstract class SyntaxPlugin extends \dokuwiki\Parsing\ParserMode\Plugin
      */
     public function getAllowedTypes()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -120,7 +119,7 @@ abstract class SyntaxPlugin extends \dokuwiki\Parsing\ParserMode\Plugin
                 $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
             }
 
-            $idx = array_search(substr(get_class($this), 7), (array)$this->allowedModes);
+            $idx = array_search(substr(get_class($this), 7), (array)$this->allowedModes, true);
             if ($idx !== false) {
                 unset($this->allowedModes[$idx]);
             }

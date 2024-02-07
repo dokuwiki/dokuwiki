@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author KAWASHIMA,Y <darknmatta@gmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
@@ -102,8 +103,6 @@ $lang['indexdelay']            = 'インデックスを許可（何秒後）';
 $lang['mailguard']             = 'メールアドレス保護';
 $lang['iexssprotect']          = 'アップロードファイルに悪意のあるJavaScriptやHTMLが含まれていないかチェックする';
 $lang['usedraft']              = '編集中の自動保存（ドラフト）機能を使用';
-$lang['htmlok']                = 'HTML埋め込みを許可する';
-$lang['phpok']                 = 'PHP埋め込みを許可する';
 $lang['locktime']              = 'ファイルロック期限（秒）';
 $lang['cachetime']             = 'キャッシュ保持時間（秒）';
 $lang['target____wiki']        = '内部リンクのtarget属性';

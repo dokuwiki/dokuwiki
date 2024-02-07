@@ -1,4 +1,7 @@
 <?php
+
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\PassHash;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -9,19 +12,19 @@ use dokuwiki\Utf8\Sort;
  * @author    Chris Smith <chris@jalakaic.co.uk>
  * @author    Jan Schumann <js@schumann-it.com>
  */
-class auth_plugin_authldap extends DokuWiki_Auth_Plugin
+class auth_plugin_authldap extends AuthPlugin
 {
     /* @var resource $con holds the LDAP connection */
-    protected $con = null;
+    protected $con;
 
     /* @var int $bound What type of connection does already exist? */
     protected $bound = 0; // 0: anonymous, 1: user, 2: superuser
 
     /* @var array $users User data cache */
-    protected $users = null;
+    protected $users;
 
     /* @var array $pattern User filter pattern */
-    protected $pattern = null;
+    protected $pattern;
 
     /**
      * Constructor
@@ -67,28 +70,27 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
                 return false;
             }
             $this->bound = 2;
-        } elseif ($this->getConf('binddn') &&
+        } elseif (
+            $this->getConf('binddn') &&
             $this->getConf('usertree') &&
             $this->getConf('userfilter')
         ) {
             // special bind string
             $dn = $this->makeFilter(
                 $this->getConf('binddn'),
-                array('user' => $user, 'server' => $this->getConf('server'))
+                ['user' => $user, 'server' => $this->getConf('server')]
             );
         } elseif (strpos($this->getConf('usertree'), '%{user}')) {
             // direct user bind
             $dn = $this->makeFilter(
                 $this->getConf('usertree'),
-                array('user' => $user, 'server' => $this->getConf('server'))
+                ['user' => $user, 'server' => $this->getConf('server')]
             );
-        } else {
+        } elseif (!@ldap_bind($this->con)) {
             // Anonymous bind
-            if (!@ldap_bind($this->con)) {
-                msg("LDAP: can not bind anonymously", -1);
-                $this->debug('LDAP anonymous bind: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
-                return false;
-            }
+            msg("LDAP: can not bind anonymously", -1);
+            $this->debug('LDAP anonymous bind: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
+            return false;
         }
 
         // Try to bind to with the dn if we have one.
@@ -162,28 +164,28 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
     protected function fetchUserData($user, $inbind = false)
     {
         global $conf;
-        if (!$this->openLDAP()) return array();
+        if (!$this->openLDAP()) return [];
 
         // force superuser bind if wanted and not bound as superuser yet
         if ($this->getConf('binddn') && $this->getConf('bindpw') && $this->bound < 2) {
             // use superuser credentials
             if (!@ldap_bind($this->con, $this->getConf('binddn'), conf_decodeString($this->getConf('bindpw')))) {
                 $this->debug('LDAP bind as superuser: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
-                return array();
+                return [];
             }
             $this->bound = 2;
         } elseif ($this->bound == 0 && !$inbind) {
             // in some cases getUserData is called outside the authentication workflow
             // eg. for sending email notification on subscribed pages. This data might not
             // be accessible anonymously, so we try to rebind the current user here
-            list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
+            [$loginuser, $loginsticky, $loginpass] = auth_getCookie();
             if ($loginuser && $loginpass) {
                 $loginpass = auth_decrypt($loginpass, auth_cookiesalt(!$loginsticky, true));
                 $this->checkPass($loginuser, $loginpass);
             }
         }
 
-        $info = array();
+        $info = [];
         $info['user'] = $user;
         $this->debug('LDAP user to find: ' . hsc($info['user']), 0, __LINE__, __FILE__);
 
@@ -203,7 +205,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         $this->debug('LDAP user search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
         $sr = $this->ldapSearch($this->con, $base, $filter, $this->getConf('userscope'), $this->getConf('attributes'));
-
+        if ($sr === false) {
+            $this->debug('User ldap_search failed. Check configuration.', 0, __LINE__, __FILE__);
+            return false;
+        }
 
         $result = @ldap_get_entries($this->con, $sr);
 
@@ -211,7 +216,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         if (!is_array($result)) {
             // no objects found
             $this->debug('LDAP search returned non-array result: ' . hsc(print($result)), -1, __LINE__, __FILE__);
-            return array();
+            return [];
         }
 
         // Don't accept more or less than one response
@@ -225,7 +230,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
             //for($i = 0; $i < $result["count"]; $i++) {
             //$this->_debug('result: '.hsc(print_r($result[$i])), 0, __LINE__, __FILE__);
             //}
-            return array();
+            return [];
         }
 
         $this->debug('LDAP search found single result !', 0, __LINE__, __FILE__);
@@ -235,10 +240,10 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
 
         // general user info
         $info['dn'] = $user_result['dn'];
-        $info['gid'] = $user_result['gidnumber'][0];
+        $info['gid'] = $user_result['gidnumber'][0] ?? null;
         $info['mail'] = $user_result['mail'][0];
         $info['name'] = $user_result['cn'][0];
-        $info['grps'] = array();
+        $info['grps'] = [];
 
         // overwrite if other attribs are specified.
         if (is_array($this->getConf('mapping'))) {
@@ -273,14 +278,14 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
                 $base,
                 $filter,
                 $this->getConf('groupscope'),
-                array($this->getConf('groupkey'))
+                [$this->getConf('groupkey')]
             );
             $this->debug('LDAP group search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
             $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
 
             if (!$sr) {
                 msg("LDAP: Reading group memberships failed", -1);
-                return array();
+                return [];
             }
             $result = ldap_get_entries($this->con, $sr);
             ldap_free_result($sr);
@@ -302,7 +307,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         }
 
         // always add the default group to the list of groups
-        if (!$info['grps'] or !in_array($conf['defaultgroup'], $info['grps'])) {
+        if (!$info['grps'] || !in_array($conf['defaultgroup'], $info['grps'])) {
             $info['grps'][] = $conf['defaultgroup'];
         }
         return $info;
@@ -333,7 +338,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         $dn = $info['dn'];
 
         // find the old password of the user
-        list($loginuser, $loginsticky, $loginpass) = auth_getCookie();
+        [$loginuser, $loginsticky, $loginpass] = auth_getCookie();
         if ($loginuser !== null) { // the user is currently logged in
             $secret = auth_cookiesalt(!$loginsticky, true);
             $pass = auth_decrypt($loginpass, $secret);
@@ -360,11 +365,11 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         }
 
         // Generate the salted hashed password for LDAP
-        $phash = new \dokuwiki\PassHash();
+        $phash = new PassHash();
         $hash = $phash->hash_ssha($changes['pass']);
 
         // change the password
-        if (!@ldap_mod_replace($this->con, $dn, array('userpassword' => $hash))) {
+        if (!@ldap_mod_replace($this->con, $dn, ['userpassword' => $hash])) {
             $this->debug(
                 'LDAP mod replace failed: ' . hsc($dn) . ': ' . hsc(ldap_error($this->con)),
                 0,
@@ -396,9 +401,9 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      * @return  array of userinfo (refer getUserData for internal userinfo details)
      * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
      */
-    public function retrieveUsers($start = 0, $limit = 0, $filter = array())
+    public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
-        if (!$this->openLDAP()) return array();
+        if (!$this->openLDAP()) return [];
 
         if (is_null($this->users)) {
             // Perform the search and grab all their details
@@ -409,20 +414,20 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
             }
             $sr = ldap_search($this->con, $this->getConf('usertree'), $all_filter);
             $entries = ldap_get_entries($this->con, $sr);
-            $users_array = array();
+            $users_array = [];
             $userkey = $this->getConf('userkey');
             for ($i = 0; $i < $entries["count"]; $i++) {
-                array_push($users_array, $entries[$i][$userkey][0]);
+                $users_array[] = $entries[$i][$userkey][0];
             }
             Sort::asort($users_array);
             $result = $users_array;
-            if (!$result) return array();
+            if (!$result) return [];
             $this->users = array_fill_keys($result, false);
         }
         $i = 0;
         $count = 0;
         $this->constructPattern($filter);
-        $result = array();
+        $result = [];
 
         foreach ($this->users as $user => &$info) {
             if ($i++ < $start) {
@@ -483,8 +488,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
                 if (!preg_match($pattern, $user)) return false;
             } elseif ($item == 'grps') {
                 if (!count(preg_grep($pattern, $info['grps']))) return false;
-            } else {
-                if (!preg_match($pattern, $info[$item])) return false;
+            } elseif (!preg_match($pattern, $info[$item])) {
+                return false;
             }
         }
         return true;
@@ -500,7 +505,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
      */
     protected function constructPattern($filter)
     {
-        $this->pattern = array();
+        $this->pattern = [];
         foreach ($filter as $item => $pattern) {
             $this->pattern[$item] = '/' . str_replace('/', '\/', $pattern) . '/i'; // allow regex characters
         }
@@ -520,9 +525,7 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         // see https://github.com/adldap/adLDAP/issues/22
         return preg_replace_callback(
             '/([\x00-\x1F\*\(\)\\\\])/',
-            function ($matches) {
-                return "\\" . join("", unpack("H2", $matches[1]));
-            },
+            static fn($matches) => "\\" . implode("", unpack("H2", $matches[1])),
             $string
         );
     }
@@ -563,11 +566,12 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
 
             //set protocol version and dependend options
             if ($this->getConf('version')) {
-                if (!@ldap_set_option(
-                    $this->con,
-                    LDAP_OPT_PROTOCOL_VERSION,
-                    $this->getConf('version')
-                )
+                if (
+                    !@ldap_set_option(
+                        $this->con,
+                        LDAP_OPT_PROTOCOL_VERSION,
+                        $this->getConf('version')
+                    )
                 ) {
                     msg('Setting LDAP Protocol version ' . $this->getConf('version') . ' failed', -1);
                     $this->debug('LDAP version set: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
@@ -581,11 +585,12 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
                     }
                     // needs version 3
                     if ($this->getConf('referrals') > -1) {
-                        if (!@ldap_set_option(
-                            $this->con,
-                            LDAP_OPT_REFERRALS,
-                            $this->getConf('referrals')
-                        )
+                        if (
+                            !@ldap_set_option(
+                                $this->con,
+                                LDAP_OPT_REFERRALS,
+                                $this->getConf('referrals')
+                            )
                         ) {
                             msg('Setting LDAP referrals failed', -1);
                             $this->debug('LDAP referal set: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
@@ -648,9 +653,8 @@ class auth_plugin_authldap extends DokuWiki_Auth_Plugin
         $attributes = null,
         $attrsonly = 0,
         $sizelimit = 0
-    )
-    {
-        if (is_null($attributes)) $attributes = array();
+    ) {
+        if (is_null($attributes)) $attributes = [];
 
         if ($scope == 'base') {
             return @ldap_read(

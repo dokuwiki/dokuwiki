@@ -1,218 +1,208 @@
 <?php
 
-require_once (__DIR__ . '/httpclient_mock.php');
+require_once(__DIR__ . '/httpclient_mock.php');
 
-class httpclient_http_test extends DokuWikiTest {
-    protected $server = 'http://eu.httpbin.org';
-
+/**
+ * Tests are executed against an instance of go-httpbin
+ */
+class httpclient_http_test extends DokuWikiTest
+{
+    protected $server = 'http://httpbingo.org';
 
     /**
      * @group internet
      */
-    function test_simpleget(){
+    public function test_simpleget()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/get?foo=bar');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/get?foo=bar');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('args',$resp);
-        $this->assertEquals(array('foo'=>'bar'), $resp['args']);
+        $this->assertArrayHasKey('args', $resp);
+        $this->assertEquals(['foo' => ['bar']], $resp['args']);
     }
 
     /**
      * @group internet
      */
-    function test_dget(){
+    public function test_dget()
+    {
         $http = new HTTPMockClient();
-        $data = $http->dget($this->server.'/get',array('foo'=>'bar'));
-        if($http->noconnection()) {
+        $data = $http->dget($this->server . '/get', ['foo' => 'bar']);
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('args',$resp);
-        $this->assertEquals(array('foo'=>'bar'), $resp['args']);
+        $this->assertArrayHasKey('args', $resp);
+        $this->assertEquals(['foo' => ['bar']], $resp['args']);
     }
 
     /**
      * @group internet
      */
-    function test_gzip(){
+    public function test_gzip()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/gzip');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/gzip');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('gzipped',$resp);
+        $this->assertArrayHasKey('gzipped', $resp);
         $this->assertTrue($resp['gzipped']);
     }
 
     /**
      * @group internet
      */
-    function test_simplepost(){
+    public function test_simplepost()
+    {
         $http = new HTTPMockClient();
-        $data = $http->post($this->server.'/post',array('foo'=>'bar'));
-        if($http->noconnection()) {
+        $data = $http->post($this->server . '/post', ['foo' => 'bar']);
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('form',$resp);
-        $this->assertEquals(array('foo'=>'bar'), $resp['form']);
+        $this->assertArrayHasKey('form', $resp);
+        $this->assertEquals(['foo' => ['bar']], $resp['form']);
     }
 
     /**
      * @group internet
      */
-    function test_redirect(){
-        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
-        return;
-
+    public function test_redirect()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/redirect/3');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/redirect/3');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('url',$resp);
+        $this->assertArrayHasKey('url', $resp);
         $this->assertRegExp('/\/get$/', $resp['url']);
     }
 
     /**
      * @group internet
      */
-    function test_relredirect(){
-        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
-        return;
-
+    public function test_relredirect()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/relative-redirect/3');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/relative-redirect/3');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('url',$resp);
+        $this->assertArrayHasKey('url', $resp);
         $this->assertRegExp('/\/get$/', $resp['url']);
     }
 
     /**
      * @group internet
      */
-    function test_redirectfail(){
-        $this->markTestSkipped('disabled while redirect bug in httpbin is being fixed');
-        return;
-
+    public function test_redirectfail()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/redirect/5');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/redirect/5');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data === false, $http->errorInfo());
-        $this->assertEquals('Maximum number of redirects exceeded',$http->error);
+        $this->assertEquals('Maximum number of redirects exceeded', $http->error);
     }
 
     /**
      * @group internet
      */
-    function test_cookies(){
+    public function test_cookies()
+    {
         $http = new HTTPMockClient();
-        $http->get($this->server.'/cookies/set/foo/bar');
-        if($http->noconnection()) {
+        $http->get($this->server . '/cookies/set?foo=bar');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
-        $this->assertEquals(array('foo' => 'bar'), $http->cookies);
-        $data = $http->get($this->server.'/cookies');
-        if($http->noconnection()) {
+        $this->assertEquals(['foo' => 'bar'], $http->cookies);
+        $data = $http->get($this->server . '/cookies');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('cookies',$resp);
-        $this->assertEquals(array('foo'=>'bar'), $resp['cookies']);
+        $this->assertEquals(['foo' => 'bar'], $resp);
     }
 
     /**
      * @group internet
      */
-    function test_teapot(){
+    public function test_teapot()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/status/418');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/status/418');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data === false, $http->errorInfo());
-        $this->assertEquals(418,$http->status);
+        $this->assertEquals(418, $http->status);
     }
 
     /**
      * @group internet
      */
-    function test_maxbody(){
+    public function test_maxbody()
+    {
         $http = new HTTPMockClient();
         $http->max_bodysize = 250;
 
         // this should abort completely
-        $data = $http->get($this->server.'/stream/30');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/stream/30');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data === false, $http->errorInfo());
 
         // this should read just the needed bytes
         $http->max_bodysize_abort = false;
         $http->keep_alive = false;
-        $data = $http->get($this->server.'/stream/30');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/stream/30');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         /* should read no more than max_bodysize+1 */
-        $this->assertLessThanOrEqual(251,strlen($data));
+        $this->assertLessThanOrEqual(251, strlen($data));
     }
 
     /**
      * @group internet
      */
-    function test_maxbodyok(){
+    public function test_maxbodyok()
+    {
         $http = new HTTPMockClient();
-        $http->max_bodysize = 500*1024;
-        $data = $http->get($this->server.'/stream/5');
-        if($http->noconnection()) {
+        $http->max_bodysize = 500 * 1024;
+        $data = $http->get($this->server . '/stream/5');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data !== false, $http->errorInfo());
         $http->max_bodysize_abort = false;
-        $data = $http->get($this->server.'/stream/5');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/stream/5');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data !== false, $http->errorInfo());
     }
@@ -220,78 +210,79 @@ class httpclient_http_test extends DokuWikiTest {
     /**
      * @group internet
      */
-    function test_basicauth(){
+    function test_basicauth()
+    {
         $http = new HTTPMockClient();
         $http->user = 'user';
         $http->pass = 'pass';
-        $data = $http->get($this->server.'/basic-auth/user/pass');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/basic-auth/user/pass');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertEquals(array('authenticated'=>true,'user'=>'user'), $resp);
+        $this->assertEquals(['authorized' => true, 'user' => 'user'], $resp);
     }
 
     /**
      * @group internet
      */
-    function test_basicauthfail(){
+    public function test_basicauthfail()
+    {
         $http = new HTTPMockClient();
         $http->user = 'user';
         $http->pass = 'invalid';
-        $data = $http->get($this->server.'/basic-auth/user/pass');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/basic-auth/user/pass');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data === false, $http->errorInfo());
-        $this->assertEquals(401,$http->status);
+        $this->assertEquals(401, $http->status);
     }
 
     /**
      * @group internet
      */
-    function test_timeout(){
+    public function test_timeout()
+    {
         $http = new HTTPMockClient();
         $http->timeout = 5;
-        $data = $http->get($this->server.'/delay/10');
+        $data = $http->get($this->server . '/delay/10');
         $this->assertTrue($data === false, $http->errorInfo());
-        $this->assertEquals(-100,$http->status);
+        $this->assertEquals(-100, $http->status);
     }
 
     /**
      * @group internet
      */
-    function test_headers(){
+    public function test_headers()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/response-headers?baz=&foo=bar');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/response-headers?baz=&foo=bar');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertArrayHasKey('baz',$http->resp_headers);
-        $this->assertArrayHasKey('foo',$http->resp_headers);
-        $this->assertEquals('bar',$http->resp_headers['foo']);
+        $this->assertArrayHasKey('baz', $http->resp_headers);
+        $this->assertArrayHasKey('foo', $http->resp_headers);
+        $this->assertEquals('bar', $http->resp_headers['foo']);
     }
 
     /**
      * @group internet
      */
-    function test_chunked(){
+    public function test_chunked()
+    {
         $http = new HTTPMockClient();
-        $data = $http->get($this->server.'/stream-bytes/5000?chunk_size=250');
-        if($http->noconnection()) {
+        $data = $http->get($this->server . '/stream-bytes/5000?chunk_size=250');
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertFalse($data === false, $http->errorInfo());
-        $this->assertEquals(5000,strlen($data));
+        $this->assertEquals(5000, strlen($data));
     }
 
     /**
@@ -300,12 +291,12 @@ class httpclient_http_test extends DokuWikiTest {
      * @group internet
      * @group flaky
      */
-    function test_wikimatrix(){
+    public function test_wikimatrix()
+    {
         $http = new HTTPMockClient();
         $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
-        if($http->noconnection()) {
+        if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
-            return;
         }
         $this->assertTrue($data !== false, $http->errorInfo());
     }
@@ -313,15 +304,15 @@ class httpclient_http_test extends DokuWikiTest {
     /**
      * @throws ReflectionException
      */
-    function test_postencode(){
+    public function test_postencode()
+    {
         $http = new HTTPMockClient();
 
-
         // check simple data
-        $data = array(
+        $data = [
             'öä?' => 'öä?',
-            'foo' => 'bang'
-        );
+            'foo' => 'bang',
+        ];
         $this->assertEquals(
             '%C3%B6%C3%A4%3F=%C3%B6%C3%A4%3F&foo=bang',
             $this->callInaccessibleMethod($http, 'postEncode', [$data]),
@@ -329,10 +320,10 @@ class httpclient_http_test extends DokuWikiTest {
         );
 
         // check first level numeric array
-        $data = array(
+        $data = [
             'foo' => 'bang',
-            'ärr' => array('ö', 'b', 'c')
-        );
+            'ärr' => ['ö', 'b', 'c'],
+        ];
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B0%5D=%C3%B6&%C3%A4rr%5B1%5D=b&%C3%A4rr%5B2%5D=c',
             $this->callInaccessibleMethod($http, 'postEncode', [$data]),
@@ -340,22 +331,21 @@ class httpclient_http_test extends DokuWikiTest {
         );
 
         // check first level associative array
-        $data = array(
+        $data = [
             'foo' => 'bang',
-            'ärr' => array('ö'=>'ä', 'b' => 'c')
-        );
+            'ärr' => ['ö' => 'ä', 'b' => 'c'],
+        ];
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5Bb%5D=c',
             $this->callInaccessibleMethod($http, 'postEncode', [$data]),
             'onelevelassoc'
         );
 
-
         // check first level associative array
-        $data = array(
+        $data = [
             'foo' => 'bang',
-            'ärr' => array('ö'=>'ä', 'ä' => array('ö'=>'ä'))
-        );
+            'ärr' => ['ö' => 'ä', 'ä' => ['ö' => 'ä']],
+        ];
         $this->assertEquals(
             'foo=bang&%C3%A4rr%5B%C3%B6%5D=%C3%A4&%C3%A4rr%5B%C3%A4%5D%5B%C3%B6%5D=%C3%A4',
             $this->callInaccessibleMethod($http, 'postEncode', [$data]),
@@ -363,4 +353,3 @@ class httpclient_http_test extends DokuWikiTest {
         );
     }
 }
-//Setup VIM: ex: et ts=4 :

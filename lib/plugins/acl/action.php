@@ -1,24 +1,27 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
+
 /**
  * AJAX call handler for ACL plugin
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
 /**
  * Register handler
  */
-class action_plugin_acl extends DokuWiki_Action_Plugin
+class action_plugin_acl extends ActionPlugin
 {
-
     /**
      * Registers a callback function for a given event
      *
-     * @param Doku_Event_Handler $controller DokuWiki's event controller object
+     * @param EventHandler $controller DokuWiki's event controller object
      * @return void
      */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
 
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handleAjaxCallAcl');
@@ -27,11 +30,11 @@ class action_plugin_acl extends DokuWiki_Action_Plugin
     /**
      * AJAX call handler for ACL plugin
      *
-     * @param Doku_Event $event  event object by reference
+     * @param Event $event  event object by reference
      * @param mixed $param  empty
      * @return void
      */
-    public function handleAjaxCallAcl(Doku_Event $event, $param)
+    public function handleAjaxCallAcl(Event $event, $param)
     {
         if ($event->data !== 'plugin_acl') {
             return;
@@ -78,8 +81,8 @@ class action_plugin_acl extends DokuWiki_Action_Plugin
             echo html_buildlist(
                 $data,
                 'acl',
-                array($acl, 'makeTreeItem'),
-                array($acl, 'makeListItem')
+                [$acl, 'makeTreeItem'],
+                [$acl, 'makeListItem']
             );
         }
     }

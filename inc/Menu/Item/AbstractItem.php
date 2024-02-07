@@ -17,14 +17,14 @@ namespace dokuwiki\Menu\Item;
  * Children usually just need to overwrite the different properties, but for complex things
  * the accessors may be overwritten instead.
  */
-abstract class AbstractItem {
-
+abstract class AbstractItem
+{
     /** menu item is to be shown on desktop screens only */
-    const CTX_DESKTOP = 1;
+    public const CTX_DESKTOP = 1;
     /** menu item is to be shown on mobile screens only */
-    const CTX_MOBILE = 2;
+    public const CTX_MOBILE = 2;
     /** menu item is to be shown in all contexts */
-    const CTX_ALL = 3;
+    public const CTX_ALL = 3;
 
     /** @var string name of the action, usually the lowercase class name */
     protected $type = '';
@@ -35,7 +35,7 @@ abstract class AbstractItem {
     /** @var string the method to be used when this action is used in a form */
     protected $method = 'get';
     /** @var array parameters for the action (should contain the do parameter) */
-    protected $params = array();
+    protected $params = [];
     /** @var bool when true, a rel=nofollow should be used */
     protected $nofollow = true;
     /** @var string this item's label may contain a placeholder, which is replaced with this */
@@ -58,13 +58,14 @@ abstract class AbstractItem {
      *
      * @throws \RuntimeException when the action is disabled
      */
-    public function __construct() {
+    public function __construct()
+    {
         global $ID;
         $this->id = $ID;
         $this->type = $this->getType();
         $this->params['do'] = $this->type;
 
-        if(!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
+        if (!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
     }
 
     /**
@@ -76,16 +77,17 @@ abstract class AbstractItem {
      *
      * @return string
      */
-    public function getLabel() {
-        if($this->label !== '') return $this->label;
+    public function getLabel()
+    {
+        if ($this->label !== '') return $this->label;
 
         /** @var array $lang */
         global $lang;
         $label = $lang['btn_' . $this->type];
-        if(strpos($label, '%s')) {
+        if (strpos($label, '%s')) {
             $label = sprintf($label, $this->replacement);
         }
-        if($label === '') $label = '[' . $this->type . ']';
+        if ($label === '') $label = '[' . $this->type . ']';
         return $label;
     }
 
@@ -97,8 +99,9 @@ abstract class AbstractItem {
      *
      * @return string
      */
-    public function getTitle() {
-        if($this->title === '') return $this->getLabel();
+    public function getTitle()
+    {
+        if ($this->title === '') return $this->getLabel();
         return $this->title;
     }
 
@@ -110,11 +113,12 @@ abstract class AbstractItem {
      *
      * Please note that the generated URL is *not* XML escaped.
      *
-     * @see wl()
      * @return string
+     * @see wl()
      */
-    public function getLink() {
-        if($this->id && $this->id[0] == '#') {
+    public function getLink()
+    {
+        if ($this->id && $this->id[0] == '#') {
             return $this->id;
         } else {
             return wl($this->id, $this->params, false, '&');
@@ -124,21 +128,19 @@ abstract class AbstractItem {
     /**
      * Convenience method to get the attributes for constructing an <a> element
      *
-     * @see buildAttributes()
      * @param string|false $classprefix create a class from type with this prefix, false for no class
      * @return array
+     * @see buildAttributes()
      */
-    public function getLinkAttributes($classprefix = 'menuitem ') {
-        $attr = array(
-            'href' => $this->getLink(),
-            'title' => $this->getTitle(),
-        );
-        if($this->isNofollow()) $attr['rel'] = 'nofollow';
-        if($this->getAccesskey()) {
+    public function getLinkAttributes($classprefix = 'menuitem ')
+    {
+        $attr = ['href' => $this->getLink(), 'title' => $this->getTitle()];
+        if ($this->isNofollow()) $attr['rel'] = 'nofollow';
+        if ($this->getAccesskey()) {
             $attr['accesskey'] = $this->getAccesskey();
             $attr['title'] .= ' [' . $this->getAccesskey() . ']';
         }
-        if($classprefix !== false) $attr['class'] = $classprefix . $this->getType();
+        if ($classprefix !== false) $attr['class'] = $classprefix . $this->getType();
 
         return $attr;
     }
@@ -152,10 +154,11 @@ abstract class AbstractItem {
      * @param bool $svg add SVG icon to the link
      * @return string
      */
-    public function asHtmlLink($classprefix = 'menuitem ', $svg = true) {
+    public function asHtmlLink($classprefix = 'menuitem ', $svg = true)
+    {
         $attr = buildAttributes($this->getLinkAttributes($classprefix));
         $html = "<a $attr>";
-        if($svg) {
+        if ($svg) {
             $html .= '<span>' . hsc($this->getLabel()) . '</span>';
             $html .= inlineSVG($this->getSvg());
         } else {
@@ -173,7 +176,8 @@ abstract class AbstractItem {
      *
      * @return string
      */
-    public function asHtmlButton() {
+    public function asHtmlButton()
+    {
         return html_btn(
             $this->getType(),
             $this->id,
@@ -192,15 +196,17 @@ abstract class AbstractItem {
      * @param int $ctx the current context
      * @return bool
      */
-    public function visibleInContext($ctx) {
-        return (bool) ($ctx & $this->context);
+    public function visibleInContext($ctx)
+    {
+        return (bool)($ctx & $this->context);
     }
 
     /**
      * @return string the name of this item
      */
-    public function getType() {
-        if($this->type === '') {
+    public function getType()
+    {
+        if ($this->type === '') {
             $this->type = strtolower(substr(strrchr(get_class($this), '\\'), 1));
         }
         return $this->type;
@@ -209,28 +215,32 @@ abstract class AbstractItem {
     /**
      * @return string
      */
-    public function getAccesskey() {
+    public function getAccesskey()
+    {
         return $this->accesskey;
     }
 
     /**
      * @return array
      */
-    public function getParams() {
+    public function getParams()
+    {
         return $this->params;
     }
 
     /**
      * @return bool
      */
-    public function isNofollow() {
+    public function isNofollow()
+    {
         return $this->nofollow;
     }
 
     /**
      * @return string
      */
-    public function getSvg() {
+    public function getSvg()
+    {
         return $this->svg;
     }
 
@@ -239,8 +249,9 @@ abstract class AbstractItem {
      *
      * @return array
      */
-    public function getLegacyData() {
-        return array(
+    public function getLegacyData()
+    {
+        return [
             'accesskey' => $this->accesskey ?: null,
             'type' => $this->type,
             'id' => $this->id,
@@ -248,6 +259,6 @@ abstract class AbstractItem {
             'params' => $this->params,
             'nofollow' => $this->nofollow,
             'replacement' => $this->replacement
-        );
+        ];
     }
 }

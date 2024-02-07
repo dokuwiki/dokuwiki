@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author RainbowSpike <1@2.ru>
- * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  */
+$lang['home']                  = 'Домой';
 $lang['__background_site__']   = 'Цвет для дальнего фона (за окном содержимого)';
 $lang['__link__']              = 'Основной цвет ссылок';
 $lang['__existing__']          = 'Цвет ссылок на существующие страницы';

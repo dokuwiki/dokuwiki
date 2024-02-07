@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Plugin extension (Helper Component)
  *
@@ -6,14 +7,15 @@
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Extension\Plugin;
 use dokuwiki\Form\Form;
 
 /**
  * Class helper_plugin_extension_list takes care of the overall GUI
  */
-class helper_plugin_extension_gui extends DokuWiki_Plugin
+class helper_plugin_extension_gui extends Plugin
 {
-    protected $tabs = array('plugins', 'templates', 'search', 'install');
+    protected $tabs = ['plugins', 'templates', 'search', 'install'];
 
     /** @var string the extension that should have an open info window FIXME currently broken */
     protected $infoFor = '';
@@ -45,8 +47,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $form = new Form([
-                'action' => $this->tabURL('', [], '&'),
-                'id'  => 'extension__list',
+            'action' => $this->tabURL('', [], '&'),
+            'id' => 'extension__list',
         ]);
         $list->startForm();
         foreach ($pluginlist as $name) {
@@ -68,7 +70,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo '</div>';
 
         // FIXME do we have a real way?
-        $tpllist = glob(DOKU_INC.'lib/tpl/*', GLOB_ONLYDIR);
+        $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
         $tpllist = array_map('basename', $tpllist);
         sort($tpllist);
 
@@ -78,8 +80,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $form = new Form([
-                'action' => $this->tabURL('', [], '&'),
-                'id'  => 'extension__list',
+            'action' => $this->tabURL('', [], '&'),
+            'id' => 'extension__list',
         ]);
         $list->startForm();
         foreach ($tpllist as $name) {
@@ -102,8 +104,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo '</div>';
 
         $form = new Form([
-                'action' => $this->tabURL('', [], '&'),
-                'class'  => 'search',
+            'action' => $this->tabURL('', [], '&'),
+            'class' => 'search',
         ]);
         $form->addTagOpen('div')->addClass('no');
         $form->addTextInput('q', $this->getLang('search_for'))
@@ -118,7 +120,7 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
 
         /* @var helper_plugin_extension_repository $repository FIXME should we use some gloabl instance? */
         $repository = $this->loadHelper('extension_repository');
-        $result     = $repository->search($INPUT->str('q'));
+        $result = $repository->search($INPUT->str('q'));
 
         /* @var helper_plugin_extension_extension $extension */
         $extension = $this->loadHelper('extension_extension');
@@ -126,8 +128,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         $list = $this->loadHelper('extension_list');
 
         $form = new Form([
-                'action' => $this->tabURL('', [], '&'),
-                'id'  => 'extension__list',
+            'action' => $this->tabURL('', [], '&'),
+            'id' => 'extension__list',
         ]);
         $list->startForm();
         if ($result) {
@@ -154,9 +156,9 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         echo '</div>';
 
         $form = new Form([
-                'action' => $this->tabURL('', [], '&'),
-                'enctype' => 'multipart/form-data',
-                'class'  => 'install',
+            'action' => $this->tabURL('', [], '&'),
+            'enctype' => 'multipart/form-data',
+            'class' => 'install',
         ]);
         $form->addTagOpen('div')->addClass('no');
         $form->addTextInput('installurl', $this->getLang('install_url'))
@@ -191,7 +193,8 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
             } else {
                 $class = '';
             }
-            echo '<li class="'.$tab.$class.'"><a href="'.$url.'">'.$this->getLang('tab_'.$tab).'</a></li>';
+            echo '<li class="' . $tab . $class . '"><a href="' . $url . '">' .
+                $this->getLang('tab_' . $tab) . '</a></li>';
         }
         echo '</ul>';
     }
@@ -213,10 +216,10 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
     /**
      * Create an URL inside the extension manager
      *
-     * @param string $tab      tab to load, empty for current tab
-     * @param array  $params   associative array of parameter to set
-     * @param string $sep      seperator to build the URL
-     * @param bool   $absolute create absolute URLs?
+     * @param string $tab tab to load, empty for current tab
+     * @param array $params associative array of parameter to set
+     * @param string $sep seperator to build the URL
+     * @param bool $absolute create absolute URLs?
      * @return string
      */
     public function tabURL($tab = '', $params = [], $sep = '&', $absolute = false)
@@ -225,11 +228,11 @@ class helper_plugin_extension_gui extends DokuWiki_Plugin
         global $INPUT;
 
         if (!$tab) $tab = $this->currentTab();
-        $defaults = array(
-            'do'   => 'admin',
+        $defaults = [
+            'do' => 'admin',
             'page' => 'extension',
-            'tab'  => $tab,
-        );
+            'tab' => $tab
+        ];
         if ($tab == 'search') $defaults['q'] = $INPUT->str('q');
 
         return wl($ID, array_merge($defaults, $params), $absolute, $sep);

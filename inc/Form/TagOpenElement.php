@@ -16,7 +16,7 @@ class TagOpenElement extends ValueElement
      * @param string $tag
      * @param array $attributes
      */
-    public function __construct($tag, $attributes = array())
+    public function __construct($tag, $attributes = [])
     {
         parent::__construct('tagopen', $tag, $attributes);
     }
@@ -28,6 +28,6 @@ class TagOpenElement extends ValueElement
      */
     public function toHTML()
     {
-        return '<'.$this->val().' '.buildAttributes($this->attrs()).'>';
+        return '<' . $this->val() . ' ' . buildAttributes($this->attrs()) . '>';
     }
 }

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
@@ -108,8 +109,6 @@ $lang['indexdelay']            = 'Intervallo di tempo prima dell\'indicizzazione
 $lang['mailguard']             = 'Oscuramento indirizzi email';
 $lang['iexssprotect']          = 'Controlla i file caricati in cerca di possibile codice JavaScript o HTML maligno.';
 $lang['usedraft']              = 'Salva una bozza in automatico in fase di modifica';
-$lang['htmlok']                = 'Consenti HTML incorporato';
-$lang['phpok']                 = 'Consenti PHP incorporato';
 $lang['locktime']              = 'Durata dei file di lock (sec)';
 $lang['cachetime']             = 'Durata della cache (sec)';
 $lang['target____wiki']        = 'Finestra di destinazione per i collegamenti interni';

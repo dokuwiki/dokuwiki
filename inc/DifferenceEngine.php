@@ -929,6 +929,18 @@ define('NBSP', "\xC2\xA0");     // utf-8 non-breaking space.
 
 class _HWLDF_WordAccumulator {
 
+    /** @var array */
+    protected $_lines;
+
+    /** @var string */
+    protected $_line;
+
+    /** @var string */
+    protected $_group;
+
+    /** @var string */
+    protected $_tag;
+
     function __construct() {
         $this->_lines = array();
         $this->_line = '';
@@ -1438,6 +1450,18 @@ class Diff3 extends Diff {
  * @access private
  */
 class _Diff3_Op {
+
+    /** @var array|mixed */
+    protected $orig;
+
+    /** @var array|mixed */
+    protected $final1;
+
+    /** @var array|mixed */
+    protected $final2;
+
+    /** @var array|mixed|false */
+    protected $_merged;
 
     function __construct($orig = false, $final1 = false, $final2 = false) {
         $this->orig = $orig ? $orig : array();

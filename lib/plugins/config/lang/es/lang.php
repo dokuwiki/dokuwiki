@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author cadetill <cadetill@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Miguel Pagano <miguel.pagano@gmail.com>
@@ -106,14 +107,13 @@ $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por mo
 $lang['securecookie']          = 'Las cookies establecidas por HTTPS, ¿el naveagdor solo puede enviarlas por HTTPS? Inhabilite esta opción cuando solo se asegure con SSL la entrada, pero no la navegación de su wiki.';
 $lang['remote']                = 'Activar el sistema API remoto. Esto permite a otras aplicaciones acceder al wiki a traves de XML-RPC u otros mecanismos.';
 $lang['remoteuser']            = 'Restringir el acceso remoto por API a los grupos o usuarios separados por comas que se dan aquí. Dejar en blanco para dar acceso a todo el mundo.';
+$lang['remotecors']            = 'Habilitar el Uso Compartido de Recursos entre Orígenes (CORS) para las interfaces remotas. Asterisco (*) para permitir todos los orígenes. Dejar vacío para denegar CORS.';
 $lang['usewordblock']          = 'Bloquear spam usando una lista de palabras';
 $lang['relnofollow']           = 'Usar rel="nofollow" en enlaces externos';
 $lang['indexdelay']            = 'Intervalo de tiempo antes de indexar (segundos)';
 $lang['mailguard']             = 'Ofuscar direcciones de correo electrónico';
 $lang['iexssprotect']          = 'Comprobar posible código malicioso (JavaScript ó HTML) en archivos subidos';
 $lang['usedraft']              = 'Guardar automáticamente un borrador mientras se edita';
-$lang['htmlok']                = 'Permitir HTML embebido';
-$lang['phpok']                 = 'Permitir PHP embebido';
 $lang['locktime']              = 'Edad máxima para archivos de bloqueo (segundos)';
 $lang['cachetime']             = 'Edad máxima para caché (segundos)';
 $lang['target____wiki']        = 'Ventana para enlaces internos';
@@ -173,6 +173,7 @@ $lang['search_fragment_o_contains'] = 'contiene';
 $lang['trustedproxy']          = 'Confíe en los proxys de reenvío que coincidan con esta expresión regular acerca de la IP verdadera del cliente que referencia. El valor predeterminado coincide con las redes locales. Dejar en blanco para no confiar en ningún proxy.';
 $lang['_feature_flags']        = 'Configuración de características';
 $lang['defer_js']              = 'Aplazar JavaScript para que se ejecute después de que se haya analizado el HTML de la página. Mejora la velocidad percibida de la página, pero podría romper un pequeño número de complementos.';
+$lang['hidewarnings']          = 'No mostrar ninguna advertencia emitida por PHP. Esto puede facilitar la transición a PHP8+. Las advertencias seguirán siendo registradas en el registro de errores y deben ser reportadas.';
 $lang['dnslookups']            = 'DokuWiki buscara los hostnames para usuarios editando las páginas con IP remota. Si usted tiene un servidor DNS bastante lento o que no funcione, favor de desactivar esta opción.';
 $lang['jquerycdn']             = '¿Deberían cargarse los ficheros de script jQuery y jQuery UI desde un CDN? Esto añade peticiones HTTP adicionales, pero los ficheros se pueden cargar más rápido y los usuarios pueden tenerlas ya almacenadas en caché.';
 $lang['jquerycdn_o_0']         = 'No CDN, sólo entrega local';

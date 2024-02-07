@@ -1,4 +1,5 @@
 <?php
+
 $meta['server']      = array('string','_caution' => 'danger');
 $meta['port']        = array('numeric','_caution' => 'danger');
 $meta['usertree']    = array('string','_caution' => 'danger');
@@ -10,7 +11,7 @@ $meta['starttls']    = array('onoff','_caution' => 'danger');
 $meta['referrals']   = array('multichoice','_choices' => array(-1,0,1),'_caution' => 'danger');
 $meta['deref']       = array('multichoice','_choices' => array(0,1,2,3),'_caution' => 'danger');
 $meta['binddn']      = array('string','_caution' => 'danger');
-$meta['bindpw']      = array('password','_caution' => 'danger','_code'=>'base64');
+$meta['bindpw']      = array('password','_caution' => 'danger','_code' => 'base64');
 $meta['attributes']  = array('array');
 //$meta['mapping']['name']  unsupported in config manager
 //$meta['mapping']['grps']  unsupported in config manager

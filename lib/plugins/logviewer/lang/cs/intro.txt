@@ -1,0 +1,6 @@
+====== Zobrazit záznamy ======
+
+Toto rozhraní vám umožňuje prohlížet různé záznamy zapsané DokuWiki. Ve výchozím nastavení by toho zde nemělo být mnoho (záleží na vašem [[doku>config:dontlog|nastavení logů]]). Pokud se však něco pokazí, můžete zde najít užitečné informace o problému. Všechny časy jsou v UTC!
+
+Mějte prosím na paměti, že **soubory protokolu mohou obsahovat citlivé informace**, jako jsou hesla, cesty nebo jiné.
+Ujistěte se, že jste záznamy důkladně zkontrolovali, než je zveřejníte na fóru nebo v hlášeních o chybách!

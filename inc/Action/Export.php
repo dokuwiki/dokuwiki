@@ -12,10 +12,11 @@ use dokuwiki\Extension\Event;
  *
  * @package dokuwiki\Action
  */
-class Export extends AbstractAction {
-
+class Export extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
@@ -34,7 +35,8 @@ class Export extends AbstractAction {
      * @author Michael Klier <chi@chimeric.de>
      * @inheritdoc
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         global $REV;
         global $conf;
@@ -42,13 +44,13 @@ class Export extends AbstractAction {
 
         $pre = '';
         $post = '';
-        $headers = array();
+        $headers = [];
 
         // search engines: never cache exported docs! (Google only currently)
         $headers['X-Robots-Tag'] = 'noindex';
 
         $mode = substr($this->actionname, 7);
-        switch($mode) {
+        switch ($mode) {
             case 'raw':
                 $headers['Content-Type'] = 'text/plain; charset=utf-8';
                 $headers['Content-Disposition'] = 'attachment; filename=' . noNS($ID) . '.txt';
@@ -91,7 +93,7 @@ class Export extends AbstractAction {
         }
 
         // prepare event data
-        $data = array();
+        $data = [];
         $data['id'] = $ID;
         $data['mode'] = $mode;
         $data['headers'] = $headers;
@@ -99,15 +101,14 @@ class Export extends AbstractAction {
 
         Event::createAndTrigger('ACTION_EXPORT_POSTPROCESS', $data);
 
-        if(!empty($data['output'])) {
-            if(is_array($data['headers'])) foreach($data['headers'] as $key => $val) {
+        if (!empty($data['output'])) {
+            if (is_array($data['headers'])) foreach ($data['headers'] as $key => $val) {
                 header("$key: $val");
             }
-            print $pre . $data['output'] . $post;
+            echo $pre . $data['output'] . $post;
             exit;
         }
 
         throw new ActionAbort();
     }
-
 }

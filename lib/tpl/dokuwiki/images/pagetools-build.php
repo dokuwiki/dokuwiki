@@ -17,7 +17,7 @@
 $GAMMA = 0.8;
 $OPTIPNG = '/usr/bin/optipng';
 
-if('cli' != php_sapi_name()) die('please run from commandline');
+if('cli' != PHP_SAPI) die('please run from commandline');
 
 // load input images
 $input = glob('pagetools/*.png');
@@ -86,11 +86,7 @@ function hex2rgb($hex) {
     }
 
     // calc rgb
-    return array(
-       'r' => hexdec(substr($hex, 0, 2)),
-       'g' => hexdec(substr($hex, 2, 2)),
-       'b' => hexdec(substr($hex, 4, 2))
-    );
+    return ['r' => hexdec(substr($hex, 0, 2)), 'g' => hexdec(substr($hex, 2, 2)), 'b' => hexdec(substr($hex, 4, 2))];
 }
 
 /**

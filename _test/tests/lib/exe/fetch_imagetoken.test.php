@@ -51,11 +51,11 @@ class fetch_imagetoken_test extends DokuWikiTest {
         $response = $this->fetchResponse($valid_token);
         $this->assertTrue((bool)$response->getHeader('Content-Type'));
         $this->assertTrue((bool)($response->getContent()));
-        
+
         $status_code = $response->getStatusCode();
         $this->assertTrue(is_null($status_code) || (200 == $status_code));
     }
-    
+
     /**
      *  modified image request with invalid token
      *  expect: 412 status code
@@ -64,7 +64,7 @@ class fetch_imagetoken_test extends DokuWikiTest {
         $invalid_token = 'tok='.media_get_token('junk',200,100).'&';
         $this->assertEquals(412,$this->fetchResponse($invalid_token)->getStatusCode());
     }
-    
+
     /**
      *  modified image request with no token
      *  expect: 412 status code
