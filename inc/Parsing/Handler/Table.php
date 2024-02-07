@@ -167,15 +167,12 @@ class Table extends AbstractRewriter
             $this->inTableHead = false;
             $this->countTableHeadRows = 0;
         }
-        // Look for the colspan elements and increment the colspan on the
-        // previous non-empty opening cell. Once done, delete all the cells
-        // that contain colspans
-        $counter = count($this->tableCalls);
 
         // Look for the colspan elements and increment the colspan on the
         // previous non-empty opening cell. Once done, delete all the cells
         // that contain colspans
-        for ($key = 0; $key < $counter; ++$key) {
+        $key = -1;
+        while (++$key < count($this->tableCalls)) {
             $call = $this->tableCalls[$key];
 
             switch ($call[0]) {
