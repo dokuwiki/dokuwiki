@@ -10,24 +10,36 @@ class Korean
     /**
      * Korean codepoint.
      */
-    const START = 0xAC00;
-    const END = 0xD7AF;
-    const REGEX = '/[\x{AC00}-\x{D7AF}]/u';
+    public const START = 0xAC00;
+    public const END = 0xD7AF;
+    public const REGEX = '/[\x{AC00}-\x{D7AF}]/u';
 
     /**
      * Define Korean romanization table.
-     * 
+     *
      * It can't be 1:1 since first and third element have different pronounciation.
      */
-    const PART1_TABLE = array('g', 'kk', 'n', 'd', 'tt', 'r', 'm', 'b', 'pp', 's', 'ss', '', 'j', 'jj', 'ch', 'k', 't', 'p', 'h');
-    const PART2_TABLE = array('a', 'ae', 'ya', 'yae', 'eo', 'e', 'yeo', 'ye', 'o', 'wa', 'wae', 'oe', 'yo', 'u', 'wo', 'we', 'wi', 'yu', 'eu', 'ui', 'i');
-    const PART3_TABLE = array('', 'k', 'k', 'k', 'n', 'n', 'n', 't', 'l', 'k', 'm', 'p', 't', 't', 'p', 'l', 'm', 'p', 'p', 't', 't', 'ng', 't', 't', 'k', 't', 'p', '');
+    protected const PART1_TABLE = array(
+        'g', 'kk', 'n', 'd', 'tt', 'r', 'm', 'b', 'pp', 's',
+        'ss', '', 'j', 'jj', 'ch', 'k', 't', 'p', 'h'
+    );
+    protected const PART2_TABLE = array(
+        'a', 'ae', 'ya', 'yae', 'eo', 'e', 'yeo', 'ye', 'o', 'wa',
+        'wae', 'oe', 'yo', 'u', 'wo', 'we', 'wi', 'yu', 'eu', 'ui',
+        'i'
+    );
+    protected const PART3_TABLE = array(
+        '', 'k', 'k', 'k', 'n', 'n', 'n', 't', 'l', 'k',
+        'm', 'p', 't', 't', 'p', 'l', 'm', 'p', 'p', 't',
+        't', 'ng', 't', 't', 'k', 't', 'p', ''
+    );
 
 
     /**
      * Return romanization of single character.
      */
-    public static function romanize_korean_character($char) {
+    public static function romanizeKoreanCharacter($char)
+    {
         $code = mb_ord($char, 'UTF-8') - self::START;
         $result = [];
 

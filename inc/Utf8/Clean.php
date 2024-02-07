@@ -181,7 +181,7 @@ class Clean
                 $char = mb_substr($string, $i, 1, 'UTF-8');
                 $code = mb_ord($char, 'UTF-8');
                 if ($code >= Korean::START && $code <= Korean::END) {
-                    $romanized[] = Korean::romanize_korean_character($char);
+                    $romanized[] = Korean::romanizeKoreanCharacter($char);
                 } else {
                     $romanized[] = $char;
                 }
@@ -190,7 +190,6 @@ class Clean
         } else {
             return $string;
         }
-
     }
 
     /**
