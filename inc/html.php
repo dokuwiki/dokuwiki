@@ -311,7 +311,7 @@ function html_hilight($html, $phrases)
             $hlight = '<span class="search_hit">' . $hlight . '</span>';
         }
         return $hlight;
-    }, $html);
+    }, html_entity_decode($html));
 }
 
 /**
