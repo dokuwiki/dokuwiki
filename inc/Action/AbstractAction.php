@@ -2,7 +2,6 @@
 
 namespace dokuwiki\Action;
 
-use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\FatalException;
 
@@ -13,8 +12,8 @@ use dokuwiki\Action\Exception\FatalException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractAction {
-
+abstract class AbstractAction
+{
     /** @var string holds the name of the action (lowercase class name, no namespace) */
     protected $actionname;
 
@@ -23,8 +22,9 @@ abstract class AbstractAction {
      *
      * @param string $actionname the name of this action (see getActionName() for caveats)
      */
-    public function __construct($actionname = '') {
-        if($actionname !== '') {
+    public function __construct($actionname = '')
+    {
+        if ($actionname !== '') {
             $this->actionname = $actionname;
         } else {
             // http://stackoverflow.com/a/27457689/172068
@@ -49,7 +49,8 @@ abstract class AbstractAction {
      * @throws ActionException
      * @return void
      */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
     }
 
     /**
@@ -62,15 +63,18 @@ abstract class AbstractAction {
      * @throws ActionException
      * @return void
      */
-    public function preProcess() {
+    public function preProcess()
+    {
     }
 
     /**
      * Output whatever content is wanted within tpl_content();
      *
      * @fixme we may want to return a Ui class here
+     * @throws FatalException
      */
-    public function tplContent() {
+    public function tplContent()
+    {
         throw new FatalException('No content for Action ' . $this->actionname);
     }
 
@@ -82,7 +86,8 @@ abstract class AbstractAction {
      *
      * @return string
      */
-    public function getActionName() {
+    public function getActionName()
+    {
         return $this->actionname;
     }
 }

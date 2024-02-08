@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Mark Prins <mprins@users.sf.net>
  * @author Rene <wllywlnt@yahoo.com>
  * @author Gerrit Uitslag <klapinklapin@gmail.com>
  * @author Johan Vervloet <johan.vervloet@gmail.com>
  * @author Mijndert <mijndert@mijndertstuij.nl>
  * @author Johan Wijnker <johan@wijnker.eu>
- * @author Mark C. Prins <mprins@users.sf.net>
  * @author hugo smet <hugo.smet@scarlet.be>
  */
 $lang['menu']                  = 'Uitbreidingen';
@@ -78,6 +78,7 @@ $lang['msg_template_update_success'] = 'Template %s werd succesvol geüpdatet';
 $lang['msg_plugin_install_success'] = 'Plugin %s werd succesvol geïnstalleerd';
 $lang['msg_plugin_update_success'] = 'Plugin %s werd succesvol geüpdatet';
 $lang['msg_upload_failed']     = 'Uploaden van het bestand is mislukt';
+$lang['msg_nooverwrite']       = 'Uitbreiding %s bestaat al en wordt niet overschreven; vink de optie Bestaande bestanden overschrijven aan om te overschrijven';
 $lang['missing_dependency']    = '<strong>niet aanwezige of uitgeschakelde afhankelijkheid</strong> %s';
 $lang['security_issue']        = '<strong>Veiligheids kwestie:</strong> %s';
 $lang['security_warning']      = '<strong>Veiligheids Waarschuwing</strong> %s';

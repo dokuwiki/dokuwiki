@@ -1,6 +1,14 @@
 name: Linux Unit Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
+
+permissions:
+  contents: read  #  to fetch code (actions/checkout)
 
 jobs:
     run:
@@ -10,7 +18,7 @@ jobs:
 
         strategy:
             matrix:
-                php-versions: ['7.2', '7.3', '7.4', '8.0']
+                php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3']
             fail-fast: false
 
         services:
@@ -26,15 +34,20 @@ jobs:
                     POSTGRES_PASSWORD: postgres
                 ports:
                     - 5432:5432
+            squid:
+              image: ubuntu/squid
+              ports:
+                    - 3128:3128
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
                   extensions: mbstring, intl, PDO, pdo_sqlite, pdo_mysql, pdo_pgsql, bz2
+                  ini-values: pcre.jit=0
 
             - name: Setup problem matchers
               run: |
@@ -43,12 +56,13 @@ jobs:
 
             - name: Setup PHPUnit
               run: |
-                  php _test/fetchphpunit.php
                   cd _test
+                  composer install --no-interaction --no-progress --no-suggest --prefer-dist
                   cp mysql.conf.php.dist mysql.conf.php
                   cp pgsql.conf.php.dist pgsql.conf.php
+                  cp proxy.conf.php.dist proxy.conf.php
 
             - name: Run PHPUnit
               run: |
                 cd _test
-                php phpunit.phar --verbose --stderr
+                composer run test

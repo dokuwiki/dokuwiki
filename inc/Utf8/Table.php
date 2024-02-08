@@ -9,7 +9,6 @@ namespace dokuwiki\Utf8;
  */
 class Table
 {
-
     /**
      * Get the upper to lower case conversion table
      *

@@ -56,7 +56,7 @@ class RSSCreator091 extends FeedCreator
         } else {
             $feed .= "    <channel>\n";
         }
-        $feed .= "        <title>".FeedCreator::iTrunc(htmlspecialchars($this->title), 100)."</title>\n";
+        $feed .= "        <title>".FeedCreator::iTrunc(htmlspecialchars((string) $this->title), 100)."</title>\n";
         $this->descriptionTruncSize = 500;
         $feed .= "        <description>".$this->getDescription()."</description>\n";
         $feed .= "        <link>".$this->link."</link>\n";
@@ -130,10 +130,10 @@ class RSSCreator091 extends FeedCreator
         for ($i = 0; $i < count($this->items); $i++) {
             $feed .= "        <item>\n";
             $feed .= "            <title>".FeedCreator::iTrunc(
-                    htmlspecialchars(strip_tags($this->items[$i]->title)),
+                    htmlspecialchars(strip_tags((string) $this->items[$i]->title)),
                     100
                 )."</title>\n";
-            $feed .= "            <link>".htmlspecialchars($this->items[$i]->link)."</link>\n";
+            $feed .= "            <link>".htmlspecialchars((string) $this->items[$i]->link)."</link>\n";
             $feed .= "            <description>".$this->items[$i]->getDescription()."</description>\n";
 
             $creator = $this->getAuthor($this->items[$i]->author, $this->items[$i]->authorEmail);

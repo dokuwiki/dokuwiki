@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author JPdroid <jpdroid.jpo@gmail.com>
+ * @author Rafael Fernandes <rafa.fernan10@gmail.com>
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -139,6 +142,7 @@ $lang['git']                   = 'Esta extensão foi instalada via git, você po
 $lang['auth']                  = 'Este plugin não está ativado na configuração, considere desativá-lo.';
 $lang['install_url']           = 'Instalar a partir da URL:';
 $lang['install_upload']        = 'Enviar Extensão:';
+$lang['repo_badresponse']      = 'O repositório de plugin retornou uma mensagem inválida.';
 $lang['repo_error']            = 'O repositório do plugin não pôde ser contactado. Verifique se o seu servidor está autorizado a conectar com www.dokuwiki.org e verifique as configurações de proxy do servidor.
 ';
 $lang['nossl']                 = 'Seu PHP parece que perdeu o suporte a SSL. O download não vai funcionar para muitas extensões DokuWiki.

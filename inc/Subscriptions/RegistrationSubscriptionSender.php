@@ -4,7 +4,6 @@ namespace dokuwiki\Subscriptions;
 
 class RegistrationSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send a notify mail on new registration
      *

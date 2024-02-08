@@ -5,6 +5,7 @@
  *
  * Arabic language file
  *
+ * @author talal <ksa76@hotmail.com>
  * @author Khalid <khalid.aljahil@gmail.com>
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
@@ -94,8 +95,6 @@ $lang['indexdelay']            = 'التأخير قبل الفهرسة (ثوان
 $lang['mailguard']             = 'عناوين بريدية مبهمة';
 $lang['iexssprotect']          = 'تحقق الملفات المرفوعة من احتمال وجود أكواد جافاسكربت أو HTML ضارة';
 $lang['usedraft']              = 'احفظ المسودة تلقائيا أثناء التحرير';
-$lang['htmlok']                = 'مكّن تضمين HTML';
-$lang['phpok']                 = 'مكّن تضمين PHP';
 $lang['locktime']              = 'الحد الأعظمي لقفل الملف (ثوان)';
 $lang['cachetime']             = 'الحد الأعظم لعمر المخُبأ (ثوان)';
 $lang['target____wiki']        = 'النافذة الهدف للروابط الداخلية';

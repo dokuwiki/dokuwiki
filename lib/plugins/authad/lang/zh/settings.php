@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author 小李 <szsd5257@foxmail.com>
  * @author HaoNan <haonan@zhuoming.info>
  * @author lainme <lainme993@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
@@ -24,4 +25,5 @@ $lang['expirywarn']            = '提前多少天警告用户密码即将到期�
 $lang['additional']            = '需要从用户数据中获取的额外 AD 属性的列表，以逗号分隔。用于某些插件。';
 $lang['update_name']           = '允许用户更新其AD显示名称？';
 $lang['update_mail']           = '是否允许用户更新他们的电子邮件地址？';
+$lang['update_pass']           = '是否允许用户更新其密码？需要上述 SSL 或 TLS。';
 $lang['recursive_groups']      = '将嵌套组拆分为各自的成员（较慢）';

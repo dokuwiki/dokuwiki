@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>
@@ -99,8 +100,6 @@ $lang['indexdelay']            = 'Tidsfördröjning före indexering (sek)';
 $lang['mailguard']             = 'Koda e-postadresser';
 $lang['iexssprotect']          = 'Kontrollera om uppladdade filer innehåller eventuellt skadlig JavaScript eller HTML-kod';
 $lang['usedraft']              = 'Spara utkast automatiskt under redigering';
-$lang['htmlok']                = 'Tillåt inbäddad HTML';
-$lang['phpok']                 = 'Tillåt inbäddad PHP';
 $lang['locktime']              = 'Maximal livslängd för fillåsning (sek)';
 $lang['cachetime']             = 'Maximal livslängd för cache (sek)';
 $lang['target____wiki']        = 'Målfönster för interna länkar';

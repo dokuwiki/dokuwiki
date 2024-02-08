@@ -398,4 +398,3 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
 }
-

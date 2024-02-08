@@ -1,15 +1,11 @@
 <?php
+
 /**
  * Mail functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-
-// end of line for mail lines - RFC822 says CRLF but postfix (and other MTAs?)
-// think different
-if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
-#define('MAILHEADER_ASCIIONLY',1);
 
 /**
  * Patterns for use in email detection and validation
@@ -24,10 +20,10 @@ if(!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL',"\n");
  * @author Chris Smith <chris@jalakai.co.uk>
  * Check if a given mail address is valid
  */
-if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT',"0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
+if (!defined('RFC2822_ATEXT')) define('RFC2822_ATEXT', "0-9a-zA-Z!#$%&'*+/=?^_`{|}~-");
 if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
     'PREG_PATTERN_VALID_EMAIL',
-    '['.RFC2822_ATEXT.']+(?:\.['.RFC2822_ATEXT.']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
+    '[' . RFC2822_ATEXT . ']+(?:\.[' . RFC2822_ATEXT . ']+)*@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})'
 );
 
 /**
@@ -38,42 +34,45 @@ if (!defined('PREG_PATTERN_VALID_EMAIL')) define(
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function mail_setup(){
+function mail_setup()
+{
     global $conf;
     global $USERINFO;
     /** @var Input $INPUT */
     global $INPUT;
 
     // auto constructed address
-    $host = @parse_url(DOKU_URL,PHP_URL_HOST);
-    if(!$host) $host = 'example.com';
-    $noreply = 'noreply@'.$host;
+    $host = @parse_url(DOKU_URL, PHP_URL_HOST);
+    if (!$host) $host = 'example.com';
+    $noreply = 'noreply@' . $host;
 
-    $replace = array();
-    if(!empty($USERINFO['mail'])){
+    $replace = [];
+    if (!empty($USERINFO['mail'])) {
         $replace['@MAIL@'] = $USERINFO['mail'];
-    }else{
+    } else {
         $replace['@MAIL@'] = $noreply;
     }
 
     // use 'noreply' if no user
     $replace['@USER@'] = $INPUT->server->str('REMOTE_USER', 'noreply', true);
 
-    if(!empty($USERINFO['name'])){
+    if (!empty($USERINFO['name'])) {
         $replace['@NAME@'] = $USERINFO['name'];
-    }else{
+    } else {
         $replace['@NAME@'] = '';
     }
 
     // apply replacements
-    $from = str_replace(array_keys($replace),
-                        array_values($replace),
-                        $conf['mailfrom']);
+    $from = str_replace(
+        array_keys($replace),
+        array_values($replace),
+        $conf['mailfrom']
+    );
 
     // any replacements done? set different mailfromnone
-    if($from != $conf['mailfrom']){
+    if ($from != $conf['mailfrom']) {
         $conf['mailfromnobody'] = $noreply;
-    }else{
+    } else {
         $conf['mailfromnobody'] = $from;
     }
     $conf['mailfrom'] = $from;
@@ -85,7 +84,8 @@ function mail_setup(){
  * @param   string $email the address to check
  * @return  bool          true if address is valid
  */
-function mail_isvalid($email) {
+function mail_isvalid($email)
+{
     return EmailAddressValidator::checkEmailAddress($email, true);
 }
 
@@ -101,14 +101,15 @@ function mail_isvalid($email) {
  *
  * @return string
  */
-function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true) {
+function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit = true)
+{
     // split text into lines
-    $aLines= preg_split("/(?:\r\n|\r|\n)/", $sText);
+    $aLines = preg_split("/(?:\r\n|\r|\n)/", $sText);
     $cnt = count($aLines);
 
-    for ($i=0;$i<$cnt;$i++) {
+    for ($i = 0; $i < $cnt; $i++) {
         $sLine =& $aLines[$i];
-        if (strlen($sLine)===0) continue; // do nothing, if empty
+        if ($sLine === '') continue; // do nothing, if empty
 
         $sRegExp = '/[^\x09\x20\x21-\x3C\x3E-\x7E]/e';
 
@@ -118,29 +119,29 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         if ($bEmulate_imap_8bit)
             $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/';
 
-        $sLine = preg_replace_callback( $sRegExp, 'mail_quotedprintable_encode_callback', $sLine );
+        $sLine = preg_replace_callback($sRegExp, 'mail_quotedprintable_encode_callback', $sLine);
 
         // encode x09,x20 at lineends
         {
             $iLength = strlen($sLine);
-            $iLastChar = ord($sLine[$iLength-1]);
+            $iLastChar = ord($sLine[$iLength - 1]);
 
             //              !!!!!!!!
             // imap_8_bit does not encode x20 at the very end of a text,
             // here is, where I don't agree with imap_8_bit,
             // please correct me, if I'm wrong,
             // or comment next line for RFC2045 conformance, if you like
-            if (!($bEmulate_imap_8bit && ($i==count($aLines)-1))){
-                if (($iLastChar==0x09)||($iLastChar==0x20)) {
-                    $sLine[$iLength-1]='=';
-                    $sLine .= ($iLastChar==0x09)?'09':'20';
-                }
+        if (!($bEmulate_imap_8bit && ($i == count($aLines) - 1))) {
+            if (($iLastChar == 0x09) || ($iLastChar == 0x20)) {
+                $sLine[$iLength - 1] = '=';
+                $sLine .= ($iLastChar == 0x09) ? '09' : '20';
             }
+        }
         }    // imap_8bit encodes x20 before chr(13), too
         // although IMHO not requested by RFC2045, why not do it safer :)
         // and why not encode any x20 around chr(10) or chr(13)
         if ($bEmulate_imap_8bit) {
-            $sLine=str_replace(' =0D','=20=0D',$sLine);
+            $sLine = str_replace(' =0D', '=20=0D', $sLine);
             //$sLine=str_replace(' =0A','=20=0A',$sLine);
             //$sLine=str_replace('=0D ','=0D=20',$sLine);
             //$sLine=str_replace('=0A ','=0A=20',$sLine);
@@ -151,16 +152,17 @@ function mail_quotedprintable_encode($sText,$maxlen=74,$bEmulate_imap_8bit=true)
         // at the very first character of the line
         // and after soft linebreaks, as well,
         // but this wouldn't be caught by such an easy RegExp
-        if($maxlen){
-            preg_match_all( '/.{1,'.($maxlen - 2).'}([^=]{0,2})?/', $sLine, $aMatch );
-            $sLine = implode( '=' . MAILHEADER_EOL, $aMatch[0] ); // add soft crlf's
+        if ($maxlen) {
+            preg_match_all('/.{1,' . ($maxlen - 2) . '}([^=]{0,2})?/', $sLine, $aMatch);
+            $sLine = implode('=' . MAILHEADER_EOL, $aMatch[0]); // add soft crlf's
         }
     }
 
     // join lines into text
-    return implode(MAILHEADER_EOL,$aLines);
+    return implode(MAILHEADER_EOL, $aLines);
 }
 
-function mail_quotedprintable_encode_callback($matches){
-    return sprintf( "=%02X", ord ( $matches[0] ) ) ;
+function mail_quotedprintable_encode_callback($matches)
+{
+    return sprintf("=%02X", ord($matches[0])) ;
 }

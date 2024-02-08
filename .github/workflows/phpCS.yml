@@ -1,6 +1,14 @@
 name: PHP Code Style
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
+
+permissions:
+  contents: read  #  to fetch code (actions/checkout)
 
 jobs:
     phpcs:
@@ -8,13 +16,17 @@ jobs:
         runs-on: ubuntu-latest
         if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '7.4'
-                  tools: cs2pr, phpcs
+                  php-version: '8.2'
 
             - name: run PHP codesniffer
-              run: phpcs -q --standard=_test/phpcs_MigrationAdjustments.xml --report=checkstyle | cs2pr
+              run: |
+                cd _test
+                composer install --no-interaction --no-progress --no-suggest --prefer-dist
+                composer run check

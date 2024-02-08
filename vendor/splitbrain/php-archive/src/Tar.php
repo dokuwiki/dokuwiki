@@ -88,11 +88,30 @@ class Tar extends Archive
      */
     public function contents()
     {
+        $result = array();
+
+        foreach ($this->yieldContents() as $fileinfo) {
+            $result[] = $fileinfo;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Read the contents of a TAR archive and return each entry using yield
+     * for memory efficiency.
+     *
+     * @see contents()
+     * @throws ArchiveIOException
+     * @throws ArchiveCorruptedException
+     * @returns FileInfo[]
+     */
+    public function yieldContents()
+    {
         if ($this->closed || !$this->file) {
             throw new ArchiveIOException('Can not read from a closed archive');
         }
 
-        $result = array();
         while ($read = $this->readbytes(512)) {
             $header = $this->parseHeader($read);
             if (!is_array($header)) {
@@ -100,11 +119,11 @@ class Tar extends Archive
             }
 
             $this->skipbytes(ceil($header['size'] / 512) * 512);
-            $result[] = $this->header2fileinfo($header);
+            yield $this->header2fileinfo($header);
         }
 
         $this->close();
-        return $result;
+
     }
 
     /**
@@ -166,7 +185,9 @@ class Tar extends Archive
             // create output directory
             $output    = $outdir.'/'.$fileinfo->getPath();
             $directory = ($fileinfo->getIsdir()) ? $output : dirname($output);
-            @mkdir($directory, 0777, true);
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true);
+            }
 
             // extract data
             if (!$fileinfo->getIsdir()) {

@@ -2,9 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
-
 /**
  * DokuWiki Index Interface
  *
@@ -14,11 +11,11 @@ class Index extends Ui
 {
     protected $ns;
 
-    /** 
+    /**
      * Index Ui constructor
      *
-     * @param string $ns  namespace
-    */
+     * @param string $ns namespace
+     */
     public function __construct($ns = '')
     {
         $this->ns = $ns;
@@ -28,16 +25,16 @@ class Index extends Ui
     /**
      * Display page index
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
         // print intro
-        print p_locale_xhtml('index');
+        echo p_locale_xhtml('index');
 
-        print $this->sitemap();
+        echo $this->sitemap();
     }
 
     /**
@@ -51,18 +48,17 @@ class Index extends Ui
         global $ID;
 
         $ns = cleanID($this->ns);
-        if (empty($ns)){
+        if (empty($ns)) {
             $ns = getNS($ID);
             if ($ns === false) $ns = '';
         }
         $ns = utf8_encodeFN(str_replace(':', '/', $ns));
-        $data = array();
-        search($data, $conf['datadir'], 'search_index', array('ns' => $ns));
+        $data = [];
+        search($data, $conf['datadir'], 'search_index', ['ns' => $ns]);
 
-        $html = '<div id="index__tree" class="index__tree">'
-              . html_buildlist($data, 'idx', [$this,'formatListItem'], [$this,'tagListItem'])
-              . '</div>';
-        return $html;
+        return '<div id="index__tree" class="index__tree">'
+            . html_buildlist($data, 'idx', [$this, 'formatListItem'], [$this, 'tagListItem'])
+            . '</div>';
     }
 
     /**
@@ -70,10 +66,10 @@ class Index extends Ui
      *
      * User function for html_buildlist()
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     *
      * @param array $item
      * @return string
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
      */
     public function formatListItem($item)    // RENAMED from html_list_index()
     {
@@ -83,17 +79,17 @@ class Index extends Ui
         $nofollow = ($ID != $conf['start'] || $conf['sitemap']) ? 'rel="nofollow"' : '';
 
         $html = '';
-        $base = ':'.$item['id'];
-        $base = substr($base, strrpos($base,':') +1);
+        $base = ':' . $item['id'];
+        $base = substr($base, strrpos($base, ':') + 1);
         if ($item['type'] == 'd') {
             // FS#2766, no need for search bots to follow namespace links in the index
-            $link = wl($ID, 'idx='. rawurlencode($item['id']));
-            $html .= '<a href="'. $link .'" title="'. $item['id'] .'" class="idx_dir"' . $nofollow .'><strong>';
+            $link = wl($ID, 'idx=' . rawurlencode($item['id']));
+            $html .= '<a href="' . $link . '" title="' . $item['id'] . '" class="idx_dir"' . $nofollow . '><strong>';
             $html .= $base;
             $html .= '</strong></a>';
         } else {
             // default is noNSorNS($id), but we want noNS($id) when useheading is off FS#2605
-            $html .= html_wikilink(':'.$item['id'], useHeading('navigation') ? null : noNS($item['id']));
+            $html .= html_wikilink(':' . $item['id'], useHeading('navigation') ? null : noNS($item['id']));
         }
         return $html;
     }
@@ -105,10 +101,10 @@ class Index extends Ui
      * <li> tags for namespaces when displaying the page index
      * it gives different classes to opened or closed "folders"
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     *
      * @param array $item
      * @return string html
+     * @author Andreas Gohr <andi@splitbrain.org>
+     *
      */
     public function tagListItem($item)    // RENAMED from html_li_index()
     {
@@ -124,12 +120,11 @@ class Index extends Ui
                 $id = ' id="scroll__here"';
                 $class = ' bounce';
             }
-            return '<li class="level'.$item['level'].$class.'" '.$id.'>';
+            return '<li class="level' . $item['level'] . $class . '" ' . $id . '>';
         } elseif ($item['open']) {
             return '<li class="open">';
         } else {
             return '<li class="closed">';
         }
     }
-
 }

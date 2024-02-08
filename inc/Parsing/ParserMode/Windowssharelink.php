@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Windowssharelink extends AbstractMode
 {
-
     protected $pattern;
 
     /** @inheritdoc */

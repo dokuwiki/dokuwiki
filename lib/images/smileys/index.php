@@ -31,21 +31,21 @@
 <?php
 $smi_list = '';
 foreach (glob('*.svg') as $img) {
-    $smi_list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+    $smi_list .= '<img src="' . $img . '" alt="' . $img . '" title="' . $img . '" /> ';
 }
-if(is_dir('local')) {
+if (is_dir('local')) {
     $smi_list .= '<hr />';
     foreach (glob('local/*.svg') as $img) {
-        $smi_list .= '<img src="'.$img.'" alt="'.$img.'" title="'.$img.'" /> ';
+        $smi_list .= '<img src="' . $img . '" alt="' . $img . '" title="' . $img . '" /> ';
     }
 }
 
 echo '<div class="white box">
-'.$smi_list.'
+' . $smi_list . '
 </div>
 
 <div class="black box">
-'.$smi_list;
+' . $smi_list;
 ?>
 </div>
 

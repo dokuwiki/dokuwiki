@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hoàng Vịnh <hoangdangvinh.vn@gmail.com>
+ * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  * @author James Do <jdo@myrealbox.com>
  */
@@ -142,6 +144,9 @@ $lang['profdeleted']           = 'Tài khoản thành viên của bạn đã b�
 $lang['profconfdelete']        = 'Tôi muốn xóa tài khoản của tôi khỏi wiki này. <br/> Hành động này không thể hoàn tác.';
 $lang['profconfdeletemissing'] = 'Hộp kiểm xác nhận chưa được đánh dấu';
 $lang['proffail']              = 'Hồ sơ thành viên chưa được cập nhật.';
+$lang['proftokenlegend']       = 'Mã xác thực';
+$lang['proftokengenerate']     = 'Đặt lại mã thông báo';
+$lang['proftokeninfo']         = 'Mã thông báo xác thực có thể được sử dụng để cho phép các ứng dụng của bên thứ 3 đăng nhập và hành động thay mặt bạn. Việc đặt lại mã thông báo sẽ làm mất hiệu lực mã cũ và đăng xuất tất cả các ứng dụng đã sử dụng mã thông báo trước đó.';
 $lang['pwdforget']             = 'Bạn quên mật khẩu? Tạo một cái mới';
 $lang['resendna']              = 'Wiki này không hỗ trợ gửi lại mật khẩu.';
 $lang['resendpwd']             = 'Đặt mật khẩu mới cho';
@@ -212,7 +217,8 @@ $lang['created']               = 'đã tạo';
 $lang['restored']              = 'đã khôi phục phiên bản cũ (%s)';
 $lang['external_edit']         = 'sửa đổi bên ngoài';
 $lang['summary']               = 'Tóm lược sửa đổi';
-$lang['noflash']               = 'Cần có <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> mới có thể xem được nội dung này.';
+$lang['unknowndate']           = 'Ngày không xác định';
+$lang['noflash']               = 'Cần có <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> mới có thể xem được nội dung này.';
 $lang['download']              = 'Tải xuống đoạn trích';
 $lang['tools']                 = 'Công cụ';
 $lang['user_tools']            = 'Công cụ thành viên';
@@ -294,10 +300,10 @@ $lang['i_superuser']           = 'Siêu thành viên';
 $lang['i_problems']            = 'Trình cài đặt tìm thấy một số vấn đề, được chỉ ra bên dưới. Bạn không thể tiếp tục cho đến khi bạn đã sửa chúng.';
 $lang['i_modified']            = 'Vì lý do bảo mật, tập lệnh này sẽ chỉ hoạt động với bản cài đặt Dokuwiki mới và chưa được sửa đổi.
                                   Bạn nên trích xuất lại các tập tin từ gói đã tải xuống hoặc tham khảo
-                    <a href="http://dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
+                    <a href="https://www.dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
 $lang['i_funcna']              = 'Hàm PHP <code>%s</code> không có sẵn. Có lẽ nhà cung cấp dịch vụ lưu trữ của bạn đã vô hiệu hóa nó vì một số lý do?';
 $lang['i_disabled']            = 'Nó đã bị vô hiệu hóa bởi nhà cung cấp của bạn.';
-$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="http://dokuwiki.org/plugins/smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Phiên bản PHP <code>%s</code> hiện taị thấp hơn mức <code>%s</code> cần thiết. Bạn cần nâng cấp cài đặt PHP của bạn.';
 $lang['i_mbfuncoverload']      = 'mbopes.func_overload phải bị vô hiệu trong php.ini để chạy DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki không thể tạo số mật mã an toàn cho cookie. Bạn có thể muốn kiểm tra cài đặt open_basingir trong php.ini để truy cập <code>/dev/urandom</code> thích hợp.';
@@ -362,3 +368,6 @@ $lang['page_nonexist_rev']     = 'Trang không tồn tại tại %s. Sau đó, n
 $lang['unable_to_parse_date']  = 'Không thể phân tích cú pháp tại tham số "%s".';
 $lang['email_signature_text']  = 'Thư này được tạo bởi DokuWiki tại
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Tệp nhật ký quá lớn. Những dòng trước đã bị bỏ qua!';
+$lang['log_file_failed_to_open'] = 'Không thể mở tệp nhật ký.';
+$lang['log_file_failed_to_read'] = 'Đã xảy ra lỗi khi đọc nhật ký.';

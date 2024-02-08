@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Set up globally available constants
  */
@@ -63,3 +64,17 @@ define('DOKU_MEDIA_DELETED', 1);
 define('DOKU_MEDIA_NOT_AUTH', 2);
 define('DOKU_MEDIA_INUSE', 4);
 define('DOKU_MEDIA_EMPTY_NS', 8);
+
+/**
+ * Mail header constants
+ *
+ * EOL is defined as CRLF in RFC822 and seems to work on modern systems. We had problems with
+ * older MTAs in the past that expected LF only, so this constant remains changeable for now
+ *
+ * @file inc/mail.php
+ * @file inc/Mailer.class.php
+ */
+// phpcs:disable
+if (!defined('MAILHEADER_EOL')) define('MAILHEADER_EOL', "\r\n");
+// phpcs:enable
+// define('MAILHEADER_ASCIIONLY',1); // we currently don't use this

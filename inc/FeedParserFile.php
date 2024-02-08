@@ -2,6 +2,8 @@
 
 namespace dokuwiki;
 
+use SimplePie\File;
+use SimplePie\SimplePie;
 use dokuwiki\HTTP\DokuHTTPClient;
 
 /**
@@ -9,7 +11,7 @@ use dokuwiki\HTTP\DokuHTTPClient;
  *
  * Replaces SimplePie's own class
  */
-class FeedParserFile extends \SimplePie_File
+class FeedParserFile extends File
 {
     protected $http;
     /** @noinspection PhpMissingParentConstructorInspection */
@@ -22,13 +24,7 @@ class FeedParserFile extends \SimplePie_File
      * @inheritdoc
      */
     public function __construct(
-        $url,
-        $timeout = 10,
-        $redirects = 5,
-        $headers = null,
-        $useragent = null,
-        $force_fsockopen = false,
-        $curl_options = array()
+        $url
     ) {
         $this->http = new DokuHTTPClient();
         $this->success = $this->http->sendRequest($url);
@@ -37,7 +33,7 @@ class FeedParserFile extends \SimplePie_File
         $this->body = $this->http->resp_body;
         $this->error = $this->http->error;
 
-        $this->method = SIMPLEPIE_FILE_SOURCE_REMOTE | SIMPLEPIE_FILE_SOURCE_FSOCKOPEN;
+        $this->method = SimplePie::FILE_SOURCE_REMOTE | SimplePie::FILE_SOURCE_FSOCKOPEN;
 
         return $this->success;
     }

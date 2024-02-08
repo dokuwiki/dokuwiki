@@ -1,9 +1,12 @@
 <?php
+
 /**
  * We map legacy class names to the new namespaced versions here
  *
  * These are names that we will probably never change because they have been part of DokuWiki's
  * public interface for years and renaming would break just too many plugins
+ *
+ * Note: when adding to this file, please also add appropriate actions to _test/rector.php
  */
 
 class_alias('\dokuwiki\Extension\EventHandler', 'Doku_Event_Handler');

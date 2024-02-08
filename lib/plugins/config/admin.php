@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Configuration Manager admin plugin
  *
@@ -7,6 +8,7 @@
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
 
+use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\plugin\config\core\Configuration;
 use dokuwiki\plugin\config\core\Setting\Setting;
 use dokuwiki\plugin\config\core\Setting\SettingFieldset;
@@ -16,9 +18,9 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_config extends DokuWiki_Admin_Plugin {
-
-    const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
+class admin_plugin_config extends AdminPlugin
+{
+    protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
 
     /** @var Configuration */
     protected $configuration;
@@ -33,42 +35,45 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     /**
      * handle user request
      */
-    public function handle() {
+    public function handle()
+    {
         global $ID, $INPUT;
 
         // always initialize the configuration
         $this->configuration = new Configuration();
 
-        if(!$INPUT->bool('save') || !checkSecurityToken()) {
+        if (!$INPUT->bool('save') || !checkSecurityToken()) {
             return;
         }
 
         // don't go any further if the configuration is locked
-        if($this->configuration->isLocked()) return;
+        if ($this->configuration->isLocked()) return;
 
         // update settings and redirect of successful
         $ok = $this->configuration->updateSettings($INPUT->arr('config'));
-        if($ok) { // no errors
+        if ($ok) { // no errors
             try {
-                if($this->configuration->hasChanged()) {
+                if ($this->configuration->hasChanged()) {
                     $this->configuration->save();
                 } else {
                     $this->configuration->touch();
                 }
                 msg($this->getLang('updated'), 1);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 msg($this->getLang('error'), -1);
             }
-            send_redirect(wl($ID, array('do' => 'admin', 'page' => 'config'), true, '&'));
+            send_redirect(wl($ID, ['do' => 'admin', 'page' => 'config'], true, '&'));
         } else {
             $this->hasErrors = true;
+            msg($this->getLang('error'), -1);
         }
     }
 
     /**
      * output appropriate html
      */
-    public function html() {
+    public function html()
+    {
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
         global $lang;
         global $ID;
@@ -79,7 +84,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         echo '<div id="config__manager">';
 
-        if($this->configuration->isLocked()) {
+        if ($this->configuration->isLocked()) {
             echo '<div class="info">' . $this->getLang('locked') . '</div>';
         }
 
@@ -94,22 +99,22 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $in_fieldset = false;
         $first_plugin_fieldset = true;
         $first_template_fieldset = true;
-        foreach($this->configuration->getSettings() as $setting) {
-            if(is_a($setting, SettingHidden::class)) {
+        foreach ($this->configuration->getSettings() as $setting) {
+            if ($setting instanceof SettingHidden) {
                 continue;
-            } else if(is_a($setting, settingFieldset::class)) {
+            } elseif ($setting instanceof SettingFieldset) {
                 // config setting group
-                if($in_fieldset) {
+                if ($in_fieldset) {
                     echo '</table>';
                     echo '</div>';
                     echo '</fieldset>';
                 } else {
                     $in_fieldset = true;
                 }
-                if($first_plugin_fieldset && $setting->getType() == 'plugin') {
+                if ($first_plugin_fieldset && $setting->getType() == 'plugin') {
                     $this->printH1('plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
-                } else if($first_template_fieldset && $setting->getType() == 'template') {
+                } elseif ($first_template_fieldset && $setting->getType() == 'template') {
                     $this->printH1('template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
@@ -119,7 +124,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
                 echo '<table class="inline">';
             } else {
                 // config settings
-                list($label, $input) = $setting->html($this, $this->hasErrors);
+                [$label, $input] = $setting->html($this, $this->hasErrors);
 
                 $class = $setting->isDefault()
                     ? ' class="default"'
@@ -144,13 +149,13 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
 
         echo '</table>';
         echo '</div>';
-        if($in_fieldset) {
+        if ($in_fieldset) {
             echo '</fieldset>';
         }
 
         // show undefined settings list
         $undefined_settings = $this->configuration->getUndefined();
-        if($allow_debug && !empty($undefined_settings)) {
+        if ($allow_debug && !empty($undefined_settings)) {
             /**
              * Callback for sorting settings
              *
@@ -158,7 +163,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
              * @param Setting $b
              * @return int if $a is lower/equal/higher than $b
              */
-            function settingNaturalComparison($a, $b) {
+            function settingNaturalComparison($a, $b)
+            {
                 return strnatcmp($a->getKey(), $b->getKey());
             }
 
@@ -167,8 +173,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             echo '<fieldset>';
             echo '<div class="table">';
             echo '<table class="inline">';
-            foreach($undefined_settings as $setting) {
-                list($label, $input) = $setting->html($this);
+            foreach ($undefined_settings as $setting) {
+                [$label, $input] = $setting->html($this);
                 echo '<tr>';
                 echo '<td class="label">' . $label . '</td>';
                 echo '<td>' . $input . '</td>';
@@ -184,7 +190,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         echo '<input type="hidden" name="do"     value="admin" />';
         echo '<input type="hidden" name="page"   value="config" />';
 
-        if(!$this->configuration->isLocked()) {
+        if (!$this->configuration->isLocked()) {
             echo '<input type="hidden" name="save"   value="1" />';
             echo '<button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
             echo '<button type="reset">' . $lang['btn_reset'] . '</button>';
@@ -199,9 +205,10 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
     /**
      * @param bool $prompts
      */
-    public function setupLocale($prompts = false) {
+    public function setupLocale($prompts = false)
+    {
         parent::setupLocale();
-        if(!$prompts || $this->promptsLocalized) return;
+        if (!$prompts || $this->promptsLocalized) return;
         $this->lang = array_merge($this->lang, $this->configuration->getLangs());
         $this->promptsLocalized = true;
     }
@@ -213,17 +220,18 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      *
      * @return array
      */
-    public function getTOC() {
+    public function getTOC()
+    {
         $this->setupLocale(true);
 
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
-        $toc = array();
+        $toc = [];
         $check = false;
 
         // gather settings data into three sub arrays
         $labels = ['dokuwiki' => [], 'plugin' => [], 'template' => []];
-        foreach($this->configuration->getSettings() as $setting) {
-            if(is_a($setting, SettingFieldset::class)) {
+        foreach ($this->configuration->getSettings() as $setting) {
+            if ($setting instanceof SettingFieldset) {
                 $labels[$setting->getType()][] = $setting;
             }
         }
@@ -233,8 +241,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         $toc[] = html_mktocitem(sectionID($title, $check), $title, 1);
 
         // main entries
-        foreach(['dokuwiki', 'plugin', 'template'] as $section) {
-            if(empty($labels[$section])) continue; // no entries, skip
+        foreach (['dokuwiki', 'plugin', 'template'] as $section) {
+            if (empty($labels[$section])) continue; // no entries, skip
 
             // create main header
             $toc[] = html_mktocitem(
@@ -244,7 +252,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
             );
 
             // create sub headers
-            foreach($labels[$section] as $setting) {
+            foreach ($labels[$section] as $setting) {
                 /** @var SettingFieldset $setting */
                 $name = $setting->prompt($this);
                 $toc[] = html_mktocitem($setting->getKey(), $name, 2);
@@ -252,7 +260,7 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
         }
 
         // undefined settings if allowed
-        if(count($this->configuration->getUndefined()) && $allow_debug) {
+        if (count($this->configuration->getUndefined()) && $allow_debug) {
             $toc[] = html_mktocitem('undefined_settings', $this->getLang('_header_undefined'), 1);
         }
 
@@ -263,7 +271,8 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $id
      * @param string $text
      */
-    protected function printH1($id, $text) {
+    protected function printH1($id, $text)
+    {
         echo '<h1 id="' . $id . '">' . $text . '</h1>';
     }
 
@@ -275,8 +284,9 @@ class admin_plugin_config extends DokuWiki_Admin_Plugin {
      * @param string $key
      * @param string $value
      */
-    public function addLang($key, $value) {
-        if(!$this->localised) $this->setupLocale();
+    public function addLang($key, $value)
+    {
+        if (!$this->localised) $this->setupLocale();
         $this->lang[$key] = $value;
     }
 }

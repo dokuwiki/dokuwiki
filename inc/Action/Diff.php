@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageDiff;
 use dokuwiki\Ui;
 
 /**
@@ -34,7 +35,7 @@ class Diff extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Diff())->show();
+        global $INFO;
+        (new PageDiff($INFO['id']))->preference('showIntro', true)->show();
     }
-
 }

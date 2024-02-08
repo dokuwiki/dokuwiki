@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author KAWASHIMA,Y <darknmatta@gmail.com>
  * @author HokkaidoPerson <dosankomali@yahoo.co.jp>
  * @author lempel <riverlempel@hotmail.com>
  * @author Yuji Takenaka <webmaster@davilin.com>
@@ -199,7 +200,7 @@ $lang['current']               = '現在';
 $lang['yours']                 = 'あなたのバージョン';
 $lang['diff']                  = '現在のリビジョンとの差分を表示';
 $lang['diff2']                 = '選択したリビジョン間の差分を表示';
-$lang['difflink']              = 'この比較画面にリンクする';
+$lang['difflink']              = 'この比較画面へのリンク';
 $lang['diff_type']             = '差分の表示方法：';
 $lang['diff_inline']           = 'インライン';
 $lang['diff_side']             = '横に並べる';
@@ -218,7 +219,8 @@ $lang['created']               = '作成';
 $lang['restored']              = '以前のリビジョンを復元 (%s)';
 $lang['external_edit']         = '外部編集';
 $lang['summary']               = '編集の概要';
-$lang['noflash']               = 'この内容を表示するには <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> が必要です。';
+$lang['unknowndate']           = '不明な日付';
+$lang['noflash']               = 'この内容を表示するには <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> が必要です。';
 $lang['download']              = 'この部分をダウンロード';
 $lang['tools']                 = 'ツール';
 $lang['user_tools']            = 'ユーザ用ツール';
@@ -300,10 +302,10 @@ $lang['i_superuser']           = 'スーパーユーザー';
 $lang['i_problems']            = '問題が発見されました。以下に示す問題を解決するまで、インストールを続行できません。';
 $lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
                          ダウンロードしたパッケージを再解凍して使用するか、
-                         <a href="http://dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
+                         <a href="https://www.dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_disabled']            = 'ご利用のプロバイダにより制限されています。';
-$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="http://dokuwiki.org/plugins/smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
+$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="https://www.dokuwiki.org/plugin:smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
 $lang['i_mbfuncoverload']      = 'DokuWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
 $lang['i_urandom']             = 'DokuWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
@@ -366,3 +368,6 @@ $lang['page_nonexist_rev']     = '指定ページ %s はありません。この
 $lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
 $lang['email_signature_text']  = 'このメールは次のDokuWikiより自動的に送信されています。
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'ログファイルが大きすぎます．前の行をスキップしました！';
+$lang['log_file_failed_to_open'] = 'ログファイルを開けませんでした．';
+$lang['log_file_failed_to_read'] = 'ログの読み込み中にエラーが発生しました．';

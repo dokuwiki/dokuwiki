@@ -13,7 +13,7 @@ use dokuwiki\ErrorHandler;
 class PluginController
 {
     /** @var array the types of plugins DokuWiki supports */
-    const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
+    public const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
 
     protected $listByType = [];
     /** @var array all installed plugins and their enabled state [plugin=>enabled] */
@@ -28,6 +28,7 @@ class PluginController
     {
         $this->loadConfig();
         $this->populateMasterList();
+        $this->initAutoloaders();
     }
 
     /**
@@ -83,7 +84,7 @@ class PluginController
         //we keep all loaded plugins available in global scope for reuse
         global $DOKU_PLUGINS;
 
-        list($plugin, /* $component */) = $this->splitName($name);
+        [$plugin, /* component */ ] = $this->splitName($name);
 
         // check if disabled
         if (!$disabled && !$this->isEnabled($plugin)) {
@@ -96,8 +97,7 @@ class PluginController
             //plugin already loaded?
             if (!empty($DOKU_PLUGINS[$type][$name])) {
                 if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
-
-                    return class_exists($class, true) ? new $class : null;
+                    return class_exists($class, true) ? new $class() : null;
                 }
 
                 return $DOKU_PLUGINS[$type][$name];
@@ -115,21 +115,19 @@ class PluginController
                             hsc(
                                 $inf['base']
                             )
-                        ), -1
+                        ),
+                        -1
                     );
                 } elseif (preg_match('/^' . DOKU_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
-                    msg(
-                        sprintf(
-                            "Plugin name '%s' is not a valid plugin name, only the characters a-z ".
-                            "and 0-9 are allowed. " .
-                            'Maybe the plugin has been installed in the wrong directory?', hsc($plugin)
-                        ), -1
-                    );
+                    msg(sprintf(
+                        'Plugin name \'%s\' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ' .
+                        'Maybe the plugin has been installed in the wrong directory?',
+                        hsc($plugin)
+                    ), -1);
                 }
                 return null;
             }
-            $DOKU_PLUGINS[$type][$name] = new $class;
-
+            $DOKU_PLUGINS[$type][$name] = new $class();
         } catch (\Throwable $e) {
             ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));
             return null;
@@ -204,14 +202,13 @@ class PluginController
     protected function populateMasterList()
     {
         if ($dh = @opendir(DOKU_PLUGIN)) {
-            $all_plugins = array();
+            $all_plugins = [];
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] === '.') continue;               // skip hidden entries
                 if (is_file(DOKU_PLUGIN . $plugin)) continue;    // skip files, we're only interested in directories
 
                 if (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 0) {
                     $all_plugins[$plugin] = 0;
-
                 } elseif (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 1) {
                     $all_plugins[$plugin] = 1;
                 } else {
@@ -234,7 +231,7 @@ class PluginController
      */
     protected function checkRequire($files)
     {
-        $plugins = array();
+        $plugins = [];
         foreach ($files as $file) {
             if (file_exists($file)) {
                 include_once($file);
@@ -297,7 +294,7 @@ class PluginController
         //gives us the ones we need to check and save
         $diffed_ones = array_diff_key($local_default, $this->pluginCascade['default']);
         //The ones which we are sure of (list of 0s not in default)
-        $sure_plugins = array_filter($diffed_ones, array($this, 'negate'));
+        $sure_plugins = array_filter($diffed_ones, [$this, 'negate']);
         //the ones in need of diff
         $conflicts = array_diff_key($local_default, $diffed_ones);
         //The final list
@@ -311,20 +308,18 @@ class PluginController
     protected function loadConfig()
     {
         global $config_cascade;
-        foreach (array('default', 'protected') as $type) {
+        foreach (['default', 'protected'] as $type) {
             if (array_key_exists($type, $config_cascade['plugins'])) {
                 $this->pluginCascade[$type] = $this->checkRequire($config_cascade['plugins'][$type]);
             }
         }
         $local = $config_cascade['plugins']['local'];
         $this->lastLocalConfigFile = array_pop($local);
-        $this->pluginCascade['local'] = $this->checkRequire(array($this->lastLocalConfigFile));
-        if (is_array($local)) {
-            $this->pluginCascade['default'] = array_merge(
-                $this->pluginCascade['default'],
-                $this->checkRequire($local)
-            );
-        }
+        $this->pluginCascade['local'] = $this->checkRequire([$this->lastLocalConfigFile]);
+        $this->pluginCascade['default'] = array_merge(
+            $this->pluginCascade['default'],
+            $this->checkRequire($local)
+        );
         $this->masterList = array_merge(
             $this->pluginCascade['default'],
             $this->pluginCascade['local'],
@@ -344,11 +339,10 @@ class PluginController
     {
         $master_list = $enabled
             ? array_keys(array_filter($this->masterList))
-            : array_keys(array_filter($this->masterList, array($this, 'negate')));
-        $plugins = array();
+            : array_keys(array_filter($this->masterList, [$this, 'negate']));
+        $plugins = [];
 
         foreach ($master_list as $plugin) {
-
             if (file_exists(DOKU_PLUGIN . "$plugin/$type.php")) {
                 $plugins[] = $plugin;
                 continue;
@@ -358,7 +352,10 @@ class PluginController
             if (is_dir($typedir)) {
                 if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
-                        if (strpos($component, '.') === 0 || strtolower(substr($component, -4)) !== '.php') continue;
+                        if (
+                            str_starts_with($component, '.') ||
+                            !str_ends_with(strtolower($component), '.php')
+                        ) continue;
                         if (is_file($typedir . $component)) {
                             $plugins[] = $plugin . '_' . substr($component, 0, -4);
                         }
@@ -366,7 +363,6 @@ class PluginController
                     closedir($dp);
                 }
             }
-
         }//foreach
 
         return $plugins;
@@ -383,10 +379,10 @@ class PluginController
     protected function splitName($name)
     {
         if (!isset($this->masterList[$name])) {
-            return explode('_', $name, 2);
+            return sexplode('_', $name, 2, '');
         }
 
-        return array($name, '');
+        return [$name, ''];
     }
 
     /**
@@ -398,5 +394,22 @@ class PluginController
     protected function negate($input)
     {
         return !(bool)$input;
+    }
+
+    /**
+     * Initialize vendor autoloaders for all plugins that have them
+     */
+    protected function initAutoloaders()
+    {
+        $plugins = $this->getList();
+        foreach ($plugins as $plugin) {
+            if (file_exists(DOKU_PLUGIN . $plugin . '/vendor/autoload.php')) {
+                try {
+                    require_once(DOKU_PLUGIN . $plugin . '/vendor/autoload.php');
+                } catch (\Throwable $e) {
+                    ErrorHandler::showExceptionMsg($e, sprintf('Failed to init plugin %s autoloader', $plugin));
+                }
+            }
+        }
     }
 }

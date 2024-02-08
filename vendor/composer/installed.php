@@ -1,107 +1,143 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => 'dokuwiki/dokuwiki',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '87f6c7185502767dd23d1039195eed23f0048dd1',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
     ),
-    'reference' => '4ee6ddae660f9ec72c1f6e2ddb72d6b29d6d8900',
-    'name' => 'splitbrain/dokuwiki',
-  ),
-  'versions' => 
-  array (
-    'aziraphale/email-address-validator' => 
-    array (
-      'pretty_version' => '2.0.1',
-      'version' => '2.0.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'fa25bc22c1c0b6491657c91473fae3e40719a650',
+    'versions' => array(
+        'aziraphale/email-address-validator' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => 'fa25bc22c1c0b6491657c91473fae3e40719a650',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../aziraphale/email-address-validator',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'dokuwiki/dokuwiki' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '87f6c7185502767dd23d1039195eed23f0048dd1',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'geshi/geshi' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '7884d22244c6d2de5ac7ffd919ce4add02b36e66',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../geshi/geshi',
+            'aliases' => array(
+                0 => '9999999-dev',
+                1 => '1.0.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
+        'kissifrot/php-ixr' => array(
+            'pretty_version' => '1.8.4',
+            'version' => '1.8.4.0',
+            'reference' => '45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../kissifrot/php-ixr',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'openpsa/universalfeedcreator' => array(
+            'pretty_version' => 'v1.8.6',
+            'version' => '1.8.6.0',
+            'reference' => '3abf36ef9d3a3b31a3c330caea7d5176f0396301',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../openpsa/universalfeedcreator',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'paragonie/constant_time_encoding' => array(
+            'pretty_version' => 'v2.6.3',
+            'version' => '2.6.3.0',
+            'reference' => '58c3f47f650c94ec05a151692652a868995d2938',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'paragonie/random_compat' => array(
+            'pretty_version' => 'v9.99.100',
+            'version' => '9.99.100.0',
+            'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/random_compat',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'phpseclib/phpseclib' => array(
+            'pretty_version' => '3.0.35',
+            'version' => '3.0.35.0',
+            'reference' => '4b1827beabce71953ca479485c0ae9c51287f2fe',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpseclib/phpseclib',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'simplepie/simplepie' => array(
+            'pretty_version' => '1.8.0',
+            'version' => '1.8.0.0',
+            'reference' => '65b095d87bc00898d8fa7737bdbcda93a3fbcc55',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../simplepie/simplepie',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'splitbrain/lesserphp' => array(
+            'pretty_version' => 'v0.10.0',
+            'version' => '0.10.0.0',
+            'reference' => '2e5d20c4ce9186a34554a137a4a1784fc5c29505',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../splitbrain/lesserphp',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'splitbrain/php-archive' => array(
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => 'd274e5190ba309777926348900cf9578d9e533c9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../splitbrain/php-archive',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'splitbrain/php-cli' => array(
+            'pretty_version' => '1.3.1',
+            'version' => '1.3.1.0',
+            'reference' => '844609ef16b8486691b7fd892d54478918f27fe8',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../splitbrain/php-cli',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'splitbrain/php-jsstrip' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => '21254b19b381a25d6f3dd89dbd5c8191373a4d69',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../splitbrain/php-jsstrip',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'splitbrain/slika' => array(
+            'pretty_version' => '1.0.6',
+            'version' => '1.0.6.0',
+            'reference' => '274511fc654fa29cb7cfc039bed97a5ea786f1a0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../splitbrain/slika',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
     ),
-    'geshi/geshi' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '1.0.x-dev',
-        1 => '9999999-dev',
-      ),
-      'reference' => '3c12a7931d509c5e3557c5ed44c9a32e9c917c7d',
-    ),
-    'marcusschwarz/lesserphp' => 
-    array (
-      'pretty_version' => 'v0.5.5',
-      'version' => '0.5.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '77ba82b5218ff228267d3b0e5ec8697be75e86a7',
-    ),
-    'openpsa/universalfeedcreator' => 
-    array (
-      'pretty_version' => 'v1.8.4',
-      'version' => '1.8.4.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '099817dc9efef33ca2382b04daf9e191b77fed13',
-    ),
-    'phpseclib/phpseclib' => 
-    array (
-      'pretty_version' => '2.0.31',
-      'version' => '2.0.31.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '233a920cb38636a43b18d428f9a8db1f0a1a08f4',
-    ),
-    'simplepie/simplepie' => 
-    array (
-      'pretty_version' => '1.5.6',
-      'version' => '1.5.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '1c68e14ca3ac84346b6e6fe3c5eedf725d0f92c6',
-    ),
-    'splitbrain/dokuwiki' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '4ee6ddae660f9ec72c1f6e2ddb72d6b29d6d8900',
-    ),
-    'splitbrain/php-archive' => 
-    array (
-      'pretty_version' => '1.2.1',
-      'version' => '1.2.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '211a2198b73b233d7d2b6159462e11cd9a91348a',
-    ),
-    'splitbrain/php-cli' => 
-    array (
-      'pretty_version' => '1.1.8',
-      'version' => '1.1.8.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '8c2c001b1b55d194402cf18aad2757049ac6d575',
-    ),
-    'splitbrain/slika' => 
-    array (
-      'pretty_version' => '1.0.4',
-      'version' => '1.0.4.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'fda87e816eb150f3608282da962788b4ad509c11',
-    ),
-  ),
 );
