@@ -129,4 +129,12 @@ class html_hilight_test extends DokuWikiTest {
             html_hilight($html,'*куВи*')
         );
     }
+
+    function testHighlightHTMLEntity() {
+        $html = 'foo } bar';
+        $this->assertRegExp(
+            '/foo } bar/',
+            html_hilight($html,'*12*')
+        );
+    }
 }
