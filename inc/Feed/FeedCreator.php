@@ -50,9 +50,18 @@ class FeedCreator
                 $items = $this->fetchItemsFromPlugin();
         }
 
-        foreach ($items as $item) {
-            $this->createAndAddItem($item);
+        $eventData = [
+            'rss' => $this->feed,
+            'data' => &$items,
+            'opt' =>  &$this->options->options,
+        ];
+        $event = new Event('FEED_DATA_PROCESS', $eventData);
+        if ($event->advise_before(false)) {
+            foreach ($items as $item) {
+                $this->createAndAddItem($item);
+            }
         }
+        $event->advise_after();
 
         return $this->feed->createFeed($this->options->get('type'));
     }
