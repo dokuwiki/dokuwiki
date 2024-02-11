@@ -63,7 +63,7 @@ class FeedCreator
         }
         $event->advise_after();
 
-        return $this->feed->createFeed($this->options->get('type'));
+        return $this->feed->createFeed($this->options->getType());
     }
 
     /**
