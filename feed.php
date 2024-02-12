@@ -52,7 +52,7 @@ $depends['purge'] = $INPUT->bool('purge');
 // time or the update interval has not passed, also handles conditional requests
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
-header('Content-Type: ' . $options->get('mime_type'));
+header('Content-Type: ' . $options->getMimeType());
 header('X-Robots-Tag: noindex');
 if ($cache->useCache($depends)) {
     http_conditionalRequest($cache->getTime());
