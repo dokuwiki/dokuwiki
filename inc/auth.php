@@ -10,6 +10,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ErrorHandler;
 use dokuwiki\JWT;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
@@ -19,6 +20,7 @@ use dokuwiki\PassHash;
 use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
 use phpseclib3\Crypt\AES;
 use phpseclib3\Crypt\Common\SymmetricKey;
+use phpseclib3\Exception\BadDecryptionException;
 
 /**
  * Initialize the auth system.
@@ -455,7 +457,7 @@ function auth_encrypt($data, $secret)
  *
  * @param string $ciphertext The encrypted data
  * @param string $secret     The secret/password that shall be used
- * @return string The decrypted data
+ * @return string|null The decrypted data
  */
 function auth_decrypt($ciphertext, $secret)
 {
@@ -464,7 +466,12 @@ function auth_decrypt($ciphertext, $secret)
     $cipher->setPassword($secret, 'pbkdf2', 'sha1', 'phpseclib');
     $cipher->setIV($iv);
 
-    return $cipher->decrypt(substr($ciphertext, 16));
+    try {
+        return $cipher->decrypt(substr($ciphertext, 16));
+    } catch (BadDecryptionException $e) {
+        ErrorHandler::logException($e);
+        return null;
+    }
 }
 
 /**
