@@ -15,6 +15,10 @@ class FeedCreatorOptions
             'name' => 'RSS0.91',
             'mime' => 'text/xml; charset=utf-8',
         ],
+        'rss1' => [
+            'name' => 'RSS1.0',
+            'mime' => 'text/xml; charset=utf-8',
+        ],
         'rss2' => [
             'name' => 'RSS2.0',
             'mime' => 'text/xml; charset=utf-8',

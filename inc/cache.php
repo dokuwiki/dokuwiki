@@ -1,6 +1,6 @@
 <?php
 // phpcs:ignoreFile
-use dokuwiki\Cache\Cache;
+use dokuwiki\Cache\Cache as NewCache;
 use dokuwiki\Cache\CacheParser;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
@@ -9,11 +9,11 @@ use dokuwiki\Debug\DebugHelper;
 /**
  * @deprecated since 2019-02-02 use \dokuwiki\Cache\Cache instead!
  */
-class cache extends Cache
+class cache extends NewCache
 {
     public function __construct($key, $ext)
     {
-        DebugHelper::dbgDeprecatedFunction(Cache::class);
+        DebugHelper::dbgDeprecatedFunction(NewCache::class);
         parent::__construct($key, $ext);
     }
 }

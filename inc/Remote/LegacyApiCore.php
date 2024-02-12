@@ -203,7 +203,7 @@ class LegacyApiCore extends ApiCore
                 'perms' => $page->permission,
                 'size' => $page->size,
                 'rev' => $page->revision,
-                'lastModified' => $this->toDate($page->revision),
+                'mtime' => $page->revision,
                 'hash' => $page->hash,
 
             ];

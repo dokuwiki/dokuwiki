@@ -47,7 +47,7 @@ trait PluginTrait
             // check if all required fields are present
             $msg = 'Extension %s does not provide a valid %s in %s';
             foreach (array_keys($base) as $line) {
-                if (empty($raw[$line])) Logger::error(sprintf($msg, [$ext, $line, $file]));
+                if (empty($raw[$line])) Logger::error(sprintf($msg, $ext, $line, $file));
             }
 
             return array_merge($base, $raw);
