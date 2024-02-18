@@ -1,6 +1,6 @@
 name: 🐛 Report a bug
 description: Use this to report a bug in DokuWiki
-labels: [ bug ]
+labels: [ "Bug" ]
 body:
   - type: markdown
     attributes:
@@ -72,9 +72,10 @@ body:
       description: >-
         If you think it might be relevant, please provide any additional information about your environment here.
         For example:
-        
-          * Provider-, server- and network-setup like proxies or firewalls, etc.
+
+          * Provider-, server- and network-setup like proxies, firewalls, Single-Sign-On envrionments etc.
           * Any installed plugins or templates that might be relevant to the problem
+          * Your configuration settings related to the problem
           * Any custom changes you made to the DokuWiki core or plugins
   - type: markdown
     attributes:
@@ -100,4 +101,4 @@ body:
       description: >-
         Please copy and paste any relevant logs and/or error messages here. This will automatically formatted into code, so no need for backticks.
       render: text
-      
+
