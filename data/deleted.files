@@ -56,12 +56,9 @@ lib/images/smileys/icon_smile2.gif
 lib/images/smileys/icon_surprised.gif
 lib/images/smileys/icon_twisted.gif
 lib/images/smileys/icon_wink.gif
-vendor/paragonie/random_compat/LICENSE
-vendor/paragonie/random_compat/composer.json
 vendor/paragonie/random_compat/lib/byte_safe_strings.php
 vendor/paragonie/random_compat/lib/cast_to_int.php
 vendor/paragonie/random_compat/lib/error_polyfill.php
-vendor/paragonie/random_compat/lib/random.php
 vendor/paragonie/random_compat/lib/random_bytes_com_dotnet.php
 vendor/paragonie/random_compat/lib/random_bytes_dev_urandom.php
 vendor/paragonie/random_compat/lib/random_bytes_libsodium.php
@@ -218,8 +215,6 @@ lib/plugins/config/settings/config.class.php
 lib/plugins/config/settings/extra.class.php
 lib/plugins/styling/iris.js
 lib/scripts/jquery/jquery-migrate.min.js
-vendor/paragonie/random_compat/psalm-autoload.php
-vendor/paragonie/random_compat/psalm.xml
 
 # removed in 2018-04-22
 data/security.png
