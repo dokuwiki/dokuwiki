@@ -1,0 +1,542 @@
+<?php
+
+namespace dokuwiki\plugin\extension;
+
+use dokuwiki\Extension\PluginController;
+use dokuwiki\Utf8\PhpString;
+use RuntimeException;
+
+class Extension
+{
+    const TYPE_PLUGIN = 'plugin';
+    const TYPE_TEMPLATE = 'template';
+
+    /** @var string "plugin"|"template" */
+    protected string $type = self::TYPE_PLUGIN;
+
+    /** @var string The base name of this extension */
+    protected string $base;
+
+    /** @var string|null The current location of this extension */
+    protected ?string $currentDir;
+
+    /** @var array The local info array of the extension */
+    protected array $localInfo = [];
+
+    /** @var array The remote info array of the extension */
+    protected array $remoteInfo = [];
+
+    /** @var array The manager info array of the extension */
+    protected array $managerInfo = [];
+
+    // region Constructors
+
+    /**
+     * The main constructor is private to force the use of the factory methods
+     */
+    protected function __construct()
+    {
+    }
+
+    /**
+     * Initializes an extension from a directory
+     *
+     * The given directory might be the one where the extension has already been installed to
+     * or it might be the extracted source in some temporary directory.
+     *
+     * @param string $dir Where the extension code is currently located
+     * @param string|null $type TYPE_PLUGIN|TYPE_TEMPLATE, null for auto-detection
+     * @param string $base The base name of the extension, null for auto-detection
+     * @return Extension
+     */
+    public static function createFromDirectory($dir, $type = null, $base = null)
+    {
+        $extension = new self();
+        $extension->initFromDirectory($dir, $type, $base);
+        return $extension;
+    }
+
+    protected function initFromDirectory($dir, $type = null, $base = null)
+    {
+        if (!is_dir($dir)) throw new RuntimeException('Directory not found: ' . $dir);
+        $this->currentDir = realpath($dir);
+
+        if ($type === null || $type === self::TYPE_TEMPLATE) {
+            if (
+                file_exists($dir . '/template.info.php') ||
+                file_exists($dir . '/style.ini') ||
+                file_exists($dir . '/main.php') ||
+                file_exists($dir . '/detail.php') ||
+                file_exists($dir . '/mediamanager.php')
+            ) {
+                $this->type = self::TYPE_TEMPLATE;
+            }
+        } else {
+            $this->type = self::TYPE_PLUGIN;
+        }
+
+        $this->readLocalInfo();
+
+        if ($base !== null) {
+            $this->base = $base;
+        } elseif (isset($this->localInfo['base'])) {
+            $this->base = $this->localInfo['base'];
+        } else {
+            $this->base = basename($dir);
+        }
+    }
+
+    /**
+     * Initializes an extension from remote data
+     *
+     * @param array $data The data as returned by the repository api
+     * @return Extension
+     */
+    public static function createFromRemoteData($data)
+    {
+        $extension = new self();
+        $extension->initFromRemoteData($data);
+        return $extension;
+    }
+
+    protected function initFromRemoteData($data)
+    {
+        if (!isset($data['plugin'])) throw new RuntimeException('Invalid remote data');
+
+        [$type, $base] = sexplode(':', $data['plugin'], 2);
+        if ($base === null) {
+            $base = $type;
+            $type = self::TYPE_PLUGIN;
+        } else {
+            $type = self::TYPE_TEMPLATE;
+        }
+
+        $this->remoteInfo = $data;
+        $this->type = $type;
+        $this->base = $base;
+
+        if ($this->isInstalled()) {
+            $this->currentDir = $this->getInstallDir();
+            $this->readLocalInfo();
+        }
+    }
+
+    // endregion
+
+    // region Getters
+
+    /**
+     * @return string The extension id (same as base but prefixed with "template:" for templates)
+     */
+    public function getId()
+    {
+        if ($this->type === self::TYPE_TEMPLATE) {
+            return self::TYPE_TEMPLATE . ':' . $this->base;
+        }
+        return $this->base;
+    }
+
+    /**
+     * Get the base name of this extension
+     *
+     * @return string
+     */
+    public function getBase()
+    {
+        return $this->base;
+    }
+
+    /**
+     * Get the type of the extension
+     *
+     * @return string "plugin"|"template"
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * The current directory of the extension
+     *
+     * @return string|null
+     */
+    public function getCurrentDir()
+    {
+        // recheck that the current currentDir is still valid
+        if ($this->currentDir && !is_dir($this->currentDir)) {
+            $this->currentDir = null;
+        }
+
+        // if the extension is installed, then the currentDir is the install dir!
+        if (!$this->currentDir && $this->isInstalled()) {
+            $this->currentDir = $this->getInstallDir();
+        }
+
+        return $this->currentDir;
+    }
+
+    /**
+     * Get the directory where this extension should be installed in
+     *
+     * Note: this does not mean that the extension is actually installed there
+     *
+     * @return string
+     */
+    public function getInstallDir()
+    {
+        if ($this->isTemplate()) {
+            $dir = dirname(tpl_incdir()) . $this->base;
+        } else {
+            $dir = DOKU_PLUGIN . $this->base;
+        }
+
+        return realpath($dir);
+    }
+
+
+    /**
+     * Get the display name of the extension
+     *
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->getTag('name', PhpString::ucwords($this->getBase() . ' ' . $this->getType()));
+    }
+
+    /**
+     * Get the author name of the extension
+     *
+     * @return string Returns an empty string if the author info is missing
+     */
+    public function getAuthor()
+    {
+        return $this->getTag('author');
+    }
+
+    /**
+     * Get the email of the author of the extension if there is any
+     *
+     * @return string Returns an empty string if the email info is missing
+     */
+    public function getEmail()
+    {
+        // email is only in the local data
+        return $this->localInfo['email'] ?? '';
+    }
+
+    /**
+     * Get the email id, i.e. the md5sum of the email
+     *
+     * @return string Empty string if no email is available
+     */
+    public function getEmailID()
+    {
+        if (!empty($this->remoteInfo['emailid'])) return $this->remoteInfo['emailid'];
+        if (!empty($this->localInfo['email'])) return md5($this->localInfo['email']);
+        return '';
+    }
+
+    /**
+     * Get the description of the extension
+     *
+     * @return string Empty string if no description is available
+     */
+    public function getDescription()
+    {
+        return $this->getTag(['desc', 'description']);
+    }
+
+    /**
+     * Get the URL of the extension, usually a page on dokuwiki.org
+     *
+     * @return string
+     */
+    public function getURL()
+    {
+        return $this->getTag(
+            'url',
+            'https://www.dokuwiki.org/' .
+            ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase()
+        );
+    }
+
+    /**
+     * Is this extension a template?
+     *
+     * @return bool false if it is a plugin
+     */
+    public function isTemplate()
+    {
+        return $this->type === self::TYPE_TEMPLATE;
+    }
+
+    /**
+     * Is the extension installed locally?
+     *
+     * @return bool
+     */
+    public function isInstalled()
+    {
+        return is_dir($this->getInstallDir());
+    }
+
+    /**
+     * Is the extension under git control?
+     *
+     * @return bool
+     */
+    public function isGitControlled()
+    {
+        if (!$this->isInstalled()) return false;
+        return file_exists($this->getInstallDir() . '/.git');
+    }
+
+    /**
+     * If the extension is bundled
+     *
+     * @return bool If the extension is bundled
+     */
+    public function isBundled()
+    {
+        $this->loadRemoteInfo();
+        return $this->remoteInfo['bundled'] ?? in_array(
+            $this->getId(),
+            [
+                'authad',
+                'authldap',
+                'authpdo',
+                'authplain',
+                'acl',
+                'config',
+                'extension',
+                'info',
+                'popularity',
+                'revert',
+                'safefnrecode',
+                'styling',
+                'testing',
+                'usermanager',
+                'logviewer',
+                'template:dokuwiki'
+            ]
+        );
+    }
+
+    /**
+     * Is the extension protected against any modification (disable/uninstall)
+     *
+     * @return bool if the extension is protected
+     */
+    public function isProtected()
+    {
+        // never allow deinstalling the current auth plugin:
+        global $conf;
+        if ($this->getId() == $conf['authtype']) return true;
+
+        // FIXME disallow current template to be uninstalled
+
+        /** @var PluginController $plugin_controller */
+        global $plugin_controller;
+        $cascade = $plugin_controller->getCascade();
+        return ($cascade['protected'][$this->getId()] ?? false);
+    }
+
+    /**
+     * Is the extension installed in the correct directory?
+     *
+     * @return bool
+     */
+    public function isInWrongFolder()
+    {
+        return $this->getInstallDir() != $this->currentDir;
+    }
+
+    /**
+     * Is the extension enabled?
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        global $conf;
+        if ($this->isTemplate()) {
+            return ($conf['template'] == $this->getBase());
+        }
+
+        /* @var PluginController $plugin_controller */
+        global $plugin_controller;
+        return $plugin_controller->isEnabled($this->base);
+    }
+
+    // endregion
+
+    // region Actions
+
+    /**
+     * Install or update the extension
+     *
+     * @throws Exception
+     */
+    public function installOrUpdate()
+    {
+        $installer = new Installer(true);
+        $installer->installFromUrl(
+            $this->getURL(),
+            $this->getBase(),
+        );
+    }
+
+    /**
+     * Uninstall the extension
+     * @throws Exception
+     */
+    public function uninstall()
+    {
+        $installer = new Installer(true);
+        $installer->uninstall($this);
+    }
+
+    /**
+     * Enable the extension
+     * @todo I'm unsure if this code should be here or part of Installer
+     * @throws Exception
+     */
+    public function enable()
+    {
+        if ($this->isTemplate()) throw new Exception('notimplemented');
+        if (!$this->isInstalled()) throw new Exception('notinstalled');
+        if ($this->isEnabled()) throw new Exception('alreadyenabled');
+
+        /* @var PluginController $plugin_controller */
+        global $plugin_controller;
+        if (!$plugin_controller->enable($this->base)) {
+            throw new Exception('pluginlistsaveerror');
+        }
+        Installer::purgeCache();
+    }
+
+    /**
+     * Disable the extension
+     * @todo I'm unsure if this code should be here or part of Installer
+     * @throws Exception
+     */
+    public function disable()
+    {
+        if ($this->isTemplate()) throw new Exception('notimplemented');
+        if (!$this->isInstalled()) throw new Exception('notinstalled');
+        if (!$this->isEnabled()) throw new Exception('alreadydisabled');
+        if ($this->isProtected()) throw new Exception('error_disable_protected');
+
+        /* @var PluginController $plugin_controller */
+        global $plugin_controller;
+        if (!$plugin_controller->disable($this->base)) {
+            throw new Exception('pluginlistsaveerror');
+        }
+        Installer::purgeCache();
+    }
+
+    // endregion
+
+    // region Meta Data Management
+
+    /**
+     * This updates the timestamp and URL in the manager.dat file
+     *
+     * It is called by Installer when installing or updating an extension
+     *
+     * @param $url
+     */
+    public function updateManagerInfo($url)
+    {
+        $this->managerInfo['downloadurl'] = $url;
+        if (isset($this->managerInfo['installed'])) {
+            // it's an update
+            $this->managerInfo['updated'] = date('r');
+        } else {
+            // it's a new install
+            $this->managerInfo['installed'] = date('r');
+        }
+
+        $managerpath = $this->getInstallDir() . '/manager.dat';
+        $data = '';
+        foreach ($this->managerInfo as $k => $v) {
+            $data .= $k . '=' . $v . DOKU_LF;
+        }
+        io_saveFile($managerpath, $data);
+    }
+
+    /**
+     * Reads the manager.dat file and fills the managerInfo array
+     */
+    protected function readManagerInfo()
+    {
+        if ($this->managerInfo) return;
+
+        $managerpath = $this->getInstallDir() . '/manager.dat';
+        if (!is_readable($managerpath)) return;
+
+        $file = (array)@file($managerpath);
+        foreach ($file as $line) {
+            [$key, $value] = sexplode('=', $line, 2, '');
+            $key = trim($key);
+            $value = trim($value);
+            // backwards compatible with old plugin manager
+            if ($key == 'url') $key = 'downloadurl';
+            $this->managerInfo[$key] = $value;
+        }
+    }
+
+    /**
+     * Reads the info file of the extension if available and fills the localInfo array
+     */
+    protected function readLocalInfo()
+    {
+        if (!$this->currentDir) return;
+        $file = $this->currentDir . '/' . $this->type . '.info.txt';
+        if (!is_readable($file)) return;
+        $this->localInfo = confToHash($file, true);
+        $this->localInfo = array_filter($this->localInfo); // remove all falsy keys
+    }
+
+    /**
+     * Fetches the remote info from the repository
+     *
+     * This ignores any errors coming from the repository and just sets the remoteInfo to an empty array in that case
+     */
+    protected function loadRemoteInfo()
+    {
+        if ($this->remoteInfo) return;
+        $remote = Repository::getInstance();
+        try {
+            $this->remoteInfo = (array)$remote->getExtensionData($this->getId());
+        } catch (Exception $e) {
+            $this->remoteInfo = [];
+        }
+    }
+
+    /**
+     * Read information from either local or remote info
+     *
+     * Always prefers local info over remote info
+     *
+     * @param string|string[] $tag one or multiple keys to check
+     * @param mixed $default
+     * @return mixed
+     */
+    protected function getTag($tag, $default = '')
+    {
+        foreach ((array)$tag as $t) {
+            if (isset($this->localInfo[$t])) return $this->localInfo[$t];
+        }
+        $this->loadRemoteInfo();
+        foreach ((array)$tag as $t) {
+            if (isset($this->remoteInfo[$t])) return $this->remoteInfo[$t];
+        }
+
+        return $default;
+    }
+
+    // endregion
+}

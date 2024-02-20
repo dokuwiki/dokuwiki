@@ -75,7 +75,7 @@ $lang['msg_template_install_success'] = 'Template %s installed successfully';
 $lang['msg_template_update_success']  = 'Template %s updated successfully';
 $lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';
 $lang['msg_plugin_update_success']    = 'Plugin %s updated successfully';
-$lang['msg_upload_failed']            = 'Uploading the file failed';
+$lang['msg_upload_failed']            = 'Uploading the file failed: %s';
 $lang['msg_nooverwrite']              = 'Extension %s already exists so it is not being overwritten; to overwrite, tick the overwrite option';
 
 $lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
@@ -88,10 +88,17 @@ $lang['url_change']                   = '<strong>URL changed:</strong> Download 
 
 $lang['error_badurl']                 = 'URLs should start with http or https';
 $lang['error_dircreate']              = 'Unable to create temporary folder to receive download';
-$lang['error_download']               = 'Unable to download the file: %s';
+$lang['error_download']               = 'Unable to download the file: %s %s %s';
 $lang['error_decompress']             = 'Unable to decompress the downloaded file. This maybe as a result of a bad download, in which case you should try again; or the compression format may be unknown, in which case you will need to download and install manually.';
 $lang['error_findfolder']             = 'Unable to identify extension directory, you need to download and install manually';
-$lang['error_copy']                   = 'There was a file copy error while attempting to install files for directory <em>%s</em>: the disk could be full or file access permissions may be incorrect. This may have resulted in a partially installed plugin and leave your wiki installation unstable';
+$lang['error_copy']                   = 'There was a file copy error while attempting to install files for directory \'%s\': the disk could be full or file access permissions may be incorrect. This may have resulted in a partially installed plugin and leave your wiki installation unstable';
+$lang['error_copy_read']              = 'Could not read directory %s';
+$lang['error_copy_mkdir']             = 'Could not create directory %s';
+$lang['error_copy_copy']              = 'Could not copy %s to %s';
+$lang['error_archive_read']           = 'Could not open archive %s for reading';
+$lang['error_archive_extract']        = 'Could not extract archive %s: %s';
+$lang['error_uninstall_protected']    = 'Extension %s is protected and cannot be uninstalled';
+$lang['error_disable_protected']     = 'Extension %s is protected and cannot be disabled';
 
 $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';
