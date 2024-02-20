@@ -39,6 +39,27 @@ class Extension
     }
 
     /**
+     * Initializes an extension from an id
+     *
+     * @param string $id The id of the extension
+     * @return Extension
+     */
+    public static function createFromId($id)
+    {
+        $extension = new self();
+        $extension->initFromId($id);
+        return $extension;
+    }
+
+    protected function initFromId($id)
+    {
+        [$type, $base] = $this->idToTypeBase($id);
+        $this->type = $type;
+        $this->base = $base;
+        $this->readLocalInfo();
+    }
+
+    /**
      * Initializes an extension from a directory
      *
      * The given directory might be the one where the extension has already been installed to
@@ -103,14 +124,7 @@ class Extension
     {
         if (!isset($data['plugin'])) throw new RuntimeException('Invalid remote data');
 
-        [$type, $base] = sexplode(':', $data['plugin'], 2);
-        if ($base === null) {
-            $base = $type;
-            $type = self::TYPE_PLUGIN;
-        } else {
-            $type = self::TYPE_TEMPLATE;
-        }
-
+        [$type, $base] = $this->idToTypeBase($data['plugin']);
         $this->remoteInfo = $data;
         $this->type = $type;
         $this->base = $base;
@@ -493,7 +507,7 @@ class Extension
      */
     protected function readLocalInfo()
     {
-        if (!$this->currentDir) return;
+        if (!$this->getCurrentDir()) return;
         $file = $this->currentDir . '/' . $this->type . '.info.txt';
         if (!is_readable($file)) return;
         $this->localInfo = confToHash($file, true);
@@ -538,5 +552,29 @@ class Extension
         return $default;
     }
 
+    // endregion
+
+    // region utilities
+
+    /**
+     * Convert an extension id to a type and base
+     *
+     * @param string $id
+     * @return array [type, base]
+     */
+    protected function idToTypeBase($id)
+    {
+        [$type, $base] = sexplode(':', $id, 2);
+        if ($base === null) {
+            $base = $type;
+            $type = self::TYPE_PLUGIN;
+        } elseif ($type === self::TYPE_TEMPLATE) {
+            $type = self::TYPE_TEMPLATE;
+        } else {
+            throw new RuntimeException('Invalid extension id: ' . $id);
+        }
+
+        return [$type, $base];
+    }
     // endregion
 }
