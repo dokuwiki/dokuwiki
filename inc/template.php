@@ -441,6 +441,30 @@ function _tpl_metaheaders_action($data)
 }
 
 /**
+ * Output the given script as inline script tag
+ *
+ * This function will add the nonce attribute if a nonce is available.
+ *
+ * The script is NOT automatically escaped!
+ *
+ * @param string $script
+ * @param bool $return Return or print directly?
+ * @return string|void
+ */
+function tpl_inlineScript($script, $return = false)
+{
+    $nonce = getenv('NONCE');
+    if ($nonce) {
+        $script = '<script nonce="' . $nonce . '">' . $script . '</script>';
+    } else {
+        $script = '<script>' . $script . '</script>';
+    }
+
+    if ($return) return $script;
+    echo $script;
+}
+
+/**
  * Print a link
  *
  * Just builds a link.
