@@ -411,16 +411,22 @@ function tpl_metaheaders($alt = true)
  * For tags having a body attribute specify the body data in the special
  * attribute '_data'. This field will NOT BE ESCAPED automatically.
  *
+ * Inline scripts will use any nonce provided in the environment variable 'NONCE'.
+ *
  * @param array $data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function _tpl_metaheaders_action($data)
 {
+    $nonce = getenv('NONCE');
     foreach ($data as $tag => $inst) {
         foreach ($inst as $attr) {
             if (empty($attr)) {
                 continue;
+            }
+            if ($nonce && $tag == 'script' && !empty($attr['_data'])) {
+                $attr['nonce'] = $nonce; // add nonce to inline script tags
             }
             echo '<', $tag, ' ', buildAttributes($attr);
             if (isset($attr['_data']) || $tag == 'script') {
