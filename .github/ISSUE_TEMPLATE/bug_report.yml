@@ -73,7 +73,7 @@ body:
         If you think it might be relevant, please provide any additional information about your environment here.
         For example:
 
-          * Provider-, server- and network-setup like proxies, firewalls, Single-Sign-On envrionments etc.
+          * Provider-, server- and network-setup like proxies, firewalls, Single-Sign-On environments etc.
           * Any installed plugins or templates that might be relevant to the problem
           * Your configuration settings related to the problem
           * Any custom changes you made to the DokuWiki core or plugins
