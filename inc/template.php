@@ -379,6 +379,7 @@ function tpl_metaheaders($alt = true)
     }
     jsinfo();
     $script .= 'var JSINFO = ' . json_encode($JSINFO, JSON_THROW_ON_ERROR) . ';';
+    $script .= '(function(H){H.className=H.className.replace(/\bno-js\b/,\'js\')})(document.documentElement);';
     $head['script'][] = ['_data' => $script];
 
     // load jquery
