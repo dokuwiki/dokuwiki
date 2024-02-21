@@ -44,7 +44,7 @@ class JsonRpcServer
             header('Allow: POST');
             throw new RemoteException("JSON-RPC server only accepts POST requests.", -32606);
         }
-        if ($INPUT->server->str('CONTENT_TYPE') !== 'application/json') {
+        if (!$this->checkContentType($INPUT->server->str('CONTENT_TYPE'))) {
             http_status(415);
             throw new RemoteException("JSON-RPC server only accepts application/json requests.", -32606);
         }
@@ -184,5 +184,24 @@ class JsonRpcServer
             http_status(400);
             throw $e;
         }
+    }
+
+    /**
+     * Checks the correct content type
+     * 
+     * @param string $contentType
+     * @return bool
+     */
+    protected function checkContentType($contentType){
+        $contentTypeArray = explode(';',$contentType);
+        $typeSize = count($contentTypeArray);
+        
+        for($i =0;$i < $typeSize; $i++){
+            $typeToCheck = strtolower($contentTypeArray[$i]);
+            if($typeToCheck == 'application/json')
+                return true;
+        }
+
+        return false;
     }
 }

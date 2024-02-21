@@ -35,11 +35,7 @@ class XmlRpcServer extends Server
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
         }
         if (
-            !isset($_SERVER['CONTENT_TYPE']) ||
-            (
-                str_contains(strtolower($_SERVER['CONTENT_TYPE']), 'text/xml') &&
-                str_contains(strtolower($_SERVER['CONTENT_TYPE']), 'application/xml')
-            )
+            !isset($_SERVER['CONTENT_TYPE']) || !$this->checkContentType($_SERVER['CONTENT_TYPE'])
         ) {
             throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
         }
@@ -66,5 +62,24 @@ class XmlRpcServer extends Server
         } catch (RemoteException $e) {
             return new Error($e->getCode(), $e->getMessage());
         }
+    }
+
+    /**
+     * Checks the correct content type
+     * 
+     * @param string $contentType
+     * @return bool
+     */
+    protected function checkContentType($contentType){
+        $contentTypeArray = explode(';',$contentType);
+        $typeSize = count($contentTypeArray);
+        
+        for($i =0;$i < $typeSize; $i++){
+            $typeToCheck = strtolower($contentTypeArray[$i]);
+            if($typeToCheck == 'text/xml' || $typeToCheck == 'application/xml')
+                return true;
+        }
+
+        return false;
     }
 }
