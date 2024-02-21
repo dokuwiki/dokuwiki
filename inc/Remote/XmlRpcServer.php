@@ -37,8 +37,8 @@ class XmlRpcServer extends Server
         if (
             !isset($_SERVER['CONTENT_TYPE']) ||
             (
-                strtolower($_SERVER['CONTENT_TYPE']) !== 'text/xml' &&
-                strtolower($_SERVER['CONTENT_TYPE']) !== 'application/xml'
+                str_contains(strtolower($_SERVER['CONTENT_TYPE']), 'text/xml') &&
+                str_contains(strtolower($_SERVER['CONTENT_TYPE']), 'application/xml')
             )
         ) {
             throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
