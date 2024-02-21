@@ -424,11 +424,6 @@ function _tpl_metaheaders_action($data)
             }
             echo '<', $tag, ' ', buildAttributes($attr);
             if (isset($attr['_data']) || $tag == 'script') {
-                if ($tag == 'script' && isset($attr['_data']))
-                    $attr['_data'] = "/*<![CDATA[*/" .
-                        $attr['_data'] .
-                        "\n/*!]]>*/";
-
                 echo '>', $attr['_data'] ?? '', '</', $tag, '>';
             } else {
                 echo '/>';
