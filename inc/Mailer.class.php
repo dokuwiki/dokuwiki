@@ -285,7 +285,7 @@ class Mailer
     }
 
     /**
-     * Set the subject prefix. This overrides the site's mailprefix config. 
+     * Set the subject prefix. This overrides the site's mailprefix config.
      *
      * @param string $param
      */
@@ -589,7 +589,7 @@ class Mailer
                 // add prefix to subject
                 if (!empty($this->subjectPrefix)) {
                     $prefix = '[' . $this->subjectPrefix . ']';
-                } else if (empty($conf['mailprefix'])) {
+                } elseif (empty($conf['mailprefix'])) {
                     if (PhpString::strlen($conf['title']) < 20) {
                         $prefix = '[' . $conf['title'] . ']';
                     } else {
