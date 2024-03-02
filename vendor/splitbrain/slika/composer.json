@@ -1,0 +1,27 @@
+{
+  "name": "splitbrain/slika",
+  "description": "Simple image resizing",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Gohr",
+      "email": "andi@splitbrain.org"
+    }
+  ],
+  "suggest": {
+    "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
+  },
+  "autoload": {
+    "psr-4": {
+      "splitbrain\\slika\\tests\\": "tests",
+      "splitbrain\\slika\\": "src"
+    }
+  },
+  "require": {
+      "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  }
+}

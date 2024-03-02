@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🤔 Have questions or need support?
+    url: https://forum.dokuwiki.org
+    about: Please get in touch at the DokuWiki User Forum!

@@ -10,6 +10,6 @@ namespace dokuwiki\Action\Exception;
  *
  * @package dokuwiki\Action\Exception
  */
-class NoActionException extends \Exception {
-
+class NoActionException extends \Exception
+{
 }

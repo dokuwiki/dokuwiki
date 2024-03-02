@@ -12,10 +12,10 @@ use dokuwiki\Menu\Item\AbstractItem;
  * It contains convenience functions to display the menu in HTML, but template authors can also
  * just accesst the items via getItems() and create the HTML as however they see fit.
  */
-abstract class AbstractMenu implements MenuInterface {
-
+abstract class AbstractMenu implements MenuInterface
+{
     /** @var string[] list of Item classes to load */
-    protected $types = array();
+    protected $types = [];
 
     /** @var int the context this menu is used in */
     protected $context = AbstractItem::CTX_DESKTOP;
@@ -28,7 +28,8 @@ abstract class AbstractMenu implements MenuInterface {
      *
      * @param int $context the context this menu is used in
      */
-    public function __construct($context = AbstractItem::CTX_DESKTOP) {
+    public function __construct($context = AbstractItem::CTX_DESKTOP)
+    {
         $this->context = $context;
     }
 
@@ -38,30 +39,29 @@ abstract class AbstractMenu implements MenuInterface {
      * @return AbstractItem[]
      * @triggers MENU_ITEMS_ASSEMBLY
      */
-    public function getItems() {
-        $data = array(
-            'view' => $this->view,
-            'items' => array(),
-        );
-        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, array($this, 'loadItems'));
+    public function getItems()
+    {
+        $data = ['view' => $this->view, 'items' => []];
+        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, [$this, 'loadItems']);
         return $data['items'];
     }
 
     /**
      * Default action for the MENU_ITEMS_ASSEMBLY event
      *
-     * @see getItems()
      * @param array $data The plugin data
+     * @see getItems()
      */
-    public function loadItems(&$data) {
-        foreach($this->types as $class) {
+    public function loadItems(&$data)
+    {
+        foreach ($this->types as $class) {
             try {
                 $class = "\\dokuwiki\\Menu\\Item\\$class";
                 /** @var AbstractItem $item */
                 $item = new $class();
-                if(!$item->visibleInContext($this->context)) continue;
+                if (!$item->visibleInContext($this->context)) continue;
                 $data['items'][] = $item;
-            } catch(\RuntimeException $ignored) {
+            } catch (\RuntimeException $ignored) {
                 // item not available
             }
         }
@@ -77,10 +77,11 @@ abstract class AbstractMenu implements MenuInterface {
      * @param bool $svg add the SVG link
      * @return string
      */
-    public function getListItems($classprefix = '', $svg = true) {
+    public function getListItems($classprefix = '', $svg = true)
+    {
         $html = '';
-        foreach($this->getItems() as $item) {
-            if($classprefix !== false) {
+        foreach ($this->getItems() as $item) {
+            if ($classprefix !== false) {
                 $class = ' class="' . $classprefix . $item->getType() . '"';
             } else {
                 $class = '';
@@ -92,5 +93,4 @@ abstract class AbstractMenu implements MenuInterface {
         }
         return $html;
     }
-
 }

@@ -1,16 +1,19 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
+
 /**
  * DokuWiki Plugin safefnrecode (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-
-class action_plugin_safefnrecode extends DokuWiki_Action_Plugin
+class action_plugin_safefnrecode extends ActionPlugin
 {
-
     /** @inheritdoc */
-    public function register(Doku_Event_Handler $controller)
+    public function register(EventHandler $controller)
     {
         $controller->register_hook('INDEXER_TASKS_RUN', 'BEFORE', $this, 'handleIndexerTasksRun');
     }
@@ -18,32 +21,32 @@ class action_plugin_safefnrecode extends DokuWiki_Action_Plugin
     /**
      * Handle indexer event
      *
-     * @param Doku_Event $event
+     * @param Event $event
      * @param $param
      */
-    public function handleIndexerTasksRun(Doku_Event $event, $param)
+    public function handleIndexerTasksRun(Event $event, $param)
     {
         global $conf;
         if ($conf['fnencode'] != 'safe') return;
 
-        if (!file_exists($conf['datadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['datadir'] . '_safefn.recoded')) {
             $this->recode($conf['datadir']);
-            touch($conf['datadir'].'_safefn.recoded');
+            touch($conf['datadir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['olddir'].'_safefn.recoded')) {
+        if (!file_exists($conf['olddir'] . '_safefn.recoded')) {
             $this->recode($conf['olddir']);
-            touch($conf['olddir'].'_safefn.recoded');
+            touch($conf['olddir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['metadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['metadir'] . '_safefn.recoded')) {
             $this->recode($conf['metadir']);
-            touch($conf['metadir'].'_safefn.recoded');
+            touch($conf['metadir'] . '_safefn.recoded');
         }
 
-        if (!file_exists($conf['mediadir'].'_safefn.recoded')) {
+        if (!file_exists($conf['mediadir'] . '_safefn.recoded')) {
             $this->recode($conf['mediadir']);
-            touch($conf['mediadir'].'_safefn.recoded');
+            touch($conf['mediadir'] . '_safefn.recoded');
         }
     }
 

@@ -3,6 +3,7 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionException;
+use dokuwiki\Extension\AdminPlugin;
 
 /**
  * Class Admin
@@ -11,26 +12,24 @@ use dokuwiki\Action\Exception\ActionException;
  *
  * @package dokuwiki\Action
  */
-class Admin extends AbstractUserAction {
-
+class Admin extends AbstractUserAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ; // let in check later
     }
 
-    public function checkPreconditions() {
-        parent::checkPreconditions();
-    }
-
-    public function preProcess() {
+    /** @inheritDoc */
+    public function preProcess()
+    {
         global $INPUT;
-        global $INFO;
 
         // retrieve admin plugin name from $_REQUEST['page']
-        if(($page = $INPUT->str('page', '', true)) != '') {
-            /** @var $plugin \dokuwiki\Extension\AdminPlugin */
-            if($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
-                if(!$plugin->isAccessibleByCurrentUser()) {
+        if ($INPUT->str('page', '', true) != '') {
+            /** @var AdminPlugin $plugin */
+            if ($plugin = plugin_getRequestAdminPlugin()) { // FIXME this method does also permission checking
+                if (!$plugin->isAccessibleByCurrentUser()) {
                     throw new ActionException('denied');
                 }
                 $plugin->handle();
@@ -38,8 +37,9 @@ class Admin extends AbstractUserAction {
         }
     }
 
-    public function tplContent() {
+    /** @inheritDoc */
+    public function tplContent()
+    {
         tpl_admin();
     }
-
 }

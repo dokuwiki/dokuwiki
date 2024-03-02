@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Utf8\Unicode;
+
 /**
  * Class to safely store UTF-8 in a Filename
  *
@@ -13,8 +15,8 @@
  * @author   Christopher Smith <chris@jalakai.co.uk>
  * @date     2010-04-02
  */
-class SafeFN {
-
+class SafeFN
+{
     // 'safe' characters are a superset of $plain, $pre_indicator and $post_indicator
     private static $plain = '-./[_0123456789abcdefghijklmnopqrstuvwxyz'; // these characters aren't converted
     private static $pre_indicator = '%';
@@ -44,8 +46,9 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public static function encode($filename) {
-        return self::unicodeToSafe(\dokuwiki\Utf8\Unicode::fromUtf8($filename));
+    public static function encode($filename)
+    {
+        return self::unicodeToSafe(Unicode::fromUtf8($filename));
     }
 
     /**
@@ -73,16 +76,19 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    public static function decode($filename) {
-        return \dokuwiki\Utf8\Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
+    public static function decode($filename)
+    {
+        return Unicode::toUtf8(self::safeToUnicode(strtolower($filename)));
     }
 
-    public static function validatePrintableUtf8($printable_utf8) {
-        return !preg_match('#[\x01-\x1f]#',$printable_utf8);
+    public static function validatePrintableUtf8($printable_utf8)
+    {
+        return !preg_match('#[\x01-\x1f]#', $printable_utf8);
     }
 
-    public static function validateSafe($safe) {
-        return !preg_match('#[^'.self::$plain.self::$post_indicator.self::$pre_indicator.']#',$safe);
+    public static function validateSafe($safe)
+    {
+        return !preg_match('#[^' . self::$plain . self::$post_indicator . self::$pre_indicator . ']#', $safe);
     }
 
     /**
@@ -93,28 +99,28 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function unicodeToSafe($unicode) {
+    private static function unicodeToSafe($unicode)
+    {
 
         $safe = '';
         $converted = false;
 
         foreach ($unicode as $codepoint) {
-            if ($codepoint < 127 && (strpos(self::$plain.self::$post_indicator,chr($codepoint))!==false)) {
+            if ($codepoint < 127 && (strpos(self::$plain . self::$post_indicator, chr($codepoint)) !== false)) {
                 if ($converted) {
                     $safe .= self::$post_indicator;
                     $converted = false;
                 }
                 $safe .= chr($codepoint);
-
-            } else if ($codepoint == ord(self::$pre_indicator)) {
+            } elseif ($codepoint == ord(self::$pre_indicator)) {
                 $safe .= self::$pre_indicator;
                 $converted = true;
             } else {
-                $safe .= self::$pre_indicator.base_convert((string)($codepoint-32),10,36);
+                $safe .= self::$pre_indicator . base_convert((string)($codepoint - 32), 10, 36);
                 $converted = true;
             }
         }
-        if($converted) $safe .= self::$post_indicator;
+        if ($converted) $safe .= self::$post_indicator;
         return $safe;
     }
 
@@ -126,10 +132,16 @@ class SafeFN {
      *
      * @author   Christopher Smith <chris@jalakai.co.uk>
      */
-    private static function safeToUnicode($safe) {
+    private static function safeToUnicode($safe)
+    {
 
-        $unicode = array();
-        $split = preg_split('#(?=['.self::$post_indicator.self::$pre_indicator.'])#',$safe,-1,PREG_SPLIT_NO_EMPTY);
+        $unicode = [];
+        $split = preg_split(
+            '#(?=[' . self::$post_indicator . self::$pre_indicator . '])#',
+            $safe,
+            -1,
+            PREG_SPLIT_NO_EMPTY
+        );
 
         $converted = false;
         foreach ($split as $sub) {
@@ -137,22 +149,21 @@ class SafeFN {
             if ($sub[0] != self::$pre_indicator) {
                 // plain (unconverted) characters, optionally starting with a post_indicator
                 // set initial value to skip any post_indicator
-                for ($i=($converted?1:0); $i < $len; $i++) {
+                for ($i = ($converted ? 1 : 0); $i < $len; $i++) {
                     $unicode[] = ord($sub[$i]);
                 }
                 $converted = false;
-            } else if ($len==1) {
+            } elseif ($len == 1) {
                 // a pre_indicator character in the real data
                 $unicode[] = ord($sub);
                 $converted = true;
             } else {
                 // a single codepoint in base36, adjusted for initial 32 non-printable chars
-                $unicode[] = 32 + (int)base_convert(substr($sub,1),36,10);
+                $unicode[] = 32 + (int)base_convert(substr($sub, 1), 36, 10);
                 $converted = true;
             }
         }
 
         return $unicode;
     }
-
 }

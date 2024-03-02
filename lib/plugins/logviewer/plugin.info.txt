@@ -1,0 +1,7 @@
+base   logviewer
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2023-12-22
+name   logviewer plugin
+desc   View DokuWiki logs
+url    https://www.dokuwiki.org/plugin:logviewer

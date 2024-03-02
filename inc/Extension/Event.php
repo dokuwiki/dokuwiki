@@ -1,7 +1,10 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
+
+use dokuwiki\Logger;
 
 /**
  * The Action plugin event
@@ -11,13 +14,13 @@ class Event
     /** @var string READONLY  event name, objects must register against this name to see the event */
     public $name = '';
     /** @var mixed|null READWRITE data relevant to the event, no standardised format, refer to event docs */
-    public $data = null;
+    public $data;
     /**
      * @var mixed|null READWRITE the results of the event action, only relevant in "_AFTER" advise
      *                 event handlers may modify this if they are preventing the default action
      *                 to provide the after event handlers with event results
      */
-    public $result = null;
+    public $result;
     /** @var bool READONLY  if true, event handlers can prevent the events default action */
     public $canPreventDefault = true;
 
@@ -71,7 +74,8 @@ class Event
         if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'BEFORE');
         } else {
-            dbglog($this->name . ':BEFORE event triggered before event system was initialized');
+            Logger::getInstance(Logger::LOG_DEBUG)
+                  ->log($this->name . ':BEFORE event triggered before event system was initialized');
         }
 
         return (!$enablePreventDefault || $this->runDefault);
@@ -92,7 +96,8 @@ class Event
         if ($EVENT_HANDLER !== null) {
             $EVENT_HANDLER->process_event($this, 'AFTER');
         } else {
-            dbglog($this->name . ':AFTER event triggered before event system was initialized');
+            Logger::getInstance(Logger::LOG_DEBUG)->
+                log($this->name . ':AFTER event triggered before event system was initialized');
         }
     }
 
@@ -189,7 +194,7 @@ class Event
      *                                      by default this is the return value of the default action however
      *                                      it can be set or modified by event handler hooks
      */
-    static public function createAndTrigger($name, &$data, $action = null, $canPreventDefault = true)
+    public static function createAndTrigger($name, &$data, $action = null, $canPreventDefault = true)
     {
         $evt = new Event($name, $data);
         return $evt->trigger($action, $canPreventDefault);

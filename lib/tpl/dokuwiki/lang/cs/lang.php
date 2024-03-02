@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  */
+$lang['home']                  = 'Domů';
 $lang['__background_site__']   = 'Barva hlavního pozadí (pod kontextovým boxem)';
 $lang['__link__']              = 'Hlavní barva odkazů';
 $lang['__existing__']          = 'Barva odkazů na existující stránky';

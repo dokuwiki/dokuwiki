@@ -140,7 +140,7 @@ class HTMLCreator extends FeedCreator
             $feedArray[] = "<div class='".$this->stylePrefix."footer'>".$this->footer."</div>";
         }
 
-        $feed = "".join($feedArray, "\r\n");
+        $feed = "".implode("\r\n", $feedArray);
 
         return $feed;
     }
@@ -154,7 +154,7 @@ class HTMLCreator extends FeedCreator
      */
     protected function _generateFilename()
     {
-        $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
+        $fileInfo = pathinfo($_SERVER["SCRIPT_NAME"]);
 
         return substr($fileInfo["basename"], 0, -(strlen($fileInfo["extension"]) + 1)).".html";
     }

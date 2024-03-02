@@ -1,0 +1,47 @@
+name: Windows Unit Tests
+
+on:
+  push:
+    branches-ignore:
+      - stable
+      - old-stable
+  pull_request:
+
+permissions:
+  contents: read  #  to fetch code (actions/checkout)
+
+jobs:
+    run:
+        name: PHP ${{ matrix.php-versions }}
+        runs-on: windows-latest
+        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+
+        strategy:
+            matrix:
+                php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3']
+            fail-fast: false
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  extensions: mbstring, intl, bz2
+
+            - name: Setup problem matchers
+              run: |
+                  echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+                  echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            - name: Setup PHPUnit
+              run: |
+                  cd _test
+                  composer install --no-interaction --no-progress --no-suggest --prefer-dist
+
+            - name: Run PHPUnit
+              run: |
+                cd _test
+                composer run test

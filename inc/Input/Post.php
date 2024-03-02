@@ -7,7 +7,6 @@ namespace dokuwiki\Input;
  */
 class Post extends Input
 {
-
     /** @noinspection PhpMissingParentConstructorInspection
      * Initialize the $access array, remove subclass members
      */

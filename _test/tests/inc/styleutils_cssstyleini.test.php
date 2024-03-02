@@ -10,8 +10,8 @@ class styleutils_cssstyleini_test extends DokuWikiTest {
                 array (
                     'screen' =>
                         array (
-                            DOKU_CONF . 'tpl/dokuwiki/css/_tests.less' => '/./',
-                            DOKU_INC . 'lib/tpl/dokuwiki/css/content.less' => '/./lib/tpl/dokuwiki/',
+                            DOKU_CONF . 'tpl/dokuwiki/css/_tests.less' => '/',
+                            DOKU_INC . 'lib/tpl/dokuwiki/css/content.less' => '/lib/tpl/dokuwiki/',
                         ),
                 ),
             'replacements' =>
@@ -30,9 +30,13 @@ class styleutils_cssstyleini_test extends DokuWikiTest {
         $this->assertArrayHasKey('print', $actual['stylesheets']);
 
         // check an original stylesheet and an additional one
-        $this->assertArraySubset($expected['stylesheets']['screen'], $actual['stylesheets']['screen']);
+        $this->assertEmpty(
+            array_diff_assoc($expected['stylesheets']['screen'], $actual['stylesheets']['screen'])
+        );
 
         // merged config has an original value (text), an overridden value (background) and a new custom replacement (custom_variable)
-        $this->assertArraySubset($expected['replacements'], $actual['replacements']);
+        $this->assertEmpty(
+            array_diff_assoc($expected['replacements'], $actual['replacements'])
+        );
     }
 }

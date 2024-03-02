@@ -1,16 +1,14 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
 
-
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Input\Input;
-use DokuWiki_Auth_Plugin;
+use Exception;
 
 class BulkSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send digest and list subscriptions
      *
@@ -20,8 +18,8 @@ class BulkSubscriptionSender extends SubscriptionSender
      * This function is called form lib/exe/indexer.php
      *
      * @param string $page
-     *
      * @return int number of sent mails
+     * @throws Exception
      */
     public function sendBulk($page)
     {
@@ -30,7 +28,7 @@ class BulkSubscriptionSender extends SubscriptionSender
             return 0;
         }
 
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
         global $USERINFO;
@@ -50,7 +48,7 @@ class BulkSubscriptionSender extends SubscriptionSender
             }
 
             foreach ($users as $user => $info) {
-                list($style, $lastupdate) = $info;
+                [$style, $lastupdate] = $info;
 
                 $lastupdate = (int)$lastupdate;
                 if ($lastupdate + $conf['subscribe_time'] > time()) {
@@ -69,7 +67,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                     continue;
                 }
 
-                if (substr($target, -1, 1) === ':') {
+                if (str_ends_with($target, ':')) {
                     // subscription target is a namespace, get all changes within
                     $changes = getRecentsSince($lastupdate, null, getNS($target));
                 } else {
@@ -85,12 +83,14 @@ class BulkSubscriptionSender extends SubscriptionSender
                 $change_ids = [];
                 foreach ($changes as $rev) {
                     $n = 0;
-                    while (!is_null($rev) && $rev['date'] >= $lastupdate &&
+                    $pagelog = new PageChangeLog($rev['id']);
+                    while (
+                        !is_null($rev) && $rev['date'] >= $lastupdate &&
                         ($INPUT->server->str('REMOTE_USER') === $rev['user'] ||
-                            $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)) {
-                        $pagelog = new PageChangeLog($rev['id']);
-                        $rev = $pagelog->getRevisions($n++, 1);
-                        $rev = (count($rev) > 0) ? $rev[0] : null;
+                            $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)
+                    ) {
+                        $revisions = $pagelog->getRevisions($n++, 1);
+                        $rev = ($revisions !== []) ? $pagelog->getRevisionInfo($revisions[0]) : null;
                     }
 
                     if (!is_null($rev) && $rev['date'] >= $lastupdate) {
@@ -109,11 +109,9 @@ class BulkSubscriptionSender extends SubscriptionSender
                         );
                         $count++;
                     }
-                } else {
-                    if ($style === 'list') {
-                        $this->sendList($USERINFO['mail'], $change_ids, $target);
-                        $count++;
-                    }
+                } elseif ($style === 'list') {
+                    $this->sendList($USERINFO['mail'], $change_ids, $target);
+                    $count++;
                 }
                 // TODO: Handle duplicate subscriptions.
 
@@ -152,11 +150,11 @@ class BulkSubscriptionSender extends SubscriptionSender
         }
 
         // try creating the lock directory
-        if (!@mkdir($lock, $conf['dmode'])) {
+        if (!@mkdir($lock)) {
             return false;
         }
 
-        if (!empty($conf['dperm'])) {
+        if ($conf['dperm']) {
             chmod($lock, $conf['dperm']);
         }
         return true;
@@ -198,7 +196,7 @@ class BulkSubscriptionSender extends SubscriptionSender
         $n = 0;
         do {
             $rev = $pagelog->getRevisions($n++, 1);
-            $rev = (count($rev) > 0) ? $rev[0] : null;
+            $rev = ($rev !== []) ? $rev[0] : null;
         } while (!is_null($rev) && $rev > $lastupdate);
 
         // TODO I'm not happy with the following line and passing $this->mailer around. Not sure how to solve it better
@@ -226,7 +224,7 @@ class BulkSubscriptionSender extends SubscriptionSender
      */
     protected function sendList($subscriber_mail, $ids, $ns_id)
     {
-        if (count($ids) === 0) {
+        if ($ids === []) {
             return false;
         }
 

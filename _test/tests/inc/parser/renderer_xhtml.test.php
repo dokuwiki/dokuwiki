@@ -14,12 +14,12 @@ class renderer_xhtml_test extends DokuWikiTest {
      *
      * @throws Exception
      */
-    function setUp() {
+    function setUp() : void {
         parent::setUp();
         $this->R = new Doku_Renderer_xhtml();
     }
 
-    function tearDown() {
+    function tearDown() : void {
         unset($this->R);
     }
 
@@ -269,7 +269,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->assertSame('0', $header);
 
         $this->R->internallink($id);
-        $expected = '<a href="/./doku.php?id='.$id.'" class="wikilink1" title="'.$id.'" data-wiki-id="blanktest">0</a>';
+        $expected = '<a href="/doku.php?id='.$id.'" class="wikilink1" title="'.$id.'" data-wiki-id="blanktest">0</a>';
         $this->assertEquals($expected, trim($this->R->doc));
     }
 }

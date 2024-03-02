@@ -11,16 +11,18 @@
     "license": "MIT",
 
     "require": {
-        "php": ">=5.4"
+        "php": ">=7.0"
     },
 
     "suggest": {
         "ext-iconv": "Used for proper filename encode handling",
-        "ext-mbstring": "Can be used alternatively for handling filename encoding"
+        "ext-mbstring": "Can be used alternatively for handling filename encoding",
+        "ext-bz2": "For bz2 compression",
+        "ext-zlib": "For zlib compression"
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^4.8",
+        "phpunit/phpunit": "^8",
         "mikey179/vfsstream": "^1.6",
         "ext-zip": "*",
         "ext-bz2": "*"

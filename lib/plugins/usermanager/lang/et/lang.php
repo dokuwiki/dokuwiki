@@ -2,8 +2,8 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
- * @author kristian.kankainen@kuu.la
+ *
+ * @author kristian.kankainen <kristian.kankainen@kuu.la>
  * @author Rivo Zängov <eraser@eraser.ee>
  * @author Janar Leas <janar.leas@eesti.ee>
  */

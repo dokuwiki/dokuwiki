@@ -14,16 +14,12 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
 
     private $pageid = 'mailinglist';
 
-    function setup() {
+    function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
     }
 
 
@@ -140,7 +136,7 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         //save settings
         $oldSuperUser = $conf['superuser'];
         $oldUseacl = $conf['useacl'];
-        $oldRemoteUser = $_SERVER['REMOTE_USER'];
+        $oldRemoteUser = isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : null;
 
         $conf['superuser'] = 'admin';
         $conf['useacl']    = 1;
@@ -165,7 +161,9 @@ class changelog_getlastrevisionat_test extends DokuWikiTest {
         $this->assertLessThanOrEqual(time(), $current);
 
         //restore settings
-        $_SERVER['REMOTE_USER'] = $oldRemoteUser;
+        if ($oldRemoteUser !== null) {
+            $_SERVER['REMOTE_USER'] = $oldRemoteUser;
+        }
         $conf['superuser'] = $oldSuperUser;
         $conf['useacl'] = $oldUseacl;
     }

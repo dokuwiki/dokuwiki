@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Draft;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 
@@ -16,10 +17,10 @@ class Editor extends Ui
      * Display the Edit Window
      * preprocess edit form data
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
      * @triggers EDIT_FORM_ADDTEXTAREA
-     * @return void
      */
     public function show()
     {
@@ -66,23 +67,23 @@ class Editor extends Ui
         $form->setHiddenField('id', $ID);
         $form->setHiddenField('rev', $REV);
         $form->setHiddenField('date', $DATE);
-        $form->setHiddenField('prefix', $PRE .'.');
+        $form->setHiddenField('prefix', $PRE . '.');
         $form->setHiddenField('suffix', $SUF);
         $form->setHiddenField('changecheck', $check);
 
         // prepare data for EDIT_FORM_ALTERNATE event
-        $data = array(
+        $data = [
             'form' => $form,
-            'wr'   => $wr,
+            'wr' => $wr,
             'media_manager' => true,
             'target' => ($INPUT->has('target') && $wr) ? $INPUT->str('target') : 'section',
-            'intro_locale' => $intro,
-        );
+            'intro_locale' => $intro
+        ];
 
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
             // edit target is not section.
-            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, [$this,'addTextarea'], true);
+            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, [$this, 'addTextarea'], true);
         } else {
             $this->addTextarea($data);
         }
@@ -134,23 +135,22 @@ class Editor extends Ui
 
         // license note
         if ($wr && $conf['license']) {
-            $attr = array(
-                'href'   => $license[$conf['license']]['url'],
-                'rel'    => 'license',
-                'class'  => 'urlextern',
-                'target' => $conf['target']['extern'] ? $conf['target']['extern'] : '',
-            );
+            $attr = [
+                'href' => $license[$conf['license']]['url'],
+                'rel' => 'license',
+                'class' => 'urlextern',
+                'target' => $conf['target']['extern'] ?: ''
+            ];
             $form->addTagOpen('div')->addClass('license');
             $form->addHTML($lang['licenseok']
-                .' <a '.buildAttributes($attr, true).'>'.$license[$conf['license']]['name'].'</a>'
-            );
+                . ' <a ' . buildAttributes($attr, true) . '>' . $license[$conf['license']]['name'] . '</a>');
             $form->addTagClose('div');
         }
 
         // start editor html output
         if ($wr) {
             // sets changed to true when previewed
-            echo '<script>/*<![CDATA[*/'.'textChanged = '. ($mod ? 'true' : 'false') .'/*!]]>*/</script>';
+            echo '<script>/*<![CDATA[*/textChanged = ' . ($mod ? 'true' : 'false') . '/*!]]>*/</script>';
         }
 
         // print intro locale text (edit, rditrev, or read.txt)
@@ -163,7 +163,7 @@ class Editor extends Ui
         echo '<div class="toolbar group">';
         echo '<div id="tool__bar" class="tool__bar">';
         if ($wr && $data['media_manager']) {
-            echo '<a href="'.DOKU_BASE.'lib/exe/mediamanager.php?ns='.$INFO['namespace'].'" target="_blank">';
+            echo '<a href="' . DOKU_BASE . 'lib/exe/mediamanager.php?ns=' . $INFO['namespace'] . '" target="_blank">';
             echo $lang['mediaselect'];
             echo '</a>';
         }
@@ -171,7 +171,7 @@ class Editor extends Ui
         echo '</div>';
 
         echo '<div id="draft__status" class="draft__status">';
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new Draft($ID, $INFO['client']);
         if ($draft->isDraftAvailable()) {
             echo $draft->getDraftMessage();
         }
@@ -187,26 +187,24 @@ class Editor extends Ui
      *
      * the default action for EDIT_FORM_ADDTEXTAREA
      *
-     * @param mixed[] $data
+     * @param array{wr: bool, media_manager: bool, target: string, intro_locale: string, form: Form} $data
      */
     public function addTextarea(&$data)
     {
         global $TEXT;
 
         if ($data['target'] !== 'section') {
-            msg('No editor for edit target '. hsc($data['target']) .' found.', -1);
+            msg('No editor for edit target ' . hsc($data['target']) . ' found.', -1);
         }
 
         // set textarea attributes
-        $attr = array('tabindex' => '1');
+        $attr = ['tabindex' => '1'];
         if (!$data['wr']) $attr['readonly'] = 'readonly';
-        $attr['dir']  = 'auto';
+        $attr['dir'] = 'auto';
         $attr['cols'] = '80';
         $attr['rows'] = '10';
 
-        /** @var dokuwiki\Form\Form $data['form'] */
-        $data['form']->addTextarea('wikitext','')->attrs($attr)->val($TEXT)
-                ->id('wiki__text')->addClass('edit');
+        $data['form']->addTextarea('wikitext', '')->attrs($attr)->val($TEXT)
+            ->id('wiki__text')->addClass('edit');
     }
-
 }

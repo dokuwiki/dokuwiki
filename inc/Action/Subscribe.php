@@ -7,6 +7,7 @@ use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ui;
+use Exception;
 
 /**
  * Class Subscribe
@@ -29,7 +30,7 @@ class Subscribe extends AbstractUserAction
         parent::checkPreconditions();
 
         global $conf;
-        if(isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
+        if (isset($conf['subscribers']) && !$conf['subscribers']) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
@@ -39,7 +40,7 @@ class Subscribe extends AbstractUserAction
             $this->handleSubscribeData();
         } catch (ActionAbort $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             msg($e->getMessage(), -1);
         }
     }
@@ -47,14 +48,14 @@ class Subscribe extends AbstractUserAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Subscribe)->show();
+        (new Ui\Subscribe())->show();
     }
 
     /**
      * Handle page 'subscribe'
      *
      * @author Adrian Lang <lang@cosmocode.de>
-     * @throws \Exception if (un)subscribing fails
+     * @throws Exception if (un)subscribing fails
      * @throws ActionAbort when (un)subscribing worked
      */
     protected function handleSubscribeData()
@@ -64,8 +65,8 @@ class Subscribe extends AbstractUserAction
         global $INPUT;
 
         // get and preprocess data.
-        $params = array();
-        foreach (array('target', 'style', 'action') as $param) {
+        $params = [];
+        foreach (['target', 'style', 'action'] as $param) {
             if ($INPUT->has("sub_$param")) {
                 $params[$param] = $INPUT->str("sub_$param");
             }
@@ -75,7 +76,7 @@ class Subscribe extends AbstractUserAction
         if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, array($this, 'handlePostData'));
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);
 
         $target = $params['target'];
         $style = $params['style'];
@@ -92,14 +93,16 @@ class Subscribe extends AbstractUserAction
         if ($ok) {
             msg(
                 sprintf(
-                    $lang["subscr_{$action}_success"], hsc($INFO['userinfo']['name']),
+                    $lang["subscr_{$action}_success"],
+                    hsc($INFO['userinfo']['name']),
                     prettyprint_id($target)
-                ), 1
+                ),
+                1
             );
             throw new ActionAbort('redirect');
         }
 
-        throw new \Exception(
+        throw new Exception(
             sprintf(
                 $lang["subscr_{$action}_error"],
                 hsc($INFO['userinfo']['name']),
@@ -117,7 +120,7 @@ class Subscribe extends AbstractUserAction
      * @author Adrian Lang <lang@cosmocode.de>
      *
      * @param array &$params the parameters: target, style and action
-     * @throws \Exception
+     * @throws Exception
      */
     public function handlePostData(&$params)
     {
@@ -127,27 +130,31 @@ class Subscribe extends AbstractUserAction
 
         // Get and validate parameters.
         if (!isset($params['target'])) {
-            throw new \Exception('no subscription target given');
+            throw new Exception('no subscription target given');
         }
         $target = $params['target'];
-        $valid_styles = array('every', 'digest');
-        if (substr($target, -1, 1) === ':') {
+        $valid_styles = ['every', 'digest'];
+        if (str_ends_with($target, ':')) {
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
         }
         $style = valid_input_set(
-            'style', $valid_styles, $params,
+            'style',
+            $valid_styles,
+            $params,
             'invalid subscription style given'
         );
         $action = valid_input_set(
-            'action', array('subscribe', 'unsubscribe'),
-            $params, 'invalid subscription action given'
+            'action',
+            ['subscribe', 'unsubscribe'],
+            $params,
+            'invalid subscription action given'
         );
 
         // Check other conditions.
         if ($action === 'subscribe') {
             if ($INFO['userinfo']['mail'] === '') {
-                throw new \Exception($lang['subscr_subscribe_noaddress']);
+                throw new Exception($lang['subscr_subscribe_noaddress']);
             }
         } elseif ($action === 'unsubscribe') {
             $is = false;
@@ -157,7 +164,7 @@ class Subscribe extends AbstractUserAction
                 }
             }
             if ($is === false) {
-                throw new \Exception(
+                throw new Exception(
                     sprintf(
                         $lang['subscr_not_subscribed'],
                         $INPUT->server->str('REMOTE_USER'),
@@ -169,7 +176,6 @@ class Subscribe extends AbstractUserAction
             $style = null;
         }
 
-        $params = compact('target', 'style', 'action');
+        $params = ['target' => $target, 'style' => $style, 'action' => $action];
     }
-
 }

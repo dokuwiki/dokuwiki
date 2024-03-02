@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author take <take@ruu.kr>
+ * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>
@@ -101,8 +103,6 @@ $lang['indexdelay']            = '색인 전 지연 시간 (초)';
 $lang['mailguard']             = '이메일 주소를 알아볼 수 없게 하기';
 $lang['iexssprotect']          = '올린 파일의 악성 자바스크립트, HTML 코드 가능성 여부를 검사';
 $lang['usedraft']              = '편집하는 동안 자동으로 초안 저장';
-$lang['htmlok']                = 'HTML 포함 허용';
-$lang['phpok']                 = 'PHP 포함 허용';
 $lang['locktime']              = '파일 잠그기에 대한 최대 시간 (초)';
 $lang['cachetime']             = '캐시에 대한 최대 시간 (초)';
 $lang['target____wiki']        = '안쪽 링크에 대한 타겟 창';
@@ -152,6 +152,7 @@ $lang['renderer_xhtml']        = '주요 (xhtml) 위키 출력에 사용할 렌�
 $lang['renderer__core']        = '%s (도쿠위키 코어)';
 $lang['renderer__plugin']      = '%s (플러그인)';
 $lang['search_nslimit']        = '검색을 현재 X 네임스페이스로 제한하십시오. 더 깊은 네임스페이스 내의 페이지에서 검색을 실행하면 첫 번째 X 네임스페이스가 필터로 추가됩니다.';
+$lang['search_fragment_o_exact'] = '정확한';
 $lang['dnslookups']            = '도쿠위키가 문서를 편집하는 사용자의 원격 IP 주소에 대한 호스트 이름을 조회합니다. 서버가 느리거나 DNS 서버를 작동하지 않거나 이 기능을 원하지 않으면, 이 옵션을 비활성화하세요';
 $lang['jquerycdn']             = '제이쿼리(jQuery)와 제이쿼리UI 스크립트 파일을 컨텐츠전송네트워크(CDN)에서 불러와야만 합니까? 이것은 추가적인 HTTP요청을 합니다. 하지만 파일이 빨리 불러지고 캐쉬에 저장되게 할 수 있습니다.';
 $lang['jquerycdn_o_0']         = '컨텐츠전송네트워크(CDN) 사용 안 함. 로컬 전송만 함';

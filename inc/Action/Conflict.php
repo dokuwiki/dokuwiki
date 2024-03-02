@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageConflict;
 use dokuwiki\Ui;
 
 /**
@@ -33,7 +34,6 @@ class Conflict extends AbstractAction
         global $SUM;
 
         $text = con($PRE, $TEXT, $SUF);
-        (new Ui\PageConflict($text, $SUM))->show();
+        (new PageConflict($text, $SUM))->show();
     }
-
 }

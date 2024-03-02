@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kurt Singer <webmaster@kurt-singer.com>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  * @author Anika Henke <anika@selfthinker.org>
  */
+$lang['home']                  = 'Startseite';
 $lang['__background_site__']   = 'Farbe für den Seitenhintergrund (hinter dem Inhaltsbereich)';
 $lang['__link__']              = 'Allgemeine Linkfarbe';
 $lang['__existing__']          = 'Farbe für Links zu existierenden Seiten';

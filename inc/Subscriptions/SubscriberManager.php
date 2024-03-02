@@ -2,13 +2,12 @@
 
 namespace dokuwiki\Subscriptions;
 
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Input\Input;
-use DokuWiki_Auth_Plugin;
 use Exception;
 
 class SubscriberManager
 {
-
     /**
      * Check if subscription system is enabled
      *
@@ -71,12 +70,13 @@ class SubscriberManager
      * namespace. It will *not* modify any subscriptions that may exist in higher
      * namespaces.
      *
-     * @param string       $id The target object’s (namespace or page) id
+     * @param string $id The target object’s (namespace or page) id
      * @param string|array $user
      * @param string|array $style
      * @param string|array $data
      *
      * @return bool
+     * @throws Exception
      */
     public function remove($id, $user = null, $style = null, $data = null)
     {
@@ -101,12 +101,13 @@ class SubscriberManager
      * and user is in effect. Else it contains an array of arrays with the fields
      * “target”, “style”, and optionally “data”.
      *
-     * @author Adrian Lang <lang@cosmocode.de>
-     *
-     * @param string $id   Page ID, defaults to global $ID
+     * @param string $id Page ID, defaults to global $ID
      * @param string $user User, defaults to $_SERVER['REMOTE_USER']
      *
      * @return array|false
+     * @throws Exception
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
      */
     public function userSubscription($id = '', $user = '')
     {
@@ -130,7 +131,7 @@ class SubscriberManager
         }
 
         $subs = $this->subscribers($id, $user);
-        if (!count($subs)) {
+        if ($subs === []) {
             return false;
         }
 
@@ -152,14 +153,16 @@ class SubscriberManager
      * This function searches all relevant subscription files for a page or
      * namespace.
      *
-     * @author Adrian Lang <lang@cosmocode.de>
-     *
-     * @param string       $page The target object’s (namespace or page) id
+     * @param string $page The target object’s (namespace or page) id
      * @param string|array $user
      * @param string|array $style
      * @param string|array $data
      *
      * @return array
+     * @throws Exception
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     *
      */
     public function subscribers($page, $user = null, $style = null, $data = null)
     {
@@ -196,6 +199,11 @@ class SubscriberManager
                     continue;
                 }
 
+                // if no last sent is set, use 0
+                if (!isset($m[3])) {
+                    $m[3] = 0;
+                }
+
                 $u = rawurldecode($m[1]); // decode the user name
                 if (!isset($result[$target])) {
                     $result[$target] = [];
@@ -211,17 +219,18 @@ class SubscriberManager
      *
      * Aggregates all email addresses of user who have subscribed the given page with 'every' style
      *
-     * @author Adrian Lang <lang@cosmocode.de>
-     * @author Steven Danz <steven-danz@kc.rr.com>
-     *
-     * @todo   move the whole functionality into this class, trigger SUBSCRIPTION_NOTIFY_ADDRESSLIST instead,
-     *         use an array for the addresses within it
-     *
      * @param array &$data Containing the entries:
      *                     - $id (the page id),
      *                     - $self (whether the author should be notified,
      *                     - $addresslist (current email address list)
      *                     - $replacements (array of additional string substitutions, @KEY@ to be replaced by value)
+     * @throws Exception
+     *
+     * @author Adrian Lang <lang@cosmocode.de>
+     * @author Steven Danz <steven-danz@kc.rr.com>
+     *
+     * @todo   move the whole functionality into this class, trigger SUBSCRIPTION_NOTIFY_ADDRESSLIST instead,
+     *         use an array for the addresses within it
      */
     public function notifyAddresses(&$data)
     {
@@ -229,7 +238,7 @@ class SubscriberManager
             return;
         }
 
-        /** @var DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
         /** @var \Input $INPUT */
@@ -242,7 +251,7 @@ class SubscriberManager
         $subscriptions = $this->subscribers($id, null, 'every');
 
         $result = [];
-        foreach ($subscriptions as $target => $users) {
+        foreach ($subscriptions as $users) {
             foreach ($users as $user => $info) {
                 $userinfo = $auth->getUserData($user);
                 if ($userinfo === false) {
@@ -279,7 +288,7 @@ class SubscriberManager
     protected function file($id)
     {
         $meta_fname = '.mlist';
-        if ((substr($id, -1, 1) === ':')) {
+        if (str_ends_with($id, ':')) {
             $meta_froot = getNS($id);
             $meta_fname = '/' . $meta_fname;
         } else {

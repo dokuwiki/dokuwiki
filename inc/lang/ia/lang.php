@@ -164,7 +164,7 @@ $lang['created']               = 'create';
 $lang['restored']              = 'ancian version restaurate (%s)';
 $lang['external_edit']         = 'modification externe';
 $lang['summary']               = 'Modificar summario';
-$lang['noflash']               = 'Le <a href="http://www.adobe.com/products/flashplayer/">plug-in Flash de Adobe</a> es necessari pro monstrar iste contento.';
+$lang['noflash']               = 'Le <a href="http://get.adobe.com/flashplayer">plug-in Flash de Adobe</a> es necessari pro monstrar iste contento.';
 $lang['download']              = 'Discargar fragmento';
 $lang['mail_newpage']          = 'pagina addite:';
 $lang['mail_changed']          = 'pagina modificate:';
@@ -232,7 +232,7 @@ $lang['i_enableacl']           = 'Activar ACL (recommendate)';
 $lang['i_superuser']           = 'Superusator';
 $lang['i_problems']            = 'Le installator ha trovate alcun problemas, indicate hic infra. Tu debe resolver iste problemas pro poter continuar.';
 $lang['i_modified']            = 'Pro motivos de securitate, iste script functiona solmente con un installation de DokuWiki nove e non modificate.
-Tu debe re-extraher le files del pacchetto discargate, o consultar le <a href="http://dokuwiki.org/install">instructiones de installation</a> complete pro altere optiones.';
+Tu debe re-extraher le files del pacchetto discargate, o consultar le <a href="https://www.dokuwiki.org/install">instructiones de installation</a> complete pro altere optiones.';
 $lang['i_funcna']              = 'Le function PHP <code>%s</code> non es disponibile. Pote esser que tu albergo web lo ha disactivate pro un ration o altere.';
 $lang['i_phpver']              = 'Le version de PHP <code>%s</code> es plus ancian que le version requisite <code>%s</code>. Es necessari actualisar le installation de PHP.';
 $lang['i_permfail']            = '<code>%s</code> non permitte le accesso de scriptura a DokuWiki. Tu debe reparar le permissiones de iste directorio!';

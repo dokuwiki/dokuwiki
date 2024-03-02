@@ -9,39 +9,27 @@ namespace dokuwiki\Parsing\Handler;
  */
 class Block
 {
-    protected $calls = array();
+    protected $calls = [];
     protected $skipEol = false;
     protected $inParagraph = false;
 
     // Blocks these should not be inside paragraphs
-    protected $blockOpen = array(
-        'header',
-        'listu_open','listo_open','listitem_open','listcontent_open',
-        'table_open','tablerow_open','tablecell_open','tableheader_open','tablethead_open',
-        'quote_open',
-        'code','file','hr','preformatted','rss',
-        'htmlblock','phpblock',
-        'footnote_open',
-    );
+    protected $blockOpen = [
+        'header', 'listu_open', 'listo_open', 'listitem_open', 'listcontent_open', 'table_open', 'tablerow_open',
+        'tablecell_open', 'tableheader_open', 'tablethead_open', 'quote_open', 'code', 'file', 'hr', 'preformatted',
+        'rss', 'footnote_open'
+    ];
 
-    protected $blockClose = array(
-        'header',
-        'listu_close','listo_close','listitem_close','listcontent_close',
-        'table_close','tablerow_close','tablecell_close','tableheader_close','tablethead_close',
-        'quote_close',
-        'code','file','hr','preformatted','rss',
-        'htmlblock','phpblock',
-        'footnote_close',
-    );
+    protected $blockClose = [
+        'header', 'listu_close', 'listo_close', 'listitem_close', 'listcontent_close', 'table_close',
+        'tablerow_close', 'tablecell_close', 'tableheader_close', 'tablethead_close', 'quote_close', 'code', 'file',
+        'hr', 'preformatted', 'rss', 'footnote_close'
+    ];
 
     // Stacks can contain paragraphs
-    protected $stackOpen = array(
-        'section_open',
-    );
+    protected $stackOpen = ['section_open'];
 
-    protected $stackClose = array(
-        'section_close',
-    );
+    protected $stackClose = ['section_close'];
 
 
     /**
@@ -58,11 +46,11 @@ class Block
         foreach ($DOKU_PLUGINS['syntax'] as $n => $p) {
             $ptype = $p->getPType();
             if ($ptype == 'block') {
-                $this->blockOpen[]  = 'plugin_'.$n;
-                $this->blockClose[] = 'plugin_'.$n;
+                $this->blockOpen[]  = 'plugin_' . $n;
+                $this->blockClose[] = 'plugin_' . $n;
             } elseif ($ptype == 'stack') {
-                $this->stackOpen[]  = 'plugin_'.$n;
-                $this->stackClose[] = 'plugin_'.$n;
+                $this->stackOpen[]  = 'plugin_' . $n;
+                $this->stackClose[] = 'plugin_' . $n;
             }
         }
     }
@@ -70,7 +58,7 @@ class Block
     protected function openParagraph($pos)
     {
         if ($this->inParagraph) return;
-        $this->calls[] = array('p_open',array(), $pos);
+        $this->calls[] = ['p_open', [], $pos];
         $this->inParagraph = true;
         $this->skipEol = true;
     }
@@ -90,7 +78,7 @@ class Block
         // look back if there was any content - we don't want empty paragraphs
         $content = '';
         $ccount = count($this->calls);
-        for ($i=$ccount-1; $i>=0; $i--) {
+        for ($i = $ccount - 1; $i >= 0; $i--) {
             if ($this->calls[$i][0] == 'p_open') {
                 break;
             } elseif ($this->calls[$i][0] == 'cdata') {
@@ -101,16 +89,18 @@ class Block
             }
         }
 
-        if (trim($content)=='') {
+        if (trim($content) == '') {
             //remove the whole paragraph
             //array_splice($this->calls,$i); // <- this is much slower than the loop below
-            for ($x=$ccount; $x>$i;
-            $x--) array_pop($this->calls);
+            for (
+                $x = $ccount; $x > $i;
+                $x--
+            ) array_pop($this->calls);
         } else {
             // remove ending linebreaks in the paragraph
-            $i=count($this->calls)-1;
+            $i = count($this->calls) - 1;
             if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], "\n");
-            $this->calls[] = array('p_close',array(), $pos);
+            $this->calls[] = ['p_close', [], $pos];
         }
 
         $this->inParagraph = false;
@@ -120,8 +110,8 @@ class Block
     protected function addCall($call)
     {
         $key = count($this->calls);
-        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
-            $this->calls[$key-1][1][0] .= $call[1][0];
+        if ($key && $call[0] == 'cdata' && $this->calls[$key - 1][0] == 'cdata') {
+            $this->calls[$key - 1][1][0] .= $call[1][0];
         } else {
             $this->calls[] = $call;
         }
@@ -150,7 +140,7 @@ class Block
         foreach ($calls as $key => $call) {
             $cname = $call[0];
             if ($cname == 'plugin') {
-                $cname='plugin_'.$call[1][0];
+                $cname = 'plugin_' . $call[1][0];
                 $plugin = true;
                 $plugin_open = (($call[1][2] == DOKU_LEXER_ENTER) || ($call[1][2] == DOKU_LEXER_SPECIAL));
                 $plugin_close = (($call[1][2] == DOKU_LEXER_EXIT) || ($call[1][2] == DOKU_LEXER_SPECIAL));
@@ -189,12 +179,12 @@ class Block
                 // Check this isn't an eol instruction to skip...
                 if (!$this->skipEol) {
                     // Next is EOL => double eol => mark as paragraph
-                    if (isset($calls[$key+1]) && $calls[$key+1][0] == 'eol') {
+                    if (isset($calls[$key + 1]) && $calls[$key + 1][0] == 'eol') {
                         $this->closeParagraph($call[2]);
                         $this->openParagraph($call[2]);
                     } else {
                         //if this is just a single eol make a space from it
-                        $this->addCall(array('cdata',array("\n"), $call[2]));
+                        $this->addCall(['cdata', ["\n"], $call[2]]);
                     }
                 }
                 continue;

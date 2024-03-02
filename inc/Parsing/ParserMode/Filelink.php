@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Filelink extends AbstractMode
 {
-
     protected $pattern;
 
     /** @inheritdoc */
@@ -14,11 +13,10 @@ class Filelink extends AbstractMode
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-';
         $punc = '.:?\-;,';
-        $host = $ltrs.$punc;
-        $any  = $ltrs.$gunk.$punc;
+        $any  = $ltrs . $gunk . $punc;
 
-        $this->pattern = '\b(?i)file(?-i)://['.$any.']+?['.
-            $punc.']*[^'.$any.']';
+        $this->pattern = '\b(?i)file(?-i)://[' . $any . ']+?[' .
+            $punc . ']*[^' . $any . ']';
     }
 
     /** @inheritdoc */

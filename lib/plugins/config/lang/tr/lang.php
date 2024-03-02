@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
  * @author Aydın Coşkuner <aydinweb@gmail.com>
@@ -78,8 +79,6 @@ $lang['relnofollow']           = 'Dışsal linkler rel="nofollow" kullan';
 $lang['indexdelay']            = 'Indekslemeden evvel zaman gecikmesi (saniye)';
 $lang['mailguard']             = 'Email adreslerini karart';
 $lang['iexssprotect']          = 'Yüklenmiş dosyaları muhtemel kötu niyetli JavaScript veya HTML koduna kontrol et';
-$lang['htmlok']                = 'Gömülü HTML koduna izin ver';
-$lang['phpok']                 = 'Gömülü PHP koduna izin ver';
 $lang['refcheck']              = 'Araç kaynak denetimi';
 $lang['gdlib']                 = 'GD Lib sürümü';
 $lang['jpg_quality']           = 'JPG sıkıştırma kalitesi [0-100]';

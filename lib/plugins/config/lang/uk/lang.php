@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author CodyMaster007 <lazorenkoda1@gmail.com>
+ * @author Mykhailo <mvkorobkov@gmail.com>
  * @author velmyshanovnyi <velmyshanovnyi@gmail.com>
  * @author Dmytro Marchenko <dmytro.marchenko1989@gmail.com>
  * @author Oleksii <alexey.furashev@gmail.com>
@@ -84,6 +86,7 @@ $lang['disableactions']        = 'Заборонити дії ДокуВікі';
 $lang['disableactions_check']  = 'Перевірити';
 $lang['disableactions_subscription'] = 'Підписатись/Відписатись';
 $lang['disableactions_wikicode'] = 'Переглянути код/Експорт';
+$lang['disableactions_profile_delete'] = 'Видалити власний акаунт';
 $lang['disableactions_other']  = 'Інші дії (розділені комами)';
 $lang['auth_security_timeout'] = 'Таймаут аутентифікації (в секундах)';
 $lang['securecookie']          = 'Чи повинен браузер надсилати файли cookies тільки через HTTPS? Вимкніть цей параметр, лише тоді, якщо вхід до Вікі захищено SSL, але перегляд сторінок відбувається у незахищеному режимі.';
@@ -93,8 +96,6 @@ $lang['indexdelay']            = 'Затримка перед індексаці
 $lang['mailguard']             = 'Кодувати адреси e-mail';
 $lang['iexssprotect']          = 'Перевірте оновлені файли на можливі заборонені Javascript чи HTML коди';
 $lang['usedraft']              = 'Автоматично зберігати чернетку при редагуванні';
-$lang['htmlok']                = 'Дозволити HTML';
-$lang['phpok']                 = 'Дозволити PHP';
 $lang['locktime']              = 'Час блокування (сек)';
 $lang['cachetime']             = 'Максимальний вік кешу (сек)';
 $lang['target____wiki']        = 'Target для внутрішніх посилань';
@@ -121,6 +122,7 @@ $lang['rss_update']            = 'Інтервал оновлення RSS (се�
 $lang['rss_show_summary']      = 'Показувати підсумки змін в заголовку XML-feed';
 $lang['rss_media_o_both']      = 'обидва';
 $lang['rss_media_o_pages']     = 'сторінки';
+$lang['rss_media_o_media']     = 'медіа';
 $lang['updatecheck']           = 'Перевірити наявність оновлень чи попереджень безпеки? Для цього ДокуВікі необхідно зв\'язатися зі update.dokuwiki.org.';
 $lang['userewrite']            = 'Красиві URL';
 $lang['useslash']              = 'Слеш, як розділювач просторів імен в URL';
@@ -138,6 +140,9 @@ $lang['renderer_xhtml']        = 'Транслятор (Renderer) для осн�
 $lang['renderer__core']        = '%s (ядро докуВікі)';
 $lang['renderer__plugin']      = '%s (доданок)';
 $lang['search_fragment_o_exact'] = 'точно';
+$lang['search_fragment_o_starts_with'] = 'почати з';
+$lang['search_fragment_o_ends_with'] = 'закінчити з';
+$lang['search_fragment_o_contains'] = 'містить';
 $lang['proxy____host']         = 'Адреса Proxy';
 $lang['proxy____port']         = 'Порт Proxy';
 $lang['proxy____user']         = 'Користувач Proxy';

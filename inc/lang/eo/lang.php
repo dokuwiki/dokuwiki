@@ -3,12 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Yves Nevelsteen <yves.nevelsteen@gmail.com>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Antono Vasiljev <esperanto.minsk ĈE tut.by>
  * @author Felipe Castro <fefcas@yahoo.com.br>
  * @author Robert Bogenschneider <robog@gmx.de>
- * @author Erik Pedersen <erik.pedersen@shaw.ca>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -70,6 +71,8 @@ $lang['minoredit']             = 'Etaj modifoj';
 $lang['draftdate']             = 'Lasta konservo de la skizo:';
 $lang['nosecedit']             = 'La paĝo ŝanĝiĝis intertempe, sekcio-informo estis malĝisdata, tial la tuta paĝo estas reŝargita.';
 $lang['searchcreatepage']      = 'Se vi ne trovis kion vi serĉantis, vi povas krei aŭ redakti la paĝo %s, nomita laŭ via serĉo.';
+$lang['search_fullresults']    = 'Plentekstaj rezultoj';
+$lang['js']['search_toggle_tools'] = 'Ŝalti serĉilojn';
 $lang['js']['willexpire']      = 'Vi povos redakti ĉi tiun paĝon post unu minuto.\nSe vi volas nuligi tempokontrolon de la ŝlosado, premu la butonon "Antaŭrigardi".';
 $lang['js']['notsavedyet']     = 'Ne konservitaj modifoj perdiĝos.
 Ĉu vi certe volas daŭrigi la procezon?';
@@ -112,10 +115,12 @@ $lang['js']['media_done_btn']  = 'Finita';
 $lang['js']['media_drop']      = 'Demetu ĉi-tien por alŝuti';
 $lang['js']['media_cancel']    = 'forigi';
 $lang['js']['media_overwrt']   = 'Anstataûi ekzistantajn dosierojn';
+$lang['js']['data_insecure']   = 'AVERTO: Ŝajnas, ke via datuma dosierujo ne estas ĝuste sekurigita. Legu pri <a href="https://www.dokuwiki.org/security#web_access_security">Sekureco de Reta Aliro en DokuWiki</a>.';
 $lang['search_exact_match']    = 'Ekzakta kongruo';
 $lang['search_starts_with']    = 'Komenciĝas per';
 $lang['search_ends_with']      = 'Finiĝas per';
 $lang['search_contains']       = 'Enhavas';
+$lang['search_custom_match']   = 'Propra';
 $lang['search_any_ns']         = 'Ajn nomspaco';
 $lang['search_any_time']       = 'Ajn tempo';
 $lang['search_past_7_days']    = 'Pasinta semajno';
@@ -159,6 +164,7 @@ $lang['txt_upload']            = 'Elektu dosieron por alŝuti:';
 $lang['txt_filename']          = 'Alŝuti kiel (laŭvole):';
 $lang['txt_overwrt']           = 'Anstataŭigi ekzistantan dosieron';
 $lang['maxuploadsize']         = 'Alŝuto maks. %s po dosiero.';
+$lang['allowedmime']           = 'Listo de permesitaj dosiersufiksoj';
 $lang['lockedby']              = 'Nune ŝlosita de:';
 $lang['lockexpire']            = 'Ŝlosado ĉesos je:';
 $lang['rssfailed']             = 'Okazis eraro dum ricevado de la novaĵ-fluo: ';
@@ -212,7 +218,8 @@ $lang['created']               = 'kreita';
 $lang['restored']              = 'malnova revizio restarigita (%s)';
 $lang['external_edit']         = 'ekstera redakto';
 $lang['summary']               = 'Bulteno de ŝanĝoj';
-$lang['noflash']               = 'La <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> necesas por montri tiun ĉi enhavon.';
+$lang['unknowndate']           = 'Nekonata dato';
+$lang['noflash']               = 'La <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> necesas por montri tiun ĉi enhavon.';
 $lang['download']              = 'Elŝuti eltiraĵon';
 $lang['tools']                 = 'Iloj';
 $lang['user_tools']            = 'Uzantaj iloj';
@@ -295,7 +302,11 @@ $lang['i_problems']            = 'La instalilo trovis kelkajn problemojn, indiki
 $lang['i_modified']            = 'Pro sekureco tiu ĉi instalilo nur funkcias por nova kaj nemodifita DokuWiki-pakaĵo.
 Vi devas aŭ redemeti la dosierojn el la elŝutita pakaĵo aŭ plibone informiĝi pri la instalada procezo.';
 $lang['i_funcna']              = 'La PHP-a funkcio <code>%s</code> ne estas uzebla. Eble via retprovizanto ial malpermesis tion?';
+$lang['i_disabled']            = 'Ĝi estis malŝaltita de via provizanto.';
+$lang['i_funcnmail']           = '<b>Noto:</b> La PHP-poŝta funkcio ne disponeblas. %s Se ĝi restas neatingebla, vi povas instali la <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-kromaĵon</a>.';
 $lang['i_phpver']              = 'La versio de la PHP <code>%s</code> estas pli malnova ol la bezonata <code>%s</code>. Vi bezonas ĝisdatigi la PHP-an instalon.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload devas esti malŝaltita en php.ini por ruli DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki ne povas krei kriptografie sekurajn nombrojn por kuketoj. Vi eble volas kontroli viajn open_basedir-agordojn en php.ini por taŭga aliro <code>/dev/urandom</code>.';
 $lang['i_permfail']            = '<code>%s</code> ne estas skribebla por DokuWiki. Vi devas redifini la permes-atributojn de tiu ĉi dosierujo!';
 $lang['i_confexists']          = '<code>%s</code> jam ekzistas';
 $lang['i_writeerr']            = 'Ne eblas krei "<code>%s</code>". Vi bezonas kontroli la permesojn de la dosier(uj)oj kaj mem krej la dosieron.';
@@ -345,6 +356,8 @@ $lang['media_perm_read']       = 'Bedaûrinde viaj rajtoj ne sufiĉas por legi d
 $lang['media_perm_upload']     = 'Bedaûrinde viaj rajtoj ne sufiĉas por alŝuti dosierojn.';
 $lang['media_update']          = 'Alŝuti novan version';
 $lang['media_restore']         = 'Restarigi ĉi tiun version';
+$lang['media_acl_warning']     = 'Ĉi tiu listo eble ne estas kompleta pro ACL-limigoj kaj kaŝitaj paĝoj.';
+$lang['email_fail']            = 'PHP mail() mankas aŭ estas alŝaltita. La jena retmesaĝo ne estis sendita:';
 $lang['currentns']             = 'Aktuala nomspaco';
 $lang['searchresult']          = 'Serĉrezulto';
 $lang['plainhtml']             = 'Plena HTML';

@@ -3,6 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author chuachua <oceanynh@gmail.com>
+ * @author Zhenzhe Huang <1991419264@qq.com>
+ * @author 林晓东 <lin_xd@126.com>
+ * @author alair <Mail@alair.top>
+ * @author better <betterzhubo@live.com>
+ * @author 小李 <szsd5257@foxmail.com>
+ * @author VinnieChow <zsz33@qq.com>
+ * @author Lakejason0 <lakesarchive@outlook.com>
  * @author Phy <dokuwiki@phy25.com>
  * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
@@ -106,16 +114,16 @@ $lang['disableactions_other']  = '其他功能（用英文逗号分隔）';
 $lang['disableactions_rss']    = 'XML 同步 (RSS)';
 $lang['auth_security_timeout'] = '认证安全超时（秒）';
 $lang['securecookie']          = '要让浏览器须以HTTPS方式传送在HTTPS会话中设置的cookies吗？请只在登录过程为SSL加密而浏览维基为明文的情况下打开此选项。';
+$lang['samesitecookie']        = '要使用的SameSite Cookie属性。将其留空将由浏览器决定SameSite策略。';
 $lang['remote']                = '激活远程 API 系统。这允许其他程序通过 XML-RPC 或其他机制来访问维基。';
 $lang['remoteuser']            = '将远程 API 的访问权限限制在指定的组或用户中，以逗号分隔。留空则允许任何人访问。';
+$lang['remotecors']            = '为远程接口启用跨源资源共享 （CORS）。星号 （*） 表示允许所有来源。留空以拒绝 CORS。';
 $lang['usewordblock']          = '根据 wordlist 阻止垃圾评论';
 $lang['relnofollow']           = '对外部链接使用 rel="nofollow" 标签';
 $lang['indexdelay']            = '构建索引前的时间延滞（秒）';
 $lang['mailguard']             = '弄乱邮件地址（保护用户的邮件地址）';
 $lang['iexssprotect']          = '检验上传的文件以避免可能存在的恶意 JavaScript 或 HTML 代码';
 $lang['usedraft']              = '编辑时自动保存一份草稿';
-$lang['htmlok']                = '允许嵌入式 HTML';
-$lang['phpok']                 = '允许嵌入式 PHP';
 $lang['locktime']              = '独有编辑权/文件锁定的最长时间（秒）';
 $lang['cachetime']             = '缓存的最长时间（秒）';
 $lang['target____wiki']        = '内部链接的目标窗口';
@@ -138,6 +146,8 @@ $lang['mailfrom']              = '自动发送邮件时使用的邮件地址';
 $lang['mailreturnpath']        = '非投递通知的收件人邮箱地址';
 $lang['mailprefix']            = '自动发送邮件时使用的邮件地址前缀';
 $lang['htmlmail']              = '发送更加美观，但体积更大的 HTML 多部分邮件。禁用则发送纯文本邮件。';
+$lang['dontlog']               = '为这些种类的日志禁用日志记录。';
+$lang['logretain']             = '日志要保留多少天。';
 $lang['sitemap']               = '生成 Google sitemap（天）';
 $lang['rss_type']              = 'XML feed 类型';
 $lang['rss_linkto']            = 'XML feed 链接到';
@@ -175,6 +185,7 @@ $lang['search_fragment_o_contains'] = '包含';
 $lang['trustedproxy']          = '信任转发代理与其正则表达式有关系，显示的是真实的客户端IP。默认匹配本地网络。留空则不选择任何代理。';
 $lang['_feature_flags']        = '功能标志';
 $lang['defer_js']              = '推迟在页面HTML解析后执行的JavaScript。提高了页面的感知速度，但可能会破坏少量插件。';
+$lang['hidewarnings']          = '不显示 PHP 发出的任何警告。这可以简化到 PHP8+ 的转换。警告仍将记录在错误日志中，并应报告。';
 $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';

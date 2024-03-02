@@ -1,0 +1,8 @@
+====== Ver registros ======
+
+Esta interfaz te permite ver los diversos registros que son escritos por DokuWiki. Por defecto, no debería haber mucho
+aquí (depende de tu [[doku>config:dontlog|configuración de registros]]). Sin embargo, si algo va mal, es muy probable que
+que encuentres información útil sobre el problema. Todas las horas son UTC.
+
+Ten en cuenta que **los archivos de registro pueden contener información sensible** como contraseñas, rutas u otros secretos.
+Asegúrate de redactar los registros adecuadamente cuando los publiques en el foro o en los informes de errores.
