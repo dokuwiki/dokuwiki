@@ -66,7 +66,7 @@ class pageutils_findnearest_test extends DokuWikiTest {
 
         $ID = 'foo:bar2';
         $sidebar = page_findnearest('sidebar');
-        $this->assertEquals('foo:bar2:sidebar', $sidebar);
+        $this->assertEquals('sidebar', $sidebar);
 
         $ID = 'foo:bar2:start';
         $sidebar = page_findnearest('sidebar');
@@ -83,8 +83,51 @@ class pageutils_findnearest_test extends DokuWikiTest {
         $ID = 'foo:bar2:deeper:page';
         $sidebar = page_findnearest('sidebar');
         $this->assertEquals('foo:bar2:deeper:sidebar', $sidebar);
-    }
 
+        saveWikiText('foo:bar3', 'startPage', '');
+        saveWikiText('foo:bar3:start', 'innerStartPage', '');
+        saveWikiText('foo:bar3:sidebar', 'sidebarInside', '');
+
+        $ID = 'foo:bar3';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('sidebar', $sidebar);
+
+        $ID = 'foo:bar3:test';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('foo:bar3:sidebar', $sidebar);
+
+        saveWikiText('foo:bar4', 'startPage', '');
+        saveWikiText('foo:bar4:bar4', 'innerStartPage', '');
+        saveWikiText('foo:bar4:sidebar', 'sidebarInside', '');
+
+        $ID = 'foo:bar4';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('sidebar', $sidebar);
+
+        $ID = 'foo:bar4:test';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('foo:bar4:sidebar', $sidebar);
+
+        $ID = 'foo:bar4:deeper:even:deeper:page';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('foo:bar4:sidebar', $sidebar);
+
+        saveWikiText('foo:sidebar', 'sidebarInside', '');
+
+        $ID = 'foo:bar5:deeper:even:deeper:page';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('foo:sidebar', $sidebar);
+
+        saveWikiText('foo:bar5:sidebar', 'sidebarInside', '');
+
+        $ID = 'foo:bar5:deeper:even:deeper:page';
+        $sidebar = page_findnearest('sidebar');
+        $this->assertEquals('foo:bar5:sidebar', $sidebar);
+
+        // clean up to avoid issues with future tests
+        saveWikiText('foo:sidebar', null, '');
+    }
+    
     function testExistingSidebars() {
         global $ID;
 
