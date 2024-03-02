@@ -32,6 +32,8 @@ class Mailer
 
     protected $replacements = ['text' => [], 'html' => []];
 
+    protected $subjectPrefix = "";
+
     /**
      * Constructor
      *
@@ -280,6 +282,16 @@ class Mailer
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    /**
+     * Set the subject prefix. This overrides the site's mailprefix config. 
+     *
+     * @param string $param
+     */
+    public function setSubjectPrefix($prefix)
+    {
+        $this->subjectPrefix = $prefix;
     }
 
     /**
@@ -573,18 +585,22 @@ class Mailer
         }
 
         if (isset($this->headers['Subject'])) {
-            // add prefix to subject
-            if (empty($conf['mailprefix'])) {
-                if (PhpString::strlen($conf['title']) < 20) {
-                    $prefix = '[' . $conf['title'] . ']';
+            if ($conf['mailprefix'] != '!!not set!!' || !empty($this->subjectPrefix)) {
+                // add prefix to subject
+                if (!empty($this->subjectPrefix)) {
+                    $prefix = '[' . $this->subjectPrefix . ']';
+                } else if (empty($conf['mailprefix'])) {
+                    if (PhpString::strlen($conf['title']) < 20) {
+                        $prefix = '[' . $conf['title'] . ']';
+                    } else {
+                        $prefix = '[' . PhpString::substr($conf['title'], 0, 20) . '...]';
+                    }
                 } else {
-                    $prefix = '[' . PhpString::substr($conf['title'], 0, 20) . '...]';
+                    $prefix = '[' . $conf['mailprefix'] . ']';
                 }
-            } else {
-                $prefix = '[' . $conf['mailprefix'] . ']';
-            }
-            if (!str_starts_with($this->headers['Subject'], $prefix)) {
-                $this->headers['Subject'] = $prefix . ' ' . $this->headers['Subject'];
+                if (!str_starts_with($this->headers['Subject'], $prefix)) {
+                    $this->headers['Subject'] = $prefix . ' ' . $this->headers['Subject'];
+                }
             }
 
             // encode subject
