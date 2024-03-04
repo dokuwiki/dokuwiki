@@ -81,6 +81,7 @@ $lang['msg_nooverwrite']       = 'L\'extension %s existe déjà et ne sera pas r
 $lang['missing_dependency']    = '<strong>Dépendance absente ou désactivée :</strong> %s';
 $lang['security_issue']        = '<strong>Problème de sécurité :</strong> %s';
 $lang['security_warning']      = '<strong>Avertissement de sécurité :</strong> %s';
+$lang['update_message']        = '<strong>Message de mise à jour :</strong> %s';
 $lang['update_available']      = '<strong>Mise à jour :</strong> la version %s est disponible.';
 $lang['wrong_folder']          = '<strong>Greffon installé incorrectement :</strong> renommer le dossier du greffon "%s" en "%s".';
 $lang['url_change']            = '<strong>URL modifiée :</strong> L\'URL de téléchargement a changé depuis le dernier téléchargement. Vérifiez si l\'URL est valide avant de mettre à jour l\'extension.<br />Nouvelle URL : %s<br />Ancien : %s';
