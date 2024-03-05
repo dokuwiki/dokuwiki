@@ -70,7 +70,7 @@ class Lessc
     protected ?stdClass $env = null;
 
     /** @var stdClass|null The currently parsed block FIXME should probably be its own proper class */
-    protected ?stdClass $scope;
+    protected ?stdClass $scope = null;
 
     /** @var array [file => mtime] list of all files that have been parsed, to avoid circular imports */
     protected array $allParsedFiles = [];

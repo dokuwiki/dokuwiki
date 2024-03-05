@@ -142,7 +142,11 @@ class Parser
         }
 
         if ($this->count != strlen($this->buffer)) {
-            $this->throwError();
+            $this->throwError(sprintf(
+                "parse error: count mismatches buffer length %d != %d",
+                $this->count,
+                strlen($this->buffer)
+            ));
         }
 
         // TODO report where the block was opened

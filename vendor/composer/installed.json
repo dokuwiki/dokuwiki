@@ -151,17 +151,17 @@
         },
         {
             "name": "openpsa/universalfeedcreator",
-            "version": "v1.8.6",
-            "version_normalized": "1.8.6.0",
+            "version": "v1.9.0",
+            "version_normalized": "1.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flack/UniversalFeedCreator.git",
-                "reference": "3abf36ef9d3a3b31a3c330caea7d5176f0396301"
+                "reference": "c55f908e867aa6dade0905b8aefb94fd9d8c1f9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/3abf36ef9d3a3b31a3c330caea7d5176f0396301",
-                "reference": "3abf36ef9d3a3b31a3c330caea7d5176f0396301",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/c55f908e867aa6dade0905b8aefb94fd9d8c1f9e",
+                "reference": "c55f908e867aa6dade0905b8aefb94fd9d8c1f9e",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.5.32 || ^9.5.10"
             },
-            "time": "2024-01-23T15:59:31+00:00",
+            "time": "2024-02-22T11:08:24+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -203,7 +203,7 @@
             ],
             "support": {
                 "issues": "https://github.com/flack/UniversalFeedCreator/issues",
-                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.6"
+                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.9.0"
             },
             "install-path": "../openpsa/universalfeedcreator"
         },
@@ -332,17 +332,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.35",
-            "version_normalized": "3.0.35.0",
+            "version": "3.0.37",
+            "version_normalized": "3.0.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe"
+                "reference": "cfa2013d0f68c062055180dd4328cc8b9d1f30b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4b1827beabce71953ca479485c0ae9c51287f2fe",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/cfa2013d0f68c062055180dd4328cc8b9d1f30b8",
+                "reference": "cfa2013d0f68c062055180dd4328cc8b9d1f30b8",
                 "shasum": ""
             },
             "require": {
@@ -360,7 +360,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2023-12-29T01:59:53+00:00",
+            "time": "2024-03-03T02:14:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -425,7 +425,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.35"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.37"
             },
             "funding": [
                 {
@@ -524,17 +524,17 @@
         },
         {
             "name": "splitbrain/lesserphp",
-            "version": "v0.10.0",
-            "version_normalized": "0.10.0.0",
+            "version": "v0.10.1",
+            "version_normalized": "0.10.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/lesserphp.git",
-                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505"
+                "reference": "64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/2e5d20c4ce9186a34554a137a4a1784fc5c29505",
-                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505",
+                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0",
+                "reference": "64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0",
                 "shasum": ""
             },
             "require": {
@@ -548,7 +548,7 @@
             "suggest": {
                 "ext-fileinfo": "For mime type guessing of embedded files"
             },
-            "time": "2024-02-02T11:47:26+00:00",
+            "time": "2024-02-02T18:31:26+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -582,7 +582,7 @@
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "support": {
                 "issues": "https://github.com/splitbrain/lesserphp/issues",
-                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.0"
+                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.1"
             },
             "install-path": "../splitbrain/lesserphp"
         },
@@ -762,17 +762,17 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.6",
-            "version_normalized": "1.0.6.0",
+            "version": "1.0.7",
+            "version_normalized": "1.0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "274511fc654fa29cb7cfc039bed97a5ea786f1a0"
+                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/274511fc654fa29cb7cfc039bed97a5ea786f1a0",
-                "reference": "274511fc654fa29cb7cfc039bed97a5ea786f1a0",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/93cd2034628136b4fa322f7f1ac3d57293a6c08d",
+                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d",
                 "shasum": ""
             },
             "require": {
@@ -784,7 +784,7 @@
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2023-10-26T10:06:48+00:00",
+            "time": "2024-01-28T09:41:46+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -806,7 +806,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.0.6"
+                "source": "https://github.com/splitbrain/slika/tree/1.0.7"
             },
             "install-path": "../splitbrain/slika"
         }

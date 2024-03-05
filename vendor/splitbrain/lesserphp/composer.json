@@ -41,7 +41,7 @@
         "rector/rector": "^0.19"
     },
     "scripts": {
-        "test": "phpunit --verbose",
+        "test": "phpunit",
         "check": "phpcs -p -s",
         "fix": "phpcbf",
         "rector": "rector process"

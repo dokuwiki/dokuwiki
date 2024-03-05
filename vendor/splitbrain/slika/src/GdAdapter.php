@@ -90,13 +90,13 @@ class GdAdapter extends Adapter
 
         // rotate
         if (in_array($orientation, [3, 4])) {
-            $image = imagerotate($this->image, 180, $transparency, 1);
+            $image = imagerotate($this->image, 180, $transparency);
         }
         if (in_array($orientation, [5, 6])) {
-            $image = imagerotate($this->image, -90, $transparency, 1);
+            $image = imagerotate($this->image, -90, $transparency);
             list($this->width, $this->height) = [$this->height, $this->width];
         } elseif (in_array($orientation, [7, 8])) {
-            $image = imagerotate($this->image, 90, $transparency, 1);
+            $image = imagerotate($this->image, 90, $transparency);
             list($this->width, $this->height) = [$this->height, $this->width];
         }
         /** @var resource $image is now defined */
