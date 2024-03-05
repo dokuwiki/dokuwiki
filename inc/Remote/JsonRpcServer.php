@@ -44,7 +44,9 @@ class JsonRpcServer
             header('Allow: POST');
             throw new RemoteException("JSON-RPC server only accepts POST requests.", -32606);
         }
-        if ($INPUT->server->str('CONTENT_TYPE') !== 'application/json') {
+        [$contentType] = explode(';', $INPUT->server->str('CONTENT_TYPE'), 2); // ignore charset
+        $contentType = strtolower($contentType); // mime types are case-insensitive
+        if ($contentType !== 'application/json') {
             http_status(415);
             throw new RemoteException("JSON-RPC server only accepts application/json requests.", -32606);
         }
