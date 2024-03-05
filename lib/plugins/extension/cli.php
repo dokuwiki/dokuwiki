@@ -1,10 +1,14 @@
 <?php
 
-use splitbrain\phpcli\Exception;
 use dokuwiki\Extension\CLIPlugin;
+use dokuwiki\plugin\extension\Exception as ExtensionException;
+use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Local;
+use dokuwiki\plugin\extension\Repository;
+use splitbrain\phpcli\Colors;
+use splitbrain\phpcli\Exception;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
-use splitbrain\phpcli\Colors;
 
 /**
  * Class cli_plugin_extension
@@ -20,6 +24,7 @@ class cli_plugin_extension extends CLIPlugin
     protected function setup(Options $options)
     {
         // general setup
+        $options->useCompactHelp();
         $options->setHelp(
             "Manage plugins and templates for this DokuWiki instance\n\n" .
             "Status codes:\n" .
@@ -69,9 +74,10 @@ class cli_plugin_extension extends CLIPlugin
     /** @inheritdoc */
     protected function main(Options $options)
     {
-        /** @var helper_plugin_extension_repository $repo */
-        $repo = plugin_load('helper', 'extension_repository');
-        if (!$repo->hasAccess(false)) {
+        $repo = Repository::getInstance();
+        try {
+            $repo->checkAccess();
+        } catch (ExtensionException $e) {
             $this->warning('Extension Repository API is not accessible, no remote info available!');
         }
 
@@ -214,8 +220,6 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdInstall($extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
 
         $ok = 0;
         foreach ($extensions as $extname) {
@@ -270,9 +274,8 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdSearch($query, $showdetails, $max)
     {
-        /** @var helper_plugin_extension_repository $repository */
-        $repository = $this->loadHelper('extension_repository');
-        $result = $repository->search($query);
+        $repo = Repository::getInstance();
+        $result = $repo->searchExtensions($query);
         if ($max) {
             $result = array_slice($result, 0, $max);
         }
@@ -289,47 +292,22 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdList($showdetails, $filter)
     {
-        $list = $this->getInstalledExtensions();
-        $this->listExtensions($list, $showdetails, $filter);
-
+        $this->listExtensions((new Local())->getExtensions(), $showdetails, $filter);
         return 0;
-    }
-
-    /**
-     * Get all installed extensions
-     *
-     * @return array
-     */
-    protected function getInstalledExtensions()
-    {
-        /** @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
-        $pluginlist = $plugin_controller->getList('', true);
-        $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
-        $tpllist = array_map(static fn($path) => 'template:' . basename($path), $tpllist);
-
-        $list = array_merge($pluginlist, $tpllist);
-        sort($list);
-        return $list;
     }
 
     /**
      * List the given extensions
      *
-     * @param string[] $list
+     * @param Extension[] $list
      * @param bool $details display details
      * @param string $filter filter for this status
      * @throws Exception
      */
     protected function listExtensions($list, $details, $filter = '')
     {
-        /** @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
         $tr = new TableFormatter($this->colors);
-
-
-        foreach ($list as $name) {
-            $ext->setExtension($name);
+        foreach ($list as $ext) {
 
             $status = '';
             if ($ext->isInstalled()) {

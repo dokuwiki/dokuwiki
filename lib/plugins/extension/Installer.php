@@ -118,7 +118,7 @@ class Installer
                 $extension->getInstallDir()
             );
             $this->isDirty = true;
-            $extension->updateManagerInfo($this->sourceUrl);
+            $extension->getManager()->storeUpdate($this->sourceUrl);
             $this->removeDeletedFiles($extension);
 
             // FIXME remember installed extensions and if it was an update or new install

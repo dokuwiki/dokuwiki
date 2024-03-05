@@ -26,8 +26,8 @@ class Extension
     /** @var array The remote info array of the extension */
     protected array $remoteInfo = [];
 
-    /** @var array The manager info array of the extension */
-    protected array $managerInfo = [];
+    /** @var Manager|null The manager for this extension */
+    protected ?Manager $manager;
 
     // region Constructors
 
@@ -277,6 +277,18 @@ class Extension
     }
 
     /**
+     * Get the version of the extension that is actually installed
+     *
+     * Returns an empty string if the version is not available
+     *
+     * @return string
+     */
+    public function getInstalledVersion()
+    {
+        return $this->localInfo['date'] ?? '';
+    }
+
+    /**
      * Is this extension a template?
      *
      * @return bool false if it is a plugin
@@ -386,6 +398,132 @@ class Extension
 
     // endregion
 
+    // region Remote Info
+
+    /**
+     * Get the date of the last available update
+     *
+     * @return string yyyy-mm-dd
+     */
+    public function getLastUpdate()
+    {
+        return $this->getRemoteTag('lastupdate');
+    }
+
+    /**
+     * Get a list of tags this extension is tagged with at dokuwiki.org
+     *
+     * @return string[]
+     */
+    public function getTags()
+    {
+        return $this->getRemoteTag('tags', []);
+    }
+
+    /**
+     * Get the popularity of the extension
+     *
+     * This is a float between 0 and 1
+     *
+     * @return float
+     */
+    public function getPopularity()
+    {
+        return (float)$this->getRemoteTag('popularity', 0);
+    }
+
+    /**
+     * Get the text of the update message if there is any
+     *
+     * @return string
+     */
+    public function getUpdateMessage()
+    {
+        return $this->getRemoteTag('updatemessage');
+    }
+
+    /**
+     * Get the text of the security warning if there is any
+     *
+     * @return string
+     */
+    public function getSecurityWarning()
+    {
+        return $this->getRemoteTag('securitywarning');
+    }
+
+    /**
+     * Get the text of the security issue if there is any
+     *
+     * @return string
+     */
+    public function getSecurityIssue()
+    {
+        return $this->getRemoteTag('securityissue');
+    }
+
+    /**
+     * Get the URL of the screenshot of the extension if there is any
+     *
+     * @return string
+     */
+    public function getScreenshotURL()
+    {
+        return $this->getRemoteTag('screenshoturl');
+    }
+
+    /**
+     * Get the URL of the thumbnail of the extension if there is any
+     *
+     * @return string
+     */
+    public function getThumbnailURL()
+    {
+        return $this->getRemoteTag('thumbnailurl');
+    }
+
+    /**
+     * Get the download URL of the extension if there is any
+     *
+     * @return string
+     */
+    public function getDownloadURL()
+    {
+        return $this->getRemoteTag('downloadurl');
+    }
+
+    /**
+     * Get the bug tracker URL of the extension if there is any
+     *
+     * @return string
+     */
+    public function getBugtrackerURL()
+    {
+        return $this->getRemoteTag('bugtracker');
+    }
+
+    /**
+     * Get the URL of the source repository if there is any
+     *
+     * @return string
+     */
+    public function getSourcerepoURL()
+    {
+        return $this->getRemoteTag('sourcerepo');
+    }
+
+    /**
+     * Get the donation URL of the extension if there is any
+     *
+     * @return string
+     */
+    public function getDonationURL()
+    {
+        return $this->getRemoteTag('donationurl');
+    }
+
+    // endregion
+
     // region Actions
 
     /**
@@ -456,50 +594,16 @@ class Extension
     // region Meta Data Management
 
     /**
-     * This updates the timestamp and URL in the manager.dat file
+     * Access the Manager for this extension
      *
-     * It is called by Installer when installing or updating an extension
-     *
-     * @param $url
+     * @return Manager
      */
-    public function updateManagerInfo($url)
+    public function getManager()
     {
-        $this->managerInfo['downloadurl'] = $url;
-        if (isset($this->managerInfo['installed'])) {
-            // it's an update
-            $this->managerInfo['updated'] = date('r');
-        } else {
-            // it's a new install
-            $this->managerInfo['installed'] = date('r');
+        if ($this->manager === null) {
+            $this->manager = new Manager($this);
         }
-
-        $managerpath = $this->getInstallDir() . '/manager.dat';
-        $data = '';
-        foreach ($this->managerInfo as $k => $v) {
-            $data .= $k . '=' . $v . DOKU_LF;
-        }
-        io_saveFile($managerpath, $data);
-    }
-
-    /**
-     * Reads the manager.dat file and fills the managerInfo array
-     */
-    protected function readManagerInfo()
-    {
-        if ($this->managerInfo) return;
-
-        $managerpath = $this->getInstallDir() . '/manager.dat';
-        if (!is_readable($managerpath)) return;
-
-        $file = (array)@file($managerpath);
-        foreach ($file as $line) {
-            [$key, $value] = sexplode('=', $line, 2, '');
-            $key = trim($key);
-            $value = trim($value);
-            // backwards compatible with old plugin manager
-            if ($key == 'url') $key = 'downloadurl';
-            $this->managerInfo[$key] = $value;
-        }
+        return $this->manager;
     }
 
     /**
@@ -533,7 +637,8 @@ class Extension
     /**
      * Read information from either local or remote info
      *
-     * Always prefers local info over remote info
+     * Always prefers local info over remote info. Giving multiple keys is useful when the
+     * key has been renamed in the past or if local and remote keys might differ.
      *
      * @param string|string[] $tag one or multiple keys to check
      * @param mixed $default
@@ -544,11 +649,23 @@ class Extension
         foreach ((array)$tag as $t) {
             if (isset($this->localInfo[$t])) return $this->localInfo[$t];
         }
+
+        return $this->getRemoteTag($tag, $default);
+    }
+
+    /**
+     * Read information from remote info
+     *
+     * @param string|string[] $tag one or mutiple keys to check
+     * @param mixed $default
+     * @return mixed
+     */
+    protected function getRemoteTag($tag, $default = '')
+    {
         $this->loadRemoteInfo();
         foreach ((array)$tag as $t) {
             if (isset($this->remoteInfo[$t])) return $this->remoteInfo[$t];
         }
-
         return $default;
     }
 
@@ -576,5 +693,13 @@ class Extension
 
         return [$type, $base];
     }
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getId();
+    }
+
     // endregion
 }
