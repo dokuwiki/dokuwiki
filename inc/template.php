@@ -375,7 +375,7 @@ function tpl_metaheaders($alt = true)
 
     jsinfo();
     $JSINFO['sig'] = toolbar_signature();
-    $head['meta'][] = ['itemprop' => 'JSINFO', 'content' => base64_encode(json_encode($JSINFO, JSON_THROW_ON_ERROR))];
+    $head['meta'][] = ['name' => 'JSINFO', 'content' => htmlspecialchars(json_encode($JSINFO, JSON_THROW_ON_ERROR))];
 
     // load jquery
     $jquery = getCdnUrls();

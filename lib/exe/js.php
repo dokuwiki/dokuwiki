@@ -99,7 +99,7 @@ function js_out()
     ob_start();
 
     // add some global variables
-    echo "const JSINFO = JSON.parse(atob(document.head.querySelector('meta[itemprop=JSINFO]').content));";
+    echo "const JSINFO = JSON.parse($('<div/>').html(document.head.querySelector('meta[name=JSINFO]').content).text());";
     // TODO Is this neccessary?
     echo "const NS = JSINFO.namespace;";
     echo "const SIG = JSINFO.sig;";
