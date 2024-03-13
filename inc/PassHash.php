@@ -77,7 +77,7 @@ class PassHash
         } elseif (preg_match('/^md5\$(.{5})\$/', $hash, $m)) {
             $method = 'djangomd5';
             $salt   = $m[1];
-        } elseif (preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
+        } elseif (preg_match('/^\$2([abxy])\$(.{2})\$/', $hash, $m)) {
             $method = 'bcrypt';
             $salt   = $hash;
         } elseif (str_starts_with($hash, '{SSHA}')) {
