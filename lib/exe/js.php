@@ -102,10 +102,7 @@ function js_out()
     echo "const JSINFO = JSON.parse(atob(document.head.querySelector('meta[itemprop=JSINFO]').content));";
     // TODO Is this neccessary?
     echo "const NS = JSINFO.namespace;";
-    // TODO From template.php. Is this neccessary?
-    if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        echo  "var SIG=" . toolbar_signature() . ";";
-    }
+    echo "const SIG = JSINFO.sig;";
     echo "var DOKU_BASE   = '" . DOKU_BASE . "';";
     echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
     echo "var DOKU_COOKIE_PARAM = " . json_encode([
