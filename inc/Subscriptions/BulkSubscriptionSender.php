@@ -110,7 +110,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                         $count++;
                     }
                 } elseif ($style === 'list') {
-                    $this->sendList($USERINFO['mail'], $change_ids, $target);
+                    $this->sendList($USERINFO['mail'], $change_ids, $target, $lastupdate);
                     $count++;
                 }
                 // TODO: Handle duplicate subscriptions.
@@ -222,7 +222,7 @@ class BulkSubscriptionSender extends SubscriptionSender
      * @author Adrian Lang <lang@cosmocode.de>
      *
      */
-    protected function sendList($subscriber_mail, $ids, $ns_id)
+    protected function sendList($subscriber_mail, $ids, $ns_id, $lastupdate)
     {
         if ($ids === []) {
             return false;
@@ -231,9 +231,24 @@ class BulkSubscriptionSender extends SubscriptionSender
         $tlist = '';
         $hlist = '<ul>';
         foreach ($ids as $id) {
+            $pagelog = new PageChangeLog($id);
+            $n = 0;
+            $last = null;
+            do {
+                $rev = $pagelog->getRevisions($n++, 1);
+                $rev = ($rev !== []) ? $rev[0] : null;
+                if ($rev !== null) {
+                    $last = $rev;
+                }
+            } while (!is_null($rev) && $rev > $lastupdate);
+
             $link = wl($id, [], true);
+            $difflink = wl($id, ['do' => 'diff', 'rev' => $last], true);
             $tlist .= '* ' . $link . NL;
-            $hlist .= '<li><a href="' . $link . '">' . hsc($id) . '</a></li>' . NL;
+            $hlist .= '<li>';
+            $hlist .= '<a href="' . $link . '">' . hsc($id) . '</a>';
+            $hlist .= ' (<a href="' . $difflink . '">diff</a>)';
+            $hlist .= '</li>' . NL;
         }
         $hlist .= '</ul>';
 
