@@ -373,13 +373,9 @@ function tpl_metaheaders($alt = true)
         'href' => DOKU_BASE . 'lib/exe/css.php?t=' . rawurlencode($conf['template']) . '&tseed=' . $tseed
     ];
 
-    $script = "var NS='" . (isset($INFO) ? $INFO['namespace'] : '') . "';";
-    if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER')) {
-        $script .= "var SIG=" . toolbar_signature() . ";";
-    }
     jsinfo();
-    $script .= 'var JSINFO = ' . json_encode($JSINFO, JSON_THROW_ON_ERROR) . ';';
-    $head['script'][] = ['_data' => $script];
+    $JSINFO['sig'] = toolbar_signature();
+    $head['meta'][] = ['name' => 'JSINFO', 'content' => htmlspecialchars(json_encode($JSINFO, JSON_THROW_ON_ERROR))];
 
     // load jquery
     $jquery = getCdnUrls();
