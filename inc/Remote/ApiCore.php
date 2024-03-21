@@ -64,6 +64,7 @@ class ApiCore
 
             'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
             'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
+            'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
             // todo: implement getMediaHistory
             // todo: implement getMediaUsage
 
@@ -874,6 +875,31 @@ class ApiCore
         if ($author) $info->retrieveAuthor();
 
         return $info;
+    }
+
+    /**
+     * Returns the pages that use a given media file
+     *
+     * The call will return an error if the requested media file does not exist.
+     *
+     * Read access is required for the media file.
+     * 
+     * @param string $media file id
+     * @return string[] A list of pages linking to the given page
+     * @throws AccessDeniedException no permission for media
+     * @throws RemoteException if not exist
+     */
+    public function getMediaUsage($media) 
+    {
+        $media = cleanID($media);
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if (!media_exists($media, $rev)) {
+            throw new RemoteException('The requested media file does not exist', 221);
+        }
+
+        return ft_mediause($media);
     }
 
     /**
