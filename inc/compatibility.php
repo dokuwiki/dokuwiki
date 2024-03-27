@@ -105,7 +105,7 @@ if (!function_exists('str_starts_with')) {
 if (!function_exists('str_contains')) {
     function str_contains(?string $haystack, ?string $needle)
     {
-        return '' === $needle || false !== strpos($haystack, $needle);
+        return '' === $needle || false !== strpos($haystack, (string) $needle);
     }
 }
 
