@@ -23,6 +23,7 @@ use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
@@ -126,6 +127,7 @@ return static function (RectorConfig $rectorConfig): void {
         TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
         RemoveExtraParametersRector::class, // this actually broke code
+        RemoveUnusedConstructorParamRector::class, // see rectorphp/rector#8580
         RemoveUnusedNonEmptyArrayBeforeForeachRector::class, // seems unreliable when checking on array keys
         RemoveAlwaysTrueIfConditionRector::class, // fails with if(defined(...)) constructs
         RemoveUnreachableStatementRector::class, // fails GOTO in authpdo -> should be rewritten with exceptions
