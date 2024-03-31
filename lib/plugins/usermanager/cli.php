@@ -15,7 +15,6 @@ use splitbrain\phpcli\TableFormatter;
  */
 class cli_plugin_usermanager extends CLIPlugin
 {
-
     /** @inheritdoc */
     protected function setup(Options $options)
     {
