@@ -18,6 +18,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Cleaning list from re-introduced files
+        run: |
+          for E in $(git ls-tree -r master --name-only); do
+            if (git check-attr export-ignore "$E" | grep -q "export-ignore: set"); then
+              continue
+            fi
+            grep -v "^$E" data/deleted.files > data/deleted.files.tmp && mv data/deleted.files.tmp data/deleted.files
+          done
+          
       - name: Update deleted files
         run: |
           for F in $(git diff origin/stable..HEAD --summary | awk '/^ delete/ && $4 !~ /^(VERSION)/ {print $4}'); do
