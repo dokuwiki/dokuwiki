@@ -27,8 +27,9 @@ jobs:
             if grep -q "^$F" data/deleted.files; then
               continue
             fi
-            echo "$F" >> data/deleted.files
+            awk -v "input=$F" '/# removed in/ && !found {print input; found=1} 1' data/deleted.files > data/deleted.files.tmp && mv data/deleted.files.tmp data/deleted.files
           done
+          awk '/# removed in/ && !found {printf("\n"); found=1} 1' data/deleted.files > data/deleted.files.tmp && mv data/deleted.files.tmp data/deleted.files
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
