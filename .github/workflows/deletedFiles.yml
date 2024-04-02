@@ -3,6 +3,7 @@
 # It compares the current master with the stable branch and adds all deleted files to the data/deleted.files file
 # unless they are already listed there or are excluded from the release archives (export-ignore in .gitattributes).
 # Any additions are made to the top of the list with a single trailing line before the first "# removed in" line.
+# Finally, the list of newly removed entries receives a header "# removed in $(date -I)" with the current ISO date.
 
 name: "Update deleted files"
 on:
@@ -38,10 +39,14 @@ jobs:
             if grep -q "^$F$" data/deleted.files; then
               continue
             fi
+            if ( ! test -f "data/deleted.files.tmp"); then
+              awk -v "input=# newly removed" '/# removed in/ && !found {print input; found=1} 1' data/deleted.files > data/deleted.files.tmp && cp data/deleted.files{.tmp,}
+            fi
             awk -v "input=$F" '/# removed in/ && !found {print input; found=1} 1' data/deleted.files > data/deleted.files.tmp && cp data/deleted.files{.tmp,}
           done
           if (test -f "data/deleted.files.tmp"); then
             awk '/# removed in/ && !found {printf("\n"); found=1} 1' data/deleted.files > data/deleted.files.tmp && mv data/deleted.files{.tmp,}
+            sed -i "s/^# newly removed/# removed in $(date -I)/" data/deleted.files
           fi
           
       - name: Create Pull Request
