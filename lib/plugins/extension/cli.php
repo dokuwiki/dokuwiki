@@ -352,9 +352,9 @@ class cli_plugin_extension extends CLIPlugin
                 }
 
                 if ($ext->isEnabled()) {
-                    $ecolor = Colors::C_BROWN;
+                    $ecolor = Colors::C_RESET;
                 } else {
-                    $ecolor = Colors::C_DARKGRAY;
+                    $ecolor = Colors::C_BLUE;
                     $status .= 'd';
                 }
             } else {
