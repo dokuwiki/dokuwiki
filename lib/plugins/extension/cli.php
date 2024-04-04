@@ -327,23 +327,30 @@ class cli_plugin_extension extends CLIPlugin
         $ext = $this->loadHelper('extension_extension');
         $tr = new TableFormatter($this->colors);
 
-
         foreach ($list as $name) {
             $ext->setExtension($name);
 
-            $status = '';
             if ($ext->isInstalled()) {
                 $date = $ext->getInstalledVersion();
                 $avail = $ext->getLastUpdate();
-                $status = 'i';
-                if ($avail && $avail > $date) {
-                    $vcolor = Colors::C_RED;
-                    $status .= 'u';
+
+                if ($ext->isBundled()) {
+                    $status = 'b';
+                    $vcolor = Colors::C_RESET;
                 } else {
-                    $vcolor = Colors::C_GREEN;
+                    if ($ext->isGitControlled()) {
+                        $status = 'g';
+                    } else {
+                        $status = 'i';
+                    }
+                    if ($avail && $avail > $date) {
+                        $vcolor = Colors::C_RED;
+                        $status .= 'u';
+                    } else {
+                        $vcolor = Colors::C_GREEN;
+                    }
                 }
-                if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) $status = 'b';
+
                 if ($ext->isEnabled()) {
                     $ecolor = Colors::C_BROWN;
                 } else {
@@ -351,6 +358,7 @@ class cli_plugin_extension extends CLIPlugin
                     $status .= 'd';
                 }
             } else {
+                $status = '';
                 $ecolor = null;
                 $date = $ext->getLastUpdate();
                 $vcolor = null;
