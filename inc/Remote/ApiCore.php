@@ -883,13 +883,13 @@ class ApiCore
      * The call will return an error if the requested media file does not exist.
      *
      * Read access is required for the media file.
-     * 
+     *
      * @param string $media file id
      * @return string[] A list of pages linking to the given page
      * @throws AccessDeniedException no permission for media
      * @throws RemoteException if not exist
      */
-    public function getMediaUsage($media) 
+    public function getMediaUsage($media)
     {
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
