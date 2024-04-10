@@ -276,7 +276,7 @@ function toolbar_signature()
     }
     $sig = str_replace('@DATE@', dformat(), $sig);
     $sig = str_replace('\\\\n', '\\n', $sig);
-    return json_encode($sig, JSON_THROW_ON_ERROR);
+    return $sig;
 }
 
 //Setup VIM: ex: et ts=4 :
