@@ -345,7 +345,6 @@ class PluginController
         foreach ($master_list as $plugin) {
             if (file_exists(DOKU_PLUGIN . "$plugin/$type.php")) {
                 $plugins[] = $plugin;
-                continue;
             }
 
             $typedir = DOKU_PLUGIN . "$plugin/$type/";
