@@ -22,7 +22,7 @@ use dokuwiki\Utf8\Sort;
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    public const API_VERSION = 12;
+    public const API_VERSION = 13;
 
     /**
      * Returns details about the core methods
@@ -883,6 +883,8 @@ class ApiCore
      *
      * Read access is required for the media file.
      *
+     * Since API Version 13
+     *
      * @param string $media file id
      * @return string[] A list of pages linking to the given page
      * @throws AccessDeniedException no permission for media
@@ -894,7 +896,7 @@ class ApiCore
         if (auth_quickaclcheck($media) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
-        if (!media_exists($media, $rev)) {
+        if (!media_exists($media)) {
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
