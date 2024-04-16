@@ -135,6 +135,7 @@ class Admin extends Ui
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;
+            if (!$obj->showInMenu()) continue;
 
             if (in_array($p, $this->forAdmins, true)) {
                 $type = 'admin';

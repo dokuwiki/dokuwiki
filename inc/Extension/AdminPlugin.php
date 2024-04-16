@@ -60,6 +60,16 @@ abstract class AdminPlugin extends Plugin
     }
 
     /**
+     * Return true if the plugin should be shown in the admin menu
+     *
+     * @return bool
+     */
+    public function showInMenu()
+    {
+        return true;
+    }
+
+    /**
      * Carry out required processing
      */
     public function handle()
