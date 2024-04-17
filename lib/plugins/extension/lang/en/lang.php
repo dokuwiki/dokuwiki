@@ -14,9 +14,6 @@ $lang['tab_search']                   = 'Search and Install';
 $lang['tab_install']                  = 'Manual Install';
 
 $lang['notimplemented']               = 'This feature hasn\'t been implemented yet';
-$lang['notinstalled']                 = 'This extension is not installed';
-$lang['alreadyenabled']               = 'This extension has already been enabled';
-$lang['alreadydisabled']              = 'This extension has already been disabled';
 $lang['pluginlistsaveerror']          = 'There was an error saving the plugin list';
 $lang['unknownauthor']                = 'Unknown author';
 $lang['unknownversion']               = 'Unknown version';
@@ -98,6 +95,10 @@ $lang['error_archive_extract']        = 'Could not extract archive %s: %s';
 $lang['error_uninstall_protected']    = 'Extension %s is protected and cannot be uninstalled';
 $lang['error_disable_protected']      = 'Extension %s is protected and cannot be disabled';
 $lang['error_nourl']                  = 'No download URL could be found for extension %s';
+$lang['error_notinstalled']           = 'Extension %s is not installed';
+$lang['error_alreadyenabled']         = 'Extension %s has already been enabled';
+$lang['error_alreadydisabled']        = 'Extension %s has already been disabled';
+
 
 $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';

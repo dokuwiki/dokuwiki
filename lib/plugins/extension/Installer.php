@@ -36,7 +36,6 @@ class Installer
     public const STATUS_SKIPPED = 'skipped';
     public const STATUS_UPDATED = 'updated';
     public const STATUS_INSTALLED = 'installed';
-    public const STATUS_DELETED = 'deleted';
 
 
     /**
@@ -63,9 +62,9 @@ class Installer
     }
 
     /**
-     * Install an extension
+     * Install an extension by ID
      *
-     * This will simply call installFromUrl() with the URL from the extension
+     * This will simply call installExtension after constructing an extension from the ID
      *
      * The $skipInstalled parameter should only be used when installing dependencies
      *
@@ -73,11 +72,25 @@ class Installer
      * @param bool $skipInstalled Ignore the overwrite setting and skip installed extensions
      * @throws Exception
      */
-    public function installFromId($id, $skipInstalled = false) {
+    public function installFromId($id, $skipInstalled = false)
+    {
         $extension = Extension::createFromId($id);
-        if($skipInstalled && $extension->isInstalled()) return;
+        if ($skipInstalled && $extension->isInstalled()) return;
+        $this->installExtension($extension);
+    }
+
+    /**
+     * Install an extension
+     *
+     * This will simply call installFromUrl() with the URL from the extension
+     *
+     * @param Extension $extension
+     * @throws Exception
+     */
+    public function installExtension(Extension $extension)
+    {
         $url = $extension->getDownloadURL();
-        if(!$url) {
+        if (!$url) {
             throw new Exception('error_nourl', [$extension->getId()]);
         }
         $this->installFromUrl($url);
@@ -142,7 +155,7 @@ class Installer
         foreach ($extensions as $extension) {
             // check installation status
             if ($extension->isInstalled()) {
-                if(!$this->overwrite) {
+                if (!$this->overwrite) {
                     $this->processed[$extension->getId()] = self::STATUS_SKIPPED;
                     continue;
                 }
@@ -184,7 +197,11 @@ class Installer
     {
         // FIXME check if dependencies are still needed
 
-        if($extension->isProtected()) {
+        if (!$extension->isInstalled()) {
+            throw new Exception('error_notinstalled', [$extension->getId()]);
+        }
+
+        if ($extension->isProtected()) {
             throw new Exception('error_uninstall_protected', [$extension->getId()]);
         }
 
@@ -284,7 +301,7 @@ class Installer
     }
 
     /**
-     * Get the list of processed extensions and the processing status
+     * Get the list of processed extensions and their status during an installation run
      *
      * @return array id => status
      */

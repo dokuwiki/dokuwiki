@@ -29,14 +29,11 @@ class cli_plugin_extension extends CLIPlugin
         $options->setHelp(
             "Manage plugins and templates for this DokuWiki instance\n\n" .
             "Status codes:\n" .
-            "   i - installed\n" .
-            "   b - bundled with DokuWiki\n" .
-            "   g - installed via git\n" .
-            "   d - disabled\n" .
-            "   u - update available\n" .
-            "   ☠ - security issue\n" .
-            "   ⚠ - security warning\n" .
-            "   ▽ - update message\n"
+            "   i - installed                    ☠ - security issue\n" .
+            "   b - bundled with DokuWiki        ⚠ - security warning\n" .
+            "   g - installed via git            ↯ - update message\n" .
+            "   d - disabled                     ⮎ - URL changed\n" .
+            "   u - update available\n"
         );
 
         // search
@@ -126,21 +123,12 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdUpgrade()
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
-        $list = $this->getInstalledExtensions();
-
-        $ok = 0;
-        foreach ($list as $extname) {
-            $ext->setExtension($extname);
-            $date = $ext->getInstalledVersion();
-            $avail = $ext->getLastUpdate();
-            if ($avail && $avail > $date && !$ext->isBundled()) {
-                $ok += $this->cmdInstall([$extname]);
-            }
+        $local = new Local();
+        $extensions = [];
+        foreach ($local->getExtensions() as $ext) {
+            if($ext->updateAvailable()) $extensions[] = $ext->getID();
         }
-
-        return $ok;
+        return $this->cmdInstall($extensions);
     }
 
     /**
@@ -152,32 +140,23 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdEnable($set, $extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
-
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
-            if (!$ext->isInstalled()) {
-                $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                ++$ok;
-                continue;
-            }
+            $ext = Extension::createFromId($extname);
 
-            if ($set) {
-                $status = $ext->enable();
-                $msg = 'msg_enabled';
-            } else {
-                $status = $ext->disable();
-                $msg = 'msg_disabled';
-            }
-
-            if ($status !== true) {
-                $this->error($status);
-                ++$ok;
-                continue;
-            } else {
+            try {
+                if ($set) {
+                    $ext->enable();
+                    $msg = 'msg_enabled';
+                } else {
+                    $ext->disable();
+                    $msg = 'msg_disabled';
+                }
                 $this->success(sprintf($this->getLang($msg), $ext->getID()));
+            } catch (ExtensionException $e) {
+                $this->error($e->getMessage());
+                ++$ok;
+                continue;
             }
         }
 
@@ -192,27 +171,21 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdUnInstall($extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
+        $installer = new Installer();
 
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
-            if (!$ext->isInstalled()) {
-                $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                ++$ok;
-                continue;
-            }
+            $ext = Extension::createFromId($extname);
 
-            $status = $ext->uninstall();
-            if ($status) {
+            try {
+                $installer->uninstall($ext);
                 $this->success(sprintf($this->getLang('msg_delete_success'), $ext->getID()));
-            } else {
-                $this->error(sprintf($this->getLang('msg_delete_failed'), hsc($ext->getID())));
-                $ok = 1;
+            } catch (ExtensionException $e) {
+                $this->debug($e->getTraceAsString());
+                $this->error($e->getMessage());
+                $ok++; // error code is number of failed uninstalls
             }
         }
-
         return $ok;
     }
 
@@ -224,11 +197,10 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdInstall($extensions)
     {
-
-        $installer = new Installer(true);
-
         $ok = 0;
         foreach ($extensions as $extname) {
+            $installer = new Installer(true);
+
             try {
                 if (preg_match("/^https?:\/\//i", $extname)) {
                     $installer->installFromURL($extname, true);
@@ -240,17 +212,16 @@ class cli_plugin_extension extends CLIPlugin
                 $this->error($e->getMessage());
                 $ok++; // error code is number of failed installs
             }
-        }
 
-        $processed = $installer->getProcessed();
-        foreach($processed as $id => $status){
-            if($status == Installer::STATUS_INSTALLED) {
-                $this->success(sprintf($this->getLang('msg_install_success'), $id));
-            } else if($status == Installer::STATUS_UPDATED) {
-                $this->success(sprintf($this->getLang('msg_update_success'), $id));
+            $processed = $installer->getProcessed();
+            foreach($processed as $id => $status){
+                if($status == Installer::STATUS_INSTALLED) {
+                    $this->success(sprintf($this->getLang('msg_install_success'), $id));
+                } else if($status == Installer::STATUS_UPDATED) {
+                    $this->success(sprintf($this->getLang('msg_update_success'), $id));
+                }
             }
         }
-
 
         return $ok;
     }
@@ -295,6 +266,7 @@ class cli_plugin_extension extends CLIPlugin
      * @param bool $details display details
      * @param string $filter filter for this status
      * @throws Exception
+     * @todo break into smaller methods
      */
     protected function listExtensions($list, $details, $filter = '')
     {
@@ -337,10 +309,11 @@ class cli_plugin_extension extends CLIPlugin
 
             if ($ext->getSecurityIssue()) $status .= '☠';
             if ($ext->getSecurityWarning()) $status .= '⚠';
-            if ($ext->getUpdateMessage()) $status .= '▽';
+            if ($ext->getUpdateMessage()) $status .= '↯';
+            if ($ext->hasChangedURL()) $status .= '⮎';
 
             echo $tr->format(
-                [20, 3, 12, '*'],
+                [20, 5, 12, '*'],
                 [
                     $ext->getID(),
                     $status,
@@ -363,29 +336,42 @@ class cli_plugin_extension extends CLIPlugin
             if (!$details) continue;
 
             echo $tr->format(
-                [5, '*'],
+                [7, '*'],
                 ['', $ext->getDescription()],
                 [null, Colors::C_CYAN]
             );
             if ($ext->getSecurityWarning()) {
                 echo $tr->format(
-                    [5, '*'],
+                    [7, '*'],
                     ['', '⚠ ' . $ext->getSecurityWarning()],
                     [null, Colors::C_YELLOW]
                 );
             }
             if ($ext->getSecurityIssue()) {
                 echo $tr->format(
-                    [5, '*'],
+                    [7, '*'],
                     ['', '☠ ' . $ext->getSecurityIssue()],
                     [null, Colors::C_LIGHTRED]
                 );
             }
             if ($ext->getUpdateMessage()) {
                 echo $tr->format(
-                    [5, '*'],
-                    ['', '▽ ' . $ext->getUpdateMessage()],
+                    [7, '*'],
+                    ['', '↯ ' . $ext->getUpdateMessage()],
                     [null, Colors::C_LIGHTBLUE]
+                );
+            }
+            if ($ext->hasChangedURL()) {
+                $msg = $this->getLang('url_change');
+                $msg = str_replace('<br>',"\n", $msg);
+                $msg = str_replace('<br/>',"\n", $msg);
+                $msg = str_replace('<br />',"\n", $msg);
+                $msg = strip_tags($msg);
+
+                echo $tr->format(
+                    [7, '*'],
+                    ['', '⮎ ' .  sprintf($msg, $ext->getDownloadURL(), $ext->getManager()->getDownloadUrl())],
+                    [null, Colors::C_BLUE]
                 );
             }
         }

@@ -406,6 +406,31 @@ class Extension
         return $plugin_controller->isEnabled($this->base);
     }
 
+    /**
+     * Has the download URL changed since the last download?
+     *
+     * @return bool
+     */
+    public function hasChangedURL()
+    {
+        $last = $this->getManager()->getDownloadUrl();
+        if(!$last) return false;
+        return $last !== $this->getDownloadURL();
+    }
+
+    /**
+     * Is an update available for this extension?
+     *
+     * @return bool
+     */
+    public function updateAvailable()
+    {
+        if($this->isBundled()) return false; // bundled extensions are never updated
+        $self = $this->getInstalledVersion();
+        $remote = $this->getLastUpdate();
+        return $self < $remote;
+    }
+
     // endregion
 
     // region Remote Info
@@ -544,10 +569,7 @@ class Extension
     public function installOrUpdate()
     {
         $installer = new Installer(true);
-        $installer->installFromUrl(
-            $this->getURL(),
-            $this->getBase(),
-        );
+        $installer->installExtension($this);
     }
 
     /**
@@ -568,8 +590,8 @@ class Extension
     public function enable()
     {
         if ($this->isTemplate()) throw new Exception('notimplemented');
-        if (!$this->isInstalled()) throw new Exception('notinstalled');
-        if ($this->isEnabled()) throw new Exception('alreadyenabled');
+        if (!$this->isInstalled()) throw new Exception('error_notinstalled', [$this->getId()]);
+        if ($this->isEnabled()) throw new Exception('error_alreadyenabled', [$this->getId()]);
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;
@@ -587,9 +609,9 @@ class Extension
     public function disable()
     {
         if ($this->isTemplate()) throw new Exception('notimplemented');
-        if (!$this->isInstalled()) throw new Exception('notinstalled');
-        if (!$this->isEnabled()) throw new Exception('alreadydisabled');
-        if ($this->isProtected()) throw new Exception('error_disable_protected');
+        if (!$this->isInstalled()) throw new Exception('error_notinstalled', [$this->getId()]);
+        if (!$this->isEnabled()) throw new Exception('error_alreadydisabled', [$this->getId()]);
+        if ($this->isProtected()) throw new Exception('error_disable_protected', [$this->getId()]);
 
         /* @var PluginController $plugin_controller */
         global $plugin_controller;

@@ -3,7 +3,7 @@
 namespace dokuwiki\plugin\extension;
 
 /**
- * Manages info about installation/deinstallation of extensions
+ * Manages info about installation of extensions
  */
 class Manager
 {
@@ -54,7 +54,6 @@ class Manager
     }
 
 
-
     /**
      * Reads the manager.dat file and fills the managerInfo array
      */
@@ -74,5 +73,20 @@ class Manager
         }
 
         return $data;
+    }
+
+    public function getLastUpdate()
+    {
+        return $this->data['updated'] ?? $this->data['installed'] ?? '';
+    }
+
+    public function getDownloadUrl()
+    {
+        return $this->data['downloadurl'] ?? '';
+    }
+
+    public function getInstallDate()
+    {
+        return $this->data['installed'] ?? '';
     }
 }
