@@ -32,7 +32,10 @@ class cli_plugin_extension extends CLIPlugin
             "   b - bundled with DokuWiki\n" .
             "   g - installed via git\n" .
             "   d - disabled\n" .
-            "   u - update available\n"
+            "   u - update available\n" .
+            "   ☠ - security issue\n" .
+            "   ⚠ - security warning\n" .
+            "   ▽ - update message\n"
         );
 
         // search
@@ -321,7 +324,11 @@ class cli_plugin_extension extends CLIPlugin
                     $vcolor = Colors::C_GREEN;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) $status = 'b';
+                if ($ext->isBundled()) {
+                    $status = 'b';
+                    $date = '<bundled>';
+                    $vcolor = null;
+                }
                 if ($ext->isEnabled()) {
                     $ecolor = Colors::C_BROWN;
                 } else {
@@ -337,6 +344,11 @@ class cli_plugin_extension extends CLIPlugin
             if ($filter && strpos($status, $filter) === false) {
                 continue;
             }
+
+
+            if ($ext->getSecurityIssue()) $status .= '☠';
+            if ($ext->getSecurityWarning()) $status .= '⚠';
+            if ($ext->getUpdateMessage()) $status .= '▽';
 
             echo $tr->format(
                 [20, 3, 12, '*'],
@@ -358,6 +370,7 @@ class cli_plugin_extension extends CLIPlugin
                 ]
             );
 
+
             if (!$details) continue;
 
             echo $tr->format(
@@ -365,6 +378,27 @@ class cli_plugin_extension extends CLIPlugin
                 ['', $ext->getDescription()],
                 [null, Colors::C_CYAN]
             );
+            if ($ext->getSecurityWarning()) {
+                echo $tr->format(
+                    [5, '*'],
+                    ['', '⚠ ' . $ext->getSecurityWarning()],
+                    [null, Colors::C_YELLOW]
+                );
+            }
+            if ($ext->getSecurityIssue()) {
+                echo $tr->format(
+                    [5, '*'],
+                    ['', '☠ ' . $ext->getSecurityIssue()],
+                    [null, Colors::C_LIGHTRED]
+                );
+            }
+            if ($ext->getUpdateMessage()) {
+                echo $tr->format(
+                    [5, '*'],
+                    ['', '▽ ' . $ext->getUpdateMessage()],
+                    [null, Colors::C_LIGHTBLUE]
+                );
+            }
         }
     }
 }
