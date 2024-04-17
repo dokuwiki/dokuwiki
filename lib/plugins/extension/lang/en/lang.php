@@ -98,7 +98,8 @@ $lang['error_nourl']                  = 'No download URL could be found for exte
 $lang['error_notinstalled']           = 'Extension %s is not installed';
 $lang['error_alreadyenabled']         = 'Extension %s has already been enabled';
 $lang['error_alreadydisabled']        = 'Extension %s has already been disabled';
-
+$lang['error_minphp']                 = 'Extension %s requires at least PHP %s but this wiki is running PHP %s';
+$lang['error_maxphp']                 = 'Extension %s only supports PHP up to %s but this wiki is running PHP %s';
 
 $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';

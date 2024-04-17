@@ -299,6 +299,28 @@ class Extension
     }
 
     /**
+     * Return the minimum PHP version required by the extension
+     *
+     * Empty if not set
+     *
+     * @return string
+     */
+    public function getMinimumPHPVersion()
+    {
+        return $this->getTag('phpmin', '');
+    }
+
+    /**
+     * Return the minimum PHP version supported by the extension
+     *
+     * @return string
+     */
+    public function getMaximumPHPVersion()
+    {
+        return $this->getTag('phpmax', '');
+    }
+
+    /**
      * Is this extension a template?
      *
      * @return bool false if it is a plugin

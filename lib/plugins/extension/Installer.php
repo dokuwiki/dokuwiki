@@ -164,7 +164,8 @@ class Installer
                 $status = self::STATUS_INSTALLED;
             }
 
-            // FIXME check PHP requirements
+            // check PHP requirements
+            $this->ensurePhpCompatibility($extension);
 
             // install dependencies first
             foreach ($extension->getDependencyList() as $id) {
@@ -309,6 +310,29 @@ class Installer
     {
         return $this->processed;
     }
+
+
+    /**
+     * Ensure that the given extension is compatible with the current PHP version
+     *
+     * Throws an exception if the extension is not compatible
+     *
+     * @param Extension $extension
+     * @throws Exception
+     */
+    protected function ensurePhpCompatibility(Extension $extension)
+    {
+        $min = $extension->getMinimumPHPVersion();
+        if ($min && version_compare(PHP_VERSION, $min, '<')) {
+            throw new Exception('error_minphp', [$extension->getId(), $min, PHP_VERSION]);
+        }
+
+        $max = $extension->getMaximumPHPVersion();
+        if ($max && version_compare(PHP_VERSION, $max, '>')) {
+            throw new Exception('error_maxphp', [$extension->getId(), $max, PHP_VERSION]);
+        }
+    }
+
 
     /**
      * Get a base name from an archive name (we don't trust)
