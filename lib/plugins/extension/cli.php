@@ -3,6 +3,7 @@
 use dokuwiki\Extension\CLIPlugin;
 use dokuwiki\plugin\extension\Exception as ExtensionException;
 use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Installer;
 use dokuwiki\plugin\extension\Local;
 use dokuwiki\plugin\extension\Repository;
 use splitbrain\phpcli\Colors;
@@ -224,45 +225,33 @@ class cli_plugin_extension extends CLIPlugin
     protected function cmdInstall($extensions)
     {
 
+        $installer = new Installer(true);
+
         $ok = 0;
         foreach ($extensions as $extname) {
-            $installed = [];
-
-            if (preg_match("/^https?:\/\//i", $extname)) {
-                try {
-                    $installed = $ext->installFromURL($extname, true);
-                } catch (Exception $e) {
-                    $this->error($e->getMessage());
-                    ++$ok;
+            try {
+                if (preg_match("/^https?:\/\//i", $extname)) {
+                    $installer->installFromURL($extname, true);
+                } else {
+                    $installer->installFromId($extname);
                 }
-            } else {
-                $ext->setExtension($extname);
-
-                if (!$ext->getDownloadURL()) {
-                    ++$ok;
-                    $this->error(
-                        sprintf('Could not find download for %s', $ext->getID())
-                    );
-                    continue;
-                }
-
-                try {
-                    $installed = $ext->installOrUpdate();
-                } catch (Exception $e) {
-                    $this->error($e->getMessage());
-                    ++$ok;
-                }
-            }
-
-            foreach ($installed as $info) {
-                $this->success(
-                    sprintf(
-                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                        $info['base']
-                    )
-                );
+            } catch (ExtensionException $e) {
+                $this->debug($e->getTraceAsString());
+                $this->error($e->getMessage());
+                $ok++; // error code is number of failed installs
             }
         }
+
+        $processed = $installer->getProcessed();
+        foreach($processed as $id => $status){
+            if($status == Installer::STATUS_INSTALLED) {
+                $this->success(sprintf($this->getLang('msg_install_success'), $id));
+            } else if($status == Installer::STATUS_UPDATED) {
+                $this->success(sprintf($this->getLang('msg_update_success'), $id));
+            }
+        }
+
+
         return $ok;
     }
 

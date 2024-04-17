@@ -31,6 +31,14 @@ class Installer
     /** @var string The last used URL to install an extension */
     protected $sourceUrl = '';
 
+    protected $processed = [];
+
+    public const STATUS_SKIPPED = 'skipped';
+    public const STATUS_UPDATED = 'updated';
+    public const STATUS_INSTALLED = 'installed';
+    public const STATUS_DELETED = 'deleted';
+
+
     /**
      * Initialize a new extension installer
      *
@@ -48,7 +56,31 @@ class Installer
      */
     public function __destruct()
     {
+        foreach ($this->temporary as $dir) {
+            io_rmdir($dir, true);
+        }
         $this->cleanUp();
+    }
+
+    /**
+     * Install an extension
+     *
+     * This will simply call installFromUrl() with the URL from the extension
+     *
+     * The $skipInstalled parameter should only be used when installing dependencies
+     *
+     * @param string $id the extension ID
+     * @param bool $skipInstalled Ignore the overwrite setting and skip installed extensions
+     * @throws Exception
+     */
+    public function installFromId($id, $skipInstalled = false) {
+        $extension = Extension::createFromId($id);
+        if($skipInstalled && $extension->isInstalled()) return;
+        $url = $extension->getDownloadURL();
+        if(!$url) {
+            throw new Exception('error_nourl', [$extension->getId()]);
+        }
+        $this->installFromUrl($url);
     }
 
     /**
@@ -108,11 +140,27 @@ class Installer
         $this->extractArchive($archive, $target);
         $extensions = $this->findExtensions($target, $base);
         foreach ($extensions as $extension) {
-            if ($extension->isInstalled() && !$this->overwrite) {
-                // FIXME remember skipped extensions
-                continue;
+            // check installation status
+            if ($extension->isInstalled()) {
+                if(!$this->overwrite) {
+                    $this->processed[$extension->getId()] = self::STATUS_SKIPPED;
+                    continue;
+                }
+                $status = self::STATUS_UPDATED;
+            } else {
+                $status = self::STATUS_INSTALLED;
             }
 
+            // FIXME check PHP requirements
+
+            // install dependencies first
+            foreach ($extension->getDependencyList() as $id) {
+                if (isset($this->processed[$id])) continue;
+                if ($id == $extension->getId()) continue; // avoid circular dependencies
+                $this->installFromId($id, true);
+            }
+
+            // now install the extension
             $this->dircopy(
                 $extension->getCurrentDir(),
                 $extension->getInstallDir()
@@ -120,12 +168,8 @@ class Installer
             $this->isDirty = true;
             $extension->getManager()->storeUpdate($this->sourceUrl);
             $this->removeDeletedFiles($extension);
-
-            // FIXME remember installed extensions and if it was an update or new install
-            // FIXME queue dependencies for installation
+            $this->processed[$extension->getId()] = $status;
         }
-
-        // FIXME process dependency queue
 
         $this->cleanUp();
     }
@@ -224,6 +268,9 @@ class Installer
         }
     }
 
+    /**
+     * Purge all caches
+     */
     public static function purgeCache()
     {
         // expire dokuwiki caches
@@ -234,6 +281,16 @@ class Installer
         if (function_exists('opcache_reset')) {
             opcache_reset();
         }
+    }
+
+    /**
+     * Get the list of processed extensions and the processing status
+     *
+     * @return array id => status
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
     }
 
     /**
@@ -288,7 +345,7 @@ class Installer
                 $file->getFilename() === 'plugin.info.txt' ||
                 $file->getFilename() === 'template.info.txt'
             ) {
-                $extensions = Extension::createFromDirectory($file->getPath());
+                $extensions[] = Extension::createFromDirectory($file->getPath());
             }
         }
         if ($extensions) return $extensions;
@@ -367,15 +424,10 @@ class Installer
     }
 
     /**
-     * Clean up all temporary directories and reset caches
+     * Reset caches if needed
      */
     protected function cleanUp()
     {
-        foreach ($this->temporary as $dir) {
-            io_rmdir($dir, true);
-        }
-        $this->temporary = [];
-
         if ($this->isDirty) {
             self::purgeCache();
             $this->isDirty = false;

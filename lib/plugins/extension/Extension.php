@@ -17,8 +17,8 @@ class Extension
     /** @var string The base name of this extension */
     protected string $base;
 
-    /** @var string|null The current location of this extension */
-    protected ?string $currentDir;
+    /** @var string The current location of this extension */
+    protected string $currentDir = '';
 
     /** @var array The local info array of the extension */
     protected array $localInfo = [];
@@ -27,7 +27,7 @@ class Extension
     protected array $remoteInfo = [];
 
     /** @var Manager|null The manager for this extension */
-    protected ?Manager $manager;
+    protected ?Manager $manager = null;
 
     // region Constructors
 
@@ -179,7 +179,7 @@ class Extension
     {
         // recheck that the current currentDir is still valid
         if ($this->currentDir && !is_dir($this->currentDir)) {
-            $this->currentDir = null;
+            $this->currentDir = '';
         }
 
         // if the extension is installed, then the currentDir is the install dir!
@@ -205,7 +205,7 @@ class Extension
             $dir = DOKU_PLUGIN . $this->base;
         }
 
-        return realpath($dir);
+        return fullpath($dir);
     }
 
 
@@ -286,6 +286,16 @@ class Extension
     public function getInstalledVersion()
     {
         return $this->localInfo['date'] ?? '';
+    }
+
+    /**
+     * Get a list of extension ids this extension depends on
+     *
+     * @return string[]
+     */
+    public function getDependencyList()
+    {
+        return $this->getTag('depends', []);
     }
 
     /**

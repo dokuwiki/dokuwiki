@@ -71,10 +71,8 @@ $lang['msg_enabled']                  = 'Plugin %s enabled';
 $lang['msg_disabled']                 = 'Plugin %s disabled';
 $lang['msg_delete_success']           = 'Extension %s uninstalled';
 $lang['msg_delete_failed']            = 'Uninstalling Extension %s failed';
-$lang['msg_template_install_success'] = 'Template %s installed successfully';
-$lang['msg_template_update_success']  = 'Template %s updated successfully';
-$lang['msg_plugin_install_success']   = 'Plugin %s installed successfully';
-$lang['msg_plugin_update_success']    = 'Plugin %s updated successfully';
+$lang['msg_install_success']          = 'Extension %s installed successfully';
+$lang['msg_update_success']           = 'Extension %s updated successfully';
 $lang['msg_upload_failed']            = 'Uploading the file failed: %s';
 $lang['msg_nooverwrite']              = 'Extension %s already exists so it is not being overwritten; to overwrite, tick the overwrite option';
 
@@ -98,7 +96,8 @@ $lang['error_copy_copy']              = 'Could not copy %s to %s';
 $lang['error_archive_read']           = 'Could not open archive %s for reading';
 $lang['error_archive_extract']        = 'Could not extract archive %s: %s';
 $lang['error_uninstall_protected']    = 'Extension %s is protected and cannot be uninstalled';
-$lang['error_disable_protected']     = 'Extension %s is protected and cannot be disabled';
+$lang['error_disable_protected']      = 'Extension %s is protected and cannot be disabled';
+$lang['error_nourl']                  = 'No download URL could be found for extension %s';
 
 $lang['noperms']                      = 'Extension directory is not writable';
 $lang['notplperms']                   = 'Template directory is not writable';
