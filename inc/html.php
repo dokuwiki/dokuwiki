@@ -858,7 +858,7 @@ function html_list_toc($item)
         $link = $item['link'];
     }
 
-    return '<a href="' . $link . '">' . hsc($item['title']) . '</a>';
+    return '<a href="' . $link . '" title="' . hsc($item['title']) . '">' . hsc($item['title']) . '</a>';
 }
 
 /**
