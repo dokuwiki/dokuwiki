@@ -161,7 +161,26 @@ class admin_plugin_extension extends AdminPlugin
      */
     public function html()
     {
-        echo '<h1>' . $this->getLang('menu') . '</h1>' . DOKU_LF;
+        echo '<h1>' . $this->getLang('menu') . '</h1>';
+
+        $ext = \dokuwiki\plugin\extension\Extension::createFromId('aichat');
+        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
+        echo $gui->render();
+
+        $ext = \dokuwiki\plugin\extension\Extension::createFromId('gallery');
+        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
+        echo $gui->render();
+
+        $ext = \dokuwiki\plugin\extension\Extension::createFromId('extension');
+        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
+        echo $gui->render();
+
+        $ext = \dokuwiki\plugin\extension\Extension::createFromId('top');
+        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
+        echo $gui->render();
+
+        return;
+
         echo '<div id="extension__manager">' . DOKU_LF;
 
         $this->gui->tabNavigation();

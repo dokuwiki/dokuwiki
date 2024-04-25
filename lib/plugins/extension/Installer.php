@@ -165,7 +165,7 @@ class Installer
             }
 
             // check PHP requirements
-            $this->ensurePhpCompatibility($extension);
+            self::ensurePhpCompatibility($extension);
 
             // install dependencies first
             foreach ($extension->getDependencyList() as $id) {
@@ -175,6 +175,7 @@ class Installer
             }
 
             // now install the extension
+            self::ensurePermissions($extension);
             $this->dircopy(
                 $extension->getCurrentDir(),
                 $extension->getInstallDir()
@@ -205,6 +206,8 @@ class Installer
         if ($extension->isProtected()) {
             throw new Exception('error_uninstall_protected', [$extension->getId()]);
         }
+
+        self::ensurePermissions($extension);
 
         if (!io_rmdir($extension->getInstallDir(), true)) {
             throw new Exception('msg_delete_failed', [$extension->getId()]);
@@ -320,7 +323,7 @@ class Installer
      * @param Extension $extension
      * @throws Exception
      */
-    protected function ensurePhpCompatibility(Extension $extension)
+    public static function ensurePhpCompatibility(Extension $extension)
     {
         $min = $extension->getMinimumPHPVersion();
         if ($min && version_compare(PHP_VERSION, $min, '<')) {
@@ -333,6 +336,28 @@ class Installer
         }
     }
 
+    /**
+     * Ensure the file permissions are correct before attempting to install
+     *
+     * @throws Exception if the permissions are not correct
+     */
+    public static function ensurePermissions(Extension $extension)
+    {
+        $target = $extension->getInstallDir();
+
+        // updates
+        if (file_exists($target)) {
+            if (!is_writable($target)) throw new Exception('noperms');
+            return;
+        }
+
+        // new installs
+        $target = dirname($target);
+        if (!is_writable($target)) {
+            if ($extension->isTemplate()) throw new Exception('notplperms');
+            throw new Exception('nopluginperms');
+        }
+    }
 
     /**
      * Get a base name from an archive name (we don't trust)

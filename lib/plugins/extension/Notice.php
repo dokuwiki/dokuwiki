@@ -1,0 +1,183 @@
+<?php
+
+
+namespace dokuwiki\plugin\extension;
+
+class Notice
+{
+    const INFO = 'info';
+    const WARNING = 'warning';
+    const ERROR = 'error';
+    const SECURITY = 'security';
+
+    public const ICONS = [
+        self::INFO => 'ⓘ',
+        self::WARNING => '↯',
+        self::ERROR => '⚠',
+        self::SECURITY => '☠',
+    ];
+
+    protected $notices = [
+        self::INFO => [],
+        self::WARNING => [],
+        self::ERROR => [],
+        self::SECURITY => [],
+    ];
+
+    /** @var \helper_plugin_extension */
+    protected $helper;
+
+    /** @var Extension */
+    protected Extension $extension;
+
+    /**
+     * Not public, use list() instead
+     * @param Extension $extension
+     */
+    protected function __construct(Extension $extension)
+    {
+        $this->helper = plugin_load('helper', 'extension');
+        $this->extension = $extension;
+
+        $this->checkDependencies();
+        $this->checkConflicts();
+        $this->checkSecurity();
+        $this->checkFolder();
+        $this->checkPHPVersion();
+        $this->checkUpdateMessage();
+        $this->checkURLChange();
+    }
+
+    /**
+     * Get all notices for the extension
+     *
+     * @return string[][] array of notices grouped by type
+     */
+    public static function list(Extension $extension): array
+    {
+        $self = new self($extension);
+        return $self->notices;
+    }
+
+    /**
+     * Access a language string
+     *
+     * @param string $msg
+     * @return string
+     */
+    protected function getLang($msg)
+    {
+        return strip_tags($this->helper->getLang($msg)); // FIXME existing strings should be adjusted
+    }
+
+    /**
+     * Check that all dependencies are met
+     * @return void
+     */
+    protected function checkDependencies()
+    {
+        if (!$this->extension->isInstalled()) return;
+
+        $dependencies = $this->extension->getDependencyList();
+        $missing = [];
+        foreach ($dependencies as $dependency) {
+            $dep = Extension::createFromId($dependency);
+            if (!$dep->isInstalled()) $missing[] = $dep;
+        }
+        if(!$missing) return;
+
+        $this->notices[self::ERROR][] = sprintf(
+            $this->getLang('missing_dependency'),
+            join(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $missing))
+        );
+    }
+
+    /**
+     * Check if installed dependencies are conflicting
+     * @return void
+     */
+    protected function checkConflicts()
+    {
+        $conflicts = $this->extension->getConflictList();
+        $found = [];
+        foreach ($conflicts as $conflict) {
+            $dep = Extension::createFromId($conflict);
+            if ($dep->isInstalled()) $found[] = $dep;
+        }
+        if(!$found) return;
+
+        $this->notices[self::WARNING][] = sprintf(
+            $this->getLang('found_conflict'),
+            join(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $found))
+        );
+    }
+
+    /**
+     * Check for security issues
+     * @return void
+     */
+    protected function checkSecurity()
+    {
+        if ($issue = $this->extension->getSecurityIssue()) {
+            $this->notices[self::SECURITY][] = sprintf($this->getLang('security_issue'), $issue);
+        }
+        if ($issue = $this->extension->getSecurityWarning()) {
+            $this->notices[self::SECURITY][] = sprintf($this->getLang('security_issue'), $issue);
+        }
+    }
+
+    /**
+     * Check if the extension is installed in correct folder
+     * @return void
+     */
+    protected function checkFolder()
+    {
+        if (!$this->extension->isInWrongFolder()) return;
+
+        $this->notices[self::ERROR][] = sprintf(
+            $this->getLang('wrong_folder'),
+            basename($this->extension->getCurrentDir()),
+            basename($this->extension->getInstallDir())
+        );
+    }
+
+    /**
+     * Check PHP requirements
+     * @return void
+     */
+    protected function checkPHPVersion()
+    {
+        try {
+            Installer::ensurePhpCompatibility($this->extension);
+        } catch (\Exception $e) {
+            $this->notices[self::ERROR][] = $e->getMessage();
+        }
+    }
+
+    /**
+     * Check for update message
+     * @return void
+     */
+    protected function checkUpdateMessage()
+    {
+        // FIXME should we only display this for installed extensions?
+        if ($msg = $this->extension->getUpdateMessage()) {
+            $this->notices[self::WARNING][] = sprintf($this->getLang('update_message'), $msg);
+        }
+    }
+
+    /**
+     * Check for URL changes
+     * @return void
+     */
+    protected function checkURLChange()
+    {
+        if (!$this->extension->hasChangedURL()) return;
+        $this->notices[self::WARNING][] = sprintf(
+            $this->getLang('url_change'),
+            $this->extension->getDownloadURL(),
+            $this->extension->getManager()->getDownloadURL()
+        );
+    }
+
+}

@@ -5,6 +5,7 @@ use dokuwiki\plugin\extension\Exception as ExtensionException;
 use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Installer;
 use dokuwiki\plugin\extension\Local;
+use dokuwiki\plugin\extension\Notice;
 use dokuwiki\plugin\extension\Repository;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Exception;
@@ -29,10 +30,10 @@ class cli_plugin_extension extends CLIPlugin
         $options->setHelp(
             "Manage plugins and templates for this DokuWiki instance\n\n" .
             "Status codes:\n" .
-            "   i - installed                    ☠ - security issue\n" .
-            "   b - bundled with DokuWiki        ⚠ - security warning\n" .
-            "   g - installed via git            ↯ - update message\n" .
-            "   d - disabled                     ⮎ - URL changed\n" .
+            "   i - installed                    " . Notice::ICONS[Notice::SECURITY] . " - security issue\n" .
+            "   b - bundled with DokuWiki        " . Notice::ICONS[Notice::ERROR] . " - extension error\n" .
+            "   g - installed via git            " . Notice::ICONS[Notice::WARNING] . " - extension warning\n" .
+            "   d - disabled                     " . Notice::ICONS[Notice::INFO] . " - extension info\n" .
             "   u - update available\n"
         );
 
@@ -126,7 +127,7 @@ class cli_plugin_extension extends CLIPlugin
         $local = new Local();
         $extensions = [];
         foreach ($local->getExtensions() as $ext) {
-            if($ext->updateAvailable()) $extensions[] = $ext->getID();
+            if ($ext->isUpdateAvailable()) $extensions[] = $ext->getID();
         }
         return $this->cmdInstall($extensions);
     }
@@ -214,10 +215,10 @@ class cli_plugin_extension extends CLIPlugin
             }
 
             $processed = $installer->getProcessed();
-            foreach($processed as $id => $status){
-                if($status == Installer::STATUS_INSTALLED) {
+            foreach ($processed as $id => $status) {
+                if ($status == Installer::STATUS_INSTALLED) {
                     $this->success(sprintf($this->getLang('msg_install_success'), $id));
-                } else if($status == Installer::STATUS_UPDATED) {
+                } else if ($status == Installer::STATUS_UPDATED) {
                     $this->success(sprintf($this->getLang('msg_update_success'), $id));
                 }
             }
@@ -306,11 +307,11 @@ class cli_plugin_extension extends CLIPlugin
                 continue;
             }
 
-
-            if ($ext->getSecurityIssue()) $status .= '☠';
-            if ($ext->getSecurityWarning()) $status .= '⚠';
-            if ($ext->getUpdateMessage()) $status .= '↯';
-            if ($ext->hasChangedURL()) $status .= '⮎';
+            $notices = Notice::list($ext);
+            if ($notices[Notice::SECURITY]) $status .= Notice::ICONS[Notice::SECURITY];
+            if ($notices[Notice::ERROR]) $status .= Notice::ICONS[Notice::ERROR];
+            if ($notices[Notice::WARNING]) $status .= Notice::ICONS[Notice::WARNING];
+            if ($notices[Notice::INFO]) $status .= Notice::ICONS[Notice::INFO];
 
             echo $tr->format(
                 [20, 5, 12, '*'],
@@ -340,39 +341,15 @@ class cli_plugin_extension extends CLIPlugin
                 ['', $ext->getDescription()],
                 [null, Colors::C_CYAN]
             );
-            if ($ext->getSecurityWarning()) {
-                echo $tr->format(
-                    [7, '*'],
-                    ['', '⚠ ' . $ext->getSecurityWarning()],
-                    [null, Colors::C_YELLOW]
-                );
-            }
-            if ($ext->getSecurityIssue()) {
-                echo $tr->format(
-                    [7, '*'],
-                    ['', '☠ ' . $ext->getSecurityIssue()],
-                    [null, Colors::C_LIGHTRED]
-                );
-            }
-            if ($ext->getUpdateMessage()) {
-                echo $tr->format(
-                    [7, '*'],
-                    ['', '↯ ' . $ext->getUpdateMessage()],
-                    [null, Colors::C_LIGHTBLUE]
-                );
-            }
-            if ($ext->hasChangedURL()) {
-                $msg = $this->getLang('url_change');
-                $msg = str_replace('<br>',"\n", $msg);
-                $msg = str_replace('<br/>',"\n", $msg);
-                $msg = str_replace('<br />',"\n", $msg);
-                $msg = strip_tags($msg);
-
-                echo $tr->format(
-                    [7, '*'],
-                    ['', '⮎ ' .  sprintf($msg, $ext->getDownloadURL(), $ext->getManager()->getDownloadUrl())],
-                    [null, Colors::C_BLUE]
-                );
+            foreach ($notices as $type => $msgs) {
+                if (!$msgs) continue;
+                foreach ($msgs as $msg) {
+                    echo $tr->format(
+                        [7, '*'],
+                        ['', Notice::ICONS[$type] . ' ' . $msg],
+                        [null, Colors::C_LIGHTBLUE]
+                    );
+                }
             }
         }
     }

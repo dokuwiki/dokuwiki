@@ -80,7 +80,7 @@ class Manager
         return $this->data['updated'] ?? $this->data['installed'] ?? '';
     }
 
-    public function getDownloadUrl()
+    public function getDownloadURL()
     {
         return $this->data['downloadurl'] ?? '';
     }

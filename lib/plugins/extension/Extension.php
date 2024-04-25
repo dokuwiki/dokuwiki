@@ -140,14 +140,18 @@ class Extension
     // region Getters
 
     /**
+     * @param bool $wrap If true, the id is wrapped in backticks
      * @return string The extension id (same as base but prefixed with "template:" for templates)
      */
-    public function getId()
+    public function getId($wrap=false)
     {
         if ($this->type === self::TYPE_TEMPLATE) {
-            return self::TYPE_TEMPLATE . ':' . $this->base;
+            $id = self::TYPE_TEMPLATE . ':' . $this->base;
+        } else {
+            $id = $this->base;
         }
-        return $this->base;
+        if($wrap) $id = "`$id`";
+        return $id;
     }
 
     /**
@@ -289,6 +293,17 @@ class Extension
     }
 
     /**
+     * Get the types of components this extension provides
+     *
+     * @todo for installed extensions this could be read from the filesystem instead of relying on the meta data
+     * @return array int -> type
+     */
+    public function getComponentTypes ()
+    {
+        return $this->getTag('types', []);
+    }
+
+    /**
      * Get a list of extension ids this extension depends on
      *
      * @return string[]
@@ -408,6 +423,7 @@ class Extension
      */
     public function isInWrongFolder()
     {
+        if(!$this->isInstalled()) return false;
         return $this->getInstallDir() != $this->currentDir;
     }
 
@@ -435,7 +451,7 @@ class Extension
      */
     public function hasChangedURL()
     {
-        $last = $this->getManager()->getDownloadUrl();
+        $last = $this->getManager()->getDownloadURL();
         if(!$last) return false;
         return $last !== $this->getDownloadURL();
     }
@@ -445,7 +461,7 @@ class Extension
      *
      * @return bool
      */
-    public function updateAvailable()
+    public function isUpdateAvailable()
     {
         if($this->isBundled()) return false; // bundled extensions are never updated
         $self = $this->getInstalledVersion();
@@ -577,6 +593,36 @@ class Extension
     public function getDonationURL()
     {
         return $this->getRemoteTag('donationurl');
+    }
+
+    /**
+     * Get a list of extensions that are similar to this one
+     *
+     * @return string[]
+     */
+    public function getSimilarList()
+    {
+        return $this->getRemoteTag('similar', []);
+    }
+
+    /**
+     * Get a list of extensions that are marked as conflicting with this one
+     *
+     * @return string[]
+     */
+    public function getConflictList()
+    {
+        return $this->getRemoteTag('conflicts', []);
+    }
+
+    /**
+     * Get a list of DokuWiki versions this plugin is marked as compatible with
+     *
+     * @return string[][] date -> version
+     */
+    public function getCompatibleVersions()
+    {
+        return $this->getRemoteTag('compatible', []);
     }
 
     // endregion
