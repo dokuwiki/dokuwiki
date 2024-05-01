@@ -51,7 +51,7 @@ class helper_plugin_extension_extension_test extends DokuWikiTest {
         $this->assertEquals('Tobias Sarnowski', $extension->getAuthor());
         $this->assertEquals('tobias@trustedco.de', $extension->getEmail());
         $this->assertEquals(md5('tobias@trustedco.de'), $extension->getEmailID());
-        $this->assertEquals('http://www.dokuwiki.org/plugin:testing', $extension->getURL());
+        $this->assertEquals('https://www.dokuwiki.org/plugin:testing', $extension->getURL());
         $this->assertEquals('Used to test the test framework. Should always be disabled.', $extension->getDescription());
         $this->assertFalse($extension->isTemplate());
         $this->assertFalse($extension->isEnabled());
