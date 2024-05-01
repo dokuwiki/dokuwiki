@@ -1674,13 +1674,13 @@ function media_nstree($ns)
     global $lang;
 
     // currently selected namespace
-    $ns  = cleanID($ns);
+    $ns = cleanID($ns);
     if (empty($ns)) {
         global $ID;
         $ns = (string)getNS($ID);
     }
 
-    $ns_dir  = utf8_encodeFN(str_replace(':', '/', $ns));
+    $ns_dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = [];
     search($data, $conf['mediadir'], 'search_index', ['ns' => $ns_dir, 'nofiles' => true]);
@@ -1694,8 +1694,11 @@ function media_nstree($ns)
     $pos = 0;
     $insert = false;
     foreach ($ns_parts as $level => $part) {
-        if ($tmp_ns) $tmp_ns .= ':' . $part;
-        else $tmp_ns = $part;
+        if ($tmp_ns) {
+            $tmp_ns .= ':' . $part;
+        } else {
+            $tmp_ns = $part;
+        }
 
         // find the namespace parts
         while (array_key_exists($pos, $data) && $data[$pos]['id'] != $tmp_ns) {
