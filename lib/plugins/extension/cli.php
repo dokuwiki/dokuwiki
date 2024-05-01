@@ -326,6 +326,7 @@ class cli_plugin_extension extends CLIPlugin
         /** @var helper_plugin_extension_extension $ext */
         $ext = $this->loadHelper('extension_extension');
         $tr = new TableFormatter($this->colors);
+        $dw_release_date = getVersionData()['date'];
 
         foreach ($list as $name) {
             $ext->setExtension($name);
@@ -337,6 +338,8 @@ class cli_plugin_extension extends CLIPlugin
                 if ($ext->isBundled()) {
                     $status = 'b';
                     $vcolor = Colors::C_RESET;
+                    // Use DokuWiki release date for bundled plugins
+                    $date = $dw_release_date;
                 } else {
                     if ($ext->isGitControlled()) {
                         $status = 'g';
