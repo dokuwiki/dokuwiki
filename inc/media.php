@@ -1697,7 +1697,7 @@ function media_nstree($ns)
         else $tmp_ns = $part;
 
         // find the namespace parts or insert them
-        while ($data[$pos]['id'] != $tmp_ns) {
+        while (array_key_exists($pos, $data) && $data[$pos]['id'] != $tmp_ns) {
             if (
                 $pos >= count($data) ||
                 ($data[$pos]['level'] <= $level + 1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
