@@ -29,7 +29,7 @@ jobs:
             fi
             grep -v "^$E$" data/deleted.files > data/deleted.files.tmp && mv data/deleted.files{.tmp,}
           done
-          
+
       - name: Update list with deleted files
         run: |
           for F in $(git diff origin/stable..HEAD --summary | awk '/^ delete/ && $4 !~ /^(VERSION)/ {print $4}'); do
@@ -48,9 +48,9 @@ jobs:
             awk '/# removed on/ && !found {printf("\n"); found=1} 1' data/deleted.files > data/deleted.files.tmp && mv data/deleted.files{.tmp,}
             sed -i "s/^# newly removed/# removed on $(date -I)/" data/deleted.files
           fi
-          
+
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "🤖 Update deleted files"
           title: "🤖 Update deleted files"
