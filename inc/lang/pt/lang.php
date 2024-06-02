@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Ewekansige <randomguyrnam@gmail.com>
  * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
@@ -163,6 +164,7 @@ $lang['profconfdeletemissing'] = 'A caixa de confirmação não foi marcada';
 $lang['proffail']              = 'O perfil do usuário não foi atualizado.';
 $lang['proftokenlegend']       = 'Token de autenticação';
 $lang['proftokengenerate']     = 'Token para limpar';
+$lang['proftokeninfo']         = 'A#1000?@969azb';
 $lang['pwdforget']             = 'Esqueceu a sua senha? Peça uma nova';
 $lang['resendna']              = 'Este wiki não suporta reenvio de senhas.';
 $lang['resendpwd']             = 'Definir nova senha para';
