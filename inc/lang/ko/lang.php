@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
@@ -134,6 +135,7 @@ $lang['search_past_7_days']    = '저번 주';
 $lang['search_past_month']     = '저번 달';
 $lang['search_past_year']      = '저번 년도';
 $lang['search_sort_by_hits']   = '조회수로 정렬';
+$lang['search_sort_by_mtime']  = '마지막 수정일로 정렬';
 $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자 계정을 만들었으며 비밀번호는 이메일로 보냈습니다.';
