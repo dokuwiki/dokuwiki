@@ -189,7 +189,7 @@ class Logger
         }
 
         // datetime, fileline, message
-        $logline = gmdate('Y-m-d H:i:s', $datetime) . "\t";
+        $logline = date('Y-m-d H:i:s', $datetime) . "\t";
         if ($file) {
             $logline .= $file;
             if ($line) $logline .= "($line)";
