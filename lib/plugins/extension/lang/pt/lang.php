@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
- * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -114,6 +114,7 @@ $lang['missing_dependency']    = '<strong>dependência ausente ou desabilitada:<
 $lang['security_issue']        = '<strong>Questão de Segurança:</strong> %s
 ';
 $lang['security_warning']      = '<strong>Aviso de Segurança:</strong> %s';
+$lang['update_message']        = '<strong>Mensagem de Atualização:</strong> %s';
 $lang['update_available']      = '<strong>Atualização:</strong> Nova versão %s está disponível.
 ';
 $lang['wrong_folder']          = '<strong>Plugin instalado incorretamente:</strong> Renomear pasta de plugins de "%s" para "%s".
