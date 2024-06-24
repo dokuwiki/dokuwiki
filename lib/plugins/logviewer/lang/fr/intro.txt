@@ -4,8 +4,7 @@ Cette interface permet de visualier les divers journaux que DokuWiki
 écrit.  Par défaut, il ne devrait pas y avoir grand chose ici ;
 cela dépend du [[doku>fr:config:dontlog|réglage des journaux]].
 Cependant si quelque chose se passe mal, il y a de fortes chances
-que vous trouviez ici des informations utiles. Toutes les heures
-sont en [[wpfr>Temps Universel Coordonné|UTC]] !
+que vous trouviez ici des informations utiles.
 
 Veuillez noter que les **journaux peuvent contenir des données
 sensibles** telles que des mots de passe, chemins, ou autres secrets.
