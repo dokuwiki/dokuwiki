@@ -143,4 +143,8 @@ class auth_password_test extends DokuWikiTest {
         }
     }
 
+    function test_verifyPassword_Woltlab()
+    {
+        $this->assertTrue(auth_verifyPassword('zQ9ZwsTvgufN', 'Bcrypt:$2y$12$ygz.4TeGn/NXEcXIE0pyge4lJyuSMqRdDPT5dW469lODb.HswSzjW'));
+    }
 }
