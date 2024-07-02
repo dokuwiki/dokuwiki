@@ -179,6 +179,10 @@ class JWT
      */
     public static function getStorageFile($user)
     {
-        return getCacheName($user, '.token');
+        global $conf;
+        $hash = hash('sha256', $user);
+        $file = $conf['metadir'] . '/jwt/' . $hash[0] . '/' . $hash . '.token';
+        io_makeFileDir($file);
+        return $file;
     }
 }
