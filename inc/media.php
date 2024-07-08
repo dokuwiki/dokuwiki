@@ -1413,21 +1413,20 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
     $evdata = [
         'ns'    => $ns,
         'data'  => [],
-        'query' => $query
+        'query' => (!blank($query)) ? $query : "*"
     ];
-    if (!blank($query)) {
-        $evt = new Event('MEDIA_SEARCH', $evdata);
-        if ($evt->advise_before()) {
-            $dir = utf8_encodeFN(str_replace(':', '/', $evdata['ns']));
-            $quoted = preg_quote($evdata['query'], '/');
-            //apply globbing
-            $quoted = str_replace(['\*', '\?'], ['.*', '.'], $quoted, $count);
+    $evt = new Event('MEDIA_SEARCH', $evdata);
+    if ($evt->advise_before()) {
+        $dir = utf8_encodeFN(str_replace(':','/',$evdata['ns']));
+        $quoted = preg_quote($evdata['query'],'/');
+        //apply globbing
+        $quoted = str_replace(array('\*', '\?'), array('.*', '.'), $quoted, $count);
 
-            //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
-            if ($count > 0) $quoted = '^([^:]*:)*' . $quoted . '$';
+        //if we use globbing file name must match entirely but may be preceded by arbitrary namespace
+        if ($count > 0) $quoted = '^([^:]*:)*'.$quoted.'$';
 
-            $pattern = '/' . $quoted . '/i';
-            search(
+        $pattern = '/'.$quoted.'/i';
+        search(
                 $evdata['data'],
                 $conf['mediadir'],
                 'search_mediafiles',
@@ -1435,11 +1434,10 @@ function media_searchlist($query, $ns, $auth = null, $fullscreen = false, $sort 
                 $dir,
                 1,
                 $sort
-            );
-        }
-        $evt->advise_after();
-        unset($evt);
+              );
     }
+    $evt->advise_after();
+    unset($evt);
 
     if (!$fullscreen) {
         echo '<h1 id="media__ns">' . sprintf($lang['searchmedia_in'], hsc($ns) . ':*') . '</h1>' . NL;
