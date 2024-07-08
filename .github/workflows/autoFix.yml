@@ -6,6 +6,7 @@ on:
 
 jobs:
   autofix:
+    if: github.repository_owner == 'dokuwiki'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
