@@ -86,6 +86,9 @@ class Export extends AbstractAction
                 $headers['Content-Type'] = 'text/html; charset=utf-8';
                 $output = p_wiki_xhtml($ID, $REV, false);
                 break;
+            case 'metadata':
+                // metadata should not be exported
+                break;
             default:
                 $output = p_cached_output(wikiFN($ID, $REV), $mode, $ID);
                 $headers = p_get_metadata($ID, "format $mode");

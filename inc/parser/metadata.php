@@ -108,6 +108,8 @@ class Doku_Renderer_metadata extends Doku_Renderer
         if (!isset($this->meta['date']['modified'])) {
             $this->meta['date']['modified'] = filemtime(wikiFN($ID));
         }
+
+        $this->doc = '';
     }
 
     /**
