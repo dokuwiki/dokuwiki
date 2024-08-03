@@ -65,7 +65,7 @@ class admin_plugin_acl extends AdminPlugin
         global $INPUT;
 
         // fresh 1:1 copy without replacements
-        $AUTH_ACL = file($config_cascade['acl']['default']);
+        $AUTH_ACL = auth_readACL();
 
         // namespace given?
         if ($INPUT->str('ns') == '*') {
@@ -136,14 +136,24 @@ class admin_plugin_acl extends AdminPlugin
                 }
                 // prepare lines
                 $lines = [];
+                $hadversion = false;
+                $VERSIONTEXT="#ACLVERSION:20240803 -- do not remove this line, it is used to indicate the new ACL levels are being used\n";
                 // keep header
                 foreach ($AUTH_ACL as $line) {
                     if ($line[0] == '#') {
-                        $lines[] = $line;
+                        if(preg_match('/^#ACLVERSION:/',$line)){
+                            $lines[] = $VERSIONTEXT;
+                            $hadversion = true;
+                        }
+                        else{
+                            $lines[] = $line;
+                        }
                     } else {
                         break;
                     }
                 }
+                if(!$hadversion) $lines[] = $VERSIONTEXT;
+
                 // re-add all rules
                 foreach ($acl as $where => $opt) {
                     foreach ($opt as $who => $perm) {
@@ -155,6 +165,7 @@ class admin_plugin_acl extends AdminPlugin
                             $who = $auth->cleanUser($who);
                         }
                         $who = auth_nameencode($who, true);
+
                         $lines[] = "$where\t$who\t$perm\n";
                     }
                 }
@@ -163,7 +174,7 @@ class admin_plugin_acl extends AdminPlugin
             }
 
             // reload ACL config
-            $AUTH_ACL = file($config_cascade['acl']['default']);
+            $AUTH_ACL = auth_readACL();
         }
 
         // initialize ACL array
@@ -469,20 +480,23 @@ class admin_plugin_acl extends AdminPlugin
 
         // check the permissions
         $perm = auth_aclcheck($check, $user, $groups);
-
+	
         // build array of named permissions
         $names = [];
         if ($perm) {
             if ($ns) {
-                if ($perm >= AUTH_DELETE) $names[] = $this->getLang('acl_perm16');
-                if ($perm >= AUTH_UPLOAD) $names[] = $this->getLang('acl_perm8');
-                if ($perm >= AUTH_CREATE) $names[] = $this->getLang('acl_perm4');
+                if ($perm >= AUTH_DELETE) $names[] = $this->getLang('acl_perm_delete')?:'delete';
+                if ($perm >= AUTH_UPLOAD) $names[] = $this->getLang('acl_perm_upload')?:'upload';
+                if ($perm >= AUTH_CREATE) $names[] = $this->getLang('acl_perm_create')?:'create';
             }
-            if ($perm >= AUTH_EDIT) $names[] = $this->getLang('acl_perm2');
-            if ($perm >= AUTH_READ) $names[] = $this->getLang('acl_perm1');
+            if ($perm >= AUTH_EDIT) $names[] = $this->getLang('acl_perm_edit')?:'edit';
+            if ($perm >= AUTH_SOURCE) $names[] = $this->getLang('acl_perm_source')?:'source';
+            if ($perm >= AUTH_HISTORY) $names[] = $this->getLang('acl_perm_history')?:'history';
+            if ($perm >= AUTH_EXPOSE) $names[] = $this->getLang('acl_perm_expose')?:'expose';
+            if ($perm >= AUTH_READ) $names[] = $this->getLang('acl_perm_read')?:'read';
             $names = array_reverse($names);
         } else {
-            $names[] = $this->getLang('acl_perm0');
+            $names[] = $this->getLang('acl_perm_none')?:'none';
         }
 
         // print permission explanation
@@ -538,7 +552,7 @@ class admin_plugin_acl extends AdminPlugin
         if ($item['type'] == 'd') {
             if ($item['open']) {
                 $img = DOKU_BASE . 'lib/images/minus.gif';
-                $alt = '−';
+                $alt = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
             } else {
                 $img = DOKU_BASE . 'lib/images/plus.gif';
                 $alt = '+';
@@ -776,7 +790,7 @@ class admin_plugin_acl extends AdminPlugin
 
         if ($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
 
-        foreach ([AUTH_NONE, AUTH_READ, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
+        foreach ([AUTH_NONE, AUTH_READ, AUTH_EXPOSE, AUTH_HISTORY, AUTH_SOURCE, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
             ++$label;
 
             //general checkbox attributes
@@ -798,7 +812,7 @@ class admin_plugin_acl extends AdminPlugin
             //build code
             $ret .= '<label for="pbox' . $label . '"' . $class . '>';
             $ret .= '<input ' . buildAttributes($atts) . ' />&#160;';
-            $ret .= $this->getLang('acl_perm' . $perm);
+            $ret .= $this->getLang('acl_perm_' . AUTH_NAMES[$perm])?:AUTH_NAMES[$perm]; #use AUTH_NAMES if getLang does not have it.
             $ret .= '</label>';
         }
         return $ret;

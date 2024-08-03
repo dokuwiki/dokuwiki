@@ -10,11 +10,17 @@
  */
 define('AUTH_NONE', 0);
 define('AUTH_READ', 1);
-define('AUTH_EDIT', 2);
-define('AUTH_CREATE', 4);
-define('AUTH_UPLOAD', 8);
-define('AUTH_DELETE', 16);
-define('AUTH_ADMIN', 255);
+define('AUTH_EXPOSE',2);
+define('AUTH_HISTORY',4);
+define('AUTH_SOURCE',8);
+define('AUTH_EDIT',16);
+define('AUTH_CREATE',32);
+define('AUTH_UPLOAD',64);
+define('AUTH_DELETE',128);
+define('AUTH_ADMIN',255);
+# The names are used to construct the getLang variables in plugins/acl/admin.php
+define('AUTH_NAMES',[AUTH_NONE=>'none',AUTH_READ=>'read',AUTH_EXPOSE=>'expose',AUTH_HISTORY=>'history',AUTH_SOURCE=>'source',AUTH_EDIT=>'edit',AUTH_CREATE=>'create',AUTH_UPLOAD=>'upload',AUTH_DELETE=>'delete',AUTH_ADMIN=>'admin']);
+
 
 /**
  * Message types

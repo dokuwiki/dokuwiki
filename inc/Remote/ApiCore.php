@@ -295,7 +295,7 @@ class ApiCore
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);
-            if ($perm < AUTH_READ || isHiddenPage($pages[$idx]) || !page_exists($pages[$idx])) {
+            if ($perm < AUTH_EXPOSE || isHiddenPage($pages[$idx]) || !page_exists($pages[$idx])) {
                 continue;
             }
 
@@ -893,7 +893,7 @@ class ApiCore
     public function getMediaUsage($media)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck($media) < AUTH_EXPOSE) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media)) {

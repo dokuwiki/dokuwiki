@@ -121,6 +121,43 @@ function auth_setup()
     return true;
 }
 
+
+/**
+ * Read the ACL file, detect whether the old AUTH levels are being used (absence of "#ACLVERSION:20240803 -- do not remove this line, it is used to indicate the new ACL levels are being used"), and translate them to the new AUTH levels if necessary.
+ *
+ * @author Ahmet Sacan
+ *
+ * @return array
+ */
+
+ function auth_readACL(){
+    global $config_cascade;
+    if (!is_readable($config_cascade['acl']['default'])) return [];
+    $acl = file($config_cascade['acl']['default']);
+
+    #first pass to detect whether the new ACL levels are being used.
+    $newACL=false;
+    foreach($acl as $line){
+        if(preg_match('/^\s*#ACLVERSION:20240803/',$line)){
+            $newACL=true;
+            break;
+        }
+    }
+    if($newACL) return $acl; //new ACL levels are being used, no need to translate.
+
+    foreach($acl as &$line){
+        if (empty(trim($line)) || preg_match('/\s*#/',$line)) continue; // skip blank lines & comments
+        [$id, $user, $perm] = preg_split('/[ \t]+/', $line, 3);
+
+        $perm=trim($perm);
+        $map =[2=>AUTH_EDIT, 4=>AUTH_CREATE, 8=>AUTH_UPLOAD, 16=>AUTH_DELETE]; #old AUTH values that now have new integer values.
+        if(isset($map[$perm])) $perm=$map[$perm];
+
+        $line="$id\t$user\t$perm\n";
+    } unset($line);
+    return $acl;
+}
+
 /**
  * Loads the ACL setup and handle user wildcards
  *
@@ -130,14 +167,11 @@ function auth_setup()
  */
 function auth_loadACL()
 {
-    global $config_cascade;
     global $USERINFO;
     /* @var Input $INPUT */
     global $INPUT;
-
-    if (!is_readable($config_cascade['acl']['default'])) return [];
-
-    $acl = file($config_cascade['acl']['default']);
+    
+    $acl = auth_readACL();
 
     $out = [];
     foreach ($acl as $line) {

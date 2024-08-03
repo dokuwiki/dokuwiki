@@ -17,7 +17,7 @@ class Revisions extends AbstractAction
     /** @inheritdoc */
     public function minimumPermission()
     {
-        return AUTH_READ;
+        return AUTH_HISTORY;
     }
 
     /** @inheritdoc */

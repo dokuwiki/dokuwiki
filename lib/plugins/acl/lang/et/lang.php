@@ -7,31 +7,31 @@
  * @author Aari Juhanson <aari@vmg.vil.ee>
  * @author Kaiko Kaur <kaiko@kultuur.edu.ee>
  * @author kristian.kankainen <kristian.kankainen@kuu.la>
- * @author Rivo Zängov <eraser@eraser.ee>
+ * @author Rivo ZÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngov <eraser@eraser.ee>
  * @author Janar Leas <janar.leas@eesti.ee>
  */
-$lang['admin_acl']             = 'Ligipääsukontrolli nimekirja haldamine';
-$lang['acl_group']             = 'Rühm:';
+$lang['admin_acl']             = 'LigipÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤sukontrolli nimekirja haldamine';
+$lang['acl_group']             = 'RÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hm:';
 $lang['acl_user']              = 'Kasutaja:';
 $lang['acl_perms']             = 'Lubatud';
 $lang['page']                  = 'leht';
 $lang['namespace']             = 'Nimeruum';
 $lang['btn_select']            = 'Vali';
-$lang['p_user_ns']             = 'Kasutaja <b class="aclgroup">%s</b> omab nimeruumis <b class="aclns">%s</b>: <i>%s</i> järgmisi õigusi.';
-$lang['p_group_ns']            = 'Rühma <b class="aclgroup">%s</b> liikmed omavad nimeruumis <b class="aclns">%s</b>: <i>%s</i> järgmisi õigusi.';
-$lang['p_choose_id']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks leheküljele <b class="aclpage">%s</b> sätestatud volitusi.';
-$lang['p_choose_ns']           = 'Sisesta ülal-olevasse vormi <b>kasutaja või rühm</b> nägemaks nimeruumile <b class="aclpage">%s</b> sätestatud volitusi.';
-$lang['p_inherited']           = 'Teadmiseks: Neid õigusi pole eralti määratletud, vaid on päritud teistest rühmadest või ülemast nimeruumist.';
-$lang['p_isadmin']             = 'Teadmiseks: Valitud rühm või kasutaja omab alati kõiki õigusi, kuna nii on sätestanud ülemkasutaja.';
-$lang['p_include']             = 'Kõrgemad õigused hõlmavad alamaid. Õigus loomine, üleslaadida ja kustutada rakenduvad nimeruumidele, mitte lehekülgedele.';
-$lang['where']                 = 'Lehekülg/nimeruum';
+$lang['p_user_ns']             = 'Kasutaja <b class="aclgroup">%s</b> omab nimeruumis <b class="aclns">%s</b>: <i>%s</i> jÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rgmisi ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµigusi.';
+$lang['p_group_ns']            = 'RÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hma <b class="aclgroup">%s</b> liikmed omavad nimeruumis <b class="aclns">%s</b>: <i>%s</i> jÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rgmisi ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµigusi.';
+$lang['p_choose_id']           = 'Sisesta ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lal-olevasse vormi <b>kasutaja vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµi rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hm</b> nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤gemaks lehekÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ljele <b class="aclpage">%s</b> sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤testatud volitusi.';
+$lang['p_choose_ns']           = 'Sisesta ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lal-olevasse vormi <b>kasutaja vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµi rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hm</b> nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤gemaks nimeruumile <b class="aclpage">%s</b> sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤testatud volitusi.';
+$lang['p_inherited']           = 'Teadmiseks: Neid ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµigusi pole eralti mÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ratletud, vaid on pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ritud teistest rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hmadest vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµi ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lemast nimeruumist.';
+$lang['p_isadmin']             = 'Teadmiseks: Valitud rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hm vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµi kasutaja omab alati kÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµiki ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµigusi, kuna nii on sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤testanud ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lemkasutaja.';
+$lang['p_include']             = 'KÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµrgemad ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµigused hÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂµlmavad alamaid. ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂigus loomine, ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼leslaadida ja kustutada rakenduvad nimeruumidele, mitte lehekÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lgedele.';
+$lang['where']                 = 'LehekÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼lg/nimeruum';
 $lang['who']                   = 'Kasutaja/Grupp';
-$lang['perm']                  = 'Õigused';
-$lang['acl_perm0']             = 'Pole';
-$lang['acl_perm1']             = 'Lugemine';
-$lang['acl_perm2']             = 'Toimetamine';
-$lang['acl_perm4']             = 'Tekitamine';
-$lang['acl_perm8']             = 'Üles laadimine';
-$lang['acl_perm16']            = 'Kustuta';
+$lang['perm']                  = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂigused';
+$lang['acl_perm_none']             = 'Pole';
+$lang['acl_perm_read']             = 'Lugemine';
+$lang['acl_perm_edit']             = 'Toimetamine';
+$lang['acl_perm_create']             = 'Tekitamine';
+$lang['acl_perm_upload']             = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂles laadimine';
+$lang['acl_perm_delete']            = 'Kustuta';
 $lang['acl_new']               = 'Uue kirje lisamine';
 $lang['acl_mod']               = 'Muuda sissekannet';

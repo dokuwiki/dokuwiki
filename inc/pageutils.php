@@ -762,7 +762,7 @@ function page_findnearest($page, $useacl = true)
     do {
         $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
-        if (page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)) {
+        if (page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_EXPOSE)) {
             return $pageid;
         }
     } while ($ns !== false);

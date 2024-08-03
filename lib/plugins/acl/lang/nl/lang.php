@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author François Kooman <fkooman.tuxed.net>
+ * @author FranÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ois Kooman <fkooman.tuxed.net>
  * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
  * @author Koen Huybrechts <huybkoen@gmail.com>
@@ -38,11 +38,11 @@ $lang['current']               = 'Huidige ACL regels';
 $lang['where']                 = 'Pagina/Namespace';
 $lang['who']                   = 'Gebruiker/Groep';
 $lang['perm']                  = 'Bevoegdheden';
-$lang['acl_perm0']             = 'Geen';
-$lang['acl_perm1']             = 'Lezen';
-$lang['acl_perm2']             = 'Bewerken';
-$lang['acl_perm4']             = 'Aanmaken';
-$lang['acl_perm8']             = 'Uploaden';
-$lang['acl_perm16']            = 'Verwijderen';
+$lang['acl_perm_none']             = 'Geen';
+$lang['acl_perm_read']             = 'Lezen';
+$lang['acl_perm_edit']             = 'Bewerken';
+$lang['acl_perm_create']             = 'Aanmaken';
+$lang['acl_perm_upload']             = 'Uploaden';
+$lang['acl_perm_delete']            = 'Verwijderen';
 $lang['acl_new']               = 'Nieuwe regel toevoegen';
 $lang['acl_mod']               = 'Regel aanpassen';

@@ -4,7 +4,7 @@
  *
  */
 $lang['page']                  = 'Bladsy';
-$lang['acl_perm0']             = 'Niks';
-$lang['acl_perm1']             = 'Lees';
-$lang['acl_perm2']             = 'Verander';
-$lang['acl_perm4']             = 'Maak';
+$lang['acl_perm_none']             = 'Niks';
+$lang['acl_perm_read']             = 'Lees';
+$lang['acl_perm_edit']             = 'Verander';
+$lang['acl_perm_create']             = 'Maak';

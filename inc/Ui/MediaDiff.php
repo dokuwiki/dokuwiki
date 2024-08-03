@@ -126,7 +126,7 @@ class MediaDiff extends Diff
         $ns = getNS($this->id);
         $auth = auth_quickaclcheck("$ns:*");
 
-        if ($auth < AUTH_READ || !$this->id || !$conf['mediarevisions']) return;
+        if ($auth < AUTH_HISTORY || !$this->id || !$conf['mediarevisions']) return;
 
         // retrieve form parameters: rev, rev2, difftype
         $this->handle();

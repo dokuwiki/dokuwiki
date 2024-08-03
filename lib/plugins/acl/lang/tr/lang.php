@@ -3,38 +3,38 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Selim Farsakoğlu <farsakogluselim@yahoo.de>
- * @author Aydın Coşkuner <aydinweb@gmail.com>
+ * @author Selim FarsakoÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlu <farsakogluselim@yahoo.de>
+ * @author AydÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±n CoÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂkuner <aydinweb@gmail.com>
  * @author Cihan Kahveci <kahvecicihan@gmail.com>
  * @author Yavuz Selim <yavuzselim@gmail.com>
  * @author Caleb Maclennan <caleb@alerque.com>
  * @author farukerdemoncel <farukerdemoncel@gmail.com>
  */
-$lang['admin_acl']             = 'Erişim Kontrol Listesi (ACL) Yönetimi';
+$lang['admin_acl']             = 'EriÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂim Kontrol Listesi (ACL) YÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶netimi';
 $lang['acl_group']             = 'Grup:';
-$lang['acl_user']              = 'Kullanıcı:';
-$lang['acl_perms']             = 'Şunun için yetkiler:';
+$lang['acl_user']              = 'KullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±:';
+$lang['acl_perms']             = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂunun iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yetkiler:';
 $lang['page']                  = 'Sayfa';
 $lang['namespace']             = 'Namespace';
-$lang['btn_select']            = 'Seç';
-$lang['p_user_id']             = '<b class="acluser">%s</b> kullanıcısının şu anda <b class="aclpage">%s</b> sayfası için yetkisi: <i>%s</i>.';
-$lang['p_user_ns']             = '<b class="acluser">%s</b> kullanıcısının şu anda <b class="aclns">%s</b> namesapace\'i için yetkisi: <i>%s</i>.';
-$lang['p_group_id']            = '<b class="aclgroup">%s</b> grubunun şu anda <b class="aclpage">%s</b> sayfası için yetkisi: <i>%s</i>.';
-$lang['p_group_ns']            = '<b class="aclgroup">%s</b> grubunun şu anda <b class="aclns">%s</b> namesapace\'i için yetkisi: <i>%s</i>.';
-$lang['p_choose_id']           = 'Lütfen <b class="aclpage">%s</b> sayfasına izin verilen yetkilerini görmek veya değiştirmek için yukarıdaki forma <b>bir kullanıcı veya grup adı</b> girin.';
-$lang['p_choose_ns']           = 'Lütfen <b class="aclpage">%s</b> namespace\'ie izin verilen yetkileri görmek veya değiştirmek için yukarıdaki forma <b>bir kullanıcı veya grup adı</b> girin.';
-$lang['p_inherited']           = 'Not: Bu izinler doğrudan ayarlanmadan başka grup veya üst namespace\'lerden gelmektedir.';
-$lang['p_isadmin']             = 'Not: Seçili grup veya kullanıcı, "Ana kullanıcı" olarak atandığından tüm izinlere sahiptir.';
-$lang['p_include']             = 'Üst seviye izinler alt izinleri içermektedir. Oluşturma, Yükleme ve Silme yetkisi sadece namespace\'e uygulanmaktadır. Bu yetki sayfalara uygulanmaz.';
-$lang['current']               = 'Şimdiki ACL(İzin Kontrol listesi) kuralları';
+$lang['btn_select']            = 'SeÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§';
+$lang['p_user_id']             = '<b class="acluser">%s</b> kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±n ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂu anda <b class="aclpage">%s</b> sayfasÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ± iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yetkisi: <i>%s</i>.';
+$lang['p_user_ns']             = '<b class="acluser">%s</b> kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±n ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂu anda <b class="aclns">%s</b> namesapace\'i iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yetkisi: <i>%s</i>.';
+$lang['p_group_id']            = '<b class="aclgroup">%s</b> grubunun ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂu anda <b class="aclpage">%s</b> sayfasÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ± iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yetkisi: <i>%s</i>.';
+$lang['p_group_ns']            = '<b class="aclgroup">%s</b> grubunun ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂu anda <b class="aclns">%s</b> namesapace\'i iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yetkisi: <i>%s</i>.';
+$lang['p_choose_id']           = 'LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼tfen <b class="aclpage">%s</b> sayfasÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±na izin verilen yetkilerini gÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶rmek veya deÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂtirmek iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yukarÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±daki forma <b>bir kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ± veya grup adÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±</b> girin.';
+$lang['p_choose_ns']           = 'LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼tfen <b class="aclpage">%s</b> namespace\'ie izin verilen yetkileri gÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶rmek veya deÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂtirmek iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§in yukarÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±daki forma <b>bir kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ± veya grup adÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±</b> girin.';
+$lang['p_inherited']           = 'Not: Bu izinler doÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂrudan ayarlanmadan baÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂka grup veya ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼st namespace\'lerden gelmektedir.';
+$lang['p_isadmin']             = 'Not: SeÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ili grup veya kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±, "Ana kullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±" olarak atandÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±ndan tÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼m izinlere sahiptir.';
+$lang['p_include']             = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂst seviye izinler alt izinleri iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ermektedir. OluÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂturma, YÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼kleme ve Silme yetkisi sadece namespace\'e uygulanmaktadÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±r. Bu yetki sayfalara uygulanmaz.';
+$lang['current']               = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂimdiki ACL(ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°zin Kontrol listesi) kurallarÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±';
 $lang['where']                 = 'Sayfa/Namespace';
-$lang['who']                   = 'Kullanıcı/Grup';
-$lang['perm']                  = 'İzinler';
-$lang['acl_perm0']             = 'Yok';
-$lang['acl_perm1']             = 'Okuma';
-$lang['acl_perm2']             = 'Değiştirme';
-$lang['acl_perm4']             = 'Oluşturma';
-$lang['acl_perm8']             = 'Yükleme';
-$lang['acl_perm16']            = 'Silme';
-$lang['acl_new']               = 'Yeni giriş ekle';
-$lang['acl_mod']               = 'Eski girişi değiştirme';
+$lang['who']                   = 'KullanÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±cÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±/Grup';
+$lang['perm']                  = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°zinler';
+$lang['acl_perm_none']             = 'Yok';
+$lang['acl_perm_read']             = 'Okuma';
+$lang['acl_perm_edit']             = 'DeÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂtirme';
+$lang['acl_perm_create']             = 'OluÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂturma';
+$lang['acl_perm_upload']             = 'YÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼kleme';
+$lang['acl_perm_delete']            = 'Silme';
+$lang['acl_new']               = 'Yeni giriÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ekle';
+$lang['acl_mod']               = 'Eski giriÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂi deÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂtirme';

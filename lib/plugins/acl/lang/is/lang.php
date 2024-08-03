@@ -6,13 +6,13 @@
  * Icelandic language file
  *
  * @author Hrannar Baldursson <hrannar.baldursson@gmail.com>
- * @author Ólafur Gunnlaugsson <oli@audiotools.com>
- * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Ãlafur Gunnlaugsson <oli@audiotools.com>
+ * @author Erik BjÃ¸rn Pedersen <erik.pedersen@shaw.ca>
  */
-$lang['acl_group']             = 'Hópur:';
+$lang['acl_group']             = 'HÃ³pur:';
 $lang['acl_user']              = 'Notandi:';
-$lang['page']                  = 'Síða';
-$lang['namespace']             = 'Nafnrými';
+$lang['page']                  = 'SÃ­Ã°a';
+$lang['namespace']             = 'NafnrÃ½mi';
 $lang['btn_select']            = 'Veldu';
-$lang['where']                 = 'Síða/Nafnrými';
-$lang['acl_perm16']            = 'Eyða';
+$lang['where']                 = 'SÃ­Ã°a/NafnrÃ½mi';
+$lang['acl_perm_delete']            = 'EyÃ°a';

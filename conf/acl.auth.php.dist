@@ -11,11 +11,14 @@
 # or user names you need to urlencode them (only chars <128, leave
 # UTF-8 multibyte chars as is)
 #
-# none   0
-# read   1
-# edit   2
-# create 4
-# upload 8
-# delete 16
+# none     0
+# read     1
+# index    2
+# source   4
+# history  8
+# edit    16
+# create  32
+# upload  64
+# delete 128
 
-*               @ALL        8
+*               @ALL        64

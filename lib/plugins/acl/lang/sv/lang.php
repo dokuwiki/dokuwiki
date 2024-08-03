@@ -5,39 +5,39 @@
  *
  * @author Per Foreby <per@foreby.se>
  * @author Nicklas Henriksson <nicklas[at]nihe.se>
- * @author Håkan Sandell <hakan.sandell@home.se>
+ * @author HÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥kan Sandell <hakan.sandell@home.se>
  * @author Dennis Karlsson
  * @author Tormod Otter Johansson <tormod@latast.se>
  * @author Pontus Bergendahl <pontus.bergendahl@gmail.com>
  * @author Emil Lind <emil@sys.nu>
  * @author Bogge Bogge <bogge@bogge.com>
- * @author Peter Åström <eaustreum@gmail.com>
+ * @author Peter ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂstrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶m <eaustreum@gmail.com>
  */
-$lang['admin_acl']             = 'Hantera behörighetslistan (ACL)';
+$lang['admin_acl']             = 'Hantera behÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶righetslistan (ACL)';
 $lang['acl_group']             = 'Grupp:';
-$lang['acl_user']              = 'Användare:';
-$lang['acl_perms']             = 'Behörighet för';
+$lang['acl_user']              = 'AnvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndare:';
+$lang['acl_perms']             = 'BehÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶righet fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r';
 $lang['page']                  = 'Sida';
 $lang['namespace']             = 'Namnrymd';
-$lang['btn_select']            = 'Välj';
-$lang['p_user_id']             = 'Användaren <b class="acluser">%s</b> har förnärvarande följande rättigheter på sidan <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_user_ns']             = 'Användaren <b class="acluser">%s</b> har för närvarande följande rättigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_group_id']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har för närvarande följande rättigheter på sidan <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har för närvarande följande rättigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovan för att visa eller ändra rättigheterna för sidan <b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Vänligen <b>ange en användare eller grupp</b> i formuläret ovan för att visa eller ändra rättigheterna för namnrymden <b class="aclns">%s</b>.';
-$lang['p_inherited']           = 'Notering: De här rättigheterna är inte explicit satta utan var ärvda från andra grupper eller högre namnrymder.';
-$lang['p_isadmin']             = 'Notering: Den valda gruppen eller användaren har alltid fulla rättigheter på grund av att den är konfigurerad som superanvändare.';
-$lang['p_include']             = 'Högre rättigheter inkluderar lägre. Rättigheter för Skapa, Ladda upp och Radera är endast applicerbara namnrymder, inte sidor.';
+$lang['btn_select']            = 'VÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤lj';
+$lang['p_user_id']             = 'AnvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndaren <b class="acluser">%s</b> har fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶rnÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rvarande fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶ljande rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ sidan <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_user_ns']             = 'AnvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndaren <b class="acluser">%s</b> har fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rvarande fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶ljande rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_id']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rvarande fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶ljande rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ sidan <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Medlemmar av gruppen <b class="aclgroup">%s</b> har fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rvarande fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶ljande rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter i namnrymden <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_choose_id']           = 'VÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤nligen <b>ange en anvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndare eller grupp</b> i formulÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ret ovan fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r att visa eller ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndra rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheterna fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r sidan <b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'VÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤nligen <b>ange en anvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndare eller grupp</b> i formulÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ret ovan fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r att visa eller ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndra rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheterna fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r namnrymden <b class="aclns">%s</b>.';
+$lang['p_inherited']           = 'Notering: De hÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤r rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheterna ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤r inte explicit satta utan var ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤rvda frÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥n andra grupper eller hÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶gre namnrymder.';
+$lang['p_isadmin']             = 'Notering: Den valda gruppen eller anvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndaren har alltid fulla rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ grund av att den ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤r konfigurerad som superanvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndare.';
+$lang['p_include']             = 'HÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶gre rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter inkluderar lÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤gre. RÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶r Skapa, Ladda upp och Radera ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤r endast applicerbara namnrymder, inte sidor.';
 $lang['current']               = 'Nuvarande ACL regler';
 $lang['where']                 = 'Sida/Namnrymd';
-$lang['who']                   = 'Användare/Grupp';
-$lang['perm']                  = 'Rättigheter';
-$lang['acl_perm0']             = 'Inga';
-$lang['acl_perm1']             = 'Läsa';
-$lang['acl_perm2']             = 'Redigera';
-$lang['acl_perm4']             = 'Skapa';
-$lang['acl_perm8']             = 'Ladda upp';
-$lang['acl_perm16']            = 'Radera';
-$lang['acl_new']               = 'Lägg till ny behörighet';
-$lang['acl_mod']               = 'Ändra behörighet';
+$lang['who']                   = 'AnvÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndare/Grupp';
+$lang['perm']                  = 'RÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ttigheter';
+$lang['acl_perm_none']             = 'Inga';
+$lang['acl_perm_read']             = 'LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤sa';
+$lang['acl_perm_edit']             = 'Redigera';
+$lang['acl_perm_create']             = 'Skapa';
+$lang['acl_perm_upload']             = 'Ladda upp';
+$lang['acl_perm_delete']            = 'Radera';
+$lang['acl_new']               = 'LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤gg till ny behÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶righet';
+$lang['acl_mod']               = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂndra behÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶righet';
