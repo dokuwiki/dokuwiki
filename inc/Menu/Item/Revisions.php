@@ -12,7 +12,9 @@ class Revisions extends AbstractItem
     /** @inheritdoc */
     public function __construct()
     {
+        global $INFO;
         parent::__construct();
+        if (auth_quickaclcheck($INFO['id']) < AUTH_HISTORY) throw new \RuntimeException("no permission to see revisions");
 
         $this->accesskey = 'o';
         $this->type = 'revs';

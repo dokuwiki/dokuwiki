@@ -43,7 +43,7 @@ function media_filesinuse($data, $id)
 
     $hidden = 0; //count of hits without read permission
     foreach ($data as $row) {
-        if (auth_quickaclcheck($row) >= AUTH_READ && isVisiblePage($row)) {
+        if (auth_quickaclcheck($row) >= AUTH_EXPOSE && isVisiblePage($row)) {
             echo '<div class="search_result">';
             echo '<span class="mediaref_ref">' . hsc($row) . '</span>';
             echo '</div>';
@@ -717,7 +717,7 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
 
     if (!$fullscreenview) echo '<h1 id="media__ns">:' . hsc($ns) . '</h1>' . NL;
 
-    if ($auth < AUTH_READ) {
+    if ($auth < AUTH_EXPOSE) {
         // FIXME: print permission warning here instead?
         echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
     } else {
@@ -944,7 +944,7 @@ function media_tab_files($ns, $auth = null, $jump = '')
     global $lang;
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
-    if ($auth < AUTH_READ) {
+    if ($auth < AUTH_EXPOSE) {
         echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     } else {
         media_filelist($ns, $auth, $jump, true, _media_get_sort_type());
@@ -1057,7 +1057,7 @@ function media_tab_history($image, $ns, $auth = null)
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
     $do = $INPUT->str('mediado');
 
-    if ($auth >= AUTH_READ && $image) {
+    if ($auth >= AUTH_HISTORY && $image) {
         if ($do == 'diff') {
             (new MediaDiff($image))->show(); //media_diff($image, $ns, $auth);
         } else {

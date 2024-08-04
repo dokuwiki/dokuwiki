@@ -211,7 +211,7 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
 
     //check ACL for namespace (we have no ACL for mediafiles)
     $info['perm'] = auth_quickaclcheck(getNS($info['id']) . ':*');
-    if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
+    if (empty($opts['skipacl']) && $info['perm'] < AUTH_EXPOSE) {
         return false;
     }
 
@@ -278,7 +278,7 @@ function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
 
     //check ACL for namespace (we have no ACL for mediafiles)
     $info['perm'] = auth_quickaclcheck(getNS($id) . ':*');
-    if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
+    if (empty($opts['skipacl']) && $info['perm'] < AUTH_EXPOSE) {
         return false;
     }
 
@@ -314,7 +314,7 @@ function search_list(&$data, $base, $file, $type, $lvl, $opts)
     if (str_ends_with($file, '.txt')) {
         //check ACL
         $id = pathID($file);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
+        if (auth_quickaclcheck($id) < AUTH_EXPOSE) {
             return false;
         }
         $data[]['id'] = $id;
@@ -350,7 +350,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
         if (strpos($file, (string) $opts['query']) !== false) {
             //check ACL
             $id = pathID($file);
-            if (auth_quickaclcheck($id) < AUTH_READ) {
+            if (auth_quickaclcheck($id) < AUTH_EXPOSE) {
                 return false;
             }
             $data[]['id'] = $id;
@@ -399,7 +399,7 @@ function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
 
     $item = [];
     $item['id']   = pathID($file);
-    if (empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ) {
+    if (empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_EXPOSE) {
         return false;
     }
 
@@ -549,12 +549,12 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     if ($type == 'd') {
         if (empty($opts['listdirs'])) return $return;
         //neither list nor recurse forbidden items:
-        if (empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false;
+        if (empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_EXPOSE) return false;
         if (!empty($opts['dirmatch']) && !preg_match('/' . $opts['dirmatch'] . '/', $file)) return $return;
         if (!empty($opts['nsmatch']) && !preg_match('/' . $opts['nsmatch'] . '/', $item['ns'])) return $return;
     } else {
         if (empty($opts['listfiles'])) return $return;
-        if (empty($opts['skipacl']) && $item['perm'] < AUTH_READ) return $return;
+        if (empty($opts['skipacl']) && $item['perm'] < AUTH_EXPOSE) return $return;
         if (!empty($opts['pagesonly']) && !str_ends_with($file, '.txt')) return $return;
         if (empty($opts['showhidden']) && isHiddenPage($item['id'])) return $return;
         if (!empty($opts['filematch']) && !preg_match('/' . $opts['filematch'] . '/', $file)) return $return;

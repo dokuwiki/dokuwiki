@@ -34,6 +34,7 @@ class Edit extends AbstractItem
                 }
             } else {
                 if (!actionOK("source")) throw new \RuntimeException("action disabled: source");
+                if (auth_quickaclcheck($INFO['id']) < AUTH_SOURCE) throw new \RuntimeException("no permission to see source");
                 $params['rev'] = $REV;
                 $this->type = 'source';
                 $this->accesskey = 'v';

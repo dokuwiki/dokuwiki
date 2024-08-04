@@ -17,7 +17,7 @@ class Source extends AbstractAction
     /** @inheritdoc */
     public function minimumPermission()
     {
-        return AUTH_READ;
+        return AUTH_SOURCE;
     }
 
     /** @inheritdoc */

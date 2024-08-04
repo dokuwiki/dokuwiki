@@ -414,7 +414,7 @@ function breadcrumbs()
     $crumbs = $_SESSION[DOKU_COOKIE]['bc'] ?? [];
     //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
-    if ($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
+    if ($ACT != 'show' || $INFO['perm'] < AUTH_EXPOSE || isHiddenPage($ID) || !file_exists($file)) {
         $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }

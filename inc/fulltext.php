@@ -156,7 +156,7 @@ function _ft_pageSearch(&$data)
 
     // check: settings, acls, existence
     foreach (array_keys($docs) as $id) {
-        if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_READ || !page_exists($id, '', false)) {
+        if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_EXPOSE || !page_exists($id, '', false)) {
             unset($docs[$id]);
         }
     }
@@ -193,7 +193,7 @@ function ft_backlinks($id, $ignore_perms = false)
     foreach (array_keys($result) as $idx) {
         if (
             (!$ignore_perms && (
-                isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
+                isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_EXPOSE
             )) || !page_exists($result[$idx], '', false)
         ) {
             unset($result[$idx]);
@@ -227,7 +227,7 @@ function ft_mediause($id, $ignore_perms = false)
     foreach (array_keys($result) as $idx) {
         if (
             (!$ignore_perms && (
-                    isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_READ
+                    isHiddenPage($result[$idx]) || auth_quickaclcheck($result[$idx]) < AUTH_EXPOSE
                 )) || !page_exists($result[$idx], '', false)
         ) {
             unset($result[$idx]);
@@ -338,7 +338,7 @@ function _ft_pageLookup(&$data)
     foreach (array_keys($pages) as $idx) {
         if (
             !isVisiblePage($idx) || !page_exists($idx) ||
-            auth_quickaclcheck($idx) < AUTH_READ
+            auth_quickaclcheck($idx) < AUTH_EXPOSE
         ) {
             unset($pages[$idx]);
         }

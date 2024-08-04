@@ -479,6 +479,9 @@ class admin_plugin_acl extends AdminPlugin
                 if ($perm >= AUTH_CREATE) $names[] = $this->getLang('acl_perm4');
             }
             if ($perm >= AUTH_EDIT) $names[] = $this->getLang('acl_perm2');
+            if ($perm >= AUTH_SOURCE) $names[] = $this->getLang('acl_perm_source')?:'source';
+            if ($perm >= AUTH_HISTORY) $names[] = $this->getLang('acl_perm_history')?:'history';
+            if ($perm >= AUTH_EXPOSE) $names[] = $this->getLang('acl_perm_expose')?:'expose';
             if ($perm >= AUTH_READ) $names[] = $this->getLang('acl_perm1');
             $names = array_reverse($names);
         } else {
@@ -776,7 +779,7 @@ class admin_plugin_acl extends AdminPlugin
 
         if ($ispage && $setperm > AUTH_EDIT) $setperm = AUTH_EDIT;
 
-        foreach ([AUTH_NONE, AUTH_READ, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
+        foreach ([AUTH_NONE, AUTH_READ, AUTH_EXPOSE, AUTH_HISTORY, AUTH_SOURCE, AUTH_EDIT, AUTH_CREATE, AUTH_UPLOAD, AUTH_DELETE] as $perm) {
             ++$label;
 
             //general checkbox attributes

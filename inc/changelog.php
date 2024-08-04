@@ -360,7 +360,7 @@ function _handleRecentLogLine($line, $ns, $flags, &$seen)
     } else {
         $recent['perms'] = auth_quickaclcheck($recent['id']);
     }
-    if ($recent['perms'] < AUTH_READ) return false;
+    if ($recent['perms'] < AUTH_HISTORY) return false;
 
     // check existence
     if ($flags & RECENTS_SKIP_DELETED) {

@@ -64,7 +64,7 @@ class Mapper
         foreach ($pages as $id) {
             //skip hidden, non existing and restricted files
             if (isHiddenPage($id)) continue;
-            if (auth_aclcheck($id, '', []) < AUTH_READ) continue;
+            if (auth_aclcheck($id, '', []) < AUTH_EXPOSE) continue;
             $item = Item::createFromID($id);
             if ($item instanceof Item)
                 $items[] = $item;

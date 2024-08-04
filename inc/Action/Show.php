@@ -24,7 +24,9 @@ class Show extends AbstractAction
     /** @inheritdoc */
     public function minimumPermission()
     {
-        return AUTH_READ;
+        global $REV;
+        if($REV) return AUTH_HISTORY;
+        else return AUTH_READ;
     }
 
     /** @inheritdoc */

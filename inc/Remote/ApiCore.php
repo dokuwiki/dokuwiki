@@ -295,7 +295,7 @@ class ApiCore
 
         foreach (array_keys($pages) as $idx) {
             $perm = auth_quickaclcheck($pages[$idx]);
-            if ($perm < AUTH_READ || isHiddenPage($pages[$idx]) || !page_exists($pages[$idx])) {
+            if ($perm < AUTH_EXPOSE || isHiddenPage($pages[$idx]) || !page_exists($pages[$idx])) {
                 continue;
             }
 
@@ -833,6 +833,9 @@ class ApiCore
         if (auth_quickaclcheck($media) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
+        if ($rev && auth_quickaclcheck($media) < AUTH_HISTORY) {
+            throw new AccessDeniedException('You are not allowed to read older versions of this media file', 211);
+        }
 
         $file = mediaFN($media, $rev);
         if (!@ file_exists($file)) {
@@ -864,6 +867,9 @@ class ApiCore
         $media = cleanID($media);
         if (auth_quickaclcheck($media) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if ($rev && auth_quickaclcheck($media) < AUTH_HISTORY) {
+            throw new AccessDeniedException('You are not allowed to read older versions of this media file', 211);
         }
         if (!media_exists($media, $rev)) {
             throw new RemoteException('The requested media file does not exist', 221);

@@ -769,7 +769,7 @@ function auth_aclcheck_cb($data)
         }
         if ($perm > -1) {
             //we had a match - return it
-            return (int) $perm;
+            return (float) $perm;
         }
     }
 
@@ -799,7 +799,7 @@ function auth_aclcheck_cb($data)
             }
             //we had a match - return it
             if ($perm != -1) {
-                return (int) $perm;
+                return (float) $perm;
             }
         }
         //get next higher namespace
