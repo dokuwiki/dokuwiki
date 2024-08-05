@@ -27,8 +27,9 @@ abstract class AbstractAction
         if ($actionname !== '') {
             $this->actionname = $actionname;
         } else {
-            // http://stackoverflow.com/a/27457689/172068
-            $this->actionname = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+            // As of PHP 8 this seems to be the fastest way to get the name:
+            $n = explode('\\', get_class($this));
+            $this->actionname = array_pop($n);
         }
     }
 
