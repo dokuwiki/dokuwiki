@@ -29,7 +29,7 @@ abstract class AbstractAction
         } else {
             // As of PHP 8 this seems to be the fastest way to get the name:
             $n = explode('\\', get_class($this));
-            $this->actionname = array_pop($n);
+            $this->actionname = strtolower(array_pop($n));
         }
     }
 
