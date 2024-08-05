@@ -37,9 +37,9 @@ $lang['perm']  = 'Permissions';
 
 $lang['acl_perm0']  = 'None';
 $lang['acl_perm1']  = 'Read';
-$lang['acl_perm1.2']  = 'Expose';
-$lang['acl_perm1.5']  = 'History';
-$lang['acl_perm1.7']  = 'Source';
+$lang['acl_perm_expose']  = 'Expose';
+$lang['acl_perm_history']  = 'History';
+$lang['acl_perm_source']  = 'Source';
 $lang['acl_perm2']  = 'Edit';
 $lang['acl_perm4']  = 'Create';
 $lang['acl_perm8']  = 'Upload';
