@@ -427,6 +427,7 @@ function copy_uploaded_file($from, $to)
  * $data[3]     imime:     the mimetype of the uploaded file
  * $data[4]     overwrite: if an existing file is going to be overwritten
  * $data[5]     move:      name of function that performs move/copy/..
+ * $data[6]     user:      username of the user who uploaded the file
  *
  * @triggers MEDIA_UPLOAD_FINISH
  *
@@ -435,6 +436,7 @@ function copy_uploaded_file($from, $to)
  * @param bool   $ow   overwrite?
  * @param int    $auth permission level
  * @param string $move name of functions that performs move/copy/..
+ * @param string $user username
  * @return false|array|string
  */
 function media_save($file, $id, $ow, $auth, $move)
@@ -453,7 +455,7 @@ function media_save($file, $id, $ow, $auth, $move)
         }
     }
 
-    global $lang, $conf;
+    global $lang, $conf, $_SERVER;
 
     // get filename
     $id   = cleanID($id);
@@ -496,6 +498,7 @@ function media_save($file, $id, $ow, $auth, $move)
     $data[3] = $file['mime'];
     $data[4] = $overwrite;
     $data[5] = $move;
+    $data[6] = $_SERVER['REMOTE_USER'];
 
     // trigger event
     return Event::createAndTrigger('MEDIA_UPLOAD_FINISH', $data, '_media_upload_action', true);
@@ -513,7 +516,7 @@ function _media_upload_action($data)
 {
     // fixme do further sanity tests of given data?
     if (is_array($data) && count($data) === 6) {
-        return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
+        return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
     } else {
         return false; //callback error
     }
@@ -534,7 +537,7 @@ function _media_upload_action($data)
  * @param string $move      function name
  * @return array|string
  */
-function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file')
+function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'move_uploaded_file', $user)
 {
     global $conf;
     global $lang;
