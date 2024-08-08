@@ -163,6 +163,8 @@ class admin_plugin_extension extends AdminPlugin
     {
         echo '<h1>' . $this->getLang('menu') . '</h1>';
 
+        echo '<div id="extension__list">';
+
         $ext = \dokuwiki\plugin\extension\Extension::createFromId('aichat');
         $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
         echo $gui->render();
@@ -178,6 +180,8 @@ class admin_plugin_extension extends AdminPlugin
         $ext = \dokuwiki\plugin\extension\Extension::createFromId('top');
         $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
         echo $gui->render();
+
+        echo '</div>';
 
         return;
 

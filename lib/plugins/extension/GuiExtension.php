@@ -23,13 +23,44 @@ class GuiExtension extends Gui
         $classes = $this->getClasses();
 
         $html = "<section class=\"$classes\">";
+
+        $html .= '<div class="screenshot">';
         $html .= $this->thumbnail();
+        $html .= '</div>';
+
+        $html.= '<h2>';
+        $html .= '<bdi>' . hsc($this->extension->getDisplayName()) . '</bdi>';
+        if ($this->extension->isBundled()) {
+            $html .= ' <span class="version">' . hsc('<' . $this->getLang('status_bundled') . '>') . '</span>';
+        } elseif ($this->extension->getInstalledVersion()) {
+            $html .= ' <span class="version">' . hsc($this->extension->getInstalledVersion()) . '</span>';
+        }
         $html .= $this->popularity();
-        $html .= $this->info();
+        $html .= '</h2>';
+
+        $html .= '<div class="main">';
+        $html .= '<h3>' . $this->author() . '</h3>';
+        $html .= '<p>' . hsc($this->extension->getDescription()) . '</p>';
+        $html .= '</div>';
+
+
+
+
+        $html .= '<div class="details">';
         $html .= $this->notices();
         $html .= $this->mainLinks();
         $html .= $this->details();
+        $html .= '</div>';
+
+        // show the available version if there is one
+        if ($this->extension->getDownloadURL() && $this->extension->getLastUpdate()) {
+            $html .= ' <div class="version">' . $this->getLang('available_version') . ' ' .
+                hsc($this->extension->getLastUpdate()) . '</div>';
+        }
+
+        $html .= '<div class="actions">';
         $html .= $this->actions();
+        $html .= '</div>';
 
 
         $html .= '</section>';
@@ -72,11 +103,10 @@ class GuiExtension extends Gui
             $img['src'] = DOKU_BASE . 'lib/plugins/extension/images/plugin.png';
         }
 
-        $html = '<div class="screenshot">';
+        $html = '';
         if ($link) $html .= '<a ' . buildAttributes($link) . '>';
         $html .= '<img ' . buildAttributes($img) . ' />';
         if ($link) $html .= '</a>';
-        $html .= '</div>';
 
         return $html;
 
@@ -89,18 +119,8 @@ class GuiExtension extends Gui
      */
     protected function info()
     {
-        $html = '<h2>';
-        $html .= '<bdi>' . hsc($this->extension->getDisplayName()) . '</bdi>';
-        if($this->extension->isBundled()) {
-            $html .= ' <span class="version">' . hsc('<'.$this->getLang('status_bundled').'>') . '</span>';
-        } elseif($this->extension->getInstalledVersion()) {
-            $html .= ' <span class="version">' . hsc($this->extension->getInstalledVersion()) . '</span>';
-        }
-        $html .= '</h2>';
 
-        $html .= $this->author();
 
-        $html .= '<p>' . hsc($this->extension->getDescription()) . '</p>';
 
         return $html;
     }
@@ -151,7 +171,6 @@ class GuiExtension extends Gui
             $params = $this->prepareLinkAttributes($this->extension->getDonationURL(), 'donate');
             $html .= ' <a ' . buildAttributes($params, true) . '>' . $this->getLang('donate_action') . '</a>';
         }
-
 
 
         $html .= '</div>';
@@ -229,10 +248,12 @@ class GuiExtension extends Gui
             $list['conflicts'] = $this->linkExtensions($this->extension->getConflictList());
         }
 
+        $html .= '<dl>';
         foreach ($list as $key => $value) {
             $html .= '<dt>' . $this->getLang($key) . '</dt>';
             $html .= '<dd>' . $value . '</dd>';
         }
+        $html .= '</dl>';
 
         $html .= '</details>';
         return $html;
@@ -288,12 +309,6 @@ class GuiExtension extends Gui
         $html = '';
         $actions = [];
         $errors = [];
-
-        // show the available version if there is one
-        if ($this->extension->getDownloadURL() && $this->extension->getLastUpdate()) {
-            $html .= ' <span class="version">' . $this->getLang('available_version') . ' ' .
-                hsc($this->extension->getLastUpdate()) . '</span>';
-        }
 
         // gather available actions and possible errors to show
         try {
@@ -442,124 +457,4 @@ class GuiExtension extends Gui
     }
 
     // endregion
-
-
-    /**
-     * Extension main description
-     *
-     * @return string The HTML code
-     */
-    public function makeLegend()
-    {
-        $html = '<div>';
-        $html .= '<h2>';
-        $html .= sprintf(
-            $this->getLang('extensionby'),
-            '<bdi>' . hsc($this->extension->getDisplayName()) . '</bdi>',
-            $this->author()
-        );
-        $html .= '</h2>' . DOKU_LF;
-
-        $html .= $this->makeScreenshot();
-
-        $popularity = $this->extension->getPopularity();
-        if ($popularity !== false && !$this->extension->isBundled()) {
-            $popularityText = sprintf($this->getLang('popularity'), round($popularity * 100, 2));
-            $html .= '<div class="popularity" title="' . $popularityText . '">' .
-                '<div style="width: ' . ($popularity * 100) . '%;">' .
-                '<span class="a11y">' . $popularityText . '</span>' .
-                '</div></div>' . DOKU_LF;
-        }
-
-        if ($this->extension->getDescription()) {
-            $html .= '<p><bdi>';
-            $html .= hsc($this->extension->getDescription()) . ' ';
-            $html .= '</bdi></p>' . DOKU_LF;
-        }
-
-        $html .= $this->makeLinkbar();
-        $html .= $this->makeInfo();
-        $html .= $this->makeNoticeArea();
-        $html .= '</div>' . DOKU_LF;
-        return $html;
-    }
-
-
-    /**
-     * Plugin/template details
-     *
-     * @return string The HTML code
-     */
-    public
-    function makeInfo()
-    {
-        $default = $this->getLang('unknown');
-
-
-        $list = [];
-
-        $list['status'] = $this->makeStatus();
-
-
-        if ($this->extension->getDonationURL()) {
-            $list['donate'] = '<a href="' . $this->extension->getDonationURL() . '" class="donate">' .
-                $this->getLang('donate_action') . '</a>';
-        }
-
-        if (!$this->extension->isBundled()) {
-            $list['downloadurl'] = $this->shortlink($this->extension->getDownloadURL(), $default);
-            $list['repository'] = $this->shortlink($this->extension->getSourcerepoURL(), $default);
-        }
-
-        if ($this->extension->isInstalled()) {
-            if ($this->extension->getInstalledVersion()) {
-                $list['installed_version'] = hsc($this->extension->getInstalledVersion());
-            }
-            if (!$this->extension->isBundled()) {
-                $updateDate = $this->extension->getManager()->getLastUpdate();
-                $list['install_date'] = $updateDate ? hsc($updateDate) : $default;
-            }
-        }
-
-        if (!$this->extension->isInstalled() || $this->extension->isUpdateAvailable()) {
-            $list['available_version'] = $this->extension->getLastUpdate()
-                ? hsc($this->extension->getLastUpdate())
-                : $default;
-        }
-
-
-        if (!$this->extension->isBundled() && $this->extension->getCompatibleVersions()) {
-            $html .= '<dt>' . $this->getLang('compatible') . '</dt>';
-            $html .= '<dd>';
-            foreach ($this->extension->getCompatibleVersions() as $date => $version) {
-                $html .= '<bdi>' . $version['label'] . ' (' . $date . ')</bdi>, ';
-            }
-            $html = rtrim($html, ', ');
-            $html .= '</dd>';
-        }
-        if ($this->extension->getDependencyList()) {
-            $html .= '<dt>' . $this->getLang('depends') . '</dt>';
-            $html .= '<dd>';
-            $html .= $this->makeLinkList($extension->getDependencies());
-            $html .= '</dd>';
-        }
-
-        if ($this->extension->getSimilarExtensions()) {
-            $html .= '<dt>' . $this->getLang('similar') . '</dt>';
-            $html .= '<dd>';
-            $html .= $this->makeLinkList($extension->getSimilarExtensions());
-            $html .= '</dd>';
-        }
-
-        if ($this->extension->getConflicts()) {
-            $html .= '<dt>' . $this->getLang('conflicts') . '</dt>';
-            $html .= '<dd>';
-            $html .= $this->makeLinkList($extension->getConflicts());
-            $html .= '</dd>';
-        }
-        $html .= '</dl>' . DOKU_LF;
-        return $html;
-    }
-
-
 }
