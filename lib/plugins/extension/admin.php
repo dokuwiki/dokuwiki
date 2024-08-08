@@ -163,6 +163,10 @@ class admin_plugin_extension extends AdminPlugin
     {
         echo '<h1>' . $this->getLang('menu') . '</h1>';
 
+        $gui = new \dokuwiki\plugin\extension\GuiAdmin();
+        echo $gui->render();
+
+
         echo '<div id="extension__list">';
 
         $ext = \dokuwiki\plugin\extension\Extension::createFromId('aichat');
@@ -185,26 +189,7 @@ class admin_plugin_extension extends AdminPlugin
 
         return;
 
-        echo '<div id="extension__manager">' . DOKU_LF;
 
-        $this->gui->tabNavigation();
-
-        switch ($this->gui->currentTab()) {
-            case 'search':
-                $this->gui->tabSearch();
-                break;
-            case 'templates':
-                $this->gui->tabTemplates();
-                break;
-            case 'install':
-                $this->gui->tabInstall();
-                break;
-            case 'plugins':
-            default:
-                $this->gui->tabPlugins();
-        }
-
-        echo '</div>' . DOKU_LF;
     }
 }
 

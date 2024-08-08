@@ -115,6 +115,12 @@ $lang['repo_badresponse']             = 'The plugin repository returned an inval
 $lang['repo_error']                   = 'The plugin repository could not be contacted. Make sure your server is allowed to contact www.dokuwiki.org and check your proxy settings.';
 $lang['nossl']                        = 'Your PHP seems to miss SSL support. Downloading will not work for many DokuWiki extensions.';
 
+$lang['popularity_high'] = 'This is one of the most popular extensions';
+$lang['popularity_medium'] = 'This extension is quite popular';
+$lang['popularity_low'] = 'This extension has garnered some interest';
+
+$lang['details'] = 'Details';
+
 $lang['js']['display_viewoptions']    = 'View Options:';
 $lang['js']['display_enabled']        = 'enabled';
 $lang['js']['display_disabled']       = 'disabled';

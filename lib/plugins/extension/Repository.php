@@ -96,11 +96,17 @@ class Repository
         }
 
         try {
+            $found = [];
             $extensions = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
             foreach ($extensions as $extension) {
                 $this->storeCache($extension['plugin'], $extension);
+                $found[] = $extension['plugin'];
             }
-        } catch (JsonExceptionAlias $e) {
+            // extensions that have not been returned are not in the repository, but we should cache that too
+            foreach (array_diff($ids, $found) as $id) {
+                $this->storeCache($id, []);
+            }
+        } catch (JsonException $e) {
             $this->hasAccess = false;
             throw new Exception('repo_badresponse', 0, $e);
         }

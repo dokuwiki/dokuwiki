@@ -26,39 +26,28 @@ class GuiExtension extends Gui
 
         $html .= '<div class="screenshot">';
         $html .= $this->thumbnail();
+        $html .= '<span class="id">'. hsc($this->extension->getBase()) .'</span>';
         $html .= '</div>';
-
-        $html.= '<h2>';
-        $html .= '<bdi>' . hsc($this->extension->getDisplayName()) . '</bdi>';
-        if ($this->extension->isBundled()) {
-            $html .= ' <span class="version">' . hsc('<' . $this->getLang('status_bundled') . '>') . '</span>';
-        } elseif ($this->extension->getInstalledVersion()) {
-            $html .= ' <span class="version">' . hsc($this->extension->getInstalledVersion()) . '</span>';
-        }
-        $html .= $this->popularity();
-        $html .= '</h2>';
 
         $html .= '<div class="main">';
-        $html .= '<h3>' . $this->author() . '</h3>';
-        $html .= '<p>' . hsc($this->extension->getDescription()) . '</p>';
+        $html .= $this->main();
         $html .= '</div>';
 
-
-
+        $html .= '<div class="notices">';
+        $html .= $this->notices();
+        $html .= '</div>';
 
         $html .= '<div class="details">';
-        $html .= $this->notices();
-        $html .= $this->mainLinks();
         $html .= $this->details();
         $html .= '</div>';
 
+        $html .= '<div class="actions">';
         // show the available version if there is one
         if ($this->extension->getDownloadURL() && $this->extension->getLastUpdate()) {
             $html .= ' <div class="version">' . $this->getLang('available_version') . ' ' .
                 hsc($this->extension->getLastUpdate()) . '</div>';
         }
 
-        $html .= '<div class="actions">';
         $html .= $this->actions();
         $html .= '</div>';
 
@@ -117,10 +106,25 @@ class GuiExtension extends Gui
      *
      * @return string
      */
-    protected function info()
+    protected function main()
     {
+        $html = '';
+        $html .= '<h2>';
+        $html .= '<div>';
+        $html .= sprintf($this->getLang('extensionby'), hsc($this->extension->getDisplayName()) . $this->popularity(), $this->author());
+        $html .= '</div>';
 
+        $html .= '<div class="version">';
+        if ($this->extension->isBundled()) {
+            $html .= hsc('<' . $this->getLang('status_bundled') . '>');
+        } elseif ($this->extension->getInstalledVersion()) {
+            $html .= hsc($this->extension->getInstalledVersion());
+        }
+        $html .= '</div>';
+        $html .= '</h2>';
 
+        $html .= '<p>' . hsc($this->extension->getDescription()) . '</p>';
+        $html .= $this->mainLinks();
 
         return $html;
     }
@@ -134,14 +138,16 @@ class GuiExtension extends Gui
     {
         $notices = Notice::list($this->extension);
 
-        $html = '';
+        $html = '<ul>';
         foreach ($notices as $type => $messages) {
             foreach ($messages as $message) {
                 $message = hsc($message);
+                $message = Notice::ICONS[$type] . ' ' . $message;
                 $message = preg_replace('/`([^`]+)`/', '<bdi>$1</bdi>', $message);
-                $html .= '<div class="msg ' . $type . '">' . $message . '</div>';
+                $html .= '<li class="' . $type . '"><div class="li">' . $message . '</div></li>';
             }
         }
+        $html .= '</ul>';
         return $html;
     }
 
@@ -186,7 +192,7 @@ class GuiExtension extends Gui
     protected function details()
     {
         $html = '<details>';
-        $html .= '<summary>' . 'FIXME label' . '</summary>';
+        $html .= '<summary>' . $this->getLang('details') . '</summary>';
 
 
         $default = $this->getLang('unknown');
@@ -270,13 +276,21 @@ class GuiExtension extends Gui
             return '<em class="author">' . $this->getLang('unknown_author') . '</em>';
         }
 
+        $names = explode(',', $this->extension->getAuthor());
+        $names = array_map('trim', $names);
+        if (count($names) > 2) {
+            $names = array_slice($names, 0, 2);
+            $names[] = '…';
+        }
+        $name = join(', ', $names);
+
         $mailid = $this->extension->getEmailID();
         if ($mailid) {
             $url = $this->tabURL('search', ['q' => 'authorid:' . $mailid]);
             $html = '<a href="' . $url . '" class="author" title="' . $this->getLang('author_hint') . '" >' .
                 '<img src="//www.gravatar.com/avatar/' . $mailid .
                 '?s=60&amp;d=mm" width="20" height="20" alt="" /> ' .
-                hsc($this->extension->getAuthor()) . '</a>';
+                hsc($name) . '</a>';
         } else {
             $html = '<span class="author">' . hsc($this->extension->getAuthor()) . '</span>';
         }
@@ -294,11 +308,21 @@ class GuiExtension extends Gui
         if (!$popularity) return '';
         if ($this->extension->isBundled()) return '';
 
-        $popularityText = sprintf($this->getLang('popularity'), round($popularity * 100, 2));
-        return '<div class="popularity" title="' . $popularityText . '">' .
-            '<div style="width: ' . ($popularity * 100) . '%;">' .
-            '<span class="a11y">' . $popularityText . '</span>' .
-            '</div></div>';
+        if ($popularity > 0.25) {
+            $title = $this->getLang('popularity_high');
+            $emoji = '🔥🔥🔥';
+        } else if ($popularity > 0.15) {
+            $title = $this->getLang('popularity_medium');
+            $emoji = '🔥🔥';
+        } else if ($popularity > 0.05) {
+            $title = $this->getLang('popularity_low');
+            $emoji = '🔥';
+        } else {
+            return '';
+        }
+        $title .= ' (' . round($popularity * 100) . '%)';
+
+        return '<span class="popularity" title="' . $title . '">' . $emoji . '</span>';
 
     }
 
@@ -319,22 +343,10 @@ class GuiExtension extends Gui
                 if (!$this->extension->isProtected()) $actions[] = 'uninstall';
                 if ($this->extension->getDownloadURL()) {
                     $actions[] = $this->extension->isUpdateAvailable() ? 'update' : 'reinstall';
-
-                    if ($this->extension->isGitControlled()) {
-                        $errors[] = $this->getLang('git');
-                    }
                 }
 
                 if (!$this->extension->isProtected() && !$this->extension->isTemplate()) { // no enable/disable for templates
                     $actions[] = $this->extension->isEnabled() ? 'disable' : 'enable';
-
-                    if (
-                        $this->extension->isEnabled() &&
-                        in_array('Auth', $this->extension->getComponentTypes()) &&
-                        $conf['authtype'] != $this->extension->getID()
-                    ) {
-                        $errors[] = $this->getLang('auth');
-                    }
                 }
             } else {
                 if ($this->extension->getDownloadURL()) {
@@ -342,7 +354,6 @@ class GuiExtension extends Gui
                 }
             }
         } catch (\Exception $e) {
-            $errors[] = $e->getMessage();
         }
 
         foreach ($actions as $action) {

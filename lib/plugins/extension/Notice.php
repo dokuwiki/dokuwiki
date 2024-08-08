@@ -39,6 +39,7 @@ class Notice
         $this->helper = plugin_load('helper', 'extension');
         $this->extension = $extension;
 
+        // FIXME sort sensibly
         $this->checkDependencies();
         $this->checkConflicts();
         $this->checkSecurity();
@@ -46,6 +47,9 @@ class Notice
         $this->checkPHPVersion();
         $this->checkUpdateMessage();
         $this->checkURLChange();
+        $this->checkPermissions();
+        $this->checkUnusedAuth();
+        $this->checkGit();
     }
 
     /**
@@ -84,7 +88,7 @@ class Notice
             $dep = Extension::createFromId($dependency);
             if (!$dep->isInstalled()) $missing[] = $dep;
         }
-        if(!$missing) return;
+        if (!$missing) return;
 
         $this->notices[self::ERROR][] = sprintf(
             $this->getLang('missing_dependency'),
@@ -104,7 +108,7 @@ class Notice
             $dep = Extension::createFromId($conflict);
             if ($dep->isInstalled()) $found[] = $dep;
         }
-        if(!$found) return;
+        if (!$found) return;
 
         $this->notices[self::WARNING][] = sprintf(
             $this->getLang('found_conflict'),
@@ -180,4 +184,46 @@ class Notice
         );
     }
 
+    /**
+     * Check if the extension dir has the correct permissions to change
+     *
+     * @return void
+     */
+    protected function checkPermissions()
+    {
+        try {
+            Installer::ensurePermissions($this->extension);
+        } catch (\Exception $e) {
+            $this->notices[self::ERROR][] = $e->getMessage();
+        }
+    }
+
+    /**
+     * Hint about unused auth plugins
+     *
+     * @return void
+     */
+    protected function checkUnusedAuth()
+    {
+        global $conf;
+        if (
+            $this->extension->isEnabled() &&
+            in_array('Auth', $this->extension->getComponentTypes()) &&
+            $conf['authtype'] != $this->extension->getID()
+        ) {
+            $this->notices[self::INFO][] = $this->getLang('auth');
+        }
+    }
+
+    /**
+     * Hint about installations by git
+     *
+     * @return void
+     */
+    protected function checkGit()
+    {
+        if ($this->extension->isGitControlled()) {
+            $this->notices[self::INFO][] = $this->getLang('git');
+        }
+    }
 }
