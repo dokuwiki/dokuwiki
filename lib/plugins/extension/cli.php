@@ -50,6 +50,7 @@ class cli_plugin_extension extends CLIPlugin
 
         // upgrade
         $options->registerCommand('upgrade', 'Update all installed extensions to their latest versions');
+        $options->registerOption('git-overwrite', 'Do not skip git-controlled extensions', 'g', false, 'upgrade');
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
@@ -107,7 +108,7 @@ class cli_plugin_extension extends CLIPlugin
                 $ret = $this->cmdEnable(false, $options->getArgs());
                 break;
             case 'upgrade':
-                $ret = $this->cmdUpgrade();
+                $ret = $this->cmdUpgrade($options->getOpt('git-overwrite', false));
                 break;
             default:
                 echo $options->help();
@@ -122,11 +123,12 @@ class cli_plugin_extension extends CLIPlugin
      *
      * @return int
      */
-    protected function cmdUpgrade()
+    protected function cmdUpgrade($gitOverwrite)
     {
         $local = new Local();
         $extensions = [];
         foreach ($local->getExtensions() as $ext) {
+            if($ext->isGitControlled() && !$gitOverwrite) continue; // skip git controlled extensions
             if ($ext->isUpdateAvailable()) $extensions[] = $ext->getID();
         }
         return $this->cmdInstall($extensions);
