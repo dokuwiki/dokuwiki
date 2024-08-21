@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author nakky <nakky@naver.com>
  * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
@@ -156,6 +157,8 @@ $lang['profdeleted']           = '당신의 사용자 계정이 이 위키에서
 $lang['profconfdelete']        = '이 위키에서 내 계정을 제거하고 싶습니다. <br/> 이 행동은 되돌릴 수 없습니다.';
 $lang['profconfdeletemissing'] = '선택하지 않은 확인 상자를 확인';
 $lang['proffail']              = '사용자 프로필이 업데이트되지 않았습니다.';
+$lang['proftokenlegend']       = '인증 토큰';
+$lang['proftokengenerate']     = '토큰 재설정';
 $lang['pwdforget']             = '비밀번호를 잊으셨나요? 비밀번호를 재설정하세요';
 $lang['resendna']              = '이 위키는 비밀번호 재설정을 지원하지 않습니다.';
 $lang['resendpwd']             = '다음으로 새 비밀번호 보내기';
