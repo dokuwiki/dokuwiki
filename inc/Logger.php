@@ -228,7 +228,9 @@ class Logger
     protected function writeLogLines($lines, $logfile)
     {
         if (defined('DOKU_UNITTEST')) {
-            fwrite(STDERR, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
+            $stderr = fopen('php://stderr', 'w');
+            fwrite($stderr, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
+            fclose($stderr);
         }
         return io_saveFile($logfile, implode("\n", $lines) . "\n", true);
     }
