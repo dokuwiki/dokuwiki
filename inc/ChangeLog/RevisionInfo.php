@@ -113,7 +113,7 @@ class RevisionInfo
             return media_printicon($id);
         } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
-            return '<img class="icon" src="' . DOKU_BASE . 'lib/images/fileicons/file.png" alt="' . $id . '" />';
+            return '<img class="icon" src="' . DOKU_BASE . 'lib/exe/image.php/fileicons/file.png" alt="' . $id . '" />';
         }
     }
 
@@ -286,11 +286,11 @@ class RevisionInfo
 
         if ($href) {
             return '<a href="' . $href . '" class="diff_link">'
-                  . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
+                  . '<img src="' . DOKU_BASE . 'lib/exe/image.php/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
         } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
+            return '<img src="' . DOKU_BASE . 'lib/exe/image.php/blank.gif" width="15" height="11" alt="" />';
         }
     }
 
@@ -322,11 +322,11 @@ class RevisionInfo
 
         if ($href) {
             return '<a href="' . $href . '" class="diff_link">'
-                  . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
+                  . '<img src="' . DOKU_BASE . 'lib/exe/image.php/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
         } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
+            return '<img src="' . DOKU_BASE . 'lib/exe/image.php/blank.gif" width="15" height="11" alt="" />';
         }
     }
 
@@ -354,7 +354,7 @@ class RevisionInfo
             $href = wl($id, ['do' => 'revisions'], false, '&');
         }
         return '<a href="' . $href . '" class="revisions_link">'
-              . '<img src="' . DOKU_BASE . 'lib/images/history.png" width="12" height="14"'
+              . '<img src="' . DOKU_BASE . 'lib/exe/image.php/history.png" width="12" height="14"'
               . ' title="' . $lang['btn_revs'] . '" alt="' . $lang['btn_revs'] . '" />'
               . '</a>';
     }

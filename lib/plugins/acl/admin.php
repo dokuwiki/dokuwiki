@@ -537,10 +537,10 @@ class admin_plugin_acl extends AdminPlugin
         // namespace or page?
         if ($item['type'] == 'd') {
             if ($item['open']) {
-                $img = DOKU_BASE . 'lib/images/minus.gif';
+                $img = DOKU_BASE . 'lib/exe/image.php/minus.gif';
                 $alt = '−';
             } else {
-                $img = DOKU_BASE . 'lib/images/plus.gif';
+                $img = DOKU_BASE . 'lib/exe/image.php/plus.gif';
                 $alt = '+';
             }
             $ret .= '<img src="' . $img . '" alt="' . $alt . '" />';
