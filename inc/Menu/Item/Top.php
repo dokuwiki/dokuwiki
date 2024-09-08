@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Top
  *
@@ -15,7 +17,7 @@ class Top extends AbstractItem
     {
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/10-top_arrow-up.svg';
+        $this->svg = StaticImage::path('menu/10-top_arrow-up.svg');
         $this->accesskey = 't';
         $this->params = ['do' => ''];
         $this->id = '#dokuwiki__top';

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class MediaManager
  *
@@ -21,7 +23,7 @@ class MediaManager extends AbstractItem
             throw new \RuntimeException("media manager link only with upload permissions");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
+        $this->svg = StaticImage::path('menu/11-mediamanager_folder-image.svg');
         $this->type = 'mediaManager';
         $this->params = ['ns' => $imgNS, 'image' => $IMG, 'do' => 'media'];
     }
