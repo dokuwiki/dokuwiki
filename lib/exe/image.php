@@ -1,6 +1,5 @@
 <?php
 
-
 use dokuwiki\File\StaticImage;
 
 if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
@@ -18,4 +17,3 @@ try {
     http_status(404);
     echo $e->getMessage();
 }
-

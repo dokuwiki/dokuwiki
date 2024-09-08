@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\File\StaticImage;
 use dokuwiki\Ui\MediaRevisions;
 use dokuwiki\Cache\CacheImageMod;
 use splitbrain\slika\Exception;
@@ -1483,9 +1484,9 @@ function media_printicon($filename, $size = '')
     [$ext] = mimetype(mediaFN($filename), false);
 
     try {
-        $icon = \dokuwiki\File\StaticImage::url('fileicons/' . $size . '/' . $ext . '.png');
+        $icon = StaticImage::url('fileicons/' . $size . '/' . $ext . '.png');
     } catch (\Exception $e) {
-        $icon = \dokuwiki\File\StaticImage::url('fileicons/' . $size . '/file.png');
+        $icon = StaticImage::url('fileicons/' . $size . '/file.png');
     }
 
     return '<img src="' . $icon . '" alt="' . $filename . '" class="icon" />';

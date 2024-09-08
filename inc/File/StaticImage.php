@@ -7,7 +7,6 @@ namespace dokuwiki\File;
  */
 class StaticImage
 {
-
     protected string $path;
 
     /**
