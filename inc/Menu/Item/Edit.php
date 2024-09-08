@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Menu\Item;
 
-use dokuwiki\File\StaticImage;
-
 /**
  * Class Edit
  *
@@ -63,7 +61,7 @@ class Edit extends AbstractItem
             'source' => '05-source_file-xml.svg'
         ];
         if (isset($icons[$this->type])) {
-            $this->svg = StaticImage::path('menu/' . $icons[$this->type]);
+            $this->svg = DOKU_INC . 'lib/images/menu/' . $icons[$this->type];
         }
     }
 }

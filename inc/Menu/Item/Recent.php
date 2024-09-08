@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Menu\Item;
 
-use dokuwiki\File\StaticImage;
-
 /**
  * Class Recent
  *
@@ -17,6 +15,6 @@ class Recent extends AbstractItem
         parent::__construct();
 
         $this->accesskey = 'r';
-        $this->svg = StaticImage::path('menu/calendar-clock.svg');
+        $this->svg = DOKU_INC . 'lib/images/menu/calendar-clock.svg';
     }
 }

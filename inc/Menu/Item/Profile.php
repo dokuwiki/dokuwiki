@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Menu\Item;
 
-use dokuwiki\File\StaticImage;
-
 /**
  * Class Profile
  *
@@ -21,6 +19,6 @@ class Profile extends AbstractItem
             throw new \RuntimeException("profile is only for logged in users");
         }
 
-        $this->svg = StaticImage::path('menu/account-card-details.svg');
+        $this->svg = DOKU_INC . 'lib/images/menu/account-card-details.svg';
     }
 }

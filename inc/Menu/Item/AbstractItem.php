@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Menu\Item;
 
-use dokuwiki\File\StaticImage;
-
 /**
  * Class AbstractItem
  *
@@ -66,7 +64,6 @@ abstract class AbstractItem
         $this->id = $ID;
         $this->type = $this->getType();
         $this->params['do'] = $this->type;
-        $this->svg = StaticImage::path('menu/00-default_checkbox-blank-circle-outline.svg');
 
         if (!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
     }
