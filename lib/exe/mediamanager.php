@@ -99,7 +99,7 @@ if ($IMG && ($INPUT->str('mediado') == 'save' || @array_key_exists('save', $INPU
 
 if ($INPUT->int('rev') && $conf['mediarevisions']) $REV = $INPUT->int('rev');
 
-if ($INPUT->str('mediado') == 'restore' && $conf['mediarevisions']) {
+if ($INPUT->str('mediado') == 'restore' && $conf['mediarevisions'] && checkSecurityToken()) {
     $JUMPTO = media_restore($INPUT->str('image'), $REV, $AUTH);
 }
 
