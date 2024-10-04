@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tomáš Heger <heger.tomas@gmail.com>
  * @author Martin Růžička <martinr@post.cz>
  * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
  * @author Viktor Zavadil <vzavadil@newps.cz>
@@ -38,7 +39,7 @@ $lang['search']                = 'Hledat';
 $lang['extensionby']           = '<strong>%s</strong> od %s';
 $lang['screenshot']            = 'Screenshot %s';
 $lang['popularity']            = 'Popularita: %s%%';
-$lang['homepage_link']         = 'Dokumenty';
+$lang['homepage_link']         = 'Dokumentace';
 $lang['bugs_features']         = 'Chyby';
 $lang['tags']                  = 'Štítky:';
 $lang['author_hint']           = 'Vyhledat rozšíření podle tohoto autora';
