@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Benjamin Molitor <bmolitor@uos.de>
  * @author H. Richard <wanderer379@t-online.de>
@@ -85,6 +86,7 @@ $lang['msg_nooverwrite']       = 'Die Erweiterung %s ist bereits vorhanden, soda
 $lang['missing_dependency']    = '<strong>fehlende oder deaktivierte Abhängigkeit:<strong>%s';
 $lang['security_issue']        = '<strong>Sicherheitsproblem:</strong> %s';
 $lang['security_warning']      = '<strong>Sicherheitswarnung:</strong> %s';
+$lang['update_message']        = '<strong>Update Nachricht:</strong> %s';
 $lang['update_available']      = '<strong>Update:</strong> Version %s steht zum Download bereit.';
 $lang['wrong_folder']          = '<strong>Plugin wurde nicht korrekt installiert:</strong> Benennen Sie das Plugin-Verzeichnis "%s" in "%s" um.';
 $lang['url_change']            = '<strong>URL geändert:</strong> Die Download-URL wurde seit dem letzten Download geändert. Internetadresse vor Aktualisierung der Erweiterung auf Gültigkeit prüfen.<br />Neu: %s<br />Alt: %s';
@@ -101,5 +103,6 @@ $lang['git']                   = 'Diese Erweiterung wurde über git installiert 
 $lang['auth']                  = 'Dieses Auth-Plugin ist in der Konfiguration nicht aktiviert, Sie sollten es deaktivieren.';
 $lang['install_url']           = 'Von Webadresse (URL) installieren';
 $lang['install_upload']        = 'Erweiterung hochladen:';
+$lang['repo_badresponse']      = 'Das Plugin-Verzeichnis hat eine ungültige Antwort geliefert.';
 $lang['repo_error']            = 'Es konnte keine Verbindung zum Plugin-Verzeichnis hergestellt werden. Stellen Sie sicher, dass der Server Verbindung mit www.dokuwiki.org aufnehmen darf und überprüfen Sie ihre Proxy-Einstellungen.';
 $lang['nossl']                 = 'Ihr PHP scheint SSL nicht zu unterstützen. Das Herunterladen vieler DokuWiki-Erweiterungen wird scheitern.';
