@@ -148,7 +148,7 @@ class admin_plugin_revert extends AdminPlugin
 
             echo '<a href="' . wl($recent['id'], "do=diff") . '">';
             $p = [];
-            $p['src']    = DOKU_BASE . 'lib/images/diff.png';
+            $p['src']    = DOKU_BASE . 'lib/exe/image.php/diff.png';
             $p['width']  = 15;
             $p['height'] = 11;
             $p['title']  = $lang['diff'];
@@ -159,7 +159,7 @@ class admin_plugin_revert extends AdminPlugin
 
             echo '<a href="' . wl($recent['id'], "do=revisions") . '">';
             $p = [];
-            $p['src']    = DOKU_BASE . 'lib/images/history.png';
+            $p['src']    = DOKU_BASE . 'lib/exe/image.php/history.png';
             $p['width']  = 12;
             $p['height'] = 14;
             $p['title']  = $lang['btn_revs'];
