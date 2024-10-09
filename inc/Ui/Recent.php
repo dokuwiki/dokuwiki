@@ -162,7 +162,7 @@ class Recent extends Ui
         }
         if (!$changelog->isCurrentRevision($info['date'])) {
             $currentRevInfo = $changelog->getCurrentRevisionInfo();
-            if ($currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            if ($currentRevInfo && $currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
                 // the page or media file was externally deleted, updated info because the link is already red
                 // externally created and edited not updated because sorting by date is not worth so much changes
                 $info = array_merge($info, $currentRevInfo);
