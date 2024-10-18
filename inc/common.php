@@ -1358,7 +1358,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     } elseif ($who == 'subscribers') {
         if (!actionOK('subscribe')) return false; //subscribers enabled?
         if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
-        $data = ['id' => $id, 'addresslist' => '', 'self' => false, 'replacements' => $replace];
+        $data = ['id' => $id, 'addresslist' => '', 'self' => $conf['notifyself'], 'replacements' => $replace];
         Event::createAndTrigger(
             'COMMON_NOTIFY_ADDRESSLIST',
             $data,
