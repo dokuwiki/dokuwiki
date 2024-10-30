@@ -3,7 +3,7 @@
         'name' => 'dokuwiki/dokuwiki',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'ff6a7a9d5faee648df31090bfa612e064ab19bfd',
+        'reference' => '201d2969d07ef9e1838c0935641d7a132dcf0e82',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'dokuwiki/dokuwiki' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'ff6a7a9d5faee648df31090bfa612e064ab19bfd',
+            'reference' => '201d2969d07ef9e1838c0935641d7a132dcf0e82',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -31,7 +31,7 @@
         'geshi/geshi' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7884d22244c6d2de5ac7ffd919ce4add02b36e66',
+            'reference' => '17ff9b22ac6695efa6ab6fbcf0607263f080468c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../geshi/geshi',
             'aliases' => array(
@@ -59,9 +59,9 @@
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
-            'pretty_version' => 'v2.6.3',
-            'version' => '2.6.3.0',
-            'reference' => '58c3f47f650c94ec05a151692652a868995d2938',
+            'pretty_version' => 'v2.7.0',
+            'version' => '2.7.0.0',
+            'reference' => '52a0d99e69f56b9ec27ace92ba56897fe6993105',
             'type' => 'library',
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
@@ -77,9 +77,9 @@
             'dev_requirement' => false,
         ),
         'phpseclib/phpseclib' => array(
-            'pretty_version' => '3.0.37',
-            'version' => '3.0.37.0',
-            'reference' => 'cfa2013d0f68c062055180dd4328cc8b9d1f30b8',
+            'pretty_version' => '3.0.42',
+            'version' => '3.0.42.0',
+            'reference' => 'db92f1b1987b12b13f248fe76c3a52cadb67bb98',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpseclib/phpseclib',
             'aliases' => array(),

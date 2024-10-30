@@ -1,13 +1,13 @@
 <?php
 /*************************************************************************************
- * nimrod.php
+ * nim.php
  * ----------
  * Author: Dennis Felsing (dennis@felsin9.de)
  * Copyright: (c) 2014 Dennis Felsing
  * Release Version: 1.0.9.1
  * Date Started: 2014/07/15
  *
- * Nimrod language file for GeSHi.
+ * Nim language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -39,7 +39,7 @@
  ************************************************************************************/
 
 $language_data = array (
-    'LANG_NAME' => 'Nimrod',
+    'LANG_NAME' => 'Nim',
     'COMMENT_SINGLE' => array(1 => '#'),
     'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
@@ -53,10 +53,6 @@ $language_data = array (
         GESHI_NUMBER_FLT_SCI_SHORT | GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
 
-        /*
-        ** Set 1: reserved words
-        ** http://nimrod-lang.org/manual.html#identifiers-keywords
-        */
         1 => array(
             'addr', 'and', 'as', 'asm', 'atomic',
             'bind', 'block', 'break',
