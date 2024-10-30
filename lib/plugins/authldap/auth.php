@@ -551,7 +551,11 @@ class auth_plugin_authldap extends AuthPlugin
         $servers = explode(',', $this->getConf('server'));
         foreach ($servers as $server) {
             $server = trim($server);
-            $this->con = @ldap_connect($server, $port);
+            if (str_starts_with($server, 'ldap://') || str_starts_with($server, 'ldaps://')) {
+                $this->con = @ldap_connect($server);
+            } else {
+                $this->con = @ldap_connect($server, $port);
+            }
             if (!$this->con) {
                 continue;
             }
