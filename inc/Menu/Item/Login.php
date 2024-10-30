@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Login
  *
@@ -15,7 +17,7 @@ class Login extends AbstractItem
         global $INPUT;
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/login.svg';
+        $this->svg = StaticImage::path('menu/login.svg');
         $this->params['sectok'] = getSecurityToken();
         if ($INPUT->server->has('REMOTE_USER')) {
             if (!actionOK('logout')) {
@@ -23,7 +25,7 @@ class Login extends AbstractItem
             }
             $this->params['do'] = 'logout';
             $this->type = 'logout';
-            $this->svg = DOKU_INC . 'lib/images/menu/logout.svg';
+            $this->svg = StaticImage::path('menu/logout.svg');
         }
     }
 }

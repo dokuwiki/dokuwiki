@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Backlink
  *
@@ -13,6 +15,6 @@ class Backlink extends AbstractItem
     public function __construct()
     {
         parent::__construct();
-        $this->svg = DOKU_INC . 'lib/images/menu/08-backlink_link-variant.svg';
+        $this->svg = StaticImage::path('menu/08-backlink_link-variant.svg');
     }
 }

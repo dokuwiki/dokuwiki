@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Revisions
  *
@@ -16,6 +18,6 @@ class Revisions extends AbstractItem
 
         $this->accesskey = 'o';
         $this->type = 'revs';
-        $this->svg = DOKU_INC . 'lib/images/menu/07-revisions_history.svg';
+        $this->svg = StaticImage::path('menu/07-revisions_history.svg');
     }
 }
