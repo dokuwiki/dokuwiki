@@ -185,18 +185,30 @@ function auth_tokenlogin()
     global $auth;
     if (!$auth) return false;
 
-    // see if header has token
-    $header = '';
+    // get the headers, either from Apache or from $_SERVER
     if (function_exists('getallheaders')) {
-        // Authorization headers are not in $_SERVER for mod_php
         $headers = array_change_key_case(getallheaders());
-        if (isset($headers['authorization'])) $header = $headers['authorization'];
     } else {
-        $header = $INPUT->server->str('HTTP_AUTHORIZATION');
+        $headers = [];
+        foreach ($_SERVER as $key => $value) {
+            if (substr($key, 0, 5) === 'HTTP_') {
+                $headers[strtolower(substr($key, 5))] = $value;
+            }
+        }
     }
-    if (!$header) return false;
-    [$type, $token] = sexplode(' ', $header, 2);
-    if ($type !== 'Bearer') return false;
+
+    // check authorization header
+    if (isset($headers['authorization'])) {
+        [$type, $token] = sexplode(' ', $headers['authorization'], 2);
+        if ($type !== 'Bearer') $token = ''; // not the token we want
+    }
+
+    // check x-dokuwiki-token header
+    if (isset($headers['x-dokuwiki-token'])) {
+        $token = $headers['x-dokuwiki-token'];
+    }
+
+    if (empty($token)) return false;
 
     // check token
     try {
