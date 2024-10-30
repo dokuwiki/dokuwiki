@@ -2,10 +2,10 @@
 
 namespace dokuwiki\Feed;
 
-use function PHP81_BC\strftime;
-
 use SimplePie\Item;
 use SimplePie\SimplePie;
+
+use function PHP81_BC\strftime;
 
 class FeedParserItem extends Item
 {
