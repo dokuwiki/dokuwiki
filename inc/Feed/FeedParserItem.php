@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Feed;
 
+use function PHP81_BC\strftime;
+
 use SimplePie\Item;
 use SimplePie\SimplePie;
 
@@ -17,7 +19,7 @@ class FeedParserItem extends Item
         if (!$date_format) {
             return $this->sanitize($this->get_date(''), SimplePie::CONSTRUCT_TEXT);
         } elseif (($date = $this->get_date('U')) !== null && $date !== false) {
-            return \PHP81_BC\strftime($date_format, $date);
+            return strftime($date_format, $date);
         }
 
         return null;

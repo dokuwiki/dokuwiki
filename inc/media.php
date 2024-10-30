@@ -1712,7 +1712,7 @@ function media_nstree($ns)
             ++$pos;
         }
         // insert namespace in hierarchy; if not found in above loop, append it to the end
-        if ($insert || $pos == count($data)) {
+        if ($insert || $pos === count($data)) {
             array_splice($data, $pos, 0, [['level' => $level + 1, 'id' => $tmp_ns, 'open' => 'true']]);
         }
     }

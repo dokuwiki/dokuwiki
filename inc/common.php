@@ -7,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use function PHP81_BC\strftime;
+
 use dokuwiki\PassHash;
 use dokuwiki\Draft;
 use dokuwiki\Utf8\Clean;
@@ -1500,7 +1502,7 @@ function dformat($dt = null, $format = '')
     if (!$format) $format = $conf['dformat'];
 
     $format = str_replace('%f', datetime_h($dt), $format);
-    return \PHP81_BC\strftime($format, $dt);
+    return strftime($format, $dt);
 }
 
 /**
