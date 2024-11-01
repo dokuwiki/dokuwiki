@@ -5,8 +5,15 @@
 /*____________ footnotes inside the text ____________*/
 
 /* link to footnote inside the text */
-.dokuwiki sup a.fn_top {
+.dokuwiki a.fn_top {
+    font-weight: bold;
+	vertical-align: super;
+	font-size: 66.7%;
 }
+.dokuwiki a.fn_top::after {
+	content: ')';
+}
+
 /* JSpopup */
 div.insitu-footnote {
     max-width: 40%;
@@ -26,6 +33,11 @@ div.insitu-footnote {
 .dokuwiki div.footnotes div.fn div.content {
     display: inline;
 }
-.dokuwiki div.footnotes div.fn sup a.fn_bot {
+.dokuwiki div.footnotes div.fn a.fn_bot {
     font-weight: bold;
+	vertical-align: super;
+	font-size: 66.7%;
+}
+.dokuwiki div.footnotes div.fn a.fn_bot::after {
+	content: ')';
 }
