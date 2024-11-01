@@ -95,6 +95,3 @@ phpunit.phar
 *.phpunit.result.cache
 _test/data/
 _test/.rector-cache/
-/conf
-lib/exe/php_errors.log
-php_errors.log
