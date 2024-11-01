@@ -157,8 +157,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 if (!str_starts_with($footnote, "@@FNT")) {
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
-                    $this->doc .= '<sup><a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
-                    $this->doc .= $id . ')</a></sup> ' . DOKU_LF;
+                    $this->doc .= '<a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
+                    $this->doc .= $id . '</a> ' . DOKU_LF;
 
                     // get any other footnotes that use the same markup
                     $alt = array_keys($this->footnotes, "@@FNT$id");
@@ -489,7 +489,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output the footnote reference and link
         $this->doc .= sprintf(
-            '<sup><a href="#fn__%d" id="fnt__%d" class="fn_top">%d)</a></sup>',
+            '<a href="#fn__%d" id="fnt__%d" class="fn_top">%d</a>',
             $fnid,
             $fnid,
             $fnid
