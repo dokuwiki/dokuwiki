@@ -165,8 +165,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
                     foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot">';
-                        $this->doc .= ($ref) . '</a> ' . DOKU_LF;
+                        $this->doc .= ', <a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot" data-value="' . $id . '"><span>';
+                        $this->doc .= ($ref) . '</span></a> ' . DOKU_LF;
                     }
 
                     // add footnote markup and close this footnote
@@ -489,7 +489,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output the footnote reference and link
         $this->doc .= sprintf(
-            '<a href="#fn__%d" id="fnt__%d" class="fn_top">%d</a>',
+            '<a href="#fn__%d" id="fnt__%d" class="fn_top" data-value="%d"><span>%d</span></a>',
+            $fnid,
             $fnid,
             $fnid,
             $fnid
