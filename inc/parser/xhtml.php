@@ -165,7 +165,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
                     foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot" data-value="' . $id . '"><span>';
+                        $this->doc .= ', <a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot" data-value="' . $ref . '"><span>';
                         $this->doc .= ($ref) . '</span></a> ' . DOKU_LF;
                     }
 
