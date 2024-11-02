@@ -76,13 +76,13 @@ if (!defined('DOKU_INC')) die();
     <?php if ($conf['breadcrumbs'] || $conf['youarehere']) : ?>
         <div class="breadcrumbs">
             <?php if ($conf['youarehere']) : ?>
-                <div class="youarehere"><?php tpl_youarehere() ?></div>
+                <nav class="youarehere"><?php tpl_youarehere() ?></nav>
             <?php endif ?>
             <?php if ($conf['breadcrumbs']) : ?>
-                <div class="trace"><?php tpl_breadcrumbs() ?></div>
+                <nav class="trace"><?php tpl_breadcrumbs() ?></nav>
             <?php endif ?>
         </div>
     <?php endif ?>
 
-    <hr class="a11y" />
+    <hr class="xxa11y" />
 </div></header><!-- /header -->
