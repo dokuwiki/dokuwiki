@@ -19,7 +19,6 @@ div.insitu-footnote {
     max-width: 40%;
     min-width: 5em;
 }
-
 /*____________ footnotes at the bottom of the page ____________*/
 
 .dokuwiki div.footnotes {
@@ -28,15 +27,8 @@ div.insitu-footnote {
     margin: 1em 0 0 0;
     clear: both;
 }
-.dokuwiki div.footnotes div.fn {
-}
 .dokuwiki div.footnotes div.fn div.content {
     display: inline;
-}
-.dokuwiki div.footnotes div.fn a.fn_bot {
-    font-weight: bold;
-	vertical-align: super;
-	font-size: 66.7%;
 }
 .dokuwiki div.footnotes div.fn a.fn_bot::after {
 	content: ')';
