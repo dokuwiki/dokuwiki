@@ -84,5 +84,5 @@ if (!defined('DOKU_INC')) die();
         </div>
     <?php endif ?>
 
-    <hr class="xxa11y" />
+    <hr class="a11y" />
 </div></header><!-- /header -->
