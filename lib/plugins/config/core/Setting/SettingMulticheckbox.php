@@ -54,7 +54,7 @@ class SettingMulticheckbox extends SettingString
         $value = $this->str2array($value);
         $default = $this->str2array($this->default);
 
-        $input = '';
+        $input = '<fieldset class="input">';
         foreach ($this->choices as $choice) {
             $idx = array_search($choice, $value);
             $idx_default = array_search($choice, $default);
@@ -99,6 +99,7 @@ class SettingMulticheckbox extends SettingString
                 $input .= "</div>\n";
             }
         }
+		$input .= '</fieldset>';
         $label = '<label>' . $this->prompt($plugin) . '</label>';
         return [$label, $input];
     }
