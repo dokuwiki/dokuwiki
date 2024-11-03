@@ -69,7 +69,7 @@ class SettingMulticheckbox extends SettingString
             $input .= '<div class="selection' . $class . '">' . "\n";
             $input .= '<label for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
             $input .= '<input id="config___' . $key . '_' . $choice . '" name="config[' . $key .
-                '][]" type="checkbox" class="checkbox" value="' . $choice . '" ' . $disable . ' ' . $checked . "/>\n";
+                '][]" type="checkbox" class="checkbox" value="' . $choice . '" ' . $disable . ' ' . $checked . ">\n";
             $input .= "</div>\n";
 
             // remove this action from the disabledactions array

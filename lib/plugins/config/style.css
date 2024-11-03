@@ -1,140 +1,105 @@
 /* plugin:configmanager */
-#config__manager div.success,
-#config__manager div.error,
-#config__manager div.info {
+#config__manager p.highlight {
+  background-color: #ccf;
+  background-image: url(../images/info.png);
+  border-color: #ccf;
   background-position: 0.5em;
-  padding: 0.5em;
-  text-align: center;
+  padding: 0.5em .5em .5em 32px;
+  /*text-align: center;*/
+}
+
+#config__manager {
+  clear: both;
+  color: __text__;
 }
 
 #config__manager fieldset {
   margin: 1em;
   width: auto;
   margin-bottom: 2em;
-  background-color: __background_alt__;
-  color: __text__;
   padding: 0 1em;
 }
-[dir=rtl] #config__manager fieldset {
-    clear: both;
-}
-#config__manager legend {
-    font-size: 1.25em;
+
+#config__manager section {
 }
 
-#config__manager form { }
-#config__manager table {
-    margin: 1em 0;
-    width: 100%;
+#config__manager dl {
+  background-color: __background__;
+  border: __border__ solid 1px;;
+  margin: .25rem 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  line-height: 1.5em;
+}
+#config__manager dl.error {
 }
 
-#config__manager fieldset td {
-    text-align: left;
-}
-[dir=rtl] #config__manager fieldset td {
-    text-align: right;
-}
-#config__manager fieldset td.value {
-    /* fixed data column width */
-    width: 31em;
+#config__manager dl dt {
+  font-size: smaller;
+  padding: .25em;
 }
 
-[dir=rtl] #config__manager label {
-    text-align: right;
+#config__manager dl dd {
+  margin: 0;
+  padding: .25em;
 }
-[dir=rtl] #config__manager td.value input.checkbox {
-    float: right;
-    padding-left: 0;
-    padding-right: 0.7em;
+#config__manager dl dd.status {
+		text-align: right;
 }
-[dir=rtl] #config__manager td.value label {
-    float: left;
+#config__manager dl dd.status ul {
+	list-style: none inside;
+	display: inline-block;
 }
-
-#config__manager td.label {
-    padding: 0.8em 0 0.6em 1em;
-    vertical-align: top;
+#config__manager dl dd.status ul li {
+	display: inline;
+	margin: 0; padding: 0;
 }
-[dir=rtl] #config__manager td.label {
-    padding: 0.8em 1em 0.6em 0;
+#config__manager dl dd.status ul li::after {
+	content: ',';
 }
-
-#config__manager td.label label {
-    clear: left;
-    display: block;
-}
-[dir=rtl] #config__manager td.label label {
-    clear: right;
-}
-#config__manager td.label img {
-    padding: 0 10px;
-    vertical-align: middle;
-    float: right;
-}
-[dir=rtl] #config__manager td.label img {
-    float: left;
+#config__manager dl dd.status ul li:last-child::after {
+	content: '';
 }
 
-#config__manager td.label span.outkey {
-    font-size: 70%;
-    margin-top: -1.7em;
-    margin-left: -1em;
-    display: block;
-    background-color: __background__;
-    color: __text_neu__;
-    float: left;
-    padding: 0 0.1em;
-    position: relative;
-    z-index: 1;
+#config__manager dl dd.status ul li::before {
+	content: '';
+	display: inline-block;
+	width: 1em; height: 1em;
+	background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Ehelp-circle-outline%3C/title%3E%3Cpath d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z' style='fill:%23CCC'/%3E%3C/svg%3E") center no-repeat;
+	background-size: 1em;
 }
-[dir=rtl] #config__manager td.label span.outkey {
-    float: right;
-    margin-right: 1em;
+#config__manager dl dd.status ul li.default::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z' style='fill:%23789'/%3E%3C/svg%3E");
 }
-
-#config__manager td input.edit {
-    width: 30em;
+#config__manager dl dd.status ul li.modified::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M15.1,7.07C15.24,7.07 15.38,7.12 15.5,7.23L16.77,8.5C17,8.72 17,9.07 16.77,9.28L15.77,10.28L13.72,8.23L14.72,7.23C14.82,7.12 14.96,7.07 15.1,7.07M13.13,8.81L15.19,10.87L9.13,16.93H7.07V14.87L13.13,8.81Z' style='fill:%232b73b7'/%3E%3C/svg%3E");
+}#config__manager dl dd.status ul li.protected::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z' style='fill:%23D99D36'/%3E%3C/svg%3E");
 }
-#config__manager td .input {
-    width: 30.8em;
-}
-#config__manager td select.edit { }
-#config__manager td textarea.edit {
-    width: 27.5em;
-    height: 4em;
+#config__manager dl dd.status ul li.error::before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' style='fill:%23C2462C'/%3E%3C/svg%3E");
 }
 
-#config__manager td textarea.edit:focus {
-    height: 10em;
+
+#config__manager dl.caution dd.label {
+	grid-row: 2 / span 2;
 }
 
-#config__manager tr .input,
-#config__manager tr input,
-#config__manager tr textarea,
-#config__manager tr select {
-  background-color: #fff;
-  color: #000;
+#config__manager dl dd.warning,
+#config__manager dl dd.danger,
+#config__manager dl dd.security {
+	padding-left: 1.5em;
+	background: transparent none 0 .35em no-repeat;
+	background-size: 1.2em;
 }
-
-#config__manager tr.default .input,
-#config__manager tr.default input,
-#config__manager tr.default textarea,
-#config__manager tr.default select,
-#config__manager .selectiondefault {
-  background-color: #ccddff;
-  color: #000;
+#config__manager dl dd.warning {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z' style='fill:%23D69320' /%3E%3C/svg%3E");
 }
-
-#config__manager tr.protected .input,
-#config__manager tr.protected input,
-#config__manager tr.protected textarea,
-#config__manager tr.protected select,
-#config__manager tr.protected .selection {
-  background-color: #ffcccc!important;
-  color: #000 !important;
+#config__manager dl dd.danger {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z' style='fill:%23C2462C' /%3E%3C/svg%3E");
+}#config__manager dl dd.security {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z' style='fill:%23D99D36' /%3E%3C/svg%3E");
 }
-
-#config__manager td.error  { background-color: red; color: #000; }
 
 #config__manager .selection {
   width: 14.8em;
@@ -153,7 +118,6 @@
   font-size: 90%;
 }
 
-
 #config__manager .other {
   clear: both;
   padding-top: 0.5em;
@@ -162,6 +126,17 @@
 #config__manager .other label {
   padding-left: 2px;
   font-size: 90%;
+}
+
+/* change layout in mobile view: */
+@media (max-width: @ini_phone_width) {
+	#config__manager dl dd {
+		grid-column: 1 / span 2;
+		margin-left: .67em;
+	}
+	#config__manager dl dd.status {
+		grid-column: 2;
+	}
 }
 
 /* end plugin:configmanager */

@@ -216,3 +216,10 @@ $lang['useheading_o_navigation'] = 'Nur Navigation';
 $lang['useheading_o_content']  = 'Nur Wiki-Inhalt';
 $lang['useheading_o_1']        = 'Immer';
 $lang['readdircache']          = 'Maximales Alter des readdir-Caches (Sekunden)';
+
+/* Accessibility strings */
+$lang['a11y_status'] = 'Status:';
+$lang['a11y_stat_default'] = 'Voreingestellter Wert';
+$lang['a11y_stat_modified'] = 'Wert wurde verändert';
+$lang['a11y_stat_protected'] = 'Geschütztes Feld';
+$lang['a11y_stat_error'] = 'Dieses Feld enthält einen ungültigen Wert';

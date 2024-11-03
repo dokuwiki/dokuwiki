@@ -189,3 +189,10 @@ $lang['useheading_o_navigation'] = 'Vain Navigointi';
 $lang['useheading_o_content']  = 'Vain Wiki-sisältö';
 $lang['useheading_o_1']        = 'Aina';
 $lang['readdircache']          = 'Maksimiaika readdir cachelle (sek)';
+
+/* Accessibility strings */
+$lang['a11y_status'] = 'Tilanne:';
+$lang['a11y_stat_default'] = 'Oletusarvo';
+$lang['a11y_stat_modified'] = 'Arvoa on muutettu';
+$lang['a11y_stat_protected'] = 'Suojattu kenttä';
+$lang['a11y_stat_error'] = 'Tämä kenttä sisältää virheellisen arvon';

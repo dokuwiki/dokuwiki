@@ -278,3 +278,10 @@ $lang['useheading_o_content'] = 'Wiki Content Only';
 $lang['useheading_o_1'] = 'Always';
 
 $lang['readdircache'] = 'Maximum age for readdir cache (sec)';
+
+/* Accessibility strings */
+$lang['a11y_status'] = 'Status:';
+$lang['a11y_stat_default'] = 'Default value';
+$lang['a11y_stat_modified'] = 'Value has been modified';
+$lang['a11y_stat_protected'] = 'Protected field';
+$lang['a11y_stat_error'] = 'This field contains an invalid value';
