@@ -15,11 +15,11 @@
 
 /* headlines */
 #config__manager h3 {
-	font-size: 1.75em;
+  font-size: 1.75em;
 }
 #config__manager h3 {
-	font-size: 1.5em;
-	margin: 1em 0;
+  font-size: 1.5em;
+  margin: 1em 0;
 }
 
 /* list */
@@ -45,37 +45,37 @@
   text-align: right;
 }
 #config__manager dl dd.status ul {
-	list-style: none inside;
-	display: inline-block;
+  list-style: none inside;
+  display: inline-block;
 }
 #config__manager dl dd.status ul li {
-	display: inline;
-	margin: 0; padding: 0;
+  display: inline;
+  margin: 0; padding: 0;
 }
 #config__manager dl dd.status ul li::after {
-	content: ',';
+  content: ',';
 }
 #config__manager dl dd.status ul li:last-child::after {
-	content: '';
+  content: '';
 }
 #config__manager dl dd.status ul li::before {
-	content: '';
-	display: inline-block;
-	width: 1em; height: 1em;
-	background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Ehelp-circle-outline%3C/title%3E%3Cpath d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z' style='fill:%23CCC'/%3E%3C/svg%3E") center no-repeat;
-	background-size: 1em;
+  content: '';
+  display: inline-block;
+  width: 1em; height: 1em;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Ehelp-circle-outline%3C/title%3E%3Cpath d='M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z' style='fill:%23CCC'/%3E%3C/svg%3E") center no-repeat;
+  background-size: 1em;
 }
 #config__manager dl dd.status ul li.default::before {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z' style='fill:%232b73b7'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z' style='fill:%232b73b7'/%3E%3C/svg%3E");
 }
 #config__manager dl dd.status ul li.modified::before {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z' style='fill:%23789' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5,3C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19H5V5H12V3H5M17.78,4C17.61,4 17.43,4.07 17.3,4.2L16.08,5.41L18.58,7.91L19.8,6.7C20.06,6.44 20.06,6 19.8,5.75L18.25,4.2C18.12,4.07 17.95,4 17.78,4M15.37,6.12L8,13.5V16H10.5L17.87,8.62L15.37,6.12Z' style='fill:%23789' /%3E%3C/svg%3E");
 }
 #config__manager dl dd.status ul li.protected::before {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z' style='fill:%23C2462C'/%3E%3C/svg%3E ");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22 2 17.5 2 12 6.5 2 12 2M12 4C10.1 4 8.4 4.6 7.1 5.7L18.3 16.9C19.3 15.5 20 13.8 20 12C20 7.6 16.4 4 12 4M16.9 18.3L5.7 7.1C4.6 8.4 4 10.1 4 12C4 16.4 7.6 20 12 20C13.9 20 15.6 19.4 16.9 18.3Z' style='fill:%23C2462C'/%3E%3C/svg%3E ");
 }
 #config__manager dl dd.status ul li.error::before {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' style='fill:%23C2462C'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' style='fill:%23C2462C'/%3E%3C/svg%3E");
 }
 [dir=rtl] #config__manager dl dd.status {
   text-align: left;
@@ -85,60 +85,70 @@
 #config__manager dl dd.value {
 }
 #config__manager dl dd.value div.input {
-	width: fit-content;
-	padding: 0 .25em;
+  width: fit-content;
+  padding: 0 .25em;
 }
 #config__manager dl dd.value input,
 #config__manager dl dd.value select {
-	width: max-content;
-	max-width: 100%;
+  width: max-content;
+  max-width: 100%;
 }
 #config__manager dl dd.value fieldset {
-	border: transparent none 0;
-	margin: 0; padding: 0;
-	width: 100%;
+  border: transparent none 0;
+  margin: 0; padding: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
 }
+#config__manager dl dd.value fieldset .selection {
+  width: ~"calc(50% - .5em)";
+  min-width: 14.8em;
+  margin: 0 0.3em 2px 0;
+  display: grid;
+  grid-template-columns: 2rem auto;
+}
+
+#config__manager dl dd.value fieldset input {
+  margin: 0 auto;
+}
+
 #config__manager dl dd.value fieldset label {
-	text-align: left;
+  text-align: left;
+}
+[dir=rtl] #config__manager dl dd.value fieldset label {
+  text-align: right;
 }
 #config__manager dl.caution dd.label {
-	grid-row: 2 / span 2;
+  grid-row: 2 / span 2;
 }
 
 /* warning field */
 #config__manager dl dd.warning,
 #config__manager dl dd.danger,
 #config__manager dl dd.security {
-	padding: 0 0 0 1.5em;
-	background: transparent none 0 .35em no-repeat;
-	background-size: 1.2em;
-	font-size: smaller;
-	grid-column: 2;
+  padding: 0 0 0 1.5em;
+  background: transparent none 0 .35em no-repeat;
+  background-size: 1.2em;
+  font-size: smaller;
+  grid-column: 2;
 }
 #config__manager dl dd.warning {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z' style='fill:%23D69320' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z' style='fill:%23D69320' /%3E%3C/svg%3E");
 }
 #config__manager dl dd.danger {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z' style='fill:%23C2462C' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z' style='fill:%23C2462C' /%3E%3C/svg%3E");
 }#config__manager dl dd.security {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z' style='fill:%23D99D36' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12,17C10.89,17 10,16.1 10,15C10,13.89 10.89,13 12,13A2,2 0 0,1 14,15A2,2 0 0,1 12,17M18,20V10H6V20H18M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V10C4,8.89 4.89,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z' style='fill:%23D99D36' /%3E%3C/svg%3E");
 }
 [dir=rtl] #config__manager dl dd.warning,
 [dir=rtl] #config__manager dl dd.danger,
 [dir=rtl] #config__manager dl dd.security {
-	padding: 0 1.5em 0 0;
-	background-position: right .25em;
+  padding: 0 1.5em 0 0;
+  background-position: right .25em;
 }
 
 #config__manager .selection {
-  width: 14.8em;
-  float: left;
   margin: 0 0.3em 2px 0;
-}
-[dir=rtl] #config__manager .selection {
-  width: 14.8em;
-  float: right;
-  margin: 0 0 2px 0.3em;
 }
 
 #config__manager .selection label {
@@ -163,29 +173,33 @@
 #config__manager dl.default textarea,
 #config__manager dl.default select,
 #config__manager .selectiondefault {
-	background-color: #cdf;
-	color: #000;
+  background-color: #cdf;
+  color: #333;
 }
 
 /* change layout in mobile view: */
 @media (max-width: @ini_phone_width) {
-	#config__manager dl dd {
-		grid-column: 1 / span 2;
-		margin-left: .67em;
-	}
-	#config__manager dl dd.status {
-		grid-column: 2;
-	}
-	#config__manager dl dd.warning,
-	#config__manager dl dd.danger,
-	#config__manager dl dd.security {
-		grid-column: 1 / span 2;
-	}
-	[dir=rtl] #config__manager dl dd.warning,
-	[dir=rtl] #config__manager dl dd.danger,
-	[dir=rtl] #config__manager dl dd.security {
-		background-position: right .25em;
-	}
+  #config__manager dl dd {
+    grid-column: 1 / span 2;
+    margin-left: .67em;
+  }
+  #config__manager dl dd.status {
+    grid-column: 2;
+  }
+  #config__manager dl dd.warning,
+  #config__manager dl dd.danger,
+  #config__manager dl dd.security {
+    grid-column: 1 / span 2;
+  }
+  [dir=rtl] #config__manager dl dd.warning,
+  [dir=rtl] #config__manager dl dd.danger,
+  [dir=rtl] #config__manager dl dd.security {
+    background-position: right .25em;
+  }
+
+  #config__manager dl dd.value fieldset .selection {
+    width: ~"calc(100% - .5em)";
+  }
 
 }
 

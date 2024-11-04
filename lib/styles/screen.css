@@ -87,8 +87,6 @@ div.notify {
     width: 1px !important;
     height: 1px !important;
     overflow: hidden !important;
-    color: #000 !important;
-    background-color: #FFF !important;
 }
 [dir=rtl] .a11y {
     left: auto !important;
