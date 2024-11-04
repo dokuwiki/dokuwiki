@@ -177,6 +177,20 @@
   color: #333;
 }
 
+#config__manager dl.protected .input,
+#config__manager dl.protected input,
+#config__manager dl.protected textarea,
+#config__manager dl.protected select,
+#config__manager dl.protected .selection {
+  background-color:#fcc;
+  color:#333;
+}
+#config__manager dl.error {
+  border-color: #C2462C;
+  background-color: #fdd;
+  color:#333;
+}
+
 /* change layout in mobile view: */
 @media (max-width: @ini_phone_width) {
   #config__manager dl dd {
