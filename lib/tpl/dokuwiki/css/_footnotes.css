@@ -8,7 +8,7 @@
 .dokuwiki a.fn_top {
     font-weight: bold;
 	vertical-align: super;
-	font-size: 66.7%;
+	font-size: 56%;
 	margin-left: .1em;
 }
 .dokuwiki a.fn_top::after {
