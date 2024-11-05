@@ -9,6 +9,7 @@
     font-weight: bold;
 	vertical-align: super;
 	font-size: 66.7%;
+	margin-left: .1em;
 }
 .dokuwiki a.fn_top::after {
 	content: ')';
@@ -22,22 +23,35 @@ div.insitu-footnote {
 
 /*____________ footnotes at the bottom of the page ____________*/
 
-.dokuwiki div.footnotes {
+.dokuwiki #section__footnotes {
     border-top: 1px solid @ini_border;
     padding: .5em 0 0 0;
     margin: 1em 0 0 0;
     clear: both;
 }
-.dokuwiki div.footnotes div.fn {
+
+.dokuwiki #section__footnotes ol {
+	list-style: none inside;
+	padding: 0;
 }
-.dokuwiki div.footnotes div.fn div.content {
-    display: inline;
+
+.dokuwiki #section__footnotes li.fn {
+    margin: 0 0 0 2.5em;
+    text-indent: -2.5em;
 }
-.dokuwiki div.footnotes div.fn a.fn_bot {
-    font-weight: bold;
-	vertical-align: super;
-	font-size: 66.7%;
+[dir=rtl] .dokuwiki #section__footnotes li.fn {
+    margin: 0 2.5em 0 0;
 }
-.dokuwiki div.footnotes div.fn a.fn_bot::after {
+.dokuwiki #section__footnotes li.fn .fn_bot {
+	display: inline-block;
+	width: 2em;
+	text-align: right;
+	margin: 0 .5em 0 0;
+}
+[dir=rtl] .dokuwiki #section__footnotes li.fn .fn_bot {
+	text-align: left;
+	margin: 0 0 0 .5em;
+}
+.dokuwiki #section__footnotes li.fn a.fn_bot::after {
 	content: ')';
 }
