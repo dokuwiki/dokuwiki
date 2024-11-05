@@ -153,7 +153,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         if ($this->footnotes !== []) {
             $this->doc .= '<section id="section__footnotes">' . DOKU_LF;
-            $this->doc .= '<h2 class="a11y">' . $lang['footnotes_headline'] . '</h2>'. DOKU_LF;
+            $this->doc .= '<h2 class="a11y">' . $lang['footnotes_headline'] . '</h2>' . DOKU_LF;
             $this->doc .= '<ol>' . DOKU_LF;
 
             foreach ($this->footnotes as $id => $footnote) {
@@ -471,7 +471,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     public function footnote_close()
     {
         global $lang;
-		
+
         /** @var $fnid int takes track of seen footnotes, assures they are unique even across multiple docs FS#2841 */
         static $fnid = 0;
         // assign new footnote id (we start at 1)
@@ -499,7 +499,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $fnid,
             $fnid,
             $fnid,
-			sprintf($lang['footnote_title'], $fnid),
+            sprintf($lang['footnote_title'], $fnid),
             $fnid
         );
     }
