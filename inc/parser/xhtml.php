@@ -162,7 +162,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<li class="fn" id="fn__' . $id . '">';
                     $this->doc .= "<a href=\"#fnt__{$id}\"  class=\"fn_bot\" data-value=\"{$id}\" aria-label=\"";
-					$this->doc .= sprintf($lang['footnote_title'], $id) . "\"><span>{$id}</span></a>";
+                    $this->doc .= sprintf($lang['footnote_title'], $id) . "\"><span>{$id}</span></a>";
 
                     // get any other footnotes that use the same markup
                     $alt = array_keys($this->footnotes, "@@FNT$id");
