@@ -77,8 +77,8 @@ class admin_plugin_config extends AdminPlugin
         $allow_debug = $GLOBALS['conf']['allowdebug']; // avoid global $conf; here.
         global $lang;
         global $ID;
-		
-		define('kHeadlineLevel', '2'); /* change this if doc structure requires */
+
+        define('kHeadlineLevel', '2'); /* change this if doc structure requires */
 
         $this->setupLocale(true);
 
@@ -87,7 +87,7 @@ class admin_plugin_config extends AdminPlugin
         echo '<article id="config__manager">';
 
         if ($this->configuration->isLocked()) {
-            echo '<p class="highlight">' . $this->getLang('locked') . '</p>';
+            echo '<p class="info">' . $this->getLang('locked') . '</p>';
         }
 
         // POST to script() instead of wl($ID) so config manager still works if
@@ -129,30 +129,28 @@ class admin_plugin_config extends AdminPlugin
 
                 // build the classlist and status text:
                 $classlist = [];
-				$status = [];
-				array_push($status, ($setting->isDefault() ? 'default' : 'modified'));
+                $status = [];
+                array_push($status, ($setting->isDefault() ? 'default' : 'modified'));
                 if ($setting->isDefault()) array_push($classlist, 'default');
                 if ($setting->isProtected()) {
-					array_push($classlist, 'protected');
-					array_push($status, 'protected');
-				}
+                    array_push($classlist, 'protected');
+                    array_push($status, 'protected');
+                }
                 if ($setting->hasError()) {
-					array_push($classlist, 'error');
-					array_push($status, 'error');
-				}
+                    array_push($classlist, 'error');
+                    array_push($status, 'error');
+                }
                 if ($setting->caution()) array_push($classlist, 'caution');
-
-				$makeLi = function(string $it): string {
-					$txt = $this->getLang('a11y_stat_' . $it);
-					$status = $this->getLang('a11y_status');
-					return "<li class=\"$it\" title=\"$status $txt\"><span class=\"a11y\">$txt</span></li>";
-				};
 
                 // build the HTML code:
                 echo '<dl class="' . implode(' ', $classlist) . '">';
                 echo '<dt class="outkey">' . $setting->getPrettyKey() . '</dt>';
                 echo '<dd class="status"><span class="a11y">' . $this->getLang('a11y_status') . ' </span><ul>'
-				. implode(array_map($makeLi, $status)) . '</ul></dd>';
+                    . implode(array_map(function (string $it) : string {
+                            $txt = $this->getLang('a11y_stat_' . $it);
+                            $status = $this->getLang('a11y_status');
+                            return "<li class=\"{$it}\" title=\"{$status} {$txt}\"><span class=\"a11y\">{$txt}</span></li>";
+                        }, $status)) . '</ul></dd>';
                 echo '<dd class="label">' . $label . '</dd>';
                 echo '<dd class="value">' . $input . '</dd>';
                 if ($setting->caution()) {
@@ -164,11 +162,6 @@ class admin_plugin_config extends AdminPlugin
 
         echo '</div>';
         echo '</section>';
-        /* This does not seem to be needed any longer after the HTML changes
-                if ($in_fieldset) {
-            echo '</fieldset><!-- line 148 -->';
-        }
-                */
 
         // show undefined settings list
         $undefined_settings = $this->configuration->getUndefined();
@@ -206,7 +199,7 @@ class admin_plugin_config extends AdminPlugin
 
         if (!$this->configuration->isLocked()) {
             echo '<input type="hidden" name="save" value="1">';
-			echo '<p><button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
+            echo '<p><button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
             echo '<button type="reset">' . $lang['btn_reset'] . '</button></p>';
         }
 
@@ -282,7 +275,7 @@ class admin_plugin_config extends AdminPlugin
 
     /**
      * @param int $level
-	 * @param string $id
+     * @param string $id
      * @param string $text
      */
     protected function printHeadline($level, $id, $text)
