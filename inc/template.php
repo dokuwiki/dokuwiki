@@ -948,7 +948,8 @@ function tpl_pageinfo($ret = false)
         }
     }
     $fn = utf8_decodeFN($fn);
-    $date = dformat($INFO['lastmod']);
+    $dateLocal = dformat($INFO['lastmod']);
+    $dateIso = date(DATE_ISO8601, $INFO['lastmod']);
 
     // print it
     if ($INFO['exists']) {
@@ -956,7 +957,7 @@ function tpl_pageinfo($ret = false)
         $out .= ' · ';
         $out .= $lang['lastmod'];
         $out .= ' ';
-        $out .= $date;
+        $out .= '<time datetime="' . $dateIso . '">' . $dateLocal . '</time>';
         if ($INFO['editor']) {
             $out .= ' ' . $lang['by'] . ' ';
             $out .= '<bdi>' . editorinfo($INFO['editor']) . '</bdi>';
