@@ -161,16 +161,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 if (!str_starts_with($footnote, "@@FNT")) {
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<li class="fn" id="fn__' . $id . '">';
-                    $this->doc .= '<a href="#fnt__' . $id . '"  class="fn_bot" data-value="' . $id . '" aria-label="' . sprintf($lang['footnote_title'], $id) . '"><span>';
-                    $this->doc .= $id . '</span></a>';
+                    $this->doc .= "<a href=\"#fnt__{$id}\"  class=\"fn_bot\" data-value=\"{$id}\" aria-label=\"";
+					$this->doc .= sprintf($lang['footnote_title'], $id) . "\"><span>{$id}</span></a>";
 
                     // get any other footnotes that use the same markup
                     $alt = array_keys($this->footnotes, "@@FNT$id");
 
                     foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot" data-value="' . $id . '"><span>';
-                        $this->doc .= ($ref) . '</span></a>';
+                        $this->doc .= ", <a href=\"#fnt__'{$ref}\" id=\"fn__{$ref}\" ";
+                        $this->doc .= "class=\"fn_bot\" data-value=\"{$id}\"><span>{$ref}</span></a>";
                     }
 
                     // add footnote markup and close this footnote
