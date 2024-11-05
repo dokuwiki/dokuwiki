@@ -95,4 +95,3 @@ phpunit.phar
 *.phpunit.result.cache
 _test/data/
 _test/.rector-cache/
-php_errors.log

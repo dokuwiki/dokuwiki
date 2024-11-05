@@ -1,0 +1,825 @@
+[03-Nov-2024 09:26:21 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 09:26:21 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 09:26:21 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 09:32:18 UTC] PHP Parse error:  syntax error, unexpected single-quoted string "">" in D:\Webroot\development\inc\template.php on line 960
+[03-Nov-2024 09:33:31 UTC] PHP Parse error:  syntax error, unexpected token "," in D:\Webroot\development\inc\template.php on line 952
+[03-Nov-2024 09:58:40 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 09:58:40 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 09:58:40 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 10:01:46 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:46 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:46 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:46 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:49 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:49 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:49 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:01:49 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:27 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:27 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:27 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:27 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:31 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:31 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:31 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:02:31 UTC] PHP Notice:  Formatting without \IntlDateFormatter only return english formats in D:\Webroot\development\vendor\php81_bc\strftime\src\DateLocaleFormatter.php on line 33
+[03-Nov-2024 10:33:26 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 10:33:26 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 10:33:26 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 10:50:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 10:50:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 10:50:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 10:51:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 10:51:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 10:51:36 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 12:22:20 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 12:22:20 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 12:22:20 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 13:02:37 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 13:02:37 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 13:02:37 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 13:03:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 13:03:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 13:03:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 13:03:34 UTC] PHP Warning:  Undefined variable $error in D:\Webroot\development\lib\plugins\config\admin.php on line 152
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:06:03 UTC] PHP Warning:  Undefined variable $icon in D:\Webroot\development\lib\plugins\config\admin.php on line 149
+[03-Nov-2024 13:31:56 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 13:31:56 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 13:31:56 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:45:49 UTC] PHP Warning:  Undefined array key "a11y_status" in D:\Webroot\development\lib\plugins\config\admin.php on line 146
+[03-Nov-2024 14:52:53 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:52:53 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:52:53 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:53:48 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:53:48 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:53:48 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:54:05 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:54:05 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:54:05 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:54:06 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:54:06 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:54:06 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:54:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:54:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:54:17 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:55:00 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:55:00 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:55:00 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:55:09 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:55:09 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:55:09 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:55:32 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 14:55:32 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 14:55:32 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 14:56:13 UTC] PHP Warning:  Array to string conversion in D:\Webroot\development\lib\plugins\config\admin.php on line 151
+[03-Nov-2024 17:02:41 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[03-Nov-2024 17:02:41 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[03-Nov-2024 17:02:41 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:39:29 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 160
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $lang in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Trying to access array offset on null in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:52:55 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 499
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 18:53:27 UTC] PHP Warning:  Undefined variable $id in D:\Webroot\development\inc\parser\xhtml.php on line 501
+[05-Nov-2024 19:43:03 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/os-release) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 203
+[05-Nov-2024 19:43:03 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/etc/synoinfo.conf) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 206
+[05-Nov-2024 19:43:03 UTC] PHP Warning:  file_exists(): open_basedir restriction in effect. File(/.dockerenv) is not within the allowed path(s): (D:\Webroot;C:\Windows\TEMP) in D:\Webroot\development\inc\infoutils.php on line 187
