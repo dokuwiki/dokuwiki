@@ -495,7 +495,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output the footnote reference and link
         $this->doc .= sprintf(
-            '<a href="#fn__%d" id="fnt__%d" class="fn_top" data-value="%d", aria-label="%s"><span>%d</span></a>',
+            '<a href="#fn__%d" id="fnt__%d" class="fn_top" data-value="%d" aria-label="%s"><span>%d</span></a>',
             $fnid,
             $fnid,
             $fnid,
