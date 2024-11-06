@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
  * @author Felipe Castro <fefcas@gmail.com>
@@ -80,6 +81,7 @@ $lang['msg_nooverwrite']       = 'A extensão %s já existe e, portanto, não es
 $lang['missing_dependency']    = '<strong>Dependência faltante ou desabilitada:</strong> %s';
 $lang['security_issue']        = '<strong>Problema com segurança:</strong> %s';
 $lang['security_warning']      = '<strong>Aviso sobre segurança:</strong> %s';
+$lang['update_message']        = '<strong>Mensagem de atualização:</strong> %s';
 $lang['update_available']      = '<strong>Atualização:</strong> Nova versão %s está disponível.';
 $lang['wrong_folder']          = '<strong>Extensão instalada incorretamente:</strong> Renomeie o diretório de extensões "%s" para "%s".';
 $lang['url_change']            = '<strong>URL mudou:</strong> A URL para baixar mudou desde a última baixada. Verifique se a nova URL é válida antes de atualizar a extensão.<br />Novo: %s<br />Velho: %s';
@@ -96,5 +98,6 @@ $lang['git']                   = 'A extensão foi instalada via git, você talve
 $lang['auth']                  = 'O plugin auth não está ativado na configuração, considere desativá-lo.';
 $lang['install_url']           = 'Instale a partir do URL:';
 $lang['install_upload']        = 'Publicar Extensão:';
+$lang['repo_badresponse']      = 'O repositório de plugin retornou uma resposta inválida.';
 $lang['repo_error']            = 'O repositório de plugin não pode ser contactado. Certifique-se de que o servidor pode acessar www.dokuwiki.org e confira suas configurações de proxy.';
 $lang['nossl']                 = 'Sua instalação PHP parece que não suporta SSL. Algumas extensões DokuWiki não serão baixadas.';
