@@ -884,7 +884,7 @@ function tpl_youarehere($sep = null, $return = false)
     }
     $out .= DOKU_TAB . '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li>' . DOKU_LF;
     $out .= '</ol>' . DOKU_LF;
-    
+
     if ($return) return $out;
     echo $out;
     return (bool)$out;
