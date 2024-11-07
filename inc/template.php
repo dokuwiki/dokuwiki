@@ -799,8 +799,6 @@ function tpl_breadcrumbs($sep = null, $return = false)
     //check if enabled
     if (!$conf['breadcrumbs']) return false;
 
-    /* NOTE: $sep is ignored now. Users can change the separator in the style settings */
-
     $out = '';
 
     $crumbs = breadcrumbs(); //setup crumb trace
@@ -813,9 +811,10 @@ function tpl_breadcrumbs($sep = null, $return = false)
     foreach ($crumbs as $id => $name) {
         $i++;
         $out .= DOKU_TAB . '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
-        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true) . '</bdi></li>' . DOKU_LF;
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true);
+        $out .= '</bdi></li>' . DOKU_LF;
     }
-	$out .= '</ol>' . DOKU_LF;
+    $out .= '</ol>' . DOKU_LF;
     if ($return) return $out;
     echo $out;
     return (bool)$out;
@@ -845,8 +844,6 @@ function tpl_youarehere($sep = null, $return = false)
 
     // check if enabled
     if (!$conf['youarehere']) return false;
-
-    /* NOTE: $sep is ignored now. Users can change the separator in the style settings */
 
     $out = '';
 
