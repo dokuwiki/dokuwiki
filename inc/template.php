@@ -785,7 +785,7 @@ function tpl_searchform($ajax = true, $autocomplete = true)
 /**
  * Print the breadcrumbs trace
  *
- * @param string $sep Separator between entries
+ * @param string $sep Separator between entries (no longer in use, use CSS instead)
  * @param bool $return return or print
  * @return bool|string
  *
@@ -799,24 +799,23 @@ function tpl_breadcrumbs($sep = null, $return = false)
     //check if enabled
     if (!$conf['breadcrumbs']) return false;
 
-    //set default
-    if (is_null($sep)) $sep = '•';
+    /* NOTE: $sep is ignored now. Users can change the separator in the style settings */
 
     $out = '';
 
     $crumbs = breadcrumbs(); //setup crumb trace
 
     //render crumbs, highlight the last one
-    $out .= '<h2 class="bchead">' . $lang['breadcrumb'] . '</h2><ol reversed>';
+    $out .= '<h2 class="bchead">' . $lang['breadcrumb'] . '</h2>' . DOKU_LF;
+    $out .= '<ol reversed>' . DOKU_LF;
     $last = count($crumbs);
     $i = 0;
     foreach ($crumbs as $id => $name) {
         $i++;
-        $out .= '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
-        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true) . '</bdi>';
-        if ($i == $last) $out .= '</li>';
+        $out .= DOKU_TAB . '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true) . '</bdi></li>' . DOKU_LF;
     }
-	$out .= '</ol>';
+	$out .= '</ol>' . DOKU_LF;
     if ($return) return $out;
     echo $out;
     return (bool)$out;
@@ -828,7 +827,7 @@ function tpl_breadcrumbs($sep = null, $return = false)
  * This code was suggested as replacement for the usual breadcrumbs.
  * It only makes sense with a deep site structure.
  *
- * @param string $sep Separator between entries
+ * @param string $sep Separator between entries (no longer in use, use CSS instead)
  * @param bool $return return or print
  * @return bool|string
  *
@@ -847,18 +846,18 @@ function tpl_youarehere($sep = null, $return = false)
     // check if enabled
     if (!$conf['youarehere']) return false;
 
-    //set default
-    if (is_null($sep)) $sep = ' » ';
+    /* NOTE: $sep is ignored now. Users can change the separator in the style settings */
 
     $out = '';
 
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    $out .= '<h2 class="bchead">' . $lang['youarehere'] . ' </h2>';
+    $out .= '<h2 class="bchead">' . $lang['youarehere'] . ' </h2>' . DOKU_LF;
 
     // always print the startpage
-    $out .= '<ol><li class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</li>';
+    $out .= '<ol>' . DOKU_LF;
+    $out .= DOKU_TAB . '<li class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</li>' . DOKU_LF;
 
     // print intermediate namespace links
     $part = '';
@@ -868,7 +867,7 @@ function tpl_youarehere($sep = null, $return = false)
         if ($page == $conf['start']) continue; // Skip startpage
 
         // output
-        $out .= '<li>' . tpl_pagelink($page, null, true) . '</li>';
+        $out .= DOKU_TAB . '<li>' . tpl_pagelink($page, null, true) . '</li>' . DOKU_LF;
     }
 
     // print current page, skipping start page, skipping for namespace index
@@ -886,7 +885,9 @@ function tpl_youarehere($sep = null, $return = false)
         echo $out;
         return true;
     }
-    $out .= '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li></ol>';
+    $out .= DOKU_TAB . '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li>' . DOKU_LF;
+    $out .= '</ol>' . DOKU_LF;
+    
     if ($return) return $out;
     echo $out;
     return (bool)$out;
