@@ -77,13 +77,13 @@ if (!defined('DOKU_INC')) die();
         <div class="breadcrumbs">
     <?php if ($conf['youarehere']) : ?>
         <nav class="youarehere">
-                <?php tpl_youarehere() ?>
-            </nav>
+            <?php tpl_youarehere() ?>
+        </nav>
     <?php endif ?>
     <?php if ($conf['breadcrumbs']) : ?>
         <nav class="trace">
-                <?php tpl_breadcrumbs() ?>
-            </nav>
+            <?php tpl_breadcrumbs() ?>
+        </nav>
     <?php endif ?>
         </div>
 <?php endif ?>
