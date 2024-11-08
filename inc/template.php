@@ -805,7 +805,7 @@ function tpl_breadcrumbs($sep = null, $return = false)
 
     //render crumbs, highlight the last one
     $out .= '<h2 class="bchead">' . $lang['breadcrumb'] . '</h2>' . DOKU_LF;
-    $out .= '<ol reversed>' . DOKU_LF;
+    $out .= '<ol reversed>';
     $last = count($crumbs);
     $i = 0;
     foreach ($crumbs as $id => $name) {
