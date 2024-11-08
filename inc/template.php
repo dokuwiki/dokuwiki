@@ -810,11 +810,11 @@ function tpl_breadcrumbs($sep = null, $return = false)
     $i = 0;
     foreach ($crumbs as $id => $name) {
         $i++;
-        $out .= DOKU_TAB . '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
+        $out .= '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
         $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true);
-        $out .= '</bdi></li>' . DOKU_LF;
+        $out .= '</bdi></li>';
     }
-    $out .= '</ol>' . DOKU_LF;
+    $out .= '</ol>';
     if ($return) return $out;
     echo $out;
     return (bool)$out;
@@ -853,8 +853,8 @@ function tpl_youarehere($sep = null, $return = false)
     $out .= '<h2 class="bchead">' . $lang['youarehere'] . ' </h2>' . DOKU_LF;
 
     // always print the startpage
-    $out .= '<ol>' . DOKU_LF;
-    $out .= DOKU_TAB . '<li class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</li>' . DOKU_LF;
+    $out .= '<ol>';
+    $out .= '<li class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</li>';
 
     // print intermediate namespace links
     $part = '';
@@ -864,7 +864,7 @@ function tpl_youarehere($sep = null, $return = false)
         if ($page == $conf['start']) continue; // Skip startpage
 
         // output
-        $out .= DOKU_TAB . '<li>' . tpl_pagelink($page, null, true) . '</li>' . DOKU_LF;
+        $out .= '<li>' . tpl_pagelink($page, null, true) . '</li>';
     }
 
     // print current page, skipping start page, skipping for namespace index
@@ -882,8 +882,8 @@ function tpl_youarehere($sep = null, $return = false)
         echo $out;
         return true;
     }
-    $out .= DOKU_TAB . '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li>' . DOKU_LF;
-    $out .= '</ol>' . DOKU_LF;
+    $out .= '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li>';
+    $out .= '</ol>';
 
     if ($return) return $out;
     echo $out;
