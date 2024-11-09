@@ -833,13 +833,13 @@ function html_TOC($toc)
     if ($toc === []) return '';
     global $lang;
     $out  = '<!-- TOC START -->' . DOKU_LF;
-    $out .= '<div id="dw__toc" class="dw__toc">' . DOKU_LF;
-    $out .= '<h3 class="toggle">';
+    $out .= '<nav id="dw__toc" class="dw__toc">' . DOKU_LF;
+    $out .= '<h3 class="toggle" aria-controls="toc__listwrapper">';
     $out .= $lang['toc'];
     $out .= '</h3>' . DOKU_LF;
-    $out .= '<div>' . DOKU_LF;
+    $out .= '<div id="toc__listwrapper">' . DOKU_LF;
     $out .= html_buildlist($toc, 'toc', 'html_list_toc', null, true);
-    $out .= '</div>' . DOKU_LF . '</div>' . DOKU_LF;
+    $out .= '</div>' . DOKU_LF . '</nav>' . DOKU_LF;
     $out .= '<!-- TOC END -->' . DOKU_LF;
     return $out;
 }
