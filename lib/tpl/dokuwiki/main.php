@@ -52,14 +52,14 @@ $showSidebar = $hasSidebar && ($ACT == 'show');
 
                 <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
 
-                <div class="page group">
+                <article class="page group">
                     <?php tpl_flush() ?>
                     <?php tpl_includeFile('pageheader.html') ?>
                     <!-- wikipage start -->
                     <?php tpl_content() ?>
                     <!-- wikipage stop -->
                     <?php tpl_includeFile('pagefooter.html') ?>
-                </div>
+                </article>
 
                 <div class="docInfo"><?php tpl_pageinfo() ?></div>
 

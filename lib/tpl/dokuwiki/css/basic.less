@@ -358,8 +358,8 @@ meter,
 progress {
     font: inherit;
     font-weight: normal;
-    color: #333;
-    background-color: #fff;
+    color: @ini_text;
+    background-color: @ini_background;
     line-height: normal;
     margin: 0;
     vertical-align: middle;
@@ -378,14 +378,14 @@ option {
     font-weight: normal;
 }
 option:checked {
-    background-color: #ccc;
+    background-color: @ini_background;
 }
 
 input,
 textarea,
 select,
 keygen {
-    border: 1px solid #ccc;
+    border: 1px solid @ini_border;
     box-shadow: inset 0 0 1px #eee;
     border-radius: 2px;
 }
@@ -415,11 +415,11 @@ input.button,
 a.button,
 button,
 .qq-upload-button {
-    color: #333;
+    color: @ini_text;
     background-color: #eee;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc4MjQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0VFRUVFRSIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0NDQ0NDQyIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnODI0KSIgLz4KPC9zdmc+);
     background-image: linear-gradient(to bottom, #ffffff 0%, #f4f4f4 30%, #eeeeee 99%, #cccccc 99%);
-    border: 1px solid #ccc;
+    border: 1px solid @ini_border;
     border-radius: 2px;
     padding: .1em .5em;
     cursor: pointer;
@@ -444,7 +444,7 @@ button:hover,
 button:active,
 button:focus,
 .qq-upload-button:hover {
-    border-color: #999;
+    border-color: @ini_border;
     background-color: #ddd;
     background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc2NzAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0RERERERCIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0JCQkJCQiIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnNjcwKSIgLz4KPC9zdmc+);
     background-image: linear-gradient(to bottom, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
@@ -466,6 +466,6 @@ button[readonly],
 select[readonly],
 textarea[readonly] {
     cursor: auto;
-    opacity: .5;
-    background-color: #eee;
+    color: @ini_text_alt;
+    background-color: @ini_background_alt;
 }
