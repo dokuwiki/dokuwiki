@@ -69,7 +69,8 @@ class MobileMenu implements MenuInterface
             $html .= '<input type="hidden" name="sectok" value="' . getSecurityToken() . '" />';
         }
 
-        $html .= '<select name="do" class="edit quickselect" title="' . $lang['tools'] . '" aria-label="' . $lang['tools'] . '">';
+        $html .= '<select name="do" class="edit quickselect" title="' . $lang['tools'];
+        $html .= '" aria-label="' . $lang['tools'] . '">';
         $html .= '<option value="">' . $empty . '</option>';
 
         foreach ($this->getGroupedItems() as $tools => $items) {
