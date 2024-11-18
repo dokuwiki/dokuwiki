@@ -1355,6 +1355,8 @@ function tpl_getLang($id)
             foreach ($config_cascade['lang']['template'] as $config_file) {
                 if (file_exists($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $conf['template'] . '/' . $conf['lang'] . '/lang.php');
+                } elseif (file_exists($config_file . $conf['template'] . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php')) {
+                    include($config_file . $conf['template'] . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php'); // pt-br = pt
                 }
             }
         }
@@ -1388,8 +1390,14 @@ function tpl_localeFN($id)
     if (!file_exists($file)) {
         $file = $path . $conf['lang'] . '/' . $id . '.txt';
         if (!file_exists($file)) {
-            //fall back to english
-            $file = $path . 'en/' . $id . '.txt';
+            $file = DOKU_CONF . 'template_lang/' . $conf['template'] . '/' . sexplode("-", $conf['lang'], 2)[0] . '/' . $id . '.txt'; // pt-br = pt
+            if (!file_exists($file)) {
+                $file = $path . sexplode("-", $conf['lang'], 2)[0] . '/' . $id . '.txt'; // pt-br = pt
+                if (!file_exists($file)) {
+                    //fall back to english
+                    $file = $path . 'en/' . $id . '.txt';
+                }
+            }
         }
     }
     return $file;
