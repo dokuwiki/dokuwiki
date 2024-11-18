@@ -255,6 +255,9 @@ function js_pluginstrings()
             if (file_exists($path . $conf['lang'] . "/lang.php")) {
                 include($path . $conf['lang'] . '/lang.php');
             }
+            elseif (file_exists($path . sexplode("-", $conf['lang'], 2)[0] . "/lang.php")) { // pt-br = pt
+                include($path . sexplode("-", $conf['lang'], 2)[0] . '/lang.php');
+            }
             foreach ($config_cascade['lang']['plugin'] as $config_file) {
                 if (file_exists($config_file . $p . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $p . '/' . $conf['lang'] . '/lang.php');
