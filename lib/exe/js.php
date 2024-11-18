@@ -262,6 +262,9 @@ function js_pluginstrings()
                 if (file_exists($config_file . $p . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $p . '/' . $conf['lang'] . '/lang.php');
                 }
+                elseif (file_exists($config_file . $p . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php')) { // pt-br = pt
+                    include($config_file . $p . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php');
+                }
             }
         }
 
