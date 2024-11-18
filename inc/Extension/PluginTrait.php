@@ -136,8 +136,14 @@ trait PluginTrait
         if (!file_exists($file)) {
             $file = DOKU_PLUGIN . $plugin . '/lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
             if (!file_exists($file)) {
-                //fall back to english
-                $file = DOKU_PLUGIN . $plugin . '/lang/en/' . $id . '.' . $ext;
+                $file = DOKU_CONF . 'plugin_lang/' . $plugin . '/' . sexplode("-", $conf['lang'], 2)[0] . '/' . $id . '.' . $ext; // pt-br = pt
+                if (!file_exists($file)) {
+                    $file = DOKU_PLUGIN . $plugin . '/lang/' . sexplode("-", $conf['lang'], 2)[0] . '/' . $id . '.' . $ext; // pt-br = pt
+                    if (!file_exists($file)) {
+                        //fall back to english
+                        $file = DOKU_PLUGIN . $plugin . '/lang/en/' . $id . '.' . $ext;
+                    }
+                }
             }
         }
         return $file;
@@ -168,6 +174,8 @@ trait PluginTrait
             foreach ($config_cascade['lang']['plugin'] as $config_file) {
                 if (file_exists($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php')) {
                     include($config_file . $this->getPluginName() . '/' . $conf['lang'] . '/lang.php');
+                } elseif (file_exists($config_file . $this->getPluginName() . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php')) {
+                    include($config_file . $this->getPluginName() . '/' . sexplode("-", $conf['lang'], 2)[0] . '/lang.php'); // pt-br = pt
                 }
             }
         }
