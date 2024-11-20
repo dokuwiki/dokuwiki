@@ -143,7 +143,8 @@ class GuiExtension extends Gui
         foreach ($notices as $type => $messages) {
             foreach ($messages as $message) {
                 $message = hsc($message);
-                $message = Notice::ICONS[$type] . ' ' . $message;
+                $message = nl2br($message);
+                $message = '<span>'.Notice::ICONS[$type] . '</span> ' . $message;
                 $message = preg_replace('/`([^`]+)`/', '<bdi>$1</bdi>', $message);
                 $html .= '<li class="' . $type . '"><div class="li">' . $message . '</div></li>';
             }

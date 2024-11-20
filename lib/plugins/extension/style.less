@@ -151,6 +151,11 @@
                 list-style: none;
                 margin: 0.5em 0 0 0;
                 padding: 0;
+
+                span {
+                    font-weight: bold;
+                    color: @ini_link;
+                }
             }
         }
 
@@ -188,6 +193,15 @@
                     }
                 }
             }
+        }
+    }
+
+    section.extension.disabled {
+        .screenshot img,
+        .main,
+        .notices,
+        .details {
+            opacity: 0.5;
         }
     }
 }

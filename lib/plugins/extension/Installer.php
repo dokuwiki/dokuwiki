@@ -36,6 +36,7 @@ class Installer
     public const STATUS_SKIPPED = 'skipped';
     public const STATUS_UPDATED = 'updated';
     public const STATUS_INSTALLED = 'installed';
+    public const STATUS_REMOVED = 'removed';
 
 
     /**
@@ -198,6 +199,7 @@ class Installer
     public function uninstall(Extension $extension)
     {
         // FIXME check if dependencies are still needed
+        // FIXME check if other extensions depend on this one
 
         if (!$extension->isInstalled()) {
             throw new Exception('error_notinstalled', [$extension->getId()]);
@@ -213,6 +215,8 @@ class Installer
             throw new Exception('msg_delete_failed', [$extension->getId()]);
         }
         self::purgeCache();
+
+        $this->processed[$extension->getId()] = self::STATUS_REMOVED;
     }
 
     /**

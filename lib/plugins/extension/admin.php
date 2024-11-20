@@ -1,6 +1,9 @@
 <?php
 
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Gui;
+use dokuwiki\plugin\extension\Installer;
 
 /**
  * DokuWiki Plugin extension (Admin Component)
@@ -46,10 +49,69 @@ class admin_plugin_extension extends AdminPlugin
 
     /**
      * Execute the requested action(s) and initialize the plugin repository
+     *
+     * @todo repo init and ssl check still missing
      */
     public function handle()
     {
         global $INPUT;
+
+        if (!$INPUT->post->has('fn') && !$INPUT->post->str('installurl') && !isset($_FILES['installfile'])) {
+            return; // nothing to do
+        }
+        if (!checkSecurityToken()) return;
+
+        $installer = new Installer($INPUT->post->bool('overwrite'));
+        try {
+            foreach ($INPUT->post->arr('fn') as $action => $extensions) {
+                foreach ($extensions as $extension => $label) {
+                    $ext = Extension::createFromId($extension);
+                    switch ($action) {
+                        case 'install':
+                        case 'reinstall':
+                        case 'update':
+                            $installer->installExtension($ext);
+                            break;
+                        case 'uninstall':
+                            $installer->uninstall($ext);
+                            break;
+                        case 'enable':
+                            $ext->enable();
+                            break;
+                        case 'disable':
+                            $ext->disable();
+                            break;
+                    }
+                }
+            }
+            if ($INPUT->post->str('installurl')) {
+                $installer->installFromURL($INPUT->post->str('installurl'));
+            }
+            if (isset($_FILES['installfile'])) {
+                $installer->installFromUpload('installfile');
+            }
+        } catch (Exception $e) {
+            msg(hsc($e->getMessage()), -1);
+        }
+
+        $processed = $installer->getProcessed();
+        foreach ($processed as $id => $status) {
+            if ($status == Installer::STATUS_INSTALLED) {
+                msg(sprintf($this->getLang('msg_install_success'), $id), 1);
+            } else if ($status == Installer::STATUS_UPDATED) {
+                msg(sprintf($this->getLang('msg_update_success'), $id), 1);
+            } else if ($status == Installer::STATUS_SKIPPED) {
+                msg(sprintf($this->getLang('msg_nooverwrite'), $id), 0);
+            } else if ($status == Installer::STATUS_REMOVED) {
+                msg(sprintf($this->getLang('msg_delete_success'), $id), 1);
+            }
+        }
+
+        send_redirect((new Gui())->tabURL('', [], '&', true));
+        return;
+
+        // FIXME old stuff below
+
         // initialize the remote repository
         /* @var helper_plugin_extension_repository $repository */
         $repository = $this->loadHelper('extension_repository');
@@ -63,97 +125,6 @@ class admin_plugin_extension extends AdminPlugin
         if (!in_array('ssl', stream_get_transports())) {
             msg($this->getLang('nossl'), -1);
         }
-
-        /* @var helper_plugin_extension_extension $extension */
-        $extension = $this->loadHelper('extension_extension');
-
-        try {
-            if ($INPUT->post->has('fn') && checkSecurityToken()) {
-                $actions = $INPUT->post->arr('fn');
-                foreach ($actions as $action => $extensions) {
-                    foreach ($extensions as $extname => $label) {
-                        switch ($action) {
-                            case 'install':
-                            case 'reinstall':
-                            case 'update':
-                                $extension->setExtension($extname);
-                                $installed = $extension->installOrUpdate();
-                                foreach ($installed as $info) {
-                                    msg(sprintf(
-                                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                                        $info['base']
-                                    ), 1);
-                                }
-                                break;
-                            case 'uninstall':
-                                $extension->setExtension($extname);
-                                $status = $extension->uninstall();
-                                if ($status) {
-                                    msg(sprintf(
-                                        $this->getLang('msg_delete_success'),
-                                        hsc($extension->getDisplayName())
-                                    ), 1);
-                                } else {
-                                    msg(sprintf(
-                                        $this->getLang('msg_delete_failed'),
-                                        hsc($extension->getDisplayName())
-                                    ), -1);
-                                }
-                                break;
-                            case 'enable':
-                                $extension->setExtension($extname);
-                                $status = $extension->enable();
-                                if ($status !== true) {
-                                    msg($status, -1);
-                                } else {
-                                    msg(sprintf(
-                                        $this->getLang('msg_enabled'),
-                                        hsc($extension->getDisplayName())
-                                    ), 1);
-                                }
-                                break;
-                            case 'disable':
-                                $extension->setExtension($extname);
-                                $status = $extension->disable();
-                                if ($status !== true) {
-                                    msg($status, -1);
-                                } else {
-                                    msg(sprintf(
-                                        $this->getLang('msg_disabled'),
-                                        hsc($extension->getDisplayName())
-                                    ), 1);
-                                }
-                                break;
-                        }
-                    }
-                }
-                send_redirect($this->gui->tabURL('', [], '&', true));
-            } elseif ($INPUT->post->str('installurl') && checkSecurityToken()) {
-                $installed = $extension->installFromURL(
-                    $INPUT->post->str('installurl'),
-                    $INPUT->post->bool('overwrite')
-                );
-                foreach ($installed as $info) {
-                    msg(sprintf(
-                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                        $info['base']
-                    ), 1);
-                }
-                send_redirect($this->gui->tabURL('', [], '&', true));
-            } elseif (isset($_FILES['installfile']) && checkSecurityToken()) {
-                $installed = $extension->installFromUpload('installfile', $INPUT->post->bool('overwrite'));
-                foreach ($installed as $info) {
-                    msg(sprintf(
-                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                        $info['base']
-                    ), 1);
-                }
-                send_redirect($this->gui->tabURL('', [], '&', true));
-            }
-        } catch (Exception $e) {
-            msg($e->getMessage(), -1);
-            send_redirect($this->gui->tabURL('', [], '&', true));
-        }
     }
 
     /**
@@ -165,31 +136,6 @@ class admin_plugin_extension extends AdminPlugin
 
         $gui = new \dokuwiki\plugin\extension\GuiAdmin();
         echo $gui->render();
-
-
-        echo '<div id="extension__list">';
-
-        $ext = \dokuwiki\plugin\extension\Extension::createFromId('aichat');
-        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
-        echo $gui->render();
-
-        $ext = \dokuwiki\plugin\extension\Extension::createFromId('gallery');
-        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
-        echo $gui->render();
-
-        $ext = \dokuwiki\plugin\extension\Extension::createFromId('extension');
-        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
-        echo $gui->render();
-
-        $ext = \dokuwiki\plugin\extension\Extension::createFromId('top');
-        $gui = new \dokuwiki\plugin\extension\GuiExtension($ext);
-        echo $gui->render();
-
-        echo '</div>';
-
-        return;
-
-
     }
 }
 

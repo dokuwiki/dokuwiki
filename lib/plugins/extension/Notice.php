@@ -71,7 +71,7 @@ class Notice
      */
     protected function getLang($msg)
     {
-        return strip_tags($this->helper->getLang($msg)); // FIXME existing strings should be adjusted
+        return strip_tags(preg_replace('/<br ?\/?>/', "\n", $this->helper->getLang($msg))); // FIXME existing strings should be adjusted
     }
 
     /**

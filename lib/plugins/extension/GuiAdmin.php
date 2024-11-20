@@ -59,12 +59,15 @@ class GuiAdmin extends Gui
         $pluginlist = plugin_list('', true);
 
         $html .= '<div id="extension__list">';
-        // FIXME wrap in form
+        $html .= '<form action="' . $this->tabURL('plugins') . '" method="post">';
+        $html .= '<input type="hidden" name="overwrite" value="1">';
+        $html .= formSecurityToken(false);
         foreach ($pluginlist as $name) {
             $ext = Extension::createFromId($name);
             $gui = new GuiExtension($ext);
             $html .= $gui->render();
         }
+        $html .= '</form>';
         $html .= '</div>';
 
         return $html;
