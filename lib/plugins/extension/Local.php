@@ -29,7 +29,7 @@ class Local
      */
     public function getTemplates()
     {
-        $templates = $this->readExtensionsFromDirectory(DOKU_BASE . 'lib/tpl/');
+        $templates = $this->readExtensionsFromDirectory(DOKU_INC . 'lib/tpl/');
         ksort($templates);
         return $templates;
     }

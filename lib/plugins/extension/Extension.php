@@ -204,7 +204,7 @@ class Extension
     public function getInstallDir()
     {
         if ($this->isTemplate()) {
-            $dir = dirname(tpl_incdir()) . $this->base;
+            $dir = dirname(tpl_incdir()) . '/' . $this->base;
         } else {
             $dir = DOKU_PLUGIN . $this->base;
         }
