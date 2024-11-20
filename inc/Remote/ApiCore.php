@@ -256,7 +256,7 @@ class ApiCore
         }
 
         // search_allpages handles depth weird, we need to add the given namespace depth
-        if ($depth) {
+        if ($depth && namespace !== '') {
             $depth += substr_count($namespace, ':') + 1;
         }
 
