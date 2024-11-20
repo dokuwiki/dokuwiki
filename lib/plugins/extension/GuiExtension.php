@@ -27,6 +27,7 @@ class GuiExtension extends Gui
         $html .= '<div class="screenshot">';
         $html .= $this->thumbnail();
         $html .= '<span class="id">'. hsc($this->extension->getBase()) .'</span>';
+        $html .= $this->popularity();
         $html .= '</div>';
 
         $html .= '<div class="main">';
@@ -42,8 +43,8 @@ class GuiExtension extends Gui
         $html .= '</div>';
 
         $html .= '<div class="actions">';
-        // show the available version if there is one
-        if ($this->extension->getDownloadURL() && $this->extension->getLastUpdate()) {
+        // show the available update if there is one
+        if ($this->extension->isUpdateAvailable()) {
             $html .= ' <div class="version">' . $this->getLang('available_version') . ' ' .
                 hsc($this->extension->getLastUpdate()) . '</div>';
         }
@@ -111,7 +112,7 @@ class GuiExtension extends Gui
         $html = '';
         $html .= '<h2>';
         $html .= '<div>';
-        $html .= sprintf($this->getLang('extensionby'), hsc($this->extension->getDisplayName()) . $this->popularity(), $this->author());
+        $html .= sprintf($this->getLang('extensionby'), hsc($this->extension->getDisplayName()), $this->author());
         $html .= '</div>';
 
         $html .= '<div class="version">';
@@ -428,12 +429,12 @@ class GuiExtension extends Gui
      *
      * @param string $url
      * @param string $class Additional classes to add
-     * @param string $fallback If URL is empty return this fallback
+     * @param string $fallback If URL is empty return this fallback (raw HTML)
      * @return string  HTML link
      */
     protected function shortlink($url, $class, $fallback = '')
     {
-        if (!$url) return hsc($fallback);
+        if (!$url) return $fallback;
 
         $link = parse_url($url);
         $base = $link['host'];

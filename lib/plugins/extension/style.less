@@ -63,6 +63,8 @@
 
 #extension__list {
     @thumbwidth: 120px;
+    @thumbheight: 70px;
+    box-sizing: border-box;
 
     section.extension {
         display: grid;
@@ -75,15 +77,28 @@
             grid-column: 1;
             grid-row: 1;
             padding: 0.5em 0.5em 0.5em 0;
+            position: relative;
 
             img {
                 border: 1px solid @ini_border;
                 border-radius: 2px;
+                width: @thumbwidth;
+                height: @thumbheight;
             }
 
             .id {
                 font-size: 80%;
                 color: @ini_text_alt;
+                background-color: @ini_background_alt;
+                padding: 0.1em 0.25em;
+                position: absolute;
+                top: 0.5em;
+                left: 0;
+                border-bottom-left-radius: 2px;
+            }
+
+            .popularity {
+                cursor: default;
             }
         }
 
@@ -115,7 +130,10 @@
             grid-column: 3;
             grid-row: 1;
             padding: 0.5em 0 0.5em 0.5em;
-            border-left: 1px solid @ini_border;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            gap: 0.5em;
 
             .version {
                 line-height: 1.2;
@@ -171,10 +189,6 @@
                 }
             }
         }
-    }
-
-    section.extension.update .actions .version {
-        background-color: @ini_highlight;
     }
 }
 
