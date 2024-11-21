@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\extension;
 
+use dokuwiki\Form\Form;
+
 class GuiAdmin extends Gui
 {
     public function render()
@@ -82,7 +84,8 @@ class GuiAdmin extends Gui
      *
      * @return string
      */
-    public function tabTemplates() {
+    public function tabTemplates()
+    {
         $html = '<div class="panelHeader">';
         $html .= $this->helper->locale_xhtml('intro_templates');
         $html .= '</div>';
@@ -103,4 +106,103 @@ class GuiAdmin extends Gui
         return $html;
     }
 
+    /**
+     * Return the HTML for the search tab
+     *
+     * @return string
+     */
+    public function tabSearch()
+    {
+        global $INPUT;
+
+        $html = '<div class="panelHeader">';
+        $html .= $this->helper->locale_xhtml('intro_search');
+        $html .= '</div>';
+
+        $form = new Form([
+            'action' => $this->tabURL('search'),
+            'class' => 'search',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('q', $this->getLang('search_for'))
+            ->addClass('edit')
+            ->val($INPUT->str('q'));
+        $form->addButton('submit', $this->getLang('search'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('search')]);
+        $form->addTagClose('div');
+        $html .= $form->toHTML();
+
+        if ($INPUT->str('q')) $html .= $this->SearchResults($INPUT->str('q'));
+
+        return $html;
+    }
+
+    /**
+     * Return the HTML for the install tab
+     *
+     * @return string
+     */
+    public function tabInstall()
+    {
+        global $lang;
+
+        $html = '<div class="panelHeader">';
+        $html .= $this->helper->locale_xhtml('intro_install');
+        $html .= '</div>';
+
+        $form = new Form([
+            'action' => $this->tabURL('install'),
+            'enctype' => 'multipart/form-data',
+            'class' => 'install',
+        ]);
+        $form->addTagOpen('div')->addClass('no');
+        $form->addTextInput('installurl', $this->getLang('install_url'))
+            ->addClass('block')
+            ->attrs(['type' => 'url']);
+        $form->addTag('br');
+        $form->addTextInput('installfile', $this->getLang('install_upload'))
+            ->addClass('block')
+            ->attrs(['type' => 'file']);
+        $form->addTag('br');
+        $form->addCheckbox('overwrite', $lang['js']['media_overwrt'])
+            ->addClass('block');
+        $form->addTag('br');
+        $form->addButton('', $this->getLang('btn_install'))
+            ->attrs(['type' => 'submit', 'title' => $this->getLang('btn_install')]);
+        $form->addTagClose('div');
+        $html .= $form->toHTML();
+
+        return $html;
+    }
+
+    /**
+     * Execute the given search query and return the results
+     *
+     * @param string $q the query
+     * @return string
+     */
+    protected function SearchResults($q)
+    {
+        $repo = Repository::getInstance();
+
+        $html = '<div id="extension__list">';
+        $html .= '<form action="' . $this->tabURL('search') . '" method="post">';
+
+        try {
+            $extensions = $repo->searchExtensions($q);
+            $html .= '<div id="extension__results">';
+            foreach ($extensions as $ext) {
+                $gui = new GuiExtension($ext);
+                $html .= $gui->render();
+            }
+            $html .= '</div>';
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1);
+        }
+
+        $html .= '</form>';
+        $html .= '</div>';
+
+        return $html;
+    }
 }

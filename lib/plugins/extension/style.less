@@ -62,9 +62,11 @@
 
 
 #extension__list {
-    @thumbwidth: 120px;
-    @thumbheight: 70px;
-    box-sizing: border-box;
+    @thumbwidth: 125px; // width of the thumbnail column, can be increased once we have larger thumbnails
+
+    &, * {
+        box-sizing: border-box;
+    }
 
     section.extension {
         display: grid;
@@ -76,14 +78,16 @@
         > .screenshot {
             grid-column: 1;
             grid-row: 1;
-            padding: 0.5em 0.5em 0.5em 0;
+            padding-top: 0.5em;
+            padding-right: 0.5em;
+            margin-bottom: 1.5em; // adds space for the detail summary label
             position: relative;
 
             img {
                 border: 1px solid @ini_border;
                 border-radius: 2px;
-                width: @thumbwidth;
-                height: @thumbheight;
+                width: 100%;
+                height: auto;
             }
 
             .id {
@@ -95,6 +99,11 @@
                 top: 0.5em;
                 left: 0;
                 border-bottom-left-radius: 2px;
+                white-space: nowrap;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: default;
             }
 
             .popularity {
@@ -169,7 +178,7 @@
                 summary {
                     cursor: pointer;
                     float: left;
-                    margin-top: -1.5em;
+                    margin-top: -1.5em; // moves it up into the screenshot margin
                     color: @ini_text_alt;
                 }
 
@@ -196,7 +205,7 @@
         }
     }
 
-    section.extension.disabled {
+    section.extension.installed.disabled {
         .screenshot img,
         .main,
         .details {

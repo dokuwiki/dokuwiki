@@ -26,7 +26,8 @@ class GuiExtension extends Gui
 
         $html .= '<div class="screenshot">';
         $html .= $this->thumbnail();
-        $html .= '<span class="id">'. hsc($this->extension->getBase()) .'</span>';
+        $html .= '<span class="id" title="' . hsc($this->extension->getBase()) . '">' .
+            hsc($this->extension->getBase()) . '</span>';
         $html .= $this->popularity();
         $html .= '</div>';
 
@@ -144,7 +145,7 @@ class GuiExtension extends Gui
             foreach ($messages as $message) {
                 $message = hsc($message);
                 $message = nl2br($message);
-                $message = '<span>'.Notice::ICONS[$type] . '</span> ' . $message;
+                $message = '<span>' . Notice::ICONS[$type] . '</span> ' . $message;
                 $message = preg_replace('/`([^`]+)`/', '<bdi>$1</bdi>', $message);
                 $html .= '<li class="' . $type . '"><div class="li">' . $message . '</div></li>';
             }

@@ -4,6 +4,7 @@ use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\plugin\extension\Exception as RepoException;
 use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Gui;
+use dokuwiki\plugin\extension\GuiAdmin;
 use dokuwiki\plugin\extension\Installer;
 use dokuwiki\plugin\extension\Repository;
 
@@ -11,44 +12,9 @@ use dokuwiki\plugin\extension\Repository;
  * DokuWiki Plugin extension (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
- * @author  Michael Hamann <michael@content-space.de>
- */
-
-/**
- * Admin part of the extension manager
  */
 class admin_plugin_extension extends AdminPlugin
 {
-    protected $infoFor;
-    /** @var  helper_plugin_extension_gui */
-    protected $gui;
-
-    /**
-     * Constructor
-     *
-     * loads additional helpers
-     */
-    public function __construct()
-    {
-        $this->gui = plugin_load('helper', 'extension_gui');
-    }
-
-    /**
-     * @return int sort number in admin menu
-     */
-    public function getMenuSort()
-    {
-        return 0;
-    }
-
-    /**
-     * @return bool true if only access for superuser, false is for superusers and moderators
-     */
-    public function forAdminOnly()
-    {
-        return true;
-    }
-
     /**
      * Execute the requested action(s) and initialize the plugin repository
      */
@@ -118,7 +84,9 @@ class admin_plugin_extension extends AdminPlugin
             }
         }
 
-        send_redirect((new Gui())->tabURL('', [], '&', true));
+        // Redirect to clear the POST data
+        $gui = new Gui();
+        send_redirect($gui->tabURL($gui->currentTab(), [], '&', true));
     }
 
     /**
@@ -128,9 +96,8 @@ class admin_plugin_extension extends AdminPlugin
     {
         echo '<h1>' . $this->getLang('menu') . '</h1>';
 
-        $gui = new \dokuwiki\plugin\extension\GuiAdmin();
+        $gui = new GuiAdmin();
         echo $gui->render();
     }
 }
 
-// vim:ts=4:sw=4:et:
