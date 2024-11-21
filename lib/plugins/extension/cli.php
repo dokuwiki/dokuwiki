@@ -81,7 +81,7 @@ class cli_plugin_extension extends CLIPlugin
         try {
             $repo->checkAccess();
         } catch (ExtensionException $e) {
-            $this->warning('Extension Repository API is not accessible, no remote info available!');
+            $this->warning($e->getMessage());
         }
 
         switch ($options->getCmd()) {

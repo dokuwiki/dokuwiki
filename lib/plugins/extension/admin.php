@@ -1,9 +1,11 @@
 <?php
 
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\plugin\extension\Exception as RepoException;
 use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Gui;
 use dokuwiki\plugin\extension\Installer;
+use dokuwiki\plugin\extension\Repository;
 
 /**
  * DokuWiki Plugin extension (Admin Component)
@@ -49,18 +51,26 @@ class admin_plugin_extension extends AdminPlugin
 
     /**
      * Execute the requested action(s) and initialize the plugin repository
-     *
-     * @todo repo init and ssl check still missing
      */
     public function handle()
     {
         global $INPUT;
 
+        // check access to the repository and SSL support
+        $repo = Repository::getInstance();
+        try {
+            $repo->checkAccess();
+        } catch (RepoException $e) {
+            msg($e->getMessage(), -1);
+        }
+
+        // Only continue if there is something to do
         if (!$INPUT->post->has('fn') && !$INPUT->post->str('installurl') && !isset($_FILES['installfile'])) {
             return; // nothing to do
         }
         if (!checkSecurityToken()) return;
 
+        // Run actions on the installer
         $installer = new Installer($INPUT->post->bool('overwrite'));
         try {
             foreach ($INPUT->post->arr('fn') as $action => $extensions) {
@@ -94,6 +104,7 @@ class admin_plugin_extension extends AdminPlugin
             msg(hsc($e->getMessage()), -1);
         }
 
+        // Report results of the installer
         $processed = $installer->getProcessed();
         foreach ($processed as $id => $status) {
             if ($status == Installer::STATUS_INSTALLED) {
@@ -108,23 +119,6 @@ class admin_plugin_extension extends AdminPlugin
         }
 
         send_redirect((new Gui())->tabURL('', [], '&', true));
-        return;
-
-        // FIXME old stuff below
-
-        // initialize the remote repository
-        /* @var helper_plugin_extension_repository $repository */
-        $repository = $this->loadHelper('extension_repository');
-
-        if (!$repository->hasAccess(!$INPUT->bool('purge'))) {
-            $url = $this->gui->tabURL('', ['purge' => 1], '&');
-            msg($this->getLang('repo_error') .
-                ' [<a href="' . $url . '" rel="noreferrer">' . $this->getLang('repo_retry') . '</a>]', -1);
-        }
-
-        if (!in_array('ssl', stream_get_transports())) {
-            msg($this->getLang('nossl'), -1);
-        }
     }
 
     /**

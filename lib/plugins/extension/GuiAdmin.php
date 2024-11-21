@@ -61,7 +61,7 @@ class GuiAdmin extends Gui
         $html .= $this->helper->locale_xhtml('intro_plugins');
         $html .= '</div>';
 
-        $plugins = (new Local())->getTemplates();
+        $plugins = (new Local())->getPlugins();
 
         $html .= '<div id="extension__list">';
         $html .= '<form action="' . $this->tabURL('plugins') . '" method="post">';

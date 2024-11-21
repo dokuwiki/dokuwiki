@@ -18,7 +18,9 @@ class Repository
     protected $hasAccess;
 
     /**
+     * Protected Constructor
      *
+     * Use Repository::getInstance() to get an instance
      */
     protected function __construct()
     {
