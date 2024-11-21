@@ -651,6 +651,20 @@ class Extension
     }
 
     /**
+     * Toggle the extension between enabled and disabled
+     * @return void
+     * @throws Exception
+     */
+    public function toggle()
+    {
+        if($this->isEnabled()) {
+            $this->disable();
+        } else {
+            $this->enable();
+        }
+    }
+
+    /**
      * Enable the extension
      * @todo I'm unsure if this code should be here or part of Installer
      * @throws Exception

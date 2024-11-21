@@ -21,9 +21,6 @@ class Exception extends \Exception
         $newmessage = $helper->getLang($message);
         if ($newmessage === '') {
             $newmessage = $message;
-        } else {
-            // add original language string so we still recognize it when reported by foreign users
-            $newmessage .= ' [' . $message . ']';
         }
 
         if ($context) {

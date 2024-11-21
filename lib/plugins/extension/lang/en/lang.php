@@ -125,3 +125,6 @@ $lang['js']['display_viewoptions']    = 'View Options:';
 $lang['js']['display_enabled']        = 'enabled';
 $lang['js']['display_disabled']       = 'disabled';
 $lang['js']['display_updatable']      = 'updatable';
+
+$lang['js']['close']                  = 'Click to close';
+$lang['js']['filter']                 = 'Show updatable extensions only';

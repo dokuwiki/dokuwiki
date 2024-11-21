@@ -22,7 +22,7 @@ class GuiExtension extends Gui
 
         $classes = $this->getClasses();
 
-        $html = "<section class=\"$classes\">";
+        $html = "<section class=\"$classes\" data-ext=\"{$this->extension->getId()}\">";
 
         $html .= '<div class="screenshot">';
         $html .= $this->thumbnail();
@@ -329,43 +329,47 @@ class GuiExtension extends Gui
 
     }
 
+    /**
+     * Generate the action buttons
+     *
+     * @return string
+     */
     protected function actions()
     {
-        global $conf;
-
         $html = '';
         $actions = [];
-        $errors = [];
 
-        // gather available actions and possible errors to show
+        // check permissions
         try {
             Installer::ensurePermissions($this->extension);
-
-            if ($this->extension->isInstalled()) {
-
-                if (!$this->extension->isProtected()) $actions[] = 'uninstall';
-                if ($this->extension->getDownloadURL()) {
-                    $actions[] = $this->extension->isUpdateAvailable() ? 'update' : 'reinstall';
-                }
-
-                if (!$this->extension->isProtected() && !$this->extension->isTemplate()) { // no enable/disable for templates
-                    $actions[] = $this->extension->isEnabled() ? 'disable' : 'enable';
-                }
-            } else {
-                if ($this->extension->getDownloadURL()) {
-                    $actions[] = 'install';
-                }
-            }
         } catch (\Exception $e) {
+            return '';
         }
 
+        // gather available actions
+        if ($this->extension->isInstalled()) {
+            if (!$this->extension->isProtected()) $actions[] = 'uninstall';
+            if ($this->extension->getDownloadURL()) {
+                $actions[] = $this->extension->isUpdateAvailable() ? 'update' : 'reinstall';
+            }
+
+            if (!$this->extension->isProtected() && !$this->extension->isTemplate()) { // no enable/disable for templates
+                $actions[] = $this->extension->isEnabled() ? 'disable' : 'enable';
+            }
+        } else {
+            if ($this->extension->getDownloadURL()) {
+                $actions[] = 'install';
+            }
+        }
+
+        // output the buttons
         foreach ($actions as $action) {
-            $html .= '<button name="fn[' . $action . '][' . $this->extension->getID() . ']" class="button" type="submit">' .
-                $this->getLang('btn_' . $action) . '</button>';
-        }
-
-        foreach ($errors as $error) {
-            $html .= '<div class="msg error">' . hsc($error) . '</div>';
+            $attr = [
+                'class' => 'button ' . $action,
+                'type' => 'submit',
+                'name' => 'fn[' . $action . '][' . $this->extension->getID() . ']',
+            ];
+            $html .= '<button ' . buildAttributes($attr) . '>' . $this->getLang('btn_' . $action) . '</button>';
         }
 
         return $html;
