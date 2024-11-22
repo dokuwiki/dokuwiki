@@ -3,7 +3,7 @@
 namespace dokuwiki\plugin\extension;
 
 use dokuwiki\Cache\Cache;
-use dokuwiki\plugin\upgrade\HTTP\DokuHTTPClient;
+use dokuwiki\HTTP\DokuHTTPClient;
 use JsonException;
 
 class Repository
