@@ -80,7 +80,7 @@ class Extension
     protected function initFromDirectory($dir, $type = null, $base = null)
     {
         if (!is_dir($dir)) throw new RuntimeException('Directory not found: ' . $dir);
-        $this->currentDir = realpath($dir);
+        $this->currentDir = fullpath($dir);
 
         if ($type === null || $type === self::TYPE_TEMPLATE) {
             if (
