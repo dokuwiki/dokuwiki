@@ -39,14 +39,13 @@ class Notice
         $this->helper = plugin_load('helper', 'extension');
         $this->extension = $extension;
 
-        // FIXME sort sensibly
-        $this->checkDependencies();
-        $this->checkConflicts();
         $this->checkSecurity();
+        $this->checkURLChange();
         $this->checkFolder();
         $this->checkPHPVersion();
+        $this->checkDependencies();
+        $this->checkConflicts();
         $this->checkUpdateMessage();
-        $this->checkURLChange();
         $this->checkPermissions();
         $this->checkUnusedAuth();
         $this->checkGit();
@@ -71,7 +70,8 @@ class Notice
      */
     protected function getLang($msg)
     {
-        return strip_tags(preg_replace('/<br ?\/?>/', "\n", $this->helper->getLang($msg))); // FIXME existing strings should be adjusted
+        // FIXME existing strings should be adjusted
+        return strip_tags(preg_replace('/<br ?\/?>/', "\n", $this->helper->getLang($msg)));
     }
 
     /**

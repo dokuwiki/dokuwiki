@@ -75,9 +75,18 @@ class Manager
         return $data;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getLastUpdate()
     {
-        return $this->data['updated'] ?? $this->data['installed'] ?? '';
+        $date = $this->data['updated'] ?? $this->data['installed'] ?? '';
+        if (!$date) return null;
+        try {
+            return new \DateTime($date);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     public function getDownloadURL()
@@ -85,8 +94,17 @@ class Manager
         return $this->data['downloadurl'] ?? '';
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getInstallDate()
     {
-        return $this->data['installed'] ?? '';
+        $date = $this->data['installed'] ?? '';
+        if (!$date) return null;
+        try {
+            return new \DateTime($date);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

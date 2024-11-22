@@ -422,11 +422,11 @@ class Installer
 
         // still nothing? we assume this to be a single extension that is either
         // directly in the given directory or in single subdirectory
-        $base = $base ?? PhpString::basename($dir);
         $files = glob($dir . '/*');
         if (count($files) === 1 && is_dir($files[0])) {
             $dir = $files[0];
         }
+        $base = $base ?? PhpString::basename($dir);
         return [Extension::createFromDirectory($dir, null, $base)];
     }
 

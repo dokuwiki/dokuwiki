@@ -84,7 +84,7 @@ class Extension
 
         if ($type === null || $type === self::TYPE_TEMPLATE) {
             if (
-                file_exists($dir . '/template.info.php') ||
+                file_exists($dir . '/template.info.txt') ||
                 file_exists($dir . '/style.ini') ||
                 file_exists($dir . '/main.php') ||
                 file_exists($dir . '/detail.php') ||
@@ -295,11 +295,29 @@ class Extension
     /**
      * Get the types of components this extension provides
      *
-     * @todo for installed extensions this could be read from the filesystem instead of relying on the meta data
      * @return array int -> type
      */
     public function getComponentTypes ()
     {
+        // for installed extensions we can check the files
+        if($this->isInstalled()) {
+            if($this->isTemplate()) {
+                return ['Template'];
+            } else {
+                $types = [];
+                foreach (['Admin', 'Action', 'Syntax', 'Renderer', 'Helper', 'CLI'] as $type) {
+                    $check = strtolower($type);
+                    if(
+                        file_exists($this->getInstallDir() . '/' . $check . '.php') ||
+                        is_dir($this->getInstallDir() . '/' . $check)
+                    ) {
+                        $types[] = $type;
+                    }
+                }
+                return $types;
+            }
+        }
+        // still, here? use the remote info
         return $this->getTag('types', []);
     }
 

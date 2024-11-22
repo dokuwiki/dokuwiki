@@ -214,8 +214,11 @@ class GuiExtension extends Gui
                     $list['installed_version'] = hsc($this->extension->getInstalledVersion());
                 }
                 if (!$this->extension->isBundled()) {
+                    $installDate = $this->extension->getManager()->getInstallDate();
+                    $list['installed'] = $installDate ? dformat($installDate->getTimestamp()) : $default;
+
                     $updateDate = $this->extension->getManager()->getLastUpdate();
-                    $list['install_date'] = $updateDate ? hsc($updateDate) : $default;
+                    $list['install_date'] = $updateDate ? dformat($updateDate->getTimestamp()) : $default;
                 }
             }
         }
