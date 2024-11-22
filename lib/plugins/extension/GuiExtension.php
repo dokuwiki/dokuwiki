@@ -4,8 +4,8 @@ namespace dokuwiki\plugin\extension;
 
 class GuiExtension extends Gui
 {
-    const THUMB_WIDTH = 120;
-    const THUMB_HEIGHT = 70;
+    public const THUMB_WIDTH = 120;
+    public const THUMB_HEIGHT = 70;
 
 
     protected Extension $extension;
@@ -100,7 +100,6 @@ class GuiExtension extends Gui
         if ($link) $html .= '</a>';
 
         return $html;
-
     }
 
     /**
@@ -231,10 +230,8 @@ class GuiExtension extends Gui
 
 
         if (!$this->extension->isBundled() && $this->extension->getCompatibleVersions()) {
-            $list['compatible'] = join(', ', array_map(
-                function ($date, $version) {
-                    return '<bdi>' . $version['label'] . ' (' . $date . ')</bdi>';
-                },
+            $list['compatible'] = implode(', ', array_map(
+                static fn($date, $version) => '<bdi>' . $version['label'] . ' (' . $date . ')</bdi>',
                 array_keys($this->extension->getCompatibleVersions()),
                 array_values($this->extension->getCompatibleVersions())
             ));
@@ -242,7 +239,7 @@ class GuiExtension extends Gui
 
         $tags = $this->extension->getTags();
         if ($tags) {
-            $list['tags'] = join(', ', array_map(function ($tag) {
+            $list['tags'] = implode(', ', array_map(function ($tag) {
                 $url = $this->tabURL('search', ['q' => 'tag:' . $tag]);
                 return '<bdi><a href="' . $url . '">' . hsc($tag) . '</a></bdi>';
             }, $tags));
@@ -288,7 +285,7 @@ class GuiExtension extends Gui
             $names = array_slice($names, 0, 2);
             $names[] = '…';
         }
-        $name = join(', ', $names);
+        $name = implode(', ', $names);
 
         $mailid = $this->extension->getEmailID();
         if ($mailid) {
@@ -317,10 +314,10 @@ class GuiExtension extends Gui
         if ($popularity > 0.25) {
             $title = $this->getLang('popularity_high');
             $emoji = '🔥🔥🔥';
-        } else if ($popularity > 0.15) {
+        } elseif ($popularity > 0.15) {
             $title = $this->getLang('popularity_medium');
             $emoji = '🔥🔥';
-        } else if ($popularity > 0.05) {
+        } elseif ($popularity > 0.05) {
             $title = $this->getLang('popularity_low');
             $emoji = '🔥';
         } else {
@@ -329,7 +326,6 @@ class GuiExtension extends Gui
         $title .= ' (' . round($popularity * 100) . '%)';
 
         return '<span class="popularity" title="' . $title . '">' . $emoji . '</span>';
-
     }
 
     /**
@@ -355,14 +351,12 @@ class GuiExtension extends Gui
             if ($this->extension->getDownloadURL()) {
                 $actions[] = $this->extension->isUpdateAvailable() ? 'update' : 'reinstall';
             }
-
-            if (!$this->extension->isProtected() && !$this->extension->isTemplate()) { // no enable/disable for templates
+            // no enable/disable for templates
+            if (!$this->extension->isProtected() && !$this->extension->isTemplate()) {
                 $actions[] = $this->extension->isEnabled() ? 'disable' : 'enable';
             }
-        } else {
-            if ($this->extension->getDownloadURL()) {
-                $actions[] = 'install';
-            }
+        } elseif ($this->extension->getDownloadURL()) {
+            $actions[] = 'install';
         }
 
         // output the buttons

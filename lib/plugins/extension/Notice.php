@@ -1,14 +1,13 @@
 <?php
 
-
 namespace dokuwiki\plugin\extension;
 
 class Notice
 {
-    const INFO = 'info';
-    const WARNING = 'warning';
-    const ERROR = 'error';
-    const SECURITY = 'security';
+    public const INFO = 'info';
+    public const WARNING = 'warning';
+    public const ERROR = 'error';
+    public const SECURITY = 'security';
 
     public const ICONS = [
         self::INFO => 'ⓘ',
@@ -92,7 +91,7 @@ class Notice
 
         $this->notices[self::ERROR][] = sprintf(
             $this->getLang('missing_dependency'),
-            join(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $missing))
+            implode(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $missing))
         );
     }
 
@@ -112,7 +111,7 @@ class Notice
 
         $this->notices[self::WARNING][] = sprintf(
             $this->getLang('found_conflict'),
-            join(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $found))
+            implode(', ', array_map(static fn(Extension $dep) => $dep->getId(true), $found))
         );
     }
 

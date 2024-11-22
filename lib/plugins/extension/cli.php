@@ -128,7 +128,7 @@ class cli_plugin_extension extends CLIPlugin
         $local = new Local();
         $extensions = [];
         foreach ($local->getExtensions() as $ext) {
-            if($ext->isGitControlled() && !$gitOverwrite) continue; // skip git controlled extensions
+            if ($ext->isGitControlled() && !$gitOverwrite) continue; // skip git controlled extensions
             if ($ext->isUpdateAvailable()) $extensions[] = $ext->getID();
         }
         return $this->cmdInstall($extensions);
@@ -220,7 +220,7 @@ class cli_plugin_extension extends CLIPlugin
             foreach ($processed as $id => $status) {
                 if ($status == Installer::STATUS_INSTALLED) {
                     $this->success(sprintf($this->getLang('msg_install_success'), $id));
-                } else if ($status == Installer::STATUS_UPDATED) {
+                } elseif ($status == Installer::STATUS_UPDATED) {
                     $this->success(sprintf($this->getLang('msg_update_success'), $id));
                 }
             }
@@ -275,7 +275,6 @@ class cli_plugin_extension extends CLIPlugin
     {
         $tr = new TableFormatter($this->colors);
         foreach ($list as $ext) {
-
             $status = '';
             if ($ext->isInstalled()) {
                 $date = $ext->getInstalledVersion();

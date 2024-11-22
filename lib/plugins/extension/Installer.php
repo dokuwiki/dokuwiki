@@ -248,11 +248,13 @@ class Installer
         if ($data === false) throw new Exception('error_download', [$url, $http->error, $http->status]);
 
         // get filename from headers
-        if (preg_match(
-            '/attachment;\s*filename\s*=\s*"([^"]*)"/i',
-            (string)($http->resp_headers['content-disposition'] ?? ''),
-            $match
-        )) {
+        if (
+            preg_match(
+                '/attachment;\s*filename\s*=\s*"([^"]*)"/i',
+                (string)($http->resp_headers['content-disposition'] ?? ''),
+                $match
+            )
+        ) {
             $file = PhpString::basename($match[1]);
         }
 
@@ -426,7 +428,7 @@ class Installer
         if (count($files) === 1 && is_dir($files[0])) {
             $dir = $files[0];
         }
-        $base = $base ?? PhpString::basename($dir);
+        $base ??= PhpString::basename($dir);
         return [Extension::createFromDirectory($dir, null, $base)];
     }
 
@@ -451,7 +453,7 @@ class Installer
         try {
             $archiver->open($archive);
             $archiver->extract($target);
-        } catch (ArchiveIOException|ArchiveCorruptedException|ArchiveIllegalCompressionException $e) {
+        } catch (ArchiveIOException | ArchiveCorruptedException | ArchiveIllegalCompressionException $e) {
             throw new Exception('error_archive_extract', [$archive, $e->getMessage()], $e);
         }
     }

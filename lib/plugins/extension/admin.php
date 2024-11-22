@@ -75,11 +75,11 @@ class admin_plugin_extension extends AdminPlugin
         foreach ($processed as $id => $status) {
             if ($status == Installer::STATUS_INSTALLED) {
                 msg(sprintf($this->getLang('msg_install_success'), $id), 1);
-            } else if ($status == Installer::STATUS_UPDATED) {
+            } elseif ($status == Installer::STATUS_UPDATED) {
                 msg(sprintf($this->getLang('msg_update_success'), $id), 1);
-            } else if ($status == Installer::STATUS_SKIPPED) {
+            } elseif ($status == Installer::STATUS_SKIPPED) {
                 msg(sprintf($this->getLang('msg_nooverwrite'), $id), 0);
-            } else if ($status == Installer::STATUS_REMOVED) {
+            } elseif ($status == Installer::STATUS_REMOVED) {
                 msg(sprintf($this->getLang('msg_delete_success'), $id), 1);
             }
         }
@@ -100,4 +100,3 @@ class admin_plugin_extension extends AdminPlugin
         echo $gui->render();
     }
 }
-

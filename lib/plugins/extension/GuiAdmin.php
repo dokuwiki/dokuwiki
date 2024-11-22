@@ -132,7 +132,7 @@ class GuiAdmin extends Gui
         $form->addTagClose('div');
         $html .= $form->toHTML();
 
-        if ($INPUT->str('q')) $html .= $this->SearchResults($INPUT->str('q'));
+        if ($INPUT->str('q')) $html .= $this->searchResults($INPUT->str('q'));
 
         return $html;
     }
@@ -181,7 +181,7 @@ class GuiAdmin extends Gui
      * @param string $q the query
      * @return string
      */
-    protected function SearchResults($q)
+    protected function searchResults($q)
     {
         $repo = Repository::getInstance();
 

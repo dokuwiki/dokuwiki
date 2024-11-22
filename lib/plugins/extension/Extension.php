@@ -8,8 +8,8 @@ use RuntimeException;
 
 class Extension
 {
-    const TYPE_PLUGIN = 'plugin';
-    const TYPE_TEMPLATE = 'template';
+    public const TYPE_PLUGIN = 'plugin';
+    public const TYPE_TEMPLATE = 'template';
 
     /** @var string "plugin"|"template" */
     protected string $type = self::TYPE_PLUGIN;
@@ -143,14 +143,14 @@ class Extension
      * @param bool $wrap If true, the id is wrapped in backticks
      * @return string The extension id (same as base but prefixed with "template:" for templates)
      */
-    public function getId($wrap=false)
+    public function getId($wrap = false)
     {
         if ($this->type === self::TYPE_TEMPLATE) {
             $id = self::TYPE_TEMPLATE . ':' . $this->base;
         } else {
             $id = $this->base;
         }
-        if($wrap) $id = "`$id`";
+        if ($wrap) $id = "`$id`";
         return $id;
     }
 
@@ -297,17 +297,17 @@ class Extension
      *
      * @return array int -> type
      */
-    public function getComponentTypes ()
+    public function getComponentTypes()
     {
         // for installed extensions we can check the files
-        if($this->isInstalled()) {
-            if($this->isTemplate()) {
+        if ($this->isInstalled()) {
+            if ($this->isTemplate()) {
                 return ['Template'];
             } else {
                 $types = [];
                 foreach (['Admin', 'Action', 'Syntax', 'Renderer', 'Helper', 'CLI'] as $type) {
                     $check = strtolower($type);
-                    if(
+                    if (
                         file_exists($this->getInstallDir() . '/' . $check . '.php') ||
                         is_dir($this->getInstallDir() . '/' . $check)
                     ) {
@@ -441,7 +441,7 @@ class Extension
      */
     public function isInWrongFolder()
     {
-        if(!$this->isInstalled()) return false;
+        if (!$this->isInstalled()) return false;
         return $this->getInstallDir() != $this->currentDir;
     }
 
@@ -470,7 +470,7 @@ class Extension
     public function hasChangedURL()
     {
         $last = $this->getManager()->getDownloadURL();
-        if(!$last) return false;
+        if (!$last) return false;
         return $last !== $this->getDownloadURL();
     }
 
@@ -481,7 +481,7 @@ class Extension
      */
     public function isUpdateAvailable()
     {
-        if($this->isBundled()) return false; // bundled extensions are never updated
+        if ($this->isBundled()) return false; // bundled extensions are never updated
         $self = $this->getInstalledVersion();
         $remote = $this->getLastUpdate();
         return $self < $remote;
@@ -675,7 +675,7 @@ class Extension
      */
     public function toggle()
     {
-        if($this->isEnabled()) {
+        if ($this->isEnabled()) {
             $this->disable();
         } else {
             $this->enable();
@@ -732,7 +732,7 @@ class Extension
      */
     public function getManager()
     {
-        if ($this->manager === null) {
+        if (!$this->manager instanceof Manager) {
             $this->manager = new Manager($this);
         }
         return $this->manager;

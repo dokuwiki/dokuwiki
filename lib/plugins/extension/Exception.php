@@ -29,5 +29,4 @@ class Exception extends \Exception
 
         parent::__construct($newmessage, 0, $previous);
     }
-
 }
