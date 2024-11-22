@@ -262,7 +262,7 @@ class GuiExtension extends Gui
 
         $html .= '<dl>';
         foreach ($list as $key => $value) {
-            $html .= '<dt>' . $this->getLang($key) . '</dt>';
+            $html .= '<dt>' . rtrim($this->getLang($key), ':') . '</dt>';
             $html .= '<dd>' . $value . '</dd>';
         }
         $html .= '</dl>';

@@ -59,6 +59,4 @@ class ManagerTest extends DokuWikiTest
         $this->assertNotEquals($updated, $installed);
         $this->assertEquals('http://example.com/update', $manager->getDownloadURL());
     }
-
-
 }
