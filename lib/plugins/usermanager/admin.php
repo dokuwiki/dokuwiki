@@ -3,6 +3,7 @@
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\Conversion;
 
 /*
  *  User Manager
@@ -1078,7 +1079,7 @@ class admin_plugin_usermanager extends AdminPlugin
         if ($fd) {
             while ($csv = fgets($fd)) {
                 if (!Clean::isUtf8($csv)) {
-                    $csv = utf8_encode($csv);
+                    $csv = Conversion::fromLatin1($csv);
                 }
                 $raw = str_getcsv($csv);
                 $error = '';                        // clean out any errors from the previous line
