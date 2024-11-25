@@ -1036,10 +1036,10 @@ class admin_plugin_usermanager extends AdminPlugin
 
         // output the csv
         $fd = fopen('php://output', 'w');
-        fputcsv($fd, $column_headings);
+        fputcsv($fd, $column_headings, ',', '"', "\\");
         foreach ($user_list as $user => $info) {
             $line = [$user, $info['name'], $info['mail'], implode(',', $info['grps'])];
-            fputcsv($fd, $line);
+            fputcsv($fd, $line, ',', '"', "\\");
         }
         fclose($fd);
         if (defined('DOKU_UNITTEST')) {
@@ -1081,7 +1081,7 @@ class admin_plugin_usermanager extends AdminPlugin
                 if (!Clean::isUtf8($csv)) {
                     $csv = Conversion::fromLatin1($csv);
                 }
-                $raw = str_getcsv($csv);
+                $raw = str_getcsv($csv, ',', '"', "\\");
                 $error = '';                        // clean out any errors from the previous line
                 // data checks...
                 if (1 == ++$line) {
