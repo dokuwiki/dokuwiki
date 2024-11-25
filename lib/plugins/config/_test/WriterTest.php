@@ -64,7 +64,7 @@ class WriterTest extends \DokuWikiTest {
     public function testEmpty() {
         $writer = new Writer();
         $this->expectException(\Exception::class);
-        $this->expectErrorMessage('empty config');
+        $this->expectExceptionMessage('empty config');
         $writer->save([]);
     }
 }
