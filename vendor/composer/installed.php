@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'dokuwiki/dokuwiki',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '9ad2b9131dcbe90c5d256acd8f9f347b14d958fb',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'dokuwiki/dokuwiki' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '9ad2b9131dcbe90c5d256acd8f9f347b14d958fb',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -104,9 +104,9 @@
             'dev_requirement' => false,
         ),
         'splitbrain/lesserphp' => array(
-            'pretty_version' => 'v0.10.1',
-            'version' => '0.10.1.0',
-            'reference' => '64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0',
+            'pretty_version' => 'v0.10.2',
+            'version' => '0.10.2.0',
+            'reference' => '6def0a3b497b23add902b9859386642551f9c435',
             'type' => 'library',
             'install_path' => __DIR__ . '/../splitbrain/lesserphp',
             'aliases' => array(),
