@@ -73,11 +73,11 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedCurrentEntry += $currentRevInfo;
         if ($expectedRevs > 0) {
             $this->assertEquals($expectedCurrentEntry, $currentRevInfo);
-                                
+
         }
         // attic
         $attic = wikiFN($currentRevInfo['id'], $currentRevInfo['date']);
-        $this->assertFileNotExists($attic, 'page does not yet exist in attic');
+        $this->assertFileDoesNotExist($attic, 'page does not yet exist in attic');
     }
 
 
@@ -99,7 +99,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $page = 'page';
         $file = wikiFN($page);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
 
         // 1.1 create a page
         saveWikiText($page, 'teststring', '1st save', false);
@@ -190,7 +190,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         // 1.6 delete
         saveWikiText($page, '', '6th save', false);
         clearstatcache(false, $file);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $expectedRevs = 5;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
@@ -283,7 +283,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $page = 'page2';
         $file = wikiFN($page);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
 
         // 2.1 create a page
         saveWikiText($page, 'teststring', 'Test 2, 1st save', false);
@@ -306,7 +306,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         // 2.2 delete
         saveWikiText($page, '', 'Test 2, 2nd save', false);
         clearstatcache(false, $file);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $expectedRevs = 2;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
@@ -406,7 +406,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $file = wikiFN($page);
 
         // 3.1 externally create a page
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         file_put_contents($file, 'teststring');
         clearstatcache(false, $file);
         $lastmod = filemtime($file);
@@ -488,7 +488,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $file = wikiFN($page);
 
         // 4.1 externally create a page
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         file_put_contents($file, 'teststring');
         clearstatcache(false, $file);
         $lastmod = filemtime($file);
@@ -558,7 +558,7 @@ class common_saveWikiText_test extends DokuWikiTest {
     function test_savesequence5() {
         $page = 'page5';
         $file = wikiFN($page);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
 
         // 5.1 create a page
         saveWikiText($page, 'teststring', 'Test 5, 1st save', false);
@@ -618,7 +618,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         // 5.4 delete
         saveWikiText($page, '', 'Test 5 3rd save', false);
         clearstatcache(false, $file);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $expectedRevs = 4;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
@@ -633,7 +633,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->waitForTick(); // wait for new revision ID
 
         // 5.5 create a page, second time
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         saveWikiText($page, 'teststring revived', 'Test 5, 4th save', false);
         $this->assertFileExists($file);
         $lastmod = filemtime($file);
@@ -652,7 +652,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         // 5.6 externally delete
         unlink($file);
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         $expectedRevs = 5;
         $expectExternal = array(
           //'date' => $lastmod,
@@ -667,7 +667,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $this->waitForTick(true); // wait for new revision ID
 
         // 5.7 create a page, third time
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
         saveWikiText($page, 'teststring revived 2', 'Test 5, 5th save', false);
         clearstatcache(false, $file);
         $this->assertFileExists($file);

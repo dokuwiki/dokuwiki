@@ -12,7 +12,7 @@ class JWTTest extends \DokuWikiTest
     {
         // no token file yet
         $file = JWT::getStorageFile('test');
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
 
         // initialize a new token
         $jwt = JWT::fromUser('test');
