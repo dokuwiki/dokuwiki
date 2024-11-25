@@ -243,12 +243,12 @@ class Logger
     {
         if (defined('DOKU_UNITTEST')) {
             // our tests may expect certain log messages
-            if($this->expected) {
+            if ($this->expected) {
                 $expected = array_shift($this->expected);
-                if(!str_contains($lines[0], $expected)) {
+                if (!str_contains($lines[0], $expected)) {
                     throw new \RuntimeException(
-                        "Log expectation failed:\n".
-                        "Expected: $expected\n".
+                        "Log expectation failed:\n" .
+                        "Expected: $expected\n" .
                         "Actual:   {$lines[0]}"
                     );
                 }
