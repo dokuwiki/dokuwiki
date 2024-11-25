@@ -12,7 +12,7 @@
     "require-dev": {
         "rector/rector": "^0.19",
         "squizlabs/php_codesniffer": "^3.7",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.0"
     },
     "scripts": {
         "test": [
