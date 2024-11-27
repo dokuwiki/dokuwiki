@@ -622,7 +622,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @param string $text text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
-     * @param array $options assoziative array with additional geshi options
+     * @param array $options associative array with additional geshi options
      */
     public function file($text, $language = null, $filename = null, $options = null)
     {
@@ -635,7 +635,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @param string $text text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
-     * @param array $options assoziative array with additional geshi options
+     * @param array $options associative array with additional geshi options
      */
     public function code($text, $language = null, $filename = null, $options = null)
     {
@@ -649,7 +649,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * @param string $text text to show
      * @param string $language programming language to use for syntax highlighting
      * @param string $filename file path label
-     * @param array $options assoziative array with additional geshi options
+     * @param array $options associative array with additional geshi options
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     public function _highlight($type, $text, $language = null, $filename = null, $options = null)
