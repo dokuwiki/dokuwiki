@@ -527,7 +527,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         // 4.3 externally edit as a result of a file which has older timestamp than last revision
         unlink($file);
-        file_put_contents($file, 'teststring fake 1 hout past');
+        file_put_contents($file, 'teststring fake 1 hour past');
         touch($file, filemtime($file) -3600); // change file modification time to 1 hour past
         clearstatcache();
         $newmod = filemtime($file);
@@ -540,6 +540,7 @@ class common_saveWikiText_test extends DokuWikiTest {
             'sizechange' => 16,
         );
 
+        $this->expectLogMessage('current file modification time is older than last');
         $pagelog = new PageChangeLog($page);
         $this->checkChangeLogAfterExternalEdit($pagelog, $expectedRevs, $expect, $expectExternal);
     }
