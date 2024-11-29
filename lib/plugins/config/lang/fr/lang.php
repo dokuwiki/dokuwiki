@@ -238,3 +238,10 @@ $lang['useheading_o_navigation'] = 'Navigation seulement';
 $lang['useheading_o_content']  = 'Contenu du wiki seulement';
 $lang['useheading_o_1']        = 'Toujours';
 $lang['readdircache']          = 'Durée de vie maximale du cache pour readdir (sec)';
+
+/* Accessibility strings */
+$lang['a11y_status'] = 'Statut :';
+$lang['a11y_stat_default'] = 'Valeur par défaut';
+$lang['a11y_stat_modified'] = 'Valeur modifiée';
+$lang['a11y_stat_protected'] = 'Champ protégé';
+$lang['a11y_stat_error'] = 'Ce champ contient une valeur invalide';

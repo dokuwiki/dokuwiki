@@ -54,7 +54,7 @@ class SettingMulticheckbox extends SettingString
         $value = $this->str2array($value);
         $default = $this->str2array($this->default);
 
-        $input = '';
+        $input = '<fieldset class="multiCheckbox">';
         foreach ($this->choices as $choice) {
             $idx = array_search($choice, $value);
             $idx_default = array_search($choice, $default);
@@ -67,9 +67,9 @@ class SettingMulticheckbox extends SettingString
             $prompt = ($plugin->getLang($this->key . '_' . $choice) ?: htmlspecialchars($choice));
 
             $input .= '<div class="selection' . $class . '">' . "\n";
-            $input .= '<label for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
             $input .= '<input id="config___' . $key . '_' . $choice . '" name="config[' . $key .
-                '][]" type="checkbox" class="checkbox" value="' . $choice . '" ' . $disable . ' ' . $checked . "/>\n";
+                '][]" type="checkbox" class="checkbox" value="' . $choice . '" ' . $disable . ' ' . $checked . ">\n";
+            $input .= '<label for="config___' . $key . '_' . $choice . '">' . $prompt . "</label>\n";
             $input .= "</div>\n";
 
             // remove this action from the disabledactions array
@@ -90,15 +90,16 @@ class SettingMulticheckbox extends SettingString
                     " selectiondefault" : "";
 
                 $input .= '<div class="other' . $class . '">' . "\n";
-                $input .= '<label for="config___' . $key . '_other">' .
-                    $plugin->getLang($key . '_other') .
-                    "</label>\n";
                 $input .= '<input id="config___' . $key . '_other" name="config[' . $key .
                     '][other]" type="text" class="edit" value="' . htmlspecialchars($other) .
                     '" ' . $disable . " />\n";
+                $input .= '<label for="config___' . $key . '_other">' .
+                    $plugin->getLang($key . '_other') .
+                    "</label>\n";
                 $input .= "</div>\n";
             }
         }
+        $input .= '</fieldset>';
         $label = '<label>' . $this->prompt($plugin) . '</label>';
         return [$label, $input];
     }

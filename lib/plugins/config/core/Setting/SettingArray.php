@@ -81,7 +81,7 @@ class SettingArray extends Setting
 
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<input id="config___' . $key . '" name="config[' . $key .
-            ']" type="text" class="edit" value="' . $value . '" ' . $disable . '/>';
+            ']" type="text" class="edit" value="' . $value . '" ' . $disable . '>';
         return [$label, $input];
     }
 }

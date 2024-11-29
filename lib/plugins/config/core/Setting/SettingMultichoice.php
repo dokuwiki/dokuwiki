@@ -49,6 +49,7 @@ class SettingMultichoice extends SettingString
 
             $choice = htmlspecialchars($choice);
             $option = htmlspecialchars($option);
+            if ($option == '') $option = '&nbsp;';
             $input .= '  <option value="' . $choice . '"' . $selected . ' >' . $option . '</option>' . "\n";
         }
         $input .= "</select> $nochoice \n";

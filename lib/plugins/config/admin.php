@@ -78,23 +78,25 @@ class admin_plugin_config extends AdminPlugin
         global $lang;
         global $ID;
 
+        define('KHEADLINELEVEL', '2'); /* change this if doc structure requires */
+
         $this->setupLocale(true);
 
         echo $this->locale_xhtml('intro');
 
-        echo '<div id="config__manager">';
+        echo '<article id="config__manager">';
 
         if ($this->configuration->isLocked()) {
-            echo '<div class="info">' . $this->getLang('locked') . '</div>';
+            echo '<p class="info">' . $this->getLang('locked') . '</p>';
         }
 
         // POST to script() instead of wl($ID) so config manager still works if
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
         echo '<form id="dw__configform" action="' . script() . '" method="post">';
-        echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>';
+        echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '"></div>';
         formSecurityToken();
-        $this->printH1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
+        $this->printHeadline(KHEADLINELEVEL, 'dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
         $in_fieldset = false;
         $first_plugin_fieldset = true;
@@ -105,53 +107,61 @@ class admin_plugin_config extends AdminPlugin
             } elseif ($setting instanceof SettingFieldset) {
                 // config setting group
                 if ($in_fieldset) {
-                    echo '</table>';
                     echo '</div>';
-                    echo '</fieldset>';
+                    echo '</section>';
                 } else {
                     $in_fieldset = true;
                 }
                 if ($first_plugin_fieldset && $setting->getType() == 'plugin') {
-                    $this->printH1('plugin_settings', $this->getLang('_header_plugin'));
+                    $this->printHeadline(KHEADLINELEVEL, 'plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
                 } elseif ($first_template_fieldset && $setting->getType() == 'template') {
-                    $this->printH1('template_settings', $this->getLang('_header_template'));
+                    $this->printHeadline(KHEADLINELEVEL, 'template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
-                echo '<fieldset id="' . $setting->getKey() . '">';
-                echo '<legend>' . $setting->prompt($this) . '</legend>';
-                echo '<div class="table">';
-                echo '<table class="inline">';
+                echo '<section id="' . $setting->getKey() . '">';
+                echo '<h3>' . $setting->prompt($this) . '</h3>';
+                echo '<div class="settings">';
             } else {
                 // config settings
                 [$label, $input] = $setting->html($this, $this->hasErrors);
 
-                $class = $setting->isDefault()
-                    ? ' class="default"'
-                    : ($setting->isProtected() ? ' class="protected"' : '');
-                $error = $setting->hasError()
-                    ? ' class="value error"'
-                    : ' class="value"';
-                $icon = $setting->caution()
-                    ? '<img src="' . self::IMGDIR . $setting->caution() . '.png" ' .
-                    'alt="' . $setting->caution() . '" title="' . $this->getLang($setting->caution()) . '" />'
-                    : '';
+                // build the classlist and status text:
+                $classlist = [];
+                $status = [];
+                array_push($status, ($setting->isDefault() ? 'default' : 'modified'));
+                if ($setting->isDefault()) array_push($classlist, 'default');
+                if ($setting->isProtected()) {
+                    array_push($classlist, 'protected');
+                    array_push($status, 'protected');
+                }
+                if ($setting->hasError()) {
+                    array_push($classlist, 'error');
+                    array_push($status, 'error');
+                }
+                if ($setting->caution()) array_push($classlist, 'caution');
 
-                echo '<tr' . $class . '>';
-                echo '<td class="label">';
-                echo '<span class="outkey">' . $setting->getPrettyKey() . '</span>';
-                echo $icon . $label;
-                echo '</td>';
-                echo '<td' . $error . '>' . $input . '</td>';
-                echo '</tr>';
+                // build the HTML code:
+                echo '<dl class="' . implode(' ', $classlist) . '">';
+                echo '<dt class="outkey">' . $setting->getPrettyKey() . '</dt>';
+                echo '<dd class="status"><span class="a11y">' . $this->getLang('a11y_status') . ' </span><ul>'
+                  . implode(array_map(function (string $it): string {
+                    $txt = $this->getLang('a11y_stat_' . $it);
+                    $status = $this->getLang('a11y_status');
+                    $span = "<span class=\"a11y\">{$txt}</span>";
+                    return "<li class=\"{$it}\" title=\"{$status} {$txt}\">{$span}</li>";
+                  }, $status)) . '</ul></dd>';
+                echo '<dd class="label">' . $label . '</dd>';
+                echo '<dd class="value">' . $input . '</dd>';
+                if ($setting->caution()) {
+                    echo '<dd class="' . $setting->caution() . '">' . $this->getLang($setting->caution()) . '</dd>';
+                }
+                echo '</dl>';
             }
         }
 
-        echo '</table>';
         echo '</div>';
-        if ($in_fieldset) {
-            echo '</fieldset>';
-        }
+        echo '</section>';
 
         // show undefined settings list
         $undefined_settings = $this->configuration->getUndefined();
@@ -169,37 +179,33 @@ class admin_plugin_config extends AdminPlugin
             }
 
             usort($undefined_settings, 'settingNaturalComparison');
-            $this->printH1('undefined_settings', $this->getLang('_header_undefined'));
-            echo '<fieldset>';
-            echo '<div class="table">';
-            echo '<table class="inline">';
+            $this->printHeadline(KHEADLINELEVEL, 'undefined_settings', $this->getLang('_header_undefined'));
+            echo '<section>';
+            echo '<dl>';
             foreach ($undefined_settings as $setting) {
                 [$label, $input] = $setting->html($this);
-                echo '<tr>';
-                echo '<td class="label">' . $label . '</td>';
-                echo '<td>' . $input . '</td>';
+                echo '<dd class="label">' . $label . '</dd>';
+                echo '<dd class="value">' . $input . '</dd>';
                 echo '</tr>';
             }
-            echo '</table>';
-            echo '</div>';
-            echo '</fieldset>';
+            echo '</dl>';
+            echo '</section>';
         }
 
         // finish up form
-        echo '<p>';
-        echo '<input type="hidden" name="do"     value="admin" />';
-        echo '<input type="hidden" name="page"   value="config" />';
+        echo '<footer>';
+        echo '<input type="hidden" name="do" value="admin">';
+        echo '<input type="hidden" name="page" value="config">';
 
         if (!$this->configuration->isLocked()) {
-            echo '<input type="hidden" name="save"   value="1" />';
-            echo '<button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
-            echo '<button type="reset">' . $lang['btn_reset'] . '</button>';
+            echo '<input type="hidden" name="save" value="1">';
+            echo '<p><button type="submit" name="submit" accesskey="s">' . $lang['btn_save'] . '</button>';
+            echo '<button type="reset">' . $lang['btn_reset'] . '</button></p>';
         }
 
-        echo '</p>';
-
+        echo '</footer>';
         echo '</form>';
-        echo '</div>';
+        echo '</article>';
     }
 
     /**
@@ -268,12 +274,13 @@ class admin_plugin_config extends AdminPlugin
     }
 
     /**
+     * @param int $level
      * @param string $id
      * @param string $text
      */
-    protected function printH1($id, $text)
+    protected function printHeadline($level, $id, $text)
     {
-        echo '<h1 id="' . $id . '">' . $text . '</h1>';
+        echo '<h' . $level . ' id="' . $id . '">' . $text . '</h2>';
     }
 
     /**
