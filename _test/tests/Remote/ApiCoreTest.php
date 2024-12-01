@@ -884,6 +884,16 @@ You can use up to five different levels of',
         $versions = json_decode(json_encode($versions), true);
         $this->assertEquals(1, count($versions));
         $this->assertEquals($rev[0], $versions[0]['revision']);
+
+        $params = ['media' => $id, 'first' => 2]; // offset 2
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(0, count($versions));
+
+        $params = ['media' => $id, 'first' => 2]; // offset 3
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(0, count($versions));
     }
 
     //core.saveMedia
