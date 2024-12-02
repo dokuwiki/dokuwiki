@@ -44,7 +44,7 @@ if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF . 'report_e_all')) {
     define('DOKU_E_LEVEL', E_ALL);
 }
 if (!defined('DOKU_E_LEVEL')) {
-    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
+    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 } else {
     error_reporting(DOKU_E_LEVEL);
 }

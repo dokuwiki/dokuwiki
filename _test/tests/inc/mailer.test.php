@@ -162,9 +162,9 @@ class mailer_test extends DokuWikiTest {
         $replacements = $mail->prop('replacements');
         $expected_mail_body = chunk_split(base64_encode($mailbody.$replacements['text']['EMAILSIGNATURE']),72,MAILHEADER_EOL);
 
-        $this->assertNotRegexp('/Content-Type: multipart/',$dump);
-        $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#',$dump);
-        $this->assertRegexp('/'.preg_quote($expected_mail_body,'/').'/',$dump);
+        $this->assertDoesNotMatchRegularExpression('/Content-Type: multipart/',$dump);
+        $this->assertMatchesRegularExpression('#Content-Type: text/plain; charset=UTF-8#',$dump);
+        $this->assertMatchesRegularExpression('/'.preg_quote($expected_mail_body,'/').'/',$dump);
 
         $conf['htmlmail'] = 1;
     }
@@ -180,8 +180,8 @@ class mailer_test extends DokuWikiTest {
         $html = $mail->prop('html');
 
         foreach($replacements as $repl){
-            $this->assertNotRegexp("/$repl/",$text,"$repl replacement still in text");
-            $this->assertNotRegexp("/$repl/",$html,"$repl replacement still in html");
+            $this->assertDoesNotMatchRegularExpression("/$repl/",$text,"$repl replacement still in text");
+            $this->assertDoesNotMatchRegularExpression("/$repl/",$html,"$repl replacement still in html");
         }
     }
 
@@ -292,7 +292,7 @@ class mailer_test extends DokuWikiTest {
 
         // construct the expected mail body text - include the expected dokuwiki signature
         $expected_mail_body = chunk_split(base64_encode($mailbody . $signature), 72, MAILHEADER_EOL);
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
         $conf['htmlmail'] = 1;
     }
@@ -324,9 +324,9 @@ A test mail in <strong>html</strong>
         // construct the expected mail body text - include the expected dokuwiki signature
         $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
 
-        $this->assertRegexp('/Content-Type: multipart/', $dump);
-        $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#', $dump);
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/Content-Type: multipart/', $dump);
+        $this->assertMatchesRegularExpression('#Content-Type: text/plain; charset=UTF-8#', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
     }
 
@@ -361,7 +361,7 @@ A test mail in <strong>html</strong>
         $replacements = $mail->prop('replacements');
         $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
 
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
     }
 

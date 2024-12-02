@@ -91,7 +91,7 @@ class httpclient_http_test extends DokuWikiTest
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url', $resp);
-        $this->assertRegExp('/\/get$/', $resp['url']);
+        $this->assertMatchesRegularExpression('/\/get$/', $resp['url']);
     }
 
     /**
@@ -108,7 +108,7 @@ class httpclient_http_test extends DokuWikiTest
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
         $this->assertArrayHasKey('url', $resp);
-        $this->assertRegExp('/\/get$/', $resp['url']);
+        $this->assertMatchesRegularExpression('/\/get$/', $resp['url']);
     }
 
     /**
