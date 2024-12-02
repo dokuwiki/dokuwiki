@@ -47,6 +47,11 @@ function auth_setup()
     global $plugin_controller;
     $AUTH_ACL = [];
 
+    // unset REMOTE_USER if empty
+    if ($INPUT->server->str('REMOTE_USER') === '') {
+        $INPUT->server->remove('REMOTE_USER');
+    }
+
     if (!$conf['useacl']) return false;
 
     // try to load auth backend from plugins
