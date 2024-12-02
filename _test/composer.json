@@ -10,7 +10,7 @@
     },
     "prefer-stable": true,
     "require-dev": {
-        "rector/rector": "^0.19",
+        "rector/rector": "^1.2",
         "squizlabs/php_codesniffer": "^3.7",
         "phpunit/phpunit": "^9.0"
     },

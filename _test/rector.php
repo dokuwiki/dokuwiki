@@ -5,7 +5,6 @@ declare(strict_types=1);
 use dokuwiki\test\rector\DokuWikiPtlnRector;
 use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodeQuality\Rector\Array_\CallableThisArrayToAnonymousFunctionRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
@@ -15,11 +14,9 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
-use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\StrictArraySearchRector;
-use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
@@ -41,7 +38,6 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
-use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromAssignsRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
@@ -115,16 +111,12 @@ return static function (RectorConfig $rectorConfig): void {
         SymplifyQuoteEscapeRector::class,
         CatchExceptionNameMatchingTypeRector::class,
         EncapsedStringsToSprintfRector::class,
-        CallableThisArrayToAnonymousFunctionRector::class,
-        StaticClosureRector::class,
         SimplifyUselessVariableRector::class, // seems to strip constructor property initializations
-        PostIncDecToPreIncDecRector::class,
         DisallowedEmptyRuleFixerRector::class,
         RemoveParentCallWithoutParentRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
         SimplifyIfReturnBoolRector::class,
         StrictArraySearchRector::class, // we cannot assume strict search is always wanted
-        TypedPropertyFromAssignsRector::class, // maybe?
         JoinStringConcatRector::class, // this does not count variables, so it creates overlong lines
         RemoveExtraParametersRector::class, // this actually broke code
         RemoveUnusedConstructorParamRector::class, // see rectorphp/rector#8580
