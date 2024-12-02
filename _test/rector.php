@@ -5,7 +5,9 @@ declare(strict_types=1);
 use dokuwiki\test\rector\DokuWikiPtlnRector;
 use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
+use Rector\CodeQuality\Rector\Equal\UseIdenticalOverEqualWithSameTypeRector;
 use Rector\CodeQuality\Rector\FunctionLike\SimplifyUselessVariableRector;
 use Rector\CodeQuality\Rector\If_\CombineIfRector;
 use Rector\CodeQuality\Rector\If_\CompleteMissingIfElseBracketRector;
@@ -127,6 +129,9 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUselessParamTagRector::class, // keep doc blocks
         RemoveUselessVarTagRector::class, // keep doc blocks
         RemoveUselessReturnTagRector::class, // keep doc blocks
+        ExplicitReturnNullRector::class, // we sometimes return void or string intentionally
+        UseIdenticalOverEqualWithSameTypeRector::class, // probably a good idea, maybe later
+
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
