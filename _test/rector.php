@@ -40,6 +40,7 @@ use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
+use Rector\DeadCode\Rector\If_\ReduceAlwaysFalseIfOrRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
@@ -131,6 +132,7 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUselessReturnTagRector::class, // keep doc blocks
         ExplicitReturnNullRector::class, // we sometimes return void or string intentionally
         UseIdenticalOverEqualWithSameTypeRector::class, // probably a good idea, maybe later
+        ReduceAlwaysFalseIfOrRector::class, // see rectorphp/rector#8916
 
     ]);
 
