@@ -906,7 +906,7 @@ class Indexer
                 if ($freq >= $min && (!$max || $freq <= $max))
                     $val_idx[$wid] = $freq;
             }
-            if (!empty($val_idx)) {
+            if ($val_idx !== []) {
                 $words = $this->getIndex($metaname . '_w', '');
                 foreach ($val_idx as $wid => $freq) {
                     if (strlen($words[$wid]) >= $minlen)

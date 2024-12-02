@@ -103,7 +103,7 @@ function auth_setup()
     if (!auth_tokenlogin()) {
         $ok = null;
 
-        if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
+        if ($auth->canDo('external')) {
             $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
         }
 
