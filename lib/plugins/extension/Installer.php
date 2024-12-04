@@ -2,6 +2,7 @@
 
 namespace dokuwiki\plugin\extension;
 
+use dokuwiki\Extension\PluginController;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Utf8\PhpString;
 use RecursiveDirectoryIterator;
@@ -198,9 +199,6 @@ class Installer
      */
     public function uninstall(Extension $extension)
     {
-        // FIXME check if dependencies are still needed
-        // FIXME check if other extensions depend on this one
-
         if (!$extension->isInstalled()) {
             throw new Exception('error_notinstalled', [$extension->getId()]);
         }
@@ -211,6 +209,11 @@ class Installer
 
         self::ensurePermissions($extension);
 
+        $dependants = $extension->getDependants();
+        if($dependants !== []) {
+            throw new Exception('error_uninstall_dependants', [$extension->getId(), implode(', ', $dependants)]);
+        }
+
         if (!io_rmdir($extension->getInstallDir(), true)) {
             throw new Exception('msg_delete_failed', [$extension->getId()]);
         }
@@ -218,6 +221,51 @@ class Installer
 
         $this->processed[$extension->getId()] = self::STATUS_REMOVED;
     }
+
+    /**
+     * Enable the extension
+     *
+     * @throws Exception
+     */
+    public function enable(Extension $extension)
+    {
+        if ($extension->isTemplate()) throw new Exception('notimplemented');
+        if (!$extension->isInstalled()) throw new Exception('error_notinstalled', [$extension->getId()]);
+        if ($extension->isEnabled()) throw new Exception('error_alreadyenabled', [$extension->getId()]);
+
+        /* @var PluginController $plugin_controller */
+        global $plugin_controller;
+        if (!$plugin_controller->enable($extension->getBase())) {
+            throw new Exception('pluginlistsaveerror');
+        }
+        self::purgeCache();
+    }
+
+    /**
+     * Disable the extension
+     *
+     * @throws Exception
+     */
+    public function disable(Extension $extension)
+    {
+        if ($extension->isTemplate()) throw new Exception('notimplemented');
+        if (!$extension->isInstalled()) throw new Exception('error_notinstalled', [$extension->getId()]);
+        if (!$extension->isEnabled()) throw new Exception('error_alreadydisabled', [$extension->getId()]);
+        if ($extension->isProtected()) throw new Exception('error_disable_protected', [$extension->getId()]);
+
+        $dependants = $extension->getDependants();
+        if($dependants !== []) {
+            throw new Exception('error_disable_dependants', [$extension->getId(), implode(', ', $dependants)]);
+        }
+
+        /* @var PluginController $plugin_controller */
+        global $plugin_controller;
+        if (!$plugin_controller->disable($extension->getBase())) {
+            throw new Exception('pluginlistsaveerror');
+        }
+        self::purgeCache();
+    }
+
 
     /**
      * Download an archive to a protected path

@@ -61,8 +61,15 @@ class action_plugin_extension extends ActionPlugin
             return;
         }
 
-        $extension = Extension::createFromId($ext);
-        $extension->toggle();
+        try {
+            $extension = Extension::createFromId($ext);
+            $extension->toggle();
+        } catch (Exception $e) {
+            http_status(500);
+            echo $e->getMessage();
+            return;
+        }
+
         header('Content-Type: text/html; charset=utf-8');
         echo (new GuiExtension($extension))->render();
     }

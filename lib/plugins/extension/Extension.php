@@ -332,6 +332,27 @@ class Extension
     }
 
     /**
+     * Get a list of extensions that are currently installed, enabled and depend on this extension
+     *
+     * @return Extension[]
+     */
+    public function getDependants()
+    {
+        $local = new Local();
+        $extensions = $local->getExtensions();
+        $dependants = [];
+        foreach ($extensions as $extension) {
+            if (
+                in_array($this->getId(), $extension->getDependencyList()) &&
+                $extension->isEnabled()
+            ) {
+                $dependants[$extension->getId()] = $extension;
+            }
+        }
+        return $dependants;
+    }
+
+    /**
      * Return the minimum PHP version required by the extension
      *
      * Empty if not set
@@ -427,7 +448,7 @@ class Extension
         if ($this->getId() == $conf['authtype']) return true;
 
         // disallow current template to be uninstalled
-        if($this->isTemplate() && ($this->getBase() === $conf['template'])) return true;
+        if ($this->isTemplate() && ($this->getBase() === $conf['template'])) return true;
 
         /** @var PluginController $plugin_controller */
         global $plugin_controller;
@@ -685,41 +706,22 @@ class Extension
 
     /**
      * Enable the extension
-     * @todo I'm unsure if this code should be here or part of Installer
+     *
      * @throws Exception
      */
     public function enable()
     {
-        if ($this->isTemplate()) throw new Exception('notimplemented');
-        if (!$this->isInstalled()) throw new Exception('error_notinstalled', [$this->getId()]);
-        if ($this->isEnabled()) throw new Exception('error_alreadyenabled', [$this->getId()]);
-
-        /* @var PluginController $plugin_controller */
-        global $plugin_controller;
-        if (!$plugin_controller->enable($this->base)) {
-            throw new Exception('pluginlistsaveerror');
-        }
-        Installer::purgeCache();
+        (new Installer())->enable($this);
     }
 
     /**
      * Disable the extension
-     * @todo I'm unsure if this code should be here or part of Installer
+     *
      * @throws Exception
      */
     public function disable()
     {
-        if ($this->isTemplate()) throw new Exception('notimplemented');
-        if (!$this->isInstalled()) throw new Exception('error_notinstalled', [$this->getId()]);
-        if (!$this->isEnabled()) throw new Exception('error_alreadydisabled', [$this->getId()]);
-        if ($this->isProtected()) throw new Exception('error_disable_protected', [$this->getId()]);
-
-        /* @var PluginController $plugin_controller */
-        global $plugin_controller;
-        if (!$plugin_controller->disable($this->base)) {
-            throw new Exception('pluginlistsaveerror');
-        }
-        Installer::purgeCache();
+        (new Installer())->disable($this);
     }
 
     // endregion
@@ -826,6 +828,7 @@ class Extension
 
         return [$type, $base];
     }
+
     /**
      * @return string
      */
