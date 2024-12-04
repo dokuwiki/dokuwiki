@@ -210,7 +210,7 @@ class Installer
         self::ensurePermissions($extension);
 
         $dependants = $extension->getDependants();
-        if($dependants !== []) {
+        if ($dependants !== []) {
             throw new Exception('error_uninstall_dependants', [$extension->getId(), implode(', ', $dependants)]);
         }
 
@@ -254,7 +254,7 @@ class Installer
         if ($extension->isProtected()) throw new Exception('error_disable_protected', [$extension->getId()]);
 
         $dependants = $extension->getDependants();
-        if($dependants !== []) {
+        if ($dependants !== []) {
             throw new Exception('error_disable_dependants', [$extension->getId(), implode(', ', $dependants)]);
         }
 

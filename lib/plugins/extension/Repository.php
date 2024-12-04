@@ -264,14 +264,13 @@ class Repository
         }
         // extract types
         if (preg_match_all('/(^|\s)(type:([\S]+))/', $q, $matches, PREG_SET_ORDER)) {
-
             $typevalues = array_flip(Extension::COMPONENT_TYPES);
             $typevalues = array_change_key_case($typevalues, CASE_LOWER);
 
             foreach ($matches as $m) {
                 $q = str_replace($m[2], '', $q);
                 $t = strtolower($m[3]);
-                if(isset($typevalues[$t])) {
+                if (isset($typevalues[$t])) {
                     $parameters['type'] += $typevalues[$t];
                 }
             }
