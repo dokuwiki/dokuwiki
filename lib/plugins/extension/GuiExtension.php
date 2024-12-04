@@ -237,6 +237,8 @@ class GuiExtension extends Gui
             ));
         }
 
+        $list['provides'] = implode(', ', array_map('hsc', $this->extension->getComponentTypes()));
+
         $tags = $this->extension->getTags();
         if ($tags) {
             $list['tags'] = implode(', ', array_map(function ($tag) {

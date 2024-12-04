@@ -11,6 +11,20 @@ class Extension
     public const TYPE_PLUGIN = 'plugin';
     public const TYPE_TEMPLATE = 'template';
 
+    /** @var string[] The types the API uses for plugin components */
+    public const COMPONENT_TYPES = [
+        1 => 'Syntax',
+        2 => 'Admin',
+        4 => 'Action',
+        8 => 'Render',
+        16 => 'Helper',
+        32 => 'Template',
+        64 => 'Remote',
+        128 => 'Auth',
+        256 => 'CLI',
+        512 => 'CSS/JS-only',
+    ];
+
     /** @var string "plugin"|"template" */
     protected string $type = self::TYPE_PLUGIN;
 
@@ -305,7 +319,7 @@ class Extension
                 return ['Template'];
             } else {
                 $types = [];
-                foreach (['Admin', 'Action', 'Syntax', 'Renderer', 'Helper', 'CLI'] as $type) {
+                foreach (self::COMPONENT_TYPES as $type) {
                     $check = strtolower($type);
                     if (
                         file_exists($this->getInstallDir() . '/' . $check . '.php') ||
