@@ -69,8 +69,7 @@ class Notice
      */
     protected function getLang($msg)
     {
-        // FIXME existing strings should be adjusted
-        return strip_tags(preg_replace('/<br ?\/?>/', "\n", $this->helper->getLang($msg)));
+        return $this->helper->getLang($msg);
     }
 
     /**
@@ -125,7 +124,7 @@ class Notice
             $this->notices[self::SECURITY][] = sprintf($this->getLang('security_issue'), $issue);
         }
         if ($issue = $this->extension->getSecurityWarning()) {
-            $this->notices[self::SECURITY][] = sprintf($this->getLang('security_issue'), $issue);
+            $this->notices[self::SECURITY][] = sprintf($this->getLang('security_warning'), $issue);
         }
     }
 

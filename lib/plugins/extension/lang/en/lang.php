@@ -73,14 +73,13 @@ $lang['msg_update_success']           = 'Extension %s updated successfully';
 $lang['msg_upload_failed']            = 'Uploading the file failed: %s';
 $lang['msg_nooverwrite']              = 'Extension %s already exists so it is not being overwritten; to overwrite, tick the overwrite option';
 
-$lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
-$lang['found_conflict']               = '<strong>This extension is marked as conflictig with the following installed extensions:</strong> %s';
-$lang['security_issue']               = '<strong>Security Issue:</strong> %s';
-$lang['security_warning']             = '<strong>Security Warning:</strong> %s';
-$lang['update_message']               = '<strong>Update Message:</strong> %s';
-$lang['update_available']             = '<strong>Update:</strong> New version %s is available.';
-$lang['wrong_folder']                 = '<strong>Plugin installed incorrectly:</strong> Rename plugin directory "%s" to "%s".';
-$lang['url_change']                   = '<strong>URL changed:</strong> Download URL has changed since last download. Check if the new URL is valid before updating the extension.<br />New: %s<br />Old: %s';
+$lang['missing_dependency']           = 'Missing or disabled dependency: %s';
+$lang['found_conflict']               = 'This extension is marked as conflictig with the following installed extensions: %s';
+$lang['security_issue']               = 'Security Issue: %s';
+$lang['security_warning']             = 'Security Warning: %s';
+$lang['update_message']               = 'Update Message: %s';
+$lang['wrong_folder']                 = 'Extension installed incorrectly: Rename directory from "%s" to "%s".';
+$lang['url_change']                   = "URL changed: Download URL has changed since last download. Check if the new URL is valid before updating the extension.\nNew: %s\nOld: %s";
 
 $lang['error_badurl']                 = 'URLs should start with http or https';
 $lang['error_dircreate']              = 'Unable to create temporary folder to receive download';
