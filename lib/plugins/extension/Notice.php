@@ -163,7 +163,8 @@ class Notice
      */
     protected function checkUpdateMessage()
     {
-        // FIXME should we only display this for installed extensions?
+        // only display this for installed extensions
+        if (!$this->extension->isInstalled()) return;
         if ($msg = $this->extension->getUpdateMessage()) {
             $this->notices[self::WARNING][] = sprintf($this->getLang('update_message'), $msg);
         }
