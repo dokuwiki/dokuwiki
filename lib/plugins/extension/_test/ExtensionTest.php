@@ -35,7 +35,7 @@ class ExtensionTest extends DokuWikiTest
         $this->assertEquals(md5('andi@splitbrain.org'), $extension->getEmailID());
         $this->assertStringContainsString('plugins', $extension->getDescription());
         $this->assertEquals('https://www.dokuwiki.org/plugin:extension', $extension->getURL());
-        $this->assertRegExp('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
+        $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Admin', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());
         $this->assertEmpty($extension->getDependencyList());
@@ -71,7 +71,7 @@ class ExtensionTest extends DokuWikiTest
         $this->assertEquals(md5('anika@selfthinker.org'), $extension->getEmailID());
         $this->assertStringContainsString('default template', $extension->getDescription());
         $this->assertEquals('https://www.dokuwiki.org/template:dokuwiki', $extension->getURL());
-        $this->assertRegExp('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
+        $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Template', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());
         $this->assertEmpty($extension->getDependencyList());
@@ -80,7 +80,7 @@ class ExtensionTest extends DokuWikiTest
         $this->assertTrue($extension->isInstalled());
         $this->assertFalse($extension->isGitControlled());
         $this->assertTrue($extension->isBundled());
-        $this->assertFalse($extension->isProtected());
+        $this->assertTrue($extension->isProtected()); // protected because it's the current template
         $this->assertFalse($extension->isInWrongFolder());
         $this->assertTrue($extension->isEnabled());
         $this->assertFalse($extension->hasChangedURL());
