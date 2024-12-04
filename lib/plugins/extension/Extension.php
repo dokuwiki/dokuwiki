@@ -426,7 +426,8 @@ class Extension
         global $conf;
         if ($this->getId() == $conf['authtype']) return true;
 
-        // FIXME disallow current template to be uninstalled
+        // disallow current template to be uninstalled
+        if($this->isTemplate() && ($this->getBase() === $conf['template'])) return true;
 
         /** @var PluginController $plugin_controller */
         global $plugin_controller;
