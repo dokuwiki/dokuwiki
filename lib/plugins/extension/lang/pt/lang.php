@@ -50,101 +50,60 @@ $lang['homepage_link']         = 'Documentos';
 $lang['bugs_features']         = 'Erros';
 $lang['tags']                  = 'Rótulos:';
 $lang['author_hint']           = 'Pesquisar extensões deste autor';
-$lang['installed']             = 'Instalado:
-';
-$lang['downloadurl']           = 'Baixar URL:
-';
-$lang['repository']            = 'Repositório:
-';
-$lang['unknown']               = '<em>desconhecido</em>
-';
+$lang['installed']             = 'Instalado:';
+$lang['downloadurl']           = 'Baixar URL:';
+$lang['repository']            = 'Repositório:';
+$lang['unknown']               = '<em>desconhecido</em>';
 $lang['installed_version']     = 'Versão instalada:';
 $lang['install_date']          = 'Sua última atualização:';
-$lang['available_version']     = 'Versão disponível:
-';
+$lang['available_version']     = 'Versão disponível:';
 $lang['compatible']            = 'Compatível com:';
-$lang['depends']               = 'Depende de:
-';
-$lang['similar']               = 'Semelhante a:
-';
-$lang['conflicts']             = 'Conflita com:
-';
-$lang['donate']                = 'Assim?
-';
+$lang['depends']               = 'Depende de:';
+$lang['similar']               = 'Semelhante a:';
+$lang['conflicts']             = 'Conflita com:';
+$lang['donate']                = 'Assim?';
 $lang['donate_action']         = 'Pague um café para o autor!';
-$lang['repo_retry']            = 'Tentar novamente
-';
-$lang['provides']              = 'Fornece:
-';
-$lang['status']                = 'Status:
-';
-$lang['status_installed']      = 'instalado
-';
-$lang['status_not_installed']  = 'não instalado
-';
-$lang['status_protected']      = 'protegido
-';
+$lang['repo_retry']            = 'Tentar novamente';
+$lang['provides']              = 'Fornece:';
+$lang['status']                = 'Status:';
+$lang['status_installed']      = 'instalado';
+$lang['status_not_installed']  = 'não instalado';
+$lang['status_protected']      = 'protegido';
 $lang['status_enabled']        = 'ativado';
 $lang['status_disabled']       = 'desativado';
 $lang['status_unmodifiable']   = 'inalterável';
-$lang['status_plugin']         = 'plugin
-';
-$lang['status_template']       = 'modelo
-';
-$lang['status_bundled']        = 'empacotado
-';
-$lang['msg_enabled']           = 'Plugin %s ativado
-';
+$lang['status_plugin']         = 'plugin';
+$lang['status_template']       = 'modelo';
+$lang['status_bundled']        = 'empacotado';
+$lang['msg_enabled']           = 'Plugin %s ativado';
 $lang['msg_disabled']          = 'Plugin %s desativado';
 $lang['msg_delete_success']    = 'Extensão %s desinstalada';
-$lang['msg_delete_failed']     = 'A desinstalação da Extensão %s falhou
-';
+$lang['msg_delete_failed']     = 'A desinstalação da Extensão %s falhou';
 $lang['msg_template_install_success'] = 'Modelo %s instalado com sucesso';
-$lang['msg_template_update_success'] = 'Modelo %s atualizado com sucesso
-';
-$lang['msg_plugin_install_success'] = 'Plugin %s instalado com sucesso
-';
-$lang['msg_plugin_update_success'] = 'Plugin %s atualizado com sucesso
-';
-$lang['msg_upload_failed']     = 'O envio do arquivo falhou
-';
+$lang['msg_template_update_success'] = 'Modelo %s atualizado com sucesso';
+$lang['msg_plugin_install_success'] = 'Plugin %s instalado com sucesso';
+$lang['msg_plugin_update_success'] = 'Plugin %s atualizado com sucesso';
+$lang['msg_upload_failed']     = 'O envio do arquivo falhou';
 $lang['msg_nooverwrite']       = 'A extensão %s já existe e não será substituída. Para substituir, marque a opção de substituição';
-$lang['missing_dependency']    = '<strong>dependência ausente ou desabilitada:</strong> %s
-';
-$lang['security_issue']        = '<strong>Questão de Segurança:</strong> %s
-';
-$lang['security_warning']      = '<strong>Aviso de Segurança:</strong> %s';
-$lang['update_message']        = '<strong>Mensagem de Atualização:</strong> %s';
-$lang['update_available']      = '<strong>Atualização:</strong> Nova versão %s está disponível.
-';
-$lang['wrong_folder']          = '<strong>Plugin instalado incorretamente:</strong> Renomear pasta de plugins de "%s" para "%s".
-';
-$lang['url_change']            = '<strong>A URL mudou: </strong> A URL para download mudou desde o último download. Verifique se a nova URL é válida antes de atualizar a extensão <br/> Nova:%s<br/>Antiga:%s
-';
-$lang['error_badurl']          = 'URLs deve começar com http ou https
-';
-$lang['error_dircreate']       = 'Não é possível criar pasta temporária para receber o download
-';
-$lang['error_download']        = 'Não é possível baixar o arquivo:%s
-';
+$lang['missing_dependency']    = 'dependência ausente ou desabilitada: %s';
+$lang['security_issue']        = 'Questão de Segurança: %s';
+$lang['security_warning']      = 'Aviso de Segurança: %s';
+$lang['update_message']        = 'Mensagem de Atualização: %s';
+$lang['wrong_folder']          = 'Plugin instalado incorretamente: Renomear pasta de plugins de "%s" para "%s".';
+$lang['url_change']            = "A URL mudou: A URL para download mudou desde o último download. Verifique se a nova URL é válida antes de atualizar a extensão\nNova:%s\nAntiga:%s";
+$lang['error_badurl']          = 'URLs deve começar com http ou https';
+$lang['error_dircreate']       = 'Não é possível criar pasta temporária para receber o download';
+$lang['error_download']        = 'Não é possível baixar o arquivo:%s';
 $lang['error_decompress']      = 'Não é possível descompactar o arquivo baixado. Talvez seja resultado de um download ruim e nesse caso você deve tentar novamente; ou o formato de compressão pode ser desconhecido e nesse caso, você precisará baixar e instalar manualmente.';
-$lang['error_findfolder']      = 'Não foi possível identificar diretório de extensão, você precisa baixar e instalar manualmente
-';
-$lang['error_copy']            = 'Houve um erro na cópia do arquivo durante a tentativa de instalar os arquivos para o diretório <em>%s</em>: o disco pode estar cheio ou as permissões de acesso incorretas. Isso pode ter resultado em um plugin parcialmente instalado e tornar instável seu wiki
-';
-$lang['noperms']               = 'Diretório da extensão não é gravável
-';
-$lang['notplperms']            = 'Diretório do modelo não é gravável
-';
-$lang['nopluginperms']         = 'Diretório do plugin não é gravável
-';
-$lang['git']                   = 'Esta extensão foi instalada via git, você pode não querer atualizá-la aqui.
-';
+$lang['error_findfolder']      = 'Não foi possível identificar diretório de extensão, você precisa baixar e instalar manualmente';
+$lang['error_copy']            = 'Houve um erro na cópia do arquivo durante a tentativa de instalar os arquivos para o diretório <em>%s</em>: o disco pode estar cheio ou as permissões de acesso incorretas. Isso pode ter resultado em um plugin parcialmente instalado e tornar instável seu wiki';
+$lang['noperms']               = 'Diretório da extensão não é gravável';
+$lang['notplperms']            = 'Diretório do modelo não é gravável';
+$lang['nopluginperms']         = 'Diretório do plugin não é gravável';
+$lang['git']                   = 'Esta extensão foi instalada via git, você pode não querer atualizá-la aqui.';
 $lang['auth']                  = 'Este plugin não está ativado na configuração, considere desativá-lo.';
 $lang['install_url']           = 'Instalar a partir da URL:';
 $lang['install_upload']        = 'Enviar Extensão:';
 $lang['repo_badresponse']      = 'O repositório de plugin retornou uma mensagem inválida.';
-$lang['repo_error']            = 'O repositório do plugin não pôde ser contactado. Verifique se o seu servidor está autorizado a conectar com www.dokuwiki.org e verifique as configurações de proxy do servidor.
-';
-$lang['nossl']                 = 'Seu PHP parece que perdeu o suporte a SSL. O download não vai funcionar para muitas extensões DokuWiki.
-';
+$lang['repo_error']            = 'O repositório do plugin não pôde ser contactado. Verifique se o seu servidor está autorizado a conectar com www.dokuwiki.org e verifique as configurações de proxy do servidor.';
+$lang['nossl']                 = 'Seu PHP parece que perdeu o suporte a SSL. O download não vai funcionar para muitas extensões DokuWiki.';

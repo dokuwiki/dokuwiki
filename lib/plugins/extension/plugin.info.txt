@@ -1,7 +1,7 @@
 base   extension
-author Michael Hamann
-email  michael@content-space.de
-date   2015-07-26
+author Andreas Gohr
+email  andi@splitbrain.org
+date   2024-11-22
 name   Extension Manager
 desc   Allows managing and installing plugins and templates
 url    https://www.dokuwiki.org/plugin:extension
