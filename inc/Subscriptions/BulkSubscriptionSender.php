@@ -110,7 +110,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                         $count++;
                     }
                 } elseif ($style === 'list') {
-                    $this->sendList($USERINFO['mail'], $change_ids, $target);
+                    $this->sendList($USERINFO['mail'], $change_ids, $target, $lastupdate);
                     $count++;
                 }
                 // TODO: Handle duplicate subscriptions.
@@ -176,6 +176,17 @@ class BulkSubscriptionSender extends SubscriptionSender
         return @rmdir($lock);
     }
 
+    protected function lastRevBefore($id, $lastupdate)
+    {
+        $pagelog = new PageChangeLog($id);
+        $n = 0;
+        do {
+            $rev = $pagelog->getRevisions($n++, 1);
+            $rev = ($rev !== []) ? $rev[0] : null;
+        } while (!is_null($rev) && $rev > $lastupdate);
+        return $rev;
+    }
+
     /**
      * Send a digest mail
      *
@@ -192,12 +203,7 @@ class BulkSubscriptionSender extends SubscriptionSender
      */
     protected function sendDigest($subscriber_mail, $id, $lastupdate)
     {
-        $pagelog = new PageChangeLog($id);
-        $n = 0;
-        do {
-            $rev = $pagelog->getRevisions($n++, 1);
-            $rev = ($rev !== []) ? $rev[0] : null;
-        } while (!is_null($rev) && $rev > $lastupdate);
+        $rev = $this->lastRevBefore($id, $lastupdate);
 
         // TODO I'm not happy with the following line and passing $this->mailer around. Not sure how to solve it better
         $pageSubSender = new PageSubscriptionSender($this->mailer);
@@ -222,8 +228,10 @@ class BulkSubscriptionSender extends SubscriptionSender
      * @author Adrian Lang <lang@cosmocode.de>
      *
      */
-    protected function sendList($subscriber_mail, $ids, $ns_id)
+    protected function sendList($subscriber_mail, $ids, $ns_id, $lastupdate)
     {
+        global $lang;
+
         if ($ids === []) {
             return false;
         }
@@ -231,9 +239,14 @@ class BulkSubscriptionSender extends SubscriptionSender
         $tlist = '';
         $hlist = '<ul>';
         foreach ($ids as $id) {
+            $last = $this->lastRevBefore($id, $lastupdate);
             $link = wl($id, [], true);
+            $difflink = wl($id, ['do' => 'diff', 'rev' => $last], true);
             $tlist .= '* ' . $link . NL;
-            $hlist .= '<li><a href="' . $link . '">' . hsc($id) . '</a></li>' . NL;
+            $hlist .= '<li>';
+            $hlist .= '<a href="' . $link . '">' . hsc($id) . '</a>';
+            $hlist .= ' (<a href="' . $difflink . '">' . $lang['diff'] . '</a>)';
+            $hlist .= '</li>' . NL;
         }
         $hlist .= '</ul>';
 
