@@ -124,7 +124,7 @@
     text-align: right;
 
     form.search {
-        font-size: 0.875em;
+        font-size: 1rem;
     }
 }
 
@@ -139,18 +139,19 @@ form.search {
 
     input {
         width: 18em;
-        padding: .35em 22px .35em .1em;
+        padding: .25em 1.75em .25em .5em;
     }
 
     button {
-        background: transparent url(images/search.png) no-repeat 0 0;
+        background: transparent url(images/search.svg) no-repeat center;
+        background-size: 1em;
         border-width: 0;
-        width: 19px;
-        height: 14px;
+        width: 1.5em;
+        height: 1.5em;
         text-indent: -99999px;
-        margin-left: -20px;
+        margin-left: -1.5em;
         box-shadow: none;
-        padding: 0;
+        padding: .25em;
     }
 }
 
@@ -167,13 +168,18 @@ form.search {
     }
 }
 
+/* Extension manager uses a different code structure for the search field, hence this overwrite: */
+#extension__manager form.search button {
+    margin-left: -1.75em;
+}
+
 /*____________ breadcrumbs ____________*/
 
 .dokuwiki div.breadcrumbs {
     border-top: 1px solid @ini_border;
     border-bottom: 1px solid @ini_background;
     margin-bottom: .5em;
-    font-size: 0.875em;
+    font-size: 0.94em;
     clear: both;
 
     div {
@@ -290,7 +296,7 @@ form.search {
     }
 }
 
-.dokuwiki div.page {
+.dokuwiki article.page {
     clear: both;
     background: @ini_background;
     color: inherit;
