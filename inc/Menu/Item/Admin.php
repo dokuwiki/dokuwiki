@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Admin
  *
@@ -14,7 +16,7 @@ class Admin extends AbstractItem
     {
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/settings.svg';
+        $this->svg = StaticImage::path('menu/settings.svg');
     }
 
     /** @inheritdoc */
