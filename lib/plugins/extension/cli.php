@@ -326,31 +326,42 @@ class cli_plugin_extension extends CLIPlugin
         /** @var helper_plugin_extension_extension $ext */
         $ext = $this->loadHelper('extension_extension');
         $tr = new TableFormatter($this->colors);
-
+        $dw_release_date = getVersionData()['date'];
 
         foreach ($list as $name) {
             $ext->setExtension($name);
 
-            $status = '';
             if ($ext->isInstalled()) {
                 $date = $ext->getInstalledVersion();
                 $avail = $ext->getLastUpdate();
-                $status = 'i';
-                if ($avail && $avail > $date) {
-                    $vcolor = Colors::C_RED;
-                    $status .= 'u';
+
+                if ($ext->isBundled()) {
+                    $status = 'b';
+                    $vcolor = Colors::C_RESET;
+                    // Use DokuWiki release date for bundled plugins
+                    $date = $dw_release_date;
                 } else {
-                    $vcolor = Colors::C_GREEN;
+                    if ($ext->isGitControlled()) {
+                        $status = 'g';
+                    } else {
+                        $status = 'i';
+                    }
+                    if ($avail && $avail > $date) {
+                        $vcolor = Colors::C_RED;
+                        $status .= 'u';
+                    } else {
+                        $vcolor = Colors::C_GREEN;
+                    }
                 }
-                if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) $status = 'b';
+
                 if ($ext->isEnabled()) {
-                    $ecolor = Colors::C_BROWN;
+                    $ecolor = Colors::C_RESET;
                 } else {
-                    $ecolor = Colors::C_DARKGRAY;
+                    $ecolor = Colors::C_BLUE;
                     $status .= 'd';
                 }
             } else {
+                $status = '';
                 $ecolor = null;
                 $date = $ext->getLastUpdate();
                 $vcolor = null;
