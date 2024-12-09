@@ -2,6 +2,22 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2024-12-09
+lib/plugins/extension/_test/extension.test.php
+lib/plugins/extension/all.less
+lib/plugins/extension/helper/extension.php
+lib/plugins/extension/helper/gui.php
+lib/plugins/extension/helper/list.php
+lib/plugins/extension/helper/repository.php
+lib/plugins/extension/images/bug.gif
+lib/plugins/extension/images/disabled.png
+lib/plugins/extension/images/donate.png
+lib/plugins/extension/images/down.png
+lib/plugins/extension/images/enabled.png
+lib/plugins/extension/images/tag.png
+lib/plugins/extension/images/up.png
+lib/plugins/extension/images/warning.png
+
 # removed on 2022-06-26
 .travis.yml
 appveyor.yml
