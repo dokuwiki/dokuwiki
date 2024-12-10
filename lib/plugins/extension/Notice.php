@@ -9,11 +9,11 @@ class Notice
     public const ERROR = 'error';
     public const SECURITY = 'security';
 
-    public const ICONS = [
-        self::INFO => 'ⓘ',
-        self::WARNING => '↯',
-        self::ERROR => '⚠',
-        self::SECURITY => '☠',
+    protected const ICONS = [
+        self::INFO => 'I',
+        self::WARNING => 'W',
+        self::ERROR => 'E',
+        self::SECURITY => 'S',
     ];
 
     protected $notices = [
@@ -59,6 +59,30 @@ class Notice
     {
         $self = new self($extension);
         return $self->notices;
+    }
+
+    /**
+     * Return the icon path for a notice type
+     *
+     * @param string $type The notice type constant
+     * @return string
+     */
+    public static function icon($type): string
+    {
+        if (!isset(self::ICONS[$type])) throw new \RuntimeException('Unknown notice type: ' . $type);
+        return __DIR__ . '/images/' . $type . '.svg';
+    }
+
+    /**
+     * Return the character symbol for a notice type used on CLI
+     *
+     * @param string $type The notice type constant
+     * @return string
+     */
+    public static function symbol($type): string
+    {
+        if (!isset(self::ICONS[$type])) throw new \RuntimeException('Unknown notice type: ' . $type);
+        return self::ICONS[$type][0] ?? '';
     }
 
     /**

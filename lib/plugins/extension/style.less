@@ -166,9 +166,14 @@
                 margin: 0.5em 0 0 0;
                 padding: 0;
 
-                span {
-                    font-weight: bold;
-                    color: @ini_link;
+                div.li {
+                    display: flex;
+                    line-height: 1.2em;
+                    gap: 0.25em;
+                    align-items: center;
+                    span.icon svg {
+                        fill: @ini_link;
+                    }
                 }
             }
         }
