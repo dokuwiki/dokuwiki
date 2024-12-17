@@ -288,7 +288,7 @@ class Installer
         // download
         $http = new DokuHTTPClient();
         $http->max_bodysize = 0;
-        $http->timeout = 25; //max. 25 sec
+        $http->timeout = 60*5; //max. 5min
         $http->keep_alive = false; // we do single ops here, no need for keep-alive
         $http->agent = 'DokuWiki HTTP Client (Extension Manager)';
 
