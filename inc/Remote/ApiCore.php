@@ -527,7 +527,7 @@ class ApiCore
         $page = $this->checkPage($page);
 
         // resolve page instructions
-        $ins = p_cached_instructions(wikiFN($page));
+        $ins = p_cached_instructions(wikiFN($page), false, $page);
 
         // instantiate new Renderer - needed for interwiki links
         $Renderer = new Doku_Renderer_xhtml();
