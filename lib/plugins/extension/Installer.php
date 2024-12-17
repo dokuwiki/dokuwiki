@@ -288,9 +288,16 @@ class Installer
         // download
         $http = new DokuHTTPClient();
         $http->max_bodysize = 0;
-        $http->timeout = 25; //max. 25 sec
         $http->keep_alive = false; // we do single ops here, no need for keep-alive
         $http->agent = 'DokuWiki HTTP Client (Extension Manager)';
+
+        // large downloads may take a while on slow connections, so we try to extend the timeout to 4 minutes
+        // 4 minutes was chosen, because HTTP servers and proxies often have a 5 minute timeout
+        if (php_sapi_name() === 'cli' || @set_time_limit(60 * 4)) {
+            $http->timeout = 60 * 4 - 5; // nearly 4 minutes
+        } else {
+            $http->timeout = 25; // max. 25 sec (a bit less than default execution time)
+        }
 
         $data = $http->get($url);
         if ($data === false) throw new Exception('error_download', [$url, $http->error, $http->status]);
