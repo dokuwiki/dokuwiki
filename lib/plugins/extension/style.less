@@ -79,7 +79,7 @@
             margin-bottom: 1.5em; // adds space for the detail summary label
             position: relative;
 
-            img {
+            img.shot {
                 border: 1px solid @ini_border;
                 border-radius: 2px;
                 width: 100%;
@@ -104,6 +104,11 @@
 
             .popularity {
                 cursor: default;
+                img {
+                    vertical-align: middle;
+                    height: 1.2rem;
+                    width: auto;
+                }
             }
         }
 
@@ -174,6 +179,14 @@
                     span.icon svg {
                         fill: @ini_link;
                     }
+                }
+
+                &.error div.li span.icon svg {
+                    fill: #f33;
+                }
+                &.security div.li span.icon svg,
+                &.warning div.li span.icon svg {
+                    fill: #f90;
                 }
             }
         }
