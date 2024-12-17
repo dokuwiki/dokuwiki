@@ -258,7 +258,11 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdList($showdetails, $filter)
     {
-        $this->listExtensions((new Local())->getExtensions(), $showdetails, $filter);
+        $extensions = (new Local())->getExtensions();
+        // initialize remote data in one go
+        Repository::getInstance()->initExtensions(array_keys($extensions));
+
+        $this->listExtensions($extensions, $showdetails, $filter);
         return 0;
     }
 

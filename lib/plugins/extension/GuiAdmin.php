@@ -64,6 +64,12 @@ class GuiAdmin extends Gui
         $html .= '</div>';
 
         $plugins = (new Local())->getPlugins();
+        try {
+            // initialize remote data in one go
+            Repository::getInstance()->initExtensions(array_keys($plugins));
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1); // this should not happen
+        }
 
         $html .= '<div id="extension__list">';
         $html .= '<form action="' . $this->tabURL('plugins') . '" method="post">';
@@ -91,6 +97,12 @@ class GuiAdmin extends Gui
         $html .= '</div>';
 
         $templates = (new Local())->getTemplates();
+        try {
+            // initialize remote data in one go
+            Repository::getInstance()->initExtensions(array_keys($templates));
+        } catch (Exception $e) {
+            msg($e->getMessage(), -1); // this should not happen
+        }
 
         $html .= '<div id="extension__list">';
         $html .= '<form action="' . $this->tabURL('templates') . '" method="post">';

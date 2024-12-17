@@ -135,7 +135,7 @@ class Repository
         // first get all that are cached
         foreach ($ids as $id) {
             $data = $this->retrieveCache($id);
-            if ($data === null) {
+            if ($data === null || $data === []) {
                 $toload[] = $id;
             } else {
                 $result[$id] = Extension::createFromRemoteData($data);
@@ -147,7 +147,7 @@ class Repository
             $this->fetchExtensions($toload);
             foreach ($toload as $id) {
                 $data = $this->retrieveCache($id);
-                if ($data === null) {
+                if ($data === null || $data === []) {
                     $result[$id] = null;
                 } else {
                     $result[$id] = Extension::createFromRemoteData($data);
