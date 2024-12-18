@@ -94,4 +94,5 @@ _test/vendor/
 phpunit.phar
 *.phpunit.result.cache
 _test/data/
+_test/phpunit
 _test/.rector-cache/
