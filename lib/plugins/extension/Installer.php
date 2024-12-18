@@ -293,7 +293,7 @@ class Installer
 
         // large downloads may take a while on slow connections, so we try to extend the timeout to 4 minutes
         // 4 minutes was chosen, because HTTP servers and proxies often have a 5 minute timeout
-        if (php_sapi_name() === 'cli' || @set_time_limit(60 * 4)) {
+        if (PHP_SAPI === 'cli' || @set_time_limit(60 * 4)) {
             $http->timeout = 60 * 4 - 5; // nearly 4 minutes
         } else {
             $http->timeout = 25; // max. 25 sec (a bit less than default execution time)
