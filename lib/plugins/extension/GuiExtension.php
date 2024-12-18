@@ -75,6 +75,8 @@ class GuiExtension extends Gui
         $img = [
             'width' => self::THUMB_WIDTH,
             'height' => self::THUMB_HEIGHT,
+            'class' => 'shot',
+            'loading' => 'lazy',
             'alt' => '',
         ];
 
@@ -144,8 +146,12 @@ class GuiExtension extends Gui
             foreach ($messages as $message) {
                 $message = hsc($message);
                 $message = nl2br($message);
-                $message = '<span>' . Notice::ICONS[$type] . '</span> ' . $message;
                 $message = preg_replace('/`([^`]+)`/', '<bdi>$1</bdi>', $message);
+                $message = sprintf(
+                    '<span class="icon">%s</span><span>%s</span>',
+                    inlineSVG(Notice::icon($type)),
+                    $message
+                );
                 $html .= '<li class="' . $type . '"><div class="li">' . $message . '</div></li>';
             }
         }
@@ -313,15 +319,17 @@ class GuiExtension extends Gui
         if (!$popularity) return '';
         if ($this->extension->isBundled()) return '';
 
+        $popimg = '<img src="' . DOKU_BASE . 'lib/plugins/extension/images/fire.svg" alt="🔥" />';
+
         if ($popularity > 0.25) {
             $title = $this->getLang('popularity_high');
-            $emoji = '🔥🔥🔥';
+            $emoji = str_repeat($popimg, 3);
         } elseif ($popularity > 0.15) {
             $title = $this->getLang('popularity_medium');
-            $emoji = '🔥🔥';
+            $emoji = str_repeat($popimg, 2);
         } elseif ($popularity > 0.05) {
             $title = $this->getLang('popularity_low');
-            $emoji = '🔥';
+            $emoji = str_repeat($popimg, 1);
         } else {
             return '';
         }

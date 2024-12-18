@@ -30,10 +30,10 @@ class cli_plugin_extension extends CLIPlugin
         $options->setHelp(
             "Manage plugins and templates for this DokuWiki instance\n\n" .
             "Status codes:\n" .
-            "   i - installed                    " . Notice::ICONS[Notice::SECURITY] . " - security issue\n" .
-            "   b - bundled with DokuWiki        " . Notice::ICONS[Notice::ERROR] . " - extension error\n" .
-            "   g - installed via git            " . Notice::ICONS[Notice::WARNING] . " - extension warning\n" .
-            "   d - disabled                     " . Notice::ICONS[Notice::INFO] . " - extension info\n" .
+            "   i - installed                    " . Notice::symbol(Notice::SECURITY) . " - security issue\n" .
+            "   b - bundled with DokuWiki        " . Notice::symbol(Notice::ERROR) . " - extension error\n" .
+            "   g - installed via git            " . Notice::symbol(Notice::WARNING) . " - extension warning\n" .
+            "   d - disabled                     " . Notice::symbol(Notice::INFO) . " - extension info\n" .
             "   u - update available\n"
         );
 
@@ -258,7 +258,11 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdList($showdetails, $filter)
     {
-        $this->listExtensions((new Local())->getExtensions(), $showdetails, $filter);
+        $extensions = (new Local())->getExtensions();
+        // initialize remote data in one go
+        Repository::getInstance()->initExtensions(array_keys($extensions));
+
+        $this->listExtensions($extensions, $showdetails, $filter);
         return 0;
     }
 
@@ -309,10 +313,10 @@ class cli_plugin_extension extends CLIPlugin
             }
 
             $notices = Notice::list($ext);
-            if ($notices[Notice::SECURITY]) $status .= Notice::ICONS[Notice::SECURITY];
-            if ($notices[Notice::ERROR]) $status .= Notice::ICONS[Notice::ERROR];
-            if ($notices[Notice::WARNING]) $status .= Notice::ICONS[Notice::WARNING];
-            if ($notices[Notice::INFO]) $status .= Notice::ICONS[Notice::INFO];
+            if ($notices[Notice::SECURITY]) $status .= Notice::symbol(Notice::SECURITY);
+            if ($notices[Notice::ERROR]) $status .= Notice::symbol(Notice::ERROR);
+            if ($notices[Notice::WARNING]) $status .= Notice::symbol(Notice::WARNING);
+            if ($notices[Notice::INFO]) $status .= Notice::symbol(Notice::INFO);
 
             echo $tr->format(
                 [20, 5, 12, '*'],
@@ -347,7 +351,7 @@ class cli_plugin_extension extends CLIPlugin
                 foreach ($msgs as $msg) {
                     echo $tr->format(
                         [7, '*'],
-                        ['', Notice::ICONS[$type] . ' ' . $msg],
+                        ['', Notice::symbol($type) . ' ' . $msg],
                         [null, Colors::C_LIGHTBLUE]
                     );
                 }
