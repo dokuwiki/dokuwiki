@@ -70,6 +70,10 @@ class Colors
             $this->enabled = false;
             return;
         }
+        if (getenv('NO_COLOR')) { // https://no-color.org/
+            $this->enabled = false;
+            return;
+        }
     }
 
     /**
