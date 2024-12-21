@@ -44,7 +44,7 @@ if (!defined('DOKU_INC')) die();
         <!-- USER TOOLS -->
         <?php if ($conf['useacl']) : ?>
             <div id="dokuwiki__usertools">
-                <h3 class="a11y"><?php echo $lang['user_tools']; ?></h3>
+                <h2 class="a11y"><?php echo $lang['user_tools']; ?></h2>
                 <ul>
                     <?php
                     if (!empty($_SERVER['REMOTE_USER'])) {

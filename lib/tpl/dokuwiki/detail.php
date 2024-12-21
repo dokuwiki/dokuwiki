@@ -40,7 +40,7 @@ if (!defined('DOKU_INC')) die();
                     <div class="pageId"><span><?php echo hsc(tpl_img_getTag('IPTC.Headline', $IMG)); ?></span></div>
                 <?php endif; ?>
 
-                <div class="page group">
+                <article class="page group">
                     <?php tpl_flush() ?>
                     <?php tpl_includeFile('pageheader.html') ?>
                     <!-- detail start -->
@@ -72,7 +72,7 @@ if (!defined('DOKU_INC')) die();
                         </div>
                         <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
                     <?php endif; ?>
-                </div>
+                </article>
                 <!-- detail stop -->
                 <?php tpl_includeFile('pagefooter.html') ?>
                 <?php tpl_flush() ?>
