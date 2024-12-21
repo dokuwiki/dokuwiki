@@ -35,7 +35,7 @@ class SettingPassword extends SettingString
 
         $label = '<label for="config___' . $key . '">' . $this->prompt($plugin) . '</label>';
         $input = '<input id="config___' . $key . '" name="config[' . $key .
-            ']" autocomplete="off" type="password" class="edit" value="" ' . $disable . ' />';
+            ']" autocomplete="new-password" type="password" class="edit" value="" ' . $disable . ' />';
         return [$label, $input];
     }
 }

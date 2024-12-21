@@ -373,16 +373,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.42",
+            "version": "3.0.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "db92f1b1987b12b13f248fe76c3a52cadb67bb98"
+                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db92f1b1987b12b13f248fe76c3a52cadb67bb98",
-                "reference": "db92f1b1987b12b13f248fe76c3a52cadb67bb98",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/709ec107af3cb2f385b9617be72af8cf62441d02",
+                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02",
                 "shasum": ""
             },
             "require": {
@@ -463,7 +463,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.42"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.43"
             },
             "funding": [
                 {
@@ -479,20 +479,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-16T03:06:04+00:00"
+            "time": "2024-12-14T21:12:59+00:00"
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "65b095d87bc00898d8fa7737bdbcda93a3fbcc55"
+                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/65b095d87bc00898d8fa7737bdbcda93a3fbcc55",
-                "reference": "65b095d87bc00898d8fa7737bdbcda93a3fbcc55",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
+                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
                 "shasum": ""
             },
             "require": {
@@ -553,30 +553,30 @@
             ],
             "support": {
                 "issues": "https://github.com/simplepie/simplepie/issues",
-                "source": "https://github.com/simplepie/simplepie/tree/1.8.0"
+                "source": "https://github.com/simplepie/simplepie/tree/1.8.1"
             },
-            "time": "2023-01-20T08:37:35+00:00"
+            "time": "2024-11-22T16:33:20+00:00"
         },
         {
             "name": "splitbrain/lesserphp",
-            "version": "v0.10.1",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/lesserphp.git",
-                "reference": "64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0"
+                "reference": "6def0a3b497b23add902b9859386642551f9c435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0",
-                "reference": "64e2ab63ddd399d9ef071e9a6bd778c6ddcc8db0",
+                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/6def0a3b497b23add902b9859386642551f9c435",
+                "reference": "6def0a3b497b23add902b9859386642551f9c435",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5",
-                "rector/rector": "^0.19",
+                "phpunit/phpunit": "^9",
+                "rector/rector": "^1.2",
                 "squizlabs/php_codesniffer": "^3.8"
             },
             "suggest": {
@@ -614,22 +614,22 @@
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "support": {
                 "issues": "https://github.com/splitbrain/lesserphp/issues",
-                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.1"
+                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.2"
             },
-            "time": "2024-02-02T18:31:26+00:00"
+            "time": "2024-11-25T11:59:34+00:00"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "d274e5190ba309777926348900cf9578d9e533c9"
+                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d274e5190ba309777926348900cf9578d9e533c9",
-                "reference": "d274e5190ba309777926348900cf9578d9e533c9",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d9d4eaac12a6587727b8e539946dd06cac8b3f02",
+                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02",
                 "shasum": ""
             },
             "require": {
@@ -674,22 +674,28 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-archive/issues",
-                "source": "https://github.com/splitbrain/php-archive/tree/1.3.1"
+                "source": "https://github.com/splitbrain/php-archive/tree/1.4.0"
             },
-            "time": "2022-03-23T09:21:55+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/splitbrain",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-12-09T14:08:44+00:00"
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.3.1",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "844609ef16b8486691b7fd892d54478918f27fe8"
+                "reference": "8189c68cbde3fd8c3e0fc26295b776b143b6e481"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/844609ef16b8486691b7fd892d54478918f27fe8",
-                "reference": "844609ef16b8486691b7fd892d54478918f27fe8",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/8189c68cbde3fd8c3e0fc26295b776b143b6e481",
+                "reference": "8189c68cbde3fd8c3e0fc26295b776b143b6e481",
                 "shasum": ""
             },
             "require": {
@@ -729,9 +735,9 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-cli/issues",
-                "source": "https://github.com/splitbrain/php-cli/tree/1.3.1"
+                "source": "https://github.com/splitbrain/php-cli/tree/1.3.3"
             },
-            "time": "2024-01-17T12:03:34+00:00"
+            "time": "2024-12-18T08:16:26+00:00"
         },
         {
             "name": "splitbrain/php-jsstrip",
@@ -851,7 +857,7 @@
         "php": ">=7.4",
         "ext-json": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "7.4"
     },

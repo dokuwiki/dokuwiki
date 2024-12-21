@@ -906,7 +906,7 @@ class Indexer
                 if ($freq >= $min && (!$max || $freq <= $max))
                     $val_idx[$wid] = $freq;
             }
-            if (!empty($val_idx)) {
+            if ($val_idx !== []) {
                 $words = $this->getIndex($metaname . '_w', '');
                 foreach ($val_idx as $wid => $freq) {
                     if (strlen($words[$wid]) >= $minlen)
@@ -1116,8 +1116,7 @@ class Indexer
             $id = count($index);
             $index[$id] = $value;
             if (!$this->saveIndex($idx, $suffix, $index)) {
-                trigger_error("Failed to write $idx index", E_USER_ERROR);
-                return false;
+                throw new \RuntimeException("Failed to write $idx index");
             }
         }
         return $id;

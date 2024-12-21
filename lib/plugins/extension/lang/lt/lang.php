@@ -79,13 +79,11 @@
  $lang['msg_upload_failed']            = 'Failo įkėlimo klaida';
  $lang['msg_nooverwrite']              = 'Plėtinys %s jau egzistuoja, todėl jis nebus perrašytas; norint perrašyti, pažymėkite perrašymo parinktį';
 
- $lang['missing_dependency']           = '<strong>Trūksta plėtinio (arba tas plėtinys išjungtas), nuo kurio šis priklausomas:</strong> %s';
- $lang['security_issue']               = '<strong>Saugumo problema:</strong> %s';
- $lang['security_warning']             = '<strong>Saugumo įspėjimas:</strong> %s';
- $lang['update_message']               = '<strong>Atnaujinimo pranešimas:</strong> %s';
- $lang['update_available']             = '<strong>Atnaujinimas:</strong> Yra nauja versija %s.';
- $lang['wrong_folder']                 = '<strong>Neteisingai įdiegtas įskiepis:</strong> pervadinkite įskiepio katalogą "%s" į "%s".';
- $lang['url_change']                   = '<strong>URL pakeistas:</strong> Atsisiuntimo URL pasikeitė nuo paskutinio atsisiuntimo. Patikrinkite, ar naujas URL yra teisingas prieš atnaujinant plėtinį.<br />Naujas: %s<br />Senas: %s';
+ $lang['missing_dependency']           = 'Trūksta plėtinio (arba tas plėtinys išjungtas), nuo kurio šis priklausomas: %s';
+ $lang['security_issue']               = 'Saugumo problema: %s';
+ $lang['security_warning']             = 'Saugumo įspėjimas: %s';
+ $lang['wrong_folder']                 = 'Neteisingai įdiegtas įskiepis: pervadinkite įskiepio katalogą "%s" į "%s".';
+ $lang['url_change']                   = "URL pakeistas: Atsisiuntimo URL pasikeitė nuo paskutinio atsisiuntimo. Patikrinkite, ar naujas URL yra teisingas prieš atnaujinant plėtinį.\nNaujas: %s\nSenas: %s";
 
  $lang['error_badurl']                 = 'URL turėtų prasidėti nuo http arba https';
  $lang['error_dircreate']              = 'Nepavyksta sukurti laikino katalogo, skirtamo atsisiuntimui';

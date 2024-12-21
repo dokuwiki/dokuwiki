@@ -139,7 +139,7 @@ class FeedMediaProcessor extends FeedItemProcessor
     protected function loadRevisions()
     {
         $changelog = new MediaChangeLog($this->id);
-        $revs = $changelog->getRevisions(0, 2);  // FIXME check that this returns the current one correctly
+        $revs = $changelog->getRevisions(-1, 2);
         if (!isset($this->data['rev'])) {
             // prefer an already set date, only set if missing
             // it should usally not happen that neither is available

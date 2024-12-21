@@ -1014,7 +1014,7 @@ function cleanText($text)
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if (!Clean::isUtf8($text)) $text = utf8_encode($text);
+    if (!Clean::isUtf8($text)) $text = Conversion::fromLatin1($text);
 
     return $text;
 }
@@ -1730,7 +1730,7 @@ function userlink($username = null, $textonly = false)
                         if (is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
                         }
-                        if (empty($xhtml_renderer->interwiki)) {
+                        if ($xhtml_renderer->interwiki === []) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';

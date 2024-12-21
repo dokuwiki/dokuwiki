@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit
-    bootstrap="bootstrap.php"
-    convertNoticesToExceptions="false"
-    colors="true"
-    stderr="true"
-    backupGlobals="true"
-    >
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="bootstrap.php"
+         convertNoticesToExceptions="false"
+         colors="true"
+         stderr="true"
+         backupGlobals="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage includeUncoveredFiles="false">
+        <include>
+            <directory suffix=".php">../</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">../_cs/</directory>
+            <directory suffix=".php">../_test/</directory>
+            <directory suffix=".php">../lib/plugins/*/_test/</directory>
+            <directory suffix=".php">../lib/tpl/*/_test/</directory>
+        </exclude>
+    </coverage>
     <testsuites>
         <testsuite name="DokuWiki Tests">
             <directory suffix=".test.php">tests/</directory>
@@ -21,23 +31,9 @@
             <directory suffix="Test.php">../lib/tpl/*/_test/</directory>
         </testsuite>
     </testsuites>
-
     <groups>
         <exclude>
             <group>flaky</group>
         </exclude>
     </groups>
-
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="false">
-            <directory suffix=".php">../</directory>
-            <exclude>
-                <directory suffix=".php">../_cs/</directory>
-                <directory suffix=".php">../_test/</directory>
-                <directory suffix=".php">../lib/plugins/*/_test/</directory>
-                <directory suffix=".php">../lib/tpl/*/_test/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
 </phpunit>

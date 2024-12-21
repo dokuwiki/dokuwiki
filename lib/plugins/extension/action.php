@@ -1,8 +1,10 @@
 <?php
 
 use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
 use dokuwiki\Extension\Event;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\GuiExtension;
 
 /** DokuWiki Plugin extension (Action Component)
  *
@@ -19,18 +21,19 @@ class action_plugin_extension extends ActionPlugin
      */
     public function register(EventHandler $controller)
     {
-        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'info');
+        $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this, 'handleAjaxToggle');
     }
 
     /**
-     * Create the detail info for a single plugin
+     * Toggle an extension via AJAX
+     *
+     * Returns the new HTML for the extension
      *
      * @param Event $event
      * @param $param
      */
-    public function info(Event $event, $param)
+    public function handleAjaxToggle(Event $event, $param)
     {
-        global $USERINFO;
         global $INPUT;
 
         if ($event->data != 'plugin_extension') return;
@@ -52,39 +55,22 @@ class action_plugin_extension extends ActionPlugin
             return;
         }
 
-        /** @var helper_plugin_extension_extension $extension */
-        $extension = plugin_load('helper', 'extension_extension');
-        $extension->setExtension($ext);
-
-        $act = $INPUT->str('act');
-        switch ($act) {
-            case 'enable':
-            case 'disable':
-                if (getSecurityToken() != $INPUT->str('sectok')) {
-                    http_status(403);
-                    echo 'Security Token did not match. Possible CSRF attack.';
-                    return;
-                }
-
-                $extension->$act(); //enables/disables
-                $reverse = ($act == 'disable') ? 'enable' : 'disable';
-
-                $return = [
-                    'state'   => $act . 'd', // isn't English wonderful? :-)
-                    'reverse' => $reverse,
-                    'label'   => $extension->getLang('btn_' . $reverse),
-                ];
-
-                header('Content-Type: application/json');
-                echo json_encode($return, JSON_THROW_ON_ERROR);
-                break;
-
-            case 'info':
-            default:
-                /** @var helper_plugin_extension_list $list */
-                $list = plugin_load('helper', 'extension_list');
-                header('Content-Type: text/html; charset=utf-8');
-                echo $list->makeInfo($extension);
+        if (getSecurityToken() != $INPUT->str('sectok')) {
+            http_status(403);
+            echo 'Security Token did not match. Possible CSRF attack.';
+            return;
         }
+
+        try {
+            $extension = Extension::createFromId($ext);
+            $extension->toggle();
+        } catch (Exception $e) {
+            http_status(500);
+            echo $e->getMessage();
+            return;
+        }
+
+        header('Content-Type: text/html; charset=utf-8');
+        echo (new GuiExtension($extension))->render();
     }
 }
