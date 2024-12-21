@@ -879,6 +879,13 @@ You can use up to five different levels of',
             $rev[$i] = filemtime($media);
         }
 
+        $params = ['media' => $id, 'first' => 0]; // offset 0
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(2, count($versions));
+        $this->assertEquals($rev[1], $versions[0]['revision']+1);
+        $this->assertEquals($rev[0], $versions[1]['revision']);
+
         $params = ['media' => $id, 'first' => 1]; // offset 1
         $versions = $this->remote->call('core.getMediaHistory', $params);
         $versions = json_decode(json_encode($versions), true);
