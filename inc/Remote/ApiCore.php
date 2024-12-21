@@ -908,7 +908,7 @@ class ApiCore
     /**
      * Returns a list of available revisions of a given wiki media
      *
-     * 
+     *
      *
      * @link https://www.dokuwiki.org/config:recent
      * @param string $media file id
@@ -916,7 +916,7 @@ class ApiCore
      * @return MediaChange[]
      * @throws AccessDeniedException
      * @throws RemoteException
-     * @author 
+     * @author
      */
     public function getMediaHistory($media, $first = 0)
     {
