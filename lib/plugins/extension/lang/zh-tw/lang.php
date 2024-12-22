@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Dave Hello <hsu@peterdavehello.org>
  * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
@@ -26,11 +27,13 @@ $lang['btn_disable']           = '停用';
 $lang['btn_install']           = '安裝';
 $lang['btn_reinstall']         = '重新安裝';
 $lang['js']['reallydel']       = '確定要移除此延伸功能？';
+$lang['js']['display_viewoptions'] = '檢視選項：';
 $lang['js']['display_enabled'] = '啟用';
 $lang['js']['display_disabled'] = '禁用';
 $lang['js']['display_updatable'] = '可更新';
 $lang['search_for']            = '搜尋延伸功能：';
 $lang['search']                = '搜尋';
+$lang['screenshot']            = '%s 的螢幕截圖';
 $lang['homepage_link']         = '文件';
 $lang['tags']                  = '標籤：';
 $lang['author_hint']           = '搜尋相同作者的延伸功能';
