@@ -776,7 +776,7 @@ function auth_aclcheck_cb($data)
             if (!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                 $acl[1] = PhpString::strtolower($acl[1]);
             }
-            if (!in_array($acl[1], $groups)) {
+            if (!in_array(auth_nameencode($acl[1]), $groups)) {
                 continue;
             }
             if ($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
