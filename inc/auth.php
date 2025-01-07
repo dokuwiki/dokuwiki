@@ -1321,6 +1321,8 @@ function act_resendpwd()
  * If the selected method needs a salt and none was given, a random one
  * is chosen.
  *
+ * You can pass null as the password to create an unusable hash.
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $clear The clear text password
