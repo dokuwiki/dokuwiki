@@ -22,8 +22,6 @@ use phpseclib3\Crypt\AES;
 use phpseclib3\Crypt\Common\SymmetricKey;
 use phpseclib3\Exception\BadDecryptionException;
 
-const UNUSABLE_PASSWORD = '!unusable';
-
 /**
  * Initialize the auth system.
  *
@@ -1335,7 +1333,7 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
     global $conf;
 
     if ($clear === null) {
-        return UNUSABLE_PASSWORD;
+        return DOKU_UNUSABLE_PASSWORD;
     }
 
     if (empty($method)) $method = $conf['passcrypt'];
@@ -1363,7 +1361,7 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
  */
 function auth_verifyPassword($clear, $crypt)
 {
-    if ($crypt === UNUSABLE_PASSWORD) {
+    if ($crypt === DOKU_UNUSABLE_PASSWORD) {
         return false;
     }
 
