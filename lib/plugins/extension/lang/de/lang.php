@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Anika Rachow <rachowanika@gmail.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Benjamin Molitor <bmolitor@uos.de>
@@ -21,9 +22,6 @@ $lang['tab_templates']         = 'Installierte Templates';
 $lang['tab_search']            = 'Suchen und Installieren';
 $lang['tab_install']           = 'Manuell installieren';
 $lang['notimplemented']        = 'Dieses Fähigkeit/Eigenschaft wurde noch nicht implementiert';
-$lang['notinstalled']          = 'Diese Erweiterung ist nicht installiert';
-$lang['alreadyenabled']        = 'Diese Erweiterung ist bereits aktiviert';
-$lang['alreadydisabled']       = 'Diese Erweiterung ist bereits deaktiviert';
 $lang['pluginlistsaveerror']   = 'Es gab einen Fehler beim Speichern der Plugin-Liste';
 $lang['unknownauthor']         = 'Unbekannter Autor';
 $lang['unknownversion']        = 'Unbekannte Version';
@@ -39,6 +37,8 @@ $lang['js']['display_viewoptions'] = 'Optionen anzeigen';
 $lang['js']['display_enabled'] = 'aktiviert';
 $lang['js']['display_disabled'] = 'deaktiviert';
 $lang['js']['display_updatable'] = 'aktualisierbar';
+$lang['js']['close']           = 'Zum schließen, klicken';
+$lang['js']['filter']          = 'Nur geänderte Erweiterungen anzeigen';
 $lang['search_for']            = 'Erweiterung suchen:';
 $lang['search']                = 'Suchen';
 $lang['extensionby']           = '<strong>%s</strong> von %s';
@@ -77,24 +77,35 @@ $lang['msg_enabled']           = 'Plugin %s ist aktiviert';
 $lang['msg_disabled']          = 'Erweiterung %s ist deaktiviert';
 $lang['msg_delete_success']    = 'Erweiterung %s wurde entfernt';
 $lang['msg_delete_failed']     = 'Deinstallation der Erweiterung %s fehlgeschlagen';
-$lang['msg_template_install_success'] = 'Das Template %s wurde erfolgreich installiert';
-$lang['msg_template_update_success'] = 'Das Update des Templates %s war erfolgreich ';
-$lang['msg_plugin_install_success'] = 'Das Plugin %s wurde erfolgreich installiert';
-$lang['msg_plugin_update_success'] = 'Das Update des Plugins %s war erfolgreich';
+$lang['msg_install_success']   = 'Extensions-Installation zu %s abgeschlossen.';
+$lang['msg_update_success']    = 'Extensions-Update zu %s abgeschlossen.';
 $lang['msg_upload_failed']     = 'Fehler beim Hochladen der Datei';
 $lang['msg_nooverwrite']       = 'Die Erweiterung %s ist bereits vorhanden, sodass sie nicht überschrieben wird. Zum Überschreiben aktivieren Sie die Option "Überschreiben".';
 $lang['missing_dependency']    = 'Fehlende oder deaktivierte Abhängigkeit: %s';
+$lang['found_conflict']        = 'Bei der Installation dieser Erweiterung, kann es zu einem Konflikt mit der folgenden, bereits installierten Erweiterung kommen: %s';
 $lang['security_issue']        = 'Sicherheitsproblem: %s';
 $lang['security_warning']      = 'Sicherheitswarnung: %s';
 $lang['update_message']        = 'Update Nachricht: %s';
 $lang['wrong_folder']          = 'Plugin wurde nicht korrekt installiert: Benennen Sie das Plugin-Verzeichnis "%s" in "%s" um.';
-$lang['url_change']            = "URL geändert: Die Download-URL wurde seit dem letzten Download geändert. Internetadresse vor Aktualisierung der Erweiterung auf Gültigkeit prüfen.\nNeu: %s\nAlt: %s";
+$lang['url_change']            = 'URL geändert: Die Download-URL wurde seit dem letzten Download geändert. Internetadresse vor Aktualisierung der Erweiterung auf Gültigkeit prüfen.
+Neu: %s
+Alt: %s';
 $lang['error_badurl']          = 'URLs sollten mit http oder https beginnen';
 $lang['error_dircreate']       = 'Temporärer Ordner konnte nicht erstellt werden, um Download zu abzuspeichern';
 $lang['error_download']        = 'Download der Datei: %s nicht möglich.';
 $lang['error_decompress']      = 'Die heruntergeladene Datei konnte nicht entpackt werden. Dies kann die Folge eines fehlerhaften Downloads sein. In diesem Fall sollten Sie versuchen den Vorgang zu wiederholen. Es kann auch die Folge eines unbekannten Kompressionsformates sein, in diesem Fall müssen Sie die Datei selber herunterladen und manuell installieren.';
 $lang['error_findfolder']      = 'Das Erweiterungs-Verzeichnis konnte nicht identifiziert werden, laden und installieren Sie die Datei manuell.';
 $lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>: zu installieren trat ein Kopierfehler auf. Die Dateizugriffsberechtigungen könnten falsch sein. Dies kann an einem unvollständig installierten Plugin liegen und beeinträchtigt somit die Stabilität Ihre Wiki-Installation.';
+$lang['error_copy_read']       = 'Verzeichnis konnte nicht gelesen werden: %s';
+$lang['error_copy_mkdir']      = 'Verzeichnis konnte nicht erstellt werden: %s';
+$lang['error_copy_copy']       = '%s konnte nicht nach %s kopiert werden.';
+$lang['error_uninstall_protected'] = 'Erweiterung %s ist geschützt und kann nicht gelöscht werden.';
+$lang['error_uninstall_dependants'] = 'Erweiterung %s wird von Erweiterung %s verwendet und kann daher nicht deinstalliert werden.';
+$lang['error_disable_protected'] = 'Erweiterung %s ist geschützt und kann nicht deaktiviert werden.';
+$lang['error_disable_dependants'] = 'Erweiterung %s wird weiterhin von Erweiterung %s verwendet und kann daher nicht deaktiviert werden.';
+$lang['error_notinstalled']    = 'Erweiterung %s kann nicht installiert werden.';
+$lang['error_alreadyenabled']  = 'Erweiterung %s wurde bereits aktiviert.';
+$lang['error_alreadydisabled'] = 'Erweiterung %s wurde bereits deaktiviert.';
 $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgeschützt';
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
