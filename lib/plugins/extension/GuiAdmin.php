@@ -199,6 +199,7 @@ class GuiAdmin extends Gui
 
         $html = '<div id="extension__list">';
         $html .= '<form action="' . $this->tabURL('search') . '" method="post">';
+        $html .= formSecurityToken(false);
 
         try {
             $extensions = $repo->searchExtensions($q);
