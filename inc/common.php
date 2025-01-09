@@ -804,7 +804,7 @@ function checkwordblock($text = '')
 function clientIP($single = false)
 {
     // Return the first IP in single mode, or all the IPs.
-    return $single ? Ip::clientIp() : join(',', Ip::clientIps());
+    return $single ? Ip::clientIp() : implode(',', Ip::clientIps());
 }
 
 /**
