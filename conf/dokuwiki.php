@@ -162,14 +162,6 @@ $conf['readdircache'] = 0;               //time cache in second for the readdir 
 $conf['search_nslimit'] = 0;             //limit the search to the current X namespaces
 $conf['search_fragment'] = 'exact';      //specify the default fragment search behavior
 
-$conf['trustedproxy'] = ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
-                                         // Trusted proxy servers from which to read the X-Forwarded-For header.
-                                         // Each item in the array may be either an IPv4 or IPv6 address, or
-                                         // an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8).
-
-$conf['realip'] = false;                 // Enable reading the X-Real-IP header.  Default: false.
-                                         // Only enable this if your server writes this header, otherwise it may be spoofed.
-
 /* Feature Flags */
 $conf['defer_js'] = 1;                   // Defer javascript to be executed after the page's HTML has been parsed. Setting will be removed in the next release.
 $conf['hidewarnings'] = 0;               // Hide warnings
@@ -177,6 +169,15 @@ $conf['hidewarnings'] = 0;               // Hide warnings
 /* Network Settings */
 $conf['dnslookups'] = 1;                 //disable to disallow IP to hostname lookups
 $conf['jquerycdn']  = 0;                 //use a CDN for delivering jQuery?
+$conf['trustedproxies'] = array('::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16');
+                                         // Trusted proxy servers from which to read the X-Forwarded-For header.
+                                         // Each item in the array may be either an IPv4 or IPv6 address, or
+                                         // an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8).
+
+$conf['realip'] = false;                 // Enable reading the X-Real-IP header.  Default: false.
+                                         // Only enable this if your server writes this header, otherwise it may be spoofed.
+
+
 // Proxy setup - if your Server needs a proxy to access the web set these
 $conf['proxy']['host']    = '';
 $conf['proxy']['port']    = '';

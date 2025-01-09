@@ -136,7 +136,7 @@ class Ip
      * Given the IP address of a proxy server, determine whether it is
      * a known and trusted server.
      *
-     * This test is performed using the config value `trustedproxy`.
+     * This test is performed using the config value `trustedproxies`.
      *
      * @param string $ip The IP address of the proxy.
      *
@@ -147,25 +147,17 @@ class Ip
         global $conf;
 
         // If the configuration is empty then no proxies are trusted.
-        if (empty($conf['trustedproxy'])) {
+        if (empty($conf['trustedproxies'])) {
             return false;
         }
 
-        if (is_string($conf['trustedproxy'])) {
-            // If the configuration is a string then treat it as a regex.
-            return preg_match('/' . $conf['trustedproxy'] . '/', $ip);
-        } elseif (is_array($conf['trustedproxy'])) {
-            // If the configuration is an array, then at least one must match.
-            foreach ($conf['trustedproxy'] as $trusted) {
-                if (Ip::ipMatches($ip, $trusted)) {
-                    return true;
-                }
+        foreach ((array) $conf['trustedproxies'] as $trusted) {
+            if (Ip::ipMatches($ip, $trusted)) {
+                return true;
             }
-
-            return false;
         }
 
-        Logger::error('Invalid value for $conf[trustedproxy]');
+        Logger::error('Invalid value for $conf[trustedproxies]');
         return false;
     }
 
@@ -251,7 +243,7 @@ class Ip
      * The IPs are sourced from, in order of preference:
      *
      *   - The X-Real-IP header if $conf[realip] is true.
-     *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxy].
+     *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
      *   - The TCP/IP connection remote address.
      *   - 0.0.0.0 if all else fails.
      *
