@@ -26,6 +26,7 @@ $lang['groupscope']            = 'Ogranicz zakres wyszukiwania do wyszukiwania g
 $lang['userkey']               = 'Atrybut opisujący nazwę użytkownika; musi być zgodny z filtrem użytkownika.';
 $lang['groupkey']              = 'Przynależność do grupy z dowolnego atrybutu użytkownika (zamiast standardowych grup AD), np. grupa z działu lub numer telefonu';
 $lang['modPass']               = 'Czy hasło LDAP można zmienić za pomocą dokuwiki?';
+$lang['modPassPlain']          = 'Czy wysyłać aktualizacje haseł w postaci zwykłego tekstu do serwera LDAP (zamiast dodawać do nich sól i hashować je za pomocą skonfigurowanego algorytmu przed transmisją)?';
 $lang['debug']                 = 'Przy błędach wyświetl dodatkowe informacje debugujące.';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
