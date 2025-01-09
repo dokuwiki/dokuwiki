@@ -9,6 +9,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Input\Input;
 use Exception;
 
 class Ip
@@ -24,7 +25,7 @@ class Ip
      * ipInRange('::192.168.11.123', '192.168.0.0/16') === true
      * ipInRange('::192.168.11.123', '::192.168.0.0/80') === true
      *
-     * @param string $needle   The IP to test, either IPv4 in doted decimal
+     * @param string $needle The IP to test, either IPv4 in dotted decimal
      *                         notation or IPv6 in colon notation.
      * @param string $haystack The CIDR range as an IP followed by a forward
      *                         slash and the number of significant bits.
@@ -76,7 +77,7 @@ class Ip
      *
      * For an IPv4 address, 'upper' will always be zero.
      *
-     * @param string The IPv4 or IPv6 address.
+     * @param string $ip The IPv4 or IPv6 address.
      *
      * @return int[] Returns an array of 'version', 'upper', 'lower'.
      *
@@ -94,8 +95,8 @@ class Ip
             // IPv4.
             return [
                 'version' => 4,
-                'upper'   => 0,
-                'lower'   => unpack('Nip', $binary)['ip'],
+                'upper' => 0,
+                'lower' => unpack('Nip', $binary)['ip'],
             ];
         } else {
             // IPv6.
@@ -109,7 +110,7 @@ class Ip
      * Determine if an IP address is equal to another IP or within an IP range.
      * IPv4 and IPv6 are supported.
      *
-     * @param string $ip        The address to test.
+     * @param string $ip The address to test.
      * @param string $ipOrRange An IP address or CIDR range.
      *
      * @return bool Returns true if the IP matches, false if not.
@@ -164,7 +165,8 @@ class Ip
             return false;
         }
 
-        throw new Exception('Invalid value for $conf[trustedproxy]');
+        Logger::error('Invalid value for $conf[trustedproxy]');
+        return false;
     }
 
     /**
@@ -275,9 +277,7 @@ class Ip
         $ips[] = $INPUT->server->str('REMOTE_ADDR');
 
         // Remove invalid IPs.
-        $ips = array_filter($ips, function ($ip) {
-            return filter_var($ip, FILTER_VALIDATE_IP);
-        });
+        $ips = array_filter($ips, static fn($ip) => filter_var($ip, FILTER_VALIDATE_IP));
 
         // Remove duplicated IPs.
         $ips = array_values(array_unique($ips));
