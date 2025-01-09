@@ -365,8 +365,12 @@ class auth_plugin_authldap extends AuthPlugin
         }
 
         // Generate the salted hashed password for LDAP
-        $phash = new PassHash();
-        $hash = $phash->hash_ssha($changes['pass']);
+        if ($this->getConf('modPassPlain')) {
+            $hash = $changes['pass'];
+        } else {
+            $phash = new PassHash();
+            $hash = $phash->hash_ssha($changes['pass']);
+        }
 
         // change the password
         if (!@ldap_mod_replace($this->con, $dn, ['userpassword' => $hash])) {
