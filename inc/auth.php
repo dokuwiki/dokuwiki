@@ -1319,6 +1319,8 @@ function act_resendpwd()
  * If the selected method needs a salt and none was given, a random one
  * is chosen.
  *
+ * You can pass null as the password to create an unusable hash.
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $clear The clear text password
@@ -1329,6 +1331,11 @@ function act_resendpwd()
 function auth_cryptPassword($clear, $method = '', $salt = null)
 {
     global $conf;
+
+    if ($clear === null) {
+        return DOKU_UNUSABLE_PASSWORD;
+    }
+
     if (empty($method)) $method = $conf['passcrypt'];
 
     $pass = new PassHash();
@@ -1354,6 +1361,10 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
  */
 function auth_verifyPassword($clear, $crypt)
 {
+    if ($crypt === DOKU_UNUSABLE_PASSWORD) {
+        return false;
+    }
+
     $pass = new PassHash();
     return $pass->verify_hash($clear, $crypt);
 }

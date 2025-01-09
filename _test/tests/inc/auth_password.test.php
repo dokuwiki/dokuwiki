@@ -73,6 +73,16 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue(auth_verifyPassword('foo' . $method, $hash));
     }
 
+    /**
+     * @dataProvider hashes
+     * @param $method
+     * @param $hash
+     */
+    function test_verifyUnusable($method, $hash) {
+        $hash = auth_cryptPassword(null, $method);
+        $this->assertFalse(auth_verifyPassword(null, $hash));
+    }
+
     function test_bcrypt_self() {
         $hash = auth_cryptPassword('foobcrypt', 'bcrypt');
         $this->assertTrue(auth_verifyPassword('foobcrypt', $hash));
