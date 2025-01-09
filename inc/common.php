@@ -794,14 +794,15 @@ function checkwordblock($text = '')
  * The 'trustedproxy' setting must not allow any IP, otherwise the X-Forwarded-For
  * may be spoofed by the client.
  *
- * @author Zebra North <mrzebra@mrzebra.co.uk>
- *
- * @param  bool $single If set only a single IP is returned.
+ * @param bool $single If set only a single IP is returned.
  *
  * @return string Returns an IP address if 'single' is true, or a comma-separated list
  *                of IP addresses otherwise.
+ * @author Zebra North <mrzebra@mrzebra.co.uk>
+ *
  */
-function clientIP($single = false) {
+function clientIP($single = false)
+{
     // Return the first IP in single mode, or all the IPs.
     return $single ? Ip::clientIp() : join(',', Ip::clientIps());
 }
