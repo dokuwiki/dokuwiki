@@ -19,6 +19,7 @@ use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Ip;
 
 use function PHP81_BC\strftime;
 
@@ -778,58 +779,31 @@ function checkwordblock($text = '')
 }
 
 /**
- * Return the IP of the client
+ * Return the IP of the client.
  *
- * Honours X-Forwarded-For and X-Real-IP Proxy Headers
+ * The IP is sourced from, in order of preference:
  *
- * It returns a comma separated list of IPs if the above mentioned
- * headers are set. If the single parameter is set, it tries to return
- * a routable public address, prefering the ones suplied in the X
- * headers
+ *   - The X-Real-IP header if $conf[realip] is true.
+ *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxy].
+ *   - The TCP/IP connection remote address.
+ *   - 0.0.0.0 if all else fails.
  *
- * @param boolean $single If set only a single IP is returned
- * @return string
- * @author Andreas Gohr <andi@splitbrain.org>
+ * The 'realip' config value should only be set to true if the X-Real-IP header
+ * is being added by the web server, otherwise it may be spoofed by the client.
  *
+ * The 'trustedproxy' setting must not allow any IP, otherwise the X-Forwarded-For
+ * may be spoofed by the client.
+ *
+ * @author Zebra North <mrzebra@mrzebra.co.uk>
+ *
+ * @param  bool $single If set only a single IP is returned.
+ *
+ * @return string Returns an IP address if 'single' is true, or a comma-separated list
+ *                of IP addresses otherwise.
  */
-function clientIP($single = false)
-{
-    /* @var Input $INPUT */
-    global $INPUT, $conf;
-
-    $ip = [];
-    $ip[] = $INPUT->server->str('REMOTE_ADDR');
-    if ($INPUT->server->str('HTTP_X_FORWARDED_FOR')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR'))));
-    }
-    if ($INPUT->server->str('HTTP_X_REAL_IP')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_REAL_IP'))));
-    }
-
-    // remove any non-IP stuff
-    $cnt = count($ip);
-    for ($i = 0; $i < $cnt; $i++) {
-        if (filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
-            unset($ip[$i]);
-        }
-    }
-    $ip = array_values(array_unique($ip));
-    if ($ip === [] || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
-
-    if (!$single) return implode(',', $ip);
-
-    // skip trusted local addresses
-    foreach ($ip as $i) {
-        if (!empty($conf['trustedproxy']) && preg_match('/' . $conf['trustedproxy'] . '/', $i)) {
-            continue;
-        } else {
-            return $i;
-        }
-    }
-
-    // still here? just use the last address
-    // this case all ips in the list are trusted
-    return $ip[count($ip) - 1];
+function clientIP($single = false) {
+    // Return the first IP in single mode, or all the IPs.
+    return $single ? Ip::clientIp() : join(',', Ip::clientIps());
 }
 
 /**
