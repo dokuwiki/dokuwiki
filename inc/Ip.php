@@ -151,14 +151,13 @@ class Ip
             return false;
         }
 
-        foreach ((array) $conf['trustedproxies'] as $trusted) {
+        foreach ((array)$conf['trustedproxies'] as $trusted) {
             if (Ip::ipMatches($ip, $trusted)) {
-                return true;
+                return true; // The given IP matches one of the trusted proxies.
             }
         }
 
-        Logger::error('Invalid value for $conf[trustedproxies]');
-        return false;
+        return false; // none of the proxies matched
     }
 
     /**
@@ -184,7 +183,7 @@ class Ip
 
         $forwardedFor = $INPUT->server->str('HTTP_X_FORWARDED_FOR');
 
-        if (empty($conf['trustedproxy']) || !$forwardedFor) {
+        if (empty($conf['trustedproxies']) || !$forwardedFor) {
             return [];
         }
 

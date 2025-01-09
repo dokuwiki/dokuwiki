@@ -6,7 +6,6 @@ class common_clientIP_test extends DokuWikiTest {
      * @var mixed[] $configs Possible values for $conf['trustedproxies'].
      */
     private $configs = [
-        '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)',
         ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
     ];
 

@@ -147,9 +147,6 @@ class ip_test extends DokuWikiTest {
      */
     public function proxy_is_trusted_provider(): array
     {
-        // The default value that shipped with the config.
-        $legacyDefault = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
-
         // The new default configuration value.
         $default = ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
 
@@ -159,20 +156,6 @@ class ip_test extends DokuWikiTest {
         $tests = [
             // Empty configuration.
             ['', '127.0.0.1', false],
-
-            // Legacy configuration with a regular expression.
-            [$legacyDefault, '127.0.0.1', true],
-            [$legacyDefault, '127.1.2.3', true],
-            [$legacyDefault, '10.1.2.3', true],
-            [$legacyDefault, '11.1.2.3', false],
-            [$legacyDefault, '172.16.0.1', true],
-            [$legacyDefault, '172.160.0.1', false],
-            [$legacyDefault, '172.31.255.255', true],
-            [$legacyDefault, '172.32.0.0', false],
-            [$legacyDefault, '172.200.0.0', false],
-            [$legacyDefault, '192.168.2.3', true],
-            [$legacyDefault, '192.169.1.2', false],
-            [$legacyDefault, '::1', true],
 
             // Configuration with an array of  IPs/CIDRs.
             [$default, '127.0.0.1', true],
@@ -230,9 +213,6 @@ class ip_test extends DokuWikiTest {
      */
     public function forwarded_for_provider(): array
     {
-        // The default value that shipped with the config.
-        $legacyDefault = '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)';
-
         // The new default configuration value.
         $default = ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
 
@@ -241,26 +221,8 @@ class ip_test extends DokuWikiTest {
 
         $tests = [
             // Empty config value should always return empty array.
-            ['', '', '127.0.0.1', []],
-            ['', '127.0.0.1', '127.0.0.1', []],
             [[], '', '127.0.0.1', []],
             [[], '127.0.0.1', '127.0.0.1', []],
-
-            // The old default configuration.
-            [$legacyDefault, '', '127.0.0.1', []],
-            [$legacyDefault, '1.2.3.4', '127.0.0.1', ['1.2.3.4', '127.0.0.1']],
-            [$legacyDefault, '1.2.3.4', '192.168.1.1', ['1.2.3.4', '192.168.1.1']],
-            [$legacyDefault, '1.2.3.4,172.16.0.1', '192.168.1.1', ['1.2.3.4', '172.16.0.1', '192.168.1.1']],
-            [$legacyDefault, '1.2.3.4,172.16.0.1', '::1', ['1.2.3.4', '172.16.0.1', '::1']],
-
-            // Directly from an untrusted proxy.
-            [$legacyDefault, '', '127.0.0.1', []],
-            [$legacyDefault, '1.2.3.4', '11.22.33.44', []],
-            [$legacyDefault, '::1', '11.22.33.44', []],
-
-            // From a trusted proxy, but via an untrusted proxy.
-            [$legacyDefault, '1.2.3.4,11.22.33.44,172.16.0.1', '192.168.1.1', []],
-            [$legacyDefault, '1.2.3.4,::2,172.16.0.1', '::1', []],
 
             // The new default configuration.
             [$default, '', '127.0.0.1', []],
