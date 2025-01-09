@@ -3,7 +3,7 @@
 class common_clientIP_test extends DokuWikiTest {
 
     /**
-     * @var mixed[] $configs Possible values for $conf['trustedproxy'].
+     * @var mixed[] $configs Possible values for $conf['trustedproxies'].
      */
     private $configs = [
         '^(::1|[fF][eE]80:|127\.|10\.|192\.168\.|172\.((1[6-9])|(2[0-9])|(3[0-1]))\.)',
@@ -110,7 +110,7 @@ class common_clientIP_test extends DokuWikiTest {
         $conf['realip'] = $useRealIp;
 
         foreach ($this->configs as $config) {
-            $conf['trustedproxy'] = $config;
+            $conf['trustedproxies'] = $config;
             $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
         }
     }
@@ -146,7 +146,7 @@ class common_clientIP_test extends DokuWikiTest {
         $conf['realip'] = $useRealIp;
 
         foreach ($this->configs as $config) {
-            $conf['trustedproxy'] = $config;
+            $conf['trustedproxies'] = $config;
             $this->assertEquals(str_replace(array_keys($addresses), array_values($addresses), $expected), clientIP($single));
         }
     }

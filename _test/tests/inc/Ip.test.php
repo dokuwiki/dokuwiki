@@ -209,14 +209,14 @@ class ip_test extends DokuWikiTest {
      *
      * @dataProvider proxy_is_trusted_provider
      *
-     * @param string|string[] $config   The value for $conf[trustedproxy].
+     * @param string|string[] $config   The value for $conf[trustedproxies].
      * @param string          $ip       The proxy IP to test.
      * @param bool            $expected The expected result from proxyIsTrusted().
      */
     public function test_proxy_is_trusted($config, string $ip, bool $expected): void
     {
         global $conf;
-        $conf['trustedproxy'] = $config;
+        $conf['trustedproxies'] = $config;
 
         $result = Ip::proxyIsTrusted($ip);
 
@@ -312,7 +312,7 @@ class ip_test extends DokuWikiTest {
      *
      * @dataProvider forwarded_for_provider
      *
-     * @param string|string[] $config     The trustedproxy config value.
+     * @param string|string[] $config     The trustedproxies config value.
      * @param string          $header     The X-Forwarded-For header value.
      * @param string          $remoteAddr The TCP/IP peer address.
      * @param array           $expected   The expected result from forwardedFor().
@@ -324,7 +324,7 @@ class ip_test extends DokuWikiTest {
         /* @var Input $INPUT */
         global $INPUT, $conf;
 
-        $conf['trustedproxy'] = $config;
+        $conf['trustedproxies'] = $config;
         $INPUT->server->set('HTTP_X_FORWARDED_FOR', $header);
         $INPUT->server->set('REMOTE_ADDR', $remoteAddr);
 
