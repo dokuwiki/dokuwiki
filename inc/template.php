@@ -763,6 +763,7 @@ function tpl_searchform($ajax = true, $autocomplete = true)
             'accesskey' => 'f',
             'placeholder' => $lang['btn_search'],
             'autocomplete' => $autocomplete ? 'on' : 'off',
+            'aria-label' => $lang['btn_search']
         ])
         ->id('qsearch__in')
         ->val($ACT === 'search' ? $QUERY : '')
