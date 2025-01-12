@@ -37,7 +37,7 @@
 /*____________ toc list ____________*/
 
 #dw__toc #toc__listwrapper {
-    font-size: .9rem;
+    font-size: .86rem;
 }
 #dw__toc #toc__listwrapper ul {
     padding: 0;
@@ -50,7 +50,7 @@
     line-height: 1.1;
 }
 #dw__toc #toc__listwrapper ul li div.li {
-    padding: .15em 0;
+    padding: 0;
 }
 #dw__toc #toc__listwrapper ul ul {
     padding-left: 1em;
@@ -61,6 +61,10 @@
 }
 #dw__toc #toc__listwrapper div.li {
     margin: .25em 0;
+}
+#dw__toc #toc__listwrapper a {
+	padding: .25em .125em;
+    display: block;
 }
 /* in case of toc list jumping one level
   (e.g. if heading level 3 follows directly after heading level 1) */
