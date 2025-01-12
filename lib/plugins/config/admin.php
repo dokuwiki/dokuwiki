@@ -94,7 +94,7 @@ class admin_plugin_config extends AdminPlugin
         // rewrite config is broken. Add $ID as hidden field to remember
         // current ID in most cases.
         echo '<form id="dw__configform" action="' . script() . '" method="post" autocomplete="off">';
-        echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '"></div>';
+        echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>';
         formSecurityToken();
         $this->printHeadline(self::HEADLINELEVEL, 'dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
