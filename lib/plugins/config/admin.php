@@ -31,8 +31,8 @@ class admin_plugin_config extends AdminPlugin
     /** @var bool have the settings translations been loaded? */
     protected $promptsLocalized = false;
 
-	/** @var int level of the headlines outputted **/
-	protected const HEADLINELEVEL = 2;
+    /** @var int level of the headlines outputted **/
+    protected const HEADLINELEVEL = 2;
 
     /**
      * handle user request
