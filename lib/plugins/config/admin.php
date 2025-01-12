@@ -31,6 +31,8 @@ class admin_plugin_config extends AdminPlugin
     /** @var bool have the settings translations been loaded? */
     protected $promptsLocalized = false;
 
+	/** @var int level of the headlines outputted **/
+	protected const HEADLINELEVEL = 2;
 
     /**
      * handle user request
@@ -78,8 +80,6 @@ class admin_plugin_config extends AdminPlugin
         global $lang;
         global $ID;
 
-        define('KHEADLINELEVEL', '2'); /* change this if doc structure requires */
-
         $this->setupLocale(true);
 
         echo $this->locale_xhtml('intro');
@@ -96,7 +96,7 @@ class admin_plugin_config extends AdminPlugin
         echo '<form id="dw__configform" action="' . script() . '" method="post">';
         echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '"></div>';
         formSecurityToken();
-        $this->printHeadline(KHEADLINELEVEL, 'dokuwiki_settings', $this->getLang('_header_dokuwiki'));
+        $this->printHeadline(self::HEADLINELEVEL, 'dokuwiki_settings', $this->getLang('_header_dokuwiki'));
 
         $in_fieldset = false;
         $first_plugin_fieldset = true;
@@ -113,14 +113,14 @@ class admin_plugin_config extends AdminPlugin
                     $in_fieldset = true;
                 }
                 if ($first_plugin_fieldset && $setting->getType() == 'plugin') {
-                    $this->printHeadline(KHEADLINELEVEL, 'plugin_settings', $this->getLang('_header_plugin'));
+                    $this->printHeadline(self::HEADLINELEVEL, 'plugin_settings', $this->getLang('_header_plugin'));
                     $first_plugin_fieldset = false;
                 } elseif ($first_template_fieldset && $setting->getType() == 'template') {
-                    $this->printHeadline(KHEADLINELEVEL, 'template_settings', $this->getLang('_header_template'));
+                    $this->printHeadline(self::HEADLINELEVEL, 'template_settings', $this->getLang('_header_template'));
                     $first_template_fieldset = false;
                 }
                 echo '<section id="' . $setting->getKey() . '">';
-                echo '<h3>' . $setting->prompt($this) . '</h3>';
+                echo '<h' . (self::HEADLINELEVEL+1).'>' . $setting->prompt($this) . '</h' . (self::HEADLINELEVEL+1).'>';
                 echo '<div class="settings">';
             } else {
                 // config settings
@@ -179,7 +179,7 @@ class admin_plugin_config extends AdminPlugin
             }
 
             usort($undefined_settings, 'settingNaturalComparison');
-            $this->printHeadline(KHEADLINELEVEL, 'undefined_settings', $this->getLang('_header_undefined'));
+            $this->printHeadline(self::HEADLINELEVEL, 'undefined_settings', $this->getLang('_header_undefined'));
             echo '<section>';
             echo '<dl>';
             foreach ($undefined_settings as $setting) {
