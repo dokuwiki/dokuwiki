@@ -279,7 +279,7 @@ class admin_plugin_config extends AdminPlugin
      */
     protected function printHeadline($level, $id, $text)
     {
-        echo '<h' . $level . ($id !== null ? " id=\"{$id}\"" : '' ) . '>' . $text . '</h2>';
+        echo '<h' . $level . ($id !== null ? " id=\"{$id}\"" : '' ) . '>' . $text . '</h' . $level . '>';
     }
 
     /**
