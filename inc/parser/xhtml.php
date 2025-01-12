@@ -152,7 +152,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         if ($this->footnotes !== []) {
-            $this->doc .= '<section id="section__footnotes">' . DOKU_LF;
+            $this->doc .= '<section id="section__footnotes" class="footnotes">' . DOKU_LF;
             $this->doc .= '<h2 class="a11y">' . $lang['footnotes_headline'] . '</h2>' . DOKU_LF;
             $this->doc .= '<ol>' . DOKU_LF;
 
