@@ -148,8 +148,7 @@ class admin_plugin_config extends AdminPlugin
                   . implode(array_map(function (string $it): string {
                     $txt = $this->getLang('a11y_stat_' . $it);
                     $status = $this->getLang('a11y_status');
-                    $span = "<span class=\"a11y\">{$txt}</span>";
-                    return "<li class=\"{$it}\" title=\"{$status} {$txt}\">{$span}</li>";
+                    return "<li class=\"{$it}\" title=\"{$status} {$txt}\"><span class=\"a11y\">{$txt}</span></li>";
                   }, $status)) . '</ul></dd>';
                 echo '<dd class="label">' . $label . '</dd>';
                 echo '<dd class="value">' . $input . '</dd>';
