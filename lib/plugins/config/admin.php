@@ -120,7 +120,7 @@ class admin_plugin_config extends AdminPlugin
                     $first_template_fieldset = false;
                 }
                 echo '<section id="' . $setting->getKey() . '">';
-                echo '<h' . (self::HEADLINELEVEL+1).'>' . $setting->prompt($this) . '</h' . (self::HEADLINELEVEL+1).'>';
+				$this->printHeadline(self::HEADLINELEVEL+1, null, $setting->prompt($this));
                 echo '<div class="settings">';
             } else {
                 // config settings
@@ -129,17 +129,17 @@ class admin_plugin_config extends AdminPlugin
                 // build the classlist and status text:
                 $classlist = [];
                 $status = [];
-                array_push($status, ($setting->isDefault() ? 'default' : 'modified'));
-                if ($setting->isDefault()) array_push($classlist, 'default');
+                $status[] = $setting->isDefault() ? 'default' : 'modified';
+                if ($setting->isDefault()) $classlist[] = 'default';
                 if ($setting->isProtected()) {
-                    array_push($classlist, 'protected');
-                    array_push($status, 'protected');
+                    $classlist[] = 'protected';
+                    $status[] = 'protected';
                 }
                 if ($setting->hasError()) {
-                    array_push($classlist, 'error');
-                    array_push($status, 'error');
+                    $classlist[] = 'error';
+                    $status[] = 'error';
                 }
-                if ($setting->caution()) array_push($classlist, 'caution');
+                if ($setting->caution()) $classlist[] = 'caution';
 
                 // build the HTML code:
                 echo '<dl class="' . implode(' ', $classlist) . '">';
@@ -275,12 +275,12 @@ class admin_plugin_config extends AdminPlugin
 
     /**
      * @param int $level
-     * @param string $id
+     * @param string $id (null for no ID)
      * @param string $text
      */
     protected function printHeadline($level, $id, $text)
     {
-        echo '<h' . $level . ' id="' . $id . '">' . $text . '</h2>';
+        echo '<h' . $level . ($id !== null ? " id=\"{$id}\"" : '' ) . '>' . $text . '</h2>';
     }
 
     /**
