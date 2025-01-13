@@ -9,8 +9,12 @@
     font-weight: bold;
 	vertical-align: super;
 	font-size: 56%;
-	margin-left: .1em;
+	margin: 0 0 0 .1em;
 }
+[dir=rtl] .dokuwiki a.fn_top {
+	margin: 0 .1em 0 0;
+}
+
 .dokuwiki a.fn_top::after {
 	content: ')';
 }
@@ -43,15 +47,25 @@ div.insitu-footnote {
     margin: 0 2.5em 0 0;
 }
 .dokuwiki #section__footnotes li.fn .fn_bot {
+	display: inline;
+	width: fit-content;
+	text-align: right;
+	margin: 0;
+}
+.dokuwiki #section__footnotes li.fn .fn_bot:first-of-type {
 	display: inline-block;
 	width: 2em;
-	text-align: right;
-	margin: 0 .5em 0 0;
+}
+.dokuwiki #section__footnotes li.fn .content {
+	margin: 0 0 0 .5em;
 }
 [dir=rtl] .dokuwiki #section__footnotes li.fn .fn_bot {
 	text-align: left;
-	margin: 0 0 0 .5em;
 }
 .dokuwiki #section__footnotes li.fn a.fn_bot::after {
 	content: ')';
 }
+[dir=rtl] .dokuwiki #section__footnotes li.fn .content {
+	margin: 0 .5em 0 0;
+}
+
