@@ -347,24 +347,15 @@ function mediainfo()
 /**
  * Build an string of URL parameters
  *
- * @param array $params array with key-value pairs
+ * @see http_build_query()
+ * @param array|object $params the data to encode
  * @param string $sep series of pairs are separated by this character
  * @return string query string
- * @author Andreas Gohr
  *
  */
 function buildURLparams($params, $sep = '&amp;')
 {
-    $url = '';
-    $amp = false;
-    foreach ($params as $key => $val) {
-        if ($amp) $url .= $sep;
-
-        $url .= rawurlencode($key) . '=';
-        $url .= rawurlencode((string)$val);
-        $amp = true;
-    }
-    return $url;
+    return http_build_query($params, '', $sep, PHP_QUERY_RFC3986);
 }
 
 /**
