@@ -7,3 +7,4 @@
  */
 $lang['menu']                  = 'Naplók megtekintése';
 $lang['date']                  = 'Dátum';
+$lang['js']['filter']          = 'Naplóbejegyzések szűrése:';

@@ -120,6 +120,7 @@ $lang['js']['media_done_btn']  = 'Kész';
 $lang['js']['media_drop']      = 'Húzd ide a fájlokat a feltöltéshez';
 $lang['js']['media_cancel']    = 'eltávolítás';
 $lang['js']['media_overwrt']   = 'Meglévő fájlok felülírása';
+$lang['js']['data_insecure']   = 'FIGYELEM: Úgy tűnik az adatokat tartalmazó mappa nincs biztonságosan beállítva. Tekintsd át <a href="https://www.dokuwiki.org/security#web_access_security">biztonságos hozzáférési beállítását a DokuWikiben</a>.';
 $lang['search_exact_match']    = 'pontos egyezés';
 $lang['search_starts_with']    = 'Kezdete';
 $lang['search_ends_with']      = 'Vége';
@@ -152,6 +153,9 @@ $lang['profdeleted']           = 'Felhasználói fiókodat eltávolítottuk err�
 $lang['profconfdelete']        = 'Szeretném eltávolítani a felhasználói fiókomat erről a wikiről. <br/> Ez a cselekvés nem visszavonható.';
 $lang['profconfdeletemissing'] = 'A megerősítő négyzet nincs bepipálva';
 $lang['proffail']              = 'A profil frissítése sikertelen.';
+$lang['proftokenlegend']       = 'Hitelesítő kulcs';
+$lang['proftokengenerate']     = 'Kulcs visszaállítása';
+$lang['proftokeninfo']         = 'A hitelesítő kulcs arra használható, hogy harmadik felek alkalmazásai bejelentkezhessenek, és tevékenykedhessenek a nevedben. A kulcs visszaállítása letiltja a régi kulcsot, és kijelentkeztet minden alkalmazást, ami ezt használta.';
 $lang['pwdforget']             = 'Elfelejtetted a jelszavad? Itt kérhetsz újat';
 $lang['resendna']              = 'Ez a wiki nem támogatja a jelszó újraküldést.';
 $lang['resendpwd']             = 'Új jelszó beállítása a következőhöz:';
