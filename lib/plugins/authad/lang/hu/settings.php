@@ -24,3 +24,4 @@ $lang['additional']            = 'Vesszővel elválasztott lista a további AD a
 $lang['update_name']           = 'Engedélyezed a felhasználóknak, hogy módosítsák az AD megjelenési nevüket?';
 $lang['update_mail']           = 'A felhasználók frissíthetik (megváltozatathatják) az emailcímüket?';
 $lang['update_pass']           = 'Engedélyezed a felhasználóknak a jelszavuk módosítását? Az SSL vagy TLS engedélyezése szükséges.';
+$lang['recursive_groups']      = 'Egymásbaágyazott csoportok tagjainak feltérképezése (lassabb).';

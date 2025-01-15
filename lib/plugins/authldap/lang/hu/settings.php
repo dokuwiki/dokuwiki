@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Fekete Ádám Zsolt <fadam@egbcsoport.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  * @author Marina Vladi <deldadam@gmail.com>
  */
@@ -18,11 +19,13 @@ $lang['referrals']             = 'Hivatkozások követése?';
 $lang['deref']                 = 'Hogyan fejtsük vissza az aliasokat?';
 $lang['binddn']                = 'Egy hozzáféréshez használt felhasználó DN-je, ha nincs névtelen hozzáférés. Pl. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = 'Ehhez tartozó jelszó.';
+$lang['attributes']            = 'Az LDAP kereséskor lekérendő tulajdonságok.';
 $lang['userscope']             = 'A keresési tartomány korlátozása erre a felhasználókra való keresésnél';
 $lang['groupscope']            = 'A keresési tartomány korlátozása erre a csoportokra való keresésnél';
 $lang['userkey']               = 'A felhasználónevet leíró attribútum; konzisztensnek kell lennie a felhasználói szűrővel (userfilter).';
 $lang['groupkey']              = 'Csoport meghatározása a következő attribútumból (az alapértelmezett AD csoporttagság helyett), pl. a szervezeti egység vagy a telefonszám';
 $lang['modPass']               = 'Az LDAP jelszó megváltoztatható a DokuWiki-n keresztül?';
+$lang['modPassPlain']          = 'A módosított jelszavakat szövegként küldjük az LDAP szervernek (ahelyett, hogy salted hash eljárást alkalmaznánk a beállított algoritmussal küldés előtt)?';
 $lang['debug']                 = 'Továbi hibakeresési információk megjelenítése hiba esetén';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
