@@ -173,7 +173,6 @@ $lang['search_fragment_o_exact'] = 'exato';
 $lang['search_fragment_o_starts_with'] = 'começa com';
 $lang['search_fragment_o_ends_with'] = 'termina com';
 $lang['search_fragment_o_contains'] = 'contém';
-$lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
 $lang['_feature_flags']        = 'Sinalizadores de recursos';
 $lang['defer_js']              = 'Adie o javascript para ser executado após a análise do HTML da página. Melhora a velocidade percebida da página, mas pode interromper um pequeno número de plugins.';
 $lang['hidewarnings']          = 'Não exiba nenhum aviso emitido pelo PHP. Isso pode facilitar a transição para PHP8+. Os avisos ainda serão registrados no log de erros e devem ser relatados.';
