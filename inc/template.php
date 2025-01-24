@@ -785,7 +785,7 @@ function tpl_searchform($ajax = true, $autocomplete = true)
 /**
  * Print the breadcrumbs trace
  *
- * @param string $sep Separator between entries
+ * @param string $sep Separator between entries (no longer in use, use CSS instead)
  * @param bool $return return or print
  * @return bool|string
  *
@@ -799,26 +799,22 @@ function tpl_breadcrumbs($sep = null, $return = false)
     //check if enabled
     if (!$conf['breadcrumbs']) return false;
 
-    //set default
-    if (is_null($sep)) $sep = '•';
-
     $out = '';
 
     $crumbs = breadcrumbs(); //setup crumb trace
 
-    $crumbs_sep = ' <span class="bcsep">' . $sep . '</span> ';
-
     //render crumbs, highlight the last one
-    $out .= '<span class="bchead">' . $lang['breadcrumb'] . '</span>';
+    $out .= '<h2 class="bchead">' . $lang['breadcrumb'] . '</h2>' . DOKU_LF;
+    $out .= '<ol reversed>';
     $last = count($crumbs);
     $i = 0;
     foreach ($crumbs as $id => $name) {
         $i++;
-        $out .= $crumbs_sep;
-        if ($i == $last) $out .= '<span class="curid">';
-        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true) . '</bdi>';
-        if ($i == $last) $out .= '</span>';
+        $out .= '<li' . ($i == $last ? ' class="curid" aria-current="page"' : '') . '>';
+        $out .= '<bdi>' . tpl_link(wl($id), hsc($name), 'class="breadcrumbs" title="' . $id . '"', true);
+        $out .= '</bdi></li>';
     }
+    $out .= '</ol>';
     if ($return) return $out;
     echo $out;
     return (bool)$out;
@@ -830,7 +826,7 @@ function tpl_breadcrumbs($sep = null, $return = false)
  * This code was suggested as replacement for the usual breadcrumbs.
  * It only makes sense with a deep site structure.
  *
- * @param string $sep Separator between entries
+ * @param string $sep Separator between entries (no longer in use, use CSS instead)
  * @param bool $return return or print
  * @return bool|string
  *
@@ -849,18 +845,16 @@ function tpl_youarehere($sep = null, $return = false)
     // check if enabled
     if (!$conf['youarehere']) return false;
 
-    //set default
-    if (is_null($sep)) $sep = ' » ';
-
     $out = '';
 
     $parts = explode(':', $ID);
     $count = count($parts);
 
-    $out .= '<span class="bchead">' . $lang['youarehere'] . ' </span>';
+    $out .= '<h2 class="bchead">' . $lang['youarehere'] . ' </h2>' . DOKU_LF;
 
     // always print the startpage
-    $out .= '<span class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</span>';
+    $out .= '<ol>';
+    $out .= '<li class="home">' . tpl_pagelink(':' . $conf['start'], null, true) . '</li>';
 
     // print intermediate namespace links
     $part = '';
@@ -870,7 +864,7 @@ function tpl_youarehere($sep = null, $return = false)
         if ($page == $conf['start']) continue; // Skip startpage
 
         // output
-        $out .= $sep . tpl_pagelink($page, null, true);
+        $out .= '<li>' . tpl_pagelink($page, null, true) . '</li>';
     }
 
     // print current page, skipping start page, skipping for namespace index
@@ -888,8 +882,9 @@ function tpl_youarehere($sep = null, $return = false)
         echo $out;
         return true;
     }
-    $out .= $sep;
-    $out .= tpl_pagelink($page, null, true);
+    $out .= '<li aria-current="page">' . tpl_pagelink($page, null, true) . '</li>';
+    $out .= '</ol>';
+
     if ($return) return $out;
     echo $out;
     return (bool)$out;
