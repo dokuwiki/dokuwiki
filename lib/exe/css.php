@@ -345,7 +345,7 @@ function css_interwiki()
 
     // default style
     echo 'a.interwiki {';
-    echo ' background: transparent url(' . DOKU_BASE . 'lib/images/interwiki.svg) 0 0 no-repeat;';
+    echo ' background: transparent url(' . DOKU_BASE . 'lib/exe/image.php/interwiki.svg) 0 0 no-repeat;';
     echo ' background-size: 1.2em;';
     echo ' padding: 0 0 0 1.4em;';
     echo '}';
@@ -355,7 +355,7 @@ function css_interwiki()
     foreach (array_keys($iwlinks) as $iw) {
         $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $iw);
         foreach (['svg', 'png', 'gif'] as $ext) {
-            $file = 'lib/images/interwiki/' . $iw . '.' . $ext;
+            $file = 'lib/exe/image.php/interwiki/' . $iw . '.' . $ext;
 
             if (file_exists(DOKU_INC . $file)) {
                 echo "a.iw_$class {";
@@ -377,7 +377,7 @@ function css_filetypes()
 
     // default style
     echo '.mediafile {';
-    echo ' background: transparent url(' . DOKU_BASE . 'lib/images/fileicons/svg/file.svg) 0px 1px no-repeat;';
+    echo ' background: transparent url(' . DOKU_BASE . 'lib/exe/image.php/fileicons/svg/file.svg) 0px 1px no-repeat;';
     echo ' background-size: 1.2em;';
     echo ' padding-left: 1.5em;';
     echo '}';
@@ -396,7 +396,7 @@ function css_filetypes()
     foreach ($exts as $ext) {
         $class = preg_replace('/[^_\-a-z0-9]+/', '_', $ext);
         echo ".mf_$class {";
-        echo '  background-image: url(' . DOKU_BASE . 'lib/images/fileicons/svg/' . $ext . '.svg)';
+        echo '  background-image: url(' . DOKU_BASE . 'lib/exe/image.php/fileicons/svg/' . $ext . '.svg)';
         echo '}';
     }
 }

@@ -1745,7 +1745,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
     if (!file_exists($file)) {
         // give result for fallback image
         if ($fallback) {
-            $file = DOKU_INC . 'lib/images/blank.gif';
+            $file = DOKU_INC . 'lib/exe/image.php/blank.gif';
             // stop process if false result is required (if $fallback is false)
         } else {
             return false;

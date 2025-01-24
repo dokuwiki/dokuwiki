@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class ImgBackto
  *
@@ -15,7 +17,7 @@ class ImgBackto extends AbstractItem
         global $ID;
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
+        $this->svg = StaticImage::path('menu/12-back_arrow-left.svg');
         $this->type = 'img_backto';
         $this->params = [];
         $this->accesskey = 'b';

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Back
  *
@@ -24,6 +26,6 @@ class Back extends AbstractItem
         $this->id = $parent;
         $this->params = ['do' => ''];
         $this->accesskey = 'b';
-        $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
+        $this->svg = StaticImage::path('menu/12-back_arrow-left.svg');
     }
 }
