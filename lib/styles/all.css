@@ -2,6 +2,16 @@
  * Basic screen and print styles. These styles are needed for basic DokuWiki functions
  * regardless of the used template. Templates can override them of course
  */
+.dokuwiki-footnote {
+    font-size: 0.8em;
+    vertical-align: super;
+    color: #555;
+}
+
+.dokuwiki-footnote:hover {
+    color: #000;
+    text-decoration: underline;
+}
 
 div.clearer {
     clear: both;
