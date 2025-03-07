@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
  * @author C!own77 <clown77@posteo.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author christian studer <cstuder@existenz.ch>
@@ -19,7 +20,7 @@ $lang['groupfilter']           = 'LDAP-Filter, um die Benutzergruppen zu suchen.
 $lang['version']               = 'Zu verwendende Protokollversion von LDAP.';
 $lang['starttls']              = 'Verbindung über TLS aufbauen?';
 $lang['referrals']             = 'Weiterverfolgen von LDAP-Referrals (Verweise)?';
-$lang['deref']                 = 'Wie sollen Aliase aufgelöst werden?';
+$lang['deref']                 = 'Wie sollen Aliasse derefernziert werden?';
 $lang['binddn']                = 'DN eines optionalen Benutzers, wenn der anonyme Zugriff nicht ausreichend ist. Zum Beispiel: <code>cn=admin, dc=my, dc=home</code>.';
 $lang['bindpw']                = 'Passwort des angegebenen Benutzers.';
 $lang['attributes']            = 'Attribute, die mit der LDAP-Suche abgerufen werden sollen.';
@@ -27,12 +28,13 @@ $lang['userscope']             = 'Die Suchweite nach Benutzeraccounts.';
 $lang['groupscope']            = 'Die Suchweite nach Benutzergruppen.';
 $lang['userkey']               = 'Attribut, das den Benutzernamen enthält; muss konsistent zum userfilter sein.';
 $lang['groupkey']              = 'Gruppieren der Benutzeraccounts anhand eines beliebigen Benutzerattributes z. B. Telefonnummer oder Abteilung, anstelle der Standard-Gruppen).';
-$lang['modPass']               = 'Darf über Dokuwiki das LDAP-Passwort geändert werden?';
+$lang['modPass']               = 'Kann das LDAP Passwort via dokuwiki geändert werden?';
+$lang['modPassPlain']          = 'Sende Passwort-Aktualisierungen in Klartext zum LDAP server (anstatt es durch das Salting-Verfahren <a href="https://de.wikipedia.org/wiki/Salt_(Kryptologie)"> zu verändern und anschließend einen Hash-Wert zu bilden)?';
 $lang['debug']                 = 'Debug-Informationen beim Auftreten von Fehlern anzeigen?';
-$lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
-$lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
-$lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
-$lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
-$lang['referrals_o_-1']        = 'Standard verwenden';
-$lang['referrals_o_0']         = 'Referrals nicht folgen';
-$lang['referrals_o_1']         = 'Referrals folgen';
+$lang['deref_o_0']             = 'LDAP_DEREF_NIEMALS';
+$lang['deref_o_1']             = 'LDAP_DEREF_SUCHEN';
+$lang['deref_o_2']             = 'LDAP_DEREF_FINDEN';
+$lang['deref_o_3']             = 'LDAP_DEREF_IMMER';
+$lang['referrals_o_-1']        = 'benutze die Vorgabe';
+$lang['referrals_o_0']         = 'keine Verweise erlauben';
+$lang['referrals_o_1']         = 'folge Verweisen';

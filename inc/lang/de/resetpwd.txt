@@ -1,3 +1,3 @@
 ====== Neues Passwort setzen  ======
 
-Bitte geben Sie ein neues Passwort für Ihren Wiki-Zugang ein.
+Bitte gib ein neues Passwort für deinen Wiki-Zugang ein.

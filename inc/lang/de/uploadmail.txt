@@ -1,4 +1,4 @@
-Eine Datei wurde in Ihrem Wiki hochgeladen. Hier sind die Details:
+Eine Datei wurde in deinem Wiki hochgeladen. Hier sind die Details:
 
 Datei       : @MEDIA@
 Alte Version: @OLD@

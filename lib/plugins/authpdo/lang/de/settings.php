@@ -3,13 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
  * @author Jürgen Fredriksson <jfriedrich@gmx.at>
  */
 $lang['debug']                 = 'Zeige detaillierte Fehlermeldungen. Diese sollten nach dem Setup deaktiviert werden.';
 $lang['dsn']                   = 'Der DSN(Data Source Name) zur Verbindung mit der Datenbank';
 $lang['user']                  = 'Der Benutzer für die obige Datenbankverbindung (leer lassen für SQLite)';
 $lang['pass']                  = 'Das Passwort für die obige Datenbankverbindung (leer lassen für SQLite)';
-$lang['select-user']           = 'SQL Anweisung um einen Benutzer abzufragen';
+$lang['select-user']           = 'SQL Anweisung um einen einzelnen Benutzer abzufragen';
 $lang['select-user-groups']    = 'SQL Anweisung um alle Gruppen eines Benutzers abzufragen';
 $lang['select-groups']         = 'SQL Anweisung um alle verfügbaren Gruppen auszuwählen';
 $lang['insert-user']           = 'SQL Anweisung um einen neuen Benutzer in der Datenbank abzulegen';

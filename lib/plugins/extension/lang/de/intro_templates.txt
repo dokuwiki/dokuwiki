@@ -1,1 +1,1 @@
-Dies sind die in Ihrem Dokuwiki installierten Templates. Sie können das gewünschte Template im [[?do=admin&page=config|Konfigurations Manager]] aktivieren.
+Die folgenden Templates sind momentan in deinem DokuWiki installiert. Du kannst das zu verwendende Template im [[?do=admin&page=config|Konfigurations-Manager]] auswählen.

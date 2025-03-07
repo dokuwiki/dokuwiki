@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
  * @author Robert Riebisch <rr@bttr-software.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Christof <gagi@fin.de>
@@ -23,31 +24,31 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Michael Große <grosse@cosmocode.de>
  */
-$lang['admin_acl']             = 'Zugangsverwaltung';
+$lang['admin_acl']             = 'Zugriffsverwaltung';
 $lang['acl_group']             = 'Gruppe:';
 $lang['acl_user']              = 'Benutzer:';
-$lang['acl_perms']             = 'Berechtigungen für';
+$lang['acl_perms']             = 'Rechte für';
 $lang['page']                  = 'Seite';
 $lang['namespace']             = 'Namensraum';
 $lang['btn_select']            = 'Auswählen';
-$lang['p_user_id']             = 'Nutzer <b class="acluser">%s</b> hat momentan folgende Berechtigungen für die Seite <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_user_ns']             = 'Nutzer <b class="acluser">%s</b> hat momentan folgende Berechtigungen im Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_group_id']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</b> haben momentan folgende Berechtigungen für die Seite <b class="aclpage">%s</b>: <i>%s</i>.';
-$lang['p_group_ns']            = 'Mitglieder der Gruppe <b class="aclgroup">%s</b> haben momentan folgende Berechtigungen für den Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Bitte geben Sie in obigem Formular <b>einen Benutzer oder eine Gruppe</b> an, um die Berechtigungen für die Seite <b class="aclpage">%s</b> zu sehen oder zu ändern.';
-$lang['p_choose_ns']           = 'Bitte geben Sie in obigem Formular <b>einen Benutzer oder eine Gruppe</b> an, um die Berechtigungen für den Namensraum <b class="aclns">%s</b> zu sehen oder zu ändern.';
-$lang['p_inherited']           = 'Hinweis: Diese Berechtigungen wurden nicht explizit gesetzt, sondern von anderen Gruppen oder höher liegenden Namensräumen geerbt.';
-$lang['p_isadmin']             = 'Hinweis: Die ausgewählte Gruppe oder Benutzer haben immer alle Berechtigungen, da sie als Superuser konfiguriert wurden.';
-$lang['p_include']             = 'Höhere Berechtigungen schließen niedrigere mit ein. Anlegen, Hochladen und Entfernen gilt nur für Namensräume, nicht für einzelne Seiten';
+$lang['p_user_id']             = 'Benutzer <b class="acluser">%s</b> hat im Moment folgende Rechte auf der Seite <b class="aclpage">%s</b>: <i>%s</i>';
+$lang['p_user_ns']             = 'Benutzer <b class="acluser">%s</b> hat momentan die folgenden Rechte im Namensraum <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_group_id']            = 'Die Gruppenmitglieder <b class="aclgroup">%s</b> haben momentan die folgenden Rechte auf der Seite <b class="aclpage">%s</b>: <i>%s</i>.';
+$lang['p_group_ns']            = 'Die Mitglieder der Gruppe <b class="aclgroup">%s</b> haben gerade Zugriff in folgenden Namensräumen <b class="aclns">%s</b>: <i>%s</i>.';
+$lang['p_choose_id']           = 'Bitte <b>gib einen Benutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen der Seite <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
+$lang['p_choose_ns']           = 'Bitte <b>gib einen Benutzer oder eine Gruppe</b> in das Formular ein, um die Berechtigungen des Namenraumes <b class="aclpage">%s</b> anzusehen oder zu bearbeiten.';
+$lang['p_inherited']           = 'Hinweis: Diese Rechte wurden nicht explizit gesetzt, sondern von anderen Gruppen oder übergeordneten Namensräumen geerbt.';
+$lang['p_isadmin']             = 'Hinweis: Die gewählte Gruppe oder der Benutzer haben immer die vollen Rechte, weil sie als Superuser konfiguriert sind.';
+$lang['p_include']             = 'Höhere Rechte schließen kleinere mit ein. Hochlade- und Löschrechte sind nur für Namensräume, nicht für Seiten.';
 $lang['current']               = 'Momentane Zugriffsregeln';
 $lang['where']                 = 'Seite/Namensraum';
-$lang['who']                   = 'Nutzer/Gruppe';
-$lang['perm']                  = 'Berechtigungen';
+$lang['who']                   = 'Benutzer/Gruppe';
+$lang['perm']                  = 'Rechte';
 $lang['acl_perm0']             = 'Keine';
 $lang['acl_perm1']             = 'Lesen';
 $lang['acl_perm2']             = 'Bearbeiten';
-$lang['acl_perm4']             = 'Anlegen';
+$lang['acl_perm4']             = 'Erstellen';
 $lang['acl_perm8']             = 'Hochladen';
-$lang['acl_perm16']            = 'Entfernen';
-$lang['acl_new']               = 'Eintrag hinzufügen';
-$lang['acl_mod']               = 'Eintrag bearbeiten';
+$lang['acl_perm16']            = 'Löschen';
+$lang['acl_new']               = 'Neuen Eintrag zufügen';
+$lang['acl_mod']               = 'Eintrag modifizieren';
