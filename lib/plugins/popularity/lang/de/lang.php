@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
  * @author Leo Moll <leo@yeasoft.com>
  * @author Florian Anderiasch <fa@art-core.org>
  * @author Robin Kluth <commi1993@gmail.com>
@@ -17,10 +18,10 @@
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Hella Breitkopf <hella.breitkopf@gmail.com>
  */
-$lang['name']                  = 'Popularitäts-Feedback (längere Ladezeit möglich)';
-$lang['submit']                = 'Daten senden';
+$lang['name']                  = 'Popularitätsrückmeldung (kann eine Weile dauern, bis es fertig geladen wurde)';
+$lang['submit']                = 'Sende Daten';
 $lang['autosubmit']            = 'Daten einmal im Monat automatisch senden';
 $lang['submissionFailed']      = 'Die Daten konnten aufgrund des folgenden Fehlers nicht gesendet werden: ';
-$lang['submitDirectly']        = 'Sie können die Daten durch Betätigung des Buttons manuell versenden.';
+$lang['submitDirectly']        = 'Du kannst die Daten durch Betätigung des Buttons manuell versenden.';
 $lang['autosubmitError']       = 'Beim letzten automatischen Versuch die Daten zu senden, ist folgender Fehler aufgetreten: ';
 $lang['lastSent']              = 'Die Daten wurden gesendet';
