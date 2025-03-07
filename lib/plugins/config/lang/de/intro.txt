@@ -1,7 +1,7 @@
-====== Konfigurations-Manager ======
+===== Konfigurations-Manager =====
 
-Dieses Plugin hilft Ihnen bei der Konfiguration von DokuWiki. Hilfe zu den einzelnen Einstellungen finden Sie unter [[doku>config]]. Mehr Information zu diesem Plugin ist unter [[doku>plugin:config]] erhältlich.
+Benutze diese Seite zur Kontrolle der Einstellungen deiner DokuWiki-Installation. Für Hilfe zu individuellen Einstellungen gehe zu [[doku>config]]. Für mehr Details über diese Erweiterungen siehe [[doku>plugin:config]].
 
-Einstellungen mit einem hellroten Hintergrund sind gesichert und können nicht mit diesem Plugin verändert werden, Einstellungen mit hellblauem Hintergrund sind Voreinstellungen, weiß hinterlegte Felder zeigen lokal veränderte Werte an. Sowohl die blauen als auch die weißen Felder können verändert werden.
+Einstellungen die mit einem hellroten Hintergrund angezeigt werden, können mit dieser Erweiterung nicht verändert werden. Einstellungen mit einem blauen Hintergrund sind Standardwerte und Einstellungen mit einem weißen Hintergrund wurden lokal gesetzt für diese Installation. Sowohl blaue als auch weiße Einstellungen können angepasst werden.
 
-Bitte vergessen Sie nicht **Speichern** zu drücken bevor Sie die Seite verlassen, andernfalls gehen Ihre Änderungen verloren.
+Denke dran **Speichern** zu drücken bevor du die Seite verlässt, andernfalls werden deine Änderungen nicht übernommen.

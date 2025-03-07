@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
  * @author Anika Henke <anika@selfthinker.org>
  * @author Carsten Perthel <carsten@cpesoft.com>
  */
 $lang['userexists']            = 'Der Benutzername existiert leider schon.';
-$lang['usernotexists']         = 'Dieser Benutzer existiert nicht.';
-$lang['writefail']             = 'Kann Benutzerdaten nicht ändern. Bitte informieren Sie den Wiki-Administratoren';
-$lang['protected']             = 'Die Daten des Benutzers %s sind geschützt und können nicht verändert oder gelöscht werden.';
+$lang['usernotexists']         = 'Entschuldigung, dieser Nutzer existiert nicht.';
+$lang['writefail']             = 'Konnte Nutzer-Daten nicht modifizieren. Bitte informiere einen Admin.';
+$lang['protected']             = 'Die Daten für den Nutzer %s sind geschützt und können nicht verändert oder gelöscht werden.';

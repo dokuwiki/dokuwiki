@@ -13,7 +13,7 @@ Zusammenfassung: @SUMMARY@
 Alte Revision: @OLDPAGE@
 Neue Revision: @NEWPAGE@
 
-Um das Abonnement für diese Seite aufzulösen, melden Sie sich im Wiki an
-@DOKUWIKIURL@, besuchen dann
+Um das Abonnement für diese Seite aufzulösen, melde dich im Wiki an
+@DOKUWIKIURL@, besuche dann
 @SUBSCRIBE@
-und klicken auf die Taste 'Aboverwaltung'.
+und klicke auf den Link 'Aboverwaltung'.
