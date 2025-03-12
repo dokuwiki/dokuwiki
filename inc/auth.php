@@ -190,11 +190,18 @@ function auth_tokenlogin()
     global $auth;
     if (!$auth) return false;
 
-    // get the headers, either from Apache or from $_SERVER
+    $headers = [];
+
+    // try to get the headers from Apache
     if (function_exists('getallheaders')) {
-        $headers = array_change_key_case(getallheaders());
-    } else {
-        $headers = [];
+        $headers = getallheaders();
+        if (is_array($headers)) {
+            $headers = array_change_key_case($headers);
+        }
+    }
+
+    // get the headers from $_SERVER
+    if (!$headers) {
         foreach ($_SERVER as $key => $value) {
             if (substr($key, 0, 5) === 'HTTP_') {
                 $headers[strtolower(substr($key, 5))] = $value;
