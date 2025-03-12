@@ -143,7 +143,7 @@ class JsonRpcServer
         if ($e !== null) {
             // error occured, add to response
             $response['error'] = [
-                'code' => $e->getCode(),
+                'code' => $e->getCode() ?: 1, // 0 is success, so we use 1 as default
                 'message' => $e->getMessage()
             ];
         } else {
