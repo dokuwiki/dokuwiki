@@ -633,11 +633,6 @@ function check_functions()
         'preg_replace file_get_contents htmlspecialchars_decode ' .
         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
-    if (!function_exists('mb_substr')) {
-        $funcs[] = 'utf8_encode';
-        $funcs[] = 'utf8_decode';
-    }
-
     if (!function_exists('mail')) {
         if (strpos(ini_get('disable_functions'), 'mail') !== false) {
             $disabled = $lang['i_disabled'];
