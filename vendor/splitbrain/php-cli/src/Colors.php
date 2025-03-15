@@ -31,6 +31,9 @@ class Colors
     const C_LIGHTGRAY = 'lightgray';
     const C_WHITE = 'white';
 
+    // Regex pattern to match color codes
+    const C_CODE_REGEX = "/(\33\[[0-9;]+m)/";
+
     /** @var array known color names */
     protected $colors = array(
         self::C_RESET => "\33[0m",
