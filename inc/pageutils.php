@@ -444,26 +444,40 @@ function metaFiles($id)
  *
  * The filename is URL encoded to protect Unicode chars
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Kate Arzamastseva <pshns@ukr.net>
- *
- * @param string     $id  media id
+ * @param string $id media id
  * @param string|int $rev empty string or revision timestamp
  * @param bool $clean
  *
  * @return string full path
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Kate Arzamastseva <pshns@ukr.net>
+ *
  */
 function mediaFN($id, $rev = '', $clean = true)
 {
     global $conf;
     if ($clean) $id = cleanID($id);
     $id = str_replace(':', '/', $id);
-    if (empty($rev)) {
-        $fn = $conf['mediadir'] . '/' . utf8_encodeFN($id);
+    $rev = (int) $rev;;
+
+
+    // current file
+    $simple = $conf['mediadir'] . '/' . utf8_encodeFN($id);
+
+    // if a revision is given and it matches the current revision, return the current file
+    if ($rev !== 0) {
+        $current = @filemtime($simple);
+        if ($current === $rev) {
+            return $simple;
+        }
+    }
+
+    if ($rev === 0) {
+        $fn = $simple;
     } else {
-        $ext = mimetype($id);
-        $name = substr($id, 0, -1 * strlen($ext[0]) - 1);
-        $fn = $conf['mediaolddir'] . '/' . utf8_encodeFN($name . '.' . ( (int) $rev ) . '.' . $ext[0]);
+        [$ext] = mimetype($id);
+        $name = substr($id, 0, -1 * strlen($ext) - 1);
+        $fn = $conf['mediaolddir'] . '/' . utf8_encodeFN($name . '.' . $rev . '.' . $ext);
     }
     return $fn;
 }
