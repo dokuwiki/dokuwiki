@@ -66,7 +66,6 @@ class ApiCore
             'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
             'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
             'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
-            // todo: implement getMediaHistory
             'core.getMediaHistory' => new ApiCall([$this, 'getMediaHistory'], 'media'),
 
             'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
@@ -836,6 +835,11 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
+        // was the current revision requested?
+        if ($this->isCurrentMediaRev($media, $rev)) {
+            $rev = 0;
+        }
+
         $file = mediaFN($media, $rev);
         if (!@ file_exists($file)) {
             throw new RemoteException('The requested media file (revision) does not exist', 221);
@@ -867,6 +871,12 @@ class ApiCore
         if (auth_quickaclcheck($media) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
+
+        // was the current revision requested?
+        if ($this->isCurrentMediaRev($media, $rev)) {
+            $rev = 0;
+        }
+
         if (!media_exists($media, $rev)) {
             throw new RemoteException('The requested media file does not exist', 221);
         }
@@ -938,7 +948,10 @@ class ApiCore
 
         $result = [];
         foreach ($revisions as $rev) {
-            if (!media_exists($media, $rev)) continue; // skip non-existing revisions
+            // the current revision needs to be checked against the current file path
+            $check = $this->isCurrentMediaRev($media, $rev) ? '' : $rev;
+            if (!media_exists($media, $check)) continue; // skip non-existing revisions
+
             $info = $medialog->getRevisionInfo($rev);
 
             $result[] = new MediaChange(
@@ -1037,6 +1050,20 @@ class ApiCore
         } else {
             throw new RemoteException('Failed to delete media file', 233);
         }
+    }
+
+    /**
+     * Check if the given revision is the current revision of this file
+     *
+     * @param string $id
+     * @param int $rev
+     * @return bool
+     */
+    protected function isCurrentMediaRev(string $id, int $rev)
+    {
+        $current = @filemtime(mediaFN($id));
+        if ($current === $rev) return true;
+        return false;
     }
 
     // endregion
