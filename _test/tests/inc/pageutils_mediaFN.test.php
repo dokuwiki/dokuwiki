@@ -9,15 +9,11 @@ class mediafn_test extends DokuWikiTest
      */
     public function mediaFNProvider()
     {
-
-        $currentRev = filemtime(DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png');
-
         return [
             // current
             ['wiki:dokuwiki-128.png', '', true, DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png'],
             ['wiki:dokuwiki-128.png', false, true, DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png'],
             ['wiki:dokuwiki-128.png', null, true, DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png'],
-            ['wiki:dokuwiki-128.png', $currentRev, true, DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png'],
 
             // old
             ['wiki:dokuwiki-128.png', 1234567890, true, DOKU_TMP_DATA . 'media_attic/wiki/dokuwiki-128.1234567890.png'],
@@ -35,6 +31,13 @@ class mediafn_test extends DokuWikiTest
     {
         $result = mediaFN($id, $rev, $clean);
         $this->assertEquals($expected, $result);
+    }
+
+    public function testMediaFNCurrentRev()
+    {
+        $currentRev = filemtime(DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png');
+        $result = mediaFN('wiki:dokuwiki-128.png', $currentRev);
+        $this->assertEquals(DOKU_TMP_DATA . 'media/wiki/dokuwiki-128.png', $result);
     }
 
 }

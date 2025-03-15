@@ -458,8 +458,7 @@ function mediaFN($id, $rev = '', $clean = true)
     global $conf;
     if ($clean) $id = cleanID($id);
     $id = str_replace(':', '/', $id);
-    $rev = (int) $rev;;
-
+    $rev = (int) $rev;
 
     // current file
     $simple = $conf['mediadir'] . '/' . utf8_encodeFN($id);
