@@ -3,7 +3,7 @@
         'name' => 'dokuwiki/dokuwiki',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '91c051b578b6f689d63885c95ea2d73e0e46f39a',
+        'reference' => '2ee6c32db8425e90b058cc4532511ffd71f65087',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'dokuwiki/dokuwiki' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '91c051b578b6f689d63885c95ea2d73e0e46f39a',
+            'reference' => '2ee6c32db8425e90b058cc4532511ffd71f65087',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
