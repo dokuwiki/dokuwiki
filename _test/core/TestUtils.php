@@ -39,6 +39,8 @@ class TestUtils {
             }
             $dh->close();
         }
+
+        system('sync'); // temporary attempt to fix tests
     }
 
     /**
