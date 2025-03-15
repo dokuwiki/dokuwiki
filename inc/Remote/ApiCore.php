@@ -464,7 +464,7 @@ class ApiCore
     /**
      * Returns a list of available revisions of a given wiki page
      *
-     * The number of returned pages is set by `$conf['recent']`, but non accessible revisions pages
+     * The number of returned pages is set by `$conf['recent']`, but non accessible revisions
      * are skipped, so less than that may be returned.
      *
      * @link https://www.dokuwiki.org/config:recent
@@ -917,6 +917,9 @@ class ApiCore
 
     /**
      * Returns a list of available revisions of a given media file
+     *
+     * The number of returned files is set by `$conf['recent']`, but non accessible revisions
+     * are skipped, so less than that may be returned.
      *
      * Since API Version 14
      *
