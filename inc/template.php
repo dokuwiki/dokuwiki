@@ -269,7 +269,8 @@ function tpl_metaheaders($alt = true)
     if (actionOK('manifest')) {
         $head['link'][] = [
             'rel' => 'manifest',
-            'href' => DOKU_BASE . 'lib/exe/manifest.php'
+            'href' => DOKU_BASE . 'lib/exe/manifest.php',
+            'crossorigin' => 'use-credentials' // See issue #4322
         ];
     }
 
