@@ -856,6 +856,53 @@ You can use up to five different levels of',
         $this->assertEquals(221, $e->getCode(), 'Non existing media id given');
     }
 
+    //core.getMediaHistory
+    public function testGetMediaHistory()
+    {
+        global $conf;
+
+        $_SERVER['REMOTE_USER'] = 'testuser';
+
+        //image to be uploaded
+        $orig = mediaFN('wiki:dokuwiki-128.png');
+        $tmp = $conf['tmpdir'] . 'test.png';
+
+        //create image to be revised
+        $id = 'test:image3.png';
+        $media = mediaFN($id);
+
+        $rev = [];
+        for ($i = 0; $i < 2; $i++) {
+            $this->waitForTick();
+            copy($orig, $tmp);
+            media_save(['name' => $tmp], $id, true, AUTH_UPLOAD, 'rename');
+            $rev[$i] = filemtime($media);
+        }
+
+        $params = ['media' => $id, 'first' => 0]; // offset 0
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(2, count($versions));
+        $this->assertEquals($rev[1], $versions[0]['revision']);
+        $this->assertEquals($rev[0], $versions[1]['revision']);
+
+        $params = ['media' => $id, 'first' => 1]; // offset 1
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(1, count($versions));
+        $this->assertEquals($rev[0], $versions[0]['revision']);
+
+        $params = ['media' => $id, 'first' => 2]; // offset 2
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(0, count($versions));
+
+        $params = ['media' => $id, 'first' => 2]; // offset 3
+        $versions = $this->remote->call('core.getMediaHistory', $params);
+        $versions = json_decode(json_encode($versions), true);
+        $this->assertEquals(0, count($versions));
+    }
+
     //core.saveMedia
     public function testSaveMedia()
     {

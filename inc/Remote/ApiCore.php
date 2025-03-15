@@ -4,6 +4,7 @@ namespace dokuwiki\Remote;
 
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Remote\Response\Link;
@@ -66,6 +67,7 @@ class ApiCore
             'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
             'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
             // todo: implement getMediaHistory
+            'core.getMediaHistory' => new ApiCall([$this, 'getMediaHistory'], 'media'),
 
             'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
             'core.deleteMedia' => new ApiCall([$this, 'deleteMedia'], 'media'),
@@ -901,6 +903,56 @@ class ApiCore
         }
 
         return ft_mediause($media);
+    }
+
+    /**
+     * Returns a list of available revisions of a given wiki media
+     *
+     *
+     *
+     * @link https://www.dokuwiki.org/config:recent
+     * @param string $media file id
+     * @param int $first skip the first n changelog lines, 0 starts at the current revision
+     * @return MediaChange[]
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     * @author
+     */
+    public function getMediaHistory($media, $first = 0)
+    {
+        global $conf;
+
+        $media = cleanID($media);
+        // check that this media exists
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if (!media_exists($media, 0)) {
+            throw new RemoteException('The requested media file does not exist', 221);
+        }
+
+        $medialog = new MediaChangeLog($media);
+        $medialog->setChunkSize(1024);
+        // old revisions are counted from 0, so we need to subtract 1 for the current one
+        $revisions = $medialog->getRevisions($first - 1, $conf['recent']);
+
+        $result = [];
+        foreach ($revisions as $rev) {
+            if (!media_exists($media, $rev)) continue; // skip non-existing revisions
+            $info = $medialog->getRevisionInfo($rev);
+
+            $result[] = new MediaChange(
+                $media,
+                $rev,
+                $info['user'],
+                $info['ip'],
+                $info['sum'],
+                $info['type'],
+                $info['sizechange']
+            );
+        }
+
+        return $result;
     }
 
     /**
