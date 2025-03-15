@@ -23,7 +23,7 @@ use dokuwiki\Utf8\Sort;
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    public const API_VERSION = 13;
+    public const API_VERSION = 14;
 
     /**
      * Returns details about the core methods
@@ -916,9 +916,9 @@ class ApiCore
     }
 
     /**
-     * Returns a list of available revisions of a given wiki media
+     * Returns a list of available revisions of a given media file
      *
-     *
+     * Since API Version 14
      *
      * @link https://www.dokuwiki.org/config:recent
      * @param string $media file id
