@@ -408,3 +408,6 @@ $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 $lang['log_file_too_large']    = 'Protokolldatei (Log file) zu groß. Vorherige Zeilen wurden übersprungen!';
 $lang['log_file_failed_to_open'] = 'Protokolldatei (Log file) konnte nicht geöffnet werden.';
 $lang['log_file_failed_to_read'] = 'Beim Lesen des Protokolls ist ein Fehler aufgetreten.';
+
+$lang['footnotes_headline']     = 'Fußnoten';
+$lang['footnote_title']         = 'Fußnote %d';
