@@ -1482,10 +1482,10 @@ function media_printicon($filename, $size = '')
 {
     [$ext] = mimetype(mediaFN($filename), false);
 
-    if (file_exists(DOKU_INC . 'lib/images/fileicons/' . $size . '/' . $ext . '.png')) {
-        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/' . $ext . '.png';
-    } else {
-        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/file.png';
+    try {
+        $icon = \dokuwiki\File\StaticImage::url('fileicons/' . $size . '/' . $ext . '.png');
+    } catch (\Exception $e) {
+        $icon = \dokuwiki\File\StaticImage::url('fileicons/' . $size . '/file.png');
     }
 
     return '<img src="' . $icon . '" alt="' . $filename . '" class="icon" />';
@@ -1762,11 +1762,11 @@ function media_nstree_li($item)
     $class = 'media level' . $item['level'];
     if ($item['open']) {
         $class .= ' open';
-        $img   = DOKU_BASE . 'lib/images/minus.gif';
+        $img   = DOKU_BASE . 'lib/exe/image.php/minus.gif';
         $alt   = '−';
     } else {
         $class .= ' closed';
-        $img   = DOKU_BASE . 'lib/images/plus.gif';
+        $img   = DOKU_BASE . 'lib/exe/image.php/plus.gif';
         $alt   = '+';
     }
     // TODO: only deliver an image if it actually has a subtree...

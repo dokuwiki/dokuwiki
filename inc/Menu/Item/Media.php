@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Media
  *
@@ -15,7 +17,7 @@ class Media extends AbstractItem
         global $ID;
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/folder-multiple-image.svg';
+        $this->svg = StaticImage::path('menu/folder-multiple-image.svg');
         $this->params['ns'] = getNS($ID);
     }
 }
