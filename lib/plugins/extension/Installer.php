@@ -361,7 +361,7 @@ class Installer
         @touch(reset($config_cascade['main']['local']));
 
         if (function_exists('opcache_reset')) {
-            opcache_reset();
+            @opcache_reset();
         }
     }
 
