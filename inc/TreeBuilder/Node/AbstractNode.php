@@ -91,7 +91,7 @@ abstract class AbstractNode
      */
     public function hasChildren(): bool
     {
-        return !empty($this->children);
+        return $this->children !== [];
     }
 
     /**
@@ -178,10 +178,7 @@ abstract class AbstractNode
      */
     public function getProperty(string $name, $default = null)
     {
-        if (isset($this->properties[$name])) {
-            return $this->properties[$name];
-        }
-        return $default;
+        return $this->properties[$name] ?? $default;
     }
 
     /**

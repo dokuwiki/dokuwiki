@@ -232,7 +232,7 @@ class PageTreeBuilder extends AbstractBuilder
         $dir = wikiFN($namespace . ':xxx');
         $dir = substr($dir, strlen($base));
         $dir = dirname($dir); // remove the 'xxx' part
-        if($dir === '.') $dir = ''; // dirname returns '.' for root namespace
+        if ($dir === '.') $dir = ''; // dirname returns '.' for root namespace
         return $dir;
     }
 
@@ -255,6 +255,4 @@ class PageTreeBuilder extends AbstractBuilder
         }
         return parent::applyNodeProcessor($node);
     }
-
-
 }

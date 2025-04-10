@@ -17,9 +17,9 @@ use dokuwiki\TreeBuilder\Node\WikiPage;
 class ControlPageBuilder extends AbstractBuilder
 {
     /** @var int do not include internal links */
-    const FLAG_NOINTERNAL = 1;
+    public const FLAG_NOINTERNAL = 1;
     /** @var int do not include external links */
-    const FLAG_NOEXTERNAL = 2;
+    public const FLAG_NOEXTERNAL = 2;
 
     /** @var string */
     protected string $controlPage;
@@ -66,7 +66,7 @@ class ControlPageBuilder extends AbstractBuilder
                     break;
                 case 'listu_close':
                     // if we had a node on this level, remove it from the parents
-                    if(isset($parents[$level])) {
+                    if (isset($parents[$level])) {
                         unset($parents[$level]);
                     }
                     $level--; // close list level
@@ -89,7 +89,7 @@ class ControlPageBuilder extends AbstractBuilder
                         );
                     }
 
-                    if($level) {
+                    if ($level) {
                         // remember this page as the parent for this level
                         $parents[$level] = $newpage;
                         // parent is the last page on the previous level
@@ -102,7 +102,7 @@ class ControlPageBuilder extends AbstractBuilder
 
                     $newpage->setParent($parent);
                     $newpage = $this->applyNodeProcessor($newpage);
-                    if($newpage instanceof AbstractNode) {
+                    if ($newpage instanceof AbstractNode) {
                         $parent->addChild($newpage);
                     }
                     break;

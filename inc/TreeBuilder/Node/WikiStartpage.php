@@ -34,5 +34,4 @@ class WikiStartpage extends WikiNamespace
     {
         return $this->originalNamespace;
     }
-
 }

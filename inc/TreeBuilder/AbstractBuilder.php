@@ -2,7 +2,6 @@
 
 namespace dokuwiki\TreeBuilder;
 
-
 use dokuwiki\test\mock\Doku_Renderer;
 use dokuwiki\TreeBuilder\Node\AbstractNode;
 use dokuwiki\TreeBuilder\Node\ExternalLink;
@@ -145,7 +144,7 @@ abstract class AbstractBuilder
     public function getAll(): array
     {
         if (!$this->generated) throw new \RuntimeException('need to call generate() first');
-        if (empty($this->nodes)) {
+        if ($this->nodes === []) {
             $this->nodes = [];
             foreach ($this->top->getDescendants() as $node) {
                 $this->nodes[$node->getId()] = $node;
@@ -163,9 +162,7 @@ abstract class AbstractBuilder
     public function getLeaves(): array
     {
         if (!$this->generated) throw new \RuntimeException('need to call generate() first');
-        return array_filter($this->getAll(), function ($page) {
-            return !$page->getChildren();
-        });
+        return array_filter($this->getAll(), fn($page) => !$page->getChildren());
     }
 
     /**
@@ -176,9 +173,7 @@ abstract class AbstractBuilder
     public function getBranches(): array
     {
         if (!$this->generated) throw new \RuntimeException('need to call generate() first');
-        return array_filter($this->getAll(), function ($page) {
-            return !!$page->getChildren();
-        });
+        return array_filter($this->getAll(), fn($page) => (bool) $page->getChildren());
     }
 
     /**
@@ -218,7 +213,7 @@ abstract class AbstractBuilder
         foreach ($top->getChildren() as $node) {
             $R->listitem_open(1, $node->hasChildren());
             $R->listcontent_open();
-            if (is_a($node, ExternalLink::class)) {
+            if ($node instanceof ExternalLink) {
                 $R->externallink($node->getId(), $node->getTitle());
             } else {
                 $R->internallink($node->getId(), $node->getTitle());
@@ -261,6 +256,6 @@ abstract class AbstractBuilder
      */
     public function __toString(): string
     {
-        return join("\n", $this->getAll());
+        return implode("\n", $this->getAll());
     }
 }

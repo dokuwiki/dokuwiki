@@ -7,5 +7,4 @@ namespace dokuwiki\TreeBuilder\Node;
  */
 class WikiPage extends AbstractNode
 {
-
 }
