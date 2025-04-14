@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thalles Lázaro <dokuwiki@thall.es>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
@@ -23,9 +24,6 @@ $lang['tab_templates']         = 'Modelos Instalados';
 $lang['tab_search']            = 'Pesquisar e Instalar';
 $lang['tab_install']           = 'Instalação Manual';
 $lang['notimplemented']        = 'Este recurso não foi implementado ainda';
-$lang['notinstalled']          = 'Esta extensão não está instalada';
-$lang['alreadyenabled']        = 'Esta extensão já foi ativada';
-$lang['alreadydisabled']       = 'Esta extensão já foi desativada';
 $lang['pluginlistsaveerror']   = 'Houve um erro ao salvar a lista de plugins';
 $lang['unknownauthor']         = 'Autor desconhecido';
 $lang['unknownversion']        = 'Versão desconhecida';
@@ -41,6 +39,8 @@ $lang['js']['display_viewoptions'] = 'Opções de Visualização:';
 $lang['js']['display_enabled'] = 'ativado';
 $lang['js']['display_disabled'] = 'desativado';
 $lang['js']['display_updatable'] = 'atualizável';
+$lang['js']['close']           = 'Clique para fechar';
+$lang['js']['filter']          = 'Mostrar apenas extensões atualizáveis';
 $lang['search_for']            = 'Pesquisar Extensão:';
 $lang['search']                = 'Pesquisar';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -79,24 +79,40 @@ $lang['msg_enabled']           = 'Plugin %s ativado';
 $lang['msg_disabled']          = 'Plugin %s desativado';
 $lang['msg_delete_success']    = 'Extensão %s desinstalada';
 $lang['msg_delete_failed']     = 'A desinstalação da Extensão %s falhou';
-$lang['msg_template_install_success'] = 'Modelo %s instalado com sucesso';
-$lang['msg_template_update_success'] = 'Modelo %s atualizado com sucesso';
-$lang['msg_plugin_install_success'] = 'Plugin %s instalado com sucesso';
-$lang['msg_plugin_update_success'] = 'Plugin %s atualizado com sucesso';
+$lang['msg_install_success']   = 'Extensão %s instalada com sucesso';
+$lang['msg_update_success']    = 'Extensão %s atualizada com sucesso';
 $lang['msg_upload_failed']     = 'O envio do arquivo falhou';
 $lang['msg_nooverwrite']       = 'A extensão %s já existe e não será substituída. Para substituir, marque a opção de substituição';
 $lang['missing_dependency']    = 'dependência ausente ou desabilitada: %s';
+$lang['found_conflict']        = 'Esta extensão está marcada como conflitante com as seguintes extensões instaladas: %s';
 $lang['security_issue']        = 'Questão de Segurança: %s';
 $lang['security_warning']      = 'Aviso de Segurança: %s';
 $lang['update_message']        = 'Mensagem de Atualização: %s';
 $lang['wrong_folder']          = 'Plugin instalado incorretamente: Renomear pasta de plugins de "%s" para "%s".';
-$lang['url_change']            = "A URL mudou: A URL para download mudou desde o último download. Verifique se a nova URL é válida antes de atualizar a extensão\nNova:%s\nAntiga:%s";
+$lang['url_change']            = 'A URL mudou: A URL para download mudou desde o último download. Verifique se a nova URL é válida antes de atualizar a extensão
+Nova:%s
+Antiga:%s';
 $lang['error_badurl']          = 'URLs deve começar com http ou https';
 $lang['error_dircreate']       = 'Não é possível criar pasta temporária para receber o download';
 $lang['error_download']        = 'Não é possível baixar o arquivo:%s';
 $lang['error_decompress']      = 'Não é possível descompactar o arquivo baixado. Talvez seja resultado de um download ruim e nesse caso você deve tentar novamente; ou o formato de compressão pode ser desconhecido e nesse caso, você precisará baixar e instalar manualmente.';
 $lang['error_findfolder']      = 'Não foi possível identificar diretório de extensão, você precisa baixar e instalar manualmente';
 $lang['error_copy']            = 'Houve um erro na cópia do arquivo durante a tentativa de instalar os arquivos para o diretório <em>%s</em>: o disco pode estar cheio ou as permissões de acesso incorretas. Isso pode ter resultado em um plugin parcialmente instalado e tornar instável seu wiki';
+$lang['error_copy_read']       = 'Não foi possível ler o diretório %s';
+$lang['error_copy_mkdir']      = 'Não foi possível criar o diretório %s';
+$lang['error_copy_copy']       = 'Não foi possível copiar %s para %s';
+$lang['error_archive_read']    = 'Não foi possível abrir o arquivo %s para leitura';
+$lang['error_archive_extract'] = 'Não foi possível extrair o arquivo %s: %s';
+$lang['error_uninstall_protected'] = 'A extensão %s está protegida e não pode ser desinstalada';
+$lang['error_uninstall_dependants'] = 'A extensão %s ainda é necessária para %s e, portanto, não pode ser desinstalada';
+$lang['error_disable_protected'] = 'A extensão %s está protegida e não pode ser desabilitada';
+$lang['error_disable_dependants'] = 'A extensão %s ainda é necessária por %s e, portanto, não pode ser desabilitada';
+$lang['error_nourl']           = 'Não foi possível encontrar nenhuma URL de download para a extensão %s';
+$lang['error_notinstalled']    = 'A extensão %s não está instalada';
+$lang['error_alreadyenabled']  = 'A extensão %s já foi habilitada';
+$lang['error_alreadydisabled'] = 'A extensão %s já foi desabilitada';
+$lang['error_minphp']          = 'A extensão %s requer pelo menos PHP %s, mas este wiki está executando PHP %s';
+$lang['error_maxphp']          = 'A extensão %s suporta apenas PHP até %s, mas este wiki está executando PHP %s';
 $lang['noperms']               = 'Diretório da extensão não é gravável';
 $lang['notplperms']            = 'Diretório do modelo não é gravável';
 $lang['nopluginperms']         = 'Diretório do plugin não é gravável';
@@ -107,3 +123,7 @@ $lang['install_upload']        = 'Enviar Extensão:';
 $lang['repo_badresponse']      = 'O repositório de plugin retornou uma mensagem inválida.';
 $lang['repo_error']            = 'O repositório do plugin não pôde ser contactado. Verifique se o seu servidor está autorizado a conectar com www.dokuwiki.org e verifique as configurações de proxy do servidor.';
 $lang['nossl']                 = 'Seu PHP parece que perdeu o suporte a SSL. O download não vai funcionar para muitas extensões DokuWiki.';
+$lang['popularity_high']       = 'Esta é uma das extensões mais populares';
+$lang['popularity_medium']     = 'Esta extensão é bastante popular';
+$lang['popularity_low']        = 'Esta extensão despertou algum interesse';
+$lang['details']               = 'Detalhes';
