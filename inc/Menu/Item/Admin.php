@@ -12,17 +12,19 @@ class Admin extends AbstractItem
     /** @inheritdoc */
     public function __construct()
     {
+        global $INPUT;
+        global $INFO;
+
         parent::__construct();
 
+        if (!$INPUT->server->str('REMOTE_USER')) {
+            throw new \RuntimeException("admin is only for logged in users");
+        }
+
+        if (!isset($INFO) || !$INFO['ismanager']) {
+            throw new \RuntimeException("admin is only for managers and above");
+        }
+
         $this->svg = DOKU_INC . 'lib/images/menu/settings.svg';
-    }
-
-    /** @inheritdoc */
-    public function visibleInContext($ctx)
-    {
-        global $INFO;
-        if (!$INFO['ismanager']) return false;
-
-        return parent::visibleInContext($ctx);
     }
 }
