@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class AbstractItem
  *
@@ -41,7 +43,7 @@ abstract class AbstractItem
     /** @var string this item's label may contain a placeholder, which is replaced with this */
     protected $replacement = '';
     /** @var string the full path to the SVG icon of this menu item */
-    protected $svg = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
+    protected $svg = '';
     /** @var string can be set to overwrite the default lookup in $lang.btn_* */
     protected $label = '';
     /** @var string the tooltip title, defaults to $label */
@@ -64,6 +66,9 @@ abstract class AbstractItem
         $this->id = $ID;
         $this->type = $this->getType();
         $this->params['do'] = $this->type;
+        if ($this->svg === '') {
+            $this->svg = StaticImage::path('menu/00-default_checkbox-blank-circle-outline.svg');
+        }
 
         if (!actionOK($this->type)) throw new \RuntimeException("action disabled: {$this->type}");
     }

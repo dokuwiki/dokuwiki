@@ -736,7 +736,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     public function smiley($smiley)
     {
         if (isset($this->smileys[$smiley])) {
-            $this->doc .= '<img src="' . DOKU_BASE . 'lib/images/smileys/' . $this->smileys[$smiley] .
+            $this->doc .= '<img src="' . DOKU_BASE . 'lib/exe/image.php/smileys/' . $this->smileys[$smiley] .
                 '" class="icon smiley" alt="' . $this->_xmlEntities($smiley) . '" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);

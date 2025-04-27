@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Subscribe
  *
@@ -19,6 +21,6 @@ class Subscribe extends AbstractItem
             throw new \RuntimeException("subscribe is only for logged in users");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/09-subscribe_email-outline.svg';
+        $this->svg = StaticImage::path('menu/09-subscribe_email-outline.svg');
     }
 }

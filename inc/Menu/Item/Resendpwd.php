@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Resendpwd
  *
@@ -19,6 +21,6 @@ class Resendpwd extends AbstractItem
             throw new \RuntimeException("no resendpwd when already logged in");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/lock-reset.svg';
+        $this->svg = StaticImage::path('menu/lock-reset.svg');
     }
 }

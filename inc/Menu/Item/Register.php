@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Menu\Item;
 
+use dokuwiki\File\StaticImage;
+
 /**
  * Class Register
  *
@@ -19,6 +21,6 @@ class Register extends AbstractItem
             throw new \RuntimeException("no register when already logged in");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/account-plus.svg';
+        $this->svg = StaticImage::path('menu/account-plus.svg');
     }
 }
