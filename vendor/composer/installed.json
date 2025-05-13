@@ -96,17 +96,17 @@
         },
         {
             "name": "kissifrot/php-ixr",
-            "version": "1.8.4",
-            "version_normalized": "1.8.4.0",
+            "version": "1.8.5",
+            "version_normalized": "1.8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kissifrot/php-ixr.git",
-                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4"
+                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
-                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
+                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/17c5bc99f42fa086620a0ad2a593366ff6798753",
+                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753",
                 "shasum": ""
             },
             "require": {
@@ -116,7 +116,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^8.0"
             },
-            "time": "2023-04-15T08:50:43+00:00",
+            "time": "2025-04-22T07:42:43+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -145,7 +145,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kissifrot/php-ixr/issues",
-                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.4"
+                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.5"
             },
             "install-path": "../kissifrot/php-ixr"
         },
