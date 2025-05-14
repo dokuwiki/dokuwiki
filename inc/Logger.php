@@ -21,6 +21,9 @@ class Logger
 
     protected $isLogging = true;
 
+    /** @var string[] a list of expected log messages, only used during unit testing */
+    protected $expected = [];
+
     /**
      * Logger constructor.
      *
@@ -166,6 +169,17 @@ class Logger
     }
 
     /**
+     * Tests may register log expectations
+     *
+     * @param string $log
+     * @return void
+     */
+    public function expect($log)
+    {
+        $this->expected[] = $log;
+    }
+
+    /**
      * Formats the given data as loglines
      *
      * @param array $data Event data from LOGGER_DATA_FORMAT
@@ -189,7 +203,7 @@ class Logger
         }
 
         // datetime, fileline, message
-        $logline = gmdate('Y-m-d H:i:s', $datetime) . "\t";
+        $logline = date('Y-m-d H:i:s', $datetime) . "\t";
         if ($file) {
             $logline .= $file;
             if ($line) $logline .= "($line)";
@@ -228,8 +242,23 @@ class Logger
     protected function writeLogLines($lines, $logfile)
     {
         if (defined('DOKU_UNITTEST')) {
-            fwrite(STDERR, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
+            // our tests may expect certain log messages
+            if ($this->expected) {
+                $expected = array_shift($this->expected);
+                if (!str_contains($lines[0], $expected)) {
+                    throw new \RuntimeException(
+                        "Log expectation failed:\n" .
+                        "Expected: $expected\n" .
+                        "Actual:   {$lines[0]}"
+                    );
+                }
+            } else {
+                $stderr = fopen('php://stderr', 'w');
+                fwrite($stderr, "\n[" . $this->facility . '] ' . implode("\n", $lines) . "\n");
+                fclose($stderr);
+            }
         }
+
         return io_saveFile($logfile, implode("\n", $lines) . "\n", true);
     }
 }

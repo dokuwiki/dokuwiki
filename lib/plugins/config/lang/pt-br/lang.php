@@ -3,9 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Paul Nizan <paul_nizan@hormail.com>
- * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
@@ -106,6 +106,7 @@ $lang['disableactions_other']  = 'Outras ações (separadas por vírgula)';
 $lang['disableactions_rss']    = 'Sindicância XML (RSS)';
 $lang['auth_security_timeout'] = 'Tempo limite de segurança para autenticações (seg)';
 $lang['securecookie']          = 'Os cookies definidos via HTTPS devem ser enviados para o navegador somente via HTTPS? Desabilite essa opção quando somente a autenticação do seu wiki for realizada de maneira segura via SSL e a navegação, de maneira insegura.';
+$lang['samesitecookie']        = 'O atributo de cookie samesite a ser usado. Deixá-lo em branco permitirá que o navegador decida sobre a política samesite.';
 $lang['remote']                = 'Habilitar o sistema de API remota. Isso permite que outras aplicações acessem o wiki via XML-RPC ou outros mecanismos.';
 $lang['remoteuser']            = 'Restringir o acesso à API remota aos grupos ou usuários definidos aqui (separados por vírgulas). Deixe em branco para permitir o acesso a qualquer um.';
 $lang['remotecors']            = 'Habilite o compartilhamento de recursos entre origens (CORS) para as interfaces remotas. Asterisco (*) para permitir todas as origens. Deixe em branco para negar o CORS.';
@@ -137,6 +138,7 @@ $lang['mailreturnpath']        = 'Endereço de e-mail do destinatário para noti
 $lang['mailprefix']            = 'Prefixo do assunto dos e-mails de envio automático';
 $lang['htmlmail']              = 'Enviar e-mail HTML multipartes, que têm uma aparência melhor, mas um tamanho maior. Desabilite para enviar e-mails em texto puro.';
 $lang['dontlog']               = 'Desabilita o registro de log para os seguintes tipos de logs.';
+$lang['logretain']             = 'Quantos dias de registros manter.';
 $lang['sitemap']               = 'Gerar Google Sitemap (dias)';
 $lang['rss_type']              = 'Tipo de fonte XML';
 $lang['rss_linkto']            = 'Os links da fonte XML apontam para';
@@ -171,7 +173,6 @@ $lang['search_fragment_o_exact'] = 'exato';
 $lang['search_fragment_o_starts_with'] = 'começa com';
 $lang['search_fragment_o_ends_with'] = 'termina com';
 $lang['search_fragment_o_contains'] = 'contém';
-$lang['trustedproxy']          = 'Confie nos proxies de encaminhamento que correspondem a essa expressão regular sobre o verdadeiro IP do cliente que eles relatam. O padrão corresponde às redes locais. Deixe em branco para não confiar em proxy.';
 $lang['_feature_flags']        = 'Sinalizadores de recursos';
 $lang['defer_js']              = 'Adie o javascript para ser executado após a análise do HTML da página. Melhora a velocidade percebida da página, mas pode interromper um pequeno número de plugins.';
 $lang['hidewarnings']          = 'Não exiba nenhum aviso emitido pelo PHP. Isso pode facilitar a transição para PHP8+. Os avisos ainda serão registrados no log de erros e devem ser relatados.';

@@ -4,4 +4,4 @@ email  andi@splitbrain.org
 date   2015-07-18
 name   Plain Auth Plugin
 desc   Provides user authentication against DokuWiki's local password storage
-url    http://www.dokuwiki.org/plugin:authplain
+url    https://www.dokuwiki.org/plugin:authplain

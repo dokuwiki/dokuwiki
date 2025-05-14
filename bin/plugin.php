@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+use dokuwiki\Extension\CLIPlugin;
 use dokuwiki\Extension\PluginController;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Options;
-use dokuwiki\Extension\CLIPlugin;
 use splitbrain\phpcli\TableFormatter;
 
 if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
@@ -94,7 +94,8 @@ class PluginCLI extends CLI
      */
     protected function loadPlugin($name)
     {
-        if (plugin_isdisabled($name)) return null;
+        [$basename] = explode('_', $name); // might be a sub component
+        if (plugin_isdisabled($basename)) return null;
 
         // execute the plugin CLI
         $class = "cli_plugin_$name";

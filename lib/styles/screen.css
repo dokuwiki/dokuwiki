@@ -71,7 +71,8 @@ div.notify {
 /* media manager popup toggle buttons */
 
 #media__popup_content button.button {
-    border: 1px outset;
+    border-width: 1px;
+    border-style: outset;
 }
 
 #media__popup_content button.selected {

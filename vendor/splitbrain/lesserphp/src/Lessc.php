@@ -70,7 +70,7 @@ class Lessc
     protected ?stdClass $env = null;
 
     /** @var stdClass|null The currently parsed block FIXME should probably be its own proper class */
-    protected ?stdClass $scope;
+    protected ?stdClass $scope = null;
 
     /** @var array [file => mtime] list of all files that have been parsed, to avoid circular imports */
     protected array $allParsedFiles = [];
@@ -1197,9 +1197,11 @@ class Lessc
                 // [3] - blue component
                 // [4] - optional alpha component
                 [, $r, $g, $b] = $value;
-                $r = round($r);
-                $g = round($g);
-                $b = round($b);
+                // pre-round to work around more precice rounding in PHP 8.4+
+                // see https://github.com/php/php-src/issues/16930
+                $r = round(round($r, 13));
+                $g = round(round($g, 13));
+                $b = round(round($b, 13));
 
                 if (count($value) == 5 && $value[4] != 1) { // rgba
                     return 'rgba(' . $r . ',' . $g . ',' . $b . ',' . $value[4] . ')';

@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Dave Hello <hsu@peterdavehello.org>
+ * @author Junting Wu <lance20501@gmail.com>
  * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author chinsan <chinsan@mail2000.com.tw>
@@ -365,5 +367,8 @@ $lang['currentns']             = '目前的命名空間';
 $lang['searchresult']          = '搜尋結果';
 $lang['plainhtml']             = '純 HTML';
 $lang['wikimarkup']            = 'Wiki 語法標記';
+$lang['unable_to_parse_date']  = '無法解析參數「%s」。';
 $lang['email_signature_text']  = '本信件由以下 DokuWiki 網站產生
 @DOKUWIKIURL@';
+$lang['log_file_failed_to_open'] = '開啟日誌檔案失敗。';
+$lang['log_file_failed_to_read'] = '讀取日誌時發生錯誤。';

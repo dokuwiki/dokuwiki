@@ -4,6 +4,7 @@ namespace dokuwiki\Remote;
 
 use Doku_Renderer_xhtml;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Remote\Response\Link;
@@ -22,7 +23,7 @@ use dokuwiki\Utf8\Sort;
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    public const API_VERSION = 12;
+    public const API_VERSION = 14;
 
     /**
      * Returns details about the core methods
@@ -64,8 +65,8 @@ class ApiCore
 
             'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
             'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
-            // todo: implement getMediaHistory
-            // todo: implement getMediaUsage
+            'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
+            'core.getMediaHistory' => new ApiCall([$this, 'getMediaHistory'], 'media'),
 
             'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
             'core.deleteMedia' => new ApiCall([$this, 'deleteMedia'], 'media'),
@@ -463,7 +464,7 @@ class ApiCore
     /**
      * Returns a list of available revisions of a given wiki page
      *
-     * The number of returned pages is set by `$conf['recent']`, but non accessible revisions pages
+     * The number of returned pages is set by `$conf['recent']`, but non accessible revisions
      * are skipped, so less than that may be returned.
      *
      * @link https://www.dokuwiki.org/config:recent
@@ -527,7 +528,7 @@ class ApiCore
         $page = $this->checkPage($page);
 
         // resolve page instructions
-        $ins = p_cached_instructions(wikiFN($page));
+        $ins = p_cached_instructions(wikiFN($page), false, $page);
 
         // instantiate new Renderer - needed for interwiki links
         $Renderer = new Doku_Renderer_xhtml();
@@ -834,6 +835,11 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
+        // was the current revision requested?
+        if ($this->isCurrentMediaRev($media, $rev)) {
+            $rev = 0;
+        }
+
         $file = mediaFN($media, $rev);
         if (!@ file_exists($file)) {
             throw new RemoteException('The requested media file (revision) does not exist', 221);
@@ -865,6 +871,12 @@ class ApiCore
         if (auth_quickaclcheck($media) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
+
+        // was the current revision requested?
+        if ($this->isCurrentMediaRev($media, $rev)) {
+            $rev = 0;
+        }
+
         if (!media_exists($media, $rev)) {
             throw new RemoteException('The requested media file does not exist', 221);
         }
@@ -874,6 +886,89 @@ class ApiCore
         if ($author) $info->retrieveAuthor();
 
         return $info;
+    }
+
+    /**
+     * Returns the pages that use a given media file
+     *
+     * The call will return an error if the requested media file does not exist.
+     *
+     * Read access is required for the media file.
+     *
+     * Since API Version 13
+     *
+     * @param string $media file id
+     * @return string[] A list of pages linking to the given page
+     * @throws AccessDeniedException no permission for media
+     * @throws RemoteException if not exist
+     */
+    public function getMediaUsage($media)
+    {
+        $media = cleanID($media);
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if (!media_exists($media)) {
+            throw new RemoteException('The requested media file does not exist', 221);
+        }
+
+        return ft_mediause($media);
+    }
+
+    /**
+     * Returns a list of available revisions of a given media file
+     *
+     * The number of returned files is set by `$conf['recent']`, but non accessible revisions
+     * are skipped, so less than that may be returned.
+     *
+     * Since API Version 14
+     *
+     * @link https://www.dokuwiki.org/config:recent
+     * @param string $media file id
+     * @param int $first skip the first n changelog lines, 0 starts at the current revision
+     * @return MediaChange[]
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     * @author
+     */
+    public function getMediaHistory($media, $first = 0)
+    {
+        global $conf;
+
+        $media = cleanID($media);
+        // check that this media exists
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if (!media_exists($media, 0)) {
+            throw new RemoteException('The requested media file does not exist', 221);
+        }
+
+        $medialog = new MediaChangeLog($media);
+        $medialog->setChunkSize(1024);
+        // old revisions are counted from 0, so we need to subtract 1 for the current one
+        $revisions = $medialog->getRevisions($first - 1, $conf['recent']);
+
+        $result = [];
+        foreach ($revisions as $rev) {
+            // the current revision needs to be checked against the current file path
+            $check = $this->isCurrentMediaRev($media, $rev) ? '' : $rev;
+            if (!media_exists($media, $check)) continue; // skip non-existing revisions
+
+            $info = $medialog->getRevisionInfo($rev);
+
+            $result[] = new MediaChange(
+                $media,
+                $rev,
+                $info['user'],
+                $info['ip'],
+                $info['sum'],
+                $info['type'],
+                $info['sizechange']
+            );
+        }
+
+        return $result;
     }
 
     /**
@@ -958,6 +1053,20 @@ class ApiCore
         } else {
             throw new RemoteException('Failed to delete media file', 233);
         }
+    }
+
+    /**
+     * Check if the given revision is the current revision of this file
+     *
+     * @param string $id
+     * @param int $rev
+     * @return bool
+     */
+    protected function isCurrentMediaRev(string $id, int $rev)
+    {
+        $current = @filemtime(mediaFN($id));
+        if ($current === $rev) return true;
+        return false;
     }
 
     // endregion

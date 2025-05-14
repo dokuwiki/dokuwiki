@@ -891,6 +891,9 @@ abstract class Doku_Renderer extends Plugin
     {
         global $conf;
 
+        // remove relative namespace
+        $name = ltrim($name, '~');
+
         //if there is a hash we use the ancor name only
         [$name, $hash] = sexplode('#', $name, 2);
         if ($hash) return $hash;

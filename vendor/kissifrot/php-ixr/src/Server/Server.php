@@ -14,6 +14,9 @@ class Server
     protected $message;
     protected $capabilities;
 
+    /**
+     * @throws ServerException
+     */
     public function __construct($callbacks = false, $data = false, $wait = false)
     {
         $this->setCapabilities();
@@ -26,6 +29,9 @@ class Server
         }
     }
 
+    /**
+     * @throws ServerException
+     */
     public function serve($data = false)
     {
         if (!$data) {

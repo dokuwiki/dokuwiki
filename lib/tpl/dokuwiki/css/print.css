@@ -72,6 +72,7 @@ a.mail:after {
 /* code blocks */
 pre {
     font-family: monospace;
+    white-space: pre-wrap;
 }
 dl.code dt,
 dl.file dt {

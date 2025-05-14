@@ -1674,13 +1674,13 @@ function media_nstree($ns)
     global $lang;
 
     // currently selected namespace
-    $ns  = cleanID($ns);
+    $ns = cleanID($ns);
     if (empty($ns)) {
         global $ID;
         $ns = (string)getNS($ID);
     }
 
-    $ns_dir  = utf8_encodeFN(str_replace(':', '/', $ns));
+    $ns_dir = utf8_encodeFN(str_replace(':', '/', $ns));
 
     $data = [];
     search($data, $conf['mediadir'], 'search_index', ['ns' => $ns_dir, 'nofiles' => true]);
@@ -1692,20 +1692,28 @@ function media_nstree($ns)
     $ns_parts = explode(':', $ns);
     $tmp_ns = '';
     $pos = 0;
+    $insert = false;
     foreach ($ns_parts as $level => $part) {
-        if ($tmp_ns) $tmp_ns .= ':' . $part;
-        else $tmp_ns = $part;
+        if ($tmp_ns) {
+            $tmp_ns .= ':' . $part;
+        } else {
+            $tmp_ns = $part;
+        }
 
-        // find the namespace parts or insert them
-        while ($data[$pos]['id'] != $tmp_ns) {
+        // find the namespace parts
+        while (array_key_exists($pos, $data) && $data[$pos]['id'] != $tmp_ns) {
             if (
                 $pos >= count($data) ||
                 ($data[$pos]['level'] <= $level + 1 && Sort::strcmp($data[$pos]['id'], $tmp_ns) > 0)
             ) {
-                array_splice($data, $pos, 0, [['level' => $level + 1, 'id' => $tmp_ns, 'open' => 'true']]);
+                $insert = true;
                 break;
             }
             ++$pos;
+        }
+        // insert namespace in hierarchy; if not found in above loop, append it to the end
+        if ($insert || $pos === count($data)) {
+            array_splice($data, $pos, 0, [['level' => $level + 1, 'id' => $tmp_ns, 'open' => 'true']]);
         }
     }
 

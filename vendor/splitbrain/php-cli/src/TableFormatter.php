@@ -293,6 +293,7 @@ class TableFormatter
     protected function wordwrap($str, $width = 75, $break = "\n", $cut = false)
     {
         $lines = explode($break, $str);
+        $color_reset = $this->colors->getColorCode(Colors::C_RESET);
         foreach ($lines as &$line) {
             $line = rtrim($line);
             if ($this->strlen($line) <= $width) {
@@ -301,18 +302,30 @@ class TableFormatter
             $words = explode(' ', $line);
             $line = '';
             $actual = '';
+            $color = '';
             foreach ($words as $word) {
+                if (preg_match_all(Colors::C_CODE_REGEX, $word, $color_codes) ) {
+                    # Word contains color codes
+                    foreach ($color_codes[0] as $code) {
+                        if ($code == $color_reset) {
+                            $color = '';
+                        } else {
+                            # Remember color so we can reapply it after a line break
+                            $color = $code;
+                        }
+                    }
+                }
                 if ($this->strlen($actual . $word) <= $width) {
                     $actual .= $word . ' ';
                 } else {
                     if ($actual != '') {
                         $line .= rtrim($actual) . $break;
                     }
-                    $actual = $word;
+                    $actual = $color . $word;
                     if ($cut) {
                         while ($this->strlen($actual) > $width) {
                             $line .= $this->substr($actual, 0, $width) . $break;
-                            $actual = $this->substr($actual, $width);
+                            $actual = $color . $this->substr($actual, $width);
                         }
                     }
                     $actual .= ' ';

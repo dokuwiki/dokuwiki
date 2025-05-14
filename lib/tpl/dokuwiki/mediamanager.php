@@ -18,7 +18,6 @@ if (!defined('DOKU_INC')) die();
         <?php echo hsc($lang['mediaselect'])?>
         [<?php echo strip_tags($conf['title'])?>]
     </title>
-    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
     <?php tpl_metaheaders()?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(['favicon', 'mobile']) ?>

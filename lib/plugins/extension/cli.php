@@ -1,10 +1,16 @@
 <?php
 
-use splitbrain\phpcli\Exception;
 use dokuwiki\Extension\CLIPlugin;
+use dokuwiki\plugin\extension\Exception as ExtensionException;
+use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Installer;
+use dokuwiki\plugin\extension\Local;
+use dokuwiki\plugin\extension\Notice;
+use dokuwiki\plugin\extension\Repository;
+use splitbrain\phpcli\Colors;
+use splitbrain\phpcli\Exception;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
-use splitbrain\phpcli\Colors;
 
 /**
  * Class cli_plugin_extension
@@ -20,13 +26,14 @@ class cli_plugin_extension extends CLIPlugin
     protected function setup(Options $options)
     {
         // general setup
+        $options->useCompactHelp();
         $options->setHelp(
             "Manage plugins and templates for this DokuWiki instance\n\n" .
             "Status codes:\n" .
-            "   i - installed\n" .
-            "   b - bundled with DokuWiki\n" .
-            "   g - installed via git\n" .
-            "   d - disabled\n" .
+            "   i - installed                    " . Notice::symbol(Notice::SECURITY) . " - security issue\n" .
+            "   b - bundled with DokuWiki        " . Notice::symbol(Notice::ERROR) . " - extension error\n" .
+            "   g - installed via git            " . Notice::symbol(Notice::WARNING) . " - extension warning\n" .
+            "   d - disabled                     " . Notice::symbol(Notice::INFO) . " - extension info\n" .
             "   u - update available\n"
         );
 
@@ -43,6 +50,7 @@ class cli_plugin_extension extends CLIPlugin
 
         // upgrade
         $options->registerCommand('upgrade', 'Update all installed extensions to their latest versions');
+        $options->registerOption('git-overwrite', 'Do not skip git-controlled extensions', 'g', false, 'upgrade');
 
         // install
         $options->registerCommand('install', 'Install or upgrade extensions');
@@ -69,10 +77,11 @@ class cli_plugin_extension extends CLIPlugin
     /** @inheritdoc */
     protected function main(Options $options)
     {
-        /** @var helper_plugin_extension_repository $repo */
-        $repo = plugin_load('helper', 'extension_repository');
-        if (!$repo->hasAccess(false)) {
-            $this->warning('Extension Repository API is not accessible, no remote info available!');
+        $repo = Repository::getInstance();
+        try {
+            $repo->checkAccess();
+        } catch (ExtensionException $e) {
+            $this->warning($e->getMessage());
         }
 
         switch ($options->getCmd()) {
@@ -99,7 +108,7 @@ class cli_plugin_extension extends CLIPlugin
                 $ret = $this->cmdEnable(false, $options->getArgs());
                 break;
             case 'upgrade':
-                $ret = $this->cmdUpgrade();
+                $ret = $this->cmdUpgrade($options->getOpt('git-overwrite', false));
                 break;
             default:
                 echo $options->help();
@@ -114,23 +123,15 @@ class cli_plugin_extension extends CLIPlugin
      *
      * @return int
      */
-    protected function cmdUpgrade()
+    protected function cmdUpgrade($gitOverwrite)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
-        $list = $this->getInstalledExtensions();
-
-        $ok = 0;
-        foreach ($list as $extname) {
-            $ext->setExtension($extname);
-            $date = $ext->getInstalledVersion();
-            $avail = $ext->getLastUpdate();
-            if ($avail && $avail > $date && !$ext->isBundled()) {
-                $ok += $this->cmdInstall([$extname]);
-            }
+        $local = new Local();
+        $extensions = [];
+        foreach ($local->getExtensions() as $ext) {
+            if ($ext->isGitControlled() && !$gitOverwrite) continue; // skip git controlled extensions
+            if ($ext->isUpdateAvailable()) $extensions[] = $ext->getID();
         }
-
-        return $ok;
+        return $this->cmdInstall($extensions);
     }
 
     /**
@@ -142,32 +143,23 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdEnable($set, $extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
-
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
-            if (!$ext->isInstalled()) {
-                $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                ++$ok;
-                continue;
-            }
+            $ext = Extension::createFromId($extname);
 
-            if ($set) {
-                $status = $ext->enable();
-                $msg = 'msg_enabled';
-            } else {
-                $status = $ext->disable();
-                $msg = 'msg_disabled';
-            }
-
-            if ($status !== true) {
-                $this->error($status);
-                ++$ok;
-                continue;
-            } else {
+            try {
+                if ($set) {
+                    $ext->enable();
+                    $msg = 'msg_enabled';
+                } else {
+                    $ext->disable();
+                    $msg = 'msg_disabled';
+                }
                 $this->success(sprintf($this->getLang($msg), $ext->getID()));
+            } catch (ExtensionException $e) {
+                $this->error($e->getMessage());
+                ++$ok;
+                continue;
             }
         }
 
@@ -182,27 +174,21 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdUnInstall($extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
+        $installer = new Installer();
 
         $ok = 0;
         foreach ($extensions as $extname) {
-            $ext->setExtension($extname);
-            if (!$ext->isInstalled()) {
-                $this->error(sprintf('Extension %s is not installed', $ext->getID()));
-                ++$ok;
-                continue;
-            }
+            $ext = Extension::createFromId($extname);
 
-            $status = $ext->uninstall();
-            if ($status) {
+            try {
+                $installer->uninstall($ext);
                 $this->success(sprintf($this->getLang('msg_delete_success'), $ext->getID()));
-            } else {
-                $this->error(sprintf($this->getLang('msg_delete_failed'), hsc($ext->getID())));
-                $ok = 1;
+            } catch (ExtensionException $e) {
+                $this->debug($e->getTraceAsString());
+                $this->error($e->getMessage());
+                $ok++; // error code is number of failed uninstalls
             }
         }
-
         return $ok;
     }
 
@@ -214,48 +200,32 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdInstall($extensions)
     {
-        /* @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
-
         $ok = 0;
         foreach ($extensions as $extname) {
-            $installed = [];
+            $installer = new Installer(true);
 
-            if (preg_match("/^https?:\/\//i", $extname)) {
-                try {
-                    $installed = $ext->installFromURL($extname, true);
-                } catch (Exception $e) {
-                    $this->error($e->getMessage());
-                    ++$ok;
+            try {
+                if (preg_match("/^https?:\/\//i", $extname)) {
+                    $installer->installFromURL($extname, true);
+                } else {
+                    $installer->installFromId($extname);
                 }
-            } else {
-                $ext->setExtension($extname);
-
-                if (!$ext->getDownloadURL()) {
-                    ++$ok;
-                    $this->error(
-                        sprintf('Could not find download for %s', $ext->getID())
-                    );
-                    continue;
-                }
-
-                try {
-                    $installed = $ext->installOrUpdate();
-                } catch (Exception $e) {
-                    $this->error($e->getMessage());
-                    ++$ok;
-                }
+            } catch (ExtensionException $e) {
+                $this->debug($e->getTraceAsString());
+                $this->error($e->getMessage());
+                $ok++; // error code is number of failed installs
             }
 
-            foreach ($installed as $info) {
-                $this->success(
-                    sprintf(
-                        $this->getLang('msg_' . $info['type'] . '_' . $info['action'] . '_success'),
-                        $info['base']
-                    )
-                );
+            $processed = $installer->getProcessed();
+            foreach ($processed as $id => $status) {
+                if ($status == Installer::STATUS_INSTALLED) {
+                    $this->success(sprintf($this->getLang('msg_install_success'), $id));
+                } elseif ($status == Installer::STATUS_UPDATED) {
+                    $this->success(sprintf($this->getLang('msg_update_success'), $id));
+                }
             }
         }
+
         return $ok;
     }
 
@@ -270,9 +240,8 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdSearch($query, $showdetails, $max)
     {
-        /** @var helper_plugin_extension_repository $repository */
-        $repository = $this->loadHelper('extension_repository');
-        $result = $repository->search($query);
+        $repo = Repository::getInstance();
+        $result = $repo->searchExtensions($query);
         if ($max) {
             $result = array_slice($result, 0, $max);
         }
@@ -289,48 +258,27 @@ class cli_plugin_extension extends CLIPlugin
      */
     protected function cmdList($showdetails, $filter)
     {
-        $list = $this->getInstalledExtensions();
-        $this->listExtensions($list, $showdetails, $filter);
+        $extensions = (new Local())->getExtensions();
+        // initialize remote data in one go
+        Repository::getInstance()->initExtensions(array_keys($extensions));
 
+        $this->listExtensions($extensions, $showdetails, $filter);
         return 0;
-    }
-
-    /**
-     * Get all installed extensions
-     *
-     * @return array
-     */
-    protected function getInstalledExtensions()
-    {
-        /** @var Doku_Plugin_Controller $plugin_controller */
-        global $plugin_controller;
-        $pluginlist = $plugin_controller->getList('', true);
-        $tpllist = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
-        $tpllist = array_map(static fn($path) => 'template:' . basename($path), $tpllist);
-
-        $list = array_merge($pluginlist, $tpllist);
-        sort($list);
-        return $list;
     }
 
     /**
      * List the given extensions
      *
-     * @param string[] $list
+     * @param Extension[] $list
      * @param bool $details display details
      * @param string $filter filter for this status
      * @throws Exception
+     * @todo break into smaller methods
      */
     protected function listExtensions($list, $details, $filter = '')
     {
-        /** @var helper_plugin_extension_extension $ext */
-        $ext = $this->loadHelper('extension_extension');
         $tr = new TableFormatter($this->colors);
-
-
-        foreach ($list as $name) {
-            $ext->setExtension($name);
-
+        foreach ($list as $ext) {
             $status = '';
             if ($ext->isInstalled()) {
                 $date = $ext->getInstalledVersion();
@@ -343,7 +291,11 @@ class cli_plugin_extension extends CLIPlugin
                     $vcolor = Colors::C_GREEN;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) $status = 'b';
+                if ($ext->isBundled()) {
+                    $status = 'b';
+                    $date = '<bundled>';
+                    $vcolor = null;
+                }
                 if ($ext->isEnabled()) {
                     $ecolor = Colors::C_BROWN;
                 } else {
@@ -360,8 +312,14 @@ class cli_plugin_extension extends CLIPlugin
                 continue;
             }
 
+            $notices = Notice::list($ext);
+            if ($notices[Notice::SECURITY]) $status .= Notice::symbol(Notice::SECURITY);
+            if ($notices[Notice::ERROR]) $status .= Notice::symbol(Notice::ERROR);
+            if ($notices[Notice::WARNING]) $status .= Notice::symbol(Notice::WARNING);
+            if ($notices[Notice::INFO]) $status .= Notice::symbol(Notice::INFO);
+
             echo $tr->format(
-                [20, 3, 12, '*'],
+                [20, 5, 12, '*'],
                 [
                     $ext->getID(),
                     $status,
@@ -380,13 +338,24 @@ class cli_plugin_extension extends CLIPlugin
                 ]
             );
 
+
             if (!$details) continue;
 
             echo $tr->format(
-                [5, '*'],
+                [7, '*'],
                 ['', $ext->getDescription()],
                 [null, Colors::C_CYAN]
             );
+            foreach ($notices as $type => $msgs) {
+                if (!$msgs) continue;
+                foreach ($msgs as $msg) {
+                    echo $tr->format(
+                        [7, '*'],
+                        ['', Notice::symbol($type) . ' ' . $msg],
+                        [null, Colors::C_LIGHTBLUE]
+                    );
+                }
+            }
         }
     }
 }

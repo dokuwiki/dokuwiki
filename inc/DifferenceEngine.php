@@ -18,7 +18,7 @@ class _DiffOp {
      * @return _DiffOp
      */
     function reverse() {
-        trigger_error("pure virtual", E_USER_ERROR);
+        throw new \RuntimeException("pure virtual");
     }
 
     function norig() {
@@ -629,20 +629,20 @@ class Diff {
      */
     function _check($from_lines, $to_lines) {
         if (serialize($from_lines) != serialize($this->orig()))
-            trigger_error("Reconstructed original doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reconstructed original doesn't match");
         if (serialize($to_lines) != serialize($this->closing()))
-            trigger_error("Reconstructed closing doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reconstructed closing doesn't match");
 
         $rev = $this->reverse();
         if (serialize($to_lines) != serialize($rev->orig()))
-            trigger_error("Reversed original doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reversed original doesn't match");
         if (serialize($from_lines) != serialize($rev->closing()))
-            trigger_error("Reversed closing doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reversed closing doesn't match");
 
         $prevtype = 'none';
         foreach ($this->edits as $edit) {
             if ($prevtype == $edit->type)
-                trigger_error("Edit sequence is non-optimal", E_USER_ERROR);
+                throw new \RuntimeException("Edit sequence is non-optimal");
             $prevtype = $edit->type;
         }
 
@@ -805,7 +805,7 @@ class DiffFormatter {
             elseif ($edit->type == 'change')
                 $this->_changed($edit->orig, $edit->closing);
             else
-                trigger_error("Unknown edit type", E_USER_ERROR);
+                throw new \RuntimeException("Unknown edit type");
         }
         $this->_end_block();
     }

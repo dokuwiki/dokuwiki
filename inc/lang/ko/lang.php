@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author nakky <nakky@naver.com>
+ * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
@@ -134,6 +136,7 @@ $lang['search_past_7_days']    = '저번 주';
 $lang['search_past_month']     = '저번 달';
 $lang['search_past_year']      = '저번 년도';
 $lang['search_sort_by_hits']   = '조회수로 정렬';
+$lang['search_sort_by_mtime']  = '마지막 수정일로 정렬';
 $lang['regmissing']            = '죄송하지만 모든 필드를 채워야 합니다.';
 $lang['reguexists']            = '죄송하지만 같은 이름을 사용하는 사용자가 있습니다.';
 $lang['regsuccess']            = '사용자 계정을 만들었으며 비밀번호는 이메일로 보냈습니다.';
@@ -154,6 +157,8 @@ $lang['profdeleted']           = '당신의 사용자 계정이 이 위키에서
 $lang['profconfdelete']        = '이 위키에서 내 계정을 제거하고 싶습니다. <br/> 이 행동은 되돌릴 수 없습니다.';
 $lang['profconfdeletemissing'] = '선택하지 않은 확인 상자를 확인';
 $lang['proffail']              = '사용자 프로필이 업데이트되지 않았습니다.';
+$lang['proftokenlegend']       = '인증 토큰';
+$lang['proftokengenerate']     = '토큰 재설정';
 $lang['pwdforget']             = '비밀번호를 잊으셨나요? 비밀번호를 재설정하세요';
 $lang['resendna']              = '이 위키는 비밀번호 재설정을 지원하지 않습니다.';
 $lang['resendpwd']             = '다음으로 새 비밀번호 보내기';

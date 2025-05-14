@@ -54,10 +54,10 @@ class io_rmdir_test extends DokuWikiTest {
         $this->assertTrue(is_dir($dir));
         $this->assertTrue(is_dir($top));
 
-        $this->assertFileNotExists("$dir/this/does/not/exist");
+        $this->assertFileDoesNotExist("$dir/this/does/not/exist");
         $this->assertTrue(io_rmdir("$dir/this/does/not/exist"));
         clearstatcache();
-        $this->assertFileNotExists("$dir/this/does/not/exist");
+        $this->assertFileDoesNotExist("$dir/this/does/not/exist");
         $this->assertTrue(is_dir($dir));
         $this->assertTrue(is_dir($top));
     }
@@ -165,7 +165,7 @@ class io_rmdir_test extends DokuWikiTest {
 
         // check result
         clearstatcache();
-        $this->assertFileNotExists("$dir/testfile.txt");
+        $this->assertFileDoesNotExist("$dir/testfile.txt");
         $this->assertFalse(is_dir($dir));
         $this->assertTrue(is_dir($top));
     }
@@ -207,9 +207,9 @@ class io_rmdir_test extends DokuWikiTest {
 
         // check result
         clearstatcache();
-        $this->assertFileNotExists("$dir/testfile.txt");
-        $this->assertFileNotExists("$dir/foo/testfile.txt");
-        $this->assertFileNotExists("$dir/foo/bar/baz/testfile.txt");
+        $this->assertFileDoesNotExist("$dir/testfile.txt");
+        $this->assertFileDoesNotExist("$dir/foo/testfile.txt");
+        $this->assertFileDoesNotExist("$dir/foo/bar/baz/testfile.txt");
         $this->assertFalse(is_dir("$dir/foo/bar/baz"));
         $this->assertFalse(is_dir("$dir/foobar/bar/baz"));
         $this->assertFalse(is_dir($dir));

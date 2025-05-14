@@ -269,7 +269,8 @@ function tpl_metaheaders($alt = true)
     if (actionOK('manifest')) {
         $head['link'][] = [
             'rel' => 'manifest',
-            'href' => DOKU_BASE . 'lib/exe/manifest.php'
+            'href' => DOKU_BASE . 'lib/exe/manifest.php',
+            'crossorigin' => 'use-credentials' // See issue #4322
         ];
     }
 
@@ -379,6 +380,7 @@ function tpl_metaheaders($alt = true)
     }
     jsinfo();
     $script .= 'var JSINFO = ' . json_encode($JSINFO, JSON_THROW_ON_ERROR) . ';';
+    $script .= '(function(H){H.className=H.className.replace(/\bno-js\b/,\'js\')})(document.documentElement);';
     $head['script'][] = ['_data' => $script];
 
     // load jquery
@@ -411,37 +413,56 @@ function tpl_metaheaders($alt = true)
  * For tags having a body attribute specify the body data in the special
  * attribute '_data'. This field will NOT BE ESCAPED automatically.
  *
+ * Inline scripts will use any nonce provided in the environment variable 'NONCE'.
+ *
  * @param array $data
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function _tpl_metaheaders_action($data)
 {
+    $nonce = getenv('NONCE');
     foreach ($data as $tag => $inst) {
-        if ($tag == 'script') {
-            echo "<!--[if gte IE 9]><!-->\n"; // no scripts for old IE
-        }
         foreach ($inst as $attr) {
             if (empty($attr)) {
                 continue;
             }
+            if ($nonce && $tag == 'script' && !empty($attr['_data'])) {
+                $attr['nonce'] = $nonce; // add nonce to inline script tags
+            }
             echo '<', $tag, ' ', buildAttributes($attr);
             if (isset($attr['_data']) || $tag == 'script') {
-                if ($tag == 'script' && isset($attr['_data']))
-                    $attr['_data'] = "/*<![CDATA[*/" .
-                        $attr['_data'] .
-                        "\n/*!]]>*/";
-
                 echo '>', $attr['_data'] ?? '', '</', $tag, '>';
             } else {
                 echo '/>';
             }
             echo "\n";
         }
-        if ($tag == 'script') {
-            echo "<!--<![endif]-->\n";
-        }
     }
+}
+
+/**
+ * Output the given script as inline script tag
+ *
+ * This function will add the nonce attribute if a nonce is available.
+ *
+ * The script is NOT automatically escaped!
+ *
+ * @param string $script
+ * @param bool $return Return or print directly?
+ * @return string|void
+ */
+function tpl_inlineScript($script, $return = false)
+{
+    $nonce = getenv('NONCE');
+    if ($nonce) {
+        $script = '<script nonce="' . $nonce . '">' . $script . '</script>';
+    } else {
+        $script = '<script>' . $script . '</script>';
+    }
+
+    if ($return) return $script;
+    echo $script;
 }
 
 /**
@@ -928,7 +949,8 @@ function tpl_pageinfo($ret = false)
         }
     }
     $fn = utf8_decodeFN($fn);
-    $date = dformat($INFO['lastmod']);
+    $dateLocal = dformat($INFO['lastmod']);
+    $dateIso = date(DATE_ISO8601, $INFO['lastmod']);
 
     // print it
     if ($INFO['exists']) {
@@ -936,7 +958,7 @@ function tpl_pageinfo($ret = false)
         $out .= ' · ';
         $out .= $lang['lastmod'];
         $out .= ' ';
-        $out .= $date;
+        $out .= '<time datetime="' . $dateIso . '">' . $dateLocal . '</time>';
         if ($INFO['editor']) {
             $out .= ' ' . $lang['by'] . ' ';
             $out .= '<bdi>' . editorinfo($INFO['editor']) . '</bdi>';

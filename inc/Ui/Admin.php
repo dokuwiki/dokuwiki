@@ -71,6 +71,8 @@ class Admin extends Ui
     {
         echo '<div id="admin__version">';
         echo getVersion();
+        echo '<br>';
+        echo implode('<br>', array_map('hsc', array_values(getRuntimeVersions())));
         echo '</div>';
     }
 
@@ -135,6 +137,7 @@ class Admin extends Ui
 
             // check permissions
             if (!$obj->isAccessibleByCurrentUser()) continue;
+            if (!$obj->showInMenu()) continue;
 
             if (in_array($p, $this->forAdmins, true)) {
                 $type = 'admin';

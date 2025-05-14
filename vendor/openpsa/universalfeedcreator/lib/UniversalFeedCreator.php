@@ -88,6 +88,10 @@ class UniversalFeedCreator extends FeedCreator
                 $this->_feed = new JSCreator();
                 break;
 
+            case "JSON":
+                $this->_feed = new JSONCreator();
+                break;
+
             default:
                 $this->_feed = new RSSCreator091();
                 break;

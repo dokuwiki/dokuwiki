@@ -783,7 +783,7 @@ function p_get_first_heading($id, $render = METADATA_RENDER_USING_SIMPLE_CACHE)
  * @author Christopher Smith <chris@jalakai.co.uk>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', array $options = null)
+function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', ?array $options = null)
 {
     global $conf, $config_cascade, $INPUT;
     $language = strtolower($language);
