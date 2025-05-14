@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Draft;
 use dokuwiki\Action\Exception\ActionAbort;
 
 /**
@@ -11,10 +12,11 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Draftdel extends AbstractAction {
-
+class Draftdel extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_EDIT;
     }
 
@@ -25,14 +27,14 @@ class Draftdel extends AbstractAction {
      *
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $INFO, $ID;
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new Draft($ID, $INFO['client']);
         if ($draft->isDraftAvailable() && checkSecurityToken()) {
             $draft->deleteDraft();
         }
 
         throw new ActionAbort('redirect');
     }
-
 }

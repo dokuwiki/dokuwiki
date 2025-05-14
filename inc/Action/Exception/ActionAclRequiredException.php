@@ -12,6 +12,6 @@ namespace dokuwiki\Action\Exception;
  *
  * @package dokuwiki\Action\Exception
  */
-class ActionAclRequiredException extends ActionException {
-
+class ActionAclRequiredException extends ActionException
+{
 }

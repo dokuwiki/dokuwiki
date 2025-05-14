@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hoàng Vịnh <hoangdangvinh.vn@gmail.com>
  * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  */
@@ -86,6 +87,7 @@ $lang['disableactions_other']  = 'Hành động khác (được phân tách bằ
 $lang['disableactions_rss']    = 'Đồng bộ XML (RSS)';
 $lang['auth_security_timeout'] = 'Thời gian chờ xác thực bảo mật (giây)';
 $lang['securecookie']          = 'Có nên gửi cookie qua HTTPS qua trình duyệt HTTPS không? Vô hiệu hóa tùy chọn này khi chỉ đăng nhập wiki của bạn được bảo mật bằng SSL nhưng việc duyệt wiki được thực hiện không bảo mật.';
+$lang['samesitecookie']        = 'Thuộc tính cookie cùng một trang sẽ sử dụng. Để trống nó sẽ cho phép trình duyệt quyết định chính sách của cùng một trang.';
 $lang['remote']                = 'Kích hoạt hệ thống API từ xa. Cho phép các ứng dụng khác truy cập wiki thông qua XML-RPC hoặc các cơ chế khác.';
 $lang['remoteuser']            = 'Hạn chế quyền truy cập API từ xa đối với các nhóm hoặc thành viên được phân tách bằng dấu phẩy ở đây. Để trống sẽ cho phép mọi người truy cập.';
 $lang['remotecors']            = 'Cho phép Chia sẻ tài nguyên nguồn chéo (CORS) cho giao diện từ xa.  Dấu hoa thị (*) để cho phép tất cả các nguồn. Để trống để từ chối CORS.';

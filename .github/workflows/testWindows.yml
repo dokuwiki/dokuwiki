@@ -18,7 +18,7 @@ jobs:
 
         strategy:
             matrix:
-                php-versions: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+                php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3']
             fail-fast: false
 
         steps:
@@ -38,9 +38,10 @@ jobs:
 
             - name: Setup PHPUnit
               run: |
-                  php _test/fetchphpunit.php
+                  cd _test
+                  composer install --no-interaction --no-progress --no-suggest --prefer-dist
 
             - name: Run PHPUnit
               run: |
                 cd _test
-                php phpunit.phar --verbose --stderr
+                composer run test

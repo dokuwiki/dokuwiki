@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Default Template 2012
  *
@@ -11,7 +12,7 @@
 if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 
 $hasSidebar = page_findnearest($conf['sidebar']);
-$showSidebar = $hasSidebar && ($ACT=='show');
+$showSidebar = $hasSidebar && ($ACT == 'show');
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang'] ?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
 <head>
@@ -20,7 +21,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
     <?php tpl_metaheaders() ?>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
+    <?php echo tpl_favicon(['favicon', 'mobile']) ?>
     <?php tpl_includeFile('meta.html') ?>
 </head>
 
@@ -28,14 +29,14 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <div id="dokuwiki__site"><div id="dokuwiki__top" class="site <?php echo tpl_classes(); ?> <?php
         echo ($showSidebar) ? 'showSidebar' : ''; ?> <?php echo ($hasSidebar) ? 'hasSidebar' : ''; ?>">
 
-        <?php include('tpl_header.php') ?>
+        <?php include(__DIR__ . '/tpl_header.php') ?>
 
         <div class="wrapper group">
 
-            <?php if($showSidebar): ?>
+            <?php if ($showSidebar) : ?>
                 <!-- ********** ASIDE ********** -->
                 <nav id="dokuwiki__aside" aria-label="<?php echo $lang['sidebar']
-                    ?>"><div class="pad aside include group">
+                ?>"><div class="pad aside include group">
                     <h3 class="toggle"><?php echo $lang['sidebar'] ?></h3>
                     <div class="content"><div class="group">
                         <?php tpl_flush() ?>
@@ -79,7 +80,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             </nav>
         </div><!-- /wrapper -->
 
-        <?php include('tpl_footer.php') ?>
+        <?php include(__DIR__ . '/tpl_footer.php') ?>
     </div></div><!-- /site -->
 
     <div class="no"><?php tpl_indexerWebBug() /* provide DokuWiki housekeeping, required in all templates */ ?></div>

@@ -3,12 +3,17 @@
 namespace dokuwiki\Remote;
 
 use Doku_Renderer_xhtml;
-use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Remote\Response\Link;
+use dokuwiki\Remote\Response\Media;
+use dokuwiki\Remote\Response\MediaChange;
+use dokuwiki\Remote\Response\Page;
+use dokuwiki\Remote\Response\PageChange;
+use dokuwiki\Remote\Response\PageHit;
+use dokuwiki\Remote\Response\User;
 use dokuwiki\Utf8\Sort;
-
-define('DOKU_API_VERSION', 11);
 
 /**
  * Provides the core methods for the remote API.
@@ -17,1004 +22,64 @@ define('DOKU_API_VERSION', 11);
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    const API_VERSION = 11;
-
-
-    /** @var Api */
-    private $api;
-
-    /**
-     * @param Api $api
-     */
-    public function __construct(Api $api)
-    {
-        $this->api = $api;
-    }
+    public const API_VERSION = 12;
 
     /**
      * Returns details about the core methods
      *
      * @return array
      */
-    public function getRemoteInfo()
+    public function getMethods()
     {
-        return array(
-            'dokuwiki.getVersion' => array(
-                'args' => array(),
-                'return' => 'string',
-                'doc' => 'Returns the running DokuWiki version.'
-            ), 'dokuwiki.login' => array(
-                'args' => array('string', 'string'),
-                'return' => 'int',
-                'doc' => 'Tries to login with the given credentials and sets auth cookies.',
-                'public' => '1'
-            ), 'dokuwiki.logoff' => array(
-                'args' => array(),
-                'return' => 'int',
-                'doc' => 'Tries to logoff by expiring auth cookies and the associated PHP session.'
-            ), 'dokuwiki.getPagelist' => array(
-                'args' => array('string', 'array'),
-                'return' => 'array',
-                'doc' => 'List all pages within the given namespace.',
-                'name' => 'readNamespace'
-            ), 'dokuwiki.search' => array(
-                'args' => array('string'),
-                'return' => 'array',
-                'doc' => 'Perform a fulltext search and return a list of matching pages'
-            ), 'dokuwiki.getTime' => array(
-                'args' => array(),
-                'return' => 'int',
-                'doc' => 'Returns the current time at the remote wiki server as Unix timestamp.',
-            ), 'dokuwiki.setLocks' => array(
-                'args' => array('array'),
-                'return' => 'array',
-                'doc' => 'Lock or unlock pages.'
-            ), 'dokuwiki.getTitle' => array(
-                'args' => array(),
-                'return' => 'string',
-                'doc' => 'Returns the wiki title.',
-                'public' => '1'
-            ), 'dokuwiki.appendPage' => array(
-                'args' => array('string', 'string', 'array'),
-                'return' => 'bool',
-                'doc' => 'Append text to a wiki page.'
-            ), 'dokuwiki.createUser' => array(
-                'args' => array('struct'),
-                'return' => 'bool',
-                'doc' => 'Create a user. The result is boolean'
-            ),'dokuwiki.deleteUsers' => array(
-                'args' => array('array'),
-                'return' => 'bool',
-                'doc' => 'Remove one or more users from the list of registered users.'
-            ),  'wiki.getPage' => array(
-                'args' => array('string'),
-                'return' => 'string',
-                'doc' => 'Get the raw Wiki text of page, latest version.',
-                'name' => 'rawPage',
-            ), 'wiki.getPageVersion' => array(
-                'args' => array('string', 'int'),
-                'name' => 'rawPage',
-                'return' => 'string',
-                'doc' => 'Return a raw wiki page'
-            ), 'wiki.getPageHTML' => array(
-                'args' => array('string'),
-                'return' => 'string',
-                'doc' => 'Return page in rendered HTML, latest version.',
-                'name' => 'htmlPage'
-            ), 'wiki.getPageHTMLVersion' => array(
-                'args' => array('string', 'int'),
-                'return' => 'string',
-                'doc' => 'Return page in rendered HTML.',
-                'name' => 'htmlPage'
-            ), 'wiki.getAllPages' => array(
-                'args' => array(),
-                'return' => 'array',
-                'doc' => 'Returns a list of all pages. The result is an array of utf8 pagenames.',
-                'name' => 'listPages'
-            ), 'wiki.getAttachments' => array(
-                'args' => array('string', 'array'),
-                'return' => 'array',
-                'doc' => 'Returns a list of all media files.',
-                'name' => 'listAttachments'
-            ), 'wiki.getBackLinks' => array(
-                'args' => array('string'),
-                'return' => 'array',
-                'doc' => 'Returns the pages that link to this page.',
-                'name' => 'listBackLinks'
-            ), 'wiki.getPageInfo' => array(
-                'args' => array('string'),
-                'return' => 'array',
-                'doc' => 'Returns a struct with info about the page, latest version.',
-                'name' => 'pageInfo'
-            ), 'wiki.getPageInfoVersion' => array(
-                'args' => array('string', 'int'),
-                'return' => 'array',
-                'doc' => 'Returns a struct with info about the page.',
-                'name' => 'pageInfo'
-            ), 'wiki.getPageVersions' => array(
-                'args' => array('string', 'int'),
-                'return' => 'array',
-                'doc' => 'Returns the available revisions of the page.',
-                'name' => 'pageVersions'
-            ), 'wiki.putPage' => array(
-                'args' => array('string', 'string', 'array'),
-                'return' => 'bool',
-                'doc' => 'Saves a wiki page.'
-            ), 'wiki.listLinks' => array(
-                'args' => array('string'),
-                'return' => 'array',
-                'doc' => 'Lists all links contained in a wiki page.'
-            ), 'wiki.getRecentChanges' => array(
-                'args' => array('int'),
-                'return' => 'array',
-                'doc' => 'Returns a struct about all recent changes since given timestamp.'
-            ), 'wiki.getRecentMediaChanges' => array(
-                'args' => array('int'),
-                'return' => 'array',
-                'doc' => 'Returns a struct about all recent media changes since given timestamp.'
-            ), 'wiki.aclCheck' => array(
-                'args' => array('string', 'string', 'array'),
-                'return' => 'int',
-                'doc' => 'Returns the permissions of a given wiki page. By default, for current user/groups'
-            ), 'wiki.putAttachment' => array(
-                'args' => array('string', 'file', 'array'),
-                'return' => 'array',
-                'doc' => 'Upload a file to the wiki.'
-            ), 'wiki.deleteAttachment' => array(
-                'args' => array('string'),
-                'return' => 'int',
-                'doc' => 'Delete a file from the wiki.'
-            ), 'wiki.getAttachment' => array(
-                'args' => array('string'),
-                'doc' => 'Return a media file',
-                'return' => 'file',
-                'name' => 'getAttachment',
-            ), 'wiki.getAttachmentInfo' => array(
-                'args' => array('string'),
-                'return' => 'array',
-                'doc' => 'Returns a struct with info about the attachment.'
-            ), 'dokuwiki.getXMLRPCAPIVersion' => array(
-                'args' => array(),
-                'name' => 'getAPIVersion',
-                'return' => 'int',
-                'doc' => 'Returns the XMLRPC API version.',
-                'public' => '1',
-            ), 'wiki.getRPCVersionSupported' => array(
-                'args' => array(),
-                'name' => 'wikiRpcVersion',
-                'return' => 'int',
-                'doc' => 'Returns 2 with the supported RPC API version.',
-                'public' => '1'
-            ),
+        return [
+            'core.getAPIVersion' => (new ApiCall([$this, 'getAPIVersion'], 'info'))->setPublic(),
 
-        );
+            'core.getWikiVersion' => new ApiCall('getVersion', 'info'),
+            'core.getWikiTitle' => (new ApiCall([$this, 'getWikiTitle'], 'info'))->setPublic(),
+            'core.getWikiTime' => (new ApiCall([$this, 'getWikiTime'], 'info')),
+
+            'core.login' => (new ApiCall([$this, 'login'], 'user'))->setPublic(),
+            'core.logoff' => new ApiCall([$this, 'logoff'], 'user'),
+            'core.whoAmI' => (new ApiCall([$this, 'whoAmI'], 'user')),
+            'core.aclCheck' => new ApiCall([$this, 'aclCheck'], 'user'),
+
+            'core.listPages' => new ApiCall([$this, 'listPages'], 'pages'),
+            'core.searchPages' => new ApiCall([$this, 'searchPages'], 'pages'),
+            'core.getRecentPageChanges' => new ApiCall([$this, 'getRecentPageChanges'], 'pages'),
+
+            'core.getPage' => (new ApiCall([$this, 'getPage'], 'pages')),
+            'core.getPageHTML' => (new ApiCall([$this, 'getPageHTML'], 'pages')),
+            'core.getPageInfo' => (new ApiCall([$this, 'getPageInfo'], 'pages')),
+            'core.getPageHistory' => new ApiCall([$this, 'getPageHistory'], 'pages'),
+            'core.getPageLinks' => new ApiCall([$this, 'getPageLinks'], 'pages'),
+            'core.getPageBackLinks' => new ApiCall([$this, 'getPageBackLinks'], 'pages'),
+
+            'core.lockPages' => new ApiCall([$this, 'lockPages'], 'pages'),
+            'core.unlockPages' => new ApiCall([$this, 'unlockPages'], 'pages'),
+            'core.savePage' => new ApiCall([$this, 'savePage'], 'pages'),
+            'core.appendPage' => new ApiCall([$this, 'appendPage'], 'pages'),
+
+            'core.listMedia' => new ApiCall([$this, 'listMedia'], 'media'),
+            'core.getRecentMediaChanges' => new ApiCall([$this, 'getRecentMediaChanges'], 'media'),
+
+            'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
+            'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
+            // todo: implement getMediaHistory
+            // todo: implement getMediaUsage
+
+            'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
+            'core.deleteMedia' => new ApiCall([$this, 'deleteMedia'], 'media'),
+        ];
     }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
-    {
-        return getVersion();
-    }
+    // region info
 
     /**
-     * @return int unix timestamp
-     */
-    public function getTime()
-    {
-        return time();
-    }
-
-    /**
-     * Return a raw wiki page
+     * Return the API version
      *
-     * @param string $id wiki page id
-     * @param int|string $rev revision timestamp of the page or empty string
-     * @return string page text.
-     * @throws AccessDeniedException if no permission for page
-     */
-    public function rawPage($id, $rev = '')
-    {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this file', 111);
-        }
-        $text = rawWiki($id, $rev);
-        if (!$text) {
-            return pageTemplate($id);
-        } else {
-            return $text;
-        }
-    }
-
-    /**
-     * Return a media file
+     * This is the version of the DokuWiki API. It increases whenever the API definition changes.
      *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
-     * @param string $id file id
-     * @return mixed media file
-     * @throws AccessDeniedException no permission for media
-     * @throws RemoteException not exist
-     */
-    public function getAttachment($id)
-    {
-        $id = cleanID($id);
-        if (auth_quickaclcheck(getNS($id) . ':*') < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this file', 211);
-        }
-
-        $file = mediaFN($id);
-        if (!@ file_exists($file)) {
-            throw new RemoteException('The requested file does not exist', 221);
-        }
-
-        $data = io_readFile($file, false);
-        return $this->api->toFile($data);
-    }
-
-    /**
-     * Return info about a media file
-     *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
-     * @param string $id page id
-     * @return array
-     */
-    public function getAttachmentInfo($id)
-    {
-        $id = cleanID($id);
-        $info = array(
-            'lastModified' => $this->api->toDate(0),
-            'size' => 0,
-        );
-
-        $file = mediaFN($id);
-        if (auth_quickaclcheck(getNS($id) . ':*') >= AUTH_READ) {
-            if (file_exists($file)) {
-                $info['lastModified'] = $this->api->toDate(filemtime($file));
-                $info['size'] = filesize($file);
-            } else {
-                //Is it deleted media with changelog?
-                $medialog = new MediaChangeLog($id);
-                $revisions = $medialog->getRevisions(0, 1);
-                if (!empty($revisions)) {
-                    $info['lastModified'] = $this->api->toDate($revisions[0]);
-                }
-            }
-        }
-
-        return $info;
-    }
-
-    /**
-     * Return a wiki page rendered to html
-     *
-     * @param string $id page id
-     * @param string|int $rev revision timestamp or empty string
-     * @return null|string html
-     * @throws AccessDeniedException no access to page
-     */
-    public function htmlPage($id, $rev = '')
-    {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
-        return p_wiki_xhtml($id, $rev, false);
-    }
-
-    /**
-     * List all pages - we use the indexer list here
-     *
-     * @return array
-     */
-    public function listPages()
-    {
-        $list = array();
-        $pages = idx_get_indexer()->getPages();
-        $pages = array_filter(array_filter($pages, 'isVisiblePage'), 'page_exists');
-        Sort::ksort($pages);
-
-        foreach (array_keys($pages) as $idx) {
-            $perm = auth_quickaclcheck($pages[$idx]);
-            if ($perm < AUTH_READ) {
-                continue;
-            }
-            $page = array();
-            $page['id'] = trim($pages[$idx]);
-            $page['perms'] = $perm;
-            $page['size'] = @filesize(wikiFN($pages[$idx]));
-            $page['lastModified'] = $this->api->toDate(@filemtime(wikiFN($pages[$idx])));
-            $list[] = $page;
-        }
-
-        return $list;
-    }
-
-    /**
-     * List all pages in the given namespace (and below)
-     *
-     * @param string $ns
-     * @param array $opts
-     *    $opts['depth']   recursion level, 0 for all
-     *    $opts['hash']    do md5 sum of content?
-     * @return array
-     */
-    public function readNamespace($ns, $opts = array())
-    {
-        global $conf;
-
-        if (!is_array($opts)) $opts = array();
-
-        $ns = cleanID($ns);
-        $dir = utf8_encodeFN(str_replace(':', '/', $ns));
-        $data = array();
-        $opts['skipacl'] = 0; // no ACL skipping for XMLRPC
-        search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
-        return $data;
-    }
-
-    /**
-     * List all pages in the given namespace (and below)
-     *
-     * @param string $query
-     * @return array
-     */
-    public function search($query)
-    {
-        $regex = array();
-        $data = ft_pageSearch($query, $regex);
-        $pages = array();
-
-        // prepare additional data
-        $idx = 0;
-        foreach ($data as $id => $score) {
-            $file = wikiFN($id);
-
-            if ($idx < FT_SNIPPET_NUMBER) {
-                $snippet = ft_snippet($id, $regex);
-                $idx++;
-            } else {
-                $snippet = '';
-            }
-
-            $pages[] = array(
-                'id' => $id,
-                'score' => intval($score),
-                'rev' => filemtime($file),
-                'mtime' => filemtime($file),
-                'size' => filesize($file),
-                'snippet' => $snippet,
-                'title' => useHeading('navigation') ? p_get_first_heading($id) : $id
-            );
-        }
-        return $pages;
-    }
-
-    /**
-     * Returns the wiki title.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        global $conf;
-        return $conf['title'];
-    }
-
-    /**
-     * List all media files.
-     *
-     * Available options are 'recursive' for also including the subnamespaces
-     * in the listing, and 'pattern' for filtering the returned files against
-     * a regular expression matching their name.
-     *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
-     * @param string $ns
-     * @param array $options
-     *   $options['depth']     recursion level, 0 for all
-     *   $options['showmsg']   shows message if invalid media id is used
-     *   $options['pattern']   check given pattern
-     *   $options['hash']      add hashes to result list
-     * @return array
-     * @throws AccessDeniedException no access to the media files
-     */
-    public function listAttachments($ns, $options = array())
-    {
-        global $conf;
-
-        $ns = cleanID($ns);
-
-        if (!is_array($options)) $options = array();
-        $options['skipacl'] = 0; // no ACL skipping for XMLRPC
-
-        if (auth_quickaclcheck($ns . ':*') >= AUTH_READ) {
-            $dir = utf8_encodeFN(str_replace(':', '/', $ns));
-
-            $data = array();
-            search($data, $conf['mediadir'], 'search_media', $options, $dir);
-            $len = count($data);
-            if (!$len) return array();
-
-            for ($i = 0; $i < $len; $i++) {
-                unset($data[$i]['meta']);
-                $data[$i]['perms'] = $data[$i]['perm'];
-                unset($data[$i]['perm']);
-                $data[$i]['lastModified'] = $this->api->toDate($data[$i]['mtime']);
-            }
-            return $data;
-        } else {
-            throw new AccessDeniedException('You are not allowed to list media files.', 215);
-        }
-    }
-
-    /**
-     * Return a list of backlinks
-     *
-     * @param string $id page id
-     * @return array
-     */
-    public function listBackLinks($id)
-    {
-        return ft_backlinks($this->resolvePageId($id));
-    }
-
-    /**
-     * Return some basic data about a page
-     *
-     * @param string $id page id
-     * @param string|int $rev revision timestamp or empty string
-     * @return array
-     * @throws AccessDeniedException no access for page
-     * @throws RemoteException page not exist
-     */
-    public function pageInfo($id, $rev = '')
-    {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
-        $file = wikiFN($id, $rev);
-        $time = @filemtime($file);
-        if (!$time) {
-            throw new RemoteException('The requested page does not exist', 121);
-        }
-
-        // set revision to current version if empty, use revision otherwise
-        // as the timestamps of old files are not necessarily correct
-        if ($rev === '') {
-            $rev = $time;
-        }
-
-        $pagelog = new PageChangeLog($id, 1024);
-        $info = $pagelog->getRevisionInfo($rev);
-
-        $data = array(
-            'name' => $id,
-            'lastModified' => $this->api->toDate($rev),
-            'author' => is_array($info) ? (($info['user']) ? $info['user'] : $info['ip']) : null,
-            'version' => $rev
-        );
-
-        return ($data);
-    }
-
-    /**
-     * Save a wiki page
-     *
-     * @author Michael Klier <chi@chimeric.de>
-     *
-     * @param string $id page id
-     * @param string $text wiki text
-     * @param array $params parameters: summary, minor edit
-     * @return bool
-     * @throws AccessDeniedException no write access for page
-     * @throws RemoteException no id, empty new page or locked
-     */
-    public function putPage($id, $text, $params = array())
-    {
-        global $TEXT;
-        global $lang;
-
-        $id = $this->resolvePageId($id);
-        $TEXT = cleanText($text);
-        $sum = $params['sum'];
-        $minor = $params['minor'];
-
-        if (empty($id)) {
-            throw new RemoteException('Empty page ID', 131);
-        }
-
-        if (!page_exists($id) && trim($TEXT) == '') {
-            throw new RemoteException('Refusing to write an empty new wiki page', 132);
-        }
-
-        if (auth_quickaclcheck($id) < AUTH_EDIT) {
-            throw new AccessDeniedException('You are not allowed to edit this page', 112);
-        }
-
-        // Check, if page is locked
-        if (checklock($id)) {
-            throw new RemoteException('The page is currently locked', 133);
-        }
-
-        // SPAM check
-        if (checkwordblock()) {
-            throw new RemoteException('Positive wordblock check', 134);
-        }
-
-        // autoset summary on new pages
-        if (!page_exists($id) && empty($sum)) {
-            $sum = $lang['created'];
-        }
-
-        // autoset summary on deleted pages
-        if (page_exists($id) && empty($TEXT) && empty($sum)) {
-            $sum = $lang['deleted'];
-        }
-
-        lock($id);
-
-        saveWikiText($id, $TEXT, $sum, $minor);
-
-        unlock($id);
-
-        // run the indexer if page wasn't indexed yet
-        idx_addPage($id);
-
-        return true;
-    }
-
-    /**
-     * Appends text to a wiki page.
-     *
-     * @param string $id page id
-     * @param string $text wiki text
-     * @param array $params such as summary,minor
-     * @return bool|string
-     * @throws RemoteException
-     */
-    public function appendPage($id, $text, $params = array())
-    {
-        $currentpage = $this->rawPage($id);
-        if (!is_string($currentpage)) {
-            return $currentpage;
-        }
-        return $this->putPage($id, $currentpage . $text, $params);
-    }
-
-    /**
-     * Create one or more users
-     *
-     * @param array[] $userStruct User struct
-     *
-     * @return boolean Create state
-     *
-     * @throws AccessDeniedException
-     * @throws RemoteException
-     */
-    public function createUser($userStruct)
-    {
-        if (!auth_isadmin()) {
-            throw new AccessDeniedException('Only admins are allowed to create users', 114);
-        }
-
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
-        global $auth;
-
-        if(!$auth->canDo('addUser')) {
-            throw new AccessDeniedException(
-                sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
-                114
-            );
-        }
-
-        $user = trim($auth->cleanUser($userStruct['user'] ?? ''));
-        $password = $userStruct['password'] ?? '';
-        $name = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['name'] ?? ''));
-        $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $userStruct['mail'] ?? ''));
-        $groups = $userStruct['groups'] ?? [];
-
-        $notify = (bool)$userStruct['notify'] ?? false;
-
-        if ($user === '') throw new RemoteException('empty or invalid user', 401);
-        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
-
-        if(strlen($password) === 0) {
-            $password = auth_pwgen($user);
-        }
-
-        if (!is_array($groups) || count($groups) === 0) {
-            $groups = null;
-        }
-
-        $ok = $auth->triggerUserMod('create', array($user, $password, $name, $mail, $groups));
-
-        if ($ok !== false && $ok !== null) {
-            $ok = true;
-        }
-
-        if($ok) {
-            if($notify) {
-                auth_sendPassword($user, $password);
-            }
-        }
-
-        return $ok;
-    }
-
-
-    /**
-     * Remove one or more users from the list of registered users
-     *
-     * @param string[] $usernames List of usernames to remove
-     *
-     * @return bool
-     *
-     * @throws AccessDeniedException
-     */
-    public function deleteUsers($usernames)
-    {
-        if (!auth_isadmin()) {
-            throw new AccessDeniedException('Only admins are allowed to delete users', 114);
-        }
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
-        global $auth;
-        return (bool)$auth->triggerUserMod('delete', array($usernames));
-    }
-
-    /**
-     * Uploads a file to the wiki.
-     *
-     * Michael Klier <chi@chimeric.de>
-     *
-     * @param string $id page id
-     * @param string $file
-     * @param array $params such as overwrite
-     * @return false|string
-     * @throws RemoteException
-     */
-    public function putAttachment($id, $file, $params = array())
-    {
-        $id = cleanID($id);
-        $auth = auth_quickaclcheck(getNS($id) . ':*');
-
-        if (!isset($id)) {
-            throw new RemoteException('Filename not given.', 231);
-        }
-
-        global $conf;
-
-        $ftmp = $conf['tmpdir'] . '/' . md5($id . clientIP());
-
-        // save temporary file
-        @unlink($ftmp);
-        io_saveFile($ftmp, $file);
-
-        $res = media_save(array('name' => $ftmp), $id, $params['ow'], $auth, 'rename');
-        if (is_array($res)) {
-            throw new RemoteException($res[0], -$res[1]);
-        } else {
-            return $res;
-        }
-    }
-
-    /**
-     * Deletes a file from the wiki.
-     *
-     * @author Gina Haeussge <osd@foosel.net>
-     *
-     * @param string $id page id
-     * @return int
-     * @throws AccessDeniedException no permissions
-     * @throws RemoteException file in use or not deleted
-     */
-    public function deleteAttachment($id)
-    {
-        $id = cleanID($id);
-        $auth = auth_quickaclcheck(getNS($id) . ':*');
-        $res = media_delete($id, $auth);
-        if ($res & DOKU_MEDIA_DELETED) {
-            return 0;
-        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            throw new AccessDeniedException('You don\'t have permissions to delete files.', 212);
-        } elseif ($res & DOKU_MEDIA_INUSE) {
-            throw new RemoteException('File is still referenced', 232);
-        } else {
-            throw new RemoteException('Could not delete file', 233);
-        }
-    }
-
-    /**
-     * Returns the permissions of a given wiki page for the current user or another user
-     *
-     * @param string $id page id
-     * @param string|null $user username
-     * @param array|null $groups array of groups
-     * @return int permission level
-     */
-    public function aclCheck($id, $user = null, $groups = null)
-    {
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
-        global $auth;
-
-        $id = $this->resolvePageId($id);
-        if ($user === null) {
-            return auth_quickaclcheck($id);
-        } else {
-            if ($groups === null) {
-                $userinfo = $auth->getUserData($user);
-                if ($userinfo === false) {
-                    $groups = array();
-                } else {
-                    $groups = $userinfo['grps'];
-                }
-            }
-            return auth_aclcheck($id, $user, $groups);
-        }
-    }
-
-    /**
-     * Lists all links contained in a wiki page
-     *
-     * @author Michael Klier <chi@chimeric.de>
-     *
-     * @param string $id page id
-     * @return array
-     * @throws AccessDeniedException  no read access for page
-     */
-    public function listLinks($id)
-    {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
-        $links = array();
-
-        // resolve page instructions
-        $ins = p_cached_instructions(wikiFN($id));
-
-        // instantiate new Renderer - needed for interwiki links
-        $Renderer = new Doku_Renderer_xhtml();
-        $Renderer->interwiki = getInterwiki();
-
-        // parse parse instructions
-        foreach ($ins as $in) {
-            $link = array();
-            switch ($in[0]) {
-                case 'internallink':
-                    $link['type'] = 'local';
-                    $link['page'] = $in[1][0];
-                    $link['href'] = wl($in[1][0]);
-                    array_push($links, $link);
-                    break;
-                case 'externallink':
-                    $link['type'] = 'extern';
-                    $link['page'] = $in[1][0];
-                    $link['href'] = $in[1][0];
-                    array_push($links, $link);
-                    break;
-                case 'interwikilink':
-                    $url = $Renderer->_resolveInterWiki($in[1][2], $in[1][3]);
-                    $link['type'] = 'extern';
-                    $link['page'] = $url;
-                    $link['href'] = $url;
-                    array_push($links, $link);
-                    break;
-            }
-        }
-
-        return ($links);
-    }
-
-    /**
-     * Returns a list of recent changes since give timestamp
-     *
-     * @author Michael Hamann <michael@content-space.de>
-     * @author Michael Klier <chi@chimeric.de>
-     *
-     * @param int $timestamp unix timestamp
-     * @return array
-     * @throws RemoteException no valid timestamp
-     */
-    public function getRecentChanges($timestamp)
-    {
-        if (strlen($timestamp) != 10) {
-            throw new RemoteException('The provided value is not a valid timestamp', 311);
-        }
-
-        $recents = getRecentsSince($timestamp);
-
-        $changes = array();
-
-        foreach ($recents as $recent) {
-            $change = array();
-            $change['name'] = $recent['id'];
-            $change['lastModified'] = $this->api->toDate($recent['date']);
-            $change['author'] = $recent['user'];
-            $change['version'] = $recent['date'];
-            $change['perms'] = $recent['perms'];
-            $change['size'] = @filesize(wikiFN($recent['id']));
-            array_push($changes, $change);
-        }
-
-        if (!empty($changes)) {
-            return $changes;
-        } else {
-            // in case we still have nothing at this point
-            throw new RemoteException('There are no changes in the specified timeframe', 321);
-        }
-    }
-
-    /**
-     * Returns a list of recent media changes since give timestamp
-     *
-     * @author Michael Hamann <michael@content-space.de>
-     * @author Michael Klier <chi@chimeric.de>
-     *
-     * @param int $timestamp unix timestamp
-     * @return array
-     * @throws RemoteException no valid timestamp
-     */
-    public function getRecentMediaChanges($timestamp)
-    {
-        if (strlen($timestamp) != 10)
-            throw new RemoteException('The provided value is not a valid timestamp', 311);
-
-        $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
-
-        $changes = array();
-
-        foreach ($recents as $recent) {
-            $change = array();
-            $change['name'] = $recent['id'];
-            $change['lastModified'] = $this->api->toDate($recent['date']);
-            $change['author'] = $recent['user'];
-            $change['version'] = $recent['date'];
-            $change['perms'] = $recent['perms'];
-            $change['size'] = @filesize(mediaFN($recent['id']));
-            array_push($changes, $change);
-        }
-
-        if (!empty($changes)) {
-            return $changes;
-        } else {
-            // in case we still have nothing at this point
-            throw new RemoteException('There are no changes in the specified timeframe', 321);
-        }
-    }
-
-    /**
-     * Returns a list of available revisions of a given wiki page
-     * Number of returned pages is set by $conf['recent']
-     * However not accessible pages are skipped, so less than $conf['recent'] could be returned
-     *
-     * @author Michael Klier <chi@chimeric.de>
-     *
-     * @param string $id page id
-     * @param int $first skip the first n changelog lines
-     *                      0 = from current(if exists)
-     *                      1 = from 1st old rev
-     *                      2 = from 2nd old rev, etc
-     * @return array
-     * @throws AccessDeniedException no read access for page
-     * @throws RemoteException empty id
-     */
-    public function pageVersions($id, $first = 0)
-    {
-        $id = $this->resolvePageId($id);
-        if (auth_quickaclcheck($id) < AUTH_READ) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
-        }
-        global $conf;
-
-        $versions = array();
-
-        if (empty($id)) {
-            throw new RemoteException('Empty page ID', 131);
-        }
-
-        $first = (int) $first;
-        $first_rev = $first - 1;
-        $first_rev = $first_rev < 0 ? 0 : $first_rev;
-        $pagelog = new PageChangeLog($id);
-        $revisions = $pagelog->getRevisions($first_rev, $conf['recent']);
-
-        if ($first == 0) {
-            array_unshift($revisions, '');  // include current revision
-            if (count($revisions) > $conf['recent']) {
-                array_pop($revisions);          // remove extra log entry
-            }
-        }
-
-        if (!empty($revisions)) {
-            foreach ($revisions as $rev) {
-                $file = wikiFN($id, $rev);
-                $time = @filemtime($file);
-                // we check if the page actually exists, if this is not the
-                // case this can lead to less pages being returned than
-                // specified via $conf['recent']
-                if ($time) {
-                    $pagelog->setChunkSize(1024);
-                    $info = $pagelog->getRevisionInfo($rev ? $rev : $time);
-                    if (!empty($info)) {
-                        $data = array();
-                        $data['user'] = $info['user'];
-                        $data['ip'] = $info['ip'];
-                        $data['type'] = $info['type'];
-                        $data['sum'] = $info['sum'];
-                        $data['modified'] = $this->api->toDate($info['date']);
-                        $data['version'] = $info['date'];
-                        array_push($versions, $data);
-                    }
-                }
-            }
-            return $versions;
-        } else {
-            return array();
-        }
-    }
-
-    /**
-     * The version of Wiki RPC API supported
-     */
-    public function wikiRpcVersion()
-    {
-        return 2;
-    }
-
-    /**
-     * Locks or unlocks a given batch of pages
-     *
-     * Give an associative array with two keys: lock and unlock. Both should contain a
-     * list of pages to lock or unlock
-     *
-     * Returns an associative array with the keys locked, lockfail, unlocked and
-     * unlockfail, each containing lists of pages.
-     *
-     * @param array[] $set list pages with array('lock' => array, 'unlock' => array)
-     * @return array
-     */
-    public function setLocks($set)
-    {
-        $locked = array();
-        $lockfail = array();
-        $unlocked = array();
-        $unlockfail = array();
-
-        foreach ((array) $set['lock'] as $id) {
-            $id = $this->resolvePageId($id);
-            if (auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)) {
-                $lockfail[] = $id;
-            } else {
-                lock($id);
-                $locked[] = $id;
-            }
-        }
-
-        foreach ((array) $set['unlock'] as $id) {
-            $id = $this->resolvePageId($id);
-            if (auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)) {
-                $unlockfail[] = $id;
-            } else {
-                $unlocked[] = $id;
-            }
-        }
-
-        return array(
-            'locked' => $locked,
-            'lockfail' => $lockfail,
-            'unlocked' => $unlocked,
-            'unlockfail' => $unlockfail,
-        );
-    }
-
-    /**
-     * Return API version
+     * When developing a client, you should check this version and make sure you can handle it.
      *
      * @return int
      */
@@ -1024,33 +89,69 @@ class ApiCore
     }
 
     /**
+     * Returns the wiki title
+     *
+     * @link https://www.dokuwiki.org/config:title
+     * @return string
+     */
+    public function getWikiTitle()
+    {
+        global $conf;
+        return $conf['title'];
+    }
+
+    /**
+     * Return the current server time
+     *
+     * Returns a Unix timestamp (seconds since 1970-01-01 00:00:00 UTC).
+     *
+     * You can use this to compensate for differences between your client's time and the
+     * server's time when working with last modified timestamps (revisions).
+     *
+     * @return int A unix timestamp
+     */
+    public function getWikiTime()
+    {
+        return time();
+    }
+
+    // endregion
+
+    // region user
+
+    /**
      * Login
      *
-     * @param string $user
-     * @param string $pass
-     * @return int
+     * This will use the given credentials and attempt to login the user. This will set the
+     * appropriate cookies, which can be used for subsequent requests.
+     *
+     * Use of this mechanism is discouraged. Using token authentication is preferred.
+     *
+     * @param string $user The user name
+     * @param string $pass The password
+     * @return int If the login was successful
      */
     public function login($user, $pass)
     {
         global $conf;
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
 
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         @session_start(); // reopen session for login
         $ok = null;
         if ($auth->canDo('external')) {
             $ok = $auth->trustExternal($user, $pass, false);
         }
-        if ($ok === null){
-            $evdata = array(
+        if ($ok === null) {
+            $evdata = [
                 'user' => $user,
                 'password' => $pass,
                 'sticky' => false,
-                'silent' => true,
-            );
+                'silent' => true
+            ];
             $ok = Event::createAndTrigger('AUTH_LOGIN_CHECK', $evdata, 'auth_login_wrapper');
         }
         session_write_close(); // we're done with the session
@@ -1061,14 +162,18 @@ class ApiCore
     /**
      * Log off
      *
-     * @return int
+     * Attempt to log out the current user, deleting the appropriate cookies
+     *
+     * Use of this mechanism is discouraged. Using token authentication is preferred.
+     *
+     * @return int 0 on failure, 1 on success
      */
     public function logoff()
     {
         global $conf;
         global $auth;
         if (!$conf['useacl']) return 0;
-        if (!$auth) return 0;
+        if (!$auth instanceof AuthPlugin) return 0;
 
         auth_logoff();
 
@@ -1076,18 +181,821 @@ class ApiCore
     }
 
     /**
-     * Resolve page id
+     * Info about the currently authenticated user
+     *
+     * @return User
+     */
+    public function whoAmI()
+    {
+        return new User();
+    }
+
+    /**
+     * Check ACL Permissions
+     *
+     * This call allows to check the permissions for a given page/media and user/group combination.
+     * If no user/group is given, the current user is used.
+     *
+     * Read the link below to learn more about the permission levels.
+     *
+     * @link https://www.dokuwiki.org/acl#background_info
+     * @param string $page A page or media ID
+     * @param string $user username
+     * @param string[] $groups array of groups
+     * @return int permission level
+     * @throws RemoteException
+     */
+    public function aclCheck($page, $user = '', $groups = [])
+    {
+        /** @var AuthPlugin $auth */
+        global $auth;
+
+        $page = $this->checkPage($page, 0, false, AUTH_NONE);
+
+        if ($user === '') {
+            return auth_quickaclcheck($page);
+        } else {
+            if ($groups === []) {
+                $userinfo = $auth->getUserData($user);
+                if ($userinfo === false) {
+                    $groups = [];
+                } else {
+                    $groups = $userinfo['grps'];
+                }
+            }
+            return auth_aclcheck($page, $user, $groups);
+        }
+    }
+
+    // endregion
+
+    // region pages
+
+    /**
+     * List all pages in the given namespace (and below)
+     *
+     * Setting the `depth` to `0` and the `namespace` to `""` will return all pages in the wiki.
+     *
+     * Note: author information is not available in this call.
+     *
+     * @param string $namespace The namespace to search. Empty string for root namespace
+     * @param int $depth How deep to search. 0 for all subnamespaces
+     * @param bool $hash Whether to include a MD5 hash of the page content
+     * @return Page[] A list of matching pages
+     * @todo might be a good idea to replace search_allpages with search_universal
+     */
+    public function listPages($namespace = '', $depth = 1, $hash = false)
+    {
+        global $conf;
+
+        $namespace = cleanID($namespace);
+
+        // shortcut for all pages
+        if ($namespace === '' && $depth === 0) {
+            return $this->getAllPages($hash);
+        }
+
+        // search_allpages handles depth weird, we need to add the given namespace depth
+        if ($depth) {
+            $depth += substr_count($namespace, ':') + 1;
+        }
+
+        // run our search iterator to get the pages
+        $dir = utf8_encodeFN(str_replace(':', '/', $namespace));
+        $data = [];
+        $opts['skipacl'] = 0;
+        $opts['depth'] = $depth;
+        $opts['hash'] = $hash;
+        search($data, $conf['datadir'], 'search_allpages', $opts, $dir);
+
+        return array_map(static fn($item) => new Page(
+            $item['id'],
+            0, // we're searching current revisions only
+            $item['mtime'],
+            '', // not returned by search_allpages
+            $item['size'],
+            null, // not returned by search_allpages
+            $item['hash'] ?? ''
+        ), $data);
+    }
+
+    /**
+     * Get all pages at once
+     *
+     * This is uses the page index and is quicker than iterating which is done in listPages()
+     *
+     * @return Page[] A list of all pages
+     * @see listPages()
+     */
+    protected function getAllPages($hash = false)
+    {
+        $list = [];
+        $pages = idx_get_indexer()->getPages();
+        Sort::ksort($pages);
+
+        foreach (array_keys($pages) as $idx) {
+            $perm = auth_quickaclcheck($pages[$idx]);
+            if ($perm < AUTH_READ || isHiddenPage($pages[$idx]) || !page_exists($pages[$idx])) {
+                continue;
+            }
+
+            $page = new Page($pages[$idx], 0, 0, '', null, $perm);
+            if ($hash) $page->calculateHash();
+
+            $list[] = $page;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Do a fulltext search
+     *
+     * This executes a full text search and returns the results. The query uses the standard
+     * DokuWiki search syntax.
+     *
+     * Snippets are provided for the first 15 results only. The title is either the first heading
+     * or the page id depending on the wiki's configuration.
+     *
+     * @link https://www.dokuwiki.org/search#syntax
+     * @param string $query The search query as supported by the DokuWiki search
+     * @return PageHit[] A list of matching pages
+     */
+    public function searchPages($query)
+    {
+        $regex = [];
+        $data = ft_pageSearch($query, $regex);
+        $pages = [];
+
+        // prepare additional data
+        $idx = 0;
+        foreach ($data as $id => $score) {
+            if ($idx < FT_SNIPPET_NUMBER) {
+                $snippet = ft_snippet($id, $regex);
+                $idx++;
+            } else {
+                $snippet = '';
+            }
+
+            $pages[] = new PageHit(
+                $id,
+                $snippet,
+                $score,
+                useHeading('navigation') ? p_get_first_heading($id) : $id
+            );
+        }
+        return $pages;
+    }
+
+    /**
+     * Get recent page changes
+     *
+     * Returns a list of recent changes to wiki pages. The results can be limited to changes newer than
+     * a given timestamp.
+     *
+     * Only changes within the configured `$conf['recent']` range are returned. This is the default
+     * when no timestamp is given.
+     *
+     * @link https://www.dokuwiki.org/config:recent
+     * @param int $timestamp Only show changes newer than this unix timestamp
+     * @return PageChange[]
+     * @author Michael Klier <chi@chimeric.de>
+     * @author Michael Hamann <michael@content-space.de>
+     */
+    public function getRecentPageChanges($timestamp = 0)
+    {
+        $recents = getRecentsSince($timestamp);
+
+        $changes = [];
+        foreach ($recents as $recent) {
+            $changes[] = new PageChange(
+                $recent['id'],
+                $recent['date'],
+                $recent['user'],
+                $recent['ip'],
+                $recent['sum'],
+                $recent['type'],
+                $recent['sizechange']
+            );
+        }
+
+        return $changes;
+    }
+
+    /**
+     * Get a wiki page's syntax
+     *
+     * Returns the syntax of the given page. When no revision is given, the current revision is returned.
+     *
+     * A non-existing page (or revision) will return an empty string usually. For the current revision
+     * a page template will be returned if configured.
+     *
+     * Read access is required for the page.
+     *
+     * @param string $page wiki page id
+     * @param int $rev Revision timestamp to access an older revision
+     * @return string the syntax of the page
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function getPage($page, $rev = 0)
+    {
+        $page = $this->checkPage($page, $rev, false);
+
+        $text = rawWiki($page, $rev);
+        if (!$text && !$rev) {
+            return pageTemplate($page);
+        } else {
+            return $text;
+        }
+    }
+
+    /**
+     * Return a wiki page rendered to HTML
+     *
+     * The page is rendered to HTML as it would be in the wiki. The HTML consist only of the data for the page
+     * content itself, no surrounding structural tags, header, footers, sidebars etc are returned.
+     *
+     * References in the HTML are relative to the wiki base URL unless the `canonical` configuration is set.
+     *
+     * If the page does not exist, an error is returned.
+     *
+     * @link https://www.dokuwiki.org/config:canonical
+     * @param string $page page id
+     * @param int $rev revision timestamp
+     * @return string Rendered HTML for the page
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function getPageHTML($page, $rev = 0)
+    {
+        $page = $this->checkPage($page, $rev);
+
+        return (string)p_wiki_xhtml($page, $rev, false);
+    }
+
+    /**
+     * Return some basic data about a page
+     *
+     * The call will return an error if the requested page does not exist.
+     *
+     * Read access is required for the page.
+     *
+     * @param string $page page id
+     * @param int $rev revision timestamp
+     * @param bool $author whether to include the author information
+     * @param bool $hash whether to include the MD5 hash of the page content
+     * @return Page
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function getPageInfo($page, $rev = 0, $author = false, $hash = false)
+    {
+        $page = $this->checkPage($page, $rev);
+
+        $result = new Page($page, $rev);
+        if ($author) $result->retrieveAuthor();
+        if ($hash) $result->calculateHash();
+
+        return $result;
+    }
+
+    /**
+     * Returns a list of available revisions of a given wiki page
+     *
+     * The number of returned pages is set by `$conf['recent']`, but non accessible revisions pages
+     * are skipped, so less than that may be returned.
+     *
+     * @link https://www.dokuwiki.org/config:recent
+     * @param string $page page id
+     * @param int $first skip the first n changelog lines, 0 starts at the current revision
+     * @return PageChange[]
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    public function getPageHistory($page, $first = 0)
+    {
+        global $conf;
+
+        $page = $this->checkPage($page, 0, false);
+
+        $pagelog = new PageChangeLog($page);
+        $pagelog->setChunkSize(1024);
+        // old revisions are counted from 0, so we need to subtract 1 for the current one
+        $revisions = $pagelog->getRevisions($first - 1, $conf['recent']);
+
+        $result = [];
+        foreach ($revisions as $rev) {
+            if (!page_exists($page, $rev)) continue; // skip non-existing revisions
+            $info = $pagelog->getRevisionInfo($rev);
+
+            $result[] = new PageChange(
+                $page,
+                $rev,
+                $info['user'],
+                $info['ip'],
+                $info['sum'],
+                $info['type'],
+                $info['sizechange']
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get a page's links
+     *
+     * This returns a list of links found in the given page. This includes internal, external and interwiki links
+     *
+     * If a link occurs multiple times on the page, it will be returned multiple times.
+     *
+     * Read access for the given page is needed and page has to exist.
+     *
+     * @param string $page page id
+     * @return Link[] A list of links found on the given page
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     * @todo returning link titles would be a nice addition
+     * @todo hash handling seems not to be correct
+     * @todo maybe return the same link only once?
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    public function getPageLinks($page)
+    {
+        $page = $this->checkPage($page);
+
+        // resolve page instructions
+        $ins = p_cached_instructions(wikiFN($page));
+
+        // instantiate new Renderer - needed for interwiki links
+        $Renderer = new Doku_Renderer_xhtml();
+        $Renderer->interwiki = getInterwiki();
+
+        // parse instructions
+        $links = [];
+        foreach ($ins as $in) {
+            switch ($in[0]) {
+                case 'internallink':
+                    $links[] = new Link('local', $in[1][0], wl($in[1][0]));
+                    break;
+                case 'externallink':
+                    $links[] = new Link('extern', $in[1][0], $in[1][0]);
+                    break;
+                case 'interwikilink':
+                    $url = $Renderer->_resolveInterWiki($in[1][2], $in[1][3]);
+                    $links[] = new Link('interwiki', $in[1][0], $url);
+                    break;
+            }
+        }
+
+        return ($links);
+    }
+
+    /**
+     * Get a page's backlinks
+     *
+     * A backlink is a wiki link on another page that links to the given page.
+     *
+     * Only links from pages readable by the current user are returned. The page itself
+     * needs to be readable. Otherwise an error is returned.
+     *
+     * @param string $page page id
+     * @return string[] A list of pages linking to the given page
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function getPageBackLinks($page)
+    {
+        $page = $this->checkPage($page, 0, false);
+
+        return ft_backlinks($page);
+    }
+
+    /**
+     * Lock the given set of pages
+     *
+     * This call will try to lock all given pages. It will return a list of pages that were
+     * successfully locked. If a page could not be locked, eg. because a different user is
+     * currently holding a lock, that page will be missing from the returned list.
+     *
+     * You should always ensure that the list of returned pages matches the given list of
+     * pages. It's up to you to decide how to handle failed locking.
+     *
+     * Note: you can only lock pages that you have write access for. It is possible to create
+     * a lock for a page that does not exist, yet.
+     *
+     * Note: it is not necessary to lock a page before saving it. The `savePage()` call will
+     * automatically lock and unlock the page for you. However if you plan to do related
+     * operations on multiple pages, locking them all at once beforehand can be useful.
+     *
+     * @param string[] $pages A list of pages to lock
+     * @return string[] A list of pages that were successfully locked
+     */
+    public function lockPages($pages)
+    {
+        $locked = [];
+
+        foreach ($pages as $id) {
+            $id = cleanID($id);
+            if ($id === '') continue;
+            if (auth_quickaclcheck($id) < AUTH_EDIT || checklock($id)) {
+                continue;
+            }
+            lock($id);
+            $locked[] = $id;
+        }
+        return $locked;
+    }
+
+    /**
+     * Unlock the given set of pages
+     *
+     * This call will try to unlock all given pages. It will return a list of pages that were
+     * successfully unlocked. If a page could not be unlocked, eg. because a different user is
+     * currently holding a lock, that page will be missing from the returned list.
+     *
+     * You should always ensure that the list of returned pages matches the given list of
+     * pages. It's up to you to decide how to handle failed unlocking.
+     *
+     * Note: you can only unlock pages that you have write access for.
+     *
+     * @param string[] $pages A list of pages to unlock
+     * @return string[] A list of pages that were successfully unlocked
+     */
+    public function unlockPages($pages)
+    {
+        $unlocked = [];
+
+        foreach ($pages as $id) {
+            $id = cleanID($id);
+            if ($id === '') continue;
+            if (auth_quickaclcheck($id) < AUTH_EDIT || !unlock($id)) {
+                continue;
+            }
+            $unlocked[] = $id;
+        }
+
+        return $unlocked;
+    }
+
+    /**
+     * Save a wiki page
+     *
+     * Saves the given wiki text to the given page. If the page does not exist, it will be created.
+     * Just like in the wiki, saving an empty text will delete the page.
+     *
+     * You need write permissions for the given page and the page may not be locked by another user.
+     *
+     * @param string $page page id
+     * @param string $text wiki text
+     * @param string $summary edit summary
+     * @param bool $isminor whether this is a minor edit
+     * @return bool Returns true on success
+     * @throws AccessDeniedException no write access for page
+     * @throws RemoteException no id, empty new page or locked
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    public function savePage($page, $text, $summary = '', $isminor = false)
+    {
+        global $TEXT;
+        global $lang;
+
+        $page = $this->checkPage($page, 0, false, AUTH_EDIT);
+        $TEXT = cleanText($text);
+
+
+        if (!page_exists($page) && trim($TEXT) == '') {
+            throw new RemoteException('Refusing to write an empty new wiki page', 132);
+        }
+
+        // Check, if page is locked
+        if (checklock($page)) {
+            throw new RemoteException('The page is currently locked', 133);
+        }
+
+        // SPAM check
+        if (checkwordblock()) {
+            throw new RemoteException('The page content was blocked', 134);
+        }
+
+        // autoset summary on new pages
+        if (!page_exists($page) && empty($summary)) {
+            $summary = $lang['created'];
+        }
+
+        // autoset summary on deleted pages
+        if (page_exists($page) && empty($TEXT) && empty($summary)) {
+            $summary = $lang['deleted'];
+        }
+
+        // FIXME auto set a summary in other cases "API Edit" might be a good idea?
+
+        lock($page);
+        saveWikiText($page, $TEXT, $summary, $isminor);
+        unlock($page);
+
+        // run the indexer if page wasn't indexed yet
+        idx_addPage($page);
+
+        return true;
+    }
+
+    /**
+     * Appends text to the end of a wiki page
+     *
+     * If the page does not exist, it will be created. If a page template for the non-existant
+     * page is configured, the given text will appended to that template.
+     *
+     * The call will create a new page revision.
+     *
+     * You need write permissions for the given page.
+     *
+     * @param string $page page id
+     * @param string $text wiki text
+     * @param string $summary edit summary
+     * @param bool $isminor whether this is a minor edit
+     * @return bool Returns true on success
+     * @throws AccessDeniedException
+     * @throws RemoteException
+     */
+    public function appendPage($page, $text, $summary = '', $isminor = false)
+    {
+        $currentpage = $this->getPage($page);
+        if (!is_string($currentpage)) {
+            $currentpage = '';
+        }
+        return $this->savePage($page, $currentpage . $text, $summary, $isminor);
+    }
+
+    // endregion
+
+    // region media
+
+    /**
+     * List all media files in the given namespace (and below)
+     *
+     * Setting the `depth` to `0` and the `namespace` to `""` will return all media files in the wiki.
+     *
+     * When `pattern` is given, it needs to be a valid regular expression as understood by PHP's
+     * `preg_match()` including delimiters.
+     * The pattern is matched against the full media ID, including the namespace.
+     *
+     * @link https://www.php.net/manual/en/reference.pcre.pattern.syntax.php
+     * @param string $namespace The namespace to search. Empty string for root namespace
+     * @param string $pattern A regular expression to filter the returned files
+     * @param int $depth How deep to search. 0 for all subnamespaces
+     * @param bool $hash Whether to include a MD5 hash of the media content
+     * @return Media[]
+     * @author Gina Haeussge <osd@foosel.net>
+     */
+    public function listMedia($namespace = '', $pattern = '', $depth = 1, $hash = false)
+    {
+        global $conf;
+
+        $namespace = cleanID($namespace);
+
+        $options = [
+            'skipacl' => 0,
+            'depth' => $depth,
+            'hash' => $hash,
+            'pattern' => $pattern,
+        ];
+
+        $dir = utf8_encodeFN(str_replace(':', '/', $namespace));
+        $data = [];
+        search($data, $conf['mediadir'], 'search_media', $options, $dir);
+        return array_map(static fn($item) => new Media(
+            $item['id'],
+            0, // we're searching current revisions only
+            $item['mtime'],
+            $item['size'],
+            $item['perm'],
+            $item['isimg'],
+            $item['hash'] ?? ''
+        ), $data);
+    }
+
+    /**
+     * Get recent media changes
+     *
+     * Returns a list of recent changes to media files. The results can be limited to changes newer than
+     * a given timestamp.
+     *
+     * Only changes within the configured `$conf['recent']` range are returned. This is the default
+     * when no timestamp is given.
+     *
+     * @link https://www.dokuwiki.org/config:recent
+     * @param int $timestamp Only show changes newer than this unix timestamp
+     * @return MediaChange[]
+     * @author Michael Klier <chi@chimeric.de>
+     * @author Michael Hamann <michael@content-space.de>
+     */
+    public function getRecentMediaChanges($timestamp = 0)
+    {
+
+        $recents = getRecentsSince($timestamp, null, '', RECENTS_MEDIA_CHANGES);
+
+        $changes = [];
+        foreach ($recents as $recent) {
+            $changes[] = new MediaChange(
+                $recent['id'],
+                $recent['date'],
+                $recent['user'],
+                $recent['ip'],
+                $recent['sum'],
+                $recent['type'],
+                $recent['sizechange']
+            );
+        }
+
+        return $changes;
+    }
+
+    /**
+     * Get a media file's content
+     *
+     * Returns the content of the given media file. When no revision is given, the current revision is returned.
+     *
+     * @link https://en.wikipedia.org/wiki/Base64
+     * @param string $media file id
+     * @param int $rev revision timestamp
+     * @return string Base64 encoded media file contents
+     * @throws AccessDeniedException no permission for media
+     * @throws RemoteException not exist
+     * @author Gina Haeussge <osd@foosel.net>
+     *
+     */
+    public function getMedia($media, $rev = 0)
+    {
+        $media = cleanID($media);
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+
+        $file = mediaFN($media, $rev);
+        if (!@ file_exists($file)) {
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
+        }
+
+        $data = io_readFile($file, false);
+        return base64_encode($data);
+    }
+
+    /**
+     * Return info about a media file
+     *
+     * The call will return an error if the requested media file does not exist.
+     *
+     * Read access is required for the media file.
+     *
+     * @param string $media file id
+     * @param int $rev revision timestamp
+     * @param bool $author whether to include the author information
+     * @param bool $hash whether to include the MD5 hash of the media content
+     * @return Media
+     * @throws AccessDeniedException no permission for media
+     * @throws RemoteException if not exist
+     * @author Gina Haeussge <osd@foosel.net>
+     */
+    public function getMediaInfo($media, $rev = 0, $author = false, $hash = false)
+    {
+        $media = cleanID($media);
+        if (auth_quickaclcheck($media) < AUTH_READ) {
+            throw new AccessDeniedException('You are not allowed to read this media file', 211);
+        }
+        if (!media_exists($media, $rev)) {
+            throw new RemoteException('The requested media file does not exist', 221);
+        }
+
+        $info = new Media($media, $rev);
+        if ($hash) $info->calculateHash();
+        if ($author) $info->retrieveAuthor();
+
+        return $info;
+    }
+
+    /**
+     * Uploads a file to the wiki
+     *
+     * The file data has to be passed as a base64 encoded string.
+     *
+     * @link https://en.wikipedia.org/wiki/Base64
+     * @param string $media media id
+     * @param string $base64 Base64 encoded file contents
+     * @param bool $overwrite Should an existing file be overwritten?
+     * @return bool Should always be true
+     * @throws RemoteException
+     * @author Michael Klier <chi@chimeric.de>
+     */
+    public function saveMedia($media, $base64, $overwrite = false)
+    {
+        $media = cleanID($media);
+        $auth = auth_quickaclcheck(getNS($media) . ':*');
+
+        if ($media === '') {
+            throw new RemoteException('Empty or invalid media ID given', 231);
+        }
+
+        // clean up base64 encoded data
+        $base64 = strtr($base64, [
+            "\n" => '', // strip newlines
+            "\r" => '', // strip carriage returns
+            '-' => '+', // RFC4648 base64url
+            '_' => '/', // RFC4648 base64url
+            ' ' => '+', // JavaScript data uri
+        ]);
+
+        $data = base64_decode($base64, true);
+        if ($data === false) {
+            throw new RemoteException('Invalid base64 encoded data', 234);
+        }
+
+        if ($data === '') {
+            throw new RemoteException('Empty file given', 235);
+        }
+
+        // save temporary file
+        global $conf;
+        $ftmp = $conf['tmpdir'] . '/' . md5($media . clientIP());
+        @unlink($ftmp);
+        io_saveFile($ftmp, $data);
+
+        $res = media_save(['name' => $ftmp], $media, $overwrite, $auth, 'rename');
+        if (is_array($res)) {
+            throw new RemoteException('Failed to save media: ' . $res[0], 236);
+        }
+        return (bool)$res; // should always be true at this point
+    }
+
+    /**
+     * Deletes a file from the wiki
+     *
+     * You need to have delete permissions for the file.
+     *
+     * @param string $media media id
+     * @return bool Should always be true
+     * @throws AccessDeniedException no permissions
+     * @throws RemoteException file in use or not deleted
+     * @author Gina Haeussge <osd@foosel.net>
+     *
+     */
+    public function deleteMedia($media)
+    {
+        $media = cleanID($media);
+
+        $auth = auth_quickaclcheck($media);
+        $res = media_delete($media, $auth);
+        if ($res & DOKU_MEDIA_DELETED) {
+            return true;
+        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
+            throw new AccessDeniedException('You are not allowed to delete this media file', 212);
+        } elseif ($res & DOKU_MEDIA_INUSE) {
+            throw new RemoteException('Media file is still referenced', 232);
+        } elseif (!media_exists($media)) {
+            throw new RemoteException('The media file requested to delete does not exist', 221);
+        } else {
+            throw new RemoteException('Failed to delete media file', 233);
+        }
+    }
+
+    // endregion
+
+
+    /**
+     * Convenience method for page checks
+     *
+     * This method will perform multiple tasks:
+     *
+     * - clean the given page id
+     * - disallow an empty page id
+     * - check if the page exists (unless disabled)
+     * - check if the user has the required access level (pass AUTH_NONE to skip)
      *
      * @param string $id page id
-     * @return string
+     * @param int $rev page revision
+     * @param bool $existCheck
+     * @param int $minAccess
+     * @return string the cleaned page id
+     * @throws AccessDeniedException
+     * @throws RemoteException
      */
-    private function resolvePageId($id)
+    private function checkPage($id, $rev = 0, $existCheck = true, $minAccess = AUTH_READ)
     {
         $id = cleanID($id);
-        if (empty($id)) {
-            global $conf;
-            $id = cleanID($conf['start']);
+        if ($id === '') {
+            throw new RemoteException('Empty or invalid page ID given', 131);
         }
+
+        if ($existCheck && !page_exists($id, $rev)) {
+            throw new RemoteException('The requested page (revision) does not exist', 121);
+        }
+
+        if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
+            throw new AccessDeniedException('You are not allowed to read this page', 111);
+        }
+
         return $id;
     }
 }

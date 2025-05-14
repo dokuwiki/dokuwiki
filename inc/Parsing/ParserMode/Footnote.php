@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Footnote extends AbstractMode
 {
-
     /**
      * Footnote constructor.
      */

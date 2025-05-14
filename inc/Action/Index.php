@@ -25,5 +25,4 @@ class Index extends AbstractAction
         global $IDX;
         (new Ui\Index($IDX))->show();
     }
-
 }

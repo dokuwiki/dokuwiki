@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Paul Nizan <paul_nizan@hormail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>

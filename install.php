@@ -9,13 +9,10 @@
     provider if you're unsure what this means.
 
 </div>*/
-/**
- * Dokuwiki installation assistance
- *
- * @author      Chris Smith <chris@jalakai.co.uk>
- */
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+use dokuwiki\PassHash;
+
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
 if (!defined('DOKU_LOCAL')) define('DOKU_LOCAL', DOKU_INC . 'conf/');
 
@@ -41,63 +38,92 @@ if ($LC && $LC != 'en') {
 }
 
 // initialise variables ...
-$error = array();
+$error = [];
 
 // begin output
 header('Content-Type: text/html; charset=utf-8');
 ?>
-<!DOCTYPE html>
-<html lang="<?php echo $LC?>" dir="<?php echo $lang['direction']?>">
-<head>
-    <meta charset="utf-8" />
-    <title><?php echo $lang['i_installer']?></title>
-    <style>
-        body { width: 90%; margin: 0 auto; font: 84% Verdana, Helvetica, Arial, sans-serif; }
-        img { border: none }
-        br.cl { clear:both; }
-        code { font-size: 110%; color: #800000; }
-        fieldset { border: none }
-        label { display: block; margin-top: 0.5em; }
-        select.text, input.text { width: 30em; margin: 0 0.5em; }
-        a {text-decoration: none}
-    </style>
-    <script>
-        function acltoggle(){
-            var cb = document.getElementById('acl');
-            var fs = document.getElementById('acldep');
-            if(!cb || !fs) return;
-            if(cb.checked){
-                fs.style.display = '';
-            }else{
-                fs.style.display = 'none';
+    <!DOCTYPE html>
+    <html lang="<?php echo $LC ?>" dir="<?php echo $lang['direction'] ?>">
+    <head>
+        <meta charset="utf-8"/>
+        <title><?php echo $lang['i_installer'] ?></title>
+        <style>
+            body {
+                width: 90%;
+                margin: 0 auto;
+                font: 84% Verdana, Helvetica, Arial, sans-serif;
             }
-        }
-        window.onload = function(){
-            acltoggle();
-            var cb = document.getElementById('acl');
-            if(cb) cb.onchange = acltoggle;
-        };
-    </script>
-</head>
-<body style="">
+
+            img {
+                border: none
+            }
+
+            br.cl {
+                clear: both;
+            }
+
+            code {
+                font-size: 110%;
+                color: #800000;
+            }
+
+            fieldset {
+                border: none
+            }
+
+            label {
+                display: block;
+                margin-top: 0.5em;
+            }
+
+            select.text, input.text {
+                width: 30em;
+                margin: 0 0.5em;
+            }
+
+            a {
+                text-decoration: none
+            }
+        </style>
+        <script>
+            function acltoggle() {
+                var cb = document.getElementById('acl');
+                var fs = document.getElementById('acldep');
+                if (!cb || !fs) return;
+                if (cb.checked) {
+                    fs.style.display = '';
+                } else {
+                    fs.style.display = 'none';
+                }
+            }
+
+            window.onload = function () {
+                acltoggle();
+                var cb = document.getElementById('acl');
+                if (cb) cb.onchange = acltoggle;
+            };
+        </script>
+    </head>
+    <body style="">
     <h1 style="float:left">
         <img src="lib/exe/fetch.php?media=wiki:dokuwiki-128.png"
-             style="vertical-align: middle;" alt="" height="64" width="64" />
-        <?php echo $lang['i_installer']?>
+             style="vertical-align: middle;" alt="" height="64" width="64"/>
+        <?php echo $lang['i_installer'] ?>
     </h1>
     <div style="float:right; margin: 1em;">
-        <?php langsel()?>
+        <?php langsel() ?>
     </div>
-    <br class="cl" />
+    <br class="cl"/>
 
     <div style="float: right; width: 34%;">
         <?php
         if (file_exists(DOKU_INC . 'inc/lang/' . $LC . '/install.html')) {
             include(DOKU_INC . 'inc/lang/' . $LC . '/install.html');
         } else {
-            print "<div lang=\"en\" dir=\"ltr\">\n";
+            echo "<div lang=\"en\" dir=\"ltr\">\n";
             include(DOKU_INC . 'inc/lang/en/install.html');
-            print "</div>\n";
+            echo "</div>\n";
         }
         ?>
         <a style="
@@ -106,13 +132,13 @@ header('Content-Type: text/html; charset=utf-8');
                 left top no-repeat;
                 display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
-           href="http://www.dokuwiki.org/security#web_access_security"></a>
+           href="https://www.dokuwiki.org/security#web_access_security"></a>
     </div>
 
     <div style="float: left; width: 58%;">
         <?php
         try {
-            if (! (check_functions() && check_permissions())) {
+            if (!(check_functions() && check_permissions())) {
                 echo '<p>' . $lang['i_problems'] . '</p>';
                 print_errors();
                 print_retry();
@@ -132,18 +158,18 @@ header('Content-Type: text/html; charset=utf-8');
                 print_form($_REQUEST['d']);
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
         ?>
     </div>
 
 
-<div style="clear: both">
-  <a href="http://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki" /></a>
-  <a href="http://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP" /></a>
-</div>
-</body>
-</html>
+    <div style="clear: both">
+        <a href="https://dokuwiki.org/"><img src="lib/tpl/dokuwiki/images/button-dw.png" alt="driven by DokuWiki"/></a>
+        <a href="https://php.net"><img src="lib/tpl/dokuwiki/images/button-php.gif" alt="powered by PHP"/></a>
+    </div>
+    </body>
+    </html>
 <?php
 
 /**
@@ -158,7 +184,7 @@ function print_form($d)
 
     include(DOKU_CONF . 'license.php');
 
-    if (!is_array($d)) $d = array();
+    if (!is_array($d)) $d = [];
     $d = array_map('hsc', $d);
 
     if (!isset($d['acl'])) $d['acl'] = 1;
@@ -166,83 +192,84 @@ function print_form($d)
 
     ?>
     <form action="" method="post">
-    <input type="hidden" name="l" value="<?php echo $LC ?>" />
-    <fieldset>
-        <label for="title"><?php echo $lang['i_wikiname']?>
-        <input type="text" name="d[title]" id="title" value="<?php echo $d['title'] ?>" style="width: 20em;" />
-        </label>
+        <input type="hidden" name="l" value="<?php echo $LC ?>"/>
+        <fieldset>
+            <label for="title"><?php echo $lang['i_wikiname'] ?>
+                <input type="text" name="d[title]" id="title" value="<?php echo $d['title'] ?>" style="width: 20em;"/>
+            </label>
 
-        <fieldset style="margin-top: 1em;">
-            <label for="acl">
-            <input type="checkbox" name="d[acl]" id="acl" <?php echo(($d['acl'] ? ' checked="checked"' : ''));?> />
-            <?php echo $lang['i_enableacl']?></label>
+            <fieldset style="margin-top: 1em;">
+                <label for="acl">
+                    <input type="checkbox" name="d[acl]"
+                           id="acl" <?php echo(($d['acl'] ? ' checked="checked"' : '')); ?> />
+                    <?php echo $lang['i_enableacl'] ?></label>
 
-            <fieldset id="acldep">
-                <label for="superuser"><?php echo $lang['i_superuser']?></label>
-                <input class="text" type="text" name="d[superuser]" id="superuser"
-                       value="<?php echo $d['superuser'] ?>" />
+                <fieldset id="acldep">
+                    <label for="superuser"><?php echo $lang['i_superuser'] ?></label>
+                    <input class="text" type="text" name="d[superuser]" id="superuser"
+                           value="<?php echo $d['superuser'] ?>"/>
 
-                <label for="fullname"><?php echo $lang['fullname']?></label>
-                <input class="text" type="text" name="d[fullname]" id="fullname"
-                       value="<?php echo $d['fullname'] ?>" />
+                    <label for="fullname"><?php echo $lang['fullname'] ?></label>
+                    <input class="text" type="text" name="d[fullname]" id="fullname"
+                           value="<?php echo $d['fullname'] ?>"/>
 
-                <label for="email"><?php echo $lang['email']?></label>
-                <input class="text" type="text" name="d[email]" id="email" value="<?php echo $d['email'] ?>" />
+                    <label for="email"><?php echo $lang['email'] ?></label>
+                    <input class="text" type="text" name="d[email]" id="email" value="<?php echo $d['email'] ?>"/>
 
-                <label for="password"><?php echo $lang['pass']?></label>
-                <input class="text" type="password" name="d[password]" id="password" />
+                    <label for="password"><?php echo $lang['pass'] ?></label>
+                    <input class="text" type="password" name="d[password]" id="password"/>
 
-                <label for="confirm"><?php echo $lang['passchk']?></label>
-                <input class="text" type="password" name="d[confirm]" id="confirm" />
+                    <label for="confirm"><?php echo $lang['passchk'] ?></label>
+                    <input class="text" type="password" name="d[confirm]" id="confirm"/>
 
-                <label for="policy"><?php echo $lang['i_policy']?></label>
-                <select class="text" name="d[policy]" id="policy">
-                    <option value="0" <?php echo ($d['policy'] == 0) ? 'selected="selected"' : '' ?>><?php
-                        echo $lang['i_pol0']?></option>
-                    <option value="1" <?php echo ($d['policy'] == 1) ? 'selected="selected"' : '' ?>><?php
-                        echo $lang['i_pol1']?></option>
-                    <option value="2" <?php echo ($d['policy'] == 2) ? 'selected="selected"' : '' ?>><?php
-                        echo $lang['i_pol2']?></option>
-                </select>
+                    <label for="policy"><?php echo $lang['i_policy'] ?></label>
+                    <select class="text" name="d[policy]" id="policy">
+                        <option value="0" <?php echo ($d['policy'] == 0) ? 'selected="selected"' : '' ?>><?php
+                            echo $lang['i_pol0'] ?></option>
+                        <option value="1" <?php echo ($d['policy'] == 1) ? 'selected="selected"' : '' ?>><?php
+                            echo $lang['i_pol1'] ?></option>
+                        <option value="2" <?php echo ($d['policy'] == 2) ? 'selected="selected"' : '' ?>><?php
+                            echo $lang['i_pol2'] ?></option>
+                    </select>
 
-                <label for="allowreg">
-                    <input type="checkbox" name="d[allowreg]" id="allowreg" <?php
-                        echo(($d['allowreg'] ? ' checked="checked"' : ''));?> />
-                    <?php echo $lang['i_allowreg']?>
+                    <label for="allowreg">
+                        <input type="checkbox" name="d[allowreg]" id="allowreg" <?php
+                        echo(($d['allowreg'] ? ' checked="checked"' : '')); ?> />
+                        <?php echo $lang['i_allowreg'] ?>
+                    </label>
+                </fieldset>
+            </fieldset>
+
+            <fieldset>
+                <p><?php echo $lang['i_license'] ?></p>
+                <?php
+                $license[] = ['name' => $lang['i_license_none'], 'url' => ''];
+                if (empty($d['license'])) $d['license'] = 'cc-by-sa';
+                foreach ($license as $key => $lic) {
+                    echo '<label for="lic_' . $key . '">';
+                    echo '<input type="radio" name="d[license]" value="' . hsc($key) . '" id="lic_' . $key . '"' .
+                        (($d['license'] === $key) ? ' checked="checked"' : '') . '>';
+                    echo hsc($lic['name']);
+                    if ($lic['url']) echo ' <a href="' . $lic['url'] . '" target="_blank"><sup>[?]</sup></a>';
+                    echo '</label>';
+                }
+                ?>
+            </fieldset>
+
+            <fieldset>
+                <p><?php echo $lang['i_pop_field'] ?></p>
+                <label for="pop">
+                    <input type="checkbox" name="d[pop]" id="pop" <?php
+                    echo(($d['pop'] ? ' checked="checked"' : '')); ?> />
+                    <?php echo $lang['i_pop_label'] ?>
+                    <a href="https://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
                 </label>
             </fieldset>
-        </fieldset>
 
-        <fieldset>
-            <p><?php echo $lang['i_license']?></p>
-            <?php
-            array_push($license, array('name' => $lang['i_license_none'], 'url' => ''));
-            if (empty($d['license'])) $d['license'] = 'cc-by-sa';
-            foreach ($license as $key => $lic) {
-                echo '<label for="lic_' . $key . '">';
-                echo '<input type="radio" name="d[license]" value="' . hsc($key) . '" id="lic_' . $key . '"' .
-                     (($d['license'] === $key) ? ' checked="checked"' : '') . '>';
-                echo hsc($lic['name']);
-                if ($lic['url']) echo ' <a href="' . $lic['url'] . '" target="_blank"><sup>[?]</sup></a>';
-                echo '</label>';
-            }
-            ?>
         </fieldset>
-
-        <fieldset>
-            <p><?php echo $lang['i_pop_field']?></p>
-            <label for="pop">
-                <input type="checkbox" name="d[pop]" id="pop" <?php
-                    echo(($d['pop'] ? ' checked="checked"' : ''));?> />
-                <?php echo $lang['i_pop_label']?>
-                <a href="http://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
-            </label>
+        <fieldset id="process">
+            <button type="submit" name="submit"><?php echo $lang['btn_save'] ?></button>
         </fieldset>
-
-    </fieldset>
-    <fieldset id="process">
-        <button type="submit" name="submit"><?php echo $lang['btn_save']?></button>
-    </fieldset>
     </form>
     <?php
 }
@@ -253,10 +280,10 @@ function print_retry()
     global $LC;
     ?>
     <form action="" method="get">
-      <fieldset>
-        <input type="hidden" name="l" value="<?php echo $LC ?>" />
-        <button type="submit"><?php echo $lang['i_retry'];?></button>
-      </fieldset>
+        <fieldset>
+            <input type="hidden" name="l" value="<?php echo $LC ?>"/>
+            <button type="submit"><?php echo $lang['i_retry']; ?></button>
+        </fieldset>
     </form>
     <?php
 }
@@ -264,29 +291,29 @@ function print_retry()
 /**
  * Check validity of data
  *
- * @author Andreas Gohr
- *
  * @param array $d
  * @return bool ok?
+ * @author Andreas Gohr
+ *
  */
 function check_data(&$d)
 {
-    static $form_default = array(
-        'title'     => '',
-        'acl'       => '1',
+    static $form_default = [
+        'title' => '',
+        'acl' => '1',
         'superuser' => '',
-        'fullname'  => '',
-        'email'     => '',
-        'password'  => '',
-        'confirm'   => '',
-        'policy'    => '0',
-        'allowreg'  => '0',
-        'license'   => 'cc-by-sa'
-    );
+        'fullname' => '',
+        'email' => '',
+        'password' => '',
+        'confirm' => '',
+        'policy' => '0',
+        'allowreg' => '0',
+        'license' => 'cc-by-sa'
+    ];
     global $lang;
     global $error;
 
-    if (!is_array($d)) $d = array();
+    if (!is_array($d)) $d = [];
     foreach ($d as $k => $v) {
         if (is_array($v))
             unset($d[$k]);
@@ -304,27 +331,27 @@ function check_data(&$d)
         // check input
         if (empty($d['title'])) {
             $error[] = sprintf($lang['i_badval'], $lang['i_wikiname']);
-            $ok      = false;
+            $ok = false;
         }
         if (isset($d['acl'])) {
             if (empty($d['superuser']) || ($d['superuser'] !== cleanID($d['superuser']))) {
                 $error[] = sprintf($lang['i_badval'], $lang['i_superuser']);
-                $ok      = false;
+                $ok = false;
             }
             if (empty($d['password'])) {
                 $error[] = sprintf($lang['i_badval'], $lang['pass']);
-                $ok      = false;
+                $ok = false;
             } elseif (!isset($d['confirm']) || $d['confirm'] != $d['password']) {
                 $error[] = sprintf($lang['i_badval'], $lang['passchk']);
-                $ok      = false;
+                $ok = false;
             }
             if (empty($d['fullname']) || strstr($d['fullname'], ':')) {
                 $error[] = sprintf($lang['i_badval'], $lang['fullname']);
-                $ok      = false;
+                $ok = false;
             }
             if (empty($d['email']) || strstr($d['email'], ':') || !strstr($d['email'], '@')) {
                 $error[] = sprintf($lang['i_badval'], $lang['email']);
-                $ok      = false;
+                $ok = false;
             }
         } else {
             // Since default = 1, browser won't send acl=0 when user untick acl
@@ -338,19 +365,20 @@ function check_data(&$d)
 /**
  * Writes the data to the config files
  *
- * @author  Chris Smith <chris@jalakai.co.uk>
- *
  * @param array $d
  * @return bool
+ * @throws Exception
+ *
+ * @author  Chris Smith <chris@jalakai.co.uk>
  */
 function store_data($d)
 {
     global $LC;
     $ok = true;
-    $d['policy'] = (int) $d['policy'];
+    $d['policy'] = (int)$d['policy'];
 
     // create local.php
-    $now    = gmdate('r');
+    $now = gmdate('r');
     $output = <<<EOT
 <?php
 /**
@@ -384,7 +412,7 @@ EOT;
 
     if ($d['acl']) {
         // hash the password
-        $phash = new \dokuwiki\PassHash();
+        $phash = new PassHash();
         $pass = $phash->hash_bcrypt($d['password']);
 
         // create users.auth.php
@@ -403,7 +431,7 @@ EOT;
 
 EOT;
         // --- user:bcryptpasswordhash:Real Name:email:groups,comma,seperated
-        $output = $output . "\n" . join(':', [
+        $output = $output . "\n" . implode(':', [
                 $d['superuser'],
                 $pass,
                 $d['fullname'],
@@ -425,13 +453,13 @@ EOT;
 
 EOT;
         if ($d['policy'] == 2) {
-            $output .=  "*               @ALL          0\n";
-            $output .=  "*               @user         8\n";
+            $output .= "*               @ALL          0\n";
+            $output .= "*               @user         8\n";
         } elseif ($d['policy'] == 1) {
-            $output .=  "*               @ALL          1\n";
-            $output .=  "*               @user         8\n";
+            $output .= "*               @ALL          1\n";
+            $output .= "*               @user         8\n";
         } else {
-            $output .=  "*               @ALL          8\n";
+            $output .= "*               @ALL          8\n";
         }
         $ok = $ok && fileWrite(DOKU_LOCAL . 'acl.auth.php', $output);
     }
@@ -465,11 +493,11 @@ EOT;
 /**
  * Write the given content to a file
  *
- * @author  Chris Smith <chris@jalakai.co.uk>
- *
  * @param string $filename
  * @param string $data
  * @return bool
+ *
+ * @author  Chris Smith <chris@jalakai.co.uk>
  */
 function fileWrite($filename, $data)
 {
@@ -478,7 +506,7 @@ function fileWrite($filename, $data)
 
     if (($fp = @fopen($filename, 'wb')) === false) {
         $filename = str_replace($_SERVER['DOCUMENT_ROOT'], '{DOCUMENT_ROOT}/', $filename);
-        $error[]  = sprintf($lang['i_writeerr'], $filename);
+        $error[] = sprintf($lang['i_writeerr'], $filename);
         return false;
     }
 
@@ -494,9 +522,9 @@ function fileWrite($filename, $data)
  * check installation dependent local config files and tests for a known
  * unmodified main config file
  *
- * @author      Chris Smith <chris@jalakai.co.uk>
- *
  * @return bool
+ *
+ * @author      Chris Smith <chris@jalakai.co.uk>
  */
 function check_configs()
 {
@@ -505,18 +533,18 @@ function check_configs()
 
     $ok = true;
 
-    $config_files = array(
+    $config_files = [
         'local' => DOKU_LOCAL . 'local.php',
         'users' => DOKU_LOCAL . 'users.auth.php',
-        'auth'  => DOKU_LOCAL . 'acl.auth.php'
-    );
+        'auth' => DOKU_LOCAL . 'acl.auth.php'
+    ];
 
     // configs shouldn't exist
     foreach ($config_files as $file) {
         if (file_exists($file) && filesize($file)) {
-            $file    = str_replace($_SERVER['DOCUMENT_ROOT'], '{DOCUMENT_ROOT}/', $file);
+            $file = str_replace($_SERVER['DOCUMENT_ROOT'], '{DOCUMENT_ROOT}/', $file);
             $error[] = sprintf($lang['i_confexists'], $file);
-            $ok      = false;
+            $ok = false;
         }
     }
     return $ok;
@@ -526,36 +554,36 @@ function check_configs()
 /**
  * Check other installation dir/file permission requirements
  *
- * @author      Chris Smith <chris@jalakai.co.uk>
- *
  * @return bool
+ *
+ * @author      Chris Smith <chris@jalakai.co.uk>
  */
 function check_permissions()
 {
     global $error;
     global $lang;
 
-    $dirs = array(
-        'conf'        => DOKU_LOCAL,
-        'data'        => DOKU_INC . 'data',
-        'pages'       => DOKU_INC . 'data/pages',
-        'attic'       => DOKU_INC . 'data/attic',
-        'media'       => DOKU_INC . 'data/media',
+    $dirs = [
+        'conf' => DOKU_LOCAL,
+        'data' => DOKU_INC . 'data',
+        'pages' => DOKU_INC . 'data/pages',
+        'attic' => DOKU_INC . 'data/attic',
+        'media' => DOKU_INC . 'data/media',
         'media_attic' => DOKU_INC . 'data/media_attic',
-        'media_meta'  => DOKU_INC . 'data/media_meta',
-        'meta'        => DOKU_INC . 'data/meta',
-        'cache'       => DOKU_INC . 'data/cache',
-        'locks'       => DOKU_INC . 'data/locks',
-        'index'       => DOKU_INC . 'data/index',
-        'tmp'         => DOKU_INC . 'data/tmp'
-    );
+        'media_meta' => DOKU_INC . 'data/media_meta',
+        'meta' => DOKU_INC . 'data/meta',
+        'cache' => DOKU_INC . 'data/cache',
+        'locks' => DOKU_INC . 'data/locks',
+        'index' => DOKU_INC . 'data/index',
+        'tmp' => DOKU_INC . 'data/tmp'
+    ];
 
     $ok = true;
     foreach ($dirs as $dir) {
         if (!file_exists("$dir/.") || !is_writable($dir)) {
-            $dir     = str_replace($_SERVER['DOCUMENT_ROOT'], '{DOCUMENT_ROOT}', $dir);
+            $dir = str_replace($_SERVER['DOCUMENT_ROOT'], '{DOCUMENT_ROOT}', $dir);
             $error[] = sprintf($lang['i_permfail'], $dir);
-            $ok      = false;
+            $ok = false;
         }
     }
     return $ok;
@@ -564,9 +592,9 @@ function check_permissions()
 /**
  * Check the availability of functions used in DokuWiki and the PHP version
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @return bool
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function check_functions()
 {
@@ -574,8 +602,8 @@ function check_functions()
     global $lang;
     $ok = true;
 
-    if (version_compare(phpversion(), '5.6.0', '<')) {
-        $error[] = sprintf($lang['i_phpver'], phpversion(), '5.6.0');
+    if (version_compare(phpversion(), '7.4.0', '<')) {
+        $error[] = sprintf($lang['i_phpver'], phpversion(), '7.4.0');
         $ok = false;
     }
 
@@ -586,7 +614,7 @@ function check_functions()
 
     try {
         random_bytes(1);
-    } catch (\Exception $th) {
+    } catch (Exception $th) {
         // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
         $error[] = $lang['i_urandom'];
         $ok = false;
@@ -598,12 +626,12 @@ function check_functions()
     }
 
     $funcs = explode(' ', 'addslashes call_user_func chmod copy fgets ' .
-                         'file file_exists fseek flush filesize ftell fopen ' .
-                         'glob header ignore_user_abort ini_get mkdir ' .
-                         'ob_start opendir parse_ini_file readfile realpath ' .
-                         'rename rmdir serialize session_start unlink usleep ' .
-                         'preg_replace file_get_contents htmlspecialchars_decode ' .
-                         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
+        'file file_exists fseek flush filesize ftell fopen ' .
+        'glob header ignore_user_abort ini_get mkdir ' .
+        'ob_start opendir parse_ini_file readfile realpath ' .
+        'rename rmdir serialize session_start unlink usleep ' .
+        'preg_replace file_get_contents htmlspecialchars_decode ' .
+        'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
     if (!function_exists('mb_substr')) {
         $funcs[] = 'utf8_encode';
@@ -639,12 +667,12 @@ function langsel()
     global $LC;
 
     $dir = DOKU_INC . 'inc/lang';
-    $dh  = opendir($dir);
+    $dh = opendir($dir);
     if (!$dh) return;
 
-    $langs = array();
+    $langs = [];
     while (($file = readdir($dh)) !== false) {
-        if (preg_match('/^[\._]/', $file)) continue;
+        if (preg_match('/^[._]/', $file)) continue;
         if (is_dir($dir . '/' . $file) && file_exists($dir . '/' . $file . '/lang.php')) {
             $langs[] = $file;
         }

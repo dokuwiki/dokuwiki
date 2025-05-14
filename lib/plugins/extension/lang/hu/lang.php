@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Fekete Ádám Zsolt <fadam@egbcsoport.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
 $lang['menu']                  = 'Bővítménykezelő';
@@ -72,6 +73,7 @@ $lang['msg_template_update_success'] = 'A(z) %s sablon sikeresen frissítve';
 $lang['msg_plugin_install_success'] = 'A(z) %s modul sikeresen telepítve';
 $lang['msg_plugin_update_success'] = 'A(z) %s modul sikeresen frissítve';
 $lang['msg_upload_failed']     = 'A fájl feltöltése sikertelen';
+$lang['msg_nooverwrite']       = 'A % bővítmény már létezik, így nem írtuk felül. A felülíráshoz jelöld be a jelölőnégyzetet.';
 $lang['missing_dependency']    = '<strong>Hiányzó vagy letiltott függőség:</strong> %s';
 $lang['security_issue']        = '<strong>Biztonsági probléma:</strong> %s';
 $lang['security_warning']      = '<strong>Biztonsági figyelmeztetés:</strong> %s';

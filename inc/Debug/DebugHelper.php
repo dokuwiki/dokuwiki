@@ -1,15 +1,14 @@
 <?php
 
-
 namespace dokuwiki\Debug;
 
-use Doku_Event;
+use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
 use dokuwiki\Logger;
 
 class DebugHelper
 {
-    const INFO_DEPRECATION_LOG_EVENT = 'INFO_DEPRECATION_LOG';
+    protected const INFO_DEPRECATION_LOG_EVENT = 'INFO_DEPRECATION_LOG';
 
     /**
      * Check if deprecation messages shall be handled
@@ -24,7 +23,7 @@ class DebugHelper
         global $EVENT_HANDLER;
         if (
             !Logger::getInstance(Logger::LOG_DEPRECATED)->isLogging() &&
-            ($EVENT_HANDLER === null || !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG'))
+            (!$EVENT_HANDLER instanceof EventHandler || !$EVENT_HANDLER->hasHandlerForEvent('INFO_DEPRECATION_LOG'))
         ) {
             // avoid any work if no one cares
             return false;
@@ -45,28 +44,35 @@ class DebugHelper
         if (!self::isEnabled()) return;
 
         $backtrace = debug_backtrace();
-        for ($i = 0; $i < $callerOffset; $i += 1) {
-            if(count($backtrace) > 1) array_shift($backtrace);
+        for ($i = 0; $i < $callerOffset; ++$i) {
+            if (count($backtrace) > 1) array_shift($backtrace);
         }
 
-        list($self, $call) = $backtrace;
-
-        if (!$thing) {
-            $thing = trim(
-                (!empty($self['class']) ? ($self['class'] . '::') : '') .
-                $self['function'] . '()', ':');
-        }
+        [$self, $call] = $backtrace;
 
         self::triggerDeprecationEvent(
             $backtrace,
             $alternative,
-            $thing,
-            trim(
-                (!empty($call['class']) ? ($call['class'] . '::') : '') .
-                $call['function'] . '()', ':'),
+            self::formatCall($self),
+            self::formatCall($call),
             $self['file'] ?? $call['file'] ?? '',
             $self['line'] ?? $call['line'] ?? 0
         );
+    }
+
+    /**
+     * Format the given backtrace info into a proper function/method call string
+     * @param array $call
+     * @return string
+     */
+    protected static function formatCall($call)
+    {
+        $thing = '';
+        if (!empty($call['class'])) {
+            $thing .= $call['class'] . '::';
+        }
+        $thing .= $call['function'] . '()';
+        return trim($thing, ':');
     }
 
     /**
@@ -119,8 +125,7 @@ class DebugHelper
         $file,
         $line,
         $callerOffset = 1
-    )
-    {
+    ) {
         if (!self::isEnabled()) return;
 
         $backtrace = array_slice(debug_backtrace(), $callerOffset);
@@ -133,7 +138,6 @@ class DebugHelper
             $file,
             $line
         );
-
     }
 
     /**
@@ -151,8 +155,7 @@ class DebugHelper
         $caller,
         $file,
         $line
-    )
-    {
+    ) {
         $data = [
             'trace' => $backtrace,
             'alternative' => $alternative,
@@ -161,7 +164,7 @@ class DebugHelper
             'file' => $file,
             'line' => $line,
         ];
-        $event = new Doku_Event(self::INFO_DEPRECATION_LOG_EVENT, $data);
+        $event = new Event(self::INFO_DEPRECATION_LOG_EVENT, $data);
         if ($event->advise_before()) {
             $msg = $event->data['called'] . ' is deprecated. It was called from ';
             $msg .= $event->data['caller'] . ' in ' . $event->data['file'] . ':' . $event->data['line'];

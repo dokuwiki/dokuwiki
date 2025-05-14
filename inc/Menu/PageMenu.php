@@ -7,17 +7,9 @@ namespace dokuwiki\Menu;
  *
  * Actions manipulating the current page. Shown as a floating menu in the dokuwiki template
  */
-class PageMenu extends AbstractMenu {
-
+class PageMenu extends AbstractMenu
+{
     protected $view = 'page';
 
-    protected $types = array(
-        'Edit',
-        'Revert',
-        'Revisions',
-        'Backlink',
-        'Subscribe',
-        'Top',
-    );
-
+    protected $types = ['Edit', 'Revert', 'Revisions', 'Backlink', 'Subscribe', 'Top'];
 }

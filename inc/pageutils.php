@@ -8,6 +8,10 @@
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
 
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\File\Resolver;
+use dokuwiki\Extension\Event;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\File\MediaResolver;
@@ -49,7 +53,7 @@ function getID($param = 'id', $clean = true)
                 $relpath = 'lib/exe/';
             }
             $script = $conf['basedir'] . $relpath .
-                \dokuwiki\Utf8\PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
+                PhpString::basename($INPUT->server->str('SCRIPT_FILENAME'));
         } elseif ($INPUT->server->str('PATH_INFO')) {
             $request = $INPUT->server->str('PATH_INFO');
         } elseif ($INPUT->server->str('SCRIPT_NAME')) {
@@ -77,19 +81,19 @@ function getID($param = 'id', $clean = true)
     }
 
     // Namespace autolinking from URL
-    if (substr($id, -1) == ':' || ($conf['useslash'] && substr($id, -1) == '/')) {
+    if (str_ends_with($id, ':') || ($conf['useslash'] && str_ends_with($id, '/'))) {
         if (page_exists($id . $conf['start'])) {
             // start page inside namespace
-            $id = $id . $conf['start'];
+            $id .= $conf['start'];
         } elseif (page_exists($id . noNS(cleanID($id)))) {
             // page named like the NS inside the NS
-            $id = $id . noNS(cleanID($id));
+            $id .= noNS(cleanID($id));
         } elseif (page_exists($id)) {
             // page like namespace exists
             $id = substr($id, 0, -1);
         } else {
             // fall back to default
-            $id = $id . $conf['start'];
+            $id .= $conf['start'];
         }
         if (isset($ACT) && $ACT === 'show') {
             $urlParameters = $_GET;
@@ -135,7 +139,7 @@ function cleanID($raw_id, $ascii = false)
         $sepcharpat = '#\\' . $sepchar . '+#';
 
     $id = trim((string)$raw_id);
-    $id = \dokuwiki\Utf8\PhpString::strtolower($id);
+    $id = PhpString::strtolower($id);
 
     //alternative namespace seperator
     if ($conf['useslash']) {
@@ -144,13 +148,13 @@ function cleanID($raw_id, $ascii = false)
         $id = strtr($id, ';/', ':' . $sepchar);
     }
 
-    if ($conf['deaccent'] == 2 || $ascii) $id = \dokuwiki\Utf8\Clean::romanize($id);
-    if ($conf['deaccent'] || $ascii) $id = \dokuwiki\Utf8\Clean::deaccent($id, -1);
+    if ($conf['deaccent'] == 2 || $ascii) $id = Clean::romanize($id);
+    if ($conf['deaccent'] || $ascii) $id = Clean::deaccent($id, -1);
 
     //remove specials
-    $id = \dokuwiki\Utf8\Clean::stripspecials($id, $sepchar, '\*');
+    $id = Clean::stripspecials($id, $sepchar, '\*');
 
-    if ($ascii) $id = \dokuwiki\Utf8\Clean::strip($id);
+    if ($ascii) $id = Clean::strip($id);
 
     //clean up
     $id = preg_replace($sepcharpat, $sepchar, $id);
@@ -244,7 +248,7 @@ function noNSorNS($id)
  */
 function sectionID($title, &$check)
 {
-    $title = str_replace(array(':','.'), '', cleanID($title));
+    $title = str_replace([':', '.'], '', cleanID($title));
     $new = ltrim($title, '0123456789_-');
     if (empty($new)) {
         $title = 'section' . preg_replace('/[^0-9]+/', '', $title); //keep numbers from headline
@@ -359,7 +363,7 @@ function wikiFN($raw_id, $rev = '', $clean = true)
     }
 
     if (!isset($cache[$id])) {
-        $cache[$id] = array();
+        $cache[$id] = [];
     }
     $cache[$id][$rev] = $fn;
     return $fn;
@@ -394,6 +398,7 @@ function metaFN($id, $ext)
     global $conf;
     $id = cleanID($id);
     $id = str_replace(':', '/', $id);
+
     $fn = $conf['metadir'] . '/' . utf8_encodeFN($id) . $ext;
     return $fn;
 }
@@ -412,6 +417,7 @@ function mediaMetaFN($id, $ext)
     global $conf;
     $id = cleanID($id);
     $id = str_replace(':', '/', $id);
+
     $fn = $conf['mediametadir'] . '/' . utf8_encodeFN($id) . $ext;
     return $fn;
 }
@@ -430,7 +436,7 @@ function metaFiles($id)
     $basename = metaFN($id, '');
     $files    = glob($basename . '.*', GLOB_MARK);
     // filter files like foo.bar.meta when $id == 'foo'
-    return    $files ? preg_grep('/^' . preg_quote($basename, '/') . '\.[^.\/]*$/u', $files) : array();
+    return    $files ? preg_grep('/^' . preg_quote($basename, '/') . '\.[^.\/]*$/u', $files) : [];
 }
 
 /**
@@ -504,7 +510,7 @@ function localeFN($id, $ext = 'txt')
 function resolve_id($ns, $id, $clean = true)
 {
     global $conf;
-    dbg_deprecated(\dokuwiki\File\Resolver::class . ' and its children');
+    dbg_deprecated(Resolver::class . ' and its children');
 
     // some pre cleaning for useslash:
     if ($conf['useslash']) $id = str_replace('/', ':', $id);
@@ -518,10 +524,10 @@ function resolve_id($ns, $id, $clean = true)
         $id = $ns . ':' . $id;
 
         // cleanup relatives
-        $result = array();
+        $result = [];
         $pathA  = explode(':', $id);
         if (!$pathA[0]) $result[] = '';
-        foreach ($pathA as $key => $dir) {
+        foreach ($pathA as $dir) {
             if ($dir == '..') {
                 if (end($result) == '..') {
                     $result[] = '..';
@@ -617,11 +623,8 @@ function getCacheName($data, $ext = '')
  */
 function isHiddenPage($id)
 {
-    $data = array(
-        'id' => $id,
-        'hidden' => false
-    );
-    \dokuwiki\Extension\Event::createAndTrigger('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
+    $data = ['id' => $id, 'hidden' => false];
+    Event::createAndTrigger('PAGEUTILS_ID_HIDEPAGE', $data, '_isHiddenPage');
     return $data['hidden'];
 }
 
@@ -673,7 +676,7 @@ function prettyprint_id($id)
     if (!$id || $id === ':') {
         return '*';
     }
-    if ((substr($id, -1, 1) === ':')) {
+    if (str_ends_with($id, ':')) {
         $id .= '*';
     }
     return hsc($id);

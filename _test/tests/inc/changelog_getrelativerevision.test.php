@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\ChangeLog\ChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
@@ -113,7 +114,8 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $rev = 1362525359;
         $dir = 1;
         $revexpected = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound = $pagelog->getRelativeRevision($rev, $dir);

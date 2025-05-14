@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\Handler;
 
 class CallWriter implements CallWriterInterface
 {
-
     /** @var \Doku_Handler $Handler */
     protected $Handler;
 

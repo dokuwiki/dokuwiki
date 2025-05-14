@@ -106,6 +106,7 @@ $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['disableactions_rss'] = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
+$lang['samesitecookie'] = 'The samesite cookie attribute to use. Leaving it empty will let the browser decide on the samesite policy.';
 $lang['remote']      = 'Enable the remote API system. This allows other applications to access the wiki via XML-RPC or other mechanisms.';
 $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups or users given here. Leave empty to give access to everyone.';
 $lang['remotecors']  = 'Enable Cross-Origin Resource Sharing (CORS) for the remote interfaces. Asterisk (*) to allow all origins. Leave empty to deny CORS.';
@@ -147,6 +148,7 @@ $lang['mailreturnpath']    = 'Recipient email address for non delivery notificat
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 $lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
 $lang['dontlog'] = 'Disable logging for these types of logs.';
+$lang['logretain'] = 'How many days of logs to keep.';
 
 /* Syndication Settings */
 $lang['sitemap']           = 'Generate Google sitemap this often (in days). 0 to disable';

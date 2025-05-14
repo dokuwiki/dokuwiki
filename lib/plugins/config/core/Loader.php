@@ -10,7 +10,8 @@ use dokuwiki\Extension\Event;
  * Loads configuration meta data and settings from the various files. Honors the
  * configuration cascade and installed plugins.
  */
-class Loader {
+class Loader
+{
     /** @var ConfigParser */
     protected $parser;
 
@@ -24,7 +25,8 @@ class Loader {
      * @param ConfigParser $parser
      * @triggers PLUGIN_CONFIG_PLUGINLIST
      */
-    public function __construct(ConfigParser $parser) {
+    public function __construct(ConfigParser $parser)
+    {
         global $conf;
         $this->parser = $parser;
         $this->plugins = plugin_list();
@@ -40,13 +42,14 @@ class Loader {
      *
      * @return array
      */
-    public function loadMeta() {
+    public function loadMeta()
+    {
         // load main file
-        $meta = array();
+        $meta = [];
         include DOKU_PLUGIN . 'config/settings/config.metadata.php';
 
         // plugins
-        foreach($this->plugins as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $meta = array_merge(
                 $meta,
                 $this->loadExtensionMeta(
@@ -81,7 +84,7 @@ class Loader {
     {
 
         // initialize array
-        $conf = array();
+        $conf = [];
 
         // plugins
         foreach ($this->plugins as $plugin) {
@@ -120,11 +123,12 @@ class Loader {
      *
      * @return array
      */
-    public function loadLangs() {
-        $lang = array();
+    public function loadLangs()
+    {
+        $lang = [];
 
         // plugins
-        foreach($this->plugins as $plugin) {
+        foreach ($this->plugins as $plugin) {
             $lang = array_merge(
                 $lang,
                 $this->loadExtensionLang(
@@ -153,7 +157,8 @@ class Loader {
      *
      * @return array
      */
-    public function loadLocal() {
+    public function loadLocal()
+    {
         global $config_cascade;
         return $this->loadConfigs($config_cascade['main']['local']);
     }
@@ -163,7 +168,8 @@ class Loader {
      *
      * @return array
      */
-    public function loadProtected() {
+    public function loadProtected()
+    {
         global $config_cascade;
         return $this->loadConfigs($config_cascade['main']['protected']);
     }
@@ -174,9 +180,10 @@ class Loader {
      * @param string[] $files paths to config php's
      * @return array
      */
-    protected function loadConfigs($files) {
-        $conf = array();
-        foreach($files as $file) {
+    protected function loadConfigs($files)
+    {
+        $conf = [];
+        foreach ($files as $file) {
             $conf = array_merge($conf, $this->parser->parse($file));
         }
         return $conf;
@@ -192,20 +199,21 @@ class Loader {
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionMeta($file, $type, $extname) {
-        if(!file_exists($file)) return array();
+    protected function loadExtensionMeta($file, $type, $extname)
+    {
+        if (!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include file
-        $meta = array();
+        $meta = [];
         include $file;
-        if(empty($meta)) return array();
+        if ($meta === []) return [];
 
         // read data
-        $data = array();
+        $data = [];
         $data[$prefix . $type . '_settings_name'] = ['fieldset'];
-        foreach($meta as $key => $value) {
-            if($value[0] == 'fieldset') continue; //plugins only get one fieldset
+        foreach ($meta as $key => $value) {
+            if ($value[0] == 'fieldset') continue; //plugins only get one fieldset
             $data[$prefix . $key] = $value;
         }
 
@@ -222,17 +230,18 @@ class Loader {
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionConf($file, $type, $extname) {
-        if(!file_exists($file)) return array();
+    protected function loadExtensionConf($file, $type, $extname)
+    {
+        if (!file_exists($file)) return [];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // parse file
         $conf = $this->parser->parse($file);
-        if(empty($conf)) return array();
+        if (empty($conf)) return [];
 
         // read data
-        $data = array();
-        foreach($conf as $key => $value) {
+        $data = [];
+        foreach ($conf as $key => $value) {
             $data[$prefix . $key] = $value;
         }
 
@@ -247,23 +256,24 @@ class Loader {
      * @param string $extname name of the extension
      * @return array
      */
-    protected function loadExtensionLang($dir, $type, $extname) {
+    protected function loadExtensionLang($dir, $type, $extname)
+    {
         global $conf;
         $ll = $conf['lang'];
         $prefix = $type . Configuration::KEYMARKER . $extname . Configuration::KEYMARKER;
 
         // include files
-        $lang = array();
-        if(file_exists($dir . 'lang/en/settings.php')) {
+        $lang = [];
+        if (file_exists($dir . 'lang/en/settings.php')) {
             include $dir . 'lang/en/settings.php';
         }
-        if($ll != 'en' && file_exists($dir . 'lang/' . $ll . '/settings.php')) {
+        if ($ll != 'en' && file_exists($dir . 'lang/' . $ll . '/settings.php')) {
             include $dir . 'lang/' . $ll . '/settings.php';
         }
 
         // set up correct keys
-        $strings = array();
-        foreach($lang as $key => $val) {
+        $strings = [];
+        foreach ($lang as $key => $val) {
             $strings[$prefix . $key] = $val;
         }
 

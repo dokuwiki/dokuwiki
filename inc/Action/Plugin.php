@@ -11,10 +11,11 @@ use dokuwiki\Extension\Event;
  *
  * @package dokuwiki\Action
  */
-class Plugin extends AbstractAction {
-
+class Plugin extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
@@ -24,9 +25,10 @@ class Plugin extends AbstractAction {
      * @inheritdoc
      * @triggers TPL_ACT_UNKNOWN
      */
-    public function tplContent() {
+    public function tplContent()
+    {
         $evt = new Event('TPL_ACT_UNKNOWN', $this->actionname);
-        if($evt->advise_before()) {
+        if ($evt->advise_before()) {
             msg('Failed to handle action: ' . hsc($this->actionname), -1);
         }
         $evt->advise_after();

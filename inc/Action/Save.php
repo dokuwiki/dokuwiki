@@ -12,12 +12,13 @@ use dokuwiki\Action\Exception\ActionException;
  *
  * @package dokuwiki\Action
  */
-class Save extends AbstractAction {
-
+class Save extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         global $INFO;
-        if($INFO['exists']) {
+        if ($INFO['exists']) {
             return AUTH_EDIT;
         } else {
             return AUTH_CREATE;
@@ -25,8 +26,9 @@ class Save extends AbstractAction {
     }
 
     /** @inheritdoc */
-    public function preProcess() {
-        if(!checkSecurityToken()) throw new ActionException('preview');
+    public function preProcess()
+    {
+        if (!checkSecurityToken()) throw new ActionException('preview');
 
         global $ID;
         global $DATE;
@@ -39,12 +41,13 @@ class Save extends AbstractAction {
         global $INPUT;
 
         //spam check
-        if(checkwordblock()) {
+        if (checkwordblock()) {
             msg($lang['wordblock'], -1);
             throw new ActionException('edit');
         }
         //conflict check
-        if($DATE != 0
+        if (
+            $DATE != 0
             && isset($INFO['meta']['date']['modified'])
             && $INFO['meta']['date']['modified'] > $DATE
         ) {
@@ -59,5 +62,4 @@ class Save extends AbstractAction {
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

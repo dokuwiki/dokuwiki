@@ -30,14 +30,14 @@ class TaskRunner
         // check if user abort worked, if yes send output early
         $defer = !@ignore_user_abort() || $conf['broken_iua'];
         $output = $INPUT->has('debug') && $conf['allowdebug'];
-        if(!$defer && !$output){
+        if (!$defer && !$output) {
             $this->sendGIF();
         }
 
         $ID = cleanID($INPUT->str('id'));
 
         // Catch any possible output (e.g. errors)
-        if(!$output) {
+        if (!$output) {
             ob_start();
         } else {
             header('Content-Type: text/plain');
@@ -47,17 +47,21 @@ class TaskRunner
         $tmp = []; // No event data
         $evt = new Event('INDEXER_TASKS_RUN', $tmp);
         if ($evt->advise_before()) {
-            $this->runIndexer() or
-            $this->runSitemapper() or
-            $this->sendDigest() or
-            $this->runTrimRecentChanges() or
-            $this->runTrimRecentChanges(true) or
-            $evt->advise_after();
+            if (
+                !(
+                $this->runIndexer() ||
+                $this->runSitemapper() ||
+                $this->sendDigest() ||
+                $this->runTrimRecentChanges() ||
+                $this->runTrimRecentChanges(true))
+            ) {
+                $evt->advise_after();
+            }
         }
 
-        if(!$output) {
+        if (!$output) {
             ob_end_clean();
-            if($defer) {
+            if ($defer) {
                 $this->sendGIF();
             }
         }
@@ -73,9 +77,9 @@ class TaskRunner
     {
         $img = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAEALAAAAAABAAEAAAIBTAA7');
         header('Content-Type: image/gif');
-        header('Content-Length: '.strlen($img));
+        header('Content-Length: ' . strlen($img));
         header('Connection: Close');
-        print $img;
+        echo $img;
         tpl_flush();
         // Browser should drop connection after this
         // Thinks it's got the whole image
@@ -103,9 +107,11 @@ class TaskRunner
         // Trims the recent changes cache to the last $conf['changes_days'] recent
         // changes or $conf['recent'] items, which ever is larger.
         // The trimming is only done once a day.
-        if (file_exists($fn) &&
+        if (
+            file_exists($fn) &&
             (@filemtime($fn . '.trimmed') + 86400) < time() &&
-            !file_exists($fn . '_tmp')) {
+            !file_exists($fn . '_tmp')
+        ) {
             @touch($fn . '.trimmed');
             io_lock($fn);
             $lines = file($fn);
@@ -120,7 +126,8 @@ class TaskRunner
             $trim_time = time() - $conf['recent_days'] * 86400;
             $out_lines = [];
             $old_lines = [];
-            for ($i = 0; $i < count($lines); $i++) {
+            $counter = count($lines);
+            for ($i = 0; $i < $counter; $i++) {
                 $log = ChangeLog::parseLogLine($lines[$i]);
                 if ($log === false) {
                     continue; // discard junk
@@ -135,7 +142,7 @@ class TaskRunner
                 }
             }
 
-            if (count($lines) == count($out_lines)) {
+            if (count($lines) === count($out_lines)) {
                 // nothing to trim
                 @unlink($fn . '_tmp');
                 io_unlock($fn);
@@ -189,7 +196,7 @@ class TaskRunner
     protected function runIndexer()
     {
         global $ID;
-        print 'runIndexer(): started' . NL;
+        echo 'runIndexer(): started' . NL;
 
         if ((string) $ID === '') {
             return false;
@@ -210,9 +217,9 @@ class TaskRunner
      */
     protected function runSitemapper()
     {
-        print 'runSitemapper(): started' . NL;
+        echo 'runSitemapper(): started' . NL;
         $result = Mapper::generate() && Mapper::pingSearchEngines();
-        print 'runSitemapper(): finished' . NL;
+        echo 'runSitemapper(): finished' . NL;
         return $result;
     }
 

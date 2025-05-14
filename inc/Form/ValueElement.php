@@ -23,7 +23,7 @@ abstract class ValueElement extends Element
      * @param string $value
      * @param array $attributes
      */
-    public function __construct($type, $value, $attributes = array())
+    public function __construct($type, $value, $attributes = [])
     {
         parent::__construct($type, $attributes);
         $this->val($value);
@@ -43,5 +43,4 @@ abstract class ValueElement extends Element
         }
         return $this->value;
     }
-
 }

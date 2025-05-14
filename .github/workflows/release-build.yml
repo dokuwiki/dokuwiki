@@ -82,7 +82,7 @@ jobs:
     outputs:
       version: ${{ env.current_version }}
       file: ${{ env.current_file }}
-      url: ${{ steps.release.outputs.url }}
+      url: ${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
 
   deploy:
     name: Deploy Release
@@ -91,7 +91,7 @@ jobs:
     steps:
       - name: Download
         run: |
-          wget ${{ needs.build.outputs.url }}/dokuwiki-${{ needs.build.outputs.file }}.tgz
+          wget ${{ needs.build.outputs.url }} -O dokuwiki-${{ needs.build.outputs.file }}.tgz
 
       - name: Setup SSH Key
         uses: shimataro/ssh-key-action@v2

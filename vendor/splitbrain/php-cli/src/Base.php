@@ -6,7 +6,7 @@ namespace splitbrain\phpcli;
  * Class CLIBase
  *
  * All base functionality is implemented here.
- * 
+ *
  * Your commandline should not inherit from this class, but from one of the *CLI* classes
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -21,19 +21,65 @@ abstract class Base
     /** @var  Colors */
     public $colors;
 
-    /** @var array PSR-3 compatible loglevels and their prefix, color, output channel */
+    /** @var array PSR-3 compatible loglevels and their prefix, color, output channel, enabled status */
     protected $loglevel = array(
-        'debug' => array('', Colors::C_RESET, STDOUT),
-        'info' => array('ℹ ', Colors::C_CYAN, STDOUT),
-        'notice' => array('☛ ', Colors::C_CYAN, STDOUT),
-        'success' => array('✓ ', Colors::C_GREEN, STDOUT),
-        'warning' => array('⚠ ', Colors::C_BROWN, STDERR),
-        'error' => array('✗ ', Colors::C_RED, STDERR),
-        'critical' => array('☠ ', Colors::C_LIGHTRED, STDERR),
-        'alert' => array('✖ ', Colors::C_LIGHTRED, STDERR),
-        'emergency' => array('✘ ', Colors::C_LIGHTRED, STDERR),
+        'debug' => array(
+            'icon' => '',
+            'color' => Colors::C_RESET,
+            'channel' => STDOUT,
+            'enabled' => true
+        ),
+        'info' => array(
+            'icon' => 'ℹ ',
+            'color' => Colors::C_CYAN,
+            'channel' => STDOUT,
+            'enabled' => true
+        ),
+        'notice' => array(
+            'icon' => '☛ ',
+            'color' => Colors::C_CYAN,
+            'channel' => STDOUT,
+            'enabled' => true
+        ),
+        'success' => array(
+            'icon' => '✓ ',
+            'color' => Colors::C_GREEN,
+            'channel' => STDOUT,
+            'enabled' => true
+        ),
+        'warning' => array(
+            'icon' => '⚠ ',
+            'color' => Colors::C_BROWN,
+            'channel' => STDERR,
+            'enabled' => true
+        ),
+        'error' => array(
+            'icon' => '✗ ',
+            'color' => Colors::C_RED,
+            'channel' => STDERR,
+            'enabled' => true
+        ),
+        'critical' => array(
+            'icon' => '☠ ',
+            'color' => Colors::C_LIGHTRED,
+            'channel' => STDERR,
+            'enabled' => true
+        ),
+        'alert' => array(
+            'icon' => '✖ ',
+            'color' => Colors::C_LIGHTRED,
+            'channel' => STDERR,
+            'enabled' => true
+        ),
+        'emergency' => array(
+            'icon' => '✘ ',
+            'color' => Colors::C_LIGHTRED,
+            'channel' => STDERR,
+            'enabled' => true
+        ),
     );
 
+    /** @var string default log level */
     protected $logdefault = 'info';
 
     /**
@@ -144,11 +190,7 @@ abstract class Base
     protected function setupLogging()
     {
         $level = $this->options->getOpt('loglevel', $this->logdefault);
-        if (!isset($this->loglevel[$level])) $this->fatal('Unknown log level');
-        foreach (array_keys($this->loglevel) as $l) {
-            if ($l == $level) break;
-            unset($this->loglevel[$l]);
-        }
+        $this->setLogLevel($level);
     }
 
     /**
@@ -178,6 +220,33 @@ abstract class Base
     // endregion
 
     // region logging
+
+    /**
+     * Set the current log level
+     *
+     * @param string $level
+     */
+    public function setLogLevel($level)
+    {
+        if (!isset($this->loglevel[$level])) $this->fatal('Unknown log level');
+        $enable = false;
+        foreach (array_keys($this->loglevel) as $l) {
+            if ($l == $level) $enable = true;
+            $this->loglevel[$l]['enabled'] = $enable;
+        }
+    }
+
+    /**
+     * Check if a message with the given level should be logged
+     *
+     * @param string $level
+     * @return bool
+     */
+    public function isLogLevelEnabled($level)
+    {
+        if (!isset($this->loglevel[$level])) $this->fatal('Unknown log level');
+        return $this->loglevel[$level]['enabled'];
+    }
 
     /**
      * Exits the program on a fatal error
@@ -222,17 +291,20 @@ abstract class Base
      */
     protected function logMessage($level, $message, array $context = array())
     {
-        // is this log level wanted?
-        if (!isset($this->loglevel[$level])) return;
+        // unknown level is always an error
+        if (!isset($this->loglevel[$level])) $level = 'error';
 
-        /** @var string $prefix */
-        /** @var string $color */
-        /** @var resource $channel */
-        list($prefix, $color, $channel) = $this->loglevel[$level];
-        if (!$this->colors->isEnabled()) $prefix = '';
+        $info = $this->loglevel[$level];
+        if (!$this->isLogLevelEnabled($level)) return; // no logging for this level
 
         $message = $this->interpolate($message, $context);
-        $this->colors->ptln($prefix . $message, $color, $channel);
+
+        // when colors are wanted, we also add the icon
+        if ($this->colors->isEnabled()) {
+            $message = $info['icon'] . $message;
+        }
+
+        $this->colors->ptln($message, $info['color'], $info['channel']);
     }
 
     /**

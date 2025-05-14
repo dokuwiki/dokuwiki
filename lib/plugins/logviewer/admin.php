@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Form\Form;
 use dokuwiki\Logger;
 
 /**
@@ -8,9 +10,9 @@ use dokuwiki\Logger;
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
+class admin_plugin_logviewer extends AdminPlugin
 {
-    const MAX_READ_SIZE = 1048576; // 1 MB
+    protected const MAX_READ_SIZE = 1_048_576; // 1 MB
 
     protected $facilities;
     protected $facility;
@@ -56,7 +58,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
     {
         global $ID;
 
-        $form = new dokuwiki\Form\Form(['method' => 'GET']);
+        $form = new Form(['method' => 'GET']);
         $form->setHiddenField('do', 'admin');
         $form->setHiddenField('page', 'logviewer');
         $form->setHiddenField('facility', $this->facility);
@@ -71,8 +73,10 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
             if ($facility == $this->facility) {
                 echo '<strong>' . hsc($facility) . '</strong>';
             } else {
-                $link = wl($ID,
-                    ['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]);
+                $link = wl(
+                    $ID,
+                    ['do' => 'admin', 'page' => 'logviewer', 'date' => $this->date, 'facility' => $facility]
+                );
                 echo '<a href="' . $link . '">' . hsc($facility) . '</a>';
             }
             echo '</li>';
@@ -156,7 +160,7 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
 
             if ($size >= self::MAX_READ_SIZE) {
                 array_shift($lines); // Discard the first line
-                while (!empty($lines) && (substr($lines[0], 0, 2) === '  ')) {
+                while ($lines !== [] && str_starts_with($lines[0], '  ')) {
                     array_shift($lines); // Discard indented lines
                 }
 
@@ -182,19 +186,19 @@ class admin_plugin_logviewer extends DokuWiki_Admin_Plugin
         echo "<dl>";
         for ($i = 0; $i < $numberOfLines; $i++) {
             $line = $lines[$i];
-            if (substr($line, 0, 2) === '  ') {
+            if (str_starts_with($line, '  ')) {
                 // lines indented by two spaces are details, aggregate them
                 echo '<dd>';
-                while (substr($line, 0, 2) === '  ') {
+                while (str_starts_with($line, '  ')) {
                     echo hsc(substr($line, 2)) . '<br />';
                     $i++;
                     $line = $lines[$i] ?? '';
                 }
                 echo '</dd>';
-                $i -= 1; // rewind the counter
+                --$i; // rewind the counter
             } else {
                 // other lines are actual log lines in three parts
-                list($dt, $file, $msg) = sexplode("\t", $line, 3, '');
+                [$dt, $file, $msg] = sexplode("\t", $line, 3, '');
                 echo '<dt>';
                 echo '<span class="datetime">' . hsc($dt) . '</span>';
                 echo '<span class="log">';

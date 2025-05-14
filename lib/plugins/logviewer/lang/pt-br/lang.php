@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  */
-$lang['menu']                  = 'Exibir registros';
+$lang['menu']                  = 'Ver Logs';
 $lang['date']                  = 'Data';
-$lang['js']['filter']          = 'Filtrar linhas de registro:';
+$lang['js']['filter']          = 'Filtrar linhas de log:';

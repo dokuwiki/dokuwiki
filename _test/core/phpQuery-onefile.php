@@ -4623,6 +4623,7 @@ abstract class phpQuery {
      * Creates new document from markup.
      * Chainable.
      *
+     * @deprecated Use \DOMWrap\Document instead
      * @param unknown_type $markup
      * @return phpQueryObject|QueryTemplatesSource|QueryTemplatesParse|QueryTemplatesSourceQuery
      */

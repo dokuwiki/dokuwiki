@@ -51,5 +51,4 @@ class TextareaElement extends InputElement
         return '<textarea ' . buildAttributes($this->attrs()) . '>' .
             formText($this->val()) . '</textarea>';
     }
-
 }

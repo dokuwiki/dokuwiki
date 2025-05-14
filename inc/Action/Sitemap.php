@@ -13,10 +13,11 @@ use dokuwiki\Utf8\PhpString;
  *
  * @package dokuwiki\Action
  */
-class Sitemap extends AbstractAction {
-
+class Sitemap extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
@@ -27,26 +28,27 @@ class Sitemap extends AbstractAction {
      * @throws FatalException
      * @inheritdoc
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $conf;
 
-        if($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
+        if ($conf['sitemap'] < 1 || !is_numeric($conf['sitemap'])) {
             throw new FatalException('Sitemap generation is disabled', 404);
         }
 
         $sitemap = Mapper::getFilePath();
-        if(Mapper::sitemapIsCompressed()) {
+        if (Mapper::sitemapIsCompressed()) {
             $mime = 'application/x-gzip';
         } else {
             $mime = 'application/xml; charset=utf-8';
         }
 
         // Check if sitemap file exists, otherwise create it
-        if(!is_readable($sitemap)) {
+        if (!is_readable($sitemap)) {
             Mapper::generate();
         }
 
-        if(is_readable($sitemap)) {
+        if (is_readable($sitemap)) {
             // Send headers
             header('Content-Type: ' . $mime);
             header('Content-Disposition: attachment; filename=' . PhpString::basename($sitemap));
@@ -63,5 +65,4 @@ class Sitemap extends AbstractAction {
 
         throw new FatalException('Could not read the sitemap file - bad permissions?');
     }
-
 }

@@ -11,14 +11,15 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Search extends AbstractAction {
-
-    protected $pageLookupResults = array();
-    protected $fullTextResults = array();
-    protected $highlight = array();
+class Search extends AbstractAction
+{
+    protected $pageLookupResults = [];
+    protected $fullTextResults = [];
+    protected $highlight = [];
 
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
@@ -27,7 +28,8 @@ class Search extends AbstractAction {
      *
      * @inheritdoc
      */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
     }
 
@@ -125,7 +127,6 @@ class Search extends AbstractAction {
                         }
 
                         return '*' . $part . '*';
-
                     }, $queryParts);
                     $QUERY = implode(' ', $queryParts);
                 }

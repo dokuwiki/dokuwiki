@@ -1,13 +1,16 @@
 <?php
+
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\StyleUtils;
+
 /**
  * DokuWiki Plugin styling (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_styling extends DokuWiki_Admin_Plugin
+class admin_plugin_styling extends AdminPlugin
 {
-
     public $ispopup = false;
 
     /**
@@ -34,8 +37,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         global $INPUT;
         $run = $INPUT->extract('run')->str('run');
         if (!$run) return;
-        if(!checkSecurityToken()) return;
-        $run = 'run'.ucfirst($run);
+        if (!checkSecurityToken()) return;
+        $run = 'run' . ucfirst($run);
         $this->$run();
     }
 
@@ -47,8 +50,8 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         $class = 'nopopup';
         if ($this->ispopup) $class = 'ispopup page';
 
-        echo '<div id="plugin__styling" class="'.$class.'">';
-        ptln('<h1>'.$this->getLang('menu').'</h1>');
+        echo '<div id="plugin__styling" class="' . $class . '">';
+        echo '<h1>' . $this->getLang('menu') . '</h1>';
         $this->form();
         echo '</div>';
     }
@@ -61,22 +64,22 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         global $conf;
         global $ID;
 
-        $styleUtil = new \dokuwiki\StyleUtils($conf['template'], true, true);
-        $styleini     = $styleUtil->cssStyleini();
+        $styleUtil = new StyleUtils($conf['template'], true, true);
+        $styleini = $styleUtil->cssStyleini();
         $replacements = $styleini['replacements'];
 
         if ($this->ispopup) {
-            $target = DOKU_BASE.'lib/plugins/styling/popup.php';
+            $target = DOKU_BASE . 'lib/plugins/styling/popup.php';
         } else {
-            $target = wl($ID, array('do' => 'admin', 'page' => 'styling'));
+            $target = wl($ID, ['do' => 'admin', 'page' => 'styling']);
         }
 
         if (empty($replacements)) {
-            echo '<p class="error">'.$this->getLang('error').'</p>';
+            echo '<p class="error">' . $this->getLang('error') . '</p>';
         } else {
             echo $this->locale_xhtml('intro');
 
-            echo '<form class="styling" method="post" action="'.$target.'">';
+            echo '<form class="styling" method="post" action="' . $target . '">';
             formSecurityToken();
 
             echo '<table><tbody>';
@@ -86,27 +89,28 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
                 if (empty($name)) $name = $key;
 
                 echo '<tr>';
-                echo '<td><label for="tpl__'.hsc($key).'">'.$name.'</label></td>';
-                echo '<td><input type="'.$this->colorType($value).'" name="tpl['.hsc($key).']" id="tpl__'.hsc($key).'"
-                    value="'.hsc($this->colorValue($value)).'" dir="ltr" required="required"/></td>';
+                echo '<td><label for="tpl__' . hsc($key) . '">' . $name . '</label></td>';
+                echo '<td><input type="' . $this->colorType($value) . '" name="tpl[' . hsc($key) . ']" ' .
+                    'id="tpl__' . hsc($key) . '" value="' . hsc($this->colorValue($value)) . '" ' .
+                    'dir="ltr" required="required"/></td>';
                 echo '</tr>';
             }
             echo '</tbody></table>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[preview]" class="btn_preview primary">'.
-                $this->getLang('btn_preview').'</button> ';
+            echo '<button type="submit" name="run[preview]" class="btn_preview primary">' .
+                $this->getLang('btn_preview') . '</button> ';
             #FIXME only if preview.ini exists:
-            echo '<button type="submit" name="run[reset]">'.$this->getLang('btn_reset').'</button>';
+            echo '<button type="submit" name="run[reset]">' . $this->getLang('btn_reset') . '</button>';
             echo '</p>';
 
             echo '<p>';
-            echo '<button type="submit" name="run[save]" class="primary">'.$this->getLang('btn_save').'</button>';
+            echo '<button type="submit" name="run[save]" class="primary">' . $this->getLang('btn_save') . '</button>';
             echo '</p>';
 
             echo '<p>';
             #FIXME only if local.ini exists:
-            echo '<button type="submit" name="run[revert]">'.$this->getLang('btn_revert').'</button>';
+            echo '<button type="submit" name="run[revert]">' . $this->getLang('btn_revert') . '</button>';
             echo '</p>';
 
             echo '</form>';
@@ -150,7 +154,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
     public function runPreview()
     {
         global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
+        $ini = $conf['cachedir'] . '/preview.ini';
         io_saveFile($ini, $this->makeini());
     }
 
@@ -160,7 +164,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
     protected function runReset()
     {
         global $conf;
-        $ini = $conf['cachedir'].'/preview.ini';
+        $ini = $conf['cachedir'] . '/preview.ini';
         io_saveFile($ini, '');
     }
 
@@ -195,7 +199,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
         $ini .= ";These overwrites have been generated from the Template styling Admin interface\n";
         $ini .= ";Any values in this section will be overwritten by that tool again\n";
         foreach ($INPUT->arr('tpl') as $key => $val) {
-            $ini .= $key.' = "'.addslashes($val).'"'."\n";
+            $ini .= $key . ' = "' . addslashes($val) . '"' . "\n";
         }
 
         return $ini;
@@ -209,7 +213,7 @@ class admin_plugin_styling extends DokuWiki_Admin_Plugin
     protected function replaceIni($new)
     {
         global $conf;
-        $ini = DOKU_CONF."tpl/".$conf['template']."/style.ini";
+        $ini = DOKU_CONF . "tpl/" . $conf['template'] . "/style.ini";
         if (file_exists($ini)) {
             $old = io_readFile($ini);
             $old = preg_replace('/\[replacements\]\n.*?(\n\[.*]|$)/s', '\\1', $old);

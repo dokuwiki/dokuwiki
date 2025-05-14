@@ -1,5 +1,6 @@
 <?php
 
+use dokuwiki\Extension\CLIPlugin;
 use dokuwiki\Extension\AuthPlugin;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
@@ -12,7 +13,7 @@ use splitbrain\phpcli\TableFormatter;
  * @license GPL2
  * @author Karsten Kosmala <karsten.kosmala@gmail.com>
  */
-class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
+class cli_plugin_usermanager extends CLIPlugin
 {
     public function __construct()
     {
@@ -62,7 +63,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         /** @var AuthPlugin $auth */
         global $auth;
 
-        if (!isset($auth)) {
+        if (!$auth instanceof AuthPlugin) {
             $this->error($this->getLang('noauth'));
             return 1;
         }
@@ -127,9 +128,9 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         foreach ($list as $username => $user) {
             $content = [$username];
             if ($details) {
-                array_push($content, $user['name']);
-                array_push($content, $user['mail']);
-                array_push($content, implode(", ", $user['grps']));
+                $content[] = $user['name'];
+                $content[] = $user['mail'];
+                $content[] = implode(", ", $user['grps']);
             }
             echo $tr->format(
                 [15, 25, 25, 15],
@@ -155,7 +156,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
             return 1;
         }
 
-        list($login, $mail, $name, $grps, $pass) = $args;
+        [$login, $mail, $name, $grps, $pass] = $args;
         $grps = array_filter(array_map('trim', explode(',', $grps)));
 
         if ($auth->canDo('modPass')) {
@@ -168,15 +169,13 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
                     return 1;
                 }
             }
-        } else {
-            if (!empty($pass)) {
-                $this->error($this->getLang('add_fail'));
-                $this->error($this->getLang('addUser_error_modPass_disabled'));
-                return 1;
-            }
+        } elseif (!empty($pass)) {
+            $this->error($this->getLang('add_fail'));
+            $this->error($this->getLang('addUser_error_modPass_disabled'));
+            return 1;
         }
 
-        if ($auth->triggerUserMod('create', array($login, $pass, $name, $mail, $grps))) {
+        if ($auth->triggerUserMod('create', [$login, $pass, $name, $mail, $grps])) {
             $this->success($this->getLang('add_ok'));
         } else {
             $this->printErrorMessages();
@@ -204,9 +203,9 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
 
         $users = explode(',', $args[0]);
-        $count = $auth->triggerUserMod('delete', array($users));
+        $count = $auth->triggerUserMod('delete', [$users]);
 
-        if (!($count == count($users))) {
+        if ($count != count($users)) {
             $this->printErrorMessages();
             $part1 = str_replace('%d', $count, $this->getLang('delete_ok'));
             $part2 = str_replace('%d', (count($users) - $count), $this->getLang('delete_fail'));
@@ -228,22 +227,22 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         /** @var AuthPlugin $auth */
         global $auth;
 
-        list($name, $newgrps) = $args;
+        [$name, $newgrps] = $args;
         $newgrps = array_filter(array_map('trim', explode(',', $newgrps)));
         $oldinfo = $auth->getUserData($name);
-        $changes = array();
+        $changes = [];
 
-        if (!empty($newgrps) && $auth->canDo('modGroups')) {
+        if ($newgrps !== [] && $auth->canDo('modGroups')) {
             $changes['grps'] = $oldinfo['grps'];
             foreach ($newgrps as $group) {
                 if (!in_array($group, $oldinfo['grps'])) {
-                    array_push($changes['grps'], $group);
+                    $changes['grps'][] = $group;
                 }
             }
         }
 
         if (!empty(array_diff($changes['grps'], $oldinfo['grps']))) {
-            if ($auth->triggerUserMod('modify', array($name, $changes))) {
+            if ($auth->triggerUserMod('modify', [$name, $changes])) {
                 $this->success($this->getLang('update_ok'));
             } else {
                 $this->printErrorMessages();
@@ -266,12 +265,12 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         /** @var AuthPlugin $auth */
         global $auth;
 
-        list($name, $grps) = $args;
+        [$name, $grps] = $args;
         $grps = array_filter(array_map('trim', explode(',', $grps)));
         $oldinfo = $auth->getUserData($name);
-        $changes = array();
+        $changes = [];
 
-        if (!empty($grps) && $auth->canDo('modGroups')) {
+        if ($grps !== [] && $auth->canDo('modGroups')) {
             $changes['grps'] = $oldinfo['grps'];
             foreach ($grps as $group) {
                 if (($pos = array_search($group, $changes['grps'])) == !false) {
@@ -281,7 +280,7 @@ class cli_plugin_usermanager extends DokuWiki_CLI_Plugin
         }
 
         if (!empty(array_diff($oldinfo['grps'], $changes['grps']))) {
-            if ($auth->triggerUserMod('modify', array($name, $changes))) {
+            if ($auth->triggerUserMod('modify', [$name, $changes])) {
                 $this->success($this->getLang('update_ok'));
             } else {
                 $this->printErrorMessages();

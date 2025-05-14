@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Ui;
 
@@ -57,7 +58,7 @@ class Edit extends AbstractAction
         if (!isset($TEXT)) {
             if ($INFO['exists']) {
                 if ($RANGE) {
-                    list($PRE, $TEXT, $SUF) = rawWikiSlices($RANGE, $ID, $REV);
+                    [$PRE, $TEXT, $SUF] = rawWikiSlices($RANGE, $ID, $REV);
                 } else {
                     $TEXT = rawWiki($ID, $REV);
                 }
@@ -90,7 +91,6 @@ class Edit extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Editor)->show();
+        (new Editor())->show();
     }
-
 }

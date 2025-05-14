@@ -3,6 +3,8 @@
 namespace dokuwiki\Ui;
 
 use dokuwiki\Form\Form;
+use dokuwiki\Menu\Item\Register;
+use dokuwiki\Menu\Item\Resendpwd;
 
 /**
  * DokuWiki User Login Interface (Login Form)
@@ -13,10 +15,10 @@ class Login extends Ui
 {
     protected $showIcon = false;
 
-    /** 
+    /**
      * Login Ui constructor
      *
-     * @param bool $showIcon  Whether to show svg icons in the register and resendpwd links or not
+     * @param bool $showIcon Whether to show svg icons in the register and resendpwd links or not
      */
     public function __construct($showIcon = false)
     {
@@ -26,9 +28,9 @@ class Login extends Ui
     /**
      * Display the Login Form Panel
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
@@ -38,8 +40,8 @@ class Login extends Ui
         global $INPUT;
 
         // print intro
-        print p_locale_xhtml('login');
-        print '<div class="centeralign">'.NL;
+        echo p_locale_xhtml('login');
+        echo '<div class="centeralign">' . NL;
 
         // create the login form
         $form = new Form(['id' => 'dw__login', 'action' => wl($ID)]);
@@ -49,7 +51,7 @@ class Login extends Ui
         $form->setHiddenField('do', 'login');
 
         $input = $form->addTextInput('u', $lang['user'])->id('focus__this')->addClass('edit')
-            ->val((!$INPUT->bool('http_credentials')) ? $INPUT->str('u') : '');
+            ->val(($INPUT->bool('http_credentials')) ? '' : $INPUT->str('u'));
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
 
@@ -64,19 +66,18 @@ class Login extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        if(actionOK('register')){
-            $registerLink = (new \dokuwiki\Menu\Item\Register())->asHtmlLink('', $this->showIcon);
-            $form->addHTML('<p>'.$lang['reghere'].': '. $registerLink .'</p>');
+        if (actionOK('register')) {
+            $registerLink = (new Register())->asHtmlLink('', $this->showIcon);
+            $form->addHTML('<p>' . $lang['reghere'] . ': ' . $registerLink . '</p>');
         }
 
         if (actionOK('resendpwd')) {
-            $resendPwLink = (new \dokuwiki\Menu\Item\Resendpwd())->asHtmlLink('', $this->showIcon);
-            $form->addHTML('<p>'.$lang['pwdforget'].': '. $resendPwLink .'</p>');
+            $resendPwLink = (new Resendpwd())->asHtmlLink('', $this->showIcon);
+            $form->addHTML('<p>' . $lang['pwdforget'] . ': ' . $resendPwLink . '</p>');
         }
 
-        print $form->toHTML('Login');
+        echo $form->toHTML('Login');
 
-        print '</div>';
+        echo '</div>';
     }
-
 }

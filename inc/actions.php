@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki Actions
  *
@@ -6,17 +7,19 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\ActionRouter;
 use dokuwiki\Extension\Event;
 
 /**
  * All action processing starts here
  */
-function act_dispatch(){
+function act_dispatch()
+{
     // always initialize on first dispatch (test request may dispatch mutliple times on one request)
-    $router = \dokuwiki\ActionRouter::getInstance(true);
+    $router = ActionRouter::getInstance(true);
 
-    $headers = array('Content-Type: text/html; charset=utf-8');
-    Event::createAndTrigger('ACTION_HEADERS_SEND',$headers,'act_sendheaders');
+    $headers = ['Content-Type: text/html; charset=utf-8'];
+    Event::createAndTrigger('ACTION_HEADERS_SEND', $headers, 'act_sendheaders');
 
     // clear internal variables
     unset($router);
@@ -34,7 +37,8 @@ function act_dispatch(){
  *
  * @param array $headers The headers that shall be sent
  */
-function act_sendheaders($headers) {
+function act_sendheaders($headers)
+{
     foreach ($headers as $hdr) header($hdr);
 }
 
@@ -46,22 +50,23 @@ function act_sendheaders($headers) {
  * @param array|string $act
  * @return string
  */
-function act_clean($act){
+function act_clean($act)
+{
     // check if the action was given as array key
-    if(is_array($act)){
-        list($act) = array_keys($act);
+    if (is_array($act)) {
+        [$act] = array_keys($act);
     }
 
     // no action given
-    if($act === null) return 'show';
+    if ($act === null) return 'show';
 
     //remove all bad chars
     $act = strtolower($act);
-    $act = preg_replace('/[^1-9a-z_]+/','',$act);
+    $act = preg_replace('/[^1-9a-z_]+/', '', $act);
 
-    if($act == 'export_html') $act = 'export_xhtml';
-    if($act == 'export_htmlbody') $act = 'export_xhtmlbody';
+    if ($act == 'export_html') $act = 'export_xhtml';
+    if ($act == 'export_htmlbody') $act = 'export_xhtmlbody';
 
-    if($act === '') $act = 'show';
+    if ($act === '') $act = 'show';
     return $act;
 }

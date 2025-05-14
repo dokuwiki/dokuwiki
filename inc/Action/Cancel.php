@@ -11,18 +11,18 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Cancel extends AbstractAliasAction {
-
+class Cancel extends AbstractAliasAction
+{
     /**
      * @inheritdoc
      * @throws ActionAbort
      */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         unlock($ID);
 
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

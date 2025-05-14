@@ -1,4 +1,5 @@
 <?php
+
 /**
  * UTF-8 lookup table for upper case accented letters
  *
@@ -8,6 +9,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    \dokuwiki\Utf8\Clean::deaccent()
  */
+
 return [
     'Á' => 'A',
     'À' => 'A',

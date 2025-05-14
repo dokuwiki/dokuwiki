@@ -3,7 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Gilson Caldeira <gilsoncaldeira@gmail.com>
+ * @author Thalles Lázaro <thallesprofissional@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Paul Nizan <paul_nizan@hormail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
@@ -171,6 +172,9 @@ $lang['profdeleted']           = 'Sua conta de usuário foi excluída desse wiki
 $lang['profconfdelete']        = 'Eu desejo remover minha conta dessa wiki. <br/> Essa ação não pode ser desfeita.';
 $lang['profconfdeletemissing'] = 'Caixa de confirmação não marcada';
 $lang['proffail']              = 'O perfil do usuário não foi atualizado.';
+$lang['proftokenlegend']       = 'Token de Autenticação';
+$lang['proftokengenerate']     = 'Redefinir Token';
+$lang['proftokeninfo']         = 'O token de autenticação pode ser usado para permitir que aplicativos de terceiros façam login e atuem em seu nome.  A redefinição do token invalidará o antigo e desconectará todos os aplicativos que usaram o token anterior.';
 $lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Definir a nova senha para';
@@ -241,7 +245,7 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'a revisão anterior foi restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
-$lang['unknowndate']           = 'data desconhecida';
+$lang['unknowndate']           = 'Data desconhecida';
 $lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar o snippet';
 $lang['tools']                 = 'Ferramentas';
@@ -389,3 +393,6 @@ $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada post
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
 $lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Arquivo de registro muito grande. As linhas anteriores foram ignoradas!';
+$lang['log_file_failed_to_open'] = 'Falha ao abrir o arquivo de log.';
+$lang['log_file_failed_to_read'] = 'Ocorreu um erro ao ler o log.';

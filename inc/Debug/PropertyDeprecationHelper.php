@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Trait for issuing warnings on deprecated access.
  *
  * Adapted from https://github.com/wikimedia/mediawiki/blob/4aedefdbfd193f323097354bf581de1c93f02715/includes/debug/DeprecationHelper.php
  *
  */
-
 
 namespace dokuwiki\Debug;
 
@@ -32,7 +32,6 @@ namespace dokuwiki\Debug;
  */
 trait PropertyDeprecationHelper
 {
-
     /**
      * List of deprecated properties, in <property name> => <class> format
      * where <class> is the the name of the class defining the property
@@ -54,7 +53,7 @@ trait PropertyDeprecationHelper
         $property,
         $class = null
     ) {
-        $this->deprecatedPublicProperties[$property] = $class ?: get_class();
+        $this->deprecatedPublicProperties[$property] = $class ?: get_class($this);
     }
 
     public function __get($name)
@@ -108,7 +107,7 @@ trait PropertyDeprecationHelper
             // The class name is not necessarily correct here but getting the correct class
             // name would be expensive, this will work most of the time and getting it
             // wrong is not a big deal.
-            return __CLASS__;
+            return self::class;
         }
         // property_exists() returns false when the property does exist but is private (and not
         // defined by the current class, for some value of "current" that differs slightly
@@ -124,7 +123,7 @@ trait PropertyDeprecationHelper
                 $classname = substr($obfuscatedProp, 1, -strlen($obfuscatedPropTail));
                 if ($classname === '*') {
                     // sanity; this shouldn't be possible as protected properties were handled earlier
-                    $classname = __CLASS__;
+                    $classname = self::class;
                 }
                 return $classname;
             }

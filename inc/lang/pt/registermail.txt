@@ -1,6 +1,6 @@
-Um novo utilizador foi registrado. Aqui estão os detalhes:
+Um novo usuário foi registrado. Aqui estão os detalhes:
 
-Utilizador : @NEWUSER@
+Usuário : @NEWUSER@
 Nome Completo : @NEWNAME@
 E-mail : @NEWEMAIL@
 

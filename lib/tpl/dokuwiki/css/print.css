@@ -152,6 +152,8 @@ th {
 #dokuwiki__header .logo img {
     float: left;
     margin-right: .5em;
+    height: 64px;
+    width: auto;
 }
 [dir=rtl] #dokuwiki__header .logo img {
     float: right;
