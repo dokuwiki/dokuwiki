@@ -101,3 +101,4 @@ $lang['install_url']           = 'Instalar desde URL:';
 $lang['install_upload']        = 'Subir Extensión:';
 $lang['repo_error']            = 'El repositorio de plugins no puede ser contactado. Asegúrese que su servidor pueda contactar www.dokuwiki.org y verificar la configuración de su proxy.';
 $lang['nossl']                 = 'Tu PHP parece no tener soporte SSL. Las descargas no funcionaran para muchas extensiones de DokuWiki.';
+$lang['details']               = 'Detalles';
