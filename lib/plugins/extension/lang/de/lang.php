@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Anika Rachow <rachowanika@gmail.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
@@ -99,13 +100,18 @@ $lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>
 $lang['error_copy_read']       = 'Verzeichnis konnte nicht gelesen werden: %s';
 $lang['error_copy_mkdir']      = 'Verzeichnis konnte nicht erstellt werden: %s';
 $lang['error_copy_copy']       = '%s konnte nicht nach %s kopiert werden.';
+$lang['error_archive_read']    = 'Das Archiv %s konnte nicht gelesen werden';
+$lang['error_archive_extract'] = 'Das Archiv %s konnte nicht extrahiert werden: %s';
 $lang['error_uninstall_protected'] = 'Erweiterung %s ist geschützt und kann nicht gelöscht werden.';
 $lang['error_uninstall_dependants'] = 'Erweiterung %s wird von Erweiterung %s verwendet und kann daher nicht deinstalliert werden.';
 $lang['error_disable_protected'] = 'Erweiterung %s ist geschützt und kann nicht deaktiviert werden.';
 $lang['error_disable_dependants'] = 'Erweiterung %s wird weiterhin von Erweiterung %s verwendet und kann daher nicht deaktiviert werden.';
+$lang['error_nourl']           = 'Für die Erweiterung %s konnte keine Download-URL gefunden werden';
 $lang['error_notinstalled']    = 'Erweiterung %s kann nicht installiert werden.';
 $lang['error_alreadyenabled']  = 'Erweiterung %s wurde bereits aktiviert.';
 $lang['error_alreadydisabled'] = 'Erweiterung %s wurde bereits deaktiviert.';
+$lang['error_minphp']          = 'Die Erweiterung %s benötigt mindestens die PHP-Version %s, dieses Wiki benutzt allerdings PHP %s';
+$lang['error_maxphp']          = 'Die Erweiterung %s unterstützt maximal die PHP-Version %s, dieses Wiki benutzt allerdings PHP %s';
 $lang['noperms']               = 'Das Erweiterungs-Verzeichnis ist schreibgeschützt';
 $lang['notplperms']            = 'Das Template-Verzeichnis ist schreibgeschützt';
 $lang['nopluginperms']         = 'Das Plugin-Verzeichnis ist schreibgeschützt';
@@ -116,3 +122,7 @@ $lang['install_upload']        = 'Erweiterung hochladen:';
 $lang['repo_badresponse']      = 'Das Plugin-Verzeichnis hat eine ungültige Antwort geliefert.';
 $lang['repo_error']            = 'Es konnte keine Verbindung zum Plugin-Verzeichnis hergestellt werden. Stellen Sie sicher, dass der Server Verbindung mit www.dokuwiki.org aufnehmen darf und überprüfen Sie ihre Proxy-Einstellungen.';
 $lang['nossl']                 = 'Ihr PHP scheint SSL nicht zu unterstützen. Das Herunterladen vieler DokuWiki-Erweiterungen wird scheitern.';
+$lang['popularity_high']       = 'Diese Erweiterung ist eine der Beliebtesten';
+$lang['popularity_medium']     = 'Diese Erweiterung ist sehr beliebt';
+$lang['popularity_low']        = 'Diese Erweiterung hat Interesse geweckt';
+$lang['details']               = 'Details';
