@@ -408,7 +408,7 @@ class Installer
 
         // updates
         if (file_exists($target)) {
-            if (!is_writable($target)) throw new Exception('noperms');
+            if (!is_writable($target) && !$extension->isBundled()) throw new Exception('noperms');
             return;
         }
 
