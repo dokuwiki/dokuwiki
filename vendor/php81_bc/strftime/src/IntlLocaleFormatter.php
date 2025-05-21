@@ -14,9 +14,9 @@ class IntlLocaleFormatter extends AbstractLocaleFormatter
 
   /** @var string[] strftime to ICU placeholders */
   protected $formats = [
-    '%a' => 'EEE',  // An abbreviated textual representation of the day	Sun through Sat
+    '%a' => 'ccc',  // An abbreviated textual representation of the day	Sun through Sat
     '%A' => 'EEEE',  // A full textual representation of the day	Sunday through Saturday
-    '%b' => 'MMM',  // Abbreviated month name, based on the locale	Jan through Dec
+    '%b' => 'LLL',  // Abbreviated month name, based on the locale	Jan through Dec
     '%B' => 'MMMM',  // Full month name, based on the locale	January through December
     '%h' => 'MMM',  // Abbreviated month name, based on the locale (an alias of %b)	Jan through Dec
   ];

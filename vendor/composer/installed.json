@@ -337,12 +337,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/alphp/strftime.git",
-                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2"
+                "reference": "dcd30543db16c9b4ba095f6bf32ac16f15eb9448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/alphp/strftime/zipball/88e98f00b5d9247e8168c1eb528ab138fbf743d2",
-                "reference": "88e98f00b5d9247e8168c1eb528ab138fbf743d2",
+                "url": "https://api.github.com/repos/alphp/strftime/zipball/dcd30543db16c9b4ba095f6bf32ac16f15eb9448",
+                "reference": "dcd30543db16c9b4ba095f6bf32ac16f15eb9448",
                 "shasum": ""
             },
             "require": {
@@ -354,7 +354,7 @@
             "suggest": {
                 "ext-intl": "For proper locale aware output"
             },
-            "time": "2024-01-26T18:19:38+00:00",
+            "time": "2025-05-20T20:04:36+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

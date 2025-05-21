@@ -3,7 +3,7 @@
         'name' => 'dokuwiki/dokuwiki',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '59a6ba95c8c7b11b3a1e341c41942ec083784be0',
+        'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'dokuwiki/dokuwiki' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '59a6ba95c8c7b11b3a1e341c41942ec083784be0',
+            'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -79,7 +79,7 @@
         'php81_bc/strftime' => array(
             'pretty_version' => 'dev-fallback-intl',
             'version' => 'dev-fallback-intl',
-            'reference' => '88e98f00b5d9247e8168c1eb528ab138fbf743d2',
+            'reference' => 'dcd30543db16c9b4ba095f6bf32ac16f15eb9448',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php81_bc/strftime',
             'aliases' => array(),
