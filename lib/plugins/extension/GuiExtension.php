@@ -46,8 +46,8 @@ class GuiExtension extends Gui
         $html .= '<div class="actions">';
         // show the available update if there is one
         if ($this->extension->isUpdateAvailable()) {
-            $html .= ' <div class="version">' . $this->getLang('available_version') . ' ' .
-                hsc($this->extension->getLastUpdate()) . '</div>';
+            $html .= ' <div class="available">' . $this->getLang('available_version') . ' ' .
+                '<span class="version">' . hsc($this->extension->getLastUpdate()) . '</span></div>';
         }
 
         $html .= $this->actions();

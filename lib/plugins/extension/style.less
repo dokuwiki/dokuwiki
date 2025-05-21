@@ -66,10 +66,11 @@
 
     section.extension {
         display: grid;
-        grid-template-columns: @thumbwidth auto 15em;
+        grid-template-columns: @thumbwidth auto 22%;
         grid-template-rows: repeat(4, auto);
         margin-bottom: 1em;
         border-bottom: 1px solid @ini_border;
+        word-break: break-word;
 
         > .screenshot {
             grid-column: 1;
@@ -132,6 +133,7 @@
                 }
 
                 .version {
+                    white-space: nowrap;
                 }
             }
 
@@ -154,9 +156,14 @@
             align-items: end;
             gap: 0.5em;
 
-            .version {
+            .available {
                 line-height: 1.2;
                 margin-bottom: 1em;
+                text-align: right;
+
+                .version {
+                    white-space: nowrap;
+                }
             }
         }
 
