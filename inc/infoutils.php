@@ -184,7 +184,7 @@ function getRuntimeVersions()
 
     if (getenv('KUBERNETES_SERVICE_HOST')) {
         $data['container'] = 'Kubernetes';
-    } elseif (file_exists('/.dockerenv')) {
+    } elseif (@file_exists('/.dockerenv')) {
         $data['container'] = 'Docker';
     }
 
@@ -199,14 +199,16 @@ function getRuntimeVersions()
  */
 function getOsRelease()
 {
+    $reader = fn($file) => @parse_ini_string(preg_replace('/#.*$/m', '', file_get_contents($file)));
+
     $osRelease = [];
-    if (file_exists('/etc/os-release')) {
+    if (@file_exists('/etc/os-release')) {
         // pretty much any common Linux distribution has this
-        $osRelease = parse_ini_file('/etc/os-release');
-    } elseif (file_exists('/etc/synoinfo.conf') && file_exists('/etc/VERSION')) {
+        $osRelease = $reader('/etc/os-release');
+    } elseif (@file_exists('/etc/synoinfo.conf') && @file_exists('/etc/VERSION')) {
         // Synology DSM has its own way
-        $synoInfo = parse_ini_file('/usr/lib/synoinfo.conf');
-        $synoVersion = parse_ini_file('/etc/VERSION');
+        $synoInfo = $reader('/etc/synoinfo.conf');
+        $synoVersion = $reader('/etc/VERSION');
         $osRelease['NAME'] = 'Synology DSM';
         $osRelease['ID'] = 'synology';
         $osRelease['ID_LIKE'] = 'linux';
@@ -217,6 +219,7 @@ function getOsRelease()
     }
     return $osRelease;
 }
+
 
 /**
  * Run a few sanity checks
