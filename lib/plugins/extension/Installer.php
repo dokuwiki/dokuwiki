@@ -406,6 +406,11 @@ class Installer
     {
         $target = $extension->getInstallDir();
 
+        // bundled plugins do not need to be writable
+        if ($extension->isBundled()) {
+            return;
+        }
+
         // updates
         if (file_exists($target)) {
             if (!is_writable($target)) throw new Exception('noperms');
