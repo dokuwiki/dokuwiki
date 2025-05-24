@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author SoiBKK <info@soibangkok.online>
  * @author nakky <nakky@naver.com>
  * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
@@ -229,6 +230,7 @@ $lang['created']               = '만듦';
 $lang['restored']              = '이전 판으로 되돌림 (%s)';
 $lang['external_edit']         = '바깥 편집';
 $lang['summary']               = '편집 요약';
+$lang['unknowndate']           = '알 수 없는 날짜';
 $lang['noflash']               = '이 내용을 표시하기 위해서 <a href="http://get.adobe.com/flashplayer">Adobe Flash 플러그인</a>이 필요합니다.';
 $lang['download']              = '조각 다운로드';
 $lang['tools']                 = '도구';
