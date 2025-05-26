@@ -1,0 +1,5 @@
+====== Protokolle anzeigen ======
+
+Diese Oberfläche ermöglicht es dir, die verschiedenen Protokolle einzusehen, die von DokuWiki erstellt werden. Normalerweise sollte hier nicht viel zu sehen sein (das hängt von deinen [[doku>config:dontlog|Protokoll-Einstellungen]] ab). Wenn jedoch etwas schiefläuft, stehen die Chancen gut, dass du hier nützliche Informationen zum Problem findest.
+
+Bitte beachte, dass **Protokolldateien sensible Informationen** wie Passwörter, Pfade oder andere vertrauliche Daten enthalten können. Achte darauf, die Protokolle entsprechend zu schwärzen, bevor du sie im Forum oder in Fehlerberichten veröffentlichst!

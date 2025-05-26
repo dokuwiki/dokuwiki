@@ -2,10 +2,13 @@
   namespace PHP81_BC;
 
   use DateTime;
-  use DateTimeInterface;
   use DateTimeZone;
+  use DateTimeInterface;
   use Exception;
   use InvalidArgumentException;
+  use Locale;
+  use PHP81_BC\strftime\DateLocaleFormatter;
+  use PHP81_BC\strftime\IntlLocaleFormatter;
 
   /**
    * Locale-formatted strftime using IntlDateFormatter (PHP 8.1 compatible)
@@ -22,7 +25,9 @@
    *
    * @param  string $format Date format
    * @param  integer|string|DateTime $timestamp Timestamp
+   * @param  string|null $locale locale
    * @return string
+   * @throws InvalidArgumentException
    * @author BohwaZ <https://bohwaz.net/>
    */
   function strftime (string $format, $timestamp = null, ?string $locale = null) : string {
@@ -34,15 +39,15 @@
       } catch (Exception $e) {
         throw new InvalidArgumentException('$timestamp argument is neither a valid UNIX timestamp, a valid date-time string or a DateTime object.', 0, $e);
       }
+
+      $timestamp->setTimezone(new DateTimeZone(date_default_timezone_get()));
     }
 
-    $timestamp->setTimezone(new DateTimeZone(date_default_timezone_get()));
-
     if (class_exists('\\IntlDateFormatter') && !isset($_SERVER['STRFTIME_NO_INTL'])) {
-      $locale = \Locale::canonicalize($locale ?? setlocale(LC_TIME, '0'));
-      $locale_formatter = new \PHP81_BC\strftime\IntlLocaleFormatter($locale);
+      $locale = Locale::canonicalize($locale ?? (Locale::getDefault() ?? setlocale(LC_TIME, '0')));
+      $locale_formatter = new IntlLocaleFormatter($locale);
     } else {
-      $locale_formatter = new \PHP81_BC\strftime\DateLocaleFormatter($locale);
+      $locale_formatter = new DateLocaleFormatter($locale);
     }
 
     // Same order as https://www.php.net/manual/en/function.strftime.php
@@ -151,7 +156,7 @@
         case '#':
         case '-':
           // remove leading zeros but keep last char if also zero
-          return preg_replace('/^0+(?=.)/', '', $result);
+          return preg_replace('/^[0\s]+(?=.)/', '', $result);
       }
 
       return $result;

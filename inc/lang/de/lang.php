@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Xrizzy <xrizzy@web.de>
  * @author Kurt Singer <webmaster@kurt-singer.com>
@@ -57,7 +58,7 @@ $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
-$lang['btn_source']            = 'Zeige Quelltext';
+$lang['btn_source']            = 'Quelltext anzeigen';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
 $lang['btn_search']            = 'Suche';

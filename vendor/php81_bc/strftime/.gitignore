@@ -23,6 +23,7 @@ Thumbs.db
 #######################
 /.vscode
 /composer.lock
+.phpunit.result.cache
 # vim
 *~
 *.swp

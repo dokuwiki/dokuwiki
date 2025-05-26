@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Markus Glaser <glaser@hallowelt.com>
@@ -181,6 +182,8 @@ $lang['defer_js']              = 'JavaScript-Ausführung verzögern bis das HTML
 $lang['hidewarnings']          = 'Keine PHP Warnungen anzeigen. Diese Einstellung kann den Umstieg auf PHP8+ erleichtern. Warnungen werden weiterhin im Fehlerlog gespeichert und sollten gemeldet werden.';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn Sie einen langsamen oder unzuverlässigen DNS-Server verwenden oder die Funktion nicht benötigen, dann sollte diese Option deaktiviert sein.';
 $lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Content Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
+$lang['trustedproxies']        = 'Komma-getrennte Liste der Proxy-Server, von denen der X-Forwarded-For Header gelesen wird. Jeder Eintrag in der Liste kann entweder eine IPv4 oder IPv6 Adresse sein, oder ein IPv4 oder IPv6 CIDR Netzwerk (z. B. 10.0.0.0/8). Leer lassen, um keinem Proxy zu vertrauen.';
+$lang['realip']                = 'Vertraue dem X-Real-IP Header. Aktiviere diese Option nur, wenn dein Server diesen Header benutzt, ansonsten könnte er gefälscht werden.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, ausschließlich lokale Auslieferung';
 $lang['jquerycdn_o_jquery']    = 'CDN von code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN von cdnjs.com';
