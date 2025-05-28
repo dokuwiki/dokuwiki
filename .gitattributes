@@ -1,5 +1,13 @@
 * text eol=lf
 
+*.csv binary
+*.ttf binary
+*.zip binary
+*.gz binary
+*.db binary
+
+*.webp binary
+*.jpg binary
 *.png binary
 *.gif binary
 *.ico binary
