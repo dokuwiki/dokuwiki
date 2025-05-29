@@ -507,7 +507,9 @@ class Extension
     {
         $last = $this->getManager()->getDownloadURL();
         if (!$last) return false;
-        return $last !== $this->getDownloadURL();
+        $url = $this->getDownloadURL();
+        if (!$url) return false;
+        return $last !== $url;
     }
 
     /**
