@@ -49,6 +49,9 @@ if (!defined('DOKU_E_LEVEL')) {
     error_reporting(DOKU_E_LEVEL);
 }
 
+// autoloader
+require_once(DOKU_INC . 'inc/load.php');
+
 // avoid caching issues #1594
 header('Vary: Cookie');
 
@@ -82,6 +85,13 @@ foreach (['default', 'local', 'protected'] as $config_group) {
     }
 }
 
+// precalculate file creation modes
+init_creationmodes();
+
+// make real paths and check them
+init_paths();
+init_files();
+
 //prepare license array()
 global $license;
 $license = [];
@@ -98,6 +108,14 @@ foreach (['default', 'local'] as $config_group) {
 
 // set timezone (as in pre 5.3.0 days)
 date_default_timezone_set(@date_default_timezone_get());
+
+
+// don't let cookies ever interfere with request vars
+$_REQUEST = array_merge($_GET, $_POST);
+// input handle class
+global $INPUT;
+$INPUT = new Input();
+
 
 // define baseURL
 if (!defined('DOKU_REL')) define('DOKU_REL', getBaseURL(false));
@@ -185,25 +203,14 @@ if (!headers_sent() && !defined('NOSESSION')) {
     }
 }
 
-// don't let cookies ever interfere with request vars
-$_REQUEST = array_merge($_GET, $_POST);
 
 // we don't want a purge URL to be digged
 if (isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
-// precalculate file creation modes
-init_creationmodes();
-
-// make real paths and check them
-init_paths();
-init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
-
-// autoloader
-require_once(DOKU_INC . 'inc/load.php');
 
 // from now on everything is an exception
 ErrorHandler::register();
@@ -217,10 +224,6 @@ if ($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
 if ($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
     $conf['compression'] = 0;
 }
-
-// input handle class
-global $INPUT;
-$INPUT = new Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
