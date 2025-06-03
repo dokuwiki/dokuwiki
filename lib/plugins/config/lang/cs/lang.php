@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Martin Růžička <martinr@post.cz>
  * @author Petr Kajzar <petr.kajzar@centrum.cz>
+ * @author Martin Růžička <martinr@post.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
@@ -141,6 +141,7 @@ $lang['mailreturnpath']        = 'E-mailová adresa příjemce pro oznámení o 
 $lang['mailprefix']            = 'Předpona předmětu e-mailu, která se bude používat pro automatické e-maily';
 $lang['htmlmail']              = 'Posílat e-maily v HTML (hezčí ale větší). Při vypnutí budou posílány jen textové e-maily.';
 $lang['dontlog']               = 'Zakázat protokolování pro tyto typy záznamů.';
+$lang['logretain']             = 'Kolik dní uchovávat protokoly.';
 $lang['sitemap']               = 'Generovat Google sitemap (interval ve dnech)';
 $lang['rss_type']              = 'Typ XML kanálu';
 $lang['rss_linkto']            = 'XML kanál odkazuje na';
@@ -175,13 +176,14 @@ $lang['search_fragment_o_exact'] = 'přesný';
 $lang['search_fragment_o_starts_with'] = 'začíná s';
 $lang['search_fragment_o_ends_with'] = 'končí s';
 $lang['search_fragment_o_contains'] = 'obsahuje';
-$lang['trustedproxy']          = 'Důvěřovat proxy serverům odpovídajícím tomuto regulárním výrazu ohledně skutečné IP adresy klienta, kterou hlásí. Výchozí hodnota odpovídá místním sítím. Ponechejte prázdné, pokud nechcete důvěřovat žádné proxy.';
 $lang['_feature_flags']        = 'Feature flags';
 $lang['defer_js']              = 'Odložit spuštění javascriptu až po zpracování HTML kódu stránky. Zlepšuje vnímanou rychlost načtení stránky, ale může narušit funkci některých zásuvných modulů.';
 $lang['hidewarnings']          = 'Nezobrazovat žádná varování PHP. To může usnadnit přechod na PHP8+. Varování budou stále zaznamenána v protokolu chyb a měla by být hlášena.';
 $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené IP adresy uživatelů, kteří editují stránky. Pokud máte pomalý, nebo nefunkční DNS server, nebo nepotřebujete tuto funkci, tak tuto volbu zrušte.';
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
+$lang['trustedproxies']        = 'Čárkou oddělený seznam důvěryhodných proxy serverů, ze kterých se načítá hlavička X-Forwarded-For. Každá položka v poli může být buď adresa IPv4 nebo IPv6, nebo rozsah IPv4 nebo IPv6 CIDR (např. 10.0.0.0/8). Pokud nechcete důvěřovat žádnému proxy serveru, ponechte prázdné pole.';
+$lang['realip']                = 'Důvěřovat záhlaví X-Real-IP. Tuto funkci povolte pouze v případě, že váš server tuto hlavičku zapisuje, jinak může dojít k jejímu podvržení.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, pouze lokální doručení';
 $lang['jquerycdn_o_jquery']    = 'CDN na code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN na cdnjs.com';
