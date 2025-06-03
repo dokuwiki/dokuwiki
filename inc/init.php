@@ -263,7 +263,7 @@ function init_session()
         'lifetime' => DOKU_SESSION_LIFETIME,
         'path' => DOKU_SESSION_PATH,
         'domain' => DOKU_SESSION_DOMAIN,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -497,28 +497,12 @@ function getBaseURL($abs = null)
     if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
-    if (isset($_SERVER['HTTP_HOST'])) {
-        if (
-            (!empty($conf['trustedproxy'])) && isset($_SERVER['HTTP_X_FORWARDED_HOST'])
-             && preg_match('/' . $conf['trustedproxy'] . '/', $_SERVER['REMOTE_ADDR'])
-        ) {
-            $cur_host = $_SERVER['HTTP_X_FORWARDED_HOST'];
-        } else {
-            $cur_host = $_SERVER['HTTP_HOST'];
-        }
-        $parsed_host = parse_url('http://' . $cur_host);
-        $host = $parsed_host['host'] ?? '';
-        $port = $parsed_host['port'] ?? '';
-    } elseif (isset($_SERVER['SERVER_NAME'])) {
-        $parsed_host = parse_url('http://' . $_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'] ?? '';
-        $port = $parsed_host['port'] ?? '';
-    } else {
-        $host = php_uname('n');
-        $port = '';
-    }
+    $hostname = \dokuwiki\Ip::hostName();
+    $parsed_host = parse_url('http://' . $hostname);
+    $host = $parsed_host['host'] ?? '';
+    $port = $parsed_host['port'] ?? '';
 
-    if (!is_ssl()) {
+    if (!\dokuwiki\Ip::isSsl()) {
         $proto = 'http://';
         if ($port == '80') {
             $port = '';
@@ -536,31 +520,12 @@ function getBaseURL($abs = null)
 }
 
 /**
- * Check if accessed via HTTPS
- *
- * Apache leaves ,$_SERVER['HTTPS'] empty when not available, IIS sets it to 'off'.
- * 'false' and 'disabled' are just guessing
- *
- * @returns bool true when SSL is active
+ * @deprecated 2025-06-03
  */
 function is_ssl()
 {
-    global $conf;
-
-    // check if we are behind a reverse proxy
-    if (
-        (!empty($conf['trustedproxy'])) && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
-         && preg_match('/' . $conf['trustedproxy'] . '/', $_SERVER['REMOTE_ADDR'])
-         && ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-    ) {
-        return true;
-    }
-
-    if (preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'] ?? 'off')) {
-        return false;
-    }
-
-    return true;
+    dbg_deprecated('Ip::isSsl()');
+    return \dokuwiki\Ip::isSsl();
 }
 
 /**
