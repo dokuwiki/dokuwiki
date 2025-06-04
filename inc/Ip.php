@@ -298,7 +298,8 @@ class Ip
         /* @var Input $INPUT */
         global $INPUT;
 
-        if ($INPUT->server->str('HTTP_X_FORWARDED_HOST') && self::forwardedFor() !== []) {
+        $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
+        if ($INPUT->server->str('HTTP_X_FORWARDED_HOST') && self::proxyIsTrusted($remoteAddr)) {
             return $INPUT->server->str('HTTP_X_FORWARDED_HOST');
         } elseif ($INPUT->server->str('HTTP_HOST')) {
             return $INPUT->server->str('HTTP_HOST');
@@ -322,9 +323,10 @@ class Ip
         /* @var Input $INPUT */
         global $INPUT;
 
-        if ($INPUT->server->has('HTTP_X_FORWARDED_PROTO') && self::forwardedFor() !== []) {
+        $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
+        if ($INPUT->server->has('HTTP_X_FORWARDED_PROTO') && self::proxyIsTrusted($remoteAddr)) {
             return $INPUT->server->str('HTTP_X_FORWARDED_PROTO') === 'https';
         }
-        return preg_match('/^(|off|false|disabled)$/i', $INPUT->server->str('HTTPS', 'off'));
+        return !preg_match('/^(|off|false|disabled)$/i', $INPUT->server->str('HTTPS', 'off'));
     }
 }
