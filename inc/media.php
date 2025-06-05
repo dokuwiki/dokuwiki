@@ -1184,7 +1184,7 @@ function media_preview_buttons($image, $auth, $rev = '')
 function media_image_preview_size($image, $rev, $meta = false, $size = 500)
 {
     if (
-        !preg_match("/\.(jpe?g|gif|png)$/", $image)
+        !preg_match("/\.(jpe?g|gif|png|webp)$/", $image)
         || !file_exists($filename = mediaFN($image, $rev))
     ) return [];
 
