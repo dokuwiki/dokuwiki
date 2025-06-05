@@ -1957,7 +1957,7 @@ function set_doku_pref($pref, $val)
         setcookie('DOKU_PREFS', $cookieVal, [
             'expires' => time() + 365 * 24 * 3600,
             'path' => $cookieDir,
-            'secure' => ($conf['securecookie'] && is_ssl()),
+            'secure' => ($conf['securecookie'] && Ip::isSsl()),
             'samesite' => 'Lax'
         ]);
     }

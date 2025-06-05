@@ -49,6 +49,9 @@ if (!defined('DOKU_E_LEVEL')) {
     error_reporting(DOKU_E_LEVEL);
 }
 
+// autoloader
+require_once(DOKU_INC . 'inc/load.php');
+
 // avoid caching issues #1594
 header('Vary: Cookie');
 
@@ -82,6 +85,13 @@ foreach (['default', 'local', 'protected'] as $config_group) {
     }
 }
 
+// precalculate file creation modes
+init_creationmodes();
+
+// make real paths and check them
+init_paths();
+init_files();
+
 //prepare license array()
 global $license;
 $license = [];
@@ -98,6 +108,14 @@ foreach (['default', 'local'] as $config_group) {
 
 // set timezone (as in pre 5.3.0 days)
 date_default_timezone_set(@date_default_timezone_get());
+
+
+// don't let cookies ever interfere with request vars
+$_REQUEST = array_merge($_GET, $_POST);
+// input handle class
+global $INPUT;
+$INPUT = new Input();
+
 
 // define baseURL
 if (!defined('DOKU_REL')) define('DOKU_REL', getBaseURL(false));
@@ -185,25 +203,14 @@ if (!headers_sent() && !defined('NOSESSION')) {
     }
 }
 
-// don't let cookies ever interfere with request vars
-$_REQUEST = array_merge($_GET, $_POST);
 
 // we don't want a purge URL to be digged
 if (isset($_REQUEST['purge']) && !empty($_SERVER['HTTP_REFERER'])) unset($_REQUEST['purge']);
 
-// precalculate file creation modes
-init_creationmodes();
-
-// make real paths and check them
-init_paths();
-init_files();
 
 // setup plugin controller class (can be overwritten in preload.php)
 global $plugin_controller_class, $plugin_controller;
 if (empty($plugin_controller_class)) $plugin_controller_class = PluginController::class;
-
-// autoloader
-require_once(DOKU_INC . 'inc/load.php');
 
 // from now on everything is an exception
 ErrorHandler::register();
@@ -217,10 +224,6 @@ if ($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
 if ($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
     $conf['compression'] = 0;
 }
-
-// input handle class
-global $INPUT;
-$INPUT = new Input();
 
 // initialize plugin controller
 $plugin_controller = new $plugin_controller_class();
@@ -260,7 +263,7 @@ function init_session()
         'lifetime' => DOKU_SESSION_LIFETIME,
         'path' => DOKU_SESSION_PATH,
         'domain' => DOKU_SESSION_DOMAIN,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -494,28 +497,12 @@ function getBaseURL($abs = null)
     if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
-    if (isset($_SERVER['HTTP_HOST'])) {
-        if (
-            (!empty($conf['trustedproxy'])) && isset($_SERVER['HTTP_X_FORWARDED_HOST'])
-             && preg_match('/' . $conf['trustedproxy'] . '/', $_SERVER['REMOTE_ADDR'])
-        ) {
-            $cur_host = $_SERVER['HTTP_X_FORWARDED_HOST'];
-        } else {
-            $cur_host = $_SERVER['HTTP_HOST'];
-        }
-        $parsed_host = parse_url('http://' . $cur_host);
-        $host = $parsed_host['host'] ?? '';
-        $port = $parsed_host['port'] ?? '';
-    } elseif (isset($_SERVER['SERVER_NAME'])) {
-        $parsed_host = parse_url('http://' . $_SERVER['SERVER_NAME']);
-        $host = $parsed_host['host'] ?? '';
-        $port = $parsed_host['port'] ?? '';
-    } else {
-        $host = php_uname('n');
-        $port = '';
-    }
+    $hostname = \dokuwiki\Ip::hostName();
+    $parsed_host = parse_url('http://' . $hostname);
+    $host = $parsed_host['host'] ?? '';
+    $port = $parsed_host['port'] ?? '';
 
-    if (!is_ssl()) {
+    if (!\dokuwiki\Ip::isSsl()) {
         $proto = 'http://';
         if ($port == '80') {
             $port = '';
@@ -533,31 +520,12 @@ function getBaseURL($abs = null)
 }
 
 /**
- * Check if accessed via HTTPS
- *
- * Apache leaves ,$_SERVER['HTTPS'] empty when not available, IIS sets it to 'off'.
- * 'false' and 'disabled' are just guessing
- *
- * @returns bool true when SSL is active
+ * @deprecated 2025-06-03
  */
 function is_ssl()
 {
-    global $conf;
-
-    // check if we are behind a reverse proxy
-    if (
-        (!empty($conf['trustedproxy'])) && isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
-         && preg_match('/' . $conf['trustedproxy'] . '/', $_SERVER['REMOTE_ADDR'])
-         && ($_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-    ) {
-        return true;
-    }
-
-    if (preg_match('/^(|off|false|disabled)$/i', $_SERVER['HTTPS'] ?? 'off')) {
-        return false;
-    }
-
-    return true;
+    dbg_deprecated('Ip::isSsl()');
+    return \dokuwiki\Ip::isSsl();
 }
 
 /**

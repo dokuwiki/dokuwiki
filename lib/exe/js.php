@@ -103,7 +103,7 @@ function js_out()
     echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
     echo "var DOKU_COOKIE_PARAM = " . json_encode([
             'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-            'secure' => $conf['securecookie'] && is_ssl()
+            'secure' => $conf['securecookie'] && \dokuwiki\Ip::isSsl(),
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
     echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
