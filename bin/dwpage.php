@@ -217,6 +217,10 @@ class PageCLI extends CLI
             $localfile = getcwd() . '/' . PhpString::basename($wiki_fn);
         }
 
+        if (is_dir($localfile)) {
+            $this->fatal("Working file $localfile cannot be a directory");
+        }
+
         if (!file_exists(dirname($localfile))) {
             $this->fatal("Directory " . dirname($localfile) . " does not exist");
         }
