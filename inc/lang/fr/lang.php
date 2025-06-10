@@ -406,3 +406,6 @@ $lang['email_signature_text']  = 'Courriel envoyé par DokuWiki depuis
 $lang['log_file_too_large']    = 'Fichier journal trop grand. Lignes précédentes sautées !';
 $lang['log_file_failed_to_open'] = 'Impossible d\'ouvrir le fichier journal.';
 $lang['log_file_failed_to_read'] = 'Une erreur s\'est produite lors de la lecture du journal.';
+
+$lang['footnotes_headline']     = 'Notes de bas';
+$lang['footnote_title']         = 'Note de bas numéro %d';
