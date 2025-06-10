@@ -12,8 +12,8 @@ class Preformatted extends AbstractMode
         $this->Lexer->addEntryPattern('\n\t(?![\*\-])', $mode, 'preformatted');
 
         // How to effect a sub pattern with the Lexer!
-        $this->Lexer->addPattern('\n  ', 'preformatted');
-        $this->Lexer->addPattern('\n\t', 'preformatted');
+        $this->Lexer->addPattern('\n  (?![\*\-])', 'preformatted');
+        $this->Lexer->addPattern('\n\t(?![\*\-])', 'preformatted');
     }
 
     /** @inheritdoc */
