@@ -535,7 +535,7 @@ function auth_logoff($keepbc = false)
     setcookie(DOKU_COOKIE, '', [
         'expires' => time() - 600000,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
@@ -1401,7 +1401,7 @@ function auth_setCookie($user, $pass, $sticky)
     setcookie(DOKU_COOKIE, $cookie, [
         'expires' => $time,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
