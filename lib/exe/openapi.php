@@ -40,7 +40,7 @@ if ($INPUT->has('spec')) {
         </p>
 
         <p>
-            <a href="<?php echo DOKU_BASE ?>/lib/exe/openapi.php?spec=1" download="dokuwiki.json">Download
+            <a href="<?php echo DOKU_BASE ?>lib/exe/openapi.php?spec=1" download="dokuwiki.json">Download
                 the API Spec</a>
         </p>
 
