@@ -291,8 +291,8 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     {
         // traverse
         if ($type == 'd') {
-            if ($data['dir_nest'] < $lvl) $data['dir_nest'] = $lvl;
-            $data['dir_count']++;
+            if ($data['dir_nest'] ?? 0 < $lvl) $data['dir_nest'] = $lvl;
+            $data['dir_count'] = ($data['dir_count'] ?? 0) + 1;
             return true;
         }
 
@@ -300,10 +300,10 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         if ($opts['all'] || str_ends_with($file, '.txt')) {
             $size = filesize($base . '/' . $file);
             $date = filemtime($base . '/' . $file);
-            $data['file_count']++;
-            $data['file_size'] += $size;
+            $data['file_count'] = ($data['file_count'] ?? 0) + 1;
+            $data['file_size'] = ($data['file_size'] ?? 0) + $size;
             if (!isset($data['file_min']) || $data['file_min'] > $size) $data['file_min'] = $size;
-            if ($data['file_max'] < $size) $data['file_max'] = $size;
+            if ($data['file_max'] ?? 0 < $size) $data['file_max'] = $size;
             if (!isset($data['file_oldest']) || $data['file_oldest'] > $date) $data['file_oldest'] = $date;
         }
 
