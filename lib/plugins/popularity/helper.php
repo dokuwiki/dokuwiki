@@ -110,9 +110,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
      * @return array
      * @see searchCountCallback
      */
-    protected function initEmptySearchList()
+    public function initEmptySearchList()
     {
-        return $list = array_fill_keys([
+        return array_fill_keys([
             'file_count',
             'file_size',
             'file_max',
@@ -279,7 +279,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     /**
      * Callback to search and count the content of directories in DokuWiki
      *
-     * @param array &$data  Reference to the result data structure
+     * @param array &$data  Reference to the result data structure, init with initEmptySearchList()
      * @param string $base  Base usually $conf['datadir']
      * @param string $file  current file or directory relative to $base
      * @param string $type  Type either 'd' for directory or 'f' for file
