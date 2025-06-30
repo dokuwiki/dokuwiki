@@ -46,7 +46,7 @@ abstract class AbstractItem
     protected $label = '';
     /** @var string the tooltip title, defaults to $label */
     protected $title = '';
-    /** @var int the context this titme is shown in */
+    /** @var int the context this item is shown in */
     protected $context = self::CTX_ALL;
 
     /**
