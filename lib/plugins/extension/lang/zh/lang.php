@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Shirase <fwits@foxmail.com>
  * @author Mr_Fang <klxf@vip.qq.com>
  * @author chuachua <oceanynh@gmail.com>
  * @author Xin <chenxin1034@gmail.com>
@@ -21,9 +22,6 @@ $lang['tab_templates']         = '现有模板';
 $lang['tab_search']            = '搜索安装';
 $lang['tab_install']           = '手动安装';
 $lang['notimplemented']        = '未实现的特性';
-$lang['notinstalled']          = '该扩展未安装';
-$lang['alreadyenabled']        = '该扩展已激活';
-$lang['alreadydisabled']       = '该扩展已关闭';
 $lang['pluginlistsaveerror']   = '保存插件列表时出现错误';
 $lang['unknownauthor']         = '未知作者';
 $lang['unknownversion']        = '未知版本';
@@ -39,6 +37,8 @@ $lang['js']['display_viewoptions'] = '查看选项：';
 $lang['js']['display_enabled'] = '启用';
 $lang['js']['display_disabled'] = '禁用';
 $lang['js']['display_updatable'] = '可更新';
+$lang['js']['close']           = '点击关闭';
+$lang['js']['filter']          = '仅显示可更新的插件';
 $lang['search_for']            = '搜索扩展';
 $lang['search']                = '搜索';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -77,10 +77,6 @@ $lang['msg_enabled']           = '插件 %s 已启用';
 $lang['msg_disabled']          = '插件 %s 已禁用';
 $lang['msg_delete_success']    = '%s 扩展没有安装';
 $lang['msg_delete_failed']     = '卸载扩展 %s 失败';
-$lang['msg_template_install_success'] = '模板 %s 安装成功';
-$lang['msg_template_update_success'] = '模板 %s 更新成功';
-$lang['msg_plugin_install_success'] = '插件 %s 安装成功';
-$lang['msg_plugin_update_success'] = '插件 %s 更新成功';
 $lang['msg_upload_failed']     = '上传文件失败';
 $lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖；要覆盖，请选中覆盖选项。';
 $lang['missing_dependency']    = '缺少或者被禁用的依赖： %s';
@@ -88,7 +84,9 @@ $lang['security_issue']        = '安全问题： %s';
 $lang['security_warning']      = '安全警告： %s';
 $lang['update_message']        = '更新提醒： %s';
 $lang['wrong_folder']          = '扩展安装错误：请将扩展目录 "%s" 重命名为 "%s"。';
-$lang['url_change']            = "URL 已改变：自上次下载以来的下载 URL 已经改变。请在更新扩展前检查新 URL 是否有效。\n新的：%s\n旧的：%s";
+$lang['url_change']            = 'URL 已改变：自上次下载以来的下载 URL 已经改变。请在更新扩展前检查新 URL 是否有效。
+新的：%s
+旧的：%s';
 $lang['error_badurl']          = 'URL 应当以 http 或者 https 作为开头';
 $lang['error_dircreate']       = '无法创建用于保存下载的临时文件夹';
 $lang['error_download']        = '无法下载文件：%s';
