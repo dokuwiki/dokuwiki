@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Szymon Olewniczak <szyolewn@pg.edu.pl>
  * @author Marek Adamski <fevbew@wp.pl>
  * @author Michał <kamykowsky@gmail.com>
  * @author pavulondit <pavloo@vp.pl>
@@ -136,7 +137,7 @@ $lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalo
 $lang['search_exact_match']    = 'Dokładne dopasowanie';
 $lang['search_starts_with']    = 'Zaczyna się na';
 $lang['search_ends_with']      = 'Kończy się na';
-$lang['search_contains']       = 'Zwiera';
+$lang['search_contains']       = 'Zawiera';
 $lang['search_custom_match']   = 'Spersonalizowany';
 $lang['search_any_ns']         = 'Jakakolwiek przestrzeń nazw';
 $lang['search_any_time']       = 'Kiedykolwiek';
