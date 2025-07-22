@@ -39,7 +39,6 @@ class Installer
     public const STATUS_INSTALLED = 'installed';
     public const STATUS_REMOVED = 'removed';
 
-
     /**
      * Initialize a new extension installer
      *
