@@ -62,8 +62,7 @@ class admin_plugin_extension extends AdminPlugin
             }
             if ($INPUT->post->str('installurl')) {
                 $installer->installFromURL($INPUT->post->str('installurl'));
-            }
-            if (isset($_FILES['installfile'])) {
+            } elseif (isset($_FILES['installfile'])) {
                 $installer->installFromUpload('installfile');
             }
         } catch (Exception $e) {
