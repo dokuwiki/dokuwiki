@@ -100,7 +100,15 @@ class Ip
             ];
         } else {
             // IPv6.
-            $result = unpack('Jupper/Jlower', $binary);
+            if(PHP_INT_SIZE == 8) { // 64-bit arch
+               $result = unpack('Jupper/Jlower', $binary);
+            } else { // 32-bit
+                // unpack into four 32-bit unsigned ints, recombine as 128-bit string using bc math
+                $parts = unpack('N4', $binary);
+                $upper = bcadd(bcmul($parts[1], bcpow('2', 96)), bcmul($parts[2], bcpow('2', 64)));
+                $lower = bcadd(bcmul($parts[3], bcpow('2', 32)), $parts[4]);
+                return [$upper, $lower];
+            }
             $result['version'] = 6;
             return $result;
         }
