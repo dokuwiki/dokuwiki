@@ -99,19 +99,37 @@ class Ip
                 'lower' => unpack('Nip', $binary)['ip'],
             ];
         } else {
-            // IPv6.
+            // IPv6. strlen==16
             if(PHP_INT_SIZE == 8) { // 64-bit arch
                $result = unpack('Jupper/Jlower', $binary);
             } else { // 32-bit
-                // unpack into four 32-bit unsigned ints, recombine as 128-bit string using bc math
-                $parts = unpack('N4', $binary);
-                $upper = bcadd(bcmul($parts[1], bcpow('2', 96)), bcmul($parts[2], bcpow('2', 64)));
-                $lower = bcadd(bcmul($parts[3], bcpow('2', 32)), $parts[4]);
-                return [$upper, $lower];
+               $result = Ip::ipv6_upper_lower_32($binary);
             }
             $result['version'] = 6;
             return $result;
         }
+    }
+
+    /**
+     * conversion of inet_pton ipv6 into 64-bit upper and lower
+     * bcmath version for 32-bit architecture
+     * w/o no unpack('J') - unsigned long long (always 64 bit, big endian byte order)
+     *
+     * results match unpack('Jupper/Jlower', $binary)
+     *
+     * @param string $binary inet_pton's ipv6 16 element binary
+     *
+     * @return int[] upper 64 and lower 64 for ipToNumber
+     */
+    public static function ipv6_upper_lower_32(string $binary) {
+       // unpack into four 32-bit unsigned ints to recombine as 2 64-bit
+       $b32 = 4294967296; // bcpow(2, 32)
+       $parts = unpack('N4', $binary);
+       $upper = bcadd(bcmul($parts[1], $b32),
+                      $parts[2]);
+       $lower = bcadd(bcmul($parts[3], $b32),
+                      $parts[4]);
+       return ['upper' => $upper, 'lower' => $lower];
     }
 
     /**
