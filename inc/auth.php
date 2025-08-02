@@ -305,6 +305,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
 
     if (!empty($user)) {
         //usual login
+        if (!empty($pass)) usleep(rand(0, 250)); // add a random delay to prevent timing attacks #4491
         if (!empty($pass) && $auth->checkPass($user, $pass)) {
             // make logininfo globally available
             $INPUT->server->set('REMOTE_USER', $user);
