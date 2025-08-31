@@ -15,23 +15,23 @@
 "use strict";
 
 datepicker.regional.hu = {
-	closeText: "Bezár",
+	closeText: "Bezárás",
 	prevText: "Vissza",
 	nextText: "Előre",
 	currentText: "Ma",
-	monthNames: [ "Január", "Február", "Március", "Április", "Május", "Június",
-	"Július", "Augusztus", "Szeptember", "Október", "November", "December" ],
-	monthNamesShort: [ "Jan", "Feb", "Már", "Ápr", "Máj", "Jún",
-	"Júl", "Aug", "Szep", "Okt", "Nov", "Dec" ],
+	monthNames: [ "január", "február", "március", "április", "május", "június",
+	"július", "augusztus", "szeptember", "október", "november", "december" ],
+	monthNamesShort: [ "jan.", "febr.", "márc.", "ápr.", "máj.", "jún.",
+	"júl.", "aug.", "szept.", "okt.", "nov.", "dec." ],
 	dayNames: [ "Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat" ],
-	dayNamesShort: [ "Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo" ],
+	dayNamesShort: [ "V", "H", "K", "Sze", "Cs", "P", "Szo" ],
 	dayNamesMin: [ "V", "H", "K", "Sze", "Cs", "P", "Szo" ],
 	weekHeader: "Hét",
 	dateFormat: "yy.mm.dd.",
 	firstDay: 1,
 	isRTL: false,
 	showMonthAfterYear: true,
-	yearSuffix: "" };
+	yearSuffix: "." };
 datepicker.setDefaults( datepicker.regional.hu );
 
 return datepicker.regional.hu;

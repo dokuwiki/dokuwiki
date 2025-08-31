@@ -1,9 +1,12 @@
-Szia @FULLNAME@!
+Kedves @FULLNAME@!
 
-Te vagy más valaki kért egy új jelszót a @DOKUWIKIURL@ címen lévő @TITLE@ wiki felhasználódhoz.
+Te, vagy valaki más, egy új jelszót kért a(z)
+@DOKUWIKIURL@ webcímen elérhető
+@TITLE@ c. wikin található felhasználói fiókodhoz.
 
-Ha nem kértél ilyet, hagyd figyelmen kívül ezt a levelet.
+Ha ez nem Te voltál, nyugodtan hagyd figyelmen kívül ezt a levelet.
 
-Ha Te voltál, az új jelszó kérelmed megerősítéséhez kattints a következő linkre vagy másold a böngésződbe:
+Ha Te voltál, a jelszóváltoztatási kérelmed megerősítéséhez kattints
+az alábbi hivatkozásra vagy másold át a böngésződ címsorába:
 
 @CONFIRM@

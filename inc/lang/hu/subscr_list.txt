@@ -1,10 +1,13 @@
-Szia,
+Kedves @FULLNAME@!
 
-A @PAGE@ névtérhez tartozó oldalak megváltoztak a @TITLE wikiben.
-A módosított oldalak a következők:
+A(z) @TITLE@ c. wiki
+@PAGE@ névterében oldalak változtak meg.
+A megváltozott oldalak:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @SUBSCRIBE@.
+Ha nem szeretnél további értesítéseket kapni erről az oldalról, akkor
+jelentkezz be a következő oldalon: @DOKUWIKIURL@;
+ezt követően itt iratkozhatsz le: @SUBSCRIBE@.
