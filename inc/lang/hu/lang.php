@@ -139,7 +139,7 @@ $lang['regsuccess']            = 'Létrehoztuk a felhasználói fiókot és e-ma
 $lang['regsuccess2']           = 'Létrehoztuk a felhasználói fiókot.';
 $lang['regfail']               = 'A felhasználó létrehozása sikertelen.';
 $lang['regmailfail']           = 'Hiba történt a jelszó elküldése során. Lépj kapcsolatba az adminisztrátorokkal.';
-$lang['regbadmail']            = 'A megadott e-mail-cím érvénytelennek tűnik. Ha úgy gondolod ez hiba, lépj kapcsolatba az adminisztrátorokkal.';
+$lang['regbadmail']            = 'A megadott e-mail-cím érvénytelennek tűnik. Ha úgy gondolod, hogy ez hiba, lépj kapcsolatba az adminisztrátorokkal.';
 $lang['regbadpass']            = 'A jelszavak nem egyeznek. Próbáld újra.';
 $lang['regpwmail']             = 'A DokuWiki-jelszavad';
 $lang['reghere']               = 'Még nincs fiókod? Alább regisztrálhatsz';
@@ -161,8 +161,8 @@ $lang['resendna']              = 'Ez a wiki nem támogatja a jelszó újraküld�
 $lang['resendpwd']             = 'Új jelszó beállítása a következőhöz:';
 $lang['resendpwdmissing']      = 'Az összes mező kitöltése kötelező.';
 $lang['resendpwdnouser']       = 'Ez a felhasználónév nem található.';
-$lang['resendpwdbadauth']      = 'A megerősítő kód helytelen. Biztos, hogy a teljes megerősítő-hivatkozást pontosan beírtad?';
-$lang['resendpwdconfirm']      = 'A megerősítő hivatkozást e-mail-ben elküldtük.';
+$lang['resendpwdbadauth']      = 'A megerősítőkód helytelen. Biztos, hogy a teljes megerősítő-hivatkozást pontosan beírtad?';
+$lang['resendpwdconfirm']      = 'A megerősítő-hivatkozást e-mail-ben elküldtük.';
 $lang['resendpwdsuccess']      = 'Elküldtük az új jelszavadat e-mail-ben.';
 $lang['license']               = 'Hacsak máshol nincs egyéb rendelkezés, ezen wiki tartalma a következő licenc alatt érhető el:';
 $lang['licenseok']             = 'Megjegyzés: az oldal szerkesztésével elfogadod, hogy a tartalom a következő licenc alatt lesz elérhető:';
@@ -199,7 +199,7 @@ $lang['mediaupload']           = 'Itt tölthetsz fel állományokat az aktuális
 $lang['mediaextchange']        = 'Az állomány kiterjesztése a következő szerint változott meg: .%s → .%s';
 $lang['reference']             = 'Hivatkozások';
 $lang['ref_inuse']             = 'A megadott fájl nem törölhető, mert a következő oldalakon használják:';
-$lang['ref_hidden']            = 'Van néhány hivatkozás az oldalakon, amelyekhez nincs olvasási jogosultságod';
+$lang['ref_hidden']            = 'Bizonyos hivatkozásokhoz nincs olvasási jogosultságod';
 $lang['hits']                  = 'Találatok';
 $lang['quickhits']             = 'Illeszkedő oldalnevek';
 $lang['toc']                   = 'Tartalomjegyzék';
@@ -308,11 +308,11 @@ $lang['i_enableacl']           = 'Hozzáférés-vezérlési listák engedélyez�
 $lang['i_superuser']           = 'Adminisztrátor';
 $lang['i_problems']            = 'A varázsló az alábbi problémák miatt megakadt. Nem tudjuk folytatni, amíg ezek nincsenek elhárítva!';
 $lang['i_modified']            = 'Biztonsági okokból ez a varázsló csak új és módosítatlan DokuWiki-változaton működik.
-Csomagold ki újra a fájlokat a letöltött csomagból, vagy tekintsd meg a teljes <a href="https://www.dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
+Csomagold ki újra a vagy tekintsd meg a teljes <a href="https://www.dokuwiki.org/install">Dokuwiki telepítési útmutatót</a>.';
 $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető. Lehetséges, hogy a tárhelyszolgáltató letiltotta biztonsági okok miatt.';
 $lang['i_disabled']            = 'A szolgáltató által letiltva.';
 $lang['i_funcnmail']           = '<b>Megjegyzés:</b> A PHP mail függvény nem érhető el. %s Amennyiben a későbbiekben sem lesz elérhető, érdemes lehet telepíteni az <a href="https://www.dokuwiki.org/plugin:smtp">smtp bővítményt</a>.	';
-$lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-det újabb verzióra.';
+$lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-t újabb verzióra.';
 $lang['i_mbfuncoverload']      = 'A DokuWiki futtatásához az mbstring.func_overload opciót ki kell kapcsolni a php.ini-ben.';
 $lang['i_urandom']             = 'A DokuWiki nem tud kriptográfiailag biztonságos számokat létrehozni a sütikhez. Érdemes ellenőrizni az open_basedir beállításokat a php.ini-ben a <code>/dev/urandom</code> megfelelő hozzáféréséhez.	';
 $lang['i_permfail']            = 'A DokuWiki nem tud írni a(z) <code>%s</code> könyvtárba. Be kell állítanod ehhez a könyvtárhoz a megfelelő jogosultságokat.';
@@ -320,8 +320,8 @@ $lang['i_confexists']          = 'A(z) <code>%s</code> már létezik.';
 $lang['i_writeerr']            = 'A(z) <code>%s</code> létrehozása sikertelen. Ellenőrizd a könyvtár-/fájljogosultságokat, és hozd létre az állományt kézzel.';
 $lang['i_badhash']             = 'A dokuwiki.php nem felismerhető vagy módosított (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> – helytelen vagy üres érték';
-$lang['i_success']             = 'A beállítás sikeresen befejeződött. Az install.php fájl immár törölhető. Látogasd meg az <a href="doku.php?id=wiki:welcome">új DokuWikidet</a>!';
-$lang['i_failure']             = 'Hiba lépett fel a konfigurációs állományok írásakor. Ki kell javítanod kézzel, mielőtt használni kezded az <a href="doku.php?id=wiki:welcome">új DokuWikidet</a>.';
+$lang['i_success']             = 'A beállítás sikeresen befejeződött. Az install.php fájl immár törölhető. Látogasd meg az <a href="doku.php?id=wiki:welcome">újonnan létrehozott DokuWikidet</a>!';
+$lang['i_failure']             = 'Hiba lépett fel a konfigurációs állományok írásakor. Ki kell javítanod kézzel, mielőtt használni kezded az <a href="doku.php?id=wiki:welcome">újonnan létrehozott DokuWikidet</a>.';
 $lang['i_policy']              = 'Kezdeti hozzáférési listaházirend';
 $lang['i_pol0']                = 'Nyílt wiki (mindenki olvashatja, írhatja és fájlokat tölthet fel)';
 $lang['i_pol1']                = 'Nyilvános wiki (mindenki olvashatja, de csak regisztrált felhasználók írhatják és tölthetnek fel fájlokat)';
@@ -382,4 +382,4 @@ $lang['rss_show_deleted']	   = 'XML-hírfolyam Törölt hírfolyamok megjelenít
 $lang['search_nslimit']	       = 'Keresés korlátozása a jelenlegi X névtérre. Ha egy mélyebb névtérről indítasz keresést, akkor az első X névtér szűrőként lesz felhasználva.';
 $lang['search_fragment']       = 'Alapértelmezett töredékes keresési viselkedés';
 $lang['defer_js']              = 'JavaScript futtatása a HTML-tartalom vizsgálata után. Ez javít a látszólagos betöltési sebességen, de bizonyos bővítményeknél nem kívánt viselkedést eredményezhet.';
-$lang['trustedproxies']        = 'A megbízható proxykiszolgálók vesszővel elválasztott listája, amelyekből kiolvasható az X-Forwarded-For fejléc. A lista minden eleme lehet IPv4/IPv6 cím, vagy IPv4/IPv6 CIDR-tartomány (pl.: 10.0.0.0/8). Ha ezt üresen hagyod, akkor egy proxyt sem kezelünk megbízhatóként.';
+$lang['trustedproxies']        = 'A megbízható proxykiszolgálók vesszővel elválasztott listája, amelyekből kiolvasható az X-Forwarded-For fejléc. A lista minden eleme lehet IPv4/IPv6-cím, vagy IPv4/IPv6 CIDR-tartomány (pl.: 10.0.0.0/8). Ha ezt üresen hagyod, akkor egy proxyt sem kezelünk megbízhatóként.';
