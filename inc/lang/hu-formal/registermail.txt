@@ -1,0 +1,10 @@
+Egy új felhasználó regisztrált az alábbi adatokkal:
+
+Felhasználónév: @NEWUSER@
+Teljes név: @NEWNAME@
+E-mail-cím: @NEWEMAIL@
+
+Dátum: @DATE@
+Böngésző: @BROWSER@
+IP-cím : @IPADDRESS@
+Számítógép neve: @HOSTNAME@

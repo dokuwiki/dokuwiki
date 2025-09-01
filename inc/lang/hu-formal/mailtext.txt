@@ -1,0 +1,12 @@
+Létrejött vagy megváltozott egy oldal a DokuWikijén. Részletek:
+
+Dátum: @DATE@
+Böngésző: @BROWSER@
+IP-cím: @IPADDRESS@
+Számítógép neve: @HOSTNAME@
+Előző változat: @OLDPAGE@
+Új változat: @NEWPAGE@
+Összefoglaló: @SUMMARY@
+Felhasználó: @USER@
+
+@DIFF@
