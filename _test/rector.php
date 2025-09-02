@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+define('DOKU_INC', __DIR__ . '/../');
+
 use dokuwiki\test\rector\DokuWikiPtlnRector;
 use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
