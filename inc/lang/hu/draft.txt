@@ -1,5 +1,5 @@
 ===== Piszkozatot találtunk =====
 
-Az oldal utolsó szerkesztését nem fejezted be rendesen. A DokuWiki elmentette piszkozatként, így most folytathatod a szerkesztést. Lent látható, amit az utolsó szerkesztésből elmentettünk.
+A legutóbbi szerkesztés váratlanul fejeződött be. A DokuWiki elmentette piszkozatként, így most folytathatod a szerkesztést. A mentett változat alább tekinthető meg.
 
-Válassz a //helyreállítás// vagy a //törlés// opciók közül a piszkozat sorsát illetően vagy //megszakíthatod// a szerkesztési folyamatot.
+Válassz a //helyreállítás// vagy a //törlés// lehetőségek közül a piszkozat sorsát illetően, vagy //szakítsd meg// a szerkesztési folyamatot.
