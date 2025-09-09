@@ -15,15 +15,15 @@ class Manifest
         $manifest['scope'] = DOKU_REL;
 
         if (empty($manifest['name'])) {
-            $manifest['name'] = $conf['title'];
+            $manifest['name'] = strip_tags($conf['title']);
         }
 
         if (empty($manifest['short_name'])) {
-            $manifest['short_name'] = $conf['title'];
+            $manifest['short_name'] = strip_tags($conf['title']);
         }
 
         if (empty($manifest['description'])) {
-            $manifest['description'] = $conf['tagline'];
+            $manifest['description'] = strip_tags($conf['tagline']);
         }
 
         if (empty($manifest['start_url'])) {
