@@ -722,7 +722,7 @@ class admin_plugin_usermanager extends AdminPlugin
         $selected = array_keys($selected);
 
         if (in_array($_SERVER['REMOTE_USER'], $selected)) {
-            msg("You can't delete yourself!", -1);
+            msg($this->lang['delete_fail_self'], -1);
             return false;
         }
 
