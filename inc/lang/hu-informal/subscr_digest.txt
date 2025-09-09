@@ -11,6 +11,6 @@ Az eltérések alább olvashatók:
 Korábbi változat: @OLDPAGE@
 Jelenlegi változat: @NEWPAGE@
 
-Ha nem szeretne további értesítéseket kapni erről az oldalról, akkor
-jelentkezzen be a következő oldalon: @DOKUWIKIURL@;
-ezt követően itt iratkozhat le: @SUBSCRIBE@.
+Ha nem szeretnél további értesítéseket kapni erről az oldalról, akkor
+jelentkezz be a következő oldalon: @DOKUWIKIURL@;
+ezt követően itt iratkozhatsz le: @SUBSCRIBE@.

@@ -1,12 +1,12 @@
 Kedves @FULLNAME@!
 
-Te, vagy valaki más, egy új jelszót kért a(z)
+Ön, vagy valaki más, egy új jelszót kért a(z)
 @DOKUWIKIURL@ webcímen elérhető
-@TITLE@ c. wikin található felhasználói fiókodhoz.
+@TITLE@ c. wikin található felhasználói fiókjához.
 
-Ha ez nem Te voltál, nyugodtan hagyd figyelmen kívül ezt a levelet.
+Ha ez nem Ön volt, nyugodtan hagyja figyelmen kívül ezt a levelet.
 
-Ha Te voltál, a jelszóváltoztatási kérelmed megerősítéséhez kattints
-az alábbi hivatkozásra vagy másold át a böngésződ címsorába:
+Ha Ön volt, a jelszóváltoztatási kérelme megerősítéséhez kattintson
+az alábbi hivatkozásra vagy másolja át a böngészőjének címsorába:
 
 @CONFIRM@
