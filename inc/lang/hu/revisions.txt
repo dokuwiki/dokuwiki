@@ -1,3 +1,3 @@
-====== Előző változatok ======
+====== Korábbi változatok ======
 
-Ezek az előző változatai az aktuális dokumentumnak. Egy előző változathoz való visszatéréshez nyomd meg az ''Oldal szerkesztése'' gombot, majd mentsd el.
+Ezek az aktuális dokumentum korábbi változatai. Egy előző változathoz való visszatéréshez nyomd meg az ''Oldal szerkesztése'' gombot, majd mentsd el.
