@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Haolin Xue <tzbkk@outlook.com>
  * @author Luna Shirase <fwits@foxmail.com>
  * @author Mr_Fang <klxf@vip.qq.com>
  * @author chuachua <oceanynh@gmail.com>
@@ -77,6 +78,8 @@ $lang['msg_enabled']           = '插件 %s 已启用';
 $lang['msg_disabled']          = '插件 %s 已禁用';
 $lang['msg_delete_success']    = '%s 扩展没有安装';
 $lang['msg_delete_failed']     = '卸载扩展 %s 失败';
+$lang['msg_install_success']   = '成功安装拓展 %s';
+$lang['msg_update_success']    = '成功更新拓展 %s';
 $lang['msg_upload_failed']     = '上传文件失败';
 $lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖；要覆盖，请选中覆盖选项。';
 $lang['missing_dependency']    = '缺少或者被禁用的依赖： %s';
@@ -103,3 +106,7 @@ $lang['install_upload']        = '上传扩展：';
 $lang['repo_badresponse']      = '插件库返回无效响应。';
 $lang['repo_error']            = '无法连接到扩展库。请确定您的服务器可以连接 www.dokuwiki.org 并检查您的代理设置。';
 $lang['nossl']                 = '您的 PHP 似乎不支持 SSL，这将导致无法下载多数 DokuWiki 扩展。';
+$lang['popularity_high']       = '这是最流行的拓展之一';
+$lang['popularity_medium']     = '这个拓展很流行';
+$lang['popularity_low']        = '这个拓展获得了很多人的兴趣';
+$lang['details']               = '细节';
