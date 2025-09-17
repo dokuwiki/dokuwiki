@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author Pablo <tuthotep@gmail.com>
  * @author cadetill <cadetill@gmail.com>
  * @author Guillermo Romero <drirr.gato@gmail.com>
@@ -190,6 +191,9 @@ $lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este
 $lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
 $lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
 $lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
+$lang['proftokenlegend']       = 'Token de autenticación';
+$lang['proftokengenerate']     = 'Restablecer token';
+$lang['proftokeninfo']         = 'El token de autenticación se puede usar para permitir que aplicaciones de terceros inicien sesión y actúen en tu nombre. Al restablecer el token, se invalidará el token anterior y se cerrará la sesión de todas las aplicaciones que lo utilizaban.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -407,5 +411,6 @@ $lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue cr
 $lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
 $lang['email_signature_text']  = 'Este mail ha sido generado por DokuWiki en
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Archivo de registro demasiado grande. ¡Se han omitido las líneas anteriores!';
 $lang['log_file_failed_to_open'] = 'Fallo al abrir el archivo de registro';
 $lang['log_file_failed_to_read'] = 'Ha ocurrido un error al leer el registro';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
  * @author Eloy <ej.perezgomez@gmail.com>
@@ -26,7 +27,8 @@ $lang['userscope']             = 'Limitar ámbito de búsqueda para búsqueda de
 $lang['groupscope']            = 'Limitar ámbito de búsqueda para búsqueda de grupos';
 $lang['userkey']               = 'Atributo que denota el nombre de usuario; debe ser coherente con el filtro.';
 $lang['groupkey']              = 'Pertenencia al grupo desde cualquier atributo de usuario (en lugar de grupos AD estándar) p.e., grupo a partir departamento o número de teléfono';
-$lang['modPass']               = 'Puede ser cambiara via dokuwiki la password LDAP?';
+$lang['modPass']               = '¿Puede ser cambiada la contraseña LDAP vía dokuwiki?';
+$lang['modPassPlain']          = '¿Enviar actualizaciones de contraseña en texto plano al servidor LDAP (en lugar de aplicar un identificador aleatorio y generar su hash con el algoritmo configurado antes de la transmisión)?';
 $lang['debug']                 = 'Mostrar información adicional para depuración de errores';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
