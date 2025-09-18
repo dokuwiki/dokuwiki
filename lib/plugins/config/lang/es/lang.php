@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author cadetill <cadetill@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
@@ -105,6 +106,7 @@ $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['disableactions_rss']    = 'Sindicación XML (RSS)';
 $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por motivos de seguridad';
 $lang['securecookie']          = 'Las cookies establecidas por HTTPS, ¿el naveagdor solo puede enviarlas por HTTPS? Inhabilite esta opción cuando solo se asegure con SSL la entrada, pero no la navegación de su wiki.';
+$lang['samesitecookie']        = 'El atributo de cookie samesite que se va a utilizar. Dejarlo vacío permitirá que el navegador decida sobre la política samesite.';
 $lang['remote']                = 'Activar el sistema API remoto. Esto permite a otras aplicaciones acceder al wiki a traves de XML-RPC u otros mecanismos.';
 $lang['remoteuser']            = 'Restringir el acceso remoto por API a los grupos o usuarios separados por comas que se dan aquí. Dejar en blanco para dar acceso a todo el mundo.';
 $lang['remotecors']            = 'Habilitar el Uso Compartido de Recursos entre Orígenes (CORS) para las interfaces remotas. Asterisco (*) para permitir todos los orígenes. Dejar vacío para denegar CORS.';
@@ -136,6 +138,7 @@ $lang['mailreturnpath']        = 'Dirección de correo electrónico del destinat
 $lang['mailprefix']            = 'Asunto por defecto que se utilizará en mails automáticos.';
 $lang['htmlmail']              = 'Enviar correos electronicos en HTML con mejor aspecto pero mayor peso. Desactivar para enviar correos electronicos en texto plano.';
 $lang['dontlog']               = 'Deshabilitar inicio de sesión para este tipo de registros.';
+$lang['logretain']             = 'Cuántos días de registros conservar.';
 $lang['sitemap']               = 'Generar sitemap de Google (días)';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
@@ -175,6 +178,8 @@ $lang['defer_js']              = 'Aplazar JavaScript para que se ejecute despué
 $lang['hidewarnings']          = 'No mostrar ninguna advertencia emitida por PHP. Esto puede facilitar la transición a PHP8+. Las advertencias seguirán siendo registradas en el registro de errores y deben ser reportadas.';
 $lang['dnslookups']            = 'DokuWiki buscara los hostnames para usuarios editando las páginas con IP remota. Si usted tiene un servidor DNS bastante lento o que no funcione, favor de desactivar esta opción.';
 $lang['jquerycdn']             = '¿Deberían cargarse los ficheros de script jQuery y jQuery UI desde un CDN? Esto añade peticiones HTTP adicionales, pero los ficheros se pueden cargar más rápido y los usuarios pueden tenerlas ya almacenadas en caché.';
+$lang['trustedproxies']        = 'Lista separada por comas de servidores proxy confiables desde los cuales se leerá la cabecera X-Forwarded-For. Cada elemento del arreglo puede ser una dirección IPv4 o IPv6, o un rango CIDR de IPv4 o IPv6 (p. ej., 10.0.0.0/8). Déjar vacío para no confiar en ningún proxy.';
+$lang['realip']                = 'Confiar en la cabecera X-Real-IP. Activa esta opción solo si tu servidor genera dicha cabecera; de lo contrario, podría ser falsificada.';
 $lang['jquerycdn_o_0']         = 'No CDN, sólo entrega local';
 $lang['jquerycdn_o_jquery']    = 'CDN en code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN en cdnjs.com';
