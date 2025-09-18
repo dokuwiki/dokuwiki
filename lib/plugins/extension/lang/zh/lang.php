@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Haolin Xue <tzbkk@outlook.com>
  * @author Luna Shirase <fwits@foxmail.com>
+ * @author Haolin Xue <tzbkk@outlook.com>
  * @author Mr_Fang <klxf@vip.qq.com>
  * @author chuachua <oceanynh@gmail.com>
  * @author Xin <chenxin1034@gmail.com>
@@ -83,6 +83,7 @@ $lang['msg_update_success']    = '扩展 %s 更新成功';
 $lang['msg_upload_failed']     = '上传文件失败';
 $lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖；要覆盖，请选中覆盖选项。';
 $lang['missing_dependency']    = '缺少或者被禁用的依赖： %s';
+$lang['found_conflict']        = '这个扩展与下面的扩展有冲突：%s';
 $lang['security_issue']        = '安全问题： %s';
 $lang['security_warning']      = '安全警告： %s';
 $lang['update_message']        = '更新提醒： %s';
@@ -96,6 +97,11 @@ $lang['error_download']        = '无法下载文件：%s';
 $lang['error_decompress']      = '无法解压下载的文件。这可能是由于文件损坏，在这种情况下您可以重试。这也可能是由于压缩格式是未知的，在这种情况下您需要手动下载并且安装。';
 $lang['error_findfolder']      = '无法识别扩展目录，您需要手动下载和安装';
 $lang['error_copy']            = '在尝试安装文件到目录 <em>%s</em> 时出现文件复制错误：可能磁盘已满或文件权限不正确。这可能导致扩展安装不完整，并使您的维基处在不稳定状态';
+$lang['error_copy_read']       = '不能读取目录%s';
+$lang['error_copy_mkdir']      = '不能创建目录%s';
+$lang['error_copy_copy']       = '不能把%s复制到%s';
+$lang['error_archive_read']    = '不能打开压缩文件%s并读取';
+$lang['error_archive_extract'] = '不能解压压缩文件%s：%s';
 $lang['noperms']               = '扩展目录不可写';
 $lang['notplperms']            = '模板目录不可写';
 $lang['nopluginperms']         = '插件目录不可写';
