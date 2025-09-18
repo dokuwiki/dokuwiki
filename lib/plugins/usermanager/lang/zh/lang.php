@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Haolin Xue <tzbkk@outlook.com>
  * @author Phy <dokuwiki@phy25.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
@@ -47,6 +48,7 @@ $lang['summary']               = '找到 %3$d 名用户，显示其中第 %1$d �
 $lang['nonefound']             = '没有找到用户。数据库中共有 %d 名用户。';
 $lang['delete_ok']             = '%d 个用户删除成功';
 $lang['delete_fail']           = '%d 个用户删除失败。';
+$lang['delete_fail_self']      = '您不能删除自己';
 $lang['update_ok']             = '用户更新成功';
 $lang['update_fail']           = '用户更新失败';
 $lang['update_exists']         = '用户名更改失败，您指定的用户名（%s）已存在（其他更改将立即生效）。';
