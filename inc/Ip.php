@@ -10,6 +10,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Input\Input;
+use dokuwiki\Ip32;
 use Exception;
 
 class Ip
@@ -58,10 +59,10 @@ class Ip
         $maskLengthLower = max(0, $maskLength - 64);
 
         if (PHP_INT_SIZE == 4) {
-            $needle_up = Ip::bitmask64_32($needle['upper'],    $maskLengthUpper);
-            $net_up    = Ip::bitmask64_32($networkIp['upper'], $maskLengthUpper);
-            $needle_lo = Ip::bitmask64_32($needle['lower'],    $maskLengthLower);
-            $net_lo    = Ip::bitmask64_32($networkIp['lower'], $maskLengthLower);
+            $needle_up = Ip32::bitmask64_32($needle['upper'],    $maskLengthUpper);
+            $net_up    = Ip32::bitmask64_32($networkIp['upper'], $maskLengthUpper);
+            $needle_lo = Ip32::bitmask64_32($needle['lower'],    $maskLengthLower);
+            $net_lo    = Ip32::bitmask64_32($networkIp['lower'], $maskLengthLower);
         } else {
             $maskUpper = ~0 << intval(64 - $maskLengthUpper);
             $maskLower = ~0 << intval(64 - $maskLengthLower);
@@ -73,52 +74,6 @@ class Ip
         }
 
         return $needle_up === $net_up && $needle_lo === $net_lo;
-    }
-
-    /**
-     * modeling bitshift like  ~0 << $pow for 32-bit arch
-     * @param pow power of 2 for mask
-     * @return 64-char string of 1 and 0s
-     * pow=1
-     * 1111111111111111111111111111111111111111111111111111111111111110
-     * pow=63
-     * 1000000000000000000000000000000000000000000000000000000000000000
-     * pow=64
-     * 0000000000000000000000000000000000000000000000000000000000000000
-     */
-    private static function make_bitmask_32(int $pow) : string {
-        $pow = $pow < 0 ? 64 - $pow : $pow;
-        $mask = sprintf("%064d",0);
-        for ($i=0; $i<64; $i++) {
-            if ($i >= $pow) {
-                $mask[63 - $i] = '1';
-            }
-        }
-        return $mask;
-    }
-    /**
-     * slow and ugly bitwise_and for 32bit arch
-     * @param $u64 unsigned 64bit integer as string
-     *            likely from ipv6_upper_lower_32
-     * @param $pow 0-64 power of 2 for bitmask
-     */
-    private static function bitmask64_32(string $u64, int $pow) : string {
-        //$u64 = sprintf("%.0f", $u65);
-        $b32 = '4294967296';
-        $bin = sprintf("%032b%032b",
-                bcdiv($u64, $b32, 0),
-                bcmod($u64, $b32));
-
-        $mask = Ip::make_bitmask_32(64-$pow);
-
-        // most right is lowest bit
-        $res='0';
-        for ($i=0; $i<64; $i++){
-            if (bcmul($bin[$i], $mask[$i]) == 1) {
-                $res = bcadd($res, bcpow(2, 63-$i));
-            }
-        }
-        return $res;
     }
 
     /**
@@ -161,36 +116,11 @@ class Ip
             if(PHP_INT_SIZE == 8) { // 64-bit arch
                $result = unpack('Jupper/Jlower', $binary);
             } else { // 32-bit
-               $result = Ip::ipv6_upper_lower_32($binary);
+               $result = Ip32::ipv6_upper_lower_32($binary);
             }
             $result['version'] = 6;
             return $result;
         }
-    }
-
-    /**
-     * conversion of inet_pton ipv6 into 64-bit upper and lower
-     * bcmath version for 32-bit architecture
-     * w/o no unpack('J') - unsigned long long (always 64 bit, big endian byte order)
-     *
-     * results match unpack('Jupper/Jlower', $binary)
-     *
-     * @param string $binary inet_pton's ipv6 16 element binary
-     *
-     * @return int[] upper 64 and lower 64 for ipToNumber
-     */
-    public static function ipv6_upper_lower_32(string $binary) {
-       // unpack into four 32-bit unsigned ints to recombine as 2 64-bit
-       $b32 = 4294967296; // bcpow(2, 32)
-       $parts = unpack('N4', $binary);
-       $upper = bcadd(bcmul($parts[1], $b32),
-                      $parts[2]);
-       $lower = bcadd(bcmul($parts[3], $b32),
-                      $parts[4]);
-       // ISSUE:
-       // unpack('J2') on 64bit is stored as 2 signed int (even if J is unsigned)
-       // here upper and lower have to be strings. numbers wont fit in 32-bit
-       return ['upper' => $upper, 'lower' => $lower];
     }
 
     /**
