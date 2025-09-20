@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DokuWiki IP address functions.
+ * DokuWiki IP address and reverse proxy functions.
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Zebra North <mrzebra@mrzebra.co.uk>
@@ -366,5 +366,54 @@ class Ip
         }
 
         return $ips;
+    }
+
+    /**
+     * Get the host name of the server.
+     *
+     * The host name is sourced from, in order of preference:
+     *
+     *   - The X-Forwarded-Host header if it exists and the proxies are trusted.
+     *   - The HTTP_HOST header.
+     *   - The SERVER_NAME header.
+     *   - The system's host name.
+     *
+     * @return string Returns the host name of the server.
+     */
+    public static function hostName(): string
+    {
+        /* @var Input $INPUT */
+        global $INPUT;
+
+        $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
+        if ($INPUT->server->str('HTTP_X_FORWARDED_HOST') && self::proxyIsTrusted($remoteAddr)) {
+            return $INPUT->server->str('HTTP_X_FORWARDED_HOST');
+        } elseif ($INPUT->server->str('HTTP_HOST')) {
+            return $INPUT->server->str('HTTP_HOST');
+        } elseif ($INPUT->server->str('SERVER_NAME')) {
+            return $INPUT->server->str('SERVER_NAME');
+        } else {
+            return php_uname('n');
+        }
+    }
+
+    /**
+     * Is the connection using the HTTPS protocol?
+     *
+     * Will use the X-Forwarded-Proto header if it exists and the proxies are trusted, otherwise
+     * the HTTPS environment is used.
+     *
+     * @return bool
+     */
+    public static function isSsl(): bool
+    {
+        /* @var Input $INPUT */
+        global $INPUT;
+
+        $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
+        if ($INPUT->server->has('HTTP_X_FORWARDED_PROTO') && self::proxyIsTrusted($remoteAddr)) {
+            return $INPUT->server->str('HTTP_X_FORWARDED_PROTO') === 'https';
+        }
+        return !preg_match('/^(|off|false|disabled)$/i', $INPUT->server->str('HTTPS', 'off'));
     }
 }

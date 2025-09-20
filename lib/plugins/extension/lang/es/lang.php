@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author Pablo <tuthotep@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Antonio Bueno <atnbueno@gmail.com>
@@ -99,6 +100,7 @@ $lang['git']                   = 'Esta extensión fue instalada a través de git
 $lang['auth']                  = 'Este plugin de autenticación no está habilitada en la configuración, considere la posibilidad de desactivarlo.';
 $lang['install_url']           = 'Instalar desde URL:';
 $lang['install_upload']        = 'Subir Extensión:';
+$lang['repo_badresponse']      = 'El repositorio de complementos devolvió una respuesta no válida.';
 $lang['repo_error']            = 'El repositorio de plugins no puede ser contactado. Asegúrese que su servidor pueda contactar www.dokuwiki.org y verificar la configuración de su proxy.';
 $lang['nossl']                 = 'Tu PHP parece no tener soporte SSL. Las descargas no funcionaran para muchas extensiones de DokuWiki.';
 $lang['details']               = 'Detalles';

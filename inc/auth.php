@@ -305,6 +305,7 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
 
     if (!empty($user)) {
         //usual login
+        if (!empty($pass)) usleep(random_int(0, 250)); // add a random delay to prevent timing attacks #4491
         if (!empty($pass) && $auth->checkPass($user, $pass)) {
             // make logininfo globally available
             $INPUT->server->set('REMOTE_USER', $user);
@@ -535,7 +536,7 @@ function auth_logoff($keepbc = false)
     setcookie(DOKU_COOKIE, '', [
         'expires' => time() - 600000,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
@@ -1401,7 +1402,7 @@ function auth_setCookie($user, $pass, $sticky)
     setcookie(DOKU_COOKIE, $cookie, [
         'expires' => $time,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && is_ssl()),
+        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);

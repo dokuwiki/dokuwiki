@@ -1,8 +1,11 @@
 <?php
 
+namespace dokuwiki\test;
+
+use dokuwiki\Input\Input;
 use dokuwiki\Ip;
 
-class ip_test extends DokuWikiTest {
+class IpTest extends \DokuWikiTest {
 
     /**
      * The data provider for ipToNumber() tests.
@@ -301,6 +304,143 @@ class ip_test extends DokuWikiTest {
         $INPUT->server->set('REMOTE_ADDR', $remoteAddr);
 
         $result = Ip::forwardedFor();
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * Data provider for test_is_ssl().
+     *
+     * @return mixed[][] Returns an array of test cases.
+     */
+    public function is_ssl_provider(): array
+    {
+        // The new default configuration value.
+        $default = ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
+
+        $tests = [
+            // Running behind an SSL proxy, HTTP between server and proxy
+            // Proxy (REMOTE_ADDR) is matched by trustedproxies config
+            // HTTPS not set, HTTP_X_FORWARDED_PROTO set to https
+            [$default, '127.0.0.1', '', 'https', true],
+
+            // Running behind an SSL proxy, HTTP between server and proxy
+            // Proxy (REMOTE_ADDR) is not matched by trustedproxies config
+            // HTTPS not set, HTTP_X_FORWARDED_PROTO set to https
+            [[], '8.8.8.8', '', 'https', false],
+
+            // Running behind a plain HTTP proxy, HTTP between server and proxy
+            // HTTPS not set, HTTP_X_FORWARDED_PROTO set to http
+            [$default, '127.0.0.1', '', 'http', false],
+
+            // Running behind an SSL proxy, HTTP between server and proxy
+            // HTTPS set to off, HTTP_X_FORWARDED_PROTO set to https
+            [$default, '127.0.0.1', 'off', 'https', true],
+
+            // Not running behind a proxy, HTTPS server
+            // HTTPS set to on, HTTP_X_FORWARDED_PROTO not set
+            [[], '8.8.8.8', 'on', '', true],
+
+            // Not running behind a proxy, plain HTTP server
+            // HTTPS not set, HTTP_X_FORWARDED_PROTO not set
+            [[], '8.8.8.8', '', '', false],
+
+            // Not running behind a proxy, plain HTTP server
+            // HTTPS set to off, HTTP_X_FORWARDED_PROTO not set
+            [[], '8.8.8.8', 'off', '', false],
+
+            // Running behind an SSL proxy, SSL between proxy and HTTP server
+            // HTTPS set to on, HTTP_X_FORWARDED_PROTO set to https
+            [$default, '127.0.0.1', 'on', 'https', true],
+        ];
+
+        return $tests;
+    }
+
+    /**
+     * Test isSsl().
+     *
+     * @dataProvider is_ssl_provider
+     *
+     * @param string|string[] $config           The trustedproxies config value.
+     * @param string          $remoteAddr       The REMOTE_ADDR value.
+     * @param string          $https            The HTTPS value.
+     * @param string          $forwardedProto   The HTTP_X_FORWARDED_PROTO value.
+     * @param bool            $expected         The expected result from isSsl().
+     *
+     * @return void
+     */
+    public function test_is_ssl($config, string $remoteAddr, string $https, string $forwardedProto, bool $expected): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['trustedproxies'] = $config;
+        $INPUT->server->set('REMOTE_ADDR', $remoteAddr);
+        $INPUT->server->set('HTTPS', $https);
+        $INPUT->server->set('HTTP_X_FORWARDED_PROTO', $forwardedProto);
+
+        $result = Ip::isSsl();
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * Data provider for test_host_name().
+     *
+     * @return mixed[][] Returns an array of test cases.
+     */
+    public function host_name_provider(): array
+    {
+        // The new default configuration value.
+        $default = ['::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];
+
+        $tests = [
+            // X-Forwarded-Host with trusted proxy
+            [$default, '127.0.0.1', 'proxy.example.com', 'www.example.com', 'server.local', 'proxy.example.com'],
+
+            // X-Forwarded-Host with untrusted proxy (should fall back to HTTP_HOST)
+            [[], '8.8.8.8', 'proxy.example.com', 'www.example.com', 'server.local', 'www.example.com'],
+
+            // No X-Forwarded-Host, use HTTP_HOST
+            [$default, '127.0.0.1', '', 'www.example.com', 'server.local', 'www.example.com'],
+
+            // No X-Forwarded-Host or HTTP_HOST, use SERVER_NAME
+            [$default, '127.0.0.1', '', '', 'server.local', 'server.local'],
+
+            // No headers set, should fall back to system hostname
+            [$default, '127.0.0.1', '', '', '', php_uname('n')],
+        ];
+
+        return $tests;
+    }
+
+    /**
+     * Test hostName().
+     *
+     * @dataProvider host_name_provider
+     *
+     * @param string|string[] $config           The trustedproxies config value.
+     * @param string          $remoteAddr       The REMOTE_ADDR value.
+     * @param string          $forwardedHost    The HTTP_X_FORWARDED_HOST value.
+     * @param string          $httpHost         The HTTP_HOST value.
+     * @param string          $serverName       The SERVER_NAME value.
+     * @param string          $expected         The expected result from hostName().
+     *
+     * @return void
+     */
+    public function test_host_name($config, string $remoteAddr, string $forwardedHost, string $httpHost, string $serverName, string $expected): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['trustedproxies'] = $config;
+        $INPUT->server->set('REMOTE_ADDR', $remoteAddr);
+        $INPUT->server->set('HTTP_X_FORWARDED_HOST', $forwardedHost);
+        $INPUT->server->set('HTTP_HOST', $httpHost);
+        $INPUT->server->set('SERVER_NAME', $serverName);
+
+        $result = Ip::hostName();
 
         $this->assertSame($expected, $result);
     }

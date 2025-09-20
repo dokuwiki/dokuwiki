@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author Pablo <tuthotep@gmail.com>
  * @author cadetill <cadetill@gmail.com>
  * @author Guillermo Romero <drirr.gato@gmail.com>
@@ -93,7 +94,7 @@ $lang['btn_revert']            = 'Restaurar';
 $lang['btn_register']          = 'Registrarse';
 $lang['btn_apply']             = 'Aplicar';
 $lang['btn_media']             = 'Administrador de Ficheros';
-$lang['btn_deleteuser']        = 'Elimina Mi Cuenta';
+$lang['btn_deleteuser']        = 'Eliminar mi cuenta';
 $lang['btn_img_backto']        = 'Volver a %s';
 $lang['btn_mediaManager']      = 'Ver en el administrador de ficheros';
 $lang['loggedinas']            = 'Conectado como:';
@@ -111,10 +112,10 @@ $lang['badpassconfirm']        = 'Lo siento, la contraseña es errónea';
 $lang['minoredit']             = 'Cambios menores';
 $lang['draftdate']             = 'Borrador guardado automáticamente:';
 $lang['nosecedit']             = 'La página ha cambiado en el lapso, la información de sección estaba anticuada, en su lugar se cargó la página completa.';
-$lang['searchcreatepage']      = 'Si no econtraste lo que estabas buscando, puedes crear o editar la página %s, nombrada después de tu consulta.';
+$lang['searchcreatepage']      = 'Si no encontraste lo que estabas buscando, puedes crear o editar la página %s, nombrada después de tu consulta.';
 $lang['search_fullresults']    = 'Resultados de texto completo';
 $lang['js']['search_toggle_tools'] = 'Alternar herramientas de búsqueda';
-$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPAra prevenir conflictos usa el botón Previsualizar para restaurar el contador de bloqueo.';
+$lang['js']['willexpire']      = 'El bloqueo para la edición de esta página expira en un minuto.\nPara prevenir conflictos usa el botón Previsualizar para restaurar el contador de bloqueo.';
 $lang['js']['notsavedyet']     = 'Los cambios que no se han guardado se perderán.
 ¿Realmente quieres continuar?';
 $lang['js']['searchmedia']     = 'Buscar archivos';
@@ -156,7 +157,7 @@ $lang['js']['media_upload_btn'] = 'Cargar';
 $lang['js']['media_done_btn']  = 'Hecho';
 $lang['js']['media_drop']      = 'Arrastra los ficheros aquí para cargar';
 $lang['js']['media_cancel']    = 'Eliminar';
-$lang['js']['media_overwrt']   = 'Sobreescribir ficheros exitentes';
+$lang['js']['media_overwrt']   = 'Sobreescribir ficheros existentes';
 $lang['js']['data_insecure']   = 'ADVERTENCIA: Parece que su directorio de datos no está debidamente protegido. Por favor, lea sobre <a href="https://www.dokuwiki.org/security#web_access_security">Seguridad de acceso web en DokuWiki</a>.';
 $lang['search_exact_match']    = 'Coincidencia exacta';
 $lang['search_starts_with']    = 'Comienza con';
@@ -190,6 +191,9 @@ $lang['profdeleted']           = 'Tu cuenta de usuario ha sido eliminada de este
 $lang['profconfdelete']        = 'Deseo eliminar mi cuenta de este wiki. <br /> Esta acción es irreversible.';
 $lang['profconfdeletemissing'] = 'Casilla de verificación no activada.';
 $lang['proffail']              = 'No se ha actualizado el perfil del usuario.';
+$lang['proftokenlegend']       = 'Token de autenticación';
+$lang['proftokengenerate']     = 'Restablecer token';
+$lang['proftokeninfo']         = 'El token de autenticación se puede usar para permitir que aplicaciones de terceros inicien sesión y actúen en tu nombre. Al restablecer el token, se invalidará el token anterior y se cerrará la sesión de todas las aplicaciones que lo utilizaban.';
 $lang['pwdforget']             = '¿Has olvidado tu contraseña? Consigue una nueva';
 $lang['resendna']              = 'Este wiki no brinda la posibilidad de reenvío de contraseña.';
 $lang['resendpwd']             = 'Establecer nueva contraseña para';
@@ -315,7 +319,7 @@ $lang['img_artist']            = 'Fotógrafo:';
 $lang['img_copyr']             = 'Copyright:';
 $lang['img_format']            = 'Formato:';
 $lang['img_camera']            = 'Cámara:';
-$lang['img_keywords']          = 'Palabras claves:';
+$lang['img_keywords']          = 'Palabras clave:';
 $lang['img_width']             = 'Ancho:';
 $lang['img_height']            = 'Alto:';
 $lang['subscr_subscribe_success'] = 'Se agregó %s a las listas de suscripción para %s';
@@ -348,7 +352,7 @@ $lang['i_funcnmail']           = '<b>Nota:</b> La función de PHP mail() no est�
 $lang['i_phpver']              = 'Su versión de PHP <code>%s</code> es menor que la necesaria <code>%s</code>. Es necesario que actualice su instalación de PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki no puede crear números criptográficamente seguros para las cookies. Es posible que desee verificar la configuración de open_basedir en php.ini para obtener el acceso apropiado a <code>/dev/urandom</code>.';
-$lang['i_permfail']            = 'DokuWili no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
+$lang['i_permfail']            = 'DokuWiki no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
 $lang['i_confexists']          = '<code>%s</code> ya existe';
 $lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Se necesita que usted controle los permisos del fichero/directorio y que cree el fichero manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php no reconocido o modificado (hash=<code>%s</code>)';
@@ -407,5 +411,6 @@ $lang['page_nonexist_rev']     = 'La página no existía en %s. Por tanto fue cr
 $lang['unable_to_parse_date']  = 'Incapaz de evaluar el parámetro "%s".';
 $lang['email_signature_text']  = 'Este mail ha sido generado por DokuWiki en
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Archivo de registro demasiado grande. ¡Se han omitido las líneas anteriores!';
 $lang['log_file_failed_to_open'] = 'Fallo al abrir el archivo de registro';
 $lang['log_file_failed_to_read'] = 'Ha ocurrido un error al leer el registro';

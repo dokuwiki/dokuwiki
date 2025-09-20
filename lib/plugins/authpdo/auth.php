@@ -123,7 +123,10 @@ class auth_plugin_authpdo extends AuthPlugin
     {
 
         $userdata = $this->selectUser($user);
-        if ($userdata == false) return false;
+        if ($userdata === false) {
+            auth_cryptPassword('dummy'); // run a crypt op to prevent timing attacks
+            return false;
+        }
 
         // password checking done in SQL?
         if ($this->checkConfig(['check-pass'])) {
