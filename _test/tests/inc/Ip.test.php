@@ -16,6 +16,9 @@ class ip_test extends DokuWikiTest {
             ['::127.0.0.1', 6, 0x00000000, 0x7f000001],
             ['::1', 6, 0x00000000, 0x00000001],
             ['38AF:3033:AA39:CDE3:1A46:094C:44ED:5300', 6, 0x38AF3033AA39CDE3, 0x1A46094C44ED5300],
+            // This fails on 64bit!  "-2 is identical to 1.8446744073709552E+19"
+            //['7FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFE', 6, 9223372036854775807,0xFFFFFFFFFFFFFFFE],
+            ['0000:0000:0000:0000:0000:0000:0000:0000', 6, 0, 0],
             ['193.53.125.7', 4, 0x00000000, 0xC1357D07],
         ];
 
@@ -34,9 +37,16 @@ class ip_test extends DokuWikiTest {
      *
      * @return void
      */
-    public function test_ip_to_number(string $ip, int $version, int $upper, int $lower): void
+    public function test_ip_to_number(string $ip, int $version, int|float $upper, int|float $lower): void
     {
         $result = Ip::ipToNumber($ip);
+
+        // ugly hack. 32bit uses strings for large numbers
+        // also why we take type int (on x64) or float (on i386)
+        if(PHP_INT_SIZE == 4 && $version != 4) { // 32-bit arch
+          $upper = sprintf("%.0f",$upper);
+          $lower = sprintf("%.0f",$lower);
+        }
 
         $this->assertSame($version, $result['version']);
         $this->assertSame($upper, $result['upper']);

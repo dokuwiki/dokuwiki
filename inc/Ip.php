@@ -51,16 +51,74 @@ class Ip
             throw new Exception('Invalid IP range mask: ' . $haystack);
         }
 
-        $maskLengthUpper = min($maskLength, 64);
-        $maskLengthLower = max(0, $maskLength - 64);
-
-        $maskUpper = ~0 << intval(64 - $maskLengthUpper);
-        $maskLower = ~0 << intval(64 - $maskLengthLower);
 
         $needle = Ip::ipToNumber($needle);
 
-        return ($needle['upper'] & $maskUpper) === ($networkIp['upper'] & $maskUpper) &&
-            ($needle['lower'] & $maskLower) === ($networkIp['lower'] & $maskLower);
+        $maskLengthUpper = min($maskLength, 64);
+        $maskLengthLower = max(0, $maskLength - 64);
+
+        if (PHP_INT_SIZE == 4) {
+            $needle_up = Ip::bitmask64_32($needle['upper'],    $maskLengthUpper);
+            $net_up    = Ip::bitmask64_32($networkIp['upper'], $maskLengthUpper);
+            $needle_lo = Ip::bitmask64_32($needle['lower'],    $maskLengthLower);
+            $net_lo    = Ip::bitmask64_32($networkIp['lower'], $maskLengthLower);
+        } else {
+            $maskUpper = ~0 << intval(64 - $maskLengthUpper);
+            $maskLower = ~0 << intval(64 - $maskLengthLower);
+
+            $needle_up = $needle['upper'] & $maskUpper;
+            $net_up    = $networkIp['upper'] & $maskUpper;
+            $needle_lo = $needle['lower'] & $maskLower;
+            $net_lo    = $networkIp['lower'] & $maskLower;
+        }
+
+        return $needle_up === $net_up && $needle_lo === $net_lo;
+    }
+
+    /**
+     * modeling bitshift like  ~0 << $pow for 32-bit arch
+     * @param pow power of 2 for mask
+     * @return 64-char string of 1 and 0s
+     * pow=1
+     * 1111111111111111111111111111111111111111111111111111111111111110
+     * pow=63
+     * 1000000000000000000000000000000000000000000000000000000000000000
+     * pow=64
+     * 0000000000000000000000000000000000000000000000000000000000000000
+     */
+    private static function make_bitmask_32(int $pow) : string {
+        $pow = $pow < 0 ? 64 - $pow : $pow;
+        $mask = sprintf("%064d",0);
+        for ($i=0; $i<64; $i++) {
+            if ($i >= $pow) {
+                $mask[63 - $i] = '1';
+            }
+        }
+        return $mask;
+    }
+    /**
+     * slow and ugly bitwise_and for 32bit arch
+     * @param $u64 unsigned 64bit integer as string
+     *            likely from ipv6_upper_lower_32
+     * @param $pow 0-64 power of 2 for bitmask
+     */
+    private static function bitmask64_32(string $u64, int $pow) : string {
+        //$u64 = sprintf("%.0f", $u65);
+        $b32 = '4294967296';
+        $bin = sprintf("%032b%032b",
+                bcdiv($u64, $b32, 0),
+                bcmod($u64, $b32));
+
+        $mask = Ip::make_bitmask_32(64-$pow);
+
+        // most right is lowest bit
+        $res='0';
+        for ($i=0; $i<64; $i++){
+            if (bcmul($bin[$i], $mask[$i]) == 1) {
+                $res = bcadd($res, bcpow(2, 63-$i));
+            }
+        }
+        return $res;
     }
 
     /**
@@ -129,6 +187,9 @@ class Ip
                       $parts[2]);
        $lower = bcadd(bcmul($parts[3], $b32),
                       $parts[4]);
+       // ISSUE:
+       // unpack('J2') on 64bit is stored as 2 signed int (even if J is unsigned)
+       // here upper and lower have to be strings. numbers wont fit in 32-bit
        return ['upper' => $upper, 'lower' => $lower];
     }
 
