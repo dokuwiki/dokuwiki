@@ -12,8 +12,8 @@
  * @author Álvaro Iradier <airadier@gmail.com>
  * @author Mauricio Segura <maose38@yahoo.es>
  */
-$lang['menu']                  = 'Administrador de Extensiones ';
-$lang['tab_plugins']           = 'Plugins instalados';
+$lang['menu']                  = 'Administrador de extensiones ';
+$lang['tab_plugins']           = 'Complementos instalados';
 $lang['tab_templates']         = 'Plantillas instaladas';
 $lang['tab_search']            = 'Buscar e instalar';
 $lang['tab_install']           = 'Instalación manual';
@@ -78,8 +78,10 @@ $lang['msg_update_success']    = 'Extensión %s actualizada correctamente';
 $lang['msg_upload_failed']     = 'Falló la carga del archivo';
 $lang['msg_nooverwrite']       = 'La extensión %s ya existe, por lo que no se sobrescribe; para sobrescribirla, marque la opción de sobrescritura';
 $lang['missing_dependency']    = 'Dependencia deshabilitada o perdida: %s';
+$lang['found_conflict']        = 'Esta extensión está marcada como incompatible con las siguientes extensiones instaladas: %s';
 $lang['security_issue']        = 'Problema de seguridad: %s';
 $lang['security_warning']      = 'Aviso de seguridad: %s';
+$lang['update_message']        = 'Mensaje de actualización: %s';
 $lang['wrong_folder']          = '"Plugin" instalado incorrectamente: Cambie el nombre del directorio del plugin "%s" a "%s".';
 $lang['url_change']            = 'URL actualizada: El Download URL ha cambiado desde el último download. Verifica si el nuevo URL es valido antes de actualizar la extensión .
 Nuevo: %s
@@ -93,6 +95,18 @@ $lang['error_copy']            = 'Hubo un error durante la copia de archivos al 
 $lang['error_copy_read']       = 'No se puede leer el directorio %s';
 $lang['error_copy_mkdir']      = 'No se puede crear el directorio %s';
 $lang['error_copy_copy']       = 'No se puede copiar %s a %s';
+$lang['error_archive_read']    = 'No se pudo abrir el archivo %s para su lectura';
+$lang['error_archive_extract'] = 'No se pudo extraer el archivo %s: %s';
+$lang['error_uninstall_protected'] = 'La extensión %s está protegida y no puede desinstalarse';
+$lang['error_uninstall_dependants'] = 'La extensión %s sigue siendo requerida por %s y, por lo tanto, no puede desinstalarse';
+$lang['error_disable_protected'] = 'La extensión %s está protegida y no puede desactivarse';
+$lang['error_disable_dependants'] = 'La extensión %s sigue siendo requerida por %s y, por lo tanto, no puede desactivarse';
+$lang['error_nourl']           = 'No se encontró la URL de descarga para la extensión %s';
+$lang['error_notinstalled']    = 'La extensión %s no está instalada';
+$lang['error_alreadyenabled']  = 'La extensión %s ya ha sido activada';
+$lang['error_alreadydisabled'] = 'La extensión %s ya ha sido desactivada';
+$lang['error_minphp']          = 'La extensión %s requiere al menos PHP %s, pero este wiki está ejecutando PHP %s';
+$lang['error_maxphp']          = 'La extensión %s sólo es compatible con PHP hasta la versión %s, pero este wiki está ejecutando PHP %s';
 $lang['noperms']               = 'El directorio de extensiones no tiene permiso de escritura.';
 $lang['notplperms']            = 'El directorio de plantillas no tiene permiso de escritura.';
 $lang['nopluginperms']         = 'No se puede escribir en el directorio de plugins';
@@ -103,4 +117,7 @@ $lang['install_upload']        = 'Subir Extensión:';
 $lang['repo_badresponse']      = 'El repositorio de complementos devolvió una respuesta no válida.';
 $lang['repo_error']            = 'El repositorio de plugins no puede ser contactado. Asegúrese que su servidor pueda contactar www.dokuwiki.org y verificar la configuración de su proxy.';
 $lang['nossl']                 = 'Tu PHP parece no tener soporte SSL. Las descargas no funcionaran para muchas extensiones de DokuWiki.';
+$lang['popularity_high']       = 'Esta es una de las extensiones más populares';
+$lang['popularity_medium']     = 'Esta extensión es bastante popular';
+$lang['popularity_low']        = 'Esta extensión ha despertado cierto interés';
 $lang['details']               = 'Detalles';
