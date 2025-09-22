@@ -17,7 +17,7 @@ $lang['grouptree']             = 'Donde encontrar grupos de usuarios. Ej. <code>
 $lang['userfilter']            = 'Filtro LDAP para la busqueda de cuentas de usuario. P. E. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
 $lang['groupfilter']           = 'Filtro LDAP para la busqueda de grupos. P. E. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = 'La versión del protocolo a usar. Puede que necesites poner esto a <code>3</code>';
-$lang['starttls']              = 'Usar conexiones TLS?';
+$lang['starttls']              = '¿Usar conexiones TLS?';
 $lang['referrals']             = '¿Deben ser seguidas las referencias?';
 $lang['deref']                 = '¿Cómo desreferenciar los alias?';
 $lang['binddn']                = 'DN de un usuario de enlace opcional si el enlace anónimo no es suficiente. P. ej. <code>cn=admin, dc=my, dc=home</code>';
