@@ -14,8 +14,8 @@ $lang['server']                = 'Tu servidor LDAP. Puede ser el nombre del host
 $lang['port']                  = 'Servidor LDAP en caso de que no se diera la URL completa anteriormente.';
 $lang['usertree']              = 'Donde encontrar cuentas de usuario. Ej. <code>ou=People, dc=server, dc=tld</code>';
 $lang['grouptree']             = 'Donde encontrar grupos de usuarios. Ej. <code>ou=Group, dc=server, dc=tld</code>';
-$lang['userfilter']            = 'Filtro LDAP para la busqueda de cuentas de usuario. P. E. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
-$lang['groupfilter']           = 'Filtro LDAP para la busqueda de grupos. P. E. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
+$lang['userfilter']            = 'Filtro LDAP para la búsqueda de cuentas de usuario. P. E. <code>(&amp;(uid=%{user})(objectClass=posixAccount))</code>';
+$lang['groupfilter']           = 'Filtro LDAP para la búsqueda de grupos. P. E. <code>(&amp;(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))</code>';
 $lang['version']               = 'La versión del protocolo a usar. Puede que necesites poner esto a <code>3</code>';
 $lang['starttls']              = '¿Usar conexiones TLS?';
 $lang['referrals']             = '¿Deben ser seguidas las referencias?';
