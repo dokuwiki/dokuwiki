@@ -83,9 +83,9 @@ $lang['security_issue']        = 'Problema de seguridad: %s';
 $lang['security_warning']      = 'Aviso de seguridad: %s';
 $lang['update_message']        = 'Mensaje de actualización: %s';
 $lang['wrong_folder']          = 'Extensión instalada incorrectamente: Cambie el nombre del directorio de "%s" a "%s".';
-$lang['url_change']            = 'URL actualizada: El Download URL ha cambiado desde el último download. Verifica si el nuevo URL es valido antes de actualizar la extensión .
+$lang['url_change']            = 'URL modificada: El URL de descarga ha cambiado desde la última descarga. Verifica si el nuevo URL es válido antes de actualizar la extensión.
 Nuevo: %s
-Viejo: %s';
+Antiguo: %s';
 $lang['error_badurl']          = 'URLs deberían empezar con http o https';
 $lang['error_dircreate']       = 'No es posible de crear un directorio temporero para poder recibir el download';
 $lang['error_download']        = 'No es posible descargar el documento: %s %s %s';

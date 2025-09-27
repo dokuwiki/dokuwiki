@@ -12,8 +12,8 @@
  * @author Eloy <ej.perezgomez@gmail.com>
  * @author David Roy <davidroyapp@gmail.com>
  */
-$lang['account_suffix']        = 'Su cuenta, sufijo. Ejem. <code> @ my.domain.org </code>';
-$lang['base_dn']               = 'Su base DN. Ejem. <code>DC=my,DC=dominio,DC=org</code>';
+$lang['account_suffix']        = 'Tu cuenta, sufijo. Ejem. <code> @ my.domain.org </code>';
+$lang['base_dn']               = 'Tu DN base. Ejem. <code>DC=my,DC=dominio,DC=org</code>';
 $lang['domain_controllers']    = 'Una lista separada por coma de los controladores de dominios. Ejem. <code>srv1.dominio.org,srv2.dominio.org</code>';
 $lang['admin_username']        = 'Un usuario con privilegios de Active Directory con acceso a los datos de cualquier otro usuario. Opcional, pero es necesario para determinadas acciones como el envío de suscripciones de correos electrónicos.';
 $lang['admin_password']        = 'La contraseña del usuario anterior.';
