@@ -346,15 +346,15 @@ $lang['i_enableacl']           = 'Habilitar ACL (recomendado) (ACL: lista de con
 $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'El instalador encontró algunos problemas, indicados a continuación. No puedes continuar con la instalación hasta que los hayas corregido.';
 $lang['i_modified']            = 'Por razones de seguridad, este script sólo funcionará con una instalación nueva y sin modificaciones de Dokuwiki. Debes extraer nuevamente los ficheros desde el paquete descargado, o bien consultar las <a href="https://www.dokuwiki.org/install">instrucciones de instalación de Dokuwiki</a> completa.';
-$lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez su proveedor de alojamiento web la ha deshabilitado por alguna razón?';
-$lang['i_disabled']            = 'Ha sido deshabilitado por su proveedor.';
+$lang['i_funcna']              = 'La función de PHP <code>%s</code> no está disponible. ¿Tal vez tu proveedor de alojamiento web la ha deshabilitado por alguna razón?';
+$lang['i_disabled']            = 'Ha sido deshabilitado por tu proveedor.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La función de PHP mail() no está disponible. %s si no está disponible, puede instalar el <a href="https://www.dokuwiki.org/plugin:smtp">complemento smtp</a>.';
 $lang['i_phpver']              = 'Tu versión de PHP <code>%s</code> es inferior a la requerida <code>%s</code>. Necesitas actualizar tu instalación de PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki no puede crear números criptográficamente seguros para las cookies. Es posible que debas verificar la configuración de open_basedir en php.ini para obtener el acceso apropiado a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
 $lang['i_confexists']          = '<code>%s</code> ya existe';
-$lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Debes verificar los permisos del directorio o archivo y que crear el archivo manualmente.';
+$lang['i_writeerr']            = 'Imposible crear <code>%s</code>. Debes verificar los permisos del directorio o archivo y crear el archivo manualmente.';
 $lang['i_badhash']             = 'dokuwiki.php no reconocido o modificado (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor ilegal o vacío';
 $lang['i_success']             = 'La configuración ha concluido correctamente. Ahora puede eliminar el archivo install.php. Visite <a href="doku.php?id=wiki:welcome">su nuevo DokuWiki</a>.';
