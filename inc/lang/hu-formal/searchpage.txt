@@ -1,3 +1,0 @@
-====== Keresés ======
-
-A keresés eredményét alább láthatja. @CREATEPAGEINFO@
