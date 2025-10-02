@@ -180,6 +180,9 @@ $lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not pro
 $lang['js']['size_larger']     = 'Increase input field size';
 $lang['js']['size_smaller']    = 'Reduce input field size';
 $lang['js']['size_wrap']       = 'Toggle line wrapping';
+$lang['js']['clipboard_button'] = 'Copy';
+$lang['js']['clipboard_success'] = 'Copied!';
+$lang['js']['clipboard_error'] = 'Copy failed';
 
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
