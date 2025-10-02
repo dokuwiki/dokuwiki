@@ -170,6 +170,33 @@
     }
 }
 
+/* copy to clipboard */
+.dokuwiki .code-wrapper {
+    position: relative;
+
+    .code-copy-btn {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        opacity: 0;
+    }
+
+    &:hover,
+    &:focus {
+        .code-copy-btn {
+            opacity: 1;
+        }
+    }
+}
+
+[dir=rtl] .dokuwiki .code-wrapper {
+    .code-copy-btn {
+        top: 0.25rem;
+        right: unset;
+        left: 0.25rem;
+    }
+}
+
 /*____________ JS popup ____________*/
 
 .JSpopup {
