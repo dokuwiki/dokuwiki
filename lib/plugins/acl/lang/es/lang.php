@@ -36,8 +36,8 @@ $lang['p_user_id']             = 'El usuario <b class="acluser">%s</b> tiene los
 $lang['p_user_ns']             = 'El usuario <b class="acluser">%s</b> tiene los siguientes permisos sobre el espacio de nombres <b class="aclns">%s</b>: <i>%s</i>.';
 $lang['p_group_id']            = 'Los miembros del grupo <b class="aclgroup">%s</b> tienen actualmente los siguientes permisos sobre la página <b class="aclpage">%s</b>: <i>%s</i>.';
 $lang['p_group_ns']            = 'Los miembros del grupo <b class="aclgroup">%s</b> tienen actualmente los siguientes permisos sobre el espacio de nombres <b class="aclns">%s</b>: <i>%s</i>.';
-$lang['p_choose_id']           = 'Por favor <b>proporcione un usuario o grupo</b>en el formulario arriba mostrado para ver o editar los permisos asignados sobre la página<b class="aclpage">%s</b>.';
-$lang['p_choose_ns']           = 'Por favor <b>proporcione un usuario o grupo</b>en el formulario arriba mostrado para ver o editar los permisos asignados sobre el espacio de nombres <b class="aclns">%s</b>.';
+$lang['p_choose_id']           = 'Por favor, <b>proporciona un usuario o grupo</b>en el formulario de arriba para ver o editar los permisos asignados sobre la página<b class="aclpage">%s</b>.';
+$lang['p_choose_ns']           = 'Por favor, <b>proporciona un usuario o grupo</b>en el formulario de arriba para ver o editar los permisos asignados sobre el espacio de nombres <b class="aclns">%s</b>.';
 $lang['p_inherited']           = 'Nota: Esos permisos no fueron establecidos explícitamente sino que fueron heredados desde otros grupos o espacios de nombres superiores';
 $lang['p_isadmin']             = 'Nota: El grupo o usuario seleccionado siempre tiene permisos totales debido a que se encuentra configurado como superusuario.';
 $lang['p_include']             = 'Los permisos superiores incluyen a los inferiores. Los permisos Crear, Cargar y Eliminar sólo se aplican a los espacios de nombres, no a las páginas.';

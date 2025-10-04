@@ -1,7 +1,7 @@
 === Ayuda rápida: ===
 
 En esta página puedes añadir y quitar permisos para espacios de nombres y páginas de tu wiki.
-  * El panel izquierda muestra todos los espacios de nombres y páginas diponibles.
+  * El panel izquierdo muestra todos los espacios de nombres y páginas diponibles.
   * El formulario superior te permite ver y modificar los permisos de un usuario o grupo seleccionado.
   * En la tabla inferior se muestra todas las reglas de control de acceso actualmente definidas. Puedes usarla para eliminar o modificar varias reglas rápidamente.
 
