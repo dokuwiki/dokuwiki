@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
- * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
  * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
@@ -167,6 +167,9 @@ $lang['profdeleted']           = 'Il tuo account utente è stato rimosso da ques
 $lang['profconfdelete']        = 'Voglio rimuovere il mio account da questa wiki. <br/> Questa operazione non può essere annullata.';
 $lang['profconfdeletemissing'] = 'La check box di conferma non è selezionata';
 $lang['proffail']              = 'Il profilo utente non è stato aggiornato.';
+$lang['proftokenlegend']       = 'Token di autenticazione';
+$lang['proftokengenerate']     = 'Reimposta token';
+$lang['proftokeninfo']         = 'Il token di autenticazione può essere utilizzato per consentire ad applicazioni di terze parti di accedere e agire per tuo conto. La reimpostazione del token invaliderà quello precedente e disconnetterà tutte le applicazioni che lo utilizzavano.';
 $lang['pwdforget']             = 'Hai dimenticato la password? Richiedine una nuova';
 $lang['resendna']              = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd']             = 'Imposta nuova password per';
@@ -386,3 +389,6 @@ $lang['page_nonexist_rev']     = 'Pagina non esistente a %s. E\' stata creata su
 $lang['unable_to_parse_date']  = 'Impossibile eseguire l\'analisi al parametro "%s".';
 $lang['email_signature_text']  = 'Questa email è stata generata dal DokuWiki all\'indirizzo
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'File di log troppo grande. Righe precedenti saltate!';
+$lang['log_file_failed_to_open'] = 'Impossibile aprire il file di log.';
+$lang['log_file_failed_to_read'] = 'Si è verificato un errore durante la lettura dei log.';
