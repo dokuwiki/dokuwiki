@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Filippo <abrickslife@gmail.com>
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
@@ -27,6 +28,7 @@ $lang['groupscope']            = 'Limita il contesto di ricerca per la ricerca d
 $lang['userkey']               = 'Attributo indicante il nome utente; deve essere consistente con il filtro utente.';
 $lang['groupkey']              = 'Gruppo di appartenenza sulla base di qualunque attributo utente (invece di gruppo AD standard) e.g. gruppo in base al dipartimento o al numero di telefono';
 $lang['modPass']               = 'Può la password LDAP essere cambiata attraverso DokuWiki?';
+$lang['modPassPlain']          = 'Inviare gli aggiornamenti delle password in testo normale al server LDAP (anziché sottoporli a salt e hash con l\'algoritmo configurato prima della trasmissione)?';
 $lang['debug']                 = 'In caso di errori mostra ulteriori informazioni di debug';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
