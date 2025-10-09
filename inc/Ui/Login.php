@@ -53,10 +53,12 @@ class Login extends Ui
         $input = $form->addTextInput('u', $lang['user'])->id('focus__this')->addClass('edit')
             ->val(($INPUT->bool('http_credentials')) ? '' : $INPUT->str('u'));
         $input->getLabel()->attr('class', 'block');
+        $input->attr('autocomplete', 'username');
         $form->addHTML("<br>\n");
 
         $input = $form->addPasswordInput('p', $lang['pass'])->addClass('block edit');
         $input->getLabel()->attr('class', 'block');
+        $input->attr('autocomplete', 'current-password');
         $form->addHTML("<br>\n");
 
         if ($conf['rememberme']) {
