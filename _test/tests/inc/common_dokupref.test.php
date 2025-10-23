@@ -81,6 +81,20 @@ class common_dokupref_test extends DokuWikiTest {
         $this->assertEquals('nil', get_doku_pref('foo2', 'nil'));
     }
 
+    // #4544
+    function test_set_same() {
+        set_doku_pref('foo1', 'bar1');
+        $this->assertEquals('bar1', get_doku_pref('foo1', 'nil'), 'first set');
+
+        set_doku_pref('foo2', 'bar2');
+        $this->assertEquals('bar1', get_doku_pref('foo1', 'nil'), 'second set');
+        $this->assertEquals('bar2', get_doku_pref('foo2', 'nil'), 'second set');
+
+        // setting the same value for foo2 should not destroy the cookie
+        set_doku_pref('foo2', 'bar2');
+        $this->assertEquals('bar1', get_doku_pref('foo1', 'nil'), 'third set');
+        $this->assertEquals('bar2', get_doku_pref('foo2', 'nil'), 'third set');
+    }
 }
 
 //Setup VIM: ex: et ts=4 :
