@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Rss extends AbstractMode
 {
-
     /** @inheritdoc */
     public function connectTo($mode)
     {

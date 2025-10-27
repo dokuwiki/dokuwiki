@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Forwarder/Router to doku.php
  *
@@ -13,8 +14,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-if (php_sapi_name() != 'cli-server') {
-    if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/');
+
+if (PHP_SAPI != 'cli-server') {
+    if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
     require_once(DOKU_INC . 'inc/init.php');
 
     send_redirect(wl($conf['start']));
@@ -30,18 +32,15 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // media dispatcher
     $_GET['media'] = $m[1];
     require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/fetch.php';
-
 } elseif (preg_match('/^\/_detail\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // image detail view
     $_GET['media'] = $m[1];
     require $_SERVER['DOCUMENT_ROOT'] . '/lib/exe/detail.php';
-
 } elseif (preg_match('/^\/_export\/([^\/]+)\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // exports
     $_GET['do'] = 'export_' . $m[1];
     $_GET['id'] = $m[2];
     require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
-
 } elseif (
     $_SERVER['SCRIPT_NAME'] !== '/index.php' &&
     file_exists($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'])
@@ -49,14 +48,15 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // existing files
 
     // access limitiations
-    if (preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) or
+    if (
+        preg_match('/\/([._]ht|README$|VERSION$|COPYING$)/', $_SERVER['SCRIPT_NAME']) ||
         preg_match('/^\/(data|conf|bin|inc)\//', $_SERVER['SCRIPT_NAME'])
     ) {
         header('HTTP/1.1 403 Forbidden');
         die('Access denied');
     }
 
-    if (substr($_SERVER['SCRIPT_NAME'], -4) == '.php') {
+    if (str_ends_with($_SERVER['SCRIPT_NAME'], '.php')) {
         # php scripts
         require $_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'];
     } else {

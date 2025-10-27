@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
+ * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Philippe Verbeke <ph.verbeke@gmail.com>
  * @author Nicolas Friedli <nicolas@theologique.ch>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
@@ -67,11 +69,11 @@ $lang['template']              = 'Thème (rendu visuel du wiki)';
 $lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
-$lang['savedir']               = 'Répertoire d\'enregistrement des données';
-$lang['basedir']               = 'Répertoire de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
+$lang['savedir']               = 'Dossier d\'enregistrement des données';
+$lang['basedir']               = 'Dossier de base du serveur (par exemple : <code>/dokuwiki/</code>). Laisser vide pour une détection automatique.';
 $lang['baseurl']               = 'URL de base du site (par exemple <code>http://www.example.com</code>). Laisser vide pour une détection automatique.';
 $lang['cookiedir']             = 'Chemin des cookies. Laissez vide pour utiliser l\'URL de base.';
-$lang['dmode']                 = 'Mode de création des répertoires';
+$lang['dmode']                 = 'Mode de création des dossiers';
 $lang['fmode']                 = 'Mode de création des fichiers';
 $lang['allowdebug']            = 'Debug (<strong>Ne l\'activez que si vous en avez besoin !</strong>)';
 $lang['recent']                = 'Nombre de lignes à afficher - par page - pour les derniers changements';
@@ -110,16 +112,16 @@ $lang['disableactions_other']  = 'Autres actions (séparées par des virgules)';
 $lang['disableactions_rss']    = 'Syndication XML (RSS)';
 $lang['auth_security_timeout'] = 'Délai d\'expiration de sécurité (secondes)';
 $lang['securecookie']          = 'Les cookies définis via HTTPS doivent-ils n\'être envoyé par le navigateur que via HTTPS ? Désactivez cette option lorsque seule la connexion à votre wiki est sécurisée avec SSL et que la navigation sur le wiki est effectuée de manière non sécurisée.';
+$lang['samesitecookie']        = 'Valeur de l\'attribut samesite des cookies. Vide pour laisser les navigateurs décider de leur politique samesite.';
 $lang['remote']                = 'Active l\'API système distante. Ceci permet à d\'autres applications d\'accéder au wiki via XML-RPC ou d\'autres mécanismes.';
 $lang['remoteuser']            = 'Restreindre l\'accès à l\'API à une liste de groupes ou d\'utilisateurs (séparés par une virgule). Laisser vide pour donner l\'accès tout le monde.';
+$lang['remotecors']            = 'Active le partage de ressources entre origines multiples (CORS) pour les interfaces distantes. Utiliser un astérisque (*) pour autoriser toutes les origines. Laisser vide pour interdire le CORS.';
 $lang['usewordblock']          = 'Bloquer le spam selon les mots utilisés';
 $lang['relnofollow']           = 'Utiliser l\'attribut « rel="nofollow" » sur les liens extérieurs';
 $lang['indexdelay']            = 'Délai avant l\'indexation (secondes)';
 $lang['mailguard']             = 'Cacher les adresses de courriel';
 $lang['iexssprotect']          = 'Vérifier, dans les fichiers envoyés, la présence de code JavaScript ou HTML malveillant';
 $lang['usedraft']              = 'Enregistrer automatiquement un brouillon pendant l\'édition';
-$lang['htmlok']                = 'Permettre l\'utilisation de code HTML dans les pages';
-$lang['phpok']                 = 'Permettre l\'utilisation de code PHP dans les pages';
 $lang['locktime']              = 'Âge maximum des fichiers de blocage (secondes)';
 $lang['cachetime']             = 'Âge maximum d\'un fichier en cache (secondes)';
 $lang['target____wiki']        = 'Cible pour liens internes';
@@ -142,6 +144,7 @@ $lang['mailreturnpath']        = 'Adresse de courriel du destinataire pour les n
 $lang['mailprefix']            = 'Préfixe à utiliser dans les objets des courriels automatiques. Laisser vide pour utiliser le titre du wiki';
 $lang['htmlmail']              = 'Envoyer des courriels multipart HTML (visuellement plus agréable, mais plus lourd). Désactiver pour utiliser uniquement des courriel en texte seul.';
 $lang['dontlog']               = 'Désactiver l\'enregistrement pour ces types de journaux.';
+$lang['logretain']             = 'Nombre de jours à garder dans le journal.';
 $lang['sitemap']               = 'Fréquence de génération du sitemap Google (jours). 0 pour désactiver';
 $lang['rss_type']              = 'Type de flux XML (RSS)';
 $lang['rss_linkto']            = 'Lien du flux XML vers';
@@ -166,7 +169,7 @@ $lang['compress']              = 'Compresser les fichiers CSS et JavaScript';
 $lang['cssdatauri']            = 'Taille maximale en octets pour inclure dans les feuilles de styles CSS les images qui y sont référencées. Cette technique réduit le nombre de requêtes HTTP. Cette fonctionnalité ne fonctionne qu\'à partir de la version 8 d\'Internet Explorer! Nous recommandons une valeur entre <code>400</code> et <code>600</code>. <code>0</code> pour désactiver.';
 $lang['send404']               = 'Renvoyer « HTTP 404/Page Not Found » pour les pages inexistantes';
 $lang['broken_iua']            = 'La fonction ignore_user_abort est-elle opérationnelle sur votre système ? Ceci peut empêcher le fonctionnement de l\'index de recherche. IIS+PHP/
-CGI dysfonctionne. Voir le <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> pour plus d\'informations.';
+CGI dysfonctionne.';
 $lang['xsendfile']             = 'Utiliser l\'en-tête X-Sendfile pour permettre au serveur web de délivrer les fichiers statiques ? Votre serveur web doit prendre en charge cette technologie.';
 $lang['renderer_xhtml']        = 'Moteur de rendu du format de sortie principal (XHTML)';
 $lang['renderer__core']        = '%s (cœur de DokuWiki)';
@@ -177,11 +180,13 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'commence par';
 $lang['search_fragment_o_ends_with'] = 'se termine par';
 $lang['search_fragment_o_contains'] = 'contient';
-$lang['trustedproxy']          = 'Faire confiance aux mandataires qui correspondent à cette expression régulière pour l\'adresse IP réelle des clients qu\'ils rapportent. La valeur par défaut correspond aux réseaux locaux. Laisser vide pour ne faire confiance à aucun mandataire.';
 $lang['_feature_flags']        = 'Fonctionnalités expérimentales';
 $lang['defer_js']              = 'Attendre que le code HTML des pages soit analysé avant d\'exécuter le javascript. Améliore la vitesse de chargement perçue, mais pourrait casser un petit nombre de greffons.';
+$lang['hidewarnings']          = 'Ne montrer aucun avertissement émis par PHP. Cela peut faciliter la transition vers PHP 8+. Les avertissements seront toujours enregistrés dans le journal des erreurs et devraient être rapportés.';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
+$lang['trustedproxies']        = 'Liste à virgule de serveurs mandataires inverses de confiance depuis lesquels lire l\'entête X-Forwarded-For. Chaque élément de la liste peut être une adresse, IPV4 ou IPV6, ou une plage en format CIDR (exple : 10.0.0.0/8). Laisser vide pour ne faire confiance en aucun mandataire.';
+$lang['realip']                = 'Avoir confiance en l\'entête X-Real-IP. N\'activer que si votre serveur produit cet entête, sinon cela autorise des usurpations d\'IP.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
 $lang['jquerycdn_o_jquery']    = 'Oui : CDN code.jquery.com.';
 $lang['jquerycdn_o_cdnjs']     = 'Oui : CDN cdnjs.com.';

@@ -1,1 +1,1 @@
-Szerkeszd az oldalt majd kattints a ''Mentés'' gombra! Lásd a [[wiki:syntax|formázás]] oldalt a formázási lehetőségekért. Kérünk, hogy csak akkor szerkeszd az oldalt ha **javítani** tudsz rajta. Ha ki akarsz próbálni dolgokat, akkor az első lépéseid a [[playground:playground|játszótéren]] tedd.
+Végezd el a kívánt módosításokat, majd kattints a ''Mentés'' gombra. A formázási lehetőségekért lásd a [[wiki:syntax|formázás]] oldalt. Ezt a szócikket csak **javítás** céljából szerkeszd! Ha a szerkesztővel akarsz megismerkedni, akkor használd a [[playground:playground|játszóteret]]!

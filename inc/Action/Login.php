@@ -34,7 +34,6 @@ class Login extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Login)->show();
+        (new Ui\Login())->show();
     }
-
 }

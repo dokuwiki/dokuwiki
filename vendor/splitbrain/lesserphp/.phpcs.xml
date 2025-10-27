@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset>
+	<rule ref="PSR2">
+		<exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed" />
+		<exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps" />
+		<exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpaceBeforeCloseBrace" />
+		<exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace" />
+	</rule>
+	<file>.</file>
+	<arg name="encoding" value="UTF-8"/>
+	<arg name="extensions" value="php"/>
+	<exclude-pattern>vendor</exclude-pattern>
+</ruleset>

@@ -1,0 +1,7 @@
+====== Visualizza i log ======
+
+Questa interfaccia ti permette di visualizzare i vari log scritti da DokuWiki. Di default, non dovrebbero esserci molti log (dipende dalle tue [[doku>config:dontlog|impostazioni di log]]). Tuttavia, se qualcosa va storto, è molto probabile che
+troverai informazioni utili sul problema.
+
+Tieni presente che i **file di log possono contenere informazioni sensibili** come password, percorsi o altri segreti.
+Assicurati di redigere i log in modo appropriato quando li pubblichi sul forum o nelle segnalazioni di bug!

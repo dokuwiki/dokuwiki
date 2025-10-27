@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki search functions
  *
@@ -6,6 +7,8 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -24,11 +27,11 @@ use dokuwiki\Utf8\Sort;
  *                          'date' to sort by filemtime; leave empty to skip sorting.
  * @author  Andreas Gohr <andi@splitbrain.org>
  */
-function search(&$data, $base, $func, $opts, $dir='', $lvl=1, $sort='natural')
+function search(&$data, $base, $func, $opts, $dir = '', $lvl = 1, $sort = 'natural')
 {
-    $dirs   = array();
-    $files  = array();
-    $filepaths = array();
+    $dirs   = [];
+    $files  = [];
+    $filepaths = [];
 
     // safeguard against runaways #1452
     if ($base == '' || $base == '/') {
@@ -36,16 +39,16 @@ function search(&$data, $base, $func, $opts, $dir='', $lvl=1, $sort='natural')
     }
 
     //read in directories and files
-    $dh = @opendir($base.'/'.$dir);
+    $dh = @opendir($base . '/' . $dir);
     if (!$dh) return;
     while (($file = readdir($dh)) !== false) {
         if (preg_match('/^[\._]/', $file)) continue; //skip hidden files and upper dirs
-        if (is_dir($base.'/'.$dir.'/'.$file)) {
-            $dirs[] = $dir.'/'.$file;
+        if (is_dir($base . '/' . $dir . '/' . $file)) {
+            $dirs[] = $dir . '/' . $file;
             continue;
         }
-        $files[] = $dir.'/'.$file;
-        $filepaths[] = $base.'/'.$dir.'/'.$file;
+        $files[] = $dir . '/' . $file;
+        $filepaths[] = $base . '/' . $dir . '/' . $file;
     }
     closedir($dh);
     if (!empty($sort)) {
@@ -59,13 +62,13 @@ function search(&$data, $base, $func, $opts, $dir='', $lvl=1, $sort='natural')
 
     //give directories to userfunction then recurse
     foreach ($dirs as $dir) {
-        if (call_user_func_array($func, array(&$data, $base, $dir, 'd', $lvl,$opts))) {
-            search($data, $base, $func, $opts, $dir, $lvl+1, $sort);
+        if (call_user_func_array($func, [&$data, $base, $dir, 'd', $lvl, $opts])) {
+            search($data, $base, $func, $opts, $dir, $lvl + 1, $sort);
         }
     }
     //now handle the files
     foreach ($files as $file) {
-        call_user_func_array($func, array(&$data, $base, $file, 'f', $lvl, $opts));
+        call_user_func_array($func, [&$data, $base, $file, 'f', $lvl, $opts]);
     }
 }
 
@@ -108,11 +111,11 @@ function search(&$data, $base, $func, $opts, $dir='', $lvl=1, $sort='natural')
  */
 function search_qsearch(&$data, $base, $file, $type, $lvl, $opts)
 {
-    $opts = array(
-            'idmatch'   => '(^|:)'.preg_quote($opts['query'],'/').'/',
-            'listfiles' => true,
-            'pagesonly' => true,
-            );
+    $opts = [
+        'idmatch'   => '(^|:)' . preg_quote($opts['query'], '/') . '/',
+        'listfiles' => true,
+        'pagesonly' => true
+    ];
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
 
@@ -135,15 +138,15 @@ function search_qsearch(&$data, $base, $file, $type, $lvl, $opts)
 function search_index(&$data, $base, $file, $type, $lvl, $opts)
 {
     global $conf;
-    $ns = isset($opts['ns']) ? $opts['ns'] : '';
-    $opts = array(
+    $ns = $opts['ns'] ?? '';
+    $opts = [
         'pagesonly' => true,
         'listdirs' => true,
         'listfiles' => empty($opts['nofiles']),
         'sneakyacl' => $conf['sneaky_index'],
         // Hacky, should rather use recmatch
-        'depth' => preg_match('#^'.preg_quote($file, '#').'(/|$)#','/'.$ns) ? 0 : -1
-    );
+        'depth' => preg_match('#^' . preg_quote($file, '#') . '(/|$)#', '/' . $ns) ? 0 : -1,
+    ];
 
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
@@ -164,9 +167,7 @@ function search_index(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_namespaces(&$data, $base, $file, $type, $lvl, $opts)
 {
-    $opts = array(
-            'listdirs' => true,
-            );
+    $opts = ['listdirs' => true];
     return search_universal($data, $base, $file, $type, $lvl, $opts);
 }
 
@@ -194,21 +195,21 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') {
         if (empty($opts['depth'])) return true; // recurse forever
-        $depth = substr_count($file,'/');
+        $depth = substr_count($file, '/');
         if ($depth >= $opts['depth']) return false; // depth reached
         return true;
     }
 
-    $info         = array();
+    $info         = [];
     $info['id']   = pathID($file, true);
-    if ($info['id'] != cleanID($info['id'])) {
-        if ($opts['showmsg'])
-            msg(hsc($info['id']).' is not a valid file name for DokuWiki - skipped',-1);
+    if ($info['id'] !== cleanID($info['id'])) {
+        if (!empty($opts['showmsg']))
+            msg(hsc($info['id']) . ' is not a valid file name for DokuWiki - skipped', -1);
         return false; // skip non-valid files
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($info['id']).':*');
+    $info['perm'] = auth_quickaclcheck(getNS($info['id']) . ':*');
     if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }
@@ -218,13 +219,13 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
         return false;
     }
 
-    $info['file']     = \dokuwiki\Utf8\PhpString::basename($file);
-    $info['size']     = filesize($base.'/'.$file);
-    $info['mtime']    = filemtime($base.'/'.$file);
-    $info['writable'] = is_writable($base.'/'.$file);
+    $info['file']     = PhpString::basename($file);
+    $info['size']     = filesize($base . '/' . $file);
+    $info['mtime']    = filemtime($base . '/' . $file);
+    $info['writable'] = is_writable($base . '/' . $file);
     if (preg_match("/\.(jpe?g|gif|png)$/", $file)) {
         $info['isimg'] = true;
-        $info['meta']  = new JpegMeta($base.'/'.$file);
+        $info['meta']  = new JpegMeta($base . '/' . $file);
     } else {
         $info['isimg'] = false;
     }
@@ -256,35 +257,36 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
  *
  * @return bool
  */
-function search_mediafiles(&$data,$base,$file,$type,$lvl,$opts){
+function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
+{
 
     //we do nothing with directories
-    if($type == 'd') {
-        if(empty($opts['depth'])) return true; // recurse forever
-        $depth = substr_count($file,'/');
-        if($depth >= $opts['depth']) return false; // depth reached
+    if ($type == 'd') {
+        if (empty($opts['depth'])) return true; // recurse forever
+        $depth = substr_count($file, '/');
+        if ($depth >= $opts['depth']) return false; // depth reached
         return true;
     }
 
-    $id   = pathID($file,true);
-    if($id != cleanID($id)){
-        if($opts['showmsg'])
-            msg(hsc($id).' is not a valid file name for DokuWiki - skipped',-1);
+    $id   = pathID($file, true);
+    if ($id != cleanID($id)) {
+        if ($opts['showmsg'])
+            msg(hsc($id) . ' is not a valid file name for DokuWiki - skipped', -1);
         return false; // skip non-valid files
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($id).':*');
-    if(empty($opts['skipacl']) && $info['perm'] < AUTH_READ){
+    $info['perm'] = auth_quickaclcheck(getNS($id) . ':*');
+    if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }
 
     //check pattern filter
-    if(!empty($opts['pattern']) && !@preg_match($opts['pattern'], $id)){
+    if (!empty($opts['pattern']) && !@preg_match($opts['pattern'], $id)) {
         return false;
     }
 
-    $data[] = new \dokuwiki\File\MediaFile($id);
+    $data[] = new MediaFile($id);
     return false;
 }
 
@@ -308,7 +310,7 @@ function search_list(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return false;
     //only search txt files
-    if (substr($file, -4) == '.txt') {
+    if (str_ends_with($file,  '.txt') ) {
         //check ACL
         $id = pathID($file);
         if (auth_quickaclcheck($id) < AUTH_READ) {
@@ -340,11 +342,11 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return true;
     //only search txt files
-    if (substr($file, -4) != '.txt') return true;
+    if (!str_ends_with($file,  '.txt')) return true;
 
     //simple stringmatching
     if (!empty($opts['query'])) {
-        if (strpos($file, $opts['query']) !== false) {
+        if (strpos($file, (string)$opts['query']) !== false) {
             //check ACL
             $id = pathID($file);
             if (auth_quickaclcheck($id) < AUTH_READ) {
@@ -376,11 +378,12 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
 {
-    if (isset($opts['depth']) && $opts['depth']) {
-        $parts = explode('/',ltrim($file, '/'));
-        if (($type == 'd' && count($parts) >= $opts['depth'])
+    if (($opts['depth'] ?? 0) > 0) {
+        $parts = explode('/', ltrim($file, '/'));
+        if (
+            ($type == 'd' && count($parts) >= $opts['depth'])
             || ($type != 'd' && count($parts) > $opts['depth'])
-        ){
+        ) {
             return false; // depth reached
         }
     }
@@ -391,17 +394,17 @@ function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //only search txt files
-    if (substr($file, -4) != '.txt') return true;
+    if (!str_ends_with($file,  '.txt')) return true;
 
-    $item = array();
+    $item = [];
     $item['id']   = pathID($file);
     if (empty($opts['skipacl']) && auth_quickaclcheck($item['id']) < AUTH_READ) {
         return false;
     }
 
-    $item['rev']   = filemtime($base.'/'.$file);
+    $item['rev']   = filemtime($base . '/' . $file);
     $item['mtime'] = $item['rev'];
-    $item['size']  = filesize($base.'/'.$file);
+    $item['size']  = filesize($base . '/' . $file);
     if (!empty($opts['hash'])) {
         $item['hash'] = md5(trim(rawWiki($item['id'])));
     }
@@ -431,8 +434,8 @@ function sort_search_fulltext($a, $b)
         return -1;
     } elseif ($a['count'] < $b['count']) {
         return 1;
-    }else{
-        return Sort::strcmp($a['id'],$b['id']);
+    } else {
+        return Sort::strcmp($a['id'], $b['id']);
     }
 }
 
@@ -445,9 +448,9 @@ function sort_search_fulltext($a, $b)
  * @param string $path
  * @param bool $keeptxt
  *
- * @return mixed|string
+ * @return string
  */
-function pathID($path, $keeptxt=false)
+function pathID($path, $keeptxt = false)
 {
     $id = utf8_decodeFN($path);
     $id = str_replace('/', ':', $id);
@@ -496,14 +499,14 @@ function pathID($path, $keeptxt=false)
  */
 function search_universal(&$data, $base, $file, $type, $lvl, $opts)
 {
-    $item   = array();
+    $item   = [];
     $return = true;
 
     // get ID and check if it is a valid one
     $item['id'] = pathID($file, ($type == 'd' || !empty($opts['keeptxt'])));
-    if ($item['id'] != cleanID($item['id'])){
+    if ($item['id'] !== cleanID($item['id'])) {
         if (!empty($opts['showmsg'])) {
-            msg(hsc($item['id']).' is not a valid file name for DokuWiki - skipped',-1);
+            msg(hsc($item['id']) . ' is not a valid file name for DokuWiki - skipped', -1);
         }
         return false; // skip non-valid files
     }
@@ -514,7 +517,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
         if (empty($opts['depth'])) {
             $return = true; // recurse forever
         } else {
-            $depth = substr_count($file,'/');
+            $depth = substr_count($file, '/');
             if ($depth >= $opts['depth']) {
                 $return = false; // depth reached
             } else {
@@ -523,7 +526,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
         }
 
         if ($return) {
-            $match = empty($opts['recmatch']) || preg_match('/'.$opts['recmatch'].'/', $file);
+            $match = empty($opts['recmatch']) || preg_match('/' . $opts['recmatch'] . '/', $file);
             if (!$match) {
                 return false; // doesn't match
             }
@@ -533,7 +536,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     // check ACL
     if (empty($opts['skipacl'])) {
         if ($type == 'd') {
-            $item['perm'] = auth_quickaclcheck($item['id'].':*');
+            $item['perm'] = auth_quickaclcheck($item['id'] . ':*');
         } else {
             $item['perm'] = auth_quickaclcheck($item['id']); //FIXME check namespace for media files
         }
@@ -551,7 +554,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     } else {
         if (empty($opts['listfiles'])) return $return;
         if (empty($opts['skipacl']) && $item['perm'] < AUTH_READ) return $return;
-        if (!empty($opts['pagesonly']) && (substr($file, -4) != '.txt')) return $return;
+        if (!empty($opts['pagesonly']) && !str_ends_with($file,  '.txt')) return $return;
         if (empty($opts['showhidden']) && isHiddenPage($item['id'])) return $return;
         if (!empty($opts['filematch']) && !preg_match('/'.$opts['filematch'].'/', $file)) return $return;
         if (!empty($opts['idmatch']) && !preg_match('/'.$opts['idmatch'].'/', $item['id'])) return $return;
@@ -563,16 +566,16 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     $item['open']  = $return;
 
     if (!empty($opts['meta'])) {
-        $item['file']       = \dokuwiki\Utf8\PhpString::basename($file);
-        $item['size']       = filesize($base.'/'.$file);
-        $item['mtime']      = filemtime($base.'/'.$file);
+        $item['file']       = PhpString::basename($file);
+        $item['size']       = filesize($base . '/' . $file);
+        $item['mtime']      = filemtime($base . '/' . $file);
         $item['rev']        = $item['mtime'];
-        $item['writable']   = is_writable($base.'/'.$file);
-        $item['executable'] = is_executable($base.'/'.$file);
+        $item['writable']   = is_writable($base . '/' . $file);
+        $item['executable'] = is_executable($base . '/' . $file);
     }
 
     if ($type == 'f') {
-        if (!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base.'/'.$file, false));
+        if (!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base . '/' . $file, false));
         if (!empty($opts['firsthead'])) {
             $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
         }

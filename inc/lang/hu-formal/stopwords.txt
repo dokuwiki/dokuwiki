@@ -1,0 +1,40 @@
+# Ez egy szó-lista (soronként egy szóval), amelyeket az index készítésekor nem veszünk figyelembe.
+# Ha szerkeszted ezt a fájlt, győződj meg arról, hogy UNIX sorvég-jeleket használj! (csak NL karakter)
+# Nincs szükség 3 karakternél rövidebb szavak felsorolására, ezeket egyébként sem vesszük figyelembe.
+# Ez a lista a http://www.ranks.nl/stopwords/ oldalon szereplő alapján készült
+át
+én
+és
+ön
+össze
+ő
+ők
+a
+az
+be
+csak
+de
+egy
+el
+fel
+hát
+hogy
+ide
+igen
+ki
+le
+lesz
+meg
+mi
+mint
+nem
+oda
+rá
+szét
+te
+ti
+vagy
+van
+vissza
+volt
+www

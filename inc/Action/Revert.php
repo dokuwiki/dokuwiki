@@ -14,7 +14,6 @@ use dokuwiki\Action\Exception\ActionException;
  */
 class Revert extends AbstractUserAction
 {
-
     /** @inheritdoc */
     public function minimumPermission()
     {
@@ -59,5 +58,4 @@ class Revert extends AbstractUserAction
         // continue with draftdel -> redirect -> show
         throw new ActionAbort('draftdel');
     }
-
 }

@@ -14,7 +14,6 @@ use IXR\Request\Request;
  */
 class Client extends \IXR\Client\Client
 {
-
     /** @var HTTPClient */
     protected $httpClient;
 
@@ -37,9 +36,8 @@ class Client extends \IXR\Client\Client
     }
 
     /** @inheritdoc */
-    public function query()
+    public function query(...$args)
     {
-        $args = func_get_args();
         $method = array_shift($args);
         $request = new Request($method, $args);
         $length = $request->getLength();

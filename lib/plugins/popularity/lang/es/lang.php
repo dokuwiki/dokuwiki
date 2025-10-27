@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author oliver <oliver@samera.com.py>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Manuel Meco <manuel.meco@gmail.com>
@@ -22,7 +23,7 @@
  * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  * @author Mercè López <mercelz@gmail.com>
  */
-$lang['name']                  = 'Retroinformación (Feedback) plugin Popularity';
+$lang['name']                  = 'Retroalimentación de popularidad (puede tardar en cargar)';
 $lang['submit']                = 'Enviar datos';
 $lang['autosubmit']            = 'Enviar automáticamente datos una vez al mes';
 $lang['submissionFailed']      = 'Los datos no se pudo enviar debido al error siguiente:';

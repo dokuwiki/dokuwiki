@@ -2,6 +2,9 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
+use dokuwiki\Ui\PageView;
+use dokuwiki\Draft;
 use dokuwiki\Ui;
 
 /**
@@ -25,8 +28,8 @@ class Preview extends Edit
     public function tplContent()
     {
         global $TEXT;
-        (new Ui\Editor)->show();
-        (new Ui\PageView($TEXT))->show();
+        (new Editor())->show();
+        (new PageView($TEXT))->show();
     }
 
     /**
@@ -35,7 +38,7 @@ class Preview extends Edit
     protected function savedraft()
     {
         global $ID, $INFO;
-        $draft = new \dokuwiki\Draft($ID, $INFO['client']);
+        $draft = new Draft($ID, $INFO['client']);
         if (!$draft->saveDraft()) {
             $errors = $draft->getErrors();
             foreach ($errors as $error) {
@@ -43,5 +46,4 @@ class Preview extends Edit
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Per Foreby <per@foreby.se>

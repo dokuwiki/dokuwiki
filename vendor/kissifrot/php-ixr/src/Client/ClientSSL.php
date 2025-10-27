@@ -194,7 +194,7 @@ class ClientSSL extends Client
         curl_close($curl);
 
         // Check for 200 Code in $contents
-        if (!strstr($contents, '200 OK')) {
+        if (!strstr($contents, '200 OK') && !strstr($contents, 'HTTP/2 200')) {
             //There was no "200 OK" returned - we failed
             return $this->handleError(-32300, 'transport error - HTTP status code was not 200');
         }

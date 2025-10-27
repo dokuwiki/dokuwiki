@@ -44,8 +44,6 @@ $lang['recent']                = 'Extremae mutationes';
 $lang['breadcrumbs']           = 'Numerus uestigiorum';
 $lang['youarehere']            = 'Ordo uestigiorum';
 $lang['typography']            = 'Signa supponentes';
-$lang['htmlok']                = 'HTML aptum facere';
-$lang['phpok']                 = 'PHP aptum facere';
 $lang['dformat']               = 'Forma diei (uide paginam <a href="http://php.net/strftime">de diebus</a>)';
 $lang['signature']             = 'Subscriptio';
 $lang['toptoclevel']           = 'Gradus maior tabularum argumentorum';

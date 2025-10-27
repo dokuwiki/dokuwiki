@@ -48,8 +48,6 @@ $lang['recent']                = 'Canvis recents';
 $lang['breadcrumbs']           = 'Llongitut del rastre';
 $lang['youarehere']            = 'Rastre jeràrquic';
 $lang['typography']            = 'Fer substitucions tipogràfiques';
-$lang['htmlok']                = 'Permetre HTML';
-$lang['phpok']                 = 'Permetre PHP';
 $lang['dformat']               = 'Format de data (vore la funció <a href="http://php.net/date">date</a> de PHP)';
 $lang['signature']             = 'Firma';
 $lang['toptoclevel']           = 'Nivell superior de la taula de continguts';

@@ -12,6 +12,6 @@ namespace dokuwiki\Action\Exception;
  *
  * @package dokuwiki\Action\Exception
  */
-class ActionDisabledException extends ActionException {
-
+class ActionDisabledException extends ActionException
+{
 }

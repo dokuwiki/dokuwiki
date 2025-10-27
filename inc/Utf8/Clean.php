@@ -200,5 +200,4 @@ class Clean
 
         return $i;
     }
-
 }

@@ -1,16 +1,18 @@
 <?php
+
+use dokuwiki\Extension\AdminPlugin;
+
 /**
  * Popularity Feedback Plugin
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
-class admin_plugin_popularity extends DokuWiki_Admin_Plugin
+class admin_plugin_popularity extends AdminPlugin
 {
-
     /** @var helper_plugin_popularity */
     protected $helper;
-    protected $sentStatus = null;
+    protected $sentStatus;
 
     /**
      * admin_plugin_popularity constructor.
@@ -88,7 +90,6 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
 
         if (! $INPUT->has('data')) {
             echo $this->locale_xhtml('intro');
-
             //If there was an error the last time we tried to autosubmit, warn the user
             if ($this->helper->isAutoSubmitEnabled()) {
                 if (file_exists($this->helper->autosubmitErrorFile)) {
@@ -96,26 +97,21 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
                     echo io_readFile($this->helper->autosubmitErrorFile);
                 }
             }
-
             flush();
             echo $this->buildForm('server');
-
             //Print the last time the data was sent
             $lastSent = $this->helper->lastSentTime();
             if ($lastSent !== 0) {
                 echo $this->getLang('lastSent') . ' ' . datetime_h($lastSent);
             }
+        } elseif ($this->sentStatus === '') {
+            //If we successfully send the data
+            echo $this->locale_xhtml('submitted');
         } else {
-            //If we just submitted the form
-            if ($this->sentStatus === '') {
-                //If we successfully sent the data
-                echo $this->locale_xhtml('submitted');
-            } else {
-                //If we failed to submit the data, try directly with the browser
-                echo $this->getLang('submissionFailed') . $this->sentStatus . '<br />';
-                echo $this->getLang('submitDirectly');
-                echo $this->buildForm('browser', $INPUT->str('data'));
-            }
+            //If we failed to submit the data, try directly with the browser
+            echo $this->getLang('submissionFailed') . $this->sentStatus . '<br />';
+            echo $this->getLang('submitDirectly');
+            echo $this->buildForm('browser', $INPUT->str('data'));
         }
     }
 
@@ -133,25 +129,25 @@ class admin_plugin_popularity extends DokuWiki_Admin_Plugin
             $data = $this->helper->gatherAsString();
         }
 
-        $form = '<form method="post" action="'. $url  .'" accept-charset="utf-8">'
-            .'<fieldset style="width: 60%;">'
-            .'<textarea class="edit" rows="10" cols="80" readonly="readonly" name="data">'
-            .$data
-            .'</textarea><br />';
+        $form = '<form method="post" action="' . $url  . '" accept-charset="utf-8">'
+            . '<fieldset style="width: 60%;">'
+            . '<textarea class="edit" rows="10" cols="80" readonly="readonly" name="data">'
+            . $data
+            . '</textarea><br />';
 
         //If we submit via the server, we give the opportunity to suscribe to the autosubmission option
         if ($submissionMode !== 'browser') {
             $form .= '<label for="autosubmit">'
-                .'<input type="checkbox" name="autosubmit" id="autosubmit" '
-                .($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
-                .'/> ' . $this->getLang('autosubmit') .'<br />'
-                .'</label>'
-                .'<input type="hidden" name="do" value="admin" />'
-                .'<input type="hidden" name="page" value="popularity" />';
+                . '<input type="checkbox" name="autosubmit" id="autosubmit" '
+                . ($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
+                . '/> ' . $this->getLang('autosubmit') . '<br />'
+                . '</label>'
+                . '<input type="hidden" name="do" value="admin" />'
+                . '<input type="hidden" name="page" value="popularity" />';
         }
-        $form .= '<button type="submit">'.$this->getLang('submit').'</button>'
-            .'</fieldset>'
-            .'</form>';
+        $form .= '<button type="submit">' . $this->getLang('submit') . '</button>'
+            . '</fieldset>'
+            . '</form>';
         return $form;
     }
 }

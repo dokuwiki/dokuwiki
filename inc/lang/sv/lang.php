@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Joaquim Homrighausen <joho@webbplatsen.se>
@@ -125,6 +126,7 @@ $lang['js']['media_done_btn']  = 'Färdig';
 $lang['js']['media_drop']      = 'Släpp filer här för att ladda upp';
 $lang['js']['media_cancel']    = 'ta bort';
 $lang['js']['media_overwrt']   = 'Skriv över existerande filer';
+$lang['js']['data_insecure']   = 'VARNING! Det tycks som om din datamapp inte har tillräcklig säkerhet. Läs gärna om <a href="https://www.dokuwiki.org/security#web_access_security">Åtkomstsäkerhet i DokuWiki</a>';
 $lang['search_exact_match']    = 'Exakt träff';
 $lang['search_starts_with']    = 'Börjar med';
 $lang['search_ends_with']      = 'Slutar med';
@@ -227,7 +229,8 @@ $lang['created']               = 'skapad';
 $lang['restored']              = 'tidigare version återställd (%s)';
 $lang['external_edit']         = 'extern redigering';
 $lang['summary']               = 'Redigeringskommentar';
-$lang['noflash']               = '<a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
+$lang['unknowndate']           = 'Okänt datum';
+$lang['noflash']               = '<a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> behövs för att visa detta innehåll.';
 $lang['download']              = 'Ladda ner kodfragmentet';
 $lang['tools']                 = 'Verktyg';
 $lang['user_tools']            = 'Användarverktyg';
@@ -309,7 +312,7 @@ $lang['i_superuser']           = 'Användarnamn för administratören';
 $lang['i_problems']            = 'Installationsprogrammet hittade några problem som visas nedan. Du kan inte fortsätta innan du har fixat dem.';
 $lang['i_modified']            = 'Av säkerhetsskäl fungerar det här skriptet bara med en ny och omodifierad installation av Dokuwiki.
                          Du får antingen packa upp det nedladdade paketet på nytt, eller konsultera de kompletta
-                         <a href="http://dokuwiki.org/install">instruktionerna för installation av Dokuwiki</a>';
+                         <a href="https://www.dokuwiki.org/install">instruktionerna för installation av Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP-funktionen <code>%s</code> är inte tillgänglig. Kanske ditt webbhotell har avaktiverat den av någon anledning?';
 $lang['i_disabled']            = 'Det är avstängt av din leverantör.';
 $lang['i_funcnmail']           = '<b>Note:</b> PHP mail funktionen är inte tillgänglig. %s Om det är fortsatt otillgängligt kan du installera <a href="https://www.dokuwiki.org/plugin:smtp">smtp pluginet</a>';

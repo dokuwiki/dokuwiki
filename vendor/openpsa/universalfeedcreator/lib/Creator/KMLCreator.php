@@ -59,7 +59,6 @@ class KMLCreator extends FeedCreator
         $feed .= "  <name>".FeedCreator::iTrunc(htmlspecialchars($this->title), 100)."</name>
         <description>".$this->getDescription()."</description>
         <visibility>1</visibility>\n";
-        $this->truncSize = 500;
 
         for ($i = 0; $i < count($this->items); $i++) {
             //added here beucase description gets auto surrounded by cdata
@@ -99,7 +98,7 @@ class KMLCreator extends FeedCreator
      */
     protected function _generateFilename()
     {
-        $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
+        $fileInfo = pathinfo($_SERVER["SCRIPT_NAME"]);
 
         return substr($fileInfo["basename"], 0, -(strlen($fileInfo["extension"]) + 1)).".kml";
     }

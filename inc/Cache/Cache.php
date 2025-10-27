@@ -15,7 +15,7 @@ class Cache
     public $key = '';          // primary identifier for this item
     public $ext = '';          // file ext for cache data, secondary identifier for this item
     public $cache = '';        // cache file name
-    public $depends = array(); // array containing cache dependency information,
+    public $depends = []; // array containing cache dependency information,
     //   used by makeDefaultCacheDecision to determine cache validity
 
     // phpcs:disable
@@ -73,7 +73,7 @@ class Cache
      *
      * @return bool    true if cache can be used, false otherwise
      */
-    public function useCache($depends = array())
+    public function useCache($depends = [])
     {
         $this->depends = $depends;
         $this->addDependencies();
@@ -83,7 +83,7 @@ class Cache
                 Event::createAndTrigger(
                     $this->getEvent(),
                     $this,
-                    array($this, 'makeDefaultCacheDecision')
+                    [$this, 'makeDefaultCacheDecision']
                 )
             );
         }
@@ -212,7 +212,7 @@ class Cache
         }
 
         if (isset($stats[$this->ext])) {
-            list($ext, $count, $hits) = explode(',', $stats[$this->ext]);
+            [$ext, $count, $hits] = explode(',', $stats[$this->ext]);
         } else {
             $ext = $this->ext;
             $count = 0;
@@ -225,7 +225,7 @@ class Cache
         }
         $stats[$this->ext] = "$ext,$count,$hits";
 
-        io_saveFile($file, join("\n", $stats));
+        io_saveFile($file, implode("\n", $stats));
 
         return $success;
     }

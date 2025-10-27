@@ -8,6 +8,7 @@
  * auth.class language support 
  * installer strings 
  *
+ * @author Marek Lach <mareklachbc@tutanota.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
@@ -221,7 +222,8 @@ $lang['created']               = 'vytvorené';
 $lang['restored']              = 'stará verzia bola obnovená (%s)';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
-$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['unknowndate']           = 'Neznámy dátum';
+$lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stiahnuť';
 $lang['tools']                 = 'Nástroje';
 $lang['user_tools']            = 'Nástroje používateľa';
@@ -301,7 +303,7 @@ $lang['i_wikiname']            = 'Názov Wiki';
 $lang['i_enableacl']           = 'Aktivovať ACL (doporučené)';
 $lang['i_superuser']           = 'Správca';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžete pokračovať, pokiaľ ich neodstránite.';
-$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="http://dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
+$lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="https://www.dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
 $lang['i_funcnmail']           = '<b>Note:</b> PHP mail funkcia nie je dostupná. %s Ak zostáva stále nedostupná, možno by ste mohli nainštalovať <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';

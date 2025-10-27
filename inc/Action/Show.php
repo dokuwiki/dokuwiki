@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by IntelliJ IDEA.
  * User: andi
@@ -8,6 +9,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageView;
 use dokuwiki\Ui;
 
 /**
@@ -20,7 +22,8 @@ use dokuwiki\Ui;
 class Show extends AbstractAction
 {
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
@@ -34,7 +37,6 @@ class Show extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\PageView())->show();
+        (new PageView())->show();
     }
-
 }

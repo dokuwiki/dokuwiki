@@ -2,8 +2,10 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\UserResendPwd;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Ui;
 
 /**
@@ -26,7 +28,7 @@ class Resendpwd extends AbstractAclAction
     {
         parent::checkPreconditions();
 
-        /** @var \dokuwiki\Extension\AuthPlugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
         global $conf;
         if (isset($conf['resendpasswd']) && !$conf['resendpasswd'])
@@ -45,7 +47,7 @@ class Resendpwd extends AbstractAclAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\UserResendPwd)->show();
+        (new UserResendPwd())->show();
     }
 
     /**
@@ -66,7 +68,7 @@ class Resendpwd extends AbstractAclAction
     {
         global $lang;
         global $conf;
-        /* @var \dokuwiki\Extension\AuthPlugin $auth */
+        /* @var AuthPlugin $auth */
         global $auth;
         global $INPUT;
 
@@ -80,7 +82,7 @@ class Resendpwd extends AbstractAclAction
         if ($token) {
             // we're in token phase - get user info from token
 
-            $tfile = $conf['cachedir'] .'/'. $token[0] .'/'. $token . '.pwauth';
+            $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
             if (!file_exists($tfile)) {
                 msg($lang['resendpwdbadauth'], -1);
                 $INPUT->remove('pwauth');
@@ -96,7 +98,7 @@ class Resendpwd extends AbstractAclAction
 
             $user = io_readfile($tfile);
             $userinfo = $auth->getUserData($user, $requireGroups = false);
-            if (!$userinfo['mail']) {
+            if (empty($userinfo['mail'])) {
                 msg($lang['resendpwdnouser'], -1);
                 return false;
             }
@@ -112,15 +114,13 @@ class Resendpwd extends AbstractAclAction
                 }
 
                 // change it
-                if (!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+                if (!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                     msg($lang['proffail'], -1);
                     return false;
                 }
-
             } else { // autogenerate the password and send by mail
-
                 $pass = auth_pwgen($user);
-                if (!$auth->triggerUserMod('modify', array($user, array('pass' => $pass)))) {
+                if (!$auth->triggerUserMod('modify', [$user, ['pass' => $pass]])) {
                     msg($lang['proffail'], -1);
                     return false;
                 }
@@ -134,7 +134,6 @@ class Resendpwd extends AbstractAclAction
 
             @unlink($tfile);
             return true;
-
         } else {
             // we're in request phase
 
@@ -148,27 +147,27 @@ class Resendpwd extends AbstractAclAction
             }
 
             $userinfo = $auth->getUserData($user, $requireGroups = false);
-            if (!$userinfo['mail']) {
+            if (empty($userinfo['mail'])) {
                 msg($lang['resendpwdnouser'], -1);
                 return false;
             }
 
             // generate auth token
             $token = md5(auth_randombytes(16)); // random secret
-            $tfile = $conf['cachedir'] .'/'. $token[0] .'/'. $token .'.pwauth';
-            $url = wl('', array('do' => 'resendpwd', 'pwauth' => $token), true, '&');
+            $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
+            $url = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
 
             io_saveFile($tfile, $user);
 
             $text = rawLocale('pwconfirm');
-            $trep = array(
+            $trep = [
                 'FULLNAME' => $userinfo['name'],
                 'LOGIN' => $user,
                 'CONFIRM' => $url
-            );
+            ];
 
             $mail = new \Mailer();
-            $mail->to($userinfo['name'] .' <'. $userinfo['mail'] .'>');
+            $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
             $mail->subject($lang['regpwmail']);
             $mail->setBody($text, $trep);
             if ($mail->send()) {
@@ -180,5 +179,4 @@ class Resendpwd extends AbstractAclAction
         }
         // never reached
     }
-
 }

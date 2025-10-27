@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
 use dokuwiki\Ui;
 
 /**
@@ -35,7 +36,6 @@ class Source extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Editor)->show();
+        (new Editor())->show();
     }
-
 }

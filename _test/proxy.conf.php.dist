@@ -1,0 +1,6 @@
+<?php
+/**
+ * This configures the access to a proxy server for HTTP related proxy tests.
+ */
+$conf['host'] = '127.0.0.1';
+$conf['port'] = 3128;

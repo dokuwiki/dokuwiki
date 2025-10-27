@@ -10,7 +10,8 @@ namespace dokuwiki\plugin\config\core;
  *
  * @author  Chris Smith <chris@jalakai.co.uk>
  */
-class ConfigParser {
+class ConfigParser
+{
     /** @var string variable to parse from the file */
     protected $varname = 'conf';
     /** @var string the key to mark sub arrays */
@@ -24,36 +25,38 @@ class ConfigParser {
      * @param string $file
      * @return array
      */
-    public function parse($file) {
-        if(!file_exists($file)) return array();
+    public function parse($file)
+    {
+        if (!file_exists($file)) return [];
 
-        $config = array();
+        $config = [];
         $contents = @php_strip_whitespace($file);
 
         // fallback to simply including the file #3271
-        if($contents === null) {
+        if ($contents === null) {
             $conf = [];
             include $file;
             return $conf;
         }
 
         $pattern = '/\$' . $this->varname . '\[[\'"]([^=]+)[\'"]\] ?= ?(.*?);(?=[^;]*(?:\$' . $this->varname . '|$))/s';
-        $matches = array();
+        $matches = [];
         preg_match_all($pattern, $contents, $matches, PREG_SET_ORDER);
+        $counter = count($matches);
 
-        for($i = 0; $i < count($matches); $i++) {
+        for ($i = 0; $i < $counter; $i++) {
             $value = $matches[$i][2];
 
             // merge multi-dimensional array indices using the keymarker
             $key = preg_replace('/.\]\[./', $this->keymarker, $matches[$i][1]);
 
             // handle arrays
-            if(preg_match('/^array ?\((.*)\)/', $value, $match)) {
+            if (preg_match('/^array ?\((.*)\)/', $value, $match)) {
                 $arr = explode(',', $match[1]);
 
                 // remove quotes from quoted strings & unescape escaped data
                 $len = count($arr);
-                for($j = 0; $j < $len; $j++) {
+                for ($j = 0; $j < $len; $j++) {
                     $arr[$j] = trim($arr[$j]);
                     $arr[$j] = $this->readValue($arr[$j]);
                 }
@@ -75,17 +78,18 @@ class ConfigParser {
      * @param string $value
      * @return bool|string
      */
-    protected function readValue($value) {
+    protected function readValue($value)
+    {
         $removequotes_pattern = '/^(\'|")(.*)(?<!\\\\)\1$/s';
-        $unescape_pairs = array(
+        $unescape_pairs = [
             '\\\\' => '\\',
             '\\\'' => '\'',
             '\\"' => '"'
-        );
+        ];
 
-        if($value == 'true') {
+        if ($value == 'true') {
             $value = true;
-        } elseif($value == 'false') {
+        } elseif ($value == 'false') {
             $value = false;
         } else {
             // remove quotes from quoted strings & unescape escaped data
@@ -94,5 +98,4 @@ class ConfigParser {
         }
         return $value;
     }
-
 }

@@ -1,7 +1,7 @@
-base info
+base   info
 author Andreas Gohr
-email andi@splitbrain.org
-date 2020-06-04
-name Info Plugin
-desc Displays information about various DokuWiki internals
-url http://dokuwiki.org/plugin:info
+email  andi@splitbrain.org
+date   2020-06-04
+name   Info Plugin
+desc   Displays information about various DokuWiki internals
+url    https://www.dokuwiki.org/plugin:info

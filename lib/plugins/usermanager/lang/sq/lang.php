@@ -5,6 +5,7 @@
  *
  * Albanian language file
  *
+ * @author Valdrin Jonuzi <valdrinj00@gmail.com>
  * @author Endrit Callaki <endrit@callaki.de>
  * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */

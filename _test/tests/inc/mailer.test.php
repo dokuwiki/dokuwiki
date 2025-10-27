@@ -162,9 +162,9 @@ class mailer_test extends DokuWikiTest {
         $replacements = $mail->prop('replacements');
         $expected_mail_body = chunk_split(base64_encode($mailbody.$replacements['text']['EMAILSIGNATURE']),72,MAILHEADER_EOL);
 
-        $this->assertNotRegexp('/Content-Type: multipart/',$dump);
-        $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#',$dump);
-        $this->assertRegexp('/'.preg_quote($expected_mail_body,'/').'/',$dump);
+        $this->assertDoesNotMatchRegularExpression('/Content-Type: multipart/',$dump);
+        $this->assertMatchesRegularExpression('#Content-Type: text/plain; charset=UTF-8#',$dump);
+        $this->assertMatchesRegularExpression('/'.preg_quote($expected_mail_body,'/').'/',$dump);
 
         $conf['htmlmail'] = 1;
     }
@@ -180,8 +180,8 @@ class mailer_test extends DokuWikiTest {
         $html = $mail->prop('html');
 
         foreach($replacements as $repl){
-            $this->assertNotRegexp("/$repl/",$text,"$repl replacement still in text");
-            $this->assertNotRegexp("/$repl/",$html,"$repl replacement still in html");
+            $this->assertDoesNotMatchRegularExpression("/$repl/",$text,"$repl replacement still in text");
+            $this->assertDoesNotMatchRegularExpression("/$repl/",$html,"$repl replacement still in html");
         }
     }
 
@@ -231,7 +231,7 @@ class mailer_test extends DokuWikiTest {
 
         // ask message lint if it is okay
         $html = new HTTPClient();
-        $results = $html->post('https://tools.ietf.org/tools/msglint/msglint', array('msg'=>$msg));
+        $results = $html->post('https://www.splitbrain.org/_static/msglint/', array('msg'=>$msg));
         if($results === false) {
             $this->markTestSkipped('no response from validator');
             return;
@@ -292,7 +292,7 @@ class mailer_test extends DokuWikiTest {
 
         // construct the expected mail body text - include the expected dokuwiki signature
         $expected_mail_body = chunk_split(base64_encode($mailbody . $signature), 72, MAILHEADER_EOL);
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
         $conf['htmlmail'] = 1;
     }
@@ -324,9 +324,9 @@ A test mail in <strong>html</strong>
         // construct the expected mail body text - include the expected dokuwiki signature
         $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
 
-        $this->assertRegexp('/Content-Type: multipart/', $dump);
-        $this->assertRegexp('#Content-Type: text/plain; charset=UTF-8#', $dump);
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/Content-Type: multipart/', $dump);
+        $this->assertMatchesRegularExpression('#Content-Type: text/plain; charset=UTF-8#', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
     }
 
@@ -361,7 +361,7 @@ A test mail in <strong>html</strong>
         $replacements = $mail->prop('replacements');
         $expected_mail_body = chunk_split(base64_encode($htmlmsg_expected), 72, MAILHEADER_EOL);
 
-        $this->assertRegexp('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
+        $this->assertMatchesRegularExpression('/' . preg_quote($expected_mail_body, '/') . '/', $dump);
 
     }
 
@@ -373,6 +373,9 @@ A test mail in <strong>html</strong>
         $this->assertEquals('"Foo, Bar"', $name);
         $name = $mail->getCleanName('Foo" Bar');
         $this->assertEquals('"Foo\" Bar"', $name);
+        $name = $mail->getCleanName("\tFoo tar ");
+        $this->assertEquals('Foo tar', $name);
+
     }
 }
 //Setup VIM: ex: et ts=4 :

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pasi <zazuu@zazuu.net>
  * @author Tuomo Hartikainen <tuomo.hartikainen@heksia.fi>
  * @author otto <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
@@ -94,8 +95,6 @@ $lang['indexdelay']            = 'Aikaraja indeksoinnille (sek)';
 $lang['mailguard']             = 'Häivytä email osoite';
 $lang['iexssprotect']          = 'Tarkista lähetetyt tiedostot pahojen javascript- ja html-koodien varalta';
 $lang['usedraft']              = 'Tallenna vedos muokkaustilassa automaattisesti ';
-$lang['htmlok']                = 'Salli upotettu HTML';
-$lang['phpok']                 = 'Salli upotettu PHP';
 $lang['locktime']              = 'Lukitustiedostojen maksimi-ikä (sek)';
 $lang['cachetime']             = 'Välimuisti-tiedostojen maksimi-ikä (sek)';
 $lang['target____wiki']        = 'Kohdeikkuna sisäisissä linkeissä';

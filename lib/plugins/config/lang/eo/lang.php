@@ -5,6 +5,7 @@
  *
  * Esperantolanguage file
  *
+ * @author Yves Nevelsteen <yves.nevelsteen@gmail.com>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
@@ -98,8 +99,6 @@ $lang['indexdelay']            = 'Prokrasto antaŭ ol indeksi (en sekundoj)';
 $lang['mailguard']             = 'Nebuligi retadresojn';
 $lang['iexssprotect']          = 'Ekzameni elŝutaĵojn kontraŭ eblaj malicaj ĴavaSkripto aŭ HTML-a kodumaĵo';
 $lang['usedraft']              = 'Aŭtomate konservi skizon dum redaktado';
-$lang['htmlok']                = 'Ebligi enmeton de HTML-aĵoj';
-$lang['phpok']                 = 'Ebligi enmeton de PHP-aĵoj';
 $lang['locktime']              = 'Maksimuma aĝo por serurdosieroj (sek.)';
 $lang['cachetime']             = 'Maksimuma aĝo por provizmemoro (sek.)';
 $lang['target____wiki']        = 'Parametro "target" (celo) por internaj ligiloj';

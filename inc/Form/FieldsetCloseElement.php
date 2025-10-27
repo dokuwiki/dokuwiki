@@ -14,7 +14,7 @@ class FieldsetCloseElement extends TagCloseElement
     /**
      * @param array $attributes
      */
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         parent::__construct('', $attributes);
         $this->type = 'fieldsetclose';

@@ -157,6 +157,3 @@ interface PluginInterface
      */
     public function isSingleton();
 }
-
-
-

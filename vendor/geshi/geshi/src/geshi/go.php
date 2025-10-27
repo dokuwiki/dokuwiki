@@ -324,7 +324,9 @@ $language_data = array(
             0 => 'color: #cc66cc;' // FIXME: Duplicate array key
             ),
         'NUMBERS' => array(
-            0 => 'color: #cc66cc;'
+            0 => 'color: #cc66cc;',
+            1 => 'color: #cc66cc;',
+            2 => 'color: #cc66cc;'
             ),
         'METHODS' => array(
             0 => 'color: #004000;'

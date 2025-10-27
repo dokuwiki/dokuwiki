@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Sitemap handling functions
  *
@@ -42,8 +43,8 @@ class Mapper
 
         if (file_exists($sitemap)) {
             if (!is_writable($sitemap)) return false;
-        } else {
-            if (!is_writable(dirname($sitemap))) return false;
+        } elseif (!is_writable(dirname($sitemap))) {
+            return false;
         }
 
         if (@filesize($sitemap) &&
@@ -56,24 +57,24 @@ class Mapper
         Logger::debug("Sitemapper::generate(): using $sitemap");
 
         $pages = idx_get_indexer()->getPages();
-        Logger::debug('Sitemapper::generate(): creating sitemap using '.count($pages).' pages');
-        $items = array();
+        Logger::debug('Sitemapper::generate(): creating sitemap using ' . count($pages) . ' pages');
+        $items = [];
 
         // build the sitemap items
         foreach ($pages as $id) {
             //skip hidden, non existing and restricted files
             if (isHiddenPage($id)) continue;
-            if (auth_aclcheck($id,'',array()) < AUTH_READ) continue;
+            if (auth_aclcheck($id, '', []) < AUTH_READ) continue;
             $item = Item::createFromID($id);
-            if ($item !== null)
+            if ($item instanceof Item)
                 $items[] = $item;
         }
 
-        $eventData = array('items' => &$items, 'sitemap' => &$sitemap);
+        $eventData = ['items' => &$items, 'sitemap' => &$sitemap];
         $event = new Event('SITEMAP_GENERATE', $eventData);
         if ($event->advise_before(true)) {
             //save the new sitemap
-            $event->result = io_saveFile($sitemap, Mapper::getXML($items));
+            $event->result = io_saveFile($sitemap, (new Mapper())->getXML($items));
         }
         $event->advise_after();
 
@@ -88,16 +89,16 @@ class Mapper
      *
      * @author Michael Hamann
      */
-    private static function getXML($items)
+    private function getXML($items)
     {
         ob_start();
-        echo '<?xml version="1.0" encoding="UTF-8"?>'.NL;
-        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'.NL;
+        echo '<?xml version="1.0" encoding="UTF-8"?>' . NL;
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . NL;
         foreach ($items as $item) {
             /** @var Item $item */
             echo $item->toXML();
         }
-        echo '</urlset>'.NL;
+        echo '</urlset>' . NL;
         $result = ob_get_contents();
         ob_end_clean();
         return $result;
@@ -114,7 +115,7 @@ class Mapper
     {
         global $conf;
 
-        $sitemap = $conf['cachedir'].'/sitemap.xml';
+        $sitemap = $conf['cachedir'] . '/sitemap.xml';
         if (self::sitemapIsCompressed()) {
             $sitemap .= '.gz';
         }
@@ -147,23 +148,22 @@ class Mapper
         $http = new DokuHTTPClient();
         $http->timeout = 8;
 
-        $encoded_sitemap_url = urlencode(wl('', array('do' => 'sitemap'), true, '&'));
-        $ping_urls = array(
-            'google'    => 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.$encoded_sitemap_url,
-            'microsoft' => 'http://www.bing.com/webmaster/ping.aspx?siteMap='.$encoded_sitemap_url,
-            'yandex'    => 'http://blogs.yandex.ru/pings/?status=success&url='.$encoded_sitemap_url
-        );
+        $encoded_sitemap_url = urlencode(wl('', ['do' => 'sitemap'], true, '&'));
+        $ping_urls = [
+            'google'    => 'https://www.google.com/ping?sitemap=' . $encoded_sitemap_url,
+            'yandex'    => 'https://webmaster.yandex.com/ping?sitemap=' . $encoded_sitemap_url
+        ];
 
-        $data = array(
+        $data = [
             'ping_urls' => $ping_urls,
             'encoded_sitemap_url' => $encoded_sitemap_url
-        );
+        ];
         $event = new Event('SITEMAP_PING', $data);
         if ($event->advise_before(true)) {
             foreach ($data['ping_urls'] as $name => $url) {
                 Logger::debug("Sitemapper::PingSearchEngines(): pinging $name");
                 $resp = $http->get($url);
-                if($http->error) {
+                if ($http->error) {
                     Logger::debug("Sitemapper:pingSearchengines(): $http->error", $resp);
                 }
             }

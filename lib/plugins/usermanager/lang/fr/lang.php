@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Guy Brand <gb@unistra.fr>
  * @author Delassaux Julien <julien@delassaux.fr>
  * @author Maurice A. LeBlanc <leblancma@cooptel.qc.ca>
@@ -20,7 +21,6 @@
  * @author Bruno Veilleux <bruno.vey@gmail.com>
  * @author Antoine Turmel <geekshadow@gmail.com>
  * @author Jérôme Brandt <jeromebrandt@gmail.com>
- * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Eric <ericstevenart@netc.fr>
  */
@@ -54,6 +54,7 @@ $lang['summary']               = 'Affichage des utilisateurs %1$d-%2$d parmi %3$
 $lang['nonefound']             = 'Aucun utilisateur trouvé. %d utilisateurs au total.';
 $lang['delete_ok']             = '%d utilisateurs effacés';
 $lang['delete_fail']           = '%d effacements échoués.';
+$lang['delete_fail_self']      = 'Vous ne pouvez pas vous supprimer';
 $lang['update_ok']             = 'Utilisateur mis à jour avec succès';
 $lang['update_fail']           = 'Échec lors de la mise à jour de l\'utilisateur';
 $lang['update_exists']         = 'Échec lors du changement du nom d\'utilisateur : le nom spécifié (%s) existe déjà (toutes les autres modifications seront effectuées).';

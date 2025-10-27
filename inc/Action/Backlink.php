@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Backlinks;
 use dokuwiki\Ui;
 
 /**
@@ -22,7 +23,6 @@ class Backlink extends AbstractAction
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\Backlinks)->show();
+        (new Backlinks())->show();
     }
-
 }

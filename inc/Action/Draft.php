@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\PageDraft;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Ui;
 
@@ -31,13 +32,12 @@ class Draft extends AbstractAction
     {
         parent::checkPreconditions();
         global $INFO;
-        if (!file_exists($INFO['draft'])) throw new ActionException('edit');
+        if (!isset($INFO['draft']) || !file_exists($INFO['draft'])) throw new ActionException('edit');
     }
 
     /** @inheritdoc */
     public function tplContent()
     {
-        (new Ui\PageDraft)->show();
+        (new PageDraft())->show();
     }
-
 }

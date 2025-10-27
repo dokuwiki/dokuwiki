@@ -40,6 +40,8 @@ try {
 }
 ```
 
+Please also check the [API Docs](https://splitbrain.github.io/slika/) for details.
+
 ## Operations 
 
 ### resize

@@ -143,23 +143,24 @@ class JpegMeta {
         if(!is_array($fields)) $fields = array($fields);
         $info = false;
         foreach($fields as $field){
-            if(strtolower(substr($field,0,5)) == 'iptc.'){
+            $lower_field = strtolower($field);
+            if(str_starts_with($lower_field, 'iptc.')){
                 $info = $this->getIPTCField(substr($field,5));
-            }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+            }elseif(str_starts_with($lower_field, 'exif.')){
                 $info = $this->getExifField(substr($field,5));
-            }elseif(strtolower(substr($field,0,4)) == 'xmp.'){
+            }elseif(str_starts_with($lower_field, 'xmp.')){
                 $info = $this->getXmpField(substr($field,4));
-            }elseif(strtolower(substr($field,0,5)) == 'file.'){
+            }elseif(str_starts_with($lower_field, 'file.')){
                 $info = $this->getFileField(substr($field,5));
-            }elseif(strtolower(substr($field,0,5)) == 'date.'){
+            }elseif(str_starts_with($lower_field, 'date.')){
                 $info = $this->getDateField(substr($field,5));
-            }elseif(strtolower($field) == 'simple.camera'){
+            }elseif($lower_field == 'simple.camera'){
                 $info = $this->getCamera();
-            }elseif(strtolower($field) == 'simple.raw'){
+            }elseif($lower_field == 'simple.raw'){
                 return $this->getRawInfo();
-            }elseif(strtolower($field) == 'simple.title'){
+            }elseif($lower_field == 'simple.title'){
                 $info = $this->getTitle();
-            }elseif(strtolower($field) == 'simple.shutterspeed'){
+            }elseif($lower_field == 'simple.shutterspeed'){
                 $info = $this->getShutterSpeed();
             }else{
                 $info = $this->getExifField($field);
@@ -172,7 +173,19 @@ class JpegMeta {
             if(isset($info['val'])){
                 $info = $info['val'];
             }else{
-                $info = join(', ',$info);
+                $arr = array();
+                foreach($info as $part){
+                    if(is_array($part)){
+                        if(isset($part['val'])){
+                            $arr[] = $part['val'];
+                        }else{
+                            $arr[] = join(', ',$part);
+                        }
+                    }else{
+                        $arr[] = $part;
+                    }
+                }
+                $info = join(', ',$arr);
             }
         }
         return trim($info);
@@ -189,9 +202,10 @@ class JpegMeta {
      * @return bool success or fail
      */
     function setField($field, $value) {
-        if(strtolower(substr($field,0,5)) == 'iptc.'){
+        $lower_field = strtolower($field);
+        if(str_starts_with($lower_field, 'iptc.')){
             return $this->setIPTCField(substr($field,5),$value);
-        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+        }elseif(str_starts_with($lower_field, 'exif.')){
             return $this->setExifField(substr($field,5),$value);
         }else{
             return $this->setExifField($field,$value);
@@ -208,9 +222,10 @@ class JpegMeta {
      * @return bool
      */
     function deleteField($field) {
-        if(strtolower(substr($field,0,5)) == 'iptc.'){
+        $lower_field = strtolower($field);
+        if(str_starts_with($lower_field, 'iptc.')){
             return $this->deleteIPTCField(substr($field,5));
-        }elseif(strtolower(substr($field,0,5)) == 'exif.'){
+        }elseif(str_starts_with($lower_field, 'exif.')){
             return $this->deleteExifField(substr($field,5));
         }else{
             return $this->deleteExifField($field);
@@ -413,7 +428,7 @@ class JpegMeta {
         }
 
         // make sure datetimes are in correct format
-        if(strlen($field) >= 8 && strtolower(substr($field, 0, 8)) == 'datetime') {
+        if(strlen($field) >= 8 && str_starts_with(strtolower($field), 'datetime')) {
             if(strlen($value) < 8 || $value[4] != ':' || $value[7] != ':') {
                 $value = date('Y:m:d H:i:s', strtotime($value));
             }
@@ -665,7 +680,7 @@ class JpegMeta {
         }
 
         if (@isset($this->_info['exif']['DateTimeOriginal'])) {
-            $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTime'];
+            $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTimeOriginal'];
 
             $aux = $this->_info['exif']['DateTimeOriginal'];
             $aux[4] = "-";
@@ -684,7 +699,7 @@ class JpegMeta {
         }
 
         if (@isset($this->_info['exif']['DateTimeDigitized'])) {
-            $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTime'];
+            $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTimeDigitized'];
 
             $aux = $this->_info['exif']['DateTimeDigitized'];
             $aux[4] = "-";
@@ -1408,61 +1423,67 @@ class JpegMeta {
             $this->_readJPEG();
         }
 
-        if ($this->_markers == null) {
+        if ($this->_markers == null || $this->_isMarkerDisabled(('jfif'))) {
             return false;
         }
 
-        $data = null;
-        $count = count($this->_markers);
-        for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xE0) {
-                $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 4);
-                if ($signature == 'JFIF') {
-                    $data =& $this->_markers[$i]['data'];
-                    break;
+        try {
+            $data = null;
+            $count = count($this->_markers);
+            for ($i = 0; $i < $count; $i++) {
+                if ($this->_markers[$i]['marker'] == 0xE0) {
+                    $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 4);
+                    if ($signature == 'JFIF') {
+                        $data =& $this->_markers[$i]['data'];
+                        break;
+                    }
                 }
             }
-        }
 
-        if ($data == null) {
+            if ($data == null) {
+                $this->_info['jfif'] = false;
+                return false;
+            }
+
+            $this->_info['jfif'] = array();
+
+            $vmaj = $this->_getByte($data, 5);
+            $vmin = $this->_getByte($data, 6);
+
+            $this->_info['jfif']['Version'] = sprintf('%d.%02d', $vmaj, $vmin);
+
+            $units = $this->_getByte($data, 7);
+            switch ($units) {
+                case 0:
+                    $this->_info['jfif']['Units'] = 'pixels';
+                    break;
+                case 1:
+                    $this->_info['jfif']['Units'] = 'dpi';
+                    break;
+                case 2:
+                    $this->_info['jfif']['Units'] = 'dpcm';
+                    break;
+                default:
+                    $this->_info['jfif']['Units'] = 'unknown';
+                    break;
+            }
+
+            $xdens = $this->_getShort($data, 8);
+            $ydens = $this->_getShort($data, 10);
+
+            $this->_info['jfif']['XDensity'] = $xdens;
+            $this->_info['jfif']['YDensity'] = $ydens;
+
+            $thumbx = $this->_getByte($data, 12);
+            $thumby = $this->_getByte($data, 13);
+
+            $this->_info['jfif']['ThumbnailWidth'] = $thumbx;
+            $this->_info['jfif']['ThumbnailHeight'] = $thumby;
+        } catch(Exception $e) {
+            $this->_handleMarkerParsingException($e);
             $this->_info['jfif'] = false;
             return false;
         }
-
-        $this->_info['jfif'] = array();
-
-        $vmaj = $this->_getByte($data, 5);
-        $vmin = $this->_getByte($data, 6);
-
-        $this->_info['jfif']['Version'] = sprintf('%d.%02d', $vmaj, $vmin);
-
-        $units = $this->_getByte($data, 7);
-        switch ($units) {
-            case 0:
-                $this->_info['jfif']['Units'] = 'pixels';
-                break;
-            case 1:
-                $this->_info['jfif']['Units'] = 'dpi';
-                break;
-            case 2:
-                $this->_info['jfif']['Units'] = 'dpcm';
-                break;
-            default:
-                $this->_info['jfif']['Units'] = 'unknown';
-                break;
-        }
-
-        $xdens = $this->_getShort($data, 8);
-        $ydens = $this->_getShort($data, 10);
-
-        $this->_info['jfif']['XDensity'] = $xdens;
-        $this->_info['jfif']['YDensity'] = $ydens;
-
-        $thumbx = $this->_getByte($data, 12);
-        $thumby = $this->_getByte($data, 13);
-
-        $this->_info['jfif']['ThumbnailWidth'] = $thumbx;
-        $this->_info['jfif']['ThumbnailHeight'] = $thumby;
 
         return true;
     }
@@ -1473,54 +1494,60 @@ class JpegMeta {
             $this->_readJPEG();
         }
 
-        if ($this->_markers == null) {
+        if ($this->_markers == null || $this->_isMarkerDisabled(('sof'))) {
             return false;
         }
 
-        $data = null;
-        $count = count($this->_markers);
-        for ($i = 0; $i < $count; $i++) {
-            switch ($this->_markers[$i]['marker']) {
-                case 0xC0: // SOF0
-                case 0xC1: // SOF1
-                case 0xC2: // SOF2
-                case 0xC9: // SOF9
-                    $data =& $this->_markers[$i]['data'];
-                    $marker = $this->_markers[$i]['marker'];
-                    break;
+        try {
+            $data = null;
+            $count = count($this->_markers);
+            for ($i = 0; $i < $count; $i++) {
+                switch ($this->_markers[$i]['marker']) {
+                    case 0xC0: // SOF0
+                    case 0xC1: // SOF1
+                    case 0xC2: // SOF2
+                    case 0xC9: // SOF9
+                        $data =& $this->_markers[$i]['data'];
+                        $marker = $this->_markers[$i]['marker'];
+                        break;
+                }
             }
-        }
 
-        if ($data == null) {
+            if ($data == null) {
+                $this->_info['sof'] = false;
+                return false;
+            }
+
+            $pos = 0;
+            $this->_info['sof'] = array();
+
+            switch ($marker) {
+                case 0xC0: // SOF0
+                    $format = 'Baseline';
+                    break;
+                case 0xC1: // SOF1
+                    $format = 'Progessive';
+                    break;
+                case 0xC2: // SOF2
+                    $format = 'Non-baseline';
+                    break;
+                case 0xC9: // SOF9
+                    $format = 'Arithmetic';
+                    break;
+                default:
+                    return false;
+            }
+
+            $this->_info['sof']['Format']          = $format;
+            $this->_info['sof']['SamplePrecision'] = $this->_getByte($data, $pos + 0);
+            $this->_info['sof']['ImageHeight']     = $this->_getShort($data, $pos + 1);
+            $this->_info['sof']['ImageWidth']      = $this->_getShort($data, $pos + 3);
+            $this->_info['sof']['ColorChannels']   = $this->_getByte($data, $pos + 5);
+        } catch(Exception $e) {
+            $this->_handleMarkerParsingException($e);
             $this->_info['sof'] = false;
             return false;
         }
-
-        $pos = 0;
-        $this->_info['sof'] = array();
-
-        switch ($marker) {
-            case 0xC0: // SOF0
-                $format = 'Baseline';
-                break;
-            case 0xC1: // SOF1
-                $format = 'Progessive';
-                break;
-            case 0xC2: // SOF2
-                $format = 'Non-baseline';
-                break;
-            case 0xC9: // SOF9
-                $format = 'Arithmetic';
-                break;
-            default:
-                return false;
-        }
-
-        $this->_info['sof']['Format']          = $format;
-        $this->_info['sof']['SamplePrecision'] = $this->_getByte($data, $pos + 0);
-        $this->_info['sof']['ImageHeight']     = $this->_getShort($data, $pos + 1);
-        $this->_info['sof']['ImageWidth']      = $this->_getShort($data, $pos + 3);
-        $this->_info['sof']['ColorChannels']   = $this->_getByte($data, $pos + 5);
 
         return true;
     }
@@ -1535,48 +1562,55 @@ class JpegMeta {
             $this->_readJPEG();
         }
 
-        if ($this->_markers == null) {
+        if ($this->_markers == null || $this->_isMarkerDisabled(('xmp'))) {
             return false;
         }
 
-        $data = null;
-        $count = count($this->_markers);
-        for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xE1) {
-                $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
-                if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
-                    $data = substr($this->_markers[$i]['data'], 29);
-                    break;
+        try {
+            $data = null;
+            $count = count($this->_markers);
+            for ($i = 0; $i < $count; $i++) {
+                if ($this->_markers[$i]['marker'] == 0xE1) {
+                    $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
+                    if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
+                        $data = substr($this->_markers[$i]['data'], 29);
+                        break;
+                    }
                 }
             }
-        }
 
-        if ($data == null) {
+            if ($data == null) {
+                $this->_info['xmp'] = false;
+                return false;
+            }
+
+            $parser = xml_parser_create();
+            xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+            xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+            $result = xml_parse_into_struct($parser, $data, $values, $tags);
+            xml_parser_free($parser);
+
+            if ($result == 0) {
+                $this->_info['xmp'] = false;
+                return false;
+            }
+
+            $this->_info['xmp'] = array();
+            $count = count($values);
+            for ($i = 0; $i < $count; $i++) {
+                if ($values[$i]['tag'] == 'rdf:Description' && $values[$i]['type'] == 'open') {
+
+                    while ((++$i < $count) && ($values[$i]['tag'] != 'rdf:Description')) {
+                        $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i]['tag']], $count);
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            $this->_handleMarkerParsingException($e);
             $this->_info['xmp'] = false;
             return false;
         }
 
-        $parser = xml_parser_create();
-        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-        xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-        $result = xml_parse_into_struct($parser, $data, $values, $tags);
-        xml_parser_free($parser);
-
-        if ($result == 0) {
-            $this->_info['xmp'] = false;
-            return false;
-        }
-
-        $this->_info['xmp'] = array();
-        $count = count($values);
-        for ($i = 0; $i < $count; $i++) {
-            if ($values[$i]['tag'] == 'rdf:Description' && $values[$i]['type'] == 'open') {
-
-                while ((++$i < $count) && ($values[$i]['tag'] != 'rdf:Description')) {
-                    $this->_parseXmpNode($values, $i, $this->_info['xmp'][$values[$i]['tag']], $count);
-                }
-            }
-        }
         return true;
     }
 
@@ -1595,7 +1629,7 @@ class JpegMeta {
 
         if ($values[$i]['type'] == 'complete') {
             // Simple Type property
-            $meta = $values[$i]['value'];
+            $meta = $values[$i]['value'] ?? '';
             return;
         }
 
@@ -1635,58 +1669,64 @@ class JpegMeta {
             $this->_readJPEG();
         }
 
-        if ($this->_markers == null) {
+        if ($this->_markers == null || $this->_isMarkerDisabled(('exif'))) {
             return false;
         }
 
-        $data = null;
-        $count = count($this->_markers);
-        for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xE1) {
-                $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
-                if ($signature == "Exif\0\0") {
-                    $data =& $this->_markers[$i]['data'];
-                    break;
+        try {
+            $data = null;
+            $count = count($this->_markers);
+            for ($i = 0; $i < $count; $i++) {
+                if ($this->_markers[$i]['marker'] == 0xE1) {
+                    $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
+                    if ($signature == "Exif\0\0") {
+                        $data =& $this->_markers[$i]['data'];
+                        break;
+                    }
                 }
             }
-        }
 
-        if ($data == null) {
+            if ($data == null) {
+                $this->_info['exif'] = false;
+                return false;
+            }
+            $pos = 6;
+            $this->_info['exif'] = array();
+
+            // We don't increment $pos after this because Exif uses offsets relative to this point
+
+            $byteAlign = $this->_getShort($data, $pos + 0);
+
+            if ($byteAlign == 0x4949) { // "II"
+                $isBigEndian = false;
+            } elseif ($byteAlign == 0x4D4D) { // "MM"
+                $isBigEndian = true;
+            } else {
+                return false; // Unexpected data
+            }
+
+            $alignCheck = $this->_getShort($data, $pos + 2, $isBigEndian);
+            if ($alignCheck != 0x002A) // That's the expected value
+                return false; // Unexpected data
+
+            if ($isBigEndian) {
+                $this->_info['exif']['ByteAlign'] = "Big Endian";
+            } else {
+                $this->_info['exif']['ByteAlign'] = "Little Endian";
+            }
+
+            $offsetIFD0 = $this->_getLong($data, $pos + 4, $isBigEndian);
+            if ($offsetIFD0 < 8)
+                return false; // Unexpected data
+
+            $offsetIFD1 = $this->_readIFD($data, $pos, $offsetIFD0, $isBigEndian, 'ifd0');
+            if ($offsetIFD1 != 0)
+                $this->_readIFD($data, $pos, $offsetIFD1, $isBigEndian, 'ifd1');
+        } catch(Exception $e) {
+            $this->_handleMarkerParsingException($e);
             $this->_info['exif'] = false;
             return false;
         }
-        $pos = 6;
-        $this->_info['exif'] = array();
-
-        // We don't increment $pos after this because Exif uses offsets relative to this point
-
-        $byteAlign = $this->_getShort($data, $pos + 0);
-
-        if ($byteAlign == 0x4949) { // "II"
-            $isBigEndian = false;
-        } elseif ($byteAlign == 0x4D4D) { // "MM"
-            $isBigEndian = true;
-        } else {
-            return false; // Unexpected data
-        }
-
-        $alignCheck = $this->_getShort($data, $pos + 2, $isBigEndian);
-        if ($alignCheck != 0x002A) // That's the expected value
-            return false; // Unexpected data
-
-        if ($isBigEndian) {
-            $this->_info['exif']['ByteAlign'] = "Big Endian";
-        } else {
-            $this->_info['exif']['ByteAlign'] = "Little Endian";
-        }
-
-        $offsetIFD0 = $this->_getLong($data, $pos + 4, $isBigEndian);
-        if ($offsetIFD0 < 8)
-            return false; // Unexpected data
-
-        $offsetIFD1 = $this->_readIFD($data, $pos, $offsetIFD0, $isBigEndian, 'ifd0');
-        if ($offsetIFD1 != 0)
-            $this->_readIFD($data, $pos, $offsetIFD1, $isBigEndian, 'ifd1');
 
         return true;
     }
@@ -2356,6 +2396,16 @@ class JpegMeta {
 
         return $ifdEntries;
     }
+    /*************************************************************/
+    function _handleMarkerParsingException($e) {
+        \dokuwiki\ErrorHandler::logException($e, $this->_fileName);
+    }
+
+    /*************************************************************/
+    function _isMarkerDisabled($name) {
+        if (!isset($this->_info)) return false;
+        return isset($this->_info[$name]) && $this->_info[$name] === false;
+    }
 
     /*************************************************************/
     function _parseMarkerAdobe() {
@@ -2363,99 +2413,104 @@ class JpegMeta {
             $this->_readJPEG();
         }
 
-        if ($this->_markers == null) {
+        if ($this->_markers == null || $this->_isMarkerDisabled('adobe')) {
             return false;
         }
-
-        $data = null;
-        $count = count($this->_markers);
-        for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xED) {
-                $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 14);
-                if ($signature == "Photoshop 3.0\0") {
-                    $data =& $this->_markers[$i]['data'];
-                    break;
+        try {
+            $data = null;
+            $count = count($this->_markers);
+            for ($i = 0; $i < $count; $i++) {
+                if ($this->_markers[$i]['marker'] == 0xED) {
+                    $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 14);
+                    if ($signature == "Photoshop 3.0\0") {
+                        $data =& $this->_markers[$i]['data'];
+                        break;
+                    }
                 }
             }
-        }
 
-        if ($data == null) {
+            if ($data == null) {
+                $this->_info['adobe'] = false;
+                $this->_info['iptc'] = false;
+                return false;
+            }
+            $pos = 14;
+            $this->_info['adobe'] = array();
+            $this->_info['adobe']['raw'] = array();
+            $this->_info['iptc'] = array();
+
+            $datasize = strlen($data);
+
+            while ($pos < $datasize) {
+                $signature = $this->_getFixedString($data, $pos, 4);
+                if ($signature != '8BIM')
+                    return false;
+                $pos += 4;
+
+                $type = $this->_getShort($data, $pos);
+                $pos += 2;
+
+                $strlen = $this->_getByte($data, $pos);
+                $pos += 1;
+                $header = '';
+                for ($i = 0; $i < $strlen; $i++) {
+                    $header .= $data[$pos + $i];
+                }
+                $pos += $strlen + 1 - ($strlen % 2);  // The string is padded to even length, counting the length byte itself
+
+                $length = $this->_getLong($data, $pos);
+                $pos += 4;
+
+                $basePos = $pos;
+
+                switch ($type) {
+                    case 0x0404: // Caption (IPTC Data)
+                        $pos = $this->_readIPTC($data, $pos);
+                        if ($pos == false)
+                            return false;
+                        break;
+                    case 0x040A: // CopyrightFlag
+                        $this->_info['adobe']['CopyrightFlag'] = $this->_getByte($data, $pos);
+                        $pos += $length;
+                        break;
+                    case 0x040B: // ImageURL
+                        $this->_info['adobe']['ImageURL'] = $this->_getFixedString($data, $pos, $length);
+                        $pos += $length;
+                        break;
+                    case 0x040C: // Thumbnail
+                        $aux = $this->_getLong($data, $pos);
+                        $pos += 4;
+                        if ($aux == 1) {
+                            $this->_info['adobe']['ThumbnailWidth'] = $this->_getLong($data, $pos);
+                            $pos += 4;
+                            $this->_info['adobe']['ThumbnailHeight'] = $this->_getLong($data, $pos);
+                            $pos += 4;
+
+                            $pos += 16; // Skip some data
+
+                            $this->_info['adobe']['ThumbnailData'] = $this->_getFixedString($data, $pos, $length - 28);
+                            $pos += $length - 28;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                // We save all blocks, even those we recognized
+                $label = sprintf('8BIM_0x%04x', $type);
+                $this->_info['adobe']['raw'][$label] = array();
+                $this->_info['adobe']['raw'][$label]['type'] = $type;
+                $this->_info['adobe']['raw'][$label]['header'] = $header;
+                $this->_info['adobe']['raw'][$label]['data'] =& $this->_getFixedString($data, $basePos, $length);
+
+                $pos = $basePos + $length + ($length % 2); // Even padding
+            }
+        } catch(Exception $e) {
+            $this->_handleMarkerParsingException($e);
             $this->_info['adobe'] = false;
             $this->_info['iptc'] = false;
             return false;
         }
-        $pos = 14;
-        $this->_info['adobe'] = array();
-        $this->_info['adobe']['raw'] = array();
-        $this->_info['iptc'] = array();
-
-        $datasize = strlen($data);
-
-        while ($pos < $datasize) {
-            $signature = $this->_getFixedString($data, $pos, 4);
-            if ($signature != '8BIM')
-                return false;
-            $pos += 4;
-
-            $type = $this->_getShort($data, $pos);
-            $pos += 2;
-
-            $strlen = $this->_getByte($data, $pos);
-            $pos += 1;
-            $header = '';
-            for ($i = 0; $i < $strlen; $i++) {
-                $header .= $data[$pos + $i];
-            }
-            $pos += $strlen + 1 - ($strlen % 2);  // The string is padded to even length, counting the length byte itself
-
-            $length = $this->_getLong($data, $pos);
-            $pos += 4;
-
-            $basePos = $pos;
-
-            switch ($type) {
-                case 0x0404: // Caption (IPTC Data)
-                    $pos = $this->_readIPTC($data, $pos);
-                    if ($pos == false)
-                        return false;
-                    break;
-                case 0x040A: // CopyrightFlag
-                    $this->_info['adobe']['CopyrightFlag'] = $this->_getByte($data, $pos);
-                    $pos += $length;
-                    break;
-                case 0x040B: // ImageURL
-                    $this->_info['adobe']['ImageURL'] = $this->_getFixedString($data, $pos, $length);
-                    $pos += $length;
-                    break;
-                case 0x040C: // Thumbnail
-                    $aux = $this->_getLong($data, $pos);
-                    $pos += 4;
-                    if ($aux == 1) {
-                        $this->_info['adobe']['ThumbnailWidth'] = $this->_getLong($data, $pos);
-                        $pos += 4;
-                        $this->_info['adobe']['ThumbnailHeight'] = $this->_getLong($data, $pos);
-                        $pos += 4;
-
-                        $pos += 16; // Skip some data
-
-                        $this->_info['adobe']['ThumbnailData'] = $this->_getFixedString($data, $pos, $length - 28);
-                        $pos += $length - 28;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            // We save all blocks, even those we recognized
-            $label = sprintf('8BIM_0x%04x', $type);
-            $this->_info['adobe']['raw'][$label] = array();
-            $this->_info['adobe']['raw'][$label]['type'] = $type;
-            $this->_info['adobe']['raw'][$label]['header'] = $header;
-            $this->_info['adobe']['raw'][$label]['data'] =& $this->_getFixedString($data, $basePos, $length);
-
-            $pos = $basePos + $length + ($length % 2); // Even padding
-        }
-
     }
 
     /*************************************************************/
@@ -2586,7 +2641,7 @@ class JpegMeta {
             if (isset($IPTCNames[$label])) {
                 $type = $IPTCNames[$label];
             }
-            elseif (substr($label, 0, 7) == "IPTC_0x") {
+            elseif (str_starts_with($label, 'IPTC_0x')) {
                 $type = hexdec(substr($label, 7, 2));
             }
 
@@ -2985,6 +3040,10 @@ class JpegMeta {
      * @return int
      */
     function _getByte(&$data, $pos) {
+        if (!isset($data[$pos])) {
+            throw new Exception("Requested byte at ".$pos.". Reading outside of file's boundaries.");
+        }
+
         return ord($data[$pos]);
     }
 
@@ -3008,6 +3067,10 @@ class JpegMeta {
 
     /*************************************************************/
     function _getShort(&$data, $pos, $bigEndian = true) {
+        if (!isset($data[$pos]) || !isset($data[$pos + 1])) {
+            throw new Exception("Requested short at ".$pos.". Reading outside of file's boundaries.");
+        }
+
         if ($bigEndian) {
             return (ord($data[$pos]) << 8)
                 + ord($data[$pos + 1]);
@@ -3043,6 +3106,10 @@ class JpegMeta {
      * @return int
      */
     function _getLong(&$data, $pos, $bigEndian = true) {
+        // Assume that if the start and end bytes are defined, the bytes inbetween are defined as well.
+        if (!isset($data[$pos]) || !isset($data[$pos + 3])){
+            throw new Exception("Requested long at ".$pos.". Reading outside of file's boundaries.");
+        }
         if ($bigEndian) {
             return (ord($data[$pos]) << 24)
                 + (ord($data[$pos + 1]) << 16)
@@ -3091,6 +3158,9 @@ class JpegMeta {
         $max = strlen($data);
 
         while ($pos < $max) {
+            if (!isset($data[$pos])) {
+                throw new Exception("Requested null-terminated string at offset ".$pos.". File terminated before the null-byte.");
+            }
             if (ord($data[$pos]) == 0) {
                 return $str;
             } else {
@@ -3109,6 +3179,12 @@ class JpegMeta {
         }
 
         $rv = substr($data, $pos, $length);
+        if (strlen($rv) != $length) {
+            throw new ErrorException(sprintf(
+                "JPEGMeta failed parsing image metadata of %s. Got %d instead of %d bytes at offset %d.",
+                $this->_fileName, strlen($rv), $length, $pos
+            ), 0, E_WARNING);
+        }
         return $rv;
     }
 

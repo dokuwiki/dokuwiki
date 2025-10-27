@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author SoiBKK <info@soibangkok.online>
  * @author Young gon Cha <garmede@gmail.com>
  * @author Myeongjin <aranet100@gmail.com>
  * @author hyeonsoft <hyeonsoft@live.co.kr>
@@ -13,9 +14,6 @@ $lang['tab_templates']         = '설치된 템플릿';
 $lang['tab_search']            = '검색하고 설치';
 $lang['tab_install']           = '수동 설치';
 $lang['notimplemented']        = '이 기능은 아직 구현되지 않았습니다';
-$lang['notinstalled']          = '이 확장 기능은 설치되어 있지 않습니다';
-$lang['alreadyenabled']        = '이 확장 기능이 이미 활성화되어 있습니다';
-$lang['alreadydisabled']       = '이 확장 기능이 이미 비활성화되어 있습니다';
 $lang['pluginlistsaveerror']   = '플러그인 목록을 저장하는 중 오류가 있었습니다';
 $lang['unknownauthor']         = '알 수 없는 저자';
 $lang['unknownversion']        = '알 수 없는 버전';
@@ -31,6 +29,8 @@ $lang['js']['display_viewoptions'] = '보기 옵션:';
 $lang['js']['display_enabled'] = '활성화됨';
 $lang['js']['display_disabled'] = '비활성화됨';
 $lang['js']['display_updatable'] = '업데이트할 수 있음';
+$lang['js']['close']           = '클릭하여 닫기';
+$lang['js']['filter']          = '업데이트가 가능한 확장 기능만 보여주기';
 $lang['search_for']            = '확장 기능 검색:';
 $lang['search']                = '검색';
 $lang['extensionby']           = '<strong>%s</strong> (저자 %s)';
@@ -69,17 +69,14 @@ $lang['msg_enabled']           = '%s 플러그인이 활성화되었습니다';
 $lang['msg_disabled']          = '%s 플러그인이 비활성화되었습니다';
 $lang['msg_delete_success']    = '%s 확장 기능이 제거되었습니다';
 $lang['msg_delete_failed']     = '%s 확장 기능 제거에 실패했습니다';
-$lang['msg_template_install_success'] = '%s 템플릿을 성공적으로 설치했습니다';
-$lang['msg_template_update_success'] = '%s 템플릿을 성공적으로 업데이트했습니다';
-$lang['msg_plugin_install_success'] = '%s 플러그인을 성공적으로 설치했습니다';
-$lang['msg_plugin_update_success'] = '%s 플러그인을 성공적으로 업데이트했습니다';
 $lang['msg_upload_failed']     = '파일 올리기에 실패했습니다';
-$lang['missing_dependency']    = '<strong>의존성을 잃었거나 비활성화되어 있습니다:</strong> %s';
-$lang['security_issue']        = '<strong>보안 문제:</strong> %s';
-$lang['security_warning']      = '<strong>보안 경고:</strong> %s';
-$lang['update_available']      = '<strong>업데이트:</strong> 새 버전 %s(을)를 사용할 수 있습니다.';
-$lang['wrong_folder']          = '<strong>플러그인이 올바르지 않게 설치됨:</strong> 플러그인 디렉터리를 "%s"에서 "%s"로 이름을 바꾸세요.';
-$lang['url_change']            = '<strong>URL이 바뀜:</strong> 다운로드 URL이 최신 다운로드 이래로 바뀌었습니다. 확장 기능을 업데이트하기 전에 새 URL이 올바른지 확인하세요.<br />새 URL: %s<br />오래된 URL: %s';
+$lang['missing_dependency']    = '의존성을 잃었거나 비활성화되어 있습니다: %s';
+$lang['security_issue']        = '보안 문제: %s';
+$lang['security_warning']      = '보안 경고: %s';
+$lang['wrong_folder']          = '플러그인이 올바르지 않게 설치됨: 플러그인 디렉터리를 "%s"에서 "%s"로 이름을 바꾸세요.';
+$lang['url_change']            = 'URL이 바뀜: 다운로드 URL이 최신 다운로드 이래로 바뀌었습니다. 확장 기능을 업데이트하기 전에 새 URL이 올바른지 확인하세요.
+새 URL: %s
+오래된 URL: %s';
 $lang['error_badurl']          = 'URL은 http나 https로 시작해야 합니다';
 $lang['error_dircreate']       = '다운로드를 받을 임시 폴더를 만들 수 없습니다';
 $lang['error_download']        = '파일을 다운로드할 수 없습니다: %s';
@@ -95,3 +92,6 @@ $lang['install_url']           = 'URL에서 설치:';
 $lang['install_upload']        = '확장 기능 올리기:';
 $lang['repo_error']            = '플러그인 저장소에 연결할 수 없습니다. 서버가 www.dokuwiki.org에 연결할 수 있는지 확인하고 프록시 설정을 확인하세요.';
 $lang['nossl']                 = 'PHP가 SSL 지원을 하지 않는 것으로 보입니다. 많은 도쿠위키 확장 기능의 다운로드가 작동하지 않을 것입니다.';
+$lang['popularity_high']       = '가장 유명한 확장 기능 중 하나';
+$lang['popularity_medium']     = '꽤 유명한 확장 기능';
+$lang['details']               = '세부 정보';

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Lexer\Lexer;
+
 /**
  * This class and all the subclasses below are used to reduce the effort required to register
  * modes with the Lexer.
@@ -10,9 +12,9 @@ namespace dokuwiki\Parsing\ParserMode;
  */
 abstract class AbstractMode implements ModeInterface
 {
-    /** @var \dokuwiki\Parsing\Lexer\Lexer $Lexer will be injected on loading FIXME this should be done by setter */
+    /** @var Lexer $Lexer will be injected on loading FIXME this should be done by setter */
     public $Lexer;
-    protected $allowedModes = array();
+    protected $allowedModes = [];
 
     /** @inheritdoc */
     abstract public function getSort();

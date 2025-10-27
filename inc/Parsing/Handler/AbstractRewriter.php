@@ -11,7 +11,7 @@ abstract class AbstractRewriter implements ReWriterInterface
     protected $callWriter;
 
     /** @var array[] list of calls */
-    public $calls = array();
+    public $calls = [];
 
     /** @inheritdoc */
     public function __construct(CallWriterInterface $callWriter)

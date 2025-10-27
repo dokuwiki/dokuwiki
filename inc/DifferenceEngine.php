@@ -18,7 +18,7 @@ class _DiffOp {
      * @return _DiffOp
      */
     function reverse() {
-        trigger_error("pure virtual", E_USER_ERROR);
+        throw new \RuntimeException("pure virtual");
     }
 
     function norig() {
@@ -629,20 +629,20 @@ class Diff {
      */
     function _check($from_lines, $to_lines) {
         if (serialize($from_lines) != serialize($this->orig()))
-            trigger_error("Reconstructed original doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reconstructed original doesn't match");
         if (serialize($to_lines) != serialize($this->closing()))
-            trigger_error("Reconstructed closing doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reconstructed closing doesn't match");
 
         $rev = $this->reverse();
         if (serialize($to_lines) != serialize($rev->orig()))
-            trigger_error("Reversed original doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reversed original doesn't match");
         if (serialize($from_lines) != serialize($rev->closing()))
-            trigger_error("Reversed closing doesn't match", E_USER_ERROR);
+            throw new \RuntimeException("Reversed closing doesn't match");
 
         $prevtype = 'none';
         foreach ($this->edits as $edit) {
             if ($prevtype == $edit->type)
-                trigger_error("Edit sequence is non-optimal", E_USER_ERROR);
+                throw new \RuntimeException("Edit sequence is non-optimal");
             $prevtype = $edit->type;
         }
 
@@ -805,7 +805,7 @@ class DiffFormatter {
             elseif ($edit->type == 'change')
                 $this->_changed($edit->orig, $edit->closing);
             else
-                trigger_error("Unknown edit type", E_USER_ERROR);
+                throw new \RuntimeException("Unknown edit type");
         }
         $this->_end_block();
     }
@@ -928,6 +928,18 @@ class HTMLDiff {
 define('NBSP', "\xC2\xA0");     // utf-8 non-breaking space.
 
 class _HWLDF_WordAccumulator {
+
+    /** @var array */
+    protected $_lines;
+
+    /** @var string */
+    protected $_line;
+
+    /** @var string */
+    protected $_group;
+
+    /** @var string */
+    protected $_tag;
 
     function __construct() {
         $this->_lines = array();
@@ -1438,6 +1450,18 @@ class Diff3 extends Diff {
  * @access private
  */
 class _Diff3_Op {
+
+    /** @var array|mixed */
+    protected $orig;
+
+    /** @var array|mixed */
+    protected $final1;
+
+    /** @var array|mixed */
+    protected $final2;
+
+    /** @var array|mixed|false */
+    protected $_merged;
 
     function __construct($orig = false, $final1 = false, $final2 = false) {
         $this->orig = $orig ? $orig : array();

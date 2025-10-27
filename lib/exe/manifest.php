@@ -1,9 +1,11 @@
 <?php
 
+use dokuwiki\Manifest;
+
 if (!defined('DOKU_INC')) {
     define('DOKU_INC', __DIR__ . '/../../');
 }
-if(!defined('NOSESSION')) define('NOSESSION',true); // no session or auth required here
+if (!defined('NOSESSION')) define('NOSESSION', true); // no session or auth required here
 require_once(DOKU_INC . 'inc/init.php');
 
 if (!actionOK('manifest')) {
@@ -11,5 +13,5 @@ if (!actionOK('manifest')) {
     exit();
 }
 
-$manifest = new \dokuwiki\Manifest();
+$manifest = new Manifest();
 $manifest->sendManifest();

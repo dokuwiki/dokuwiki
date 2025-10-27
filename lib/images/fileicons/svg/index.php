@@ -15,7 +15,7 @@
 <body>
 <?php
 foreach (glob('*.svg') as $img) {
-    echo '<img src="'.$img.'" alt="'.$img.'" width="32" height="32" title="'.$img.'" /> ';
+    echo '<img src="' . $img . '" alt="' . $img . '" width="32" height="32" title="' . $img . '" /> ';
 }
 ?>
 </body>

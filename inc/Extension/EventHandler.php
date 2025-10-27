@@ -1,4 +1,5 @@
 <?php
+
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
 namespace dokuwiki\Extension;
@@ -8,11 +9,10 @@ namespace dokuwiki\Extension;
  */
 class EventHandler
 {
-
     // public properties:  none
 
     // private properties
-    protected $hooks = array();          // array of events and their registered handlers
+    protected $hooks = [];          // array of events and their registered handlers
 
     /**
      * event_handler
@@ -31,7 +31,7 @@ class EventHandler
         foreach ($pluginlist as $plugin_name) {
             $plugin = plugin_load('action', $plugin_name);
 
-            if ($plugin !== null) $plugin->register($this);
+            if ($plugin instanceof PluginInterface) $plugin->register($this);
         }
     }
 
@@ -40,19 +40,18 @@ class EventHandler
      *
      * register a hook for an event
      *
-     * @param  string $event string   name used by the event, (incl '_before' or '_after' for triggers)
-     * @param  string $advise
-     * @param  object $obj object in whose scope method is to be executed,
-     *                             if NULL, method is assumed to be a globally available function
-     * @param  string $method event handler function
-     * @param  mixed $param data passed to the event handler
-     * @param  int $seq sequence number for ordering hook execution (ascending)
+     * @param string $event name used by the event
+     * @param string $advise BEFORE|AFTER
+     * @param object $obj scope for the method be executed on, NULL for global function or callable
+     * @param string|callable $method event handler function
+     * @param mixed $param data passed to the event handler
+     * @param int $seq sequence number for ordering hook execution (ascending)
      */
     public function register_hook($event, $advise, $obj, $method, $param = null, $seq = 0)
     {
         $seq = (int)$seq;
         $doSort = !isset($this->hooks[$event . '_' . $advise][$seq]);
-        $this->hooks[$event . '_' . $advise][$seq][] = array($obj, $method, $param);
+        $this->hooks[$event . '_' . $advise][$seq][] = [$obj, $method, $param];
 
         if ($doSort) {
             ksort($this->hooks[$event . '_' . $advise]);
@@ -73,7 +72,7 @@ class EventHandler
         if (!empty($this->hooks[$evt_name])) {
             foreach ($this->hooks[$evt_name] as $sequenced_hooks) {
                 foreach ($sequenced_hooks as $hook) {
-                    list($obj, $method, $param) = $hook;
+                    [$obj, $method, $param] = $hook;
 
                     if ($obj === null) {
                         $method($event, $param);
@@ -104,5 +103,17 @@ class EventHandler
         }
 
         return isset($this->hooks[$name . '_BEFORE']) || isset($this->hooks[$name . '_AFTER']);
+    }
+
+    /**
+     * Get all hooks and their currently registered handlers
+     *
+     * The handlers are sorted by sequence, then by register time
+     *
+     * @return array
+     */
+    public function getEventHandlers()
+    {
+        return $this->hooks;
     }
 }

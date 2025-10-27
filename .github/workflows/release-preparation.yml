@@ -1,0 +1,104 @@
+# This workflow is triggered manually and prepares a new release by creating a pull request
+# All needed info is provided by the user in the workflow_dispatch dialog
+#
+# When the pull request is merged, the release-build workflow will be triggered automatically
+
+name: "Release: Preparation 🚀"
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'What type of release is this?'
+        required: true
+        default: 'stable'
+        type: choice
+        options:
+          - stable
+          - hotfix
+          - rc
+      codename:
+        description: 'The codename for this release, empty for same as last'
+        required: false
+      version:
+        description: 'The version date YYYY-MM-DD, empty for today'
+        required: false
+
+jobs:
+  create:
+    name: Prepare Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if branch is not master
+        if: github.ref != 'refs/heads/master'
+        run: |
+          echo "::error::This workflow should only be triggered on master"
+          exit 1
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set git identity
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Prepare Environment
+        run: |
+          php .github/release.php new \
+              --date "${{ inputs.version }}" \
+              --name "${{ inputs.codename }}" \
+              --type "${{ inputs.type }}" \
+              >> $GITHUB_ENV
+
+      - name: Check if a tag of the new release already exists
+        run: |
+          if git rev-parse "release-${{ env.next_version }}" >/dev/null 2>&1; then
+            echo "::error::Tag already exists, you may need to build a hotfix instead"
+            exit 1
+          fi
+
+      - name: Create merge commit with version info
+        run: |
+          git merge -s ours origin/stable
+          echo '${{ env.next_raw }}' > VERSION
+          git add VERSION
+          sed -i 's/\$updateVersion = "[^"]*";/\$updateVersion = "${{ env.next_update }}";/' doku.php
+          git add doku.php
+          git commit --amend -m 'Release preparations for ${{ env.next_raw }}'
+          git log -1
+          git log origin/stable..master --oneline
+          git checkout -B auto-${{ env.next_version }}
+          git push --set-upstream origin auto-${{ env.next_version }}
+
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: auto-${{ env.next_version }}
+          destination_branch: stable
+          pr_title: Release Preparations for ${{ env.next_raw }}
+          pr_body: |
+            With accepting this PR, the stable branch will be updated and the whole release and
+            deployment process will be triggered.
+
+            If you're not happy with the contents of this PR, please close it, delete the branch,
+            fix stuff and trigger the workflow again.
+
+            * ${{ env.current_raw }} -> ${{ env.next_raw }}
+            * Update Version ${{ env.current_update }} -> ${{ env.next_update }}
+
+            Before merging this PR, make sure that:
+
+            - [ ] All tests pass on the `master` branch (tests are not executed on PRs created in workflows)
+            - [ ] If this is a new stable release, make sure you merged `stable` into `old-stable` first
+            - [ ] Check that a meaningful [changelog](https://www.dokuwiki.org/changes) exists
+
+            After merging, the release workflow will be triggered automatically.
+
+            After this is done, you need to do the following things manually:
+
+            - [ ] Update the [version symlinks](https://download.dokuwiki.org/admin/)
+            - [ ] Update the update message system
+            - [ ] Announce the release on the mailing list, forum, IRC, social media, etc.
+

@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Quote extends AbstractMode
 {
-
     /**
      * Quote constructor.
      */

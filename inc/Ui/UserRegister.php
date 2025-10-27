@@ -14,9 +14,9 @@ class UserRegister extends Ui
     /**
      * Display the User Registration Form Panel
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
@@ -24,12 +24,12 @@ class UserRegister extends Ui
         global $conf;
         global $INPUT;
 
-        $base_attrs = array('size' => '50', 'required' => 'required');
-        $email_attrs = $base_attrs + array('type' => 'email');
+        $base_attrs = ['size' => '50', 'required' => 'required'];
+        $email_attrs = $base_attrs + ['type' => 'email'];
 
         // print intro
-        print p_locale_xhtml('register');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('register');
+        echo '<div class="centeralign">';
 
         // create the login form
         $form = new Form(['id' => 'dw__register']);
@@ -66,9 +66,8 @@ class UserRegister extends Ui
         $form->addFieldsetClose();
         $form->addTagClose('div');
 
-        print $form->toHTML('Register');
+        echo $form->toHTML('Register');
 
-        print '</div>';
+        echo '</div>';
     }
-
 }

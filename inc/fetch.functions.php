@@ -1,4 +1,8 @@
 <?php
+
+use dokuwiki\HTTP\Headers;
+use dokuwiki\Utf8\PhpString;
+
 /**
  * Functions used by lib/exe/fetch.php
  * (not included by other parts of dokuwiki)
@@ -25,19 +29,20 @@
  * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
  *
  */
-function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp=[]) {
+function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp = [])
+{
     global $conf;
     // send mime headers
     header("Content-Type: $mime");
 
     // send security policy if given
-    if (!empty($csp)) dokuwiki\HTTP\Headers::contentSecurityPolicy($csp);
+    if (!empty($csp)) Headers::contentSecurityPolicy($csp);
 
     // calculate cache times
-    if($cache == -1) {
+    if ($cache == -1) {
         $maxage  = max($conf['cachetime'], 3600); // cachetime or one hour
         $expires = time() + $maxage;
-    } else if($cache > 0) {
+    } elseif ($cache > 0) {
         $maxage  = $cache; // given time
         $expires = time() + $maxage;
     } else { // $cache == 0
@@ -46,15 +51,15 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     }
 
     // smart http caching headers
-    if($maxage) {
-        if($public) {
+    if ($maxage) {
+        if ($public) {
             // cache publically
-            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
-            header('Cache-Control: public, proxy-revalidate, no-transform, max-age='.$maxage);
+            header('Expires: ' . gmdate("D, d M Y H:i:s", $expires) . ' GMT');
+            header('Cache-Control: public, proxy-revalidate, no-transform, max-age=' . $maxage);
         } else {
             // cache in browser
-            header('Expires: '.gmdate("D, d M Y H:i:s", $expires).' GMT');
-            header('Cache-Control: private, no-transform, max-age='.$maxage);
+            header('Expires: ' . gmdate("D, d M Y H:i:s", $expires) . ' GMT');
+            header('Cache-Control: private, no-transform, max-age=' . $maxage);
         }
     } else {
         // no cache at all
@@ -67,19 +72,21 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     http_conditionalRequest($fmtime);
 
     // Use the current $file if is $orig is not set.
-    if ( $orig == null ) {
+    if ($orig == null) {
         $orig = $file;
     }
 
     //download or display?
     if ($dl) {
         header('Content-Disposition: attachment;' . rfc2231_encode(
-                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
-        );
+            'filename',
+            PhpString::basename($orig)
+        ) . ';');
     } else {
         header('Content-Disposition: inline;' . rfc2231_encode(
-                'filename', \dokuwiki\Utf8\PhpString::basename($orig)) . ';'
-        );
+            'filename',
+            PhpString::basename($orig)
+        ) . ';');
     }
 
     //use x-sendfile header to pass the delivery to compatible webservers
@@ -87,11 +94,11 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
 
     // send file contents
     $fp = @fopen($file, "rb");
-    if($fp) {
+    if ($fp) {
         http_rangeRequest($fp, filesize($file), $mime);
     } else {
         http_status(500);
-        print "Could not read $file - bad permissions?";
+        echo "Could not read $file - bad permissions?";
     }
 }
 
@@ -111,18 +118,17 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
  * @return string           in the format " name=value" for values WITHOUT special characters
  * @return string           in the format " name*=charset'lang'value" for values WITH special characters
  */
-function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
+function rfc2231_encode($name, $value, $charset = 'utf-8', $lang = 'en')
+{
     $internal = preg_replace_callback(
         '/[\x00-\x20*\'%()<>@,;:\\\\"\/[\]?=\x80-\xFF]/',
-        function ($match) {
-            return rawurlencode($match[0]);
-        },
+        static fn($match) => rawurlencode($match[0]),
         $value
     );
-    if ( $value != $internal ) {
-        return ' '.$name.'*='.$charset."'".$lang."'".$internal;
+    if ($value != $internal) {
+        return ' ' . $name . '*=' . $charset . "'" . $lang . "'" . $internal;
     } else {
-        return ' '.$name.'="'.$value.'"';
+        return ' ' . $name . '="' . $value . '"';
     }
 }
 
@@ -141,44 +147,45 @@ function rfc2231_encode($name, $value, $charset='utf-8', $lang='en') {
  * @param int    $height
  * @return array as array(STATUS, STATUSMESSAGE)
  */
-function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
+function checkFileStatus(&$media, &$file, $rev = '', $width = 0, $height = 0)
+{
     global $MIME, $EXT, $CACHE, $INPUT;
 
     //media to local file
-    if(media_isexternal($media)) {
+    if (media_isexternal($media)) {
         //check token for external image and additional for resized and cached images
-        if(media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
-            return array(412, 'Precondition Failed');
+        if (media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
+            return [412, 'Precondition Failed'];
         }
         //handle external images
-        if(strncmp($MIME, 'image/', 6) == 0) $file = media_get_from_URL($media, $EXT, $CACHE);
-        if(!$file) {
+        if (str_starts_with($MIME, 'image/')) $file = media_get_from_URL($media, $EXT, $CACHE);
+        if (!$file) {
             //download failed - redirect to original URL
-            return array(302, $media);
+            return [302, $media];
         }
     } else {
         $media = cleanID($media);
-        if(empty($media)) {
-            return array(400, 'Bad request');
+        if (empty($media)) {
+            return [400, 'Bad request'];
         }
         // check token for resized images
         if (($width || $height) && media_get_token($media, $width, $height) !== $INPUT->str('tok')) {
-            return array(412, 'Precondition Failed');
+            return [412, 'Precondition Failed'];
         }
 
         //check permissions (namespace only)
-        if(auth_quickaclcheck(getNS($media).':X') < AUTH_READ) {
-            return array(403, 'Forbidden');
+        if (auth_quickaclcheck(getNS($media) . ':X') < AUTH_READ) {
+            return [403, 'Forbidden'];
         }
         $file = mediaFN($media, $rev);
     }
 
     //check file existance
-    if(!file_exists($file)) {
-        return array(404, 'Not Found');
+    if (!file_exists($file)) {
+        return [404, 'Not Found'];
     }
 
-    return array(200, null);
+    return [200, null];
 }
 
 /**
@@ -191,10 +198,11 @@ function checkFileStatus(&$media, &$file, $rev = '', $width=0, $height=0) {
  * @param string $cache
  * @return int cachetime in seconds
  */
-function calc_cache($cache) {
+function calc_cache($cache)
+{
     global $conf;
 
-    if(strtolower($cache) == 'nocache') return 0; //never cache
-    if(strtolower($cache) == 'recache') return $conf['cachetime']; //use standard cache
+    if (strtolower($cache) == 'nocache') return 0; //never cache
+    if (strtolower($cache) == 'recache') return $conf['cachetime']; //use standard cache
     return -1; //cache endless
 }

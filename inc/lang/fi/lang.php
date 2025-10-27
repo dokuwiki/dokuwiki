@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Pasi <zazuu@zazuu.net>
  * @author Tuomo Hartikainen <tuomo.hartikainen@heksia.fi>
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
@@ -72,6 +73,7 @@ $lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
+$lang['searchcreatepage']      = 'Jos et löytänyt etsimääsi, voit luoda tai muokata sivua %s, joka on nimetty kyselysi mukaan.';
 $lang['js']['willexpire']      = 'Lukituksesi tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
 $lang['js']['notsavedyet']     = 'Dokumentissa on tallentamattomia muutoksia, jotka häviävät.
  Haluatko varmasti jatkaa?';
@@ -201,7 +203,7 @@ $lang['created']               = 'luotu';
 $lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
-$lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
+$lang['noflash']               = 'Tarvitset <a href="http://get.adobe.com/flashplayer">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
 $lang['download']              = 'Lataa palanen';
 $lang['tools']                 = 'Työkalut';
 $lang['user_tools']            = 'Käyttäjän työkalut';
@@ -281,7 +283,7 @@ $lang['i_wikiname']            = 'Wikin nimi';
 $lang['i_enableacl']           = 'Käytä käyttöoikeuksien hallintaa (ACL) (Suositeltu)';
 $lang['i_superuser']           = 'Pääkäyttäjä';
 $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia ongelmia. Et voi jatkaa ennen kuin ne on korjattu.';
-$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
+$lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="https://www.dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
 $lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
 $lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload pitää ottaa pois käytöstä php.ini -tiedostosta käyttääksesi DokuWikiä';

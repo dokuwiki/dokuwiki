@@ -4,7 +4,8 @@
  */
 
 if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
-require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
+require_once DOKU_UNITTEST.'vendor/autoload.php';
+require_once DOKU_UNITTEST.'core/phpQuery-onefile.php'; // deprecated
 require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
 require_once DOKU_UNITTEST.'core/TestResponse.php';
 require_once DOKU_UNITTEST.'core/TestRequest.php';
@@ -51,10 +52,10 @@ $default_server_vars = array(
     'DOCUMENT_ROOT' => DOKU_INC,
     'SERVER_PROTOCOL' => 'HTTP/1.1',
     'SERVER_SOFTWARE' => 'nginx/0.7.67',
-    'REMOTE_ADDR' => '87.142.120.6',
+    'REMOTE_ADDR' => '172.17.18.19',
     'REMOTE_PORT' => '21418',
-    'SERVER_ADDR' => '46.38.241.24',
-    'SERVER_PORT' => '443',
+    'SERVER_ADDR' => '10.11.12.13',
+    'SERVER_PORT' => '80',
     'SERVER_NAME' => 'wiki.example.com',
     'REDIRECT_STATUS' => '200',
     'SCRIPT_FILENAME' => DOKU_INC.'doku.php',

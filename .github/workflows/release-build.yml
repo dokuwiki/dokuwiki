@@ -1,0 +1,106 @@
+# This workflow creates a new tag, builds the release archives and uploads them to GitHub and our server
+# It is triggered by pushing to the stable branch, either manually or by merging a PR created by the
+# release-preparation workflow
+
+name: "Release: Tag, Build & Deploy"
+on:
+  push:
+    branches:
+      - stable
+
+jobs:
+
+  tag:
+    name: Tag Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Environment
+        run: |
+          php .github/release.php current >> $GITHUB_ENV
+
+      - name: Check if a tag already exists
+        run: |
+          if git rev-parse "release-${{ env.current_version }}" >/dev/null 2>&1; then
+            echo "::error::Tag already exists, be sure to update the VERSION file for a hotfix"
+            exit 1
+          fi
+
+      - name: Create tag
+        uses: actions/github-script@v6
+        with:
+          # a privileged token is needed here to create the (protected) tag
+          github-token: ${{ secrets.RELEASE_TOKEN }}
+          script: |
+            const {current_version} = process.env;
+            github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/release-${current_version}`,
+                sha: context.sha
+            });
+
+  build:
+    name: Build Release
+    needs: tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare Environment
+        run: |
+          php .github/release.php current >> $GITHUB_ENV
+
+      - name: Build Archives
+        run: |
+          for F in $(awk '/export-ignore/{print $1}' .gitattributes); do
+            rm -rf $F
+          done
+          mkdir -p data/pages/playground
+          echo "====== PlayGround ======" > data/pages/playground/playground.txt
+          cd ..
+          mv ${{ github.event.repository.name }} "dokuwiki-${{ env.current_file }}"
+          tar -czvf "dokuwiki-${{ env.current_file }}.tgz" dokuwiki-${{ env.current_file }}
+          zip -r "dokuwiki-${{ env.current_file }}.zip" dokuwiki-${{ env.current_file }}
+          rm -rf "dokuwiki-${{ env.current_file }}"
+          mkdir ${{ github.event.repository.name }}
+          mv "dokuwiki-${{ env.current_version }}.tgz" ${{ github.event.repository.name }}/
+          mv "dokuwiki-${{ env.current_version }}.zip" ${{ github.event.repository.name }}/
+
+      - name: Release to Github
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: DokuWiki ${{ env.current_raw }} [${{ env.current_update }}]
+          tag_name: release-${{ env.current_version }}
+          files: |
+            dokuwiki-${{ env.current_file }}.tgz
+            dokuwiki-${{ env.current_file }}.zip
+    outputs:
+      version: ${{ env.current_version }}
+      file: ${{ env.current_file }}
+      url: ${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
+
+  deploy:
+    name: Deploy Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download
+        run: |
+          wget ${{ needs.build.outputs.url }} -O dokuwiki-${{ needs.build.outputs.file }}.tgz
+
+      - name: Setup SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # generate with ssh-keyscan -H <server>
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Deploy to Server
+        run: |
+          scp "dokuwiki-${{ needs.build.outputs.file }}.tgz" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:htdocs/src/dokuwiki/
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd htdocs/src/dokuwiki/ && tar -xzvf dokuwiki-${{ needs.build.outputs.file }}.tgz"

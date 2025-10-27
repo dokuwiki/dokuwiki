@@ -5,6 +5,7 @@
  *
  * Albanian language file
  *
+ * @author Valdrin Jonuzi <valdrinj00@gmail.com>
  * @author Endrit Callaki <endrit@callaki.de>
  * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
@@ -85,8 +86,6 @@ $lang['indexdelay']            = 'Vonesa në kohë para index-imit (sekonda)';
 $lang['mailguard']             = 'Errëso adresat e email-it';
 $lang['iexssprotect']          = 'Kontrollo skedarët e ngarkuar për kod të mundshëm dashakeqës JavaScript ose HTML';
 $lang['usedraft']              = 'Ruaj automatikisht një skicë gjatë redaktimit';
-$lang['htmlok']                = 'Lejo HTML të ngulitura';
-$lang['phpok']                 = 'Lejo PHP të ngulitura';
 $lang['locktime']              = 'Mosha maksimale për kyçjen e skedarëve (sekonda)';
 $lang['cachetime']             = 'Mosha maksimale për cache (sekonda)';
 $lang['target____wiki']        = 'Dritarja target për link-e të brendshëm';

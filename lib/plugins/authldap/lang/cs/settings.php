@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Petr Kajzar <petr.kajzar@lf1.cuni.cz>
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author mkucera66 <mkucera66@seznam.cz>
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Martin Růžička <martinr@post.cz>
@@ -26,6 +26,7 @@ $lang['groupscope']            = 'Omezení rozsahu vyhledávání skupiny';
 $lang['userkey']               = 'Atribut označující uživatelské jméno; musí být konzistetní s uživatelským filtrem.';
 $lang['groupkey']              = 'Atribut členství uživatele ve skupinách (namísto standardních AD skupin), tj. skupina z oddělení nebo telefonní číslo';
 $lang['modPass']               = 'Může být LDAP heslo změněno přes dokuwiki?';
+$lang['modPassPlain']          = 'Odesílat aktualizace hesel na server LDAP v prostém textu (namísto jejich zabezpečení nakonfigurovaným algoritmem před přenosem)?';
 $lang['debug']                 = 'Zobrazit dodatečné debugovací informace';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

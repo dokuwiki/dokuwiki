@@ -17,6 +17,7 @@ $lang['groupscope']  = 'Limit search scope for group search';
 $lang['userkey']     = 'Attribute denoting the username; must be consistent to userfilter.';
 $lang['groupkey']    = 'Group membership from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['modPass']     = 'Can the LDAP password be changed via dokuwiki?';
+$lang['modPassPlain']= 'Send password updates in plain text to the LDAP server (rather than salt and hash them with the configured algorithm before transmission)?';
 $lang['debug']       = 'Display additional debug information on errors';
 
 

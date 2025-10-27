@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Nocache extends AbstractMode
 {
-
     /** @inheritdoc */
     public function connectTo($mode)
     {

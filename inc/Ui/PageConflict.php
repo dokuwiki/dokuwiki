@@ -14,49 +14,49 @@ class PageConflict extends Ui
     protected $text;
     protected $summary;
 
-    /** 
+    /**
      * PageConflict Ui constructor
      *
-     * @param string $text     wiki text
-     * @param string $summary  edit summary
-    */
+     * @param string $text wiki text
+     * @param string $summary edit summary
+     */
     public function __construct($text = '', $summary = '')
     {
-        $this->text    = $text;
+        $this->text = $text;
         $this->summary = $summary;
     }
 
     /**
      * Show conflict form to ask whether save anyway or cancel the page edits
      *
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
      */
     public function show()
     {
-        global $ID;
+        global $INFO;
         global $lang;
 
         // print intro
-        print p_locale_xhtml('conflict');
+        echo p_locale_xhtml('conflict');
 
         // create the form
         $form = new Form(['id' => 'dw__editform']);
         $form->addTagOpen('div')->addClass('no');
-        $form->setHiddenField('id', $ID);
+        $form->setHiddenField('id', $INFO['id']);
         $form->setHiddenField('wikitext', $this->text);
         $form->setHiddenField('summary', $this->summary);
 
-        $form->addButton('do[save]', $lang['btn_save'] )->attrs(['type' => 'submit', 'accesskey' => 's']);
-        $form->addButton('do[cancel]', $lang['btn_cancel'] )->attrs(['type' => 'submit']);
+        $form->addButton('do[save]', $lang['btn_save'])->attrs(['type' => 'submit', 'accesskey' => 's']);
+        $form->addButton('do[cancel]', $lang['btn_cancel'])->attrs(['type' => 'submit']);
         $form->addTagClose('div');
 
-        print $form->toHTML('Conflict');
+        echo $form->toHTML('Conflict');
 
-        print '<br /><br /><br /><br />';
+        echo '<br /><br /><br /><br />';
 
-        (new Diff($this->text, false))->show();
+        // print difference
+        (new PageDiff($INFO['id']))->compareWith($this->text)->preference('showIntro', false)->show();
     }
-
 }

@@ -2,21 +2,111 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
-# removed in next version
-vendor/paragonie/random_compat/LICENSE
-vendor/paragonie/random_compat/composer.json
+# removed on 2024-12-09
+lib/plugins/extension/_test/extension.test.php
+lib/plugins/extension/all.less
+lib/plugins/extension/helper/extension.php
+lib/plugins/extension/helper/gui.php
+lib/plugins/extension/helper/list.php
+lib/plugins/extension/helper/repository.php
+lib/plugins/extension/images/bug.gif
+lib/plugins/extension/images/disabled.png
+lib/plugins/extension/images/donate.png
+lib/plugins/extension/images/down.png
+lib/plugins/extension/images/enabled.png
+lib/plugins/extension/images/tag.png
+lib/plugins/extension/images/up.png
+lib/plugins/extension/images/warning.png
+
+# removed on 2022-06-26
+.travis.yml
+appveyor.yml
+inc/IXR_Library.php
+inc/cli.php
+lib/images/interwiki/amazon.de.gif
+lib/images/interwiki/amazon.gif
+lib/images/interwiki/amazon.uk.gif
+lib/images/interwiki/callto.gif
+lib/images/interwiki/doku.gif
+lib/images/interwiki/google.gif
+lib/images/interwiki/paypal.gif
+lib/images/interwiki/phpfn.gif
+lib/images/interwiki/skype.gif
+lib/images/interwiki/tel.gif
+lib/images/interwiki/user.png
+lib/images/interwiki/wp.gif
+lib/images/interwiki/wpde.gif
+lib/images/interwiki/wpes.gif
+lib/images/interwiki/wpfr.gif
+lib/images/interwiki/wpjp.gif
+lib/images/interwiki/wpmeta.gif
+lib/images/interwiki/wppl.gif
+lib/images/smileys/delete.gif
+lib/images/smileys/facepalm.gif
+lib/images/smileys/fixme.gif
+lib/images/smileys/icon_arrow.gif
+lib/images/smileys/icon_biggrin.gif
+lib/images/smileys/icon_confused.gif
+lib/images/smileys/icon_cool.gif
+lib/images/smileys/icon_cry.gif
+lib/images/smileys/icon_doubt.gif
+lib/images/smileys/icon_doubt2.gif
+lib/images/smileys/icon_eek.gif
+lib/images/smileys/icon_evil.gif
+lib/images/smileys/icon_exclaim.gif
+lib/images/smileys/icon_frown.gif
+lib/images/smileys/icon_fun.gif
+lib/images/smileys/icon_idea.gif
+lib/images/smileys/icon_kaddi.gif
+lib/images/smileys/icon_lol.gif
+lib/images/smileys/icon_mrgreen.gif
+lib/images/smileys/icon_neutral.gif
+lib/images/smileys/icon_question.gif
+lib/images/smileys/icon_razz.gif
+lib/images/smileys/icon_redface.gif
+lib/images/smileys/icon_rolleyes.gif
+lib/images/smileys/icon_sad.gif
+lib/images/smileys/icon_silenced.gif
+lib/images/smileys/icon_smile.gif
+lib/images/smileys/icon_smile2.gif
+lib/images/smileys/icon_surprised.gif
+lib/images/smileys/icon_twisted.gif
+lib/images/smileys/icon_wink.gif
 vendor/paragonie/random_compat/lib/byte_safe_strings.php
 vendor/paragonie/random_compat/lib/cast_to_int.php
 vendor/paragonie/random_compat/lib/error_polyfill.php
-vendor/paragonie/random_compat/lib/random.php
 vendor/paragonie/random_compat/lib/random_bytes_com_dotnet.php
 vendor/paragonie/random_compat/lib/random_bytes_dev_urandom.php
 vendor/paragonie/random_compat/lib/random_bytes_libsodium.php
 vendor/paragonie/random_compat/lib/random_bytes_libsodium_legacy.php
 vendor/paragonie/random_compat/lib/random_bytes_mcrypt.php
 vendor/paragonie/random_compat/lib/random_int.php
+lib/images/smileys/icon_cool.gif
+lib/images/smileys/icon_eek.gif
+lib/images/smileys/icon_eek.gif
+lib/images/smileys/icon_sad.gif
+lib/images/smileys/icon_smile.gif
+lib/images/smileys/icon_smile2.gif
+lib/images/smileys/icon_doubt.gif
+lib/images/smileys/icon_doubt2.gif
+lib/images/smileys/icon_confused.gif
+lib/images/smileys/icon_biggrin.gif
+lib/images/smileys/icon_razz.gif
+lib/images/smileys/icon_surprised.gif
+lib/images/smileys/icon_surprised.gif
+lib/images/smileys/icon_silenced.gif
+lib/images/smileys/icon_silenced.gif
+lib/images/smileys/icon_neutral.gif
+lib/images/smileys/icon_wink.gif
+lib/images/smileys/facepalm.gif
+lib/images/smileys/icon_fun.gif
+lib/images/smileys/icon_question.gif
+lib/images/smileys/icon_exclaim.gif
+lib/images/smileys/icon_lol.gif
+lib/images/smileys/fixme.gif
+lib/images/smileys/delete.gif
 
-# removed in 2020-06-01
+# removed on 2020-06-01
 inc/PluginInterface.php
 inc/PluginTrait.php
 inc/HTTPClient.php
@@ -141,10 +231,8 @@ lib/plugins/config/settings/config.class.php
 lib/plugins/config/settings/extra.class.php
 lib/plugins/styling/iris.js
 lib/scripts/jquery/jquery-migrate.min.js
-vendor/paragonie/random_compat/psalm-autoload.php
-vendor/paragonie/random_compat/psalm.xml
 
-# removed in 2018-04-22
+# removed on 2018-04-22
 data/security.png
 data/security.xcf
 inc/EmailAddressValidator.php
@@ -175,11 +263,11 @@ lib/scripts/jquery/jquery-ui.js
 lib/scripts/jquery/jquery.js
 lib/tpl/dokuwiki/css/_admin.css
 
-# removed in 2016-06-26
+# removed on 2016-06-26
 inc/cliopts.php
 lib/tpl/dokuwiki/css/mixins.less
 
-# removed in 2015-08-10
+# removed on 2015-08-10
 inc/TarLib.class.php
 inc/geshi.php
 inc/geshi/4cs.php
@@ -412,7 +500,7 @@ lib/scripts/drag.js
 lib/scripts/jquery/jquery-ui-theme/images/animated-overlay.gif
 lib/scripts/tw-sack.js
 
-# removed in 2014-05-05
+# removed on 2014-05-05
 lib/images/fileicons/audio.png
 lib/plugins/plugin/admin.php
 lib/plugins/plugin/classes/ap_delete.class.php
@@ -526,7 +614,7 @@ lib/plugins/plugin/lang/zh/lang.php
 lib/plugins/plugin/plugin.info.txt
 lib/plugins/plugin/style.css
 
-# removed in 2013-11-18
+# removed on 2013-11-18
 lib/images/arrow_down.gif
 lib/images/arrow_up.gif
 lib/images/at.gif
@@ -537,7 +625,7 @@ lib/images/list-minus.gif
 lib/images/list-plus.gif
 lib/images/pencil.png
 
-# removed in 2013-10-28
+# removed on 2013-10-28
 lib/images/interwiki/meatball.gif
 lib/images/interwiki/wiki.gif
 lib/plugins/acl/ajax.php
@@ -588,10 +676,10 @@ lib/tpl/dokuwiki/css/mobile.css
 lib/tpl/dokuwiki/css/pagetools.css
 lib/tpl/dokuwiki/css/structure.css
 
-# removed in 2013-05-10
+# removed on 2013-05-10
 lib/plugins/info/lang/sl/lang.php
 
-# removed in 2013-04-06
+# removed on 2013-04-06
 inc/adLDAP.php
 inc/auth/ad.class.php
 inc/auth/basic.class.php
@@ -600,7 +688,7 @@ inc/auth/mysql.class.php
 inc/auth/pgsql.class.php
 inc/auth/plain.class.php
 
-# removed in 2012-09-10
+# removed on 2012-09-10
 lib/images/icon-file.png
 lib/images/icon-thumb.png
 lib/images/interwiki/skype.png
@@ -608,7 +696,7 @@ lib/plugins/acl/rtl.css
 lib/plugins/config/rtl.css
 lib/plugins/plugin/rtl.css
 
-# removed in 2011-11-10
+# removed on 2011-11-10
 lib/_fla/.htaccess
 lib/_fla/MultipleUpload.as
 lib/_fla/README
@@ -620,11 +708,11 @@ lib/scripts/ajax.js
 lib/scripts/events.js
 lib/scripts/subscriptions.js
 
-# removed in 2011-05-25
+# removed on 2011-05-25
 conf/words.aspell.dist
 lib/styles/style.css
 
-# removed in 2010-11-07
+# removed on 2010-11-07
 inc/lang/ar/subscribermail.txt
 inc/lang/az/subscribermail.txt
 inc/lang/bg/subscribermail.txt
@@ -672,7 +760,7 @@ inc/lang/uk/subscribermail.txt
 inc/lang/zh/subscribermail.txt
 inc/lang/zh-tw/subscribermail.txt
 
-# removed in rc2010-10-07
+# removed on rc2010-10-07
 conf/msg
 inc/lang/bg/wordblock.txt
 inc/lang/ca-valencia/wordblock.txt
@@ -723,7 +811,7 @@ inc/lang/zh-tw/wordblock.txt
 inc/lang/zh/wordblock.txt
 lib/scripts/pngbehavior.htc
 
-# removed in rc2009-12-02
+# removed on rc2009-12-02
 inc/lang/ar/wordblock.txt
 inc/lang/ca-va/
 lib/plugins/acl/lang/ca-va/
@@ -733,11 +821,11 @@ lib/plugins/popularity/lang/ca-va/
 lib/plugins/revert/lang/ca-va/
 lib/plugins/usermanager/lang/ca-va/
 
-# removed in rc2009-01-30
+# removed on rc2009-01-30
 lib/plugins/upgradeplugindirectory
 lib/plugins/upgradeplugindirectory/action.php
 
-# removed in rc2009-01-26
+# removed on rc2009-01-26
 inc/auth/punbb.class.php
 inc/lang/ko/edit.txt_bak
 inc/lang/ko/lang.php_bak
@@ -751,7 +839,7 @@ lib/plugins/usermanager/images/no_user_edit.png
 lib/plugins/usermanager/images/user_edit.png
 lib/tpl/default/UWEB.css
 
-# removed in rc2008-03-31
+# removed on rc2008-03-31
 inc/aspell.php
 inc/geshi/css-gen.cfg
 inc/lang/fr/admin_acl.txt
@@ -797,7 +885,7 @@ lib/plugins/acl/lang/zh-tw/intro.txt
 lib/scripts/spellcheck.js
 lib/styles/spellcheck.css
 
-# removed in 2007-06-26
+# removed on 2007-06-26
 inc/parser/wiki.php
 lib/images/interwiki/bug.gif
 lib/plugins/base.php
@@ -807,7 +895,7 @@ lib/plugins/plugin/inc/zip.lib.php
 lib/scripts/domLib.js
 lib/scripts/domTT.js
 
-# removed in 2006-11-06
+# removed on 2006-11-06
 inc/admin_acl.php
 inc/magpie
 inc/magpie/rss_cache.inc
@@ -819,7 +907,7 @@ lib/tpl/default/mediaedit.php
 lib/tpl/default/media.php
 lib/tpl/default/mediaref.php
 
-# removed in 2006-03-09
+# removed on 2006-03-09
 data/pages/wiki/playground.txt
 inc/auth/ldap.php
 inc/auth/mysql.php
@@ -858,3 +946,54 @@ lib/images/toolbar/list.png
 lib/images/toolbar/list_ul.png
 lib/images/toolbar/rule.png
 lib/tpl/default/images/interwiki.png
+.github/version.php
+.github/workflows/release.yml
+_test/tests/inc/form/checkableelement.test.php
+_test/tests/inc/pageutils_resolve_id.test.php
+inc/Parsing/ParserMode/Html.php
+inc/Parsing/ParserMode/Php.php
+_test/tests/lib/exe/js_js_compress.test.php
+_test/tests/lib/exe/js_js_compress/test-CommentInDoubleQuotes1-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentInDoubleQuotes1-out.js
+_test/tests/lib/exe/js_js_compress/test-CommentInDoubleQuotes2-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentInDoubleQuotes2-out.js
+_test/tests/lib/exe/js_js_compress/test-CommentInSingleQuotes1-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentInSingleQuotes1-out.js
+_test/tests/lib/exe/js_js_compress/test-CommentInSingleQuotes2-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentInSingleQuotes2-out.js
+_test/tests/lib/exe/js_js_compress/test-CommentMultiline-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentMultiline-out.js
+_test/tests/lib/exe/js_js_compress/test-CommentSingleLine-in.js
+_test/tests/lib/exe/js_js_compress/test-CommentSingleLine-out.js
+_test/tests/lib/exe/js_js_compress/test-IfThenElseBraces-in.js
+_test/tests/lib/exe/js_js_compress/test-IfThenElseBraces-out.js
+_test/tests/lib/exe/js_js_compress/test-IfThenElseNoBraces-in.js
+_test/tests/lib/exe/js_js_compress/test-IfThenElseNoBraces-out.js
+_test/tests/lib/exe/js_js_compress/test-RegexpBackslash-in.js
+_test/tests/lib/exe/js_js_compress/test-RegexpBackslash-out.js
+_test/tests/lib/exe/js_js_compress/test-RegexpSimple-in.js
+_test/tests/lib/exe/js_js_compress/test-RegexpSimple-out.js
+_test/tests/lib/exe/js_js_compress/test-RegexpSimpleWhitespace-in.js
+_test/tests/lib/exe/js_js_compress/test-RegexpSimpleWhitespace-out.js
+_test/tests/lib/exe/js_js_compress/test-RegexpString-in.js
+_test/tests/lib/exe/js_js_compress/test-RegexpString-out.js
+_test/tests/lib/exe/js_js_compress/test-StatementDoWhile-in.js
+_test/tests/lib/exe/js_js_compress/test-StatementDoWhile-out.js
+_test/tests/lib/exe/js_js_compress/test-StatementForIn-in.js
+_test/tests/lib/exe/js_js_compress/test-StatementForIn-out.js
+_test/tests/lib/exe/js_js_compress/test-StatementNew-in.js
+_test/tests/lib/exe/js_js_compress/test-StatementNew-out.js
+_test/tests/lib/exe/js_js_compress/test-StatementSwitchCase-in.js
+_test/tests/lib/exe/js_js_compress/test-StatementSwitchCase-out.js
+_test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-in.js
+_test/tests/lib/exe/js_js_compress/test-StringDoubleQuotes-out.js
+_test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-in.js
+_test/tests/lib/exe/js_js_compress/test-StringSingleQuotes-out.js
+vendor/kissifrot/php-ixr/.editorconfig
+vendor/kissifrot/php-ixr/.gitignore
+_test/tests/inc/pageutils_resolve_mediaid.test.php
+_test/tests/inc/pageutils_resolve_pageid.test.php
+vendor/phpseclib/phpseclib/phpseclib/Net/SCP.php
+vendor/phpseclib/phpseclib/phpseclib/Net/SSH1.php
+vendor/marcusschwarz/lesserphp/README.md
+vendor/marcusschwarz/lesserphp/lessc.inc.php

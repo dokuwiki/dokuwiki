@@ -1,10 +1,15 @@
 <?php
+
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
+
 /**
  * A simple renderer that allows downloading of code and file snippets
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class Doku_Renderer_code extends Doku_Renderer {
+class Doku_Renderer_code extends Doku_Renderer
+{
     protected $_codeblock = 0;
 
     /**
@@ -16,20 +21,21 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    public function code($text, $language = null, $filename = '') {
+    public function code($text, $language = null, $filename = '')
+    {
         global $INPUT;
-        if(!$language) $language = 'txt';
+        if (!$language) $language = 'txt';
         $language = preg_replace(PREG_PATTERN_VALID_LANGUAGE, '', $language);
-        if(!$filename) $filename = 'snippet.'.$language;
-        $filename = \dokuwiki\Utf8\PhpString::basename($filename);
-        $filename = \dokuwiki\Utf8\Clean::stripspecials($filename, '_');
+        if (!$filename) $filename = 'snippet.' . $language;
+        $filename = PhpString::basename($filename);
+        $filename = Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
-        if(strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
+        if (strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
             $text = str_replace("\n", "\r\n", $text);
         }
 
-        if($this->_codeblock == $INPUT->str('codeblock')) {
+        if ($this->_codeblock == $INPUT->str('codeblock')) {
             header("Content-Type: text/plain; charset=utf-8");
             header("Content-Disposition: attachment; filename=$filename");
             header("X-Robots-Tag: noindex");
@@ -47,14 +53,16 @@ class Doku_Renderer_code extends Doku_Renderer {
      * @param string $language
      * @param string $filename
      */
-    public function file($text, $language = null, $filename = '') {
+    public function file($text, $language = null, $filename = '')
+    {
         $this->code($text, $language, $filename);
     }
 
     /**
      * This should never be reached, if it is send a 404
      */
-    public function document_end() {
+    public function document_end()
+    {
         http_status(404);
         echo '404 - Not found';
         exit;
@@ -65,7 +73,8 @@ class Doku_Renderer_code extends Doku_Renderer {
      *
      * @returns string 'code'
      */
-    public function getFormat() {
+    public function getFormat()
+    {
         return 'code';
     }
 }

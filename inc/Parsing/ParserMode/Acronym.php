@@ -5,7 +5,7 @@ namespace dokuwiki\Parsing\ParserMode;
 class Acronym extends AbstractMode
 {
     // A list
-    protected $acronyms = array();
+    protected $acronyms = [];
     protected $pattern = '';
 
     /**
@@ -15,7 +15,7 @@ class Acronym extends AbstractMode
      */
     public function __construct($acronyms)
     {
-        usort($acronyms, array($this,'compare'));
+        usort($acronyms, [$this, 'compare']);
         $this->acronyms = $acronyms;
     }
 
@@ -26,7 +26,7 @@ class Acronym extends AbstractMode
 
         $bound = '[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]';
         $acronyms = array_map(['\\dokuwiki\\Parsing\\Lexer\\Lexer', 'escape'], $this->acronyms);
-        $this->pattern = '(?<=^|'.$bound.')(?:'.join('|', $acronyms).')(?='.$bound.')';
+        $this->pattern = '(?<=^|' . $bound . ')(?:' . implode('|', $acronyms) . ')(?=' . $bound . ')';
     }
 
     /** @inheritdoc */

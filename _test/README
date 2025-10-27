@@ -1,75 +1,60 @@
-====== DokuWiki Test Suite ======
+====== DokuWiki Test Suite and Develpoment Tools ======
 
-This is the test suite to automatically test various parts of DokuWiki.
+This directory contains the test suite for DokuWiki as well as configuration for various code quality tools.
 
-===== Requirements =====
+===== Setup =====
 
-  * PHPUnit 3.6.10+ http://www.phpunit.de/
-  * PHP 5.3+ http://php.net
+Before you can use any of the tools you need to install the dependencies. This is done using composer.
 
-===== PHPUnit Installation ======
+  composer install
 
-You can install phpunit through your distribution's package manager or simply
-download the newest phar file into the _test directory:
+If you don't have composer installed yet, you can get it from https://getcomposer.org/
 
-  cd _test/
-  wget https://phar.phpunit.de/phpunit.phar
+===== Composer Scripts =====
 
+The composer configuration contains a number of scripts to run the various tools on all of DokuWiki.
 
-===== Running all tests =====
+Run all the tests:
 
-Just change to the ''_test'' directory and run phpunit (depending on your install
-method):
+  composer run test
 
-  cd _test/
-  phpunit
+Check for code style violations:
 
-or
+  composer run check
 
-  cd _test/
-  php phpunit.phar
+Automatically fix code style violations:
 
-===== Troubleshooting =====
+  composer run autofix
 
-PHPUnit will fail on some systems with a //headers already sent// error.
-This is a known problem with PHPUnit, the error can be avoided by passing the
-'--stderr' flag to phpunit:
+===== Tools =====
 
-  phpunit --stderr
+All the tools can be called directly from the ''vendor/bin'' directory.
 
-On windows you may have to enable OpenSSL support for https tests.
-Some of them point to httpclient_http.tests.php on the failure.
-To enable HTTPS support copy the ''libeay32.dll'' and ''ssleay32.dll''
-to your ''windows\system32'' folder and add the following line to your php.ini
-in the extension section:
+==== PHPUnit ====
 
-<code ini>
-extension=php_openssl.dll
-</code>
+  ./vendor/bin/phpunit --verbose --stderr
 
-===== Running selected Tests =====
+The --stderr flag is needed to avoid a headers already sent error on some systems.
 
-You can run a single test file by providing it as an argument to phpunit:
+To learn more about running tests and writing your own, visit https://www.dokuwiki.org/devel:unittesting
 
-  phpunit tests/inc/common_cleanText.test.php
+==== PHP CodeSniffer ====
 
-You can also use groups to exclude certain test from running. For example use
-the following command to avoid long running test or tests accessing the
-Internet.
+To check for code violations:
 
-  phpunit --exclude-group slow,internet
+  ./vendor/bin/phpcs
 
-===== Create new Tests =====
+To automatically fix code violations:
 
-To create a test for DokuWiki, create a *.test.php file within the tests/
-folder. Please respect the folder structure and naming convention. Inside the
-file, implement a class, extending 'DokuWikiTest'. Every method, starting
-with 'test' will be called as a test (e.g. 'testIfThisIsValid');
+  ./vendor/bin/phpcbf
 
-===== TODO for the test framework =====
+To learn more about PHP CodeSniffer visit https://www.dokuwiki.org/devel:phpcodesniffer
 
-  * optional: add helper methods to TestRequest for easy form submission
-    * createForm(), ...
-  * check PHP Unit test_helpers https://github.com/sebastianbergmann/php-test-helpers
+==== Rector ====
 
+To automatically fix code smells
+
+  ./vendor/bin/rector process
+
+To learn more about PHP CodeSniffer visit https://www.dokuwiki.org/devel:rector
 

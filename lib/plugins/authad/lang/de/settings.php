@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author C!own77 <clown77@posteo.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
@@ -25,4 +26,5 @@ $lang['expirywarn']            = 'Tage im Voraus um Benutzer über ablaufende Pa
 $lang['additional']            = 'Eine Komma-separierte Liste von zusätzlichen AD-Attributen, die von den Benutzerobjekten abgefragt werden. Wird von einigen Plugins benutzt.';
 $lang['update_name']           = 'Benutzern erlauben, ihren AD Anzeige-Namen zu ändern?';
 $lang['update_mail']           = 'Benutzern erlauben, ihre E-Mail-Adresse zu ändern?';
+$lang['update_pass']           = 'Nutzern erlauben ihr Passwort zu ändern? Benötigt SSL oder TLS.';
 $lang['recursive_groups']      = 'Auflösen verschachtelter Gruppen für ihre jeweiligen Mitglieder (langsamer).';

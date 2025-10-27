@@ -1,9 +1,11 @@
 <?php
 
+use \dokuwiki\Input\Input;
+
 class common_getGoogleQuery_test extends DokuWikiTest {
 
     /**
-     * https://github.com/splitbrain/dokuwiki/issues/2848
+     * https://github.com/dokuwiki/dokuwiki/issues/2848
      */
     function test_google_form(){
         global $INPUT;

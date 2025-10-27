@@ -53,6 +53,7 @@ class LoaderTest extends \DokuWikiTest {
         // plugin defaults
         $this->assertArrayHasKey('plugin____testing____schnibble', $conf);
         $this->assertEquals(0, $conf['plugin____testing____schnibble']);
+        $this->assertEquals('Default value', $conf['plugin____testing____second']);
     }
 
     /**

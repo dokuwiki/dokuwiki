@@ -26,7 +26,6 @@ class PIECreator01 extends FeedCreator
         $feed .= $this->_createStylesheetReferences();
         $feed .= "<feed version=\"0.1\" xmlns=\"http://example.com/newformat#\">\n";
         $feed .= "    <title>".FeedCreator::iTrunc(htmlspecialchars($this->title), 100)."</title>\n";
-        $this->truncSize = 500;
         $feed .= "    <subtitle>".$this->getDescription()."</subtitle>\n";
         $feed .= "    <link>".$this->link."</link>\n";
         for ($i = 0; $i < count($this->items); $i++) {

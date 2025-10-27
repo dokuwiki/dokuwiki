@@ -10,49 +10,44 @@ class Formatting extends AbstractMode
 {
     protected $type;
 
-    protected $formatting = array(
-        'strong' => array(
+    protected $formatting = [
+        'strong' => [
             'entry' => '\*\*(?=.*\*\*)',
             'exit' => '\*\*',
             'sort' => 70
-        ),
-
-        'emphasis' => array(
-            'entry' => '//(?=[^\x00]*[^:])', //hack for bugs #384 #763 #1468
+        ],
+        'emphasis' => [
+            'entry' => '//(?=[^\x00]*[^:])',
+            //hack for bugs #384 #763 #1468
             'exit' => '//',
-            'sort' => 80
-        ),
-
-        'underline' => array(
+            'sort' => 80,
+        ],
+        'underline' => [
             'entry' => '__(?=.*__)',
             'exit' => '__',
             'sort' => 90
-        ),
-
-        'monospace' => array(
+        ],
+        'monospace' => [
             'entry' => '\x27\x27(?=.*\x27\x27)',
             'exit' => '\x27\x27',
             'sort' => 100
-        ),
-
-        'subscript' => array(
+        ],
+        'subscript' => [
             'entry' => '<sub>(?=.*</sub>)',
             'exit' => '</sub>',
             'sort' => 110
-        ),
-
-        'superscript' => array(
+        ],
+        'superscript' => [
             'entry' => '<sup>(?=.*</sup>)',
             'exit' => '</sup>',
             'sort' => 120
-        ),
-
-        'deleted' => array(
+        ],
+        'deleted' => [
             'entry' => '<del>(?=.*</del>)',
             'exit' => '</del>',
             'sort' => 130
-        ),
-    );
+        ]
+    ];
 
     /**
      * @param string $type

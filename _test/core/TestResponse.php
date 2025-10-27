@@ -1,5 +1,8 @@
 <?php
 
+use DOMWrap\Document;
+use DOMWrap\NodeList;
+
 /**
  * holds a copy of all produced outputs of a TestRequest
  */
@@ -10,7 +13,7 @@ class TestResponse {
     /** @var array */
     protected $headers;
 
-    /** @var phpQueryObject */
+    /** @var Document */
     protected $pq = null;
 
     /** @var array */
@@ -90,14 +93,17 @@ class TestResponse {
     }
 
     /**
-     * Query the response for a JQuery compatible CSS selector
+     * Query the response for a JQuery like CSS selector
      *
-     * @link https://code.google.com/p/phpquery/wiki/Selectors
      * @param $selector string
-     * @return phpQueryObject
+     * @throws Exception
+     * @return NodeList
      */
     public function queryHTML($selector) {
-        if(is_null($this->pq)) $this->pq = phpQuery::newDocument($this->content);
+        if(is_null($this->pq)) {
+            $this->pq = new Document();
+            $this->pq->html($this->content);
+        }
         return $this->pq->find($selector);
     }
 

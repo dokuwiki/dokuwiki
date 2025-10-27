@@ -72,6 +72,7 @@ a.mail:after {
 /* code blocks */
 pre {
     font-family: monospace;
+    white-space: pre-wrap;
 }
 dl.code dt,
 dl.file dt {
@@ -152,6 +153,8 @@ th {
 #dokuwiki__header .logo img {
     float: left;
     margin-right: .5em;
+    height: 64px;
+    width: auto;
 }
 [dir=rtl] #dokuwiki__header .logo img {
     float: right;

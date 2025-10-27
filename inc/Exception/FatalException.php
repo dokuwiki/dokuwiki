@@ -7,5 +7,4 @@ namespace dokuwiki\Exception;
  */
 class FatalException extends \ErrorException
 {
-
 }

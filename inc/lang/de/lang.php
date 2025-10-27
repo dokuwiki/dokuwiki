@@ -3,9 +3,14 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
+ * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
+ * @author Xrizzy <xrizzy@web.de>
+ * @author Kurt Singer <webmaster@kurt-singer.com>
+ * @author Robert Riebisch <rr@bttr-software.de>
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
- * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
  * @author Anonymous <anonymous@example.org>
@@ -17,7 +22,6 @@
  * @author Karl_de_Hall <Karl.Grohmueller@sonnenhof-sha.de>
  * @author Michael Bohn <mjbohn@gmail.com>
  * @author Joel Strasser <strasser999@gmail.com>
- * @author Robert Riebisch <robert.riebisch@googlemail.com>
  * @author Joerg <scooter22@gmx.de>
  * @author Christof <gagi@fin.de>
  * @author Anika Henke <anika@selfthinker.org>
@@ -54,7 +58,7 @@ $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
-$lang['btn_source']            = 'Zeige Quelltext';
+$lang['btn_source']            = 'Quelltext anzeigen';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
 $lang['btn_search']            = 'Suche';
@@ -182,6 +186,9 @@ $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion lässt sich nicht rückgängig machen,';
 $lang['profconfdeletemissing'] = 'Bestätigung in Kontrollkästchen fehlt';
 $lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
+$lang['proftokenlegend']       = 'Zugangs-Token';
+$lang['proftokengenerate']     = 'Rücksetz-Token';
+$lang['proftokeninfo']         = 'Das Zugangs-Token kann von Dritten benutzt werden, um Aktionen in Deinem Namen durchzuführen. Wird das Token zurückgesetzt, wird das alte ungültig und es wird aus allen Anwendungen, die das alte Token verwendet haben, ausgeloggt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordern Sie ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';
@@ -252,7 +259,8 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
-$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
+$lang['unknowndate']           = 'Unbekanntes Datum';
+$lang['noflash']               = 'Das <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';
 $lang['user_tools']            = 'Benutzer-Werkzeuge';
@@ -332,7 +340,7 @@ $lang['i_wikiname']            = 'Wiki-Name';
 $lang['i_enableacl']           = 'Zugangskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen bevor Sie mit der Installation fortfahren können.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki Installation. Sie sollten entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von Ihrem Hoster deaktiviert?';
 $lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
 $lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
@@ -398,3 +406,6 @@ $lang['page_nonexist_rev']     = 'Die Seite exitiert nicht unter %s. Sie wurde a
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
 $lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Protokolldatei (Log file) zu groß. Vorherige Zeilen wurden übersprungen!';
+$lang['log_file_failed_to_open'] = 'Protokolldatei (Log file) konnte nicht geöffnet werden.';
+$lang['log_file_failed_to_read'] = 'Beim Lesen des Protokolls ist ein Fehler aufgetreten.';

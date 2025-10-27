@@ -15,13 +15,13 @@
  */
 class helper_plugin_authplain_escaping_test extends DokuWikiTest {
 
-    protected $pluginsEnabled = array('authplainharness');
-    /** @var  auth_plugin_authplain|auth_plugin_authplainharness */
+    protected $pluginsEnabled = array('authplain');
+    /** @var  auth_plugin_authplain */
     protected $auth;
 
     protected function reloadUsers() {
         /* auth caches data loaded from file, but recreated object forces reload */
-        $this->auth = new auth_plugin_authplainharness();
+        $this->auth = new auth_plugin_authplain();
     }
 
     function setUp() : void {
@@ -66,6 +66,14 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         $this->assertEquals($name,$user['name']);
     }
 
+    public function testNameWithHash() {
+        $name = "Hash # User";
+        $this->auth->createUser("slashuser", "password", $name, "me@example.com");
+        $this->reloadUsers();
+        $user = $this->auth->getUserData("slashuser");
+        $this->assertEquals($name,$user['name']);
+    }
+
     public function testModifyUser() {
         global $conf;
         $conf['passcrypt'] = 'mediawiki';
@@ -83,8 +91,6 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
     // really only required for developers to ensure this plugin will
     // work with systems running on PCRE 6.6 and lower.
     public function testLineSplit(){
-        $this->auth->setPregsplit_safe(false);
-
         $names = array(
           'plain',
           'ut-fठ8',
@@ -98,37 +104,34 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         foreach ($names as $testname) {
             $escaped = str_replace(array('\\',':'),array('\\\\','\\:'),$testname);   // escape : & \
             $test_line = $userpass.$escaped.$other_user_data;
-            $result = $this->auth->splitUserData($test_line);
+            $result = $this->callInaccessibleMethod($this->auth, 'splitUserData', [$test_line]);
 
             $this->assertEquals($escaped, $result[2]);
         }
     }
-}
-
-/**
- * Class auth_plugin_authplainharness
- */
-class auth_plugin_authplainharness extends auth_plugin_authplain {
 
     /**
-     * @param boolean $bool
+     * @see testCleaning
      */
-    public function setPregsplit_safe($bool) {
-        $this->pregsplit_safe = $bool;
+    public function provideCleaning()
+    {
+        return [
+            ['user', 'user'],
+            ['USER', 'user'],
+            [' USER ', 'user'],
+            [' US ER ', 'us_er'],
+            ['http://foo;bar', 'http_foo_bar'],
+        ];
     }
 
     /**
-     * @return bool|mixed
+     * @param string $input
+     * @param string $expected
+     * @dataProvider provideCleaning
      */
-    public function getPregsplit_safe(){
-        return $this->pregsplit_safe;
-    }
-
-    /**
-     * @param string $line
-     * @return array
-     */
-    public function splitUserData($line){
-        return parent::splitUserData($line);
+    public function testCleaning($input, $expected)
+    {
+        $this->assertEquals($expected, $this->auth->cleanUser($input));
+        $this->assertEquals($expected, $this->auth->cleanGroup($input));
     }
 }

@@ -11,15 +11,15 @@ use dokuwiki\Action\Exception\ActionUserRequiredException;
  *
  * @package dokuwiki\Action
  */
-abstract class AbstractUserAction extends AbstractAclAction {
-
+abstract class AbstractUserAction extends AbstractAclAction
+{
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
         global $INPUT;
-        if($INPUT->server->str('REMOTE_USER') === '') {
+        if ($INPUT->server->str('REMOTE_USER') === '') {
             throw new ActionUserRequiredException();
         }
     }
-
 }

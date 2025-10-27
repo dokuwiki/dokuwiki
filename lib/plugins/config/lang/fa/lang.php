@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Faramarz Karamizadeh <f.karamizadeh@yahoo.com>
  * @author علیرضا ایوز <info@alirezaivaz.ir>
  * @author Masoud Sadrnezhaad <masoud@sadrnezhaad.ir>
  * @author behrad eslamifar <behrad_es@yahoo.com)
@@ -99,8 +100,6 @@ $lang['indexdelay']            = 'مقدار تاخیر پیش از فهرست�
 $lang['mailguard']             = 'مبهم کردن آدرس‌های ایمیل';
 $lang['iexssprotect']          = 'بررسی کردن فایل‌های ارسال شده را برای کدهای HTML یا JavaScript مخرب';
 $lang['usedraft']              = 'ایجاد خودکار چرک‌نویس در زمان نگارش';
-$lang['htmlok']                = 'امکان افزودن HTML باشد';
-$lang['phpok']                 = 'امکان افزودن PHP باشد';
 $lang['locktime']              = 'بیشینه‌ی زمان قفل شدن فایل‌ها به ثانیه';
 $lang['cachetime']             = 'بیشینه‌ی زمان حافظه‌ی موقت (cache) به ثانیه';
 $lang['target____wiki']        = 'پنجره‌ی هدف در پیوند‌های داخلی';

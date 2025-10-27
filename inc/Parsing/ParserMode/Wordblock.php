@@ -9,7 +9,7 @@ use dokuwiki\Parsing\Lexer\Lexer;
  */
 class Wordblock extends AbstractMode
 {
-    protected $badwords = array();
+    protected $badwords = [];
     protected $pattern = '';
 
     /**
@@ -31,7 +31,7 @@ class Wordblock extends AbstractMode
 
         $sep = '';
         foreach ($this->badwords as $badword) {
-            $this->pattern .= $sep.'(?<=\b)(?i)'. Lexer::escape($badword).'(?-i)(?=\b)';
+            $this->pattern .= $sep . '(?<=\b)(?i)' . Lexer::escape($badword) . '(?-i)(?=\b)';
             $sep = '|';
         }
     }

@@ -4,8 +4,8 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Externallink extends AbstractMode
 {
-    protected $schemes = array();
-    protected $patterns = array();
+    protected $schemes = [];
+    protected $patterns = [];
 
     /** @inheritdoc */
     public function preConnect()
@@ -15,18 +15,18 @@ class Externallink extends AbstractMode
         $ltrs = '\w';
         $gunk = '/\#~:.?+=&%@!\-\[\]';
         $punc = '.:?\-;,';
-        $host = $ltrs.$punc;
-        $any  = $ltrs.$gunk.$punc;
+        $host = $ltrs . $punc;
+        $any  = $ltrs . $gunk . $punc;
 
         $this->schemes = getSchemes();
         foreach ($this->schemes as $scheme) {
-            $this->patterns[] = '\b(?i)'.$scheme.'(?-i)://['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+            $this->patterns[] = '\b(?i)' . $scheme . '(?-i)://[' . $any . ']+?(?=[' . $punc . ']*[^' . $any . '])';
         }
 
-        $this->patterns[] = '(?<![/\\\\])\b(?i)www?(?-i)\.['.$host.']+?\.'.
-                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
-        $this->patterns[] = '(?<![/\\\\])\b(?i)ftp?(?-i)\.['.$host.']+?\.'.
-                            '['.$host.']+?['.$any.']+?(?=['.$punc.']*[^'.$any.'])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)www?(?-i)\.[' . $host . ']+?\.' .
+                            '[' . $host . ']+?[' . $any . ']+?(?=[' . $punc . ']*[^' . $any . '])';
+        $this->patterns[] = '(?<![/\\\\])\b(?i)ftp?(?-i)\.[' . $host . ']+?\.' .
+                            '[' . $host . ']+?[' . $any . ']+?(?=[' . $punc . ']*[^' . $any . '])';
     }
 
     /** @inheritdoc */

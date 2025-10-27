@@ -25,7 +25,7 @@ class WriterTest extends \DokuWikiTest {
 
         // before running, no backup should exist
         $this->assertFileExists($config);
-        $this->assertFileNotExists("$config.bak.php");
+        $this->assertFileDoesNotExist("$config.bak.php");
         $old = filesize($config);
 
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -59,5 +59,12 @@ class WriterTest extends \DokuWikiTest {
         $writer->touch();
         clearstatcache($config);
         $this->assertGreaterThan($old, filemtime($config));
+    }
+
+    public function testEmpty() {
+        $writer = new Writer();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('empty config');
+        $writer->save([]);
     }
 }

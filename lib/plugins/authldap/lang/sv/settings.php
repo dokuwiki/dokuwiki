@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Smorkster Andersson <smorkster@gmail.com>
@@ -30,3 +31,4 @@ $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
+$lang['referrals_o_-1']        = 'använd standard';

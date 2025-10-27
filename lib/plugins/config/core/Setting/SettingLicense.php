@@ -5,15 +5,16 @@ namespace dokuwiki\plugin\config\core\Setting;
 /**
  * Class setting_license
  */
-class SettingLicense extends SettingMultichoice {
-
-    protected $choices = array('');      // none choosen
+class SettingLicense extends SettingMultichoice
+{
+    protected $choices = [''];      // none choosen
 
     /** @inheritdoc */
-    public function initialize($default = null, $local = null, $protected = null) {
+    public function initialize($default = null, $local = null, $protected = null)
+    {
         global $license;
 
-        foreach($license as $key => $data) {
+        foreach ($license as $key => $data) {
             $this->choices[] = $key;
             $this->lang[$this->key . '_o_' . $key] = $data['name']; // stored in setting
         }

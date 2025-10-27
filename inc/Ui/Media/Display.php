@@ -10,7 +10,7 @@ class Display
     protected $mediaFile;
 
     /** @var string should IDs be shown relative to this namespace? Used in search results */
-    protected $relativeDisplay = null;
+    protected $relativeDisplay;
 
     /** @var bool scroll to this file on display? */
     protected $scrollIntoView = false;
@@ -39,7 +39,14 @@ class Display
             $src = $this->getIconUrl();
         }
 
-        return '<img src="' . $src . '" alt="' . hsc($this->mediaFile->getDisplayName()) . '" loading="lazy" />';
+        $attr = [
+            'alt' => $this->mediaFile->getDisplayName(),
+            'loading' => 'lazy',
+            'width' => $w,
+            'height' => $h,
+        ];
+
+        return '<img src="' . $src . '" ' . buildAttributes($attr) . ' />';
     }
 
     /**
@@ -108,7 +115,7 @@ class Display
     {
         if ($this->relativeDisplay !== null) {
             $id = $this->mediaFile->getId();
-            if (substr($id, 0, strlen($this->relativeDisplay)) == $this->relativeDisplay) {
+            if (str_starts_with($id, $this->relativeDisplay)) {
                 $id = substr($id, strlen($this->relativeDisplay));
             }
             return ltrim($id, ':');

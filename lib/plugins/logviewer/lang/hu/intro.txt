@@ -1,0 +1,6 @@
+====== Naplók megtekintése ======
+
+Ezen a felületen lehetőséged van a DokuWiki különféle naplóinak áttekintésére. Alapesetben itt nem sok minden látható (függően a [[doku>config:dontlog|naplózási beállításoktól]]), hiba esetén azonban valószínűleg hasznos információkat találhatsz itt a probléma okáról.
+
+Ne feledd, hogy a **naplófájlok bizalmas adatokat tartalmazhatnak** például jelszavak, elérési utak, és egyéb titkos információk.
+Mindig ellenőrizd, hogy ezeket megfelelően eltávolítottad, mielőtt megosztod őket egy fórumon, vagy hibajelentésben!

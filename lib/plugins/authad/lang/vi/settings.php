@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['account_suffix']        = 'Hậu tố tài khoản của bạn. VD. <code>@my.domain.org</code>';
@@ -20,4 +21,5 @@ $lang['expirywarn']            = 'Báo trước ngày để cảnh báo thành v
 $lang['additional']            = 'Một danh sách được phân tách bằng dấu phẩy của các thuộc tính AD bổ sung để tìm nạp dữ liệu thành viên. Được sử dụng bởi một số plugin.';
 $lang['update_name']           = 'Cho phép thành viên cập nhật tên hiển thị AD?';
 $lang['update_mail']           = 'Cho phép thành viên cập nhật địa chỉ thư điện tử?';
+$lang['update_pass']           = 'Cho phép người dùng nâng cấp thay đổi mật khẩu của họ? Yêu cầu SSL hoặc TLS như trên.';
 $lang['recursive_groups']      = 'Giải quyết những nhóm lồng nhau cho các thành viên tương ứng (chậm hơn).';

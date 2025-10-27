@@ -9,8 +9,8 @@ use dokuwiki\Menu\Item\AbstractItem;
  *
  * Defines what a Menu provides
  */
-Interface MenuInterface {
-
+interface MenuInterface
+{
     /**
      * Get the list of action items in this menu
      *

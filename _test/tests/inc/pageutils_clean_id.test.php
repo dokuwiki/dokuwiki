@@ -52,6 +52,7 @@ class init_clean_id_test extends DokuWikiTest
             [':ns:page', 'ns:page'],
             ['page:', 'page'],
             ['ns:page:', 'ns:page'],
+            ['Łł', 'll'],
 
             // use-slash handling
             ['page/page', 'page_page', ['useslash' => 0]],

@@ -3,6 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thalles Lázaro <thallesprofissional@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
+ * @author Paul Nizan <paul_nizan@hormail.com>
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author ANDRE BASSANI DE FREITAS <dedebf@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Davi Jorge <davimoises2015@hotmail.com>
@@ -135,6 +139,7 @@ $lang['js']['media_done_btn']  = 'Concluído';
 $lang['js']['media_drop']      = 'Arraste os arquivos até aqui para enviar';
 $lang['js']['media_cancel']    = 'remover';
 $lang['js']['media_overwrt']   = 'Sobrescrever arquivos existentes';
+$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório data não está corretamente seguro. Por favor, leia sobre <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
 $lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa com';
 $lang['search_ends_with']      = 'Termina com';
@@ -167,6 +172,9 @@ $lang['profdeleted']           = 'Sua conta de usuário foi excluída desse wiki
 $lang['profconfdelete']        = 'Eu desejo remover minha conta dessa wiki. <br/> Essa ação não pode ser desfeita.';
 $lang['profconfdeletemissing'] = 'Caixa de confirmação não marcada';
 $lang['proffail']              = 'O perfil do usuário não foi atualizado.';
+$lang['proftokenlegend']       = 'Token de Autenticação';
+$lang['proftokengenerate']     = 'Redefinir Token';
+$lang['proftokeninfo']         = 'O token de autenticação pode ser usado para permitir que aplicativos de terceiros façam login e atuem em seu nome.  A redefinição do token invalidará o antigo e desconectará todos os aplicativos que usaram o token anterior.';
 $lang['pwdforget']             = 'Esqueceu sua senha? Solicite outra';
 $lang['resendna']              = 'Esse wiki não tem suporte para o reenvio de senhas.';
 $lang['resendpwd']             = 'Definir a nova senha para';
@@ -206,7 +214,7 @@ $lang['accessdenied']          = 'Você não tem permissão para visualizar esta
 $lang['mediausage']            = 'Use a seguinte sintaxe para referenciar esse arquivo:';
 $lang['mediaview']             = 'Ver o arquivo original';
 $lang['mediaroot']             = 'raiz';
-$lang['mediaupload']           = 'Envie um arquivo para o espaço de nomes atual aqui. Para criar subespaços de nomes, preponha-os ao nome do arquivo no parâmetro "Enviar como", separados por vírgulas.';
+$lang['mediaupload']           = 'Envie um arquivo para o espaço de nomes atual aqui. Para criar subespaços de nomes, preponha-os ao nome do arquivo no parâmetro "Enviar como", separados por dois pontos.';
 $lang['mediaextchange']        = 'A extensão do arquivo mudou de .%s para .%s!';
 $lang['reference']             = 'Referências para';
 $lang['ref_inuse']             = 'O arquivo não pode ser excluído, porque ele ainda está sendo utilizado nas seguintes páginas:';
@@ -237,7 +245,8 @@ $lang['created']               = 'criada';
 $lang['restored']              = 'a revisão anterior foi restaurada (%s)';
 $lang['external_edit']         = 'edição externa';
 $lang['summary']               = 'Resumo da edição';
-$lang['noflash']               = 'O <a href="http://www.adobe.com/products/flashplayer/">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
+$lang['unknowndate']           = 'Data desconhecida';
+$lang['noflash']               = 'O <a href="http://get.adobe.com/flashplayer">plug-in Adobe Flash</a> é necessário para exibir este conteúdo.';
 $lang['download']              = 'Baixar o snippet';
 $lang['tools']                 = 'Ferramentas';
 $lang['user_tools']            = 'Ferramentas do usuário';
@@ -318,7 +327,7 @@ $lang['i_enableacl']           = 'Habilitar Lista de Controle de Acessos (recome
 $lang['i_superuser']           = 'Superusuário';
 $lang['i_problems']            = 'O instalador encontrou alguns problemas, indicados abaixo. Você não pode continuar até corrigi-los.';
 $lang['i_modified']            = 'Por questões de segurança, esse script funcionará apenas em uma instalação nova e não modificada do DokuWiki.
-Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="http://dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
+Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="https://www.dokuwiki.org/install">instruções de instalação do DokuWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_disabled']            = 'Foi desativado pelo seu provedor.';
 $lang['i_funcnmail']           = '<b>Nota:</b> A função de correio PHP não está disponível. %s Se permanecer indisponível, você pode instalar o <a href="https://www.dokuwiki.org/plugin:smtp">plugin SMTP</a>.';
@@ -384,3 +393,6 @@ $lang['page_nonexist_rev']     = 'Página não encontrada em %s. Foi criada post
 $lang['unable_to_parse_date']  = 'Impossível analisar em "%s".';
 $lang['email_signature_text']  = 'Essa mensagem foi gerada pelo DokuWiki em
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Arquivo de registro muito grande. As linhas anteriores foram ignoradas!';
+$lang['log_file_failed_to_open'] = 'Falha ao abrir o arquivo de log.';
+$lang['log_file_failed_to_read'] = 'Ocorreu um erro ao ler o log.';

@@ -1,12 +1,9 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 class MediaSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send the diff for some media change
      *
@@ -23,11 +20,11 @@ class MediaSubscriptionSender extends SubscriptionSender
         global $conf;
 
         $file = mediaFN($id);
-        list($mime, /* $ext */) = mimetype($id);
+        [$mime, /* ext */] = mimetype($id);
 
         $trep = [
             'MIME' => $mime,
-            'MEDIA' => ml($id, $current_rev?('rev='.$current_rev):'', true, '&', true),
+            'MEDIA' => ml($id, $current_rev ? ('rev=' . $current_rev) : '', true, '&', true),
             'SIZE' => filesize_h(filesize($file)),
         ];
 

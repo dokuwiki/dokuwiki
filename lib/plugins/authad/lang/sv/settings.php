@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Gorm <gorm.chandler@gmail.com>
  * @author Patrik K Lundberg <patrik.kotiranta.lundberg@gmail.com>
  * @author Tor Härnqvist <tor@harnqvist.se>
  * @author Smorkster Andersson <smorkster@gmail.com>
@@ -22,4 +23,5 @@ $lang['expirywarn']            = 'Antakl dagar i förväg att varna användare o
 $lang['additional']            = 'En komma-separerad lista på extra AT-attibut att hämta från användardata. Används av vissa plugin.';
 $lang['update_name']           = 'Tillåt användare att uppdatera deras AD-visningsnamn?';
 $lang['update_mail']           = 'Tillåt användare att uppdatera deras e-postadresser?';
+$lang['update_pass']           = 'Tillåt användare att uppdatera sitt lösenord? SSL eller TLS krävs.';
 $lang['recursive_groups']      = 'Senaste veckan';

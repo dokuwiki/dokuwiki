@@ -7,11 +7,11 @@ namespace dokuwiki\plugin\config\core\Setting;
  *
  * Used to start a new settings "display-group".
  */
-class SettingFieldset extends Setting {
-
+class SettingFieldset extends Setting
+{
     /** @inheritdoc */
-    public function shouldHaveDefault() {
+    public function shouldHaveDefault()
+    {
         return false;
     }
-
 }

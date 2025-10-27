@@ -1,8 +1,6 @@
 <?php
 
-
 namespace dokuwiki\Subscriptions;
-
 
 use Diff;
 use InlineDiffFormatter;
@@ -10,7 +8,6 @@ use UnifiedDiffFormatter;
 
 class PageSubscriptionSender extends SubscriptionSender
 {
-
     /**
      * Send the diff for some page change
      *
@@ -30,7 +27,7 @@ class PageSubscriptionSender extends SubscriptionSender
         // prepare replacements (keys not set in hrep will be taken from trep)
         $trep = [
             'PAGE' => $id,
-            'NEWPAGE' => wl($id, $current_rev?('rev='.$current_rev):'', true, '&'),
+            'NEWPAGE' => wl($id, $current_rev ? ('rev=' . $current_rev) : '', true, '&'),
             'SUMMARY' => $summary,
             'SUBSCRIBE' => wl($id, ['do' => 'subscribe'], true, '&'),
         ];
@@ -84,5 +81,4 @@ class PageSubscriptionSender extends SubscriptionSender
             $headers
         );
     }
-
 }

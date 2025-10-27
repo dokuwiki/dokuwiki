@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file reads the style.ini of the used template and displays the
  * replacements defined in it. Color replacements will be displayed
@@ -8,10 +9,11 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Anika Henke <anika@selfthinker.org>
  */
+
 // phpcs:disable PSR1.Files.SideEffects
-if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../');
-if(!defined('NOSESSION')) define('NOSESSION',1);
-require_once(DOKU_INC.'inc/init.php');
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('NOSESSION')) define('NOSESSION', 1);
+require_once(DOKU_INC . 'inc/init.php');
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -50,21 +52,21 @@ $ini = $styleUtils->cssStyleini();
 
 if (!empty($ini)) {
     echo '<table>';
-    echo "<caption>".hsc($conf['template'])."'s style.ini</caption>";
-    foreach($ini['replacements'] as $key => $val){
+    echo "<caption>" . hsc($conf['template']) . "'s style.ini</caption>";
+    foreach ($ini['replacements'] as $key => $val) {
         echo '<tr>';
-        echo '<td>'.hsc($key).'</td>';
-        echo '<td>'.hsc($val).'</td>';
+        echo '<td>' . hsc($key) . '</td>';
+        echo '<td>' . hsc($val) . '</td>';
         echo '<td>';
-        if(preg_match('/^#[0-f]{3,6}$/i',$val)){
-            echo '<div class="color" style="background-color:'.$val.';">&#160;</div>';
+        if (preg_match('/^#[0-f]{3,6}$/i', $val)) {
+            echo '<div class="color" style="background-color:' . $val . ';">&#160;</div>';
         }
         echo '</td>';
         echo '</tr>';
     }
     echo '</table>';
 } else {
-    echo "<p>Non-existent or invalid template or style.ini: <strong>".hsc($conf['template'])."</strong></p>";
+    echo "<p>Non-existent or invalid template or style.ini: <strong>" . hsc($conf['template']) . "</strong></p>";
 }
 ?>
 </body>

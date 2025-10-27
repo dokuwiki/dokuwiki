@@ -220,7 +220,7 @@ $lang['created']               = 'creat';
 $lang['restored']              = 'versiune veche restaurată (%s)';
 $lang['external_edit']         = 'editare externă';
 $lang['summary']               = 'Editează sumarul';
-$lang['noflash']               = 'Plugin-ul <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> este necesar pentru afișarea corectă a conținutului.';
+$lang['noflash']               = 'Plugin-ul <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> este necesar pentru afișarea corectă a conținutului.';
 $lang['download']              = 'Bloc descărcări';
 $lang['tools']                 = 'Unelte';
 $lang['user_tools']            = 'Unelte utilizator';
@@ -301,7 +301,7 @@ $lang['i_enableacl']           = 'Activează ACL (liste de control a accesului) 
 $lang['i_superuser']           = 'Utilizator privilegiat';
 $lang['i_problems']            = 'Programul de instalare a găsit câteva probleme, indicate mai jos. Nu poți continua până nu le rezolvi.';
 $lang['i_modified']            = 'Din motive de securitate, acest script va funcționa doar cu o instalare nouă și nemodificată a DokuWiki.
-Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare DokuWiki la <a href="http://dokuwiki.org/install">';
+Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare DokuWiki la <a href="https://www.dokuwiki.org/install">';
 $lang['i_funcna']              = 'Funcția PHP <code>%s</code> nu este disponibilă. Probabil provider-ul tău a dezactivat-o pentru un motiv anume.';
 $lang['i_disabled']            = 'a fost dezactivat de furnizorul tău';
 $lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.dokuwiki.org/plugin:smtp">modulul stmp</a>.	';

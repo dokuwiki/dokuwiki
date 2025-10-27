@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  */
+$lang['home']                  = 'Trang chủ';
 $lang['__background_site__']   = 'Màu cho nền (phía sau hộp nội dung)';
 $lang['__link__']              = 'Màu liên kết chung';
 $lang['__existing__']          = 'Màu cho liên kết đến các trang hiện có';

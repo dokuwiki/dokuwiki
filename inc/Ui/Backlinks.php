@@ -2,8 +2,6 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
 use dokuwiki\Search\MetadataIndex;
 
 /**
@@ -16,10 +14,10 @@ class Backlinks extends Ui
     /**
      * Display backlinks
      *
-     * @author   Andreas Gohr <andi@splitbrain.org>
+     * @return void
      * @author   Michael Klier <chi@chimeric.de>
      *
-     * @return void
+     * @author   Andreas Gohr <andi@splitbrain.org>
      */
     public function show()
     {
@@ -27,20 +25,20 @@ class Backlinks extends Ui
         global $lang;
 
         // print intro
-        print p_locale_xhtml('backlinks');
+        echo p_locale_xhtml('backlinks');
 
         $data = (new MetadataIndex())->backlinks($ID);
 
         if (!empty($data)) {
-            print '<ul class="idx">';
+            echo '<ul class="idx">';
             foreach ($data as $blink) {
-                print '<li><div class="li">';
-                print html_wikilink(':'.$blink,useHeading('navigation') ? null : $blink);
-                print '</div></li>';
+                echo '<li><div class="li">';
+                echo html_wikilink(':' . $blink, useHeading('navigation') ? null : $blink);
+                echo '</div></li>';
             }
-            print '</ul>';
+            echo '</ul>';
         } else {
-            print '<div class="level1"><p>'. $lang['nothingfound'] .'</p></div>';
+            echo '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
         }
     }
 

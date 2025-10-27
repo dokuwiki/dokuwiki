@@ -7,7 +7,6 @@ namespace dokuwiki\Cache;
  */
 class CacheRenderer extends CacheParser
 {
-
     /**
      * method contains cache use decision logic
      *
@@ -40,8 +39,10 @@ class CacheRenderer extends CacheParser
         // for wiki pages, check metadata dependencies
         $metadata = p_get_metadata($this->page);
 
-        if (!isset($metadata['relation']['references']) ||
-            empty($metadata['relation']['references'])) {
+        if (
+            !isset($metadata['relation']['references']) ||
+            empty($metadata['relation']['references'])
+        ) {
             return true;
         }
 
@@ -70,13 +71,10 @@ class CacheRenderer extends CacheParser
         }
 
         // renderer cache file dependencies ...
-        $files = array(
-            DOKU_INC . 'inc/parser/' . $this->mode . '.php',       // ... the renderer
-        );
+        $files = [DOKU_INC . 'inc/parser/' . $this->mode . '.php'];
 
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {
-
             // for xhtml this will render the metadata if needed
             $valid = p_get_metadata($this->page, 'date valid');
             if (!empty($valid['age'])) {
@@ -85,9 +83,9 @@ class CacheRenderer extends CacheParser
             }
         }
 
-        $this->depends['files'] = !empty($this->depends['files']) ?
-            array_merge($files, $this->depends['files']) :
-            $files;
+        $this->depends['files'] = empty($this->depends['files']) ?
+            $files :
+            array_merge($files, $this->depends['files']);
 
         parent::addDependencies();
     }

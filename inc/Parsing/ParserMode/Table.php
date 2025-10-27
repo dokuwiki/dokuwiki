@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Table extends AbstractMode
 {
-
     /**
      * Table constructor.
      */

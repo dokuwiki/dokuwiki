@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Alinur <alinur@danwin1210.de>
  * @author Salif Mehmed <salif13mehmed@gmail.com>
  * @author Nikolay Vladimirov <nikolay@vladimiroff.com>
  * @author Viktor Usunov <usun0v@mail.bg>
@@ -93,8 +94,6 @@ $lang['indexdelay']            = 'Забавяне преди индексира
 $lang['mailguard']             = 'Промяна на адресите на ел. поща (във форма непозволяваща пращането на SPAM)';
 $lang['iexssprotect']          = 'Проверяване на качените файлове за вероятен зловреден JavaScript и HTML код';
 $lang['usedraft']              = 'Автоматично запазване на чернова по време на редактиране';
-$lang['htmlok']                = 'Разрешаване вграждането на HTML код';
-$lang['phpok']                 = 'Разрешаване вграждането на PHP код';
 $lang['locktime']              = 'Макс. период за съхраняване на заключените файлове (сек)';
 $lang['cachetime']             = 'Макс. период за съхраняване на кеша (сек)';
 $lang['target____wiki']        = 'Прозорец за вътрешни препратки';

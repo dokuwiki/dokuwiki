@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author take <take@ruu.kr>
+ * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
  * @author Traend <Traend@ruu.kr>
  * @author Seungheon Song <esketch@gmail.com>

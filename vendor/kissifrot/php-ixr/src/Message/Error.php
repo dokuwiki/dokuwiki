@@ -20,7 +20,7 @@ class Error
 
     public function getXml()
     {
-        $xml = <<<EOD
+        return <<<EOD
 <methodResponse>
   <fault>
     <value>
@@ -38,6 +38,5 @@ class Error
   </fault>
 </methodResponse>
 EOD;
-        return $xml;
     }
 }

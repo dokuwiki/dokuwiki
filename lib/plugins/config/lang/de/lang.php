@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
+ * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
- * @author Andreas Gohr <andi@splitbrain.org>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
  * @author C!own77 <clown77@posteo.de>
  * @author Alex Beck <alex@4becks.com>
@@ -108,16 +110,16 @@ $lang['disableactions_other']  = 'Andere Aktionen (durch Komma getrennt)';
 $lang['disableactions_rss']    = 'XML-Syndikation (RSS)';
 $lang['auth_security_timeout'] = 'Authentifikations-Timeout (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktivieren Sie diese Option, wenn nur der Login Ihres Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
+$lang['samesitecookie']        = 'Das samesite Cookie Attribut. Wenn es leer gelassen wird, entscheidet der Browser über die verwendete Richtlinie.';
 $lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zu zugreifen.';
 $lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
+$lang['remotecors']            = 'Erlaubt externen Clients API-Zugriff per Cross-Origin Resource Sharing (CORS). Asterisk (*), um alle Quellen zu erlauben. Leer lassen, um CORS zu deaktivieren.';
 $lang['usewordblock']          = 'Spam-Blocking (nach Wörterliste) benutzen';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist (in Sekunden)';
 $lang['mailguard']             = 'E-Mail-Adressen schützen';
 $lang['iexssprotect']          = 'Hochgeladene Dateien auf bösartigen JavaScript- und HTML-Code untersuchen';
 $lang['usedraft']              = 'Während des Bearbeitens automatisch Zwischenentwürfe speichern';
-$lang['htmlok']                = 'HTML erlauben';
-$lang['phpok']                 = 'PHP erlauben';
 $lang['locktime']              = 'Maximales Alter für Seitensperren (Sekunden)';
 $lang['cachetime']             = 'Maximale Cachespeicherung (Sekunden)';
 $lang['target____wiki']        = 'Zielfenster für interne Links (target Attribut)';
@@ -140,6 +142,7 @@ $lang['mailreturnpath']        = 'Empfänger-E-Mail-Adresse für Unzustellbarkei
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen (Leer lassen um den Wiki-Titel zu verwenden)';
 $lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
 $lang['dontlog']               = 'Protokollierung für diese Logtypen deaktivieren.';
+$lang['logretain']             = 'Wieviele Tage die Logdateien aufgehoben werden.';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage). Mit 0 deaktivieren.';
 $lang['rss_type']              = 'XML-Feed-Format';
 $lang['rss_linkto']            = 'XML-Feed verlinken auf';
@@ -163,7 +166,7 @@ $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
 $lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in CSS-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
-$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür. Siehe auch <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>.';
+$lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf Ihrem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Ihr Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
 $lang['renderer__core']        = '%s (DokuWiki Kern)';
@@ -174,11 +177,13 @@ $lang['search_fragment_o_exact'] = 'genaue Treffer';
 $lang['search_fragment_o_starts_with'] = 'beginnt mit';
 $lang['search_fragment_o_ends_with'] = 'endet mit';
 $lang['search_fragment_o_contains'] = 'enthält';
-$lang['trustedproxy']          = 'Vertrauen Sie Weiterleitungs-Proxys, welche dem regulärem Ausdruck entsprechen, hinsichtlich der angegebenen Client-ID. Der Standardwert entspricht dem lokalem Netzwerk. Leer lassen um jedem Proxy zu vertrauen.';
 $lang['_feature_flags']        = 'Feature-Flags';
 $lang['defer_js']              = 'JavaScript-Ausführung verzögern bis das HTML der gesamten Seite verarbeitet wurde. Erhöht die gefühlte Geschwindigkeit des Seitenaufbaus, kann aber mit einigen wenigen Plugins inkompatibel sein.';
+$lang['hidewarnings']          = 'Keine PHP Warnungen anzeigen. Diese Einstellung kann den Umstieg auf PHP8+ erleichtern. Warnungen werden weiterhin im Fehlerlog gespeichert und sollten gemeldet werden.';
 $lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn Sie einen langsamen oder unzuverlässigen DNS-Server verwenden oder die Funktion nicht benötigen, dann sollte diese Option deaktiviert sein.';
 $lang['jquerycdn']             = 'Sollen jQuery und jQuery UI Skriptdateien von einem CDN (Content Delivery Network) geladen werden? Dadurch entstehen zusätzliche HTTP-Anfragen, aber die Daten werden voraussichtlich schneller geladen und eventuell sind sie auch schon beim Benutzer im Cache.';
+$lang['trustedproxies']        = 'Komma-getrennte Liste der Proxy-Server, von denen der X-Forwarded-For Header gelesen wird. Jeder Eintrag in der Liste kann entweder eine IPv4 oder IPv6 Adresse sein, oder ein IPv4 oder IPv6 CIDR Netzwerk (z. B. 10.0.0.0/8). Leer lassen, um keinem Proxy zu vertrauen.';
+$lang['realip']                = 'Vertraue dem X-Real-IP Header. Aktiviere diese Option nur, wenn dein Server diesen Header benutzt, ansonsten könnte er gefälscht werden.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, ausschließlich lokale Auslieferung';
 $lang['jquerycdn_o_jquery']    = 'CDN von code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN von cdnjs.com';

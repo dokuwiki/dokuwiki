@@ -14,10 +14,10 @@ class UserResendPwd extends Ui
     /**
      * Display the form to request a new password for an existing account
      *
-     * @author   Benoit Chesneau <benoit@bchesneau.info>
+     * @return void
      * @author   Andreas Gohr <andi@splitbrain.org>
      *
-     * @return void
+     * @author   Benoit Chesneau <benoit@bchesneau.info>
      */
     public function show()
     {
@@ -27,8 +27,8 @@ class UserResendPwd extends Ui
         $token = preg_replace('/[^a-f0-9]+/', '', $INPUT->str('pwauth'));
 
         // print intro
-        print p_locale_xhtml('resetpwd');
-        print '<div class="centeralign">';
+        echo p_locale_xhtml('resetpwd');
+        echo '<div class="centeralign">';
 
         if (!$conf['autopasswd'] && $token) {
             $form = $this->formSetNewPassword($token);
@@ -36,9 +36,9 @@ class UserResendPwd extends Ui
             $form = $this->formResendPassword();
         }
 
-        print $form->toHTML('ResendPwd');
+        echo $form->toHTML('ResendPwd');
 
-        print '</div>';
+        echo '</div>';
     }
 
     /**
@@ -57,6 +57,7 @@ class UserResendPwd extends Ui
         $form->addFieldsetOpen($lang['btn_resendpwd']);
         $form->setHiddenField('token', $token);
         $form->setHiddenField('do', 'resendpwd');
+
         $input = $form->addPasswordInput('pass', $lang['pass'])->attr('size', '50')->addClass('edit');
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
@@ -85,6 +86,7 @@ class UserResendPwd extends Ui
         $form->setHiddenField('do', 'resendpwd');
         $form->setHiddenField('save', '1');
         $form->addHTML("<br>\n");
+
         $input = $form->addTextInput('login', $lang['user'])->addClass('edit');
         $input->getLabel()->attr('class', 'block');
         $form->addHTML("<br>\n");
@@ -94,5 +96,4 @@ class UserResendPwd extends Ui
         $form->addTagClose('div');
         return $form;
     }
-
 }

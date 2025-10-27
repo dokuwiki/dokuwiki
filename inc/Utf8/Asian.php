@@ -11,13 +11,12 @@ namespace dokuwiki\Utf8;
  */
 class Asian
 {
-
     /**
      * This defines a non-capturing group for the use in regular expressions to match any asian character that
      * needs to be treated as a word. Uses the Unicode-Ranges for Asian characters taken from
      * http://en.wikipedia.org/wiki/Unicode_block
      */
-    const REGEXP =
+    public const REGEXP =
         '(?:' .
 
         '[\x{0E00}-\x{0E7F}]' . // Thai

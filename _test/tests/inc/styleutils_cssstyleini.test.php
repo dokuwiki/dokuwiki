@@ -10,8 +10,8 @@ class styleutils_cssstyleini_test extends DokuWikiTest {
                 array (
                     'screen' =>
                         array (
-                            DOKU_CONF . 'tpl/dokuwiki/css/_tests.less' => '/./',
-                            DOKU_INC . 'lib/tpl/dokuwiki/css/content.less' => '/./lib/tpl/dokuwiki/',
+                            DOKU_CONF . 'tpl/dokuwiki/css/_tests.less' => '/',
+                            DOKU_INC . 'lib/tpl/dokuwiki/css/content.less' => '/lib/tpl/dokuwiki/',
                         ),
                 ),
             'replacements' =>

@@ -222,7 +222,7 @@ $lang['created']               = 'δημιουργήθηκε';
 $lang['restored']              = 'παλαιότερη έκδοση επαναφέρθηκε (%s)';
 $lang['external_edit']         = 'εξωτερική τροποποίηση';
 $lang['summary']               = 'Επεξεργασία σύνοψης';
-$lang['noflash']               = 'Το <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> απαιτείται για την προβολή αυτού του στοιχείου.';
+$lang['noflash']               = 'Το <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> απαιτείται για την προβολή αυτού του στοιχείου.';
 $lang['download']              = 'Λήψη Κώδικα';
 $lang['tools']                 = 'Εργαλεία';
 $lang['user_tools']            = 'Εργαλεία Χρήστη';

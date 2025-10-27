@@ -22,17 +22,15 @@
     <exclude-pattern>*/lang/*/lang.php</exclude-pattern>
     <exclude-pattern>*/lang/*/settings.php</exclude-pattern>
     <exclude-pattern>*/_test/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
 
     <!-- 3rd party libs, these should be moved to composer some day -->
     <exclude-pattern>*/inc/DifferenceEngine.php</exclude-pattern>
-    <exclude-pattern>*/inc/IXR_Library.php</exclude-pattern>
-    <exclude-pattern>*/inc/JSON.php</exclude-pattern>
     <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
     <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
 
     <!-- deprecated files to be removed soon -->
-    <exclude-pattern>*/inc/cli.php</exclude-pattern>
-    <exclude-pattern>*/inc/parser/*</exclude-pattern>
+    <exclude-pattern>*/inc/parser/parser.php</exclude-pattern>
 
     <!-- rules on top of PSR-12 -->
     <rule ref="PSR12">
@@ -64,6 +62,8 @@
         <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/syntax.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/syntax/*.php</exclude-pattern>
+
+        <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 
     <!-- underscore skips exposing public methods to remote api -->
@@ -71,10 +71,18 @@
         <exclude-pattern>*/inc/Extension/RemotePlugin.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/remote.php</exclude-pattern>
         <exclude-pattern>*/lib/plugins/*/remote/*.php</exclude-pattern>
+
+        <exclude-pattern>*/inc/parser/*</exclude-pattern>
+    </rule>
+
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*/inc/Extension/PluginInterface.php</exclude-pattern>
         <exclude-pattern>*/inc/Extension/PluginTrait.php</exclude-pattern>
+
+        <exclude-pattern>*/inc/parser/*</exclude-pattern>
     </rule>
 </ruleset>

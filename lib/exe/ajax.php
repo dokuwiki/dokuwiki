@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DokuWiki AJAX call handler
  *
@@ -6,7 +7,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-if (!defined('DOKU_INC')) define('DOKU_INC', dirname(__FILE__) . '/../../');
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Ajax;
+
+if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
 require_once(DOKU_INC . 'inc/init.php');
 
 //close session
@@ -18,8 +22,8 @@ header('Content-Type: text/html; charset=utf-8');
 //call the requested function
 global $INPUT;
 if ($INPUT->has('call')) {
-    $call = $INPUT->filter([\dokuwiki\Utf8\Clean::class, 'stripspecials'])->str('call');
-    new \dokuwiki\Ajax($call);
+    $call = $INPUT->filter([Clean::class, 'stripspecials'])->str('call');
+    new Ajax($call);
 } else {
     http_status(404);
 }

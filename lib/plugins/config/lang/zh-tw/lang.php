@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Li-Jiun Huang <ljhuang.tw@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-simptrad.html
@@ -97,8 +98,6 @@ $lang['indexdelay']            = '建立索引前的延遲時間 (秒)';
 $lang['mailguard']             = '自動弄亂使用者的電郵地址，以作保護';
 $lang['iexssprotect']          = '檢查上傳的檔案中是否隱含惡意的 JavaScript 或 HTML 碼';
 $lang['usedraft']              = '編輯時自動儲存草稿';
-$lang['htmlok']                = '允許嵌入式 HTML';
-$lang['phpok']                 = '允許嵌入式 PHP';
 $lang['locktime']              = '檔案的最大鎖定時間 (秒)';
 $lang['cachetime']             = '緩存的最大存在時間 (秒)';
 $lang['target____wiki']        = '內部連結的目標視窗';

@@ -12,7 +12,6 @@ namespace dokuwiki\Extension;
  */
 abstract class AdminPlugin extends Plugin
 {
-
     /**
      * Return the text that is displayed at the main admin menu
      * (Default localized language string 'menu' is returned, override this function for setting another name)
@@ -61,6 +60,16 @@ abstract class AdminPlugin extends Plugin
     }
 
     /**
+     * Return true if the plugin should be shown in the admin menu
+     *
+     * @return bool
+     */
+    public function showInMenu()
+    {
+        return true;
+    }
+
+    /**
      * Carry out required processing
      */
     public function handle()
@@ -78,13 +87,14 @@ abstract class AdminPlugin extends Plugin
      *
      * @return bool true if the current user may access this admin plugin
      */
-    public function isAccessibleByCurrentUser() {
+    public function isAccessibleByCurrentUser()
+    {
         $data = [];
         $data['instance'] = $this;
         $data['hasAccess'] = false;
 
         $event = new Event('ADMINPLUGIN_ACCESS_CHECK', $data);
-        if($event->advise_before()) {
+        if ($event->advise_before()) {
             if ($this->forAdminOnly()) {
                 $data['hasAccess'] = auth_isadmin();
             } else {
@@ -116,8 +126,6 @@ abstract class AdminPlugin extends Plugin
      */
     public function getTOC()
     {
-        return array();
+        return [];
     }
-
 }
-

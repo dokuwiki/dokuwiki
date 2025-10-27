@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 class Base extends AbstractMode
 {
-
     /**
      * Base constructor.
      */

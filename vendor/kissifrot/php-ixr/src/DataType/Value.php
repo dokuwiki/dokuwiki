@@ -102,7 +102,7 @@ class Value
     }
 
     /**
-     * Checks whether or not the supplied array is a struct or not
+     * Checks whether the supplied array is a struct or not
      *
      * @param array $array
      * @return boolean

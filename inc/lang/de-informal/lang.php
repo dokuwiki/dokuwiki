@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author andreash <aeheil@gmail.com>
  * @author Axel Kirch <axel@globeglotter.com>
  * @author MaWi <drmaxxis@gmail.com>
  * @author lp <spam@lukpopp.ch>
@@ -234,7 +235,8 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
-$lang['noflash']               = 'Das <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
+$lang['unknowndate']           = 'Datum unbekannt';
+$lang['noflash']               = 'Das <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';
 $lang['user_tools']            = 'Benutzer-Werkzeuge';
@@ -314,7 +316,7 @@ $lang['i_wikiname']            = 'Wiki-Name';
 $lang['i_enableacl']           = 'Zugriffskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen, bevor du mit der Installation fortfahren kannst.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="http://dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von deinem Hoster deaktiviert?';
 $lang['i_disabled']            = 'Es wurde von deinem Provider deaktiviert.';
 $lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ kansnt du das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';

@@ -3,6 +3,7 @@
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
+use dokuwiki\Logger;
 use dokuwiki\Search\Indexer;
 
 /**
@@ -61,6 +62,10 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase
      * @return void
      */
     public function setUp() : void {
+        // reset execution time if it's enabled
+        if(ini_get('max_execution_time') > 0) {
+            set_time_limit(90);
+        }
 
         // reload config
         global $conf, $config_cascade;
@@ -199,7 +204,7 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase
      * Waits until a new second has passed
      *
      * This tried to be clever about the passing of time and return early if possible. Unfortunately
-     * this never worked reliably fo unknown reasons. To avoid flaky tests, this now always simply
+     * this never worked reliably for unknown reasons. To avoid flaky tests, this now always simply
      * sleeps for a full second on every call.
      *
      * @param bool $init no longer used
@@ -269,5 +274,18 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase
         $property = $class->getProperty($prop);
         $property->setAccessible(true);
         $property->setValue($obj, $value);
+    }
+
+    /**
+     * Expect the next log message to contain $message
+     *
+     * @param string $facility
+     * @param string $message
+     * @return void
+     */
+    protected function expectLogMessage(string $message, string $facility = Logger::LOG_ERROR): void
+    {
+        $logger = Logger::getInstance($facility);
+        $logger->expect($message);
     }
 }

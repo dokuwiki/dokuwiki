@@ -41,7 +41,7 @@ class Nest extends AbstractRewriter
     public function finalise()
     {
         $last_call = end($this->calls);
-        $this->writeCall(array($this->closingInstruction,array(), $last_call[2]));
+        $this->writeCall([$this->closingInstruction, [], $last_call[2]]);
 
         $this->process();
         $this->callWriter->finalise();
@@ -53,12 +53,12 @@ class Nest extends AbstractRewriter
     {
         // merge consecutive cdata
         $unmerged_calls = $this->calls;
-        $this->calls = array();
+        $this->calls = [];
 
         foreach ($unmerged_calls as $call) $this->addCall($call);
 
         $first_call = reset($this->calls);
-        $this->callWriter->writeCall(array("nest", array($this->calls), $first_call[2]));
+        $this->callWriter->writeCall(["nest", [$this->calls], $first_call[2]]);
 
         return $this->callWriter;
     }
@@ -69,14 +69,12 @@ class Nest extends AbstractRewriter
     protected function addCall($call)
     {
         $key = count($this->calls);
-        if ($key and ($call[0] == 'cdata') and ($this->calls[$key-1][0] == 'cdata')) {
-            $this->calls[$key-1][1][0] .= $call[1][0];
+        if ($key && $call[0] == 'cdata' && $this->calls[$key - 1][0] == 'cdata') {
+            $this->calls[$key - 1][1][0] .= $call[1][0];
         } elseif ($call[0] == 'eol') {
             // do nothing (eol shouldn't be allowed, to counter preformatted fix in #1652 & #1699)
         } else {
             $this->calls[] = $call;
         }
     }
-
-
 }

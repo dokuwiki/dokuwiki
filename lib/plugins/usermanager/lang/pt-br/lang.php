@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Frederico Gonçalves Guimarães <frederico@teia.bio.br>
  * @author Felipe Castro <fefcas@gmail.com>
  * @author Lucien Raven <lucienraven@yahoo.com.br>
@@ -51,6 +52,7 @@ $lang['summary']               = 'Exibindo usuários %1$d-%2$d de %3$d encontrad
 $lang['nonefound']             = 'Nenhum usuário encontrado. %d usuários no total.';
 $lang['delete_ok']             = '%d usuários excluídos';
 $lang['delete_fail']           = 'Erro na exclusão de %d usuários.';
+$lang['delete_fail_self']      = 'Você não pode excluir a si mesmo';
 $lang['update_ok']             = 'Usuário atualizado com sucesso';
 $lang['update_fail']           = 'Não foi possível atualizar o usuário';
 $lang['update_exists']         = 'Não foi possível mudar o nome do usuário. O nome especificado (%s) já existe (as outras mudanças serão aplicadas).';

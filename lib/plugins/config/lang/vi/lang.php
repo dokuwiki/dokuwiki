@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hoàng Vịnh <hoangdangvinh.vn@gmail.com>
+ * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['menu']                  = 'Cài đặt cấu hình';
@@ -16,6 +18,8 @@ $lang['danger']                = 'Nguy hiểm: Thay đổi tùy chọn này có 
 $lang['warning']               = 'Cảnh báo: Thay đổi tùy chọn này có thể gây ra hành vi ngoài ý muốn.';
 $lang['security']              = 'Cảnh báo bảo mật: Thay đổi tùy chọn này có thể gây ra rủi ro bảo mật.';
 $lang['_configuration_manager'] = 'Quản lý cấu hình';
+$lang['_header_dokuwiki']      = 'DokuWiki';
+$lang['_header_plugin']        = 'Plugin tiện ích';
 $lang['_header_template']      = 'Chủ đề';
 $lang['_header_undefined']     = 'Cài đặt không xác định';
 $lang['_basic']                = 'Cơ bản';
@@ -83,16 +87,16 @@ $lang['disableactions_other']  = 'Hành động khác (được phân tách bằ
 $lang['disableactions_rss']    = 'Đồng bộ XML (RSS)';
 $lang['auth_security_timeout'] = 'Thời gian chờ xác thực bảo mật (giây)';
 $lang['securecookie']          = 'Có nên gửi cookie qua HTTPS qua trình duyệt HTTPS không? Vô hiệu hóa tùy chọn này khi chỉ đăng nhập wiki của bạn được bảo mật bằng SSL nhưng việc duyệt wiki được thực hiện không bảo mật.';
+$lang['samesitecookie']        = 'Thuộc tính cookie cùng một trang sẽ sử dụng. Để trống nó sẽ cho phép trình duyệt quyết định chính sách của cùng một trang.';
 $lang['remote']                = 'Kích hoạt hệ thống API từ xa. Cho phép các ứng dụng khác truy cập wiki thông qua XML-RPC hoặc các cơ chế khác.';
 $lang['remoteuser']            = 'Hạn chế quyền truy cập API từ xa đối với các nhóm hoặc thành viên được phân tách bằng dấu phẩy ở đây. Để trống sẽ cho phép mọi người truy cập.';
+$lang['remotecors']            = 'Cho phép Chia sẻ tài nguyên nguồn chéo (CORS) cho giao diện từ xa.  Dấu hoa thị (*) để cho phép tất cả các nguồn. Để trống để từ chối CORS.';
 $lang['usewordblock']          = 'Chặn spam dựa trên danh sách từ';
 $lang['relnofollow']           = 'Dùng rel="ugc nofollow" cho liên kết ngoài';
 $lang['indexdelay']            = 'Thời gian trễ trước khi lập chỉ mục (giây)';
 $lang['mailguard']             = 'Làm xáo trộn địa chỉ thư điện tử';
 $lang['iexssprotect']          = 'Kiểm tra tập tin đã tải lên có thể có mã JavaScript hoặc HTML độc hại';
 $lang['usedraft']              = 'Tự động lưu bản nháp trong khi đang sửa đổi';
-$lang['htmlok']                = 'Cho phép nhúng HTML';
-$lang['phpok']                 = 'Cho phép nhúng PHP';
 $lang['locktime']              = 'Thời gian tối đa cho các tập tin khóa (giây)';
 $lang['cachetime']             = 'Thời gian tối đa cho bộ đệm (giây)';
 $lang['target____wiki']        = 'Cửa sổ đích cho các liên kết nội bộ';
@@ -142,6 +146,7 @@ $lang['broken_iua']            = 'Chức năng ign_user_abort có bị hỏng tr
 $lang['xsendfile']             = 'Sử dụng đầu đề X-Sendfile cho phép máy chủ web cung cấp các tập tin tĩnh? Máy chủ web của bạn cần hỗ trợ cái này.';
 $lang['renderer_xhtml']        = 'Trình kết xuất để sử dụng cho đầu ra wiki chính (xhtml)';
 $lang['renderer__core']        = '%s (lõi dokuwiki)';
+$lang['renderer__plugin']      = '%s (tiện ích plugin)';
 $lang['search_nslimit']        = 'Giới hạn tìm kiếm trong không gian tên X hiện tại. Khi tìm kiếm được thực hiện từ một trang trong không gian tên sâu hơn, không gian tên X đầu tiên sẽ được thêm vào dưới dạng bộ lọc';
 $lang['search_fragment']       = 'Chỉ định hành vi tìm kiếm đoạn mặc định';
 $lang['search_fragment_o_exact'] = 'chính xác';
@@ -151,6 +156,7 @@ $lang['search_fragment_o_contains'] = 'chứa';
 $lang['trustedproxy']          = 'Những proxy chuyển tiếp tin cậy khớp với biểu thức chính quy này về IP máy khách thực mà họ báo cáo. Mặc định phù hợp với những mạng cục bộ. Để trống để tin tưởng không có proxy.';
 $lang['_feature_flags']        = 'Cờ đặc trưng';
 $lang['defer_js']              = 'Trì hoãn javascript được thực thi sau khi HTML của trang được phân tích cú pháp. Cải thiện tốc độ trang nhận thức nhưng có thể phá vỡ một số lượng nhỏ plugin.';
+$lang['hidewarnings']          = 'Không hiển thị bất kỳ cảnh báo nào được đưa ra bởi PHP. Điều này sẽ làm giảm chuyển giao tới PHP8+. Các cảnh báo sẽ vẫn được truy nhập vào sổ nhật ký log các lỗi và cần được báo cáo.';
 $lang['dnslookups']            = 'DokuWiki sẽ tra cứu tên máy chủ cho các địa chỉ IP từ xa của thành viên sửa đổi trang. Nếu bạn có máy chủ DNS chậm hoặc không hoạt động hoặc không muốn tính năng này, hãy tắt tùy chọn này';
 $lang['jquerycdn']             = 'Các tập tin script jQuery và jQuery UI có nên được tải từ CDN không? Việc này thêm các yêu cầu HTTP bổ sung, nhưng có thể tải tập tin nhanh hơn và người dùng có thể đã lưu chúng vào bộ nhớ cache.';
 $lang['jquerycdn_o_0']         = 'Không có CDN, chỉ tải nội bộ';
@@ -167,6 +173,7 @@ $lang['typography_o_0']        = 'Không';
 $lang['typography_o_1']        = 'không bao gồm dấu ngoặc đơn';
 $lang['typography_o_2']        = 'bao gồm cả dấu ngoặc đơn (có thể không phải lúc nào cũng hoạt động)';
 $lang['userewrite_o_0']        = 'không';
+$lang['userewrite_o_1']        = '.htaccess';
 $lang['userewrite_o_2']        = 'Nội bộ DokuWiki ';
 $lang['deaccent_o_0']          = 'tắt';
 $lang['deaccent_o_1']          = 'xóa dấu';
@@ -174,6 +181,11 @@ $lang['deaccent_o_2']          = 'La tinh hóa';
 $lang['gdlib_o_0']             = 'Không có sẵn GD Lib ';
 $lang['gdlib_o_1']             = 'Phiên bản 1.x';
 $lang['gdlib_o_2']             = 'Tự động phát hiện';
+$lang['rss_type_o_rss']        = 'RSS 0.91';
+$lang['rss_type_o_rss1']       = 'RSS 1.0';
+$lang['rss_type_o_rss2']       = 'RSS 2.0';
+$lang['rss_type_o_atom']       = 'Atom 0.3';
+$lang['rss_type_o_atom1']      = 'Atom 1.0';
 $lang['rss_content_o_abstract'] = 'Abstract';
 $lang['rss_content_o_diff']    = 'Unified Diff';
 $lang['rss_content_o_htmldiff'] = 'bảng HTML định dạng khác';

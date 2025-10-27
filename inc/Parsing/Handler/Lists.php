@@ -4,18 +4,18 @@ namespace dokuwiki\Parsing\Handler;
 
 class Lists extends AbstractRewriter
 {
-    protected $listCalls = array();
-    protected $listStack = array();
+    protected $listCalls = [];
+    protected $listStack = [];
 
     protected $initialDepth = 0;
 
-    const NODE = 1;
+    public const NODE = 1;
 
     /** @inheritdoc */
     public function finalise()
     {
         $last_call = end($this->calls);
-        $this->writeCall(array('list_close',array(), $last_call[2]));
+        $this->writeCall(['list_close', [], $last_call[2]]);
 
         $this->process();
         $this->callWriter->finalise();
@@ -53,11 +53,11 @@ class Lists extends AbstractRewriter
 
         $this->initialDepth = $depth;
         //                   array(list type, current depth, index of current listitem_open)
-        $this->listStack[] = array($listType, $depth, 1);
+        $this->listStack[] = [$listType, $depth, 1];
 
-        $this->listCalls[] = array('list'.$listType.'_open',array(),$call[2]);
-        $this->listCalls[] = array('listitem_open',array(1),$call[2]);
-        $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+        $this->listCalls[] = ['listitem_open', [1], $call[2]];
+        $this->listCalls[] = ['listcontent_open', [], $call[2]];
     }
 
 
@@ -67,11 +67,11 @@ class Lists extends AbstractRewriter
 
         while ($list = array_pop($this->listStack)) {
             if ($closeContent) {
-                $this->listCalls[] = array('listcontent_close',array(),$call[2]);
+                $this->listCalls[] = ['listcontent_close', [], $call[2]];
                 $closeContent = false;
             }
-            $this->listCalls[] = array('listitem_close',array(),$call[2]);
-            $this->listCalls[] = array('list'.$list[0].'_close', array(), $call[2]);
+            $this->listCalls[] = ['listitem_close', [], $call[2]];
+            $this->listCalls[] = ['list' . $list[0] . '_close', [], $call[2]];
         }
     }
 
@@ -89,40 +89,40 @@ class Lists extends AbstractRewriter
         if ($depth == $end[1]) {
             // Just another item in the list...
             if ($listType == $end[0]) {
-                $this->listCalls[] = array('listcontent_close',array(),$call[2]);
-                $this->listCalls[] = array('listitem_close',array(),$call[2]);
-                $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
-                $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+                $this->listCalls[] = ['listcontent_close', [], $call[2]];
+                $this->listCalls[] = ['listitem_close', [], $call[2]];
+                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
+                $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                 // new list item, update list stack's index into current listitem_open
                 $this->listStack[$key][2] = count($this->listCalls) - 2;
 
                 // Switched list type...
             } else {
-                $this->listCalls[] = array('listcontent_close',array(),$call[2]);
-                $this->listCalls[] = array('listitem_close',array(),$call[2]);
-                $this->listCalls[] = array('list'.$end[0].'_close', array(), $call[2]);
-                $this->listCalls[] = array('list'.$listType.'_open', array(), $call[2]);
-                $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
-                $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+                $this->listCalls[] = ['listcontent_close', [], $call[2]];
+                $this->listCalls[] = ['listitem_close', [], $call[2]];
+                $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
+                $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
+                $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                 array_pop($this->listStack);
-                $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
+                $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
             }
         } elseif ($depth > $end[1]) { // Getting deeper...
-            $this->listCalls[] = array('listcontent_close',array(),$call[2]);
-            $this->listCalls[] = array('list'.$listType.'_open', array(), $call[2]);
-            $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
-            $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+            $this->listCalls[] = ['listcontent_close', [], $call[2]];
+            $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+            $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
+            $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
             // set the node/leaf state of this item's parent listitem_open to NODE
             $this->listCalls[$this->listStack[$key][2]][1][1] = self::NODE;
 
-            $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
+            $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
         } else { // Getting shallower ( $depth < $end[1] )
-            $this->listCalls[] = array('listcontent_close',array(),$call[2]);
-            $this->listCalls[] = array('listitem_close',array(),$call[2]);
-            $this->listCalls[] = array('list'.$end[0].'_close',array(),$call[2]);
+            $this->listCalls[] = ['listcontent_close', [], $call[2]];
+            $this->listCalls[] = ['listitem_close', [], $call[2]];
+            $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
 
             // Throw away the end - done
             array_pop($this->listStack);
@@ -135,31 +135,31 @@ class Lists extends AbstractRewriter
                     // Normalize depths
                     $depth = $end[1];
 
-                    $this->listCalls[] = array('listitem_close',array(),$call[2]);
+                    $this->listCalls[] = ['listitem_close', [], $call[2]];
 
                     if ($end[0] == $listType) {
-                        $this->listCalls[] = array('listitem_open',array($depth-1),$call[2]);
-                        $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
+                        $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                         // new list item, update list stack's index into current listitem_open
                         $this->listStack[$key][2] = count($this->listCalls) - 2;
                     } else {
                         // Switching list type...
-                        $this->listCalls[] = array('list'.$end[0].'_close', array(), $call[2]);
-                        $this->listCalls[] = array('list'.$listType.'_open', array(), $call[2]);
-                        $this->listCalls[] = array('listitem_open', array($depth-1), $call[2]);
-                        $this->listCalls[] = array('listcontent_open',array(),$call[2]);
+                        $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
+                        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
+                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
+                        $this->listCalls[] = ['listcontent_open', [], $call[2]];
 
                         array_pop($this->listStack);
-                        $this->listStack[] = array($listType, $depth, count($this->listCalls) - 2);
+                        $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
                     }
 
                     break;
 
                     // Haven't dropped down far enough yet.... ( $end[1] > $depth )
                 } else {
-                    $this->listCalls[] = array('listitem_close',array(),$call[2]);
-                    $this->listCalls[] = array('list'.$end[0].'_close',array(),$call[2]);
+                    $this->listCalls[] = ['listitem_close', [], $call[2]];
+                    $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
 
                     array_pop($this->listStack);
                 }
@@ -172,9 +172,9 @@ class Lists extends AbstractRewriter
         $this->listCalls[] = $call;
     }
 
-    protected function interpretSyntax($match, & $type)
+    protected function interpretSyntax($match, &$type)
     {
-        if (substr($match, -1) == '*') {
+        if (str_ends_with($match, '*')) {
             $type = 'u';
         } else {
             $type = 'o';

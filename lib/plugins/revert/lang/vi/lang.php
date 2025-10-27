@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Minh <phandinhminh@protonmail.ch>
  * @author Thien Hau <thienhau.9a14@gmail.com>
  */
 $lang['menu']                  = 'Quản lý lùi lại';

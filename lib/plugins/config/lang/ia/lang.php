@@ -45,8 +45,6 @@ $lang['recent']                = 'Modificationes recente';
 $lang['breadcrumbs']           = 'Numero de micas de pan';
 $lang['youarehere']            = 'Micas de pan hierarchic';
 $lang['typography']            = 'Face substitutiones typographic';
-$lang['htmlok']                = 'Permitter incorporation de HTML';
-$lang['phpok']                 = 'Permitter incorporation de PHP';
 $lang['dformat']               = 'Formato del datas (vide le function <a href="http://php.net/strftime">strftime</a> de PHP)';
 $lang['signature']             = 'Signatura';
 $lang['toptoclevel']           = 'Nivello principal pro tabula de contento';

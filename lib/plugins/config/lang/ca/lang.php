@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author pau <pau@estuditic.com>
+ * @author Marc Zulet <marczulet@gmail.com>
+ * @author Joan <aseques@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
  * @author Carles Bellver <carles.bellver@gmail.com>
@@ -95,8 +98,6 @@ $lang['indexdelay']            = 'Retard abans d\'indexar (segons)';
 $lang['mailguard']             = 'Ofusca les adreces de correu';
 $lang['iexssprotect']          = 'Comprova codi HTML o Javascript maligne en els fitxers penjats';
 $lang['usedraft']              = 'Desa automàticament un esborrany mentre s\'edita';
-$lang['htmlok']                = 'Permet HTML incrustat';
-$lang['phpok']                 = 'Permet PHP incrustat';
 $lang['locktime']              = 'Durada màxima dels fitxers de bloqueig (segons)';
 $lang['cachetime']             = 'Durada màxima de la memòria cau (segons)';
 $lang['target____wiki']        = 'Finestra de destinació en enllaços interns';

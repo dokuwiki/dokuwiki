@@ -4,4 +4,4 @@ email  andi@splitbrain.org
 date   2015-07-13
 name   Active Directory Auth Plugin
 desc   Provides user authentication against a Microsoft Active Directory
-url    http://www.dokuwiki.org/plugin:authad
+url    https://www.dokuwiki.org/plugin:authad

@@ -12,11 +12,10 @@ namespace dokuwiki\Extension;
  */
 abstract class ActionPlugin extends Plugin
 {
-
     /**
      * Registers a callback function for a given event
      *
-     * @param \Doku_Event_Handler $controller
+     * @param EventHandler $controller
      */
-    abstract public function register(\Doku_Event_Handler $controller);
+    abstract public function register(EventHandler $controller);
 }

@@ -7,7 +7,6 @@ namespace dokuwiki\Utf8;
  */
 class Conversion
 {
-
     /**
      * Encodes UTF-8 characters to HTML entities
      *
@@ -58,14 +57,14 @@ class Conversion
         if (!$entities) {
             return preg_replace_callback(
                 '/(&#([Xx])?([0-9A-Za-z]+);)/m',
-                [__CLASS__, 'decodeNumericEntity'],
+                [self::class, 'decodeNumericEntity'],
                 $str
             );
         }
 
         return preg_replace_callback(
             '/&(#)?([Xx])?([0-9A-Za-z]+);/m',
-            [__CLASS__, 'decodeAnyEntity'],
+            [self::class, 'decodeAnyEntity'],
             $str
         );
     }
@@ -84,9 +83,7 @@ class Conversion
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $table = array_map(
-                static function ($c) {
-                    return Unicode::toUtf8(array(ord($c)));
-                },
+                static fn($c) => Unicode::toUtf8([ord($c)]),
                 $table
             );
         }
@@ -116,10 +113,10 @@ class Conversion
                 $cp = hexdec($ent[3]);
                 break;
             default:
-                $cp = intval($ent[3]);
+                $cp = (int) $ent[3];
                 break;
         }
-        return Unicode::toUtf8(array($cp));
+        return Unicode::toUtf8([$cp]);
     }
 
     /**
@@ -159,4 +156,50 @@ class Conversion
         return Unicode::toUtf8($uni);
     }
 
+    /**
+     * Converts a string from ISO-8859-1 to UTF-8
+     *
+     * This is a replacement for the deprecated utf8_encode function.
+     *
+     * @param $string
+     * @return string
+     * @author <p@tchwork.com> Nicolas Grekas - pure PHP implementation
+     * @link https://github.com/tchwork/utf8/blob/master/src/Patchwork/PHP/Shim/Xml.php
+     */
+    public static function fromLatin1($string)
+    {
+        if (UTF8_MBSTRING) {
+            return mb_convert_encoding($string, 'UTF-8', 'ISO-8859-1');
+        }
+        if (function_exists('iconv')) {
+            return iconv('ISO-8859-1', 'UTF-8', $string);
+        }
+        if (class_exists('UConverter')) {
+            return \UConverter::transcode($string, 'UTF8', 'ISO-8859-1');
+        }
+        if (function_exists('utf8_encode')) {
+            // deprecated
+            return utf8_encode($string);
+        }
+
+        // fallback to pure PHP
+        $string .= $string;
+        $len = strlen($string);
+        for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
+            switch (true) {
+                case $string[$i] < "\x80":
+                    $string[$j] = $string[$i];
+                    break;
+                case $string[$i] < "\xC0":
+                    $string[$j] = "\xC2";
+                    $string[++$j] = $string[$i];
+                    break;
+                default:
+                    $string[$j] = "\xC3";
+                    $string[++$j] = chr(ord($string[$i]) - 64);
+                    break;
+            }
+        }
+        return substr($string, 0, $j);
+    }
 }

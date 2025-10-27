@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Default settings for the authpdo plugin
  *

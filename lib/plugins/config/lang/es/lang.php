@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
+ * @author cadetill <cadetill@gmail.com>
  * @author Luna Frax <lunafrax@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  * @author Miguel Pagano <miguel.pagano@gmail.com>
@@ -36,7 +38,7 @@ $lang['warning']               = 'Advertencia:  Cambiar esta opción podría cau
 $lang['security']              = 'Advertencia de Seguridad: Cambiar esta opción podría representar un riesgo de seguridad.';
 $lang['_configuration_manager'] = 'Administrador de configuración';
 $lang['_header_dokuwiki']      = 'Parámetros de DokuWiki';
-$lang['_header_plugin']        = 'Parámetros de Plugin';
+$lang['_header_plugin']        = 'Parámetros de Complento (Plugin)';
 $lang['_header_template']      = 'Parámetros de Plantillas';
 $lang['_header_undefined']     = 'Parámetros sin categoría';
 $lang['_basic']                = 'Parámetros Básicos';
@@ -67,7 +69,7 @@ $lang['baseurl']               = 'URL de base';
 $lang['cookiedir']             = 'Ruta para las Cookie. Dejar en blanco para usar la ruta básica.';
 $lang['dmode']                 = 'Modo de creación de directorios';
 $lang['fmode']                 = 'Modo de creación de ficheros';
-$lang['allowdebug']            = 'Permitir debug <b>deshabilítelo si no lo necesita!</b>';
+$lang['allowdebug']            = 'Permitir depuración. <b>¡Desactívalo si no es necesario!</b>';
 $lang['recent']                = 'Cambios recientes';
 $lang['recent_days']           = 'Cuántos cambios recientes mantener (días)';
 $lang['breadcrumbs']           = 'Número de pasos de traza';
@@ -84,8 +86,8 @@ $lang['maxseclevel']           = 'Máximo nivel para edición de sección';
 $lang['camelcase']             = 'Usar CamelCase para enlaces';
 $lang['deaccent']              = 'Nombres de páginas "limpios"';
 $lang['useheading']            = 'Usar el primer encabezado para nombres de páginas';
-$lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los namespaces en el index. Habilitando esta opción los ocultará si el usuario no tiene permisos de lectura. Los sub-namespaces pueden resultar inaccesibles. El index puede hacerse poco usable dependiendo de las configuraciones ACL.';
-$lang['hidepages']             = 'Ocultar páginas con coincidencias (expresiones regulares)';
+$lang['sneaky_index']          = 'Por defecto, DokuWiki mostrará todos los espacios de nombres en el mapa del sitio. Habilitando esta opción, se ocultarán aquellos en los que el usuario no tenga permisos de lectura. Esto podría ocultar subespacios de nombres accesibles, lo que podría hacer que el índice fuera inutilizable con ciertas configuraciones de control de acceso (ACL).';
+$lang['hidepages']             = 'Ocultar las páginas que coincidan con esta expresión regular de la búsqueda, el mapa del sitio y otros índices automáticos.';
 $lang['useacl']                = 'Usar listas de control de acceso (ACL)';
 $lang['autopasswd']            = 'Autogenerar contraseñas';
 $lang['authtype']              = 'Método de Autenticación';
@@ -96,7 +98,7 @@ $lang['manager']               = 'Manager - grupo o usuario con acceso a ciertas
 $lang['profileconfirm']        = 'Confirmar cambios en perfil con contraseña';
 $lang['rememberme']            = 'Permitir cookies para acceso permanente (recordarme)';
 $lang['disableactions']        = 'Deshabilitar acciones DokuWiki';
-$lang['disableactions_check']  = 'Controlar';
+$lang['disableactions_check']  = 'Verificar';
 $lang['disableactions_subscription'] = 'Suscribirse/Cancelar suscripción';
 $lang['disableactions_wikicode'] = 'Ver la fuente/Exportar en formato raw';
 $lang['disableactions_profile_delete'] = 'Borrar tu propia cuenta';
@@ -104,16 +106,16 @@ $lang['disableactions_other']  = 'Otras acciones (separadas por coma)';
 $lang['disableactions_rss']    = 'Sindicación XML (RSS)';
 $lang['auth_security_timeout'] = 'Tiempo de Autenticación (en segundos), por motivos de seguridad';
 $lang['securecookie']          = 'Las cookies establecidas por HTTPS, ¿el naveagdor solo puede enviarlas por HTTPS? Inhabilite esta opción cuando solo se asegure con SSL la entrada, pero no la navegación de su wiki.';
+$lang['samesitecookie']        = 'El atributo de cookie samesite que se va a utilizar. Dejarlo vacío permitirá que el navegador decida sobre la política samesite.';
 $lang['remote']                = 'Activar el sistema API remoto. Esto permite a otras aplicaciones acceder al wiki a traves de XML-RPC u otros mecanismos.';
 $lang['remoteuser']            = 'Restringir el acceso remoto por API a los grupos o usuarios separados por comas que se dan aquí. Dejar en blanco para dar acceso a todo el mundo.';
+$lang['remotecors']            = 'Habilitar el Uso Compartido de Recursos entre Orígenes (CORS) para las interfaces remotas. Asterisco (*) para permitir todos los orígenes. Dejar vacío para denegar CORS.';
 $lang['usewordblock']          = 'Bloquear spam usando una lista de palabras';
 $lang['relnofollow']           = 'Usar rel="nofollow" en enlaces externos';
 $lang['indexdelay']            = 'Intervalo de tiempo antes de indexar (segundos)';
 $lang['mailguard']             = 'Ofuscar direcciones de correo electrónico';
 $lang['iexssprotect']          = 'Comprobar posible código malicioso (JavaScript ó HTML) en archivos subidos';
 $lang['usedraft']              = 'Guardar automáticamente un borrador mientras se edita';
-$lang['htmlok']                = 'Permitir HTML embebido';
-$lang['phpok']                 = 'Permitir PHP embebido';
 $lang['locktime']              = 'Edad máxima para archivos de bloqueo (segundos)';
 $lang['cachetime']             = 'Edad máxima para caché (segundos)';
 $lang['target____wiki']        = 'Ventana para enlaces internos';
@@ -134,12 +136,13 @@ $lang['registernotify']        = 'Enviar información cuando se registran nuevos
 $lang['mailfrom']              = 'Dirección de correo electrónico para emails automáticos';
 $lang['mailreturnpath']        = 'Dirección de correo electrónico del destinatario para las notificaciones de no entrega';
 $lang['mailprefix']            = 'Asunto por defecto que se utilizará en mails automáticos.';
-$lang['htmlmail']              = 'Enviar correos electronicos en HTML con mejor aspecto pero mayor peso. Desactivar para enviar correos electronicos en texto plano.';
+$lang['htmlmail']              = 'Enviar correos electrónicos en HTML con mejor aspecto pero mayor peso. Desactivar para enviar correos electrónicos en texto plano.';
 $lang['dontlog']               = 'Deshabilitar inicio de sesión para este tipo de registros.';
-$lang['sitemap']               = 'Generar sitemap de Google (días)';
+$lang['logretain']             = 'Cuántos días de registros conservar.';
+$lang['sitemap']               = 'Generar el mapa del sitio para Google con esta frecuencia (en días). Usa <code>0</code> para desactivar.';
 $lang['rss_type']              = 'Tipo de resumen (feed) XML';
 $lang['rss_linkto']            = 'Feed XML enlaza a';
-$lang['rss_content']           = '¿Qué mostrar en los items del archivo XML?';
+$lang['rss_content']           = '¿Qué mostrar en los elementos del archivo XML?';
 $lang['rss_update']            = 'Intervalo de actualización de feed XML (segundos)';
 $lang['rss_show_summary']      = 'Feed XML muestra el resumen en el título';
 $lang['rss_show_deleted']      = 'Fuente XML Mostrar fuentes eliminadas';
@@ -153,13 +156,13 @@ $lang['useslash']              = 'Usar barra (/) como separador de espacios de n
 $lang['sepchar']               = 'Separador de palabras en nombres de páginas';
 $lang['canonical']             = 'Usar URLs totalmente canónicas';
 $lang['fnencode']              = 'Método para codificar nombres de archivo no-ASCII.';
-$lang['autoplural']            = 'Controlar plurales en enlaces';
+$lang['autoplural']            = 'Verifica si los enlaces contienen formas en plural';
 $lang['compression']           = 'Método de compresión para archivos en el ático';
 $lang['gzip_output']           = 'Usar gzip Content-Encoding para xhtml';
 $lang['compress']              = 'Compactar la salida de CSS y javascript';
 $lang['cssdatauri']            = 'Tamaño en bytes hasta el cual las imágenes referenciadas en archivos CSS deberían ir incrustadas en la hoja de estilos para reducir el número de cabeceras de petición HTTP. ¡Esta técnica no funcionará en IE < 8! De <code>400</code> a <code>600</code> bytes es un valor adecuado. Establezca <code>0</code> para deshabilitarlo.';
 $lang['send404']               = 'Enviar "HTTP 404/Page Not Found" para páginas no existentes';
-$lang['broken_iua']            = '¿Se ha roto (broken) la función ignore_user_abort en su sistema? Esto puede causar que no funcione el index de búsqueda. Se sabe que IIS+PHP/CGI está roto. Vea <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a>para más información.';
+$lang['broken_iua']            = '¿La función ignore_user_abort no funciona en tu sistema? Esto podría provocar que el índice de búsqueda no funcione. Se sabe que IIS con PHP/CGI presenta este problema.';
 $lang['xsendfile']             = '¿Utilizar la cabecera X-Sendfile para permitirle al servidor web enviar archivos estáticos? Su servidor web necesita tener la capacidad para hacerlo.';
 $lang['renderer_xhtml']        = 'Visualizador a usar para salida (xhtml) principal del wiki';
 $lang['renderer__core']        = '%s (núcleo dokuwiki)';
@@ -170,11 +173,13 @@ $lang['search_fragment_o_exact'] = 'exacto';
 $lang['search_fragment_o_starts_with'] = 'comienza con';
 $lang['search_fragment_o_ends_with'] = 'termina con';
 $lang['search_fragment_o_contains'] = 'contiene';
-$lang['trustedproxy']          = 'Confíe en los proxys de reenvío que coincidan con esta expresión regular acerca de la IP verdadera del cliente que referencia. El valor predeterminado coincide con las redes locales. Dejar en blanco para no confiar en ningún proxy.';
 $lang['_feature_flags']        = 'Configuración de características';
 $lang['defer_js']              = 'Aplazar JavaScript para que se ejecute después de que se haya analizado el HTML de la página. Mejora la velocidad percibida de la página, pero podría romper un pequeño número de complementos.';
+$lang['hidewarnings']          = 'No mostrar ninguna advertencia emitida por PHP. Esto puede facilitar la transición a PHP8+. Las advertencias seguirán siendo registradas en el registro de errores y deben ser reportadas.';
 $lang['dnslookups']            = 'DokuWiki buscara los hostnames para usuarios editando las páginas con IP remota. Si usted tiene un servidor DNS bastante lento o que no funcione, favor de desactivar esta opción.';
 $lang['jquerycdn']             = '¿Deberían cargarse los ficheros de script jQuery y jQuery UI desde un CDN? Esto añade peticiones HTTP adicionales, pero los ficheros se pueden cargar más rápido y los usuarios pueden tenerlas ya almacenadas en caché.';
+$lang['trustedproxies']        = 'Lista separada por comas de servidores proxy confiables desde los cuales se leerá la cabecera X-Forwarded-For. Cada elemento del arreglo puede ser una dirección IPv4 o IPv6, o un rango CIDR de IPv4 o IPv6 (p. ej., 10.0.0.0/8). Déjar vacío para no confiar en ningún proxy.';
+$lang['realip']                = 'Confiar en la cabecera X-Real-IP. Activa esta opción solo si tu servidor genera dicha cabecera; de lo contrario, podría ser falsificada.';
 $lang['jquerycdn_o_0']         = 'No CDN, sólo entrega local';
 $lang['jquerycdn_o_jquery']    = 'CDN en code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN en cdnjs.com';

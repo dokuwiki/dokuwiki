@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
@@ -152,6 +153,8 @@ $lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
 $lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
 $lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
 $lang['proffail']              = 'Kullanıcı bilgileri güncellenmedi.';
+$lang['proftokenlegend']       = 'Doğrulama Belirteci';
+$lang['proftokengenerate']     = 'Sıfırlama Belirteci';
 $lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
 $lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
 $lang['resendpwd']             = 'İçin yeni şifre belirle';
@@ -222,7 +225,8 @@ $lang['created']               = 'oluşturuldu';
 $lang['restored']              = 'eski sürüme dönüldü (%s)';
 $lang['external_edit']         = 'Dışarıdan düzenle';
 $lang['summary']               = 'Özeti düzenle';
-$lang['noflash']               = 'Bu içeriği göstermek için <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Eklentisi</a> gerekmektedir.';
+$lang['unknowndate']           = 'Bilinmeyen tarih';
+$lang['noflash']               = 'Bu içeriği göstermek için <a href="http://get.adobe.com/flashplayer">Adobe Flash Eklentisi</a> gerekmektedir.';
 $lang['download']              = 'Parçacığı indir';
 $lang['tools']                 = 'Alet';
 $lang['user_tools']            = 'Kullanıcı Aletleri';
@@ -302,7 +306,7 @@ $lang['i_wikiname']            = 'Wiki Adı';
 $lang['i_enableacl']           = 'ACL\'yi etkinleştir (tavsiye edilir)';
 $lang['i_superuser']           = 'Ana Kullanıcı';
 $lang['i_problems']            = 'Kurulum sihirbazı aşağıda gösterilen sorunları buldu. Bunları düzeltmeden devam etmeniz mümkün değil.';
-$lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve değiştirilmemiş bir Dokuwiki kurulumunda çalışır. Ya indirdiğiniz paketi yeniden açmalı ya da <a href="http://dokuwiki.org/install"> adresindeki Dokuwiki kurulum kılavuzu</a>na bakmalısınız.';
+$lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve değiştirilmemiş bir Dokuwiki kurulumunda çalışır. Ya indirdiğiniz paketi yeniden açmalı ya da <a href="https://www.dokuwiki.org/install"> adresindeki Dokuwiki kurulum kılavuzu</a>na bakmalısınız.';
 $lang['i_funcna']              = '<code>%s</code> PHP fonksiyonu bulunmamaktadır. Barındırma(Hosting) hizmetinde bu özellik kapatılmış olabilir.';
 $lang['i_disabled']            = 'Sağlayıcınız tarafından devre dışı bırakılmış.';
 $lang['i_phpver']              = '<code>%s</code> PHP sürümü, gereken <code>%s</code>  sürümünden daha düşük. PHP kurulumunu yükseltmeniz gerekmektedir.';
@@ -362,3 +366,6 @@ $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
 $lang['email_signature_text']  = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Kayıt dosyası fazla büyük. Önceki sıralar atlandı!';
+$lang['log_file_failed_to_open'] = 'Kayıt dosyası açılamadı.';
+$lang['log_file_failed_to_read'] = 'Bu kaydı okurken bir sorun oluştu.';

@@ -16,7 +16,7 @@ class TagCloseElement extends ValueElement
      * @param string $tag
      * @param array $attributes
      */
-    public function __construct($tag, $attributes = array())
+    public function __construct($tag, $attributes = [])
     {
         parent::__construct('tagclose', $tag, $attributes);
     }
@@ -76,7 +76,7 @@ class TagCloseElement extends ValueElement
     public function attrs($attributes = null)
     {
         if ($attributes === null) {
-            return array();
+            return [];
         } else {
             throw new \BadMethodCallException('You can\t add attributes to closing tag');
         }
@@ -89,7 +89,6 @@ class TagCloseElement extends ValueElement
      */
     public function toHTML()
     {
-        return '</'.$this->val().'>';
+        return '</' . $this->val() . '>';
     }
-
 }

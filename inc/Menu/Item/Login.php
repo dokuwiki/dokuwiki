@@ -7,17 +7,18 @@ namespace dokuwiki\Menu\Item;
  *
  * Show a login or logout item, based on the current state
  */
-class Login extends AbstractItem {
-
+class Login extends AbstractItem
+{
     /** @inheritdoc */
-    public function __construct() {
+    public function __construct()
+    {
         global $INPUT;
         parent::__construct();
 
         $this->svg = DOKU_INC . 'lib/images/menu/login.svg';
         $this->params['sectok'] = getSecurityToken();
-        if($INPUT->server->has('REMOTE_USER')) {
-            if(!actionOK('logout')) {
+        if ($INPUT->server->has('REMOTE_USER')) {
+            if (!actionOK('logout')) {
                 throw new \RuntimeException("logout disabled");
             }
             $this->params['do'] = 'logout';
@@ -25,5 +26,4 @@ class Login extends AbstractItem {
             $this->svg = DOKU_INC . 'lib/images/menu/logout.svg';
         }
     }
-
 }
