@@ -329,9 +329,9 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
 
             // get session info
             if (isset($_SESSION[DOKU_COOKIE])) {
-                $session = $_SESSION[DOKU_COOKIE]['auth'];
+                $session = $_SESSION[DOKU_COOKIE]['auth'] ?? [];
                 if (
-                    isset($session) &&
+                    ($session !== []) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time() - $conf['auth_security_timeout']) &&
                     ($session['user'] == $user) &&
