@@ -1,6 +1,6 @@
 ====== Search Indexing ======
 
-This document is meant to describe the various concepts behind the indexing mechanism. It's work in progress an will be moved to the wiki once the new index code is merged.
+This document is meant to describe the various concepts behind the indexing mechanism. It's work in progress and will be moved to the wiki once the new index code is merged.
 
 ===== Uses =====
 
@@ -15,20 +15,76 @@ Please note: because index has a specific meaning in our context (see below) you
 There are basically two different complexities of collections
 
   * frequency collections - The same token can appear multiple times in the same entity and searches are usually interested in the number of times it appears. This is the words on pages use case.
-  * lookup collections - A token only appears once per entity. Search results are interested in looking up entities only. This would be used for the meta data search for example. FIXME not implemented yet
+  * lookup collections - Basically the same as frequency collection, but each token appears only once per entity thus all frequencies are 1. Searches do not care for the frequency but are only interested if a token appears for the entity or not
+  * direct collections - Here a 1:1 relation between the entity and a token exists. For example a page has exactly one title.
 
 A collection works on four indexes:
 
   * entity - This is the main entity that will be the result of a search. Eg. a page
   * token - This is the actual information strewn across the entities. Eg. words
+    * can be split into several files (usally based on token length)
   * frequency - This maps tokens to entities and records their frequency. Eg. freq(words)->page
+    * if tokens are split into several files, this is too
   * reverse - This records which tokens are on a specific entities. This is mostly used for internal index cleanup. Eg. page-words
 
-FIXME the above may not be true for all collections
+The latter two index files do not exist for direct collections
 
 Collections can be searched for one or more ''terms'' via a CollectionSearch class. In the most simple case a term is a single token. But it is also possible to use wildcards signifiers ''*'' at the start and end of a term. In that case, the term refers to a list of tokens. A CollectionSearch will return the frequency with which each term occurs on each entity.
 
-FIXME above will most likely change once we have non-frequency collections
+==== List of Collections =====
+
+^ Name                   ^ Entity ^ Token                 ^ Frequency             ^ Reverse               ^ Uses split Tokens? ^
+| FullText               | page   | w*                    | i*                    | pageword              | yes                |
+| MetaRelationMedia      | page   | relation_media_w      | relation_media_i      | relation_media_p      | no                 |
+| MetaRelationReferences | page   | relation_references_w | relation_references_i | relation_references_p | no                 |
+
+
+
+
+==== Terms ====
+
+A ''Term'' is a representation of a single search query component that can match one or more tokens in an index. The Term class is used by CollectionSearch implementations to handle wildcard searches and track which entities contain matching tokens.
+
+**Wildcard Support:**
+
+Terms can include wildcards using the ''*'' character:
+  * ''wiki'' - matches exactly "wiki"
+  * ''wiki*'' - matches tokens starting with "wiki" (e.g., "wiki", "wikitext", "wikipedia")
+  * ''*wiki'' - matches tokens ending with "wiki" (e.g., "wiki", "dokuwiki")
+  * ''*wiki*'' - matches tokens containing "wiki" anywhere (e.g., "wiki", "dokuwiki", "wikitext")
+
+The Term class internally handles these wildcards by:
+  * Storing the original term with wildcards
+  * Extracting the base term (without wildcard characters)
+  * Converting wildcards into a regular expression pattern for matching
+  * Tracking which type of wildcard is used (none, start, end, or both)
+
+**Length-Based Organization:**
+
+Terms organize their matching tokens by length. This is crucial for working with split indexes:
+  * A term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks)
+  * Each length group can be looked up in the corresponding suffixed token index
+  * This allows efficient searching across split indexes without loading irrelevant files
+
+**Token and Frequency Tracking:**
+
+During a search operation, Terms:
+  1. Collect all token IDs that match the term pattern (organized by token length)
+  2. Look up which entities contain those tokens
+  3. Aggregate the frequencies across all matching tokens
+  4. Map entity IDs to entity names for the final result
+
+For example, searching for ''wiki*'' might find:
+  * Token "wiki" (ID 42) appears 5 times on page "start" (ID 10)
+  * Token "wikitext" (ID 87) appears 3 times on page "start" (ID 10)
+  * Term result: "start" matches with total frequency 8
+
+**Validation:**
+
+Terms are validated on creation:
+  * Minimum length requirements are enforced (except for numeric terms)
+  * Terms that are too short throw a SearchException
+  * The base term (without wildcards) must meet the minimum token length configured in the Tokenizer
 
 ===== Indexes ======
 
@@ -57,6 +113,81 @@ Within an index two kinds of data can be stored per row:
   * A list of tuples. Eg. a list of pageIDs and frequencies
 
 The former is straight forward, it's a simple ''rid -> value'' store.  The latter maps to ''rid -> [key -> value, ...]'' where key is usally the ''rid'' in another index.
+
+==== Index Types ====
+
+A Collection consists of 4 (or 2 for direct collections) index types:
+
+The **entity** index lists the main entity the index will return as a result. entity.RID -> entity
+
+The **token** index contains the tokens used to search (eg. words). token.RID -> token
+
+The **frequency** index contains tuples of entity.RIDs and usage frequencies. token.RID -> entity.RID*frequency:...
+
+The **reverse** index contains tuples of token.RIDs and usage frequencies. entity.RID -> token.RID*frequency:...
+
+Direct collections only use entity and token index files with entity.RID === token.RID
+
+
+==== Index File Splitting ====
+
+To improve memory efficiency and access speed, a single token index can be split into multiple physical files using suffixes. This is particularly useful for indexes that would otherwise grow too large to handle efficiently.
+
+When creating an index, you can specify a suffix parameter that gets appended to the base index name to create the actual filename. For example:
+
+  * Base name: ''w'' (for word tokens)
+  * Suffix: ''3'' (for 3-letter words)
+  * Resulting file: ''w3.idx''
+
+A common use case is splitting token indexes by word length. In a fulltext collection:
+
+  * ''w3.idx'' - stores all 3-letter words
+  * ''w4.idx'' - stores all 4-letter words
+  * ''w5.idx'' - stores all 5-letter words
+  * and so on...
+
+When an index uses suffixes, the ''max()'' method can be used to find the highest numeric suffix currently in use. This is useful for operations that need to iterate over all splits of an index (eg. when a Term is using a wildcard).
+
+==== Tuple Data Format ====
+
+Tuple-based index rows store associations between keys (typically RIDs from another index) and numeric values (typically frequency counts). The internal format uses a compact string representation:
+
+<code>
+key*count:key*count:key*count
+</code>
+
+Where:
+  * ''key'' - Usually the RID from another index (e.g., a page ID)
+  * ''count'' - A numeric value (e.g., how many times a word appears on that page)
+  * '':'' - Separates individual tuples
+  * ''*'' - Separates the key from its count within a tuple
+
+**Example:** A frequency index row for a word might look like:
+<code>
+42*5:17*3:98*12
+</code>
+
+This means:
+  * Entity with RID 42 contains this word 5 times
+  * Entity with RID 17 contains this word 3 times
+  * Entity with RID 98 contains this word 12 times
+
+Frequencies of 1 are not stored in the index. For example:
+
+<code>
+42*5:17:98
+</code>
+
+In the above case would be interpreted as
+
+  * Entity with RID 42 contains this word 5 times
+  * Entity with RID 17 contains this word 1 times
+  * Entity with RID 98 contains this word 1 times
+
+The ''TupleOps'' class provides utility methods for working with tuple records:
+  * ''updateTuple()'' - Insert or update a specific key->count pair
+  * ''parseTuples()'' - Parse a record into an array of key->count associations
+  * ''aggregateTupleCounts()'' - Sum all counts in a record
 
 ===== Locking =====
 
