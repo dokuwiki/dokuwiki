@@ -16,7 +16,7 @@ use dokuwiki\Search\Exception\IndexWriteException;
 class FileIndex extends AbstractIndex
 {
     /** @var array RID cache for faster access */
-    protected static $ridCache = [];
+    protected $ridCache = [];
 
     /**
      * @inheritdoc
@@ -200,17 +200,17 @@ class FileIndex extends AbstractIndex
      */
     public function accessCachedValue($value)
     {
-        if (isset(static::$ridCache['value'])) {
-            return static::$ridCache['value'];
+        if (isset($this->ridCache[$value])) {
+            return $this->ridCache[$value];
         }
 
         // limit cache to 10 entries by discarding the oldest element
         // as in DokuWiki usually only the most recently
         // added item will be requested again
-        if (count(static::$ridCache) > 10) {
-            array_shift(static::$ridCache);
+        if (count($this->ridCache) > 10) {
+            array_shift($this->ridCache);
         }
-        static::$ridCache[$value] = $this->getRowID($value);
-        return static::$ridCache[$value];
+        $this->ridCache[$value] = $this->getRowID($value);
+        return $this->ridCache[$value];
     }
 }
