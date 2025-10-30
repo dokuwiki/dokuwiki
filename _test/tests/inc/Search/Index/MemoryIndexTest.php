@@ -51,7 +51,7 @@ class MemoryIndexTest extends AbstractIndexTest
     public function testSave()
     {
         $index = $this->getIndex();
-        $this->assertFileNotExists($index->getFilename());
+        $this->assertFileDoesNotExist($index->getFilename());
         $this->assertFalse($index->isDirty());
 
         $index->changeRow(0, '');
