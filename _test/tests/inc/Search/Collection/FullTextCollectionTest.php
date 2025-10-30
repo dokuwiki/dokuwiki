@@ -30,7 +30,7 @@ class FullTextCollectionTest extends \DokuWikiTest
         $this->assertEquals('two', $idxToken->retrieveRow(1));
 
         $idxFreq = new MemoryIndex('freq', '3');
-        $this->assertEquals('0*1', $idxFreq->retrieveRow(0)); // one is 1x on page 0
+        $this->assertEquals('0', $idxFreq->retrieveRow(0)); // one is 1x on page 0 (written without *1)
         $this->assertEquals('0*2', $idxFreq->retrieveRow(1)); // two is 2x on page 0
 
         $idxRev = new MemoryIndex('reverse');
