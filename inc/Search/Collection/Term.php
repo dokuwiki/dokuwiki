@@ -9,8 +9,6 @@ use dokuwiki\Search\Tokenizer;
  * Represents a term that is searched on a frequency based index
  *
  * A term can contain wildcards and thus may refer to various tokens of different lengths.
- *
- * @fixme add standalone tests for this class
  */
 class Term
 {
@@ -134,7 +132,7 @@ class Term
     /**
      * Return all tokens that match the given term
      *
-     * @return string
+     * @return string[]
      */
     public function getTokens()
     {
