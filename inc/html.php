@@ -646,7 +646,7 @@ function html_msgarea()
         $hash = md5($msg['msg']);
         if (isset($shown[$hash])) continue; // skip double messages
         if (info_msg_allowed($msg)) {
-            echo '<div class="' . $msg['lvl'] . '">';
+            echo '<div class="' . $msg['lvl'] . '" role="alert" tabindex="-1" autofocus>';
             echo $msg['msg'];
             echo '</div>';
         }
