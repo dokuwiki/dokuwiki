@@ -23,15 +23,17 @@ class TupleOps
     public static function updateTuple($record, $key, $count)
     {
         if ($record != '') {
-            // remove any current version of the tuple
-            $record = preg_replace('/(^|:)' . preg_quote($key, '/') . '\*\d*/', '', $record);
+            // remove any current version of the tuple (with or without explicit count)
+            $record = preg_replace('/(^|:)' . preg_quote($key, '/') . '(\*\d+)?/', '', $record);
         }
         $record = trim($record, ':');
         if ($count) {
-            if ($record) {
-                return "{$key}*{$count}:" . $record;
+            // Write tuples with frequency=1 without the asterisk
+            $tuple = ($count == 1) ? $key : "{$key}*{$count}";
+            if ($record !== '') {
+                return "{$tuple}:" . $record;
             } else {
-                return "{$key}*{$count}";
+                return $tuple;
             }
         }
         return $record;
@@ -39,6 +41,8 @@ class TupleOps
 
     /**
      * Sum the counts in a list of tuples
+     *
+     * Tuples can be in format "key*count" or just "key" (implicit count of 1)
      *
      * @param string $record The row value to parse
      * @return int sum of all counts
@@ -50,8 +54,13 @@ class TupleOps
         $parts = explode(':', $record);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            list(/* $key */, $cnt) = explode('*', $tuple);
-            $freq += (int)$cnt;
+            if (strpos($tuple, '*') !== false) {
+                [/* $key */, $cnt] = explode('*', $tuple);
+                $freq += (int)$cnt;
+            } else {
+                // No explicit count means count of 1
+                $freq += 1;
+            }
         }
         return $freq;
     }
@@ -66,6 +75,8 @@ class TupleOps
      *
      * If no $filtermap is given (null), all tuples are returned keeping their original keys
      *
+     * Tuples can be in format "key*count" or just "key" (implicit count of 1)
+     *
      * @param string $record The row value to parse
      * @param array|null $filtermap Associative array of ($key => $mapping), null for all tuples
      * @return array mapped counts
@@ -79,8 +90,17 @@ class TupleOps
         $parts = explode(':', $record);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            list($key, $cnt) = explode('*', $tuple);
-            if (!$cnt) continue;
+
+            // Handle both "key*count" and "key" formats
+            if (strpos($tuple, '*') !== false) {
+                [$key, $cnt] = explode('*', $tuple);
+                if (!$cnt) continue;
+            } else {
+                // No explicit count means count of 1
+                $key = $tuple;
+                $cnt = 1;
+            }
+
             if (is_array($filtermap)) {
                 if (!isset($filtermap[$key])) continue;
                 $mapped = $filtermap[$key];
