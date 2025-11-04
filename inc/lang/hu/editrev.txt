@@ -1,2 +1,2 @@
-**A szócikk egy korábbi változatát szerkeszted!** Mentés esetén ez a tartalom felül fogja írni a jelenlegi változatot.
+**A szócikk egy korábbi változatát szerkeszti!** Mentés esetén ez a tartalom felül fogja írni a jelenlegi változatot.
 ----
