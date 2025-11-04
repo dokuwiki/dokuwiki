@@ -651,7 +651,11 @@ function ft_resultUnite($args)
     $result = $args[0];
     for ($i = 1; $i !== $array_count; $i++) {
         foreach (array_keys($args[$i]) as $id) {
-            $result[$id] += $args[$i][$id];
+            if (isset($result[$id])) {
+                $result[$id] += $args[$i][$id];
+            } else {
+                $result[$id] = $args[$i][$id];
+            }
         }
     }
     return $result;
