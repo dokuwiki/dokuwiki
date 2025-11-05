@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Schopf <pschopf@gmail.com>
  * @author Victor Westmann <victor.westmann@gmail.com>
@@ -33,6 +34,6 @@ $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
-$lang['referrals_o_-1']        = 'use o padr&atilde;o';
-$lang['referrals_o_0']         = 'não seguem refer&ecirc;ncias';
-$lang['referrals_o_1']         = 'seguem refer&ecirc;ncias';
+$lang['referrals_o_-1']        = 'use o padrão';
+$lang['referrals_o_0']         = 'não seguem referências';
+$lang['referrals_o_1']         = 'seguem referências';
