@@ -10,6 +10,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Ip;
 use dokuwiki\ErrorHandler;
 use dokuwiki\JWT;
 use dokuwiki\Utf8\PhpString;
@@ -536,7 +537,7 @@ function auth_logoff($keepbc = false)
     setcookie(DOKU_COOKIE, '', [
         'expires' => time() - 600000,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
@@ -1402,7 +1403,7 @@ function auth_setCookie($user, $pass, $sticky)
     setcookie(DOKU_COOKIE, $cookie, [
         'expires' => $time,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
