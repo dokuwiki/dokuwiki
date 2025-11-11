@@ -106,6 +106,10 @@ foreach (['default', 'local'] as $config_group) {
     }
 }
 
+if (empty($conf)) {
+    nice_die("No configuration found in " . DOKU_CONF . ".");
+}
+
 // set timezone (as in pre 5.3.0 days)
 date_default_timezone_set(@date_default_timezone_get());
 
