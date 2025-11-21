@@ -22,3 +22,4 @@ $meta['groupkey']    = array('string','_caution' => 'danger');
 $meta['debug']       = array('onoff','_caution' => 'security');
 $meta['modPass']     = array('onoff');
 $meta['modPassPlain'] = array('onoff','_caution' => 'security');
+$meta['userCacheTTL'] = array('numeric');
