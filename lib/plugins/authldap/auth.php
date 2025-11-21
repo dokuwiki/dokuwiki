@@ -20,11 +20,37 @@ class auth_plugin_authldap extends AuthPlugin
     /* @var int $bound What type of connection does already exist? */
     protected $bound = 0; // 0: anonymous, 1: user, 2: superuser
 
-    /* @var array $users User data cache */
+    /**
+     * Unified in-memory cache for users used by both fetchUserData/getUserData
+     * and retrieveUsers.
+     *
+     * Structure:
+     *  - false : user known but not yet fetched
+     *  - ['data' => <userinfo array>, 'expires' => <timestamp>] : cached user data
+     *
+     * This property still holds the list of known users (keys) for retrieveUsers.
+     *
+     * @var array|null
+     */
     protected $users;
 
     /* @var array $pattern User filter pattern */
     protected $pattern;
+
+    /**
+     * Cache TTL in seconds for cached user entries. Default 300s.
+     * Can be overridden via plugin configuration key 'userCacheTTL'.
+     *
+     * @var int
+     */
+    protected $userCacheTTL = 300;
+
+    /**
+     * APCu key prefix to avoid collisions
+     *
+     * @var string
+     */
+    protected $apcuPrefix = 'authldap:user:';
 
     /**
      * Constructor
@@ -42,6 +68,12 @@ class auth_plugin_authldap extends AuthPlugin
 
         // Add the capabilities to change the password
         $this->cando['modPass'] = $this->getConf('modPass');
+
+        // initialize cache TTL from configuration if provided
+        $ttl = (int)$this->getConf('userCacheTTL');
+        if ($ttl > 0) {
+            $this->userCacheTTL = $ttl;
+        }
     }
 
     /**
@@ -166,6 +198,18 @@ class auth_plugin_authldap extends AuthPlugin
         global $conf;
         if (!$this->openLDAP()) return [];
 
+        // Try to return cached value if available and not in bind phase
+        if (!$inbind) {
+            $cached = $this->getCachedUser($user);
+            if ($cached !== null) {
+                $this->debug('LDAP: returning cached data for ' . hsc($user), 0, __LINE__, __FILE__);
+                return $cached;
+            }
+        } else {
+        	$this->debug("LDAP: Not caching due to bind", 0, __LINE__, __FILE__);
+        }
+        $this->debug("APCU:" . $this->apcuAvailable(), 0, __LINE__, __FILE__);
+
         // force superuser bind if wanted and not bound as superuser yet
         if ($this->getConf('binddn') && $this->getConf('bindpw') && $this->bound < 2) {
             // use superuser credentials
@@ -227,9 +271,6 @@ class auth_plugin_authldap extends AuthPlugin
                 __LINE__,
                 __FILE__
             );
-            //for($i = 0; $i < $result["count"]; $i++) {
-            //$this->_debug('result: '.hsc(print_r($result[$i])), 0, __LINE__, __FILE__);
-            //}
             return [];
         }
 
@@ -241,8 +282,8 @@ class auth_plugin_authldap extends AuthPlugin
         // general user info
         $info['dn'] = $user_result['dn'];
         $info['gid'] = $user_result['gidnumber'][0] ?? null;
-        $info['mail'] = $user_result['mail'][0];
-        $info['name'] = $user_result['cn'][0];
+        $info['mail'] = $user_result['mail'][0] ?? '';
+        $info['name'] = $user_result['cn'][0] ?? '';
         $info['grps'] = [];
 
         // overwrite if other attribs are specified.
@@ -263,7 +304,7 @@ class auth_plugin_authldap extends AuthPlugin
                         }
                     }
                 } else {
-                    $info[$localkey] = $user_result[$key][0];
+                    $info[$localkey] = $user_result[$key][0] ?? '';
                 }
             }
         }
@@ -310,6 +351,12 @@ class auth_plugin_authldap extends AuthPlugin
         if (!$info['grps'] || !in_array($conf['defaultgroup'], $info['grps'])) {
             $info['grps'][] = $conf['defaultgroup'];
         }
+
+        // store in unified cache if allowed and not in bind phase
+        if (!$inbind) {
+            $this->setCachedUser($user, $info);
+        }
+
         return $info;
     }
 
@@ -383,6 +430,9 @@ class auth_plugin_authldap extends AuthPlugin
             return false;
         }
 
+        // invalidate cached user entry so subsequent reads fetch fresh data
+        $this->invalidateCachedUser($user);
+
         return true;
     }
 
@@ -403,14 +453,13 @@ class auth_plugin_authldap extends AuthPlugin
      * @param int $limit max number of users to be returned
      * @param array $filter array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
-     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {
         if (!$this->openLDAP()) return [];
 
         if (is_null($this->users)) {
-            // Perform the search and grab all their details
+            // Perform the search and grab all their details (only keys, details are fetched lazily)
             if ($this->getConf('userfilter')) {
                 $all_filter = str_replace('%{user}', '*', $this->getConf('userfilter'));
             } else {
@@ -433,15 +482,32 @@ class auth_plugin_authldap extends AuthPlugin
         $this->constructPattern($filter);
         $result = [];
 
-        foreach ($this->users as $user => &$info) {
+        // iterate over the keys to avoid reference confusion with mixed entry types
+        foreach (array_keys($this->users) as $user) {
             if ($i++ < $start) {
                 continue;
             }
-            if ($info === false) {
-                $info = $this->getUserData($user);
+
+            $entry = $this->users[$user];
+
+            // Determine user info - prefer cached if available
+            if ($entry === false) {
+                $userinfo = $this->getUserData($user); // getUserData will consult APCu/local cache
+            } elseif (is_array($entry) && isset($entry['data'], $entry['expires'])) {
+                if ($entry['expires'] < time()) {
+                    // expired -> refetch (this is local-cache expiry)
+                    $userinfo = $this->getUserData($user);
+                } else {
+                    // use local cached data
+                    $userinfo = $entry['data'];
+                }
+            } else {
+                // unexpected format -> fetch fresh
+                $userinfo = $this->getUserData($user);
             }
-            if ($this->filter($user, $info)) {
-                $result[$user] = $info;
+
+            if ($this->filter($user, $userinfo)) {
+                $result[$user] = $userinfo;
                 if (($limit > 0) && (++$count >= $limit)) break;
             }
         }
@@ -571,8 +637,7 @@ class auth_plugin_authldap extends AuthPlugin
              *
              * So we should try to bind to server in order to check its availability.
              */
-
-            //set protocol version and dependend options
+            // set protocol version and dependent options
             if ($this->getConf('version')) {
                 if (
                     !@ldap_set_option(
@@ -707,5 +772,115 @@ class auth_plugin_authldap extends AuthPlugin
     {
         if (!$this->getConf('debug')) return;
         msg($message, $err, $line, $file);
+    }
+
+    /**
+     * Return true if APCu appears available & enabled for this SAPI.
+     *
+     * Note: this is a pragmatic check. apcu.enable_cli may be off for CLI.
+     *
+     * @return bool
+     */
+    protected function apcuAvailable()
+    {
+        if (!extension_loaded('apcu')) return false;
+        $enabled = @ini_get('apc.enabled');
+        if ($enabled === false) return false;
+        if ($enabled === '' || $enabled === '1' || strtolower($enabled) === 'on') return true;
+        return false;
+    }
+
+    /**
+     * Get cached user data if present and fresh.
+     *
+     * @param string $user
+     * @return array|null returns cached data array or null if not found/expired
+     */
+    protected function getCachedUser($user)
+    {
+        // Try APCu first
+        if ($this->apcuAvailable()) {
+            $key = $this->apcuPrefix . $user;
+            $success = false;
+            $entry = @apcu_fetch($key, $success);
+            if ($success && is_array($entry) && isset($entry['data'], $entry['expires'])) {
+                if ($entry['expires'] < time()) {
+                    @apcu_delete($key);
+                    // fallthrough to local check
+                } else {
+                    return $entry['data'];
+                }
+            }
+        }
+
+        // Fallback to local $this->users storage (also used to track known users list)
+        if (empty($this->users) || !array_key_exists($user, $this->users)) return null;
+        $entry = $this->users[$user];
+
+        // old-style marker for known-but-not-fetched
+        if ($entry === false) return null;
+
+        if (is_array($entry) && isset($entry['data'], $entry['expires'])) {
+            if ($entry['expires'] < time()) {
+                unset($this->users[$user]);
+                return null;
+            }
+            return $entry['data'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Store user data in unified cache (APCu when available, always keep a local copy
+     * of the cache entry so retrieveUsers can continue to use $this->users table).
+     *
+     * @param string $user
+     * @param array $data
+     * @return void
+     */
+    protected function setCachedUser($user, $data)
+    {
+        if ($this->userCacheTTL <= 0) {
+            // caching disabled
+            return;
+        }
+
+        $entry = [
+            'data'    => $data,
+            'expires' => time() + $this->userCacheTTL
+        ];
+
+        // store APCu (if available)
+        if ($this->apcuAvailable()) {
+            @apcu_store($this->apcuPrefix . $user, $entry, $this->userCacheTTL);
+        }
+
+        // always keep a local copy for the lifetime of the request/process
+        $this->users[$user] = $entry;
+    }
+
+    /**
+     * Invalidate cached user(s).
+     *
+     * @param string|null $user if null clears entire cache, otherwise clears single user
+     * @return void
+     */
+    protected function invalidateCachedUser($user = null)
+    {
+        if ($user === null) {
+            // clear APCu keys for all known users (best-effort)
+            if ($this->apcuAvailable() && is_array($this->users)) {
+                foreach (array_keys($this->users) as $u) {
+                    @apcu_delete($this->apcuPrefix . $u);
+                }
+            }
+            $this->users = null;
+        } else {
+            if ($this->apcuAvailable()) {
+                @apcu_delete($this->apcuPrefix . $user);
+            }
+            if (isset($this->users[$user])) unset($this->users[$user]);
+        }
     }
 }
