@@ -6,7 +6,7 @@ on:
 
 jobs:
   autofix:
-    if: github.repository_owner == 'easywiki'
+    if: github.repository_owner == 'egalan'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
