@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Thalles Lázaro <dokuwiki@thall.es>
+ * @author Thalles Lázaro <easywiki@thall.es>
  * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
@@ -31,7 +31,7 @@ $lang['danger']                = 'Perigo: Alterar esta opção poderá tornar se
 $lang['warning']               = 'Aviso: A alteração desta opção poderá causar comportamento involuntário.';
 $lang['security']              = 'Aviso de Segurança: Alterar esta opção pode apresentar um risco de segurança.';
 $lang['_configuration_manager'] = 'Gerenciamento de Configuração';
-$lang['_header_dokuwiki']      = 'DokuWiki';
+$lang['_header_easywiki']      = 'EasyWiki';
 $lang['_header_plugin']        = 'Plugins';
 $lang['_header_template']      = 'Modelos';
 $lang['_header_undefined']     = 'Configurações não Definidas';
@@ -58,7 +58,7 @@ $lang['tagline']               = 'Slogan (se o modelo for compatível)';
 $lang['sidebar']               = 'Nome da página da barra lateral (se o modelo for compatível). Um campo vazio desativará a barra lateral';
 $lang['license']               = 'Sob que licença o seu conteúdo deverá ser disponibilizado?';
 $lang['savedir']               = 'Pasta para salvar dados';
-$lang['basedir']               = 'Caminho do servidor (ex. <code>/dokuwiki/</code>). Deixe em branco para auto detecção.';
+$lang['basedir']               = 'Caminho do servidor (ex. <code>/easywiki/</code>). Deixe em branco para auto detecção.';
 $lang['baseurl']               = 'URL do servidor (ex. <code>http://www.yourserver.com</code>). Deixe em branco para auto detecção.';
 $lang['cookiedir']             = 'Caminho do cookie. Deixe em branco para usar a baseurl.';
 $lang['dmode']                 = 'Modo de criação de pastas.';
@@ -80,7 +80,7 @@ $lang['maxseclevel']           = 'Nível máximo para editar seção';
 $lang['camelcase']             = 'Usar CamelCase para links';
 $lang['deaccent']              = 'Como limpar nomes de páginas';
 $lang['useheading']            = 'Usar o primeiro cabeçalho para o nome da página';
-$lang['sneaky_index']          = 'Por padrão, o DokuWiki irá exibir todos os namespaces na visualização do índice. Ao ativar essa opção, serão escondidos aqueles em que o utilizador não tenha permissão de leitura. Isto pode resultar na ocultação de subnamespaces acessíveis, o que poderá tornar o índice inútil para certas configurações de ACL.';
+$lang['sneaky_index']          = 'Por padrão, o EasyWiki irá exibir todos os namespaces na visualização do índice. Ao ativar essa opção, serão escondidos aqueles em que o utilizador não tenha permissão de leitura. Isto pode resultar na ocultação de subnamespaces acessíveis, o que poderá tornar o índice inútil para certas configurações de ACL.';
 $lang['hidepages']             = 'Esconder páginas correspondentes com expressões regulares da pesquisa, índice e outros índices automáticos';
 $lang['useacl']                = 'Usar listas de controle de acesso';
 $lang['autopasswd']            = 'Auto-gerar senhas';
@@ -91,7 +91,7 @@ $lang['superuser']             = 'Superusuário - um grupo, utilizador ou uma li
 $lang['manager']               = 'Gerenciador - um grupo, utilizador ou uma lista separada por vírgulas usuário1,@grupo1,usuário2 que tem acesso a certas funções de gerenciamento';
 $lang['profileconfirm']        = 'Confirmar mudanças no perfil com a senha';
 $lang['rememberme']            = 'Permitir cookies de login permanentes (lembrar-me)';
-$lang['disableactions']        = 'Desativar ações DokuWiki';
+$lang['disableactions']        = 'Desativar ações EasyWiki';
 $lang['disableactions_check']  = 'Verificar';
 $lang['disableactions_subscription'] = 'Subscrever/Des-subscrever';
 $lang['disableactions_wikicode'] = 'Ver fonte/Exportar Direto';
@@ -144,7 +144,7 @@ $lang['rss_media']             = 'Que tipo de alterações devem ser listadas no
 $lang['rss_media_o_both']      = 'ambos';
 $lang['rss_media_o_pages']     = 'páginas';
 $lang['rss_media_o_media']     = 'mídia';
-$lang['updatecheck']           = 'Verificar por atualizações e avisos de segurança? O DokuWiki precisa contactar o "splitbrain.org" para efetuar esta verificação.';
+$lang['updatecheck']           = 'Verificar por atualizações e avisos de segurança? O EasyWiki precisa contactar o "splitbrain.org" para efetuar esta verificação.';
 $lang['userewrite']            = 'Usar URLs SEO';
 $lang['useslash']              = 'Usar a barra como separador de namespaces nas URLs';
 $lang['sepchar']               = 'Separador de palavras no nome da página';
@@ -159,7 +159,7 @@ $lang['send404']               = 'Enviar "HTTP 404/Página não encontrada" para
 $lang['broken_iua']            = 'A função "ignore_user_abort" não está a funcionar no seu sistema? Isso pode causar um índice de busca defeituoso. Sistemas com IIS+PHP/CGI são conhecidos por possuírem este problema. Veja o <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">bug 852</a> para mais informações.';
 $lang['xsendfile']             = 'Usar o cabeçalho "X-Sendfile" para permitir o servidor de internet encaminhar arquivos estáticos? O seu servidor de internet precisa ter suporte a isso.';
 $lang['renderer_xhtml']        = 'Renderizador a ser utilizado para a saída principal do wiki (xhtml)';
-$lang['renderer__core']        = '%s (núcleo dokuwiki)';
+$lang['renderer__core']        = '%s (núcleo easywiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Limite a pesquisa aos atuais X namespaces. Quando uma pesquisa é executada a partir de uma página em um namespace mais profundo, os primeiros X namespaces serão adicionados como filtro';
 $lang['search_fragment']       = 'Especifique o comportamento de pesquisa de fragmento padrão';
@@ -170,7 +170,7 @@ $lang['search_fragment_o_contains'] = 'contém';
 $lang['_feature_flags']        = 'Sinalizadores de recursos';
 $lang['defer_js']              = 'Adie a execução do javascript para depois da análise do HTML da página. Isso Melhora a velocidade da página, mas pode interromper um pequeno número de plugins.';
 $lang['hidewarnings']          = 'Não exibir nenhum aviso (Warning) emitido pelo PHP. Isso pode facilitar a transição para o PHP8+. Avisos ainda serão registrados no log de erros e devem ser reportados.';
-$lang['dnslookups']            = 'O DokuWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
+$lang['dnslookups']            = 'O EasyWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
 $lang['jquerycdn']             = 'Os arquivos de script jQuery e jQuery UI devem ser carregados de um CDN? Isso gera solicitações HTTP adicionais mas os arquivos são carregados mais rapidamente e os usuários já podem tê-los armazenados em cache.';
 $lang['trustedproxies']        = 'Lista separada por vírgulas de servidores proxy confiáveis ​​dos quais ler o cabeçalho X-Forwarded-For. Cada item na matriz pode ser um endereço IPv4 ou IPv6, ou um intervalo CIDR IPv4 ou IPv6 (por exemplo, 10.0.0.0/8). Deixe em branco para não confiar em nenhum proxy.';
 $lang['realip']                = 'Confie no cabeçalho X-Real-IP. Habilite esta opção somente se o seu servidor gravar este cabeçalho, caso contrário, ele poderá ser falsificado.';
@@ -189,7 +189,7 @@ $lang['typography_o_1']        = 'excluindo aspas simples';
 $lang['typography_o_2']        = 'incluindo aspas simples (pode não funcionar sempre)';
 $lang['userewrite_o_0']        = 'nenhum';
 $lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki interno';
+$lang['userewrite_o_2']        = 'EasyWiki interno';
 $lang['deaccent_o_0']          = 'desligado';
 $lang['deaccent_o_1']          = 'remover acentos';
 $lang['deaccent_o_2']          = 'romanizar';

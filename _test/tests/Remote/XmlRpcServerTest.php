@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
 
-use dokuwiki\test\Remote\Mock\XmlRpcServer;
+use easywiki\test\Remote\Mock\XmlRpcServer;
 
-class XmlRpcServerTest extends \DokuWikiTest
+class XmlRpcServerTest extends \EasyWikiTest
 {
     protected $server;
 
@@ -127,11 +127,11 @@ EOD;
                     </member>
                     <member>
                         <name>page</name>
-                        <value><string>wiki:dokuwiki</string></value>
+                        <value><string>wiki:easywiki</string></value>
                     </member>
                     <member>
                         <name>href</name>
-                        <value><string>https://www.dokuwiki.org/wiki:dokuwiki</string></value>
+                        <value><string>https://www.EasyWiki.org/wiki:easywiki</string></value>
                     </member>
                 </struct>
             </value>

@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionAbort;
 
 /**
  * Class Search
  *
  * Search for pages and content
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Search extends AbstractAction
 {
@@ -55,7 +55,7 @@ class Search extends AbstractAction
     {
         $this->execute();
 
-        $search = new \dokuwiki\Ui\Search($this->pageLookupResults, $this->fullTextResults, $this->highlight);
+        $search = new \easywiki\Ui\Search($this->pageLookupResults, $this->fullTextResults, $this->highlight);
         $search->show();
     }
 

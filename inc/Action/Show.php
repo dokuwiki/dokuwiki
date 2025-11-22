@@ -7,17 +7,17 @@
  * Time: 4:32 PM
  */
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\PageView;
-use dokuwiki\Ui;
+use easywiki\Ui\PageView;
+use easywiki\Ui;
 
 /**
  * Class Show
  *
  * The default action of showing a page
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Show extends AbstractAction
 {

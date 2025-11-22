@@ -2,7 +2,7 @@
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class safeFN_test extends DokuWikiTest {
+class safeFN_test extends EasyWikiTest {
 
 
     function test1(){

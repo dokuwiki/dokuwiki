@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class TagOpenElement
@@ -8,7 +8,7 @@ namespace dokuwiki\Form;
  * Creates an open HTML tag. You have to make sure you close it
  * again or this will produce invalid HTML
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class TagOpenElement extends ValueElement
 {

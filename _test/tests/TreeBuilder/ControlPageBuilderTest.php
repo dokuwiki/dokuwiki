@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Treebuilder;
+namespace easywiki\test\Treebuilder;
 
-use dokuwiki\TreeBuilder\ControlPageBuilder;
-use DokuWikiTest;
+use easywiki\TreeBuilder\ControlPageBuilder;
+use EasyWikiTest;
 
-class ControlPageBuilderTest extends DokuWikiTest
+class ControlPageBuilderTest extends EasyWikiTest
 {
     public static function setUpBeforeClass(): void
     {

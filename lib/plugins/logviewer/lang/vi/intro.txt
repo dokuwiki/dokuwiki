@@ -1,6 +1,6 @@
 ====== Xem Nhật ký Log ======
 
-Giao diện này cho phép bạn xem các nhật ký log khác nhau do DokuWiki viết. Theo mặc định, không nên có nhiều
+Giao diện này cho phép bạn xem các nhật ký log khác nhau do EasyWiki viết. Theo mặc định, không nên có nhiều
 tại đây (nó còn tùy thuộc vào [[doku>config:dontlog|cài đặt nhật ký log]] của bạn). Tuy nhiên, nếu có gì đó không ổn, rất có thể
 bạn sẽ tìm thấy thông tin hữu ích về vấn đề này.
 

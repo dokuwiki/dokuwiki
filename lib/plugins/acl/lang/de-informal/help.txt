@@ -8,4 +8,4 @@ Das obere Formular zeigt die die Rechte der ausgewählten Gruppe bzw. Benutzers.
 
 In der Tabelle unten werden alle momentan gesetzten Zugriffsregeln gezeigt. Hier kannst Du schnell mehrere Regeln löschen oder ändern.
 
-Das Lesen von [[doku>acl|official documentation on ACL]] kann Dir helfen zu verstehen, wie die Zugriffskontrole in DokuWiki funktioniert.
+Das Lesen von [[doku>acl|official documentation on ACL]] kann Dir helfen zu verstehen, wie die Zugriffskontrole in EasyWiki funktioniert.

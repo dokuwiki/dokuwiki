@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Linebreak;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Linebreak;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Eol extends TestOfWiki_Parser {
 
     function testEol() {
         $this->P->addMode('eol',new Eol());
@@ -13,7 +13,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("Foo".DOKU_PARSER_EOL."Bar")),
+            array('cdata',array("Foo".WIKI_PARSER_EOL."Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -29,7 +29,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
             array('cdata',array("Foo")),
             array('p_close',array()),
             array('p_open',array()),
-            array('cdata',array("bar".DOKU_PARSER_EOL."Foo")),
+            array('cdata',array("bar".WIKI_PARSER_EOL."Foo")),
             array('p_close',array()),
             array('document_end',array()),
         );
@@ -42,7 +42,7 @@ class TestOfDoku_Parser_Eol extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array("Foo".DOKU_PARSER_EOL."Bar")),
+            array('cdata',array("Foo".WIKI_PARSER_EOL."Bar")),
             array('p_close',array()),
             array('document_end',array()),
         );

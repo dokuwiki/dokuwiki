@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Feed;
+namespace easywiki\test\Feed;
 
-use dokuwiki\Feed\FeedMediaProcessor;
+use easywiki\Feed\FeedMediaProcessor;
 use DOMWrap\Document;
 
-class FeedMediaProcessorTest extends \DokuWikiTest
+class FeedMediaProcessorTest extends \EasyWikiTest
 {
 
     public function provideData()
@@ -16,7 +16,7 @@ class FeedMediaProcessorTest extends \DokuWikiTest
                 'date' => 1705511543,
                 'ip' => '::1',
                 'type' => 'C',
-                'id' => 'wiki:dokuwiki-128.png',
+                'id' => 'wiki:easywiki-128.png',
                 'user' => 'testuser',
                 'sum' => 'created',
                 'extra' => '',
@@ -46,8 +46,8 @@ class FeedMediaProcessorTest extends \DokuWikiTest
 
         $proc = new FeedMediaProcessor($data);
 
-        $this->assertEquals('wiki:dokuwiki-128.png', $proc->getId());
-        $this->assertEquals('dokuwiki-128.png', $proc->getTitle());
+        $this->assertEquals('wiki:easywiki-128.png', $proc->getId());
+        $this->assertEquals('easywiki-128.png', $proc->getTitle());
         $this->assertEquals($expectedAuthor, $proc->getAuthor());
         $this->assertEquals($expectedMtime, $proc->getRev());
         $this->assertEquals(null, $proc->getPrev());
@@ -57,19 +57,19 @@ class FeedMediaProcessorTest extends \DokuWikiTest
         $this->assertEquals($expectedSummary, $proc->getSummary());
 
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?image=wiki%3Adokuwiki-128.png&ns=wiki&rev=$expectedMtime&do=media",
+            "http://wiki.example.com/wiki.php?image=wiki%3Aeasywiki-128.png&ns=wiki&rev=$expectedMtime&do=media",
             $proc->getURL('page')
         );
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?image=wiki%3Adokuwiki-128.png&ns=wiki&rev=$expectedMtime&tab_details=history&do=media",
+            "http://wiki.example.com/wiki.php?image=wiki%3Aeasywiki-128.png&ns=wiki&rev=$expectedMtime&tab_details=history&do=media",
             $proc->getURL('rev')
         );
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?image=wiki%3Adokuwiki-128.png&ns=wiki&do=media",
+            "http://wiki.example.com/wiki.php?image=wiki%3Aeasywiki-128.png&ns=wiki&do=media",
             $proc->getURL('current')
         );
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?image=wiki%3Adokuwiki-128.png&ns=wiki&rev=$expectedMtime&tab_details=history&media_do=diff&do=media",
+            "http://wiki.example.com/wiki.php?image=wiki%3Aeasywiki-128.png&ns=wiki&rev=$expectedMtime&tab_details=history&media_do=diff&do=media",
             $proc->getURL('diff')
         );
 

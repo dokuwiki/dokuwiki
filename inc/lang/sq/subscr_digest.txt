@@ -11,6 +11,6 @@ Rishikimi i vjetër: @OLDPAGE@
 Rishikimi i ri: @NEWPAGE@
 
 Për të fshirë lajmërimet e faqes, mund të hyni tek wiki në
-@DOKUWIKIURL@ pastaj vizitoni
+@EASYWIKIURL@ pastaj vizitoni
 @SUBSCRIBE@
 dhe ç'regjistro faqen dhe/ose ndryshimet e hapësirës së emrit.

@@ -1,4 +1,4 @@
-Um arquivo foi enviado para o seu DokuWiki. Os detalhes são:
+Um arquivo foi enviado para o seu EasyWiki. Os detalhes são:
 
 Arquivo: @MEDIA@
 Data: @DATE@

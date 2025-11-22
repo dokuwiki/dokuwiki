@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\TreeBuilder;
+namespace easywiki\TreeBuilder;
 
-use dokuwiki\TreeBuilder\Node\AbstractNode;
-use dokuwiki\TreeBuilder\Node\WikiNamespace;
-use dokuwiki\Utf8\Sort;
+use easywiki\TreeBuilder\Node\AbstractNode;
+use easywiki\TreeBuilder\Node\WikiNamespace;
+use easywiki\Utf8\Sort;
 
 /**
  * Class that provides comparators for sorting the tree nodes

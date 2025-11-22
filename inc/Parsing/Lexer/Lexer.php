@@ -8,7 +8,7 @@
  * @author Marcus Baker http://www.lastcraft.com
  */
 
-namespace dokuwiki\Parsing\Lexer;
+namespace easywiki\Parsing\Lexer;
 
 /**
  * Accepts text and breaks it into tokens.
@@ -20,7 +20,7 @@ class Lexer
 {
     /** @var ParallelRegex[] */
     protected $regexes = [];
-    /** @var \Doku_Handler */
+    /** @var \Wiki_Handler */
     protected $handler;
     /** @var StateStack */
     protected $modeStack;
@@ -32,7 +32,7 @@ class Lexer
     /**
      * Sets up the lexer in case insensitive matching by default.
      *
-     * @param \Doku_Handler $handler  Handling strategy by reference.
+     * @param \Wiki_Handler $handler  Handling strategy by reference.
      * @param string $start            Starting handler.
      * @param boolean $case            True for case sensitive.
      */

@@ -1,17 +1,17 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Code;
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\File;
-use dokuwiki\Parsing\ParserMode\Header;
-use dokuwiki\Parsing\ParserMode\Html;
-use dokuwiki\Parsing\ParserMode\Listblock;
-use dokuwiki\Parsing\ParserMode\Php;
-use dokuwiki\Parsing\ParserMode\Preformatted;
+use easywiki\Parsing\ParserMode\Code;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\File;
+use easywiki\Parsing\ParserMode\Header;
+use easywiki\Parsing\ParserMode\Html;
+use easywiki\Parsing\ParserMode\Listblock;
+use easywiki\Parsing\ParserMode\Php;
+use easywiki\Parsing\ParserMode\Preformatted;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Preformatted extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Preformatted extends TestOfWiki_Parser {
 
     function testFile() {
         $this->P->addMode('file',new File());

@@ -10,7 +10,7 @@
  * @author 小李 <szsd5257@foxmail.com>
  * @author VinnieChow <zsz33@qq.com>
  * @author Lakejason0 <lakesarchive@outlook.com>
- * @author Phy <dokuwiki@phy25.com>
+ * @author Phy <easywiki@phy25.com>
  * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
@@ -149,7 +149,7 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拽文件到此处来上传';
 $lang['js']['media_cancel']    = '删除';
 $lang['js']['media_overwrt']   = '覆盖已存在的文件';
-$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>。';
+$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security in EasyWiki</a>。';
 $lang['search_exact_match']    = '精确匹配';
 $lang['search_starts_with']    = '开始于';
 $lang['search_ends_with']      = '结束于';
@@ -170,7 +170,7 @@ $lang['regfail']               = '用户不能被创建。';
 $lang['regmailfail']           = '发送密码邮件时产生错误。请联系管理员！';
 $lang['regbadmail']            = '您输入的邮件地址有问题——如果您认为这是系统错误，请联系管理员。';
 $lang['regbadpass']            = '您输入的密码与系统产生的不符，请重试。';
-$lang['regpwmail']             = '您的 DokuWiki 密码';
+$lang['regpwmail']             = '您的 EasyWiki 密码';
 $lang['reghere']               = '还没有账号？立即注册';
 $lang['profna']                = '本维基不允许修改个人信息';
 $lang['profnochange']          = '没有改动，不进行操作。';
@@ -331,28 +331,28 @@ $lang['subscr_style_digest']   = '对每个页面发送更改的摘要邮件（�
 $lang['subscr_style_list']     = '自上封邮件以来更改的页面的列表（每 %.2f 天）';
 $lang['authtempfail']          = '用户认证暂时无法使用。如果该状态一直存在，请通知维基管理员。';
 $lang['i_chooselang']          = '选择您的语言';
-$lang['i_installer']           = 'DokuWiki 安装工具';
+$lang['i_installer']           = 'EasyWiki 安装工具';
 $lang['i_wikiname']            = '维基名称';
 $lang['i_enableacl']           = '启用 ACL（推荐）';
 $lang['i_superuser']           = '超级用户';
 $lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
-$lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 DokuWiki 安装包。
+$lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 EasyWiki 安装包。
                          您可以重新解压下载的程序包，或查阅完整的
-                         <a href="https://www.dokuwiki.org/install">Dokuwiki 安装指南</a>';
+                         <a href="https://www.EasyWiki.org/install">EasyWiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_disabled']            = '它已经被您的服务商禁用';
-$lang['i_funcnmail']           = '<b>注意：</b> PHP邮件功能不可用。%s 如果仍然不可用，则可以安装<a href="https://www.dokuwiki.org/plugin:smtp">SMTP 插件</a>。';
+$lang['i_funcnmail']           = '<b>注意：</b> PHP邮件功能不可用。%s 如果仍然不可用，则可以安装<a href="https://www.EasyWiki.org/plugin:smtp">SMTP 插件</a>。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
-$lang['i_mbfuncoverload']      = '为了运行DokuWiki，您必须在php.ini中禁用mbstring.func_overload。';
-$lang['i_urandom']             = 'DokuWiki 无法为 Cookie 创建密码安全的数字。您可能需要检查 php.ini 中的 open_basedir 设置，以获取正确的<code>/dev/urandom</code>访问权限。';
-$lang['i_permfail']            = 'DokuWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
+$lang['i_mbfuncoverload']      = '为了运行EasyWiki，您必须在php.ini中禁用mbstring.func_overload。';
+$lang['i_urandom']             = 'EasyWiki 无法为 Cookie 创建密码安全的数字。您可能需要检查 php.ini 中的 open_basedir 设置，以获取正确的<code>/dev/urandom</code>访问权限。';
+$lang['i_permfail']            = 'EasyWiki 无法写入 <code>%s</code>。您需要修改该路径的权限设定！';
 $lang['i_confexists']          = '<code>%s</code> 已经存在';
 $lang['i_writeerr']            = '无法创建 <code>%s</code>。您需要检查该路径/文件的权限设定并手动创建该文件。';
-$lang['i_badhash']             = '无法识别的或被修改的 dokuwiki.php（哈希值=<code>%s</code>）';
+$lang['i_badhash']             = '无法识别的或被修改的 easywiki.php（哈希值=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 非法或空值';
 $lang['i_success']             = '配置成功完成。您现在可以删除 install.php 了。继续进入
-                        <a href="doku.php?id=wiki:welcome">您全新的 DokuWiki</a>。';
-$lang['i_failure']             = '写入配置文件的时候产生一些错误。在使用 <a href="doku.php?id=wiki:welcome">您全新安装的 DokuWiki</a> 前
+                        <a href="wiki.php?id=wiki:welcome">您全新的 EasyWiki</a>。';
+$lang['i_failure']             = '写入配置文件的时候产生一些错误。在使用 <a href="wiki.php?id=wiki:welcome">您全新安装的 EasyWiki</a> 前
                          您需要手动修复它们。';
 $lang['i_policy']              = '初始的 ACL 政策';
 $lang['i_pol0']                = '开放的维基（任何人都有读、写、上传的权限）';
@@ -362,8 +362,8 @@ $lang['i_allowreg']            = '允许用户自行注册';
 $lang['i_retry']               = '重试';
 $lang['i_license']             = '请选择您希望的内容发布许可协议：';
 $lang['i_license_none']        = '不要显示任何许可协议信息';
-$lang['i_pop_field']           = '请帮助我们改进 DokuWiki 的体验：';
-$lang['i_pop_label']           = '每个月向 DokuWiki 开发者发送匿名的使用数据';
+$lang['i_pop_field']           = '请帮助我们改进 EasyWiki 的体验：';
+$lang['i_pop_label']           = '每个月向 EasyWiki 开发者发送匿名的使用数据';
 $lang['recent_global']         = '您当前看到的是<b>%s</b> 名称空间的变动。你还可以在<a href="%s">查看整个维基的近期变动</a>。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%d月前';
@@ -404,8 +404,8 @@ $lang['plainhtml']             = '纯HTML';
 $lang['wikimarkup']            = 'Wiki Markup 语言';
 $lang['page_nonexist_rev']     = '页面在 %s 不存在。它曾创建于 <a href="%s">%s</a>。';
 $lang['unable_to_parse_date']  = '无法解析参数 "%s"。';
-$lang['email_signature_text']  = '本邮件由 DokuWiki 自动创建
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = '本邮件由 EasyWiki 自动创建
+@EASYWIKIURL@';
 $lang['log_file_too_large']    = '日志文件太大。跳过前几行!';
 $lang['log_file_failed_to_open'] = '日志文件打开失败。';
 $lang['log_file_failed_to_read'] = '读取日志时发生错误。';

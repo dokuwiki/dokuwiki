@@ -1,15 +1,15 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Linebreak;
-use dokuwiki\Parsing\ParserMode\Table;
-use dokuwiki\Parsing\ParserMode\Unformatted;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Footnote;
+use easywiki\Parsing\ParserMode\Formatting;
+use easywiki\Parsing\ParserMode\Linebreak;
+use easywiki\Parsing\ParserMode\Table;
+use easywiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Table extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Table extends TestOfWiki_Parser {
 
     function testTable() {
         $this->P->addMode('table',new Table());

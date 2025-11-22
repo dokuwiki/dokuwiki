@@ -1,6 +1,6 @@
 ====== Asetusten hallinta ======
 
-Käytä tätä sivua hallitaksesi DokuWikisi asetuksia. Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]]. Lisätietoa tästä liitännäisestä löytyy sivulta [[doku>plugin:config]].
+Käytä tätä sivua hallitaksesi EasyWikisi asetuksia. Apua yksittäisiin asetuksiin löytyy sivulta [[doku>config]]. Lisätietoa tästä liitännäisestä löytyy sivulta [[doku>plugin:config]].
 
 Asetukset, jotka näkyvät vaaleanpunaisella taustalla ovat suojattuja, eikä niitä voi muutta tämän liitännäisen avulla. Asetukset, jotka näkyvät sinisellä taustalla ovat oletusasetuksia. Asetukset valkoisella taustalla ovat asetettu paikallisesti tätä asennusta varten. Sekä sinisiä että valkoisia asetuksia voi muokata.
 

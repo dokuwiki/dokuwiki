@@ -1,17 +1,17 @@
 <?php
 /**
- * Simulates a full DokuWiki HTTP Request and allows
+ * Simulates a full EasyWiki HTTP Request and allows
  * runtime inspection.
  */
 
-use dokuwiki\Input\Input;
+use easywiki\Input\Input;
 
 /**
  * Helper class to execute a fake request
  */
 class TestRequest {
 
-    protected $valid_scripts = array('/doku.php', '/lib/exe/fetch.php', '/lib/exe/detail.php', '/lib/exe/ajax.php');
+    protected $valid_scripts = array('/wiki.php', '/lib/exe/fetch.php', '/lib/exe/detail.php', '/lib/exe/ajax.php');
     protected $script;
 
     protected $server = array();
@@ -121,7 +121,7 @@ class TestRequest {
      * @param string $uri end URL to simulate, needs to be one of the testable scripts
      * @return TestResponse the resulting output of the request
      */
-    public function execute($uri = '/doku.php') {
+    public function execute($uri = '/wiki.php') {
         global $INPUT;
 
         // save old environment
@@ -151,12 +151,12 @@ class TestRequest {
         // reset output buffer
         $this->output_buffer = '';
 
-        // now execute dokuwiki and grep the output
+        // now execute easywiki and grep the output
         self::$running = $this;
         header_remove();
         ob_start(array($this, 'ob_start_callback'));
         $INPUT = new Input();
-        include(DOKU_INC . $this->script);
+        include(WIKI_INC . $this->script);
         ob_end_flush();
         self::$running = null;
 
@@ -223,7 +223,7 @@ class TestRequest {
      * @param string $uri end URL to simulate
      * @return TestResponse
      */
-    public function post($post = array(), $uri = '/doku.php') {
+    public function post($post = array(), $uri = '/wiki.php') {
         $this->post = array_merge($this->post, $post);
         $this->setServer('REQUEST_METHOD', 'POST');
         return $this->execute($uri);
@@ -236,7 +236,7 @@ class TestRequest {
      * @param string $uri end URL to simulate
      * @return TestResponse
      */
-    public function get($get = array(), $uri = '/doku.php') {
+    public function get($get = array(), $uri = '/wiki.php') {
         $this->get = array_merge($this->get, $get);
         $this->setServer('REQUEST_METHOD', 'GET');
         return $this->execute($uri);

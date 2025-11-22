@@ -1,4 +1,4 @@
-Cafodd tudalen yn eich DokuWiki ei hychwanegu neu newid. Dyma'r manylion:
+Cafodd tudalen yn eich EasyWiki ei hychwanegu neu newid. Dyma'r manylion:
 
 Dyddiad         : @DATE@
 Porwr           : @BROWSER@
@@ -13,5 +13,5 @@ Defnyddiwr      : @USER@
 
 
 -- 
-Cafodd y neges hon ei generadyu gan DokuWiki ar
-@DOKUWIKIURL@
+Cafodd y neges hon ei generadyu gan EasyWiki ar
+@EASYWIKIURL@

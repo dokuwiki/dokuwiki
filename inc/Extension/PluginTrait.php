@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
-use dokuwiki\Logger;
+use easywiki\Logger;
 
 /**
- * Provides standard DokuWiki plugin behaviour
+ * Provides standard EasyWiki plugin behaviour
  */
 trait PluginTrait
 {
@@ -37,10 +37,10 @@ trait PluginTrait
             'date' => '0000-00-00',
             'name' => $ext . ' plugin',
             'desc' => 'Unknown purpose - bad plugin.info.txt',
-            'url' => 'https://www.dokuwiki.org/plugins/' . $ext,
+            'url' => 'https://www.EasyWiki.org/plugins/' . $ext,
         ];
 
-        $file = DOKU_PLUGIN . '/' . $ext . '/plugin.info.txt';
+        $file = WIKI_PLUGIN . '/' . $ext . '/plugin.info.txt';
         if (file_exists($file)) {
             $raw = confToHash($file);
 
@@ -132,12 +132,12 @@ trait PluginTrait
     {
         global $conf;
         $plugin = $this->getPluginName();
-        $file = DOKU_CONF . 'plugin_lang/' . $plugin . '/' . $conf['lang'] . '/' . $id . '.' . $ext;
+        $file = WIKI_CONF . 'plugin_lang/' . $plugin . '/' . $conf['lang'] . '/' . $id . '.' . $ext;
         if (!file_exists($file)) {
-            $file = DOKU_PLUGIN . $plugin . '/lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
+            $file = WIKI_PLUGIN . $plugin . '/lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
             if (!file_exists($file)) {
                 //fall back to english
-                $file = DOKU_PLUGIN . $plugin . '/lang/en/' . $id . '.' . $ext;
+                $file = WIKI_PLUGIN . $plugin . '/lang/en/' . $id . '.' . $ext;
             }
         }
         return $file;
@@ -151,7 +151,7 @@ trait PluginTrait
         if ($this->localised) return;
 
         global $conf, $config_cascade; // definitely don't invoke "global $lang"
-        $path = DOKU_PLUGIN . $this->getPluginName() . '/lang/';
+        $path = WIKI_PLUGIN . $this->getPluginName() . '/lang/';
 
         $lang = [];
 
@@ -224,7 +224,7 @@ trait PluginTrait
     protected function readDefaultSettings()
     {
 
-        $path = DOKU_PLUGIN . $this->getPluginName() . '/conf/';
+        $path = WIKI_PLUGIN . $this->getPluginName() . '/conf/';
         $conf = [];
 
         if (file_exists($path . 'default.php')) {

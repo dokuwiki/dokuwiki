@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Camelcaselink;
-use dokuwiki\Parsing\ParserMode\Emaillink;
-use dokuwiki\Parsing\ParserMode\Externallink;
-use dokuwiki\Parsing\ParserMode\Filelink;
-use dokuwiki\Parsing\ParserMode\Internallink;
-use dokuwiki\Parsing\ParserMode\Media;
-use dokuwiki\Parsing\ParserMode\Windowssharelink;
+use easywiki\Parsing\ParserMode\Camelcaselink;
+use easywiki\Parsing\ParserMode\Emaillink;
+use easywiki\Parsing\ParserMode\Externallink;
+use easywiki\Parsing\ParserMode\Filelink;
+use easywiki\Parsing\ParserMode\Internallink;
+use easywiki\Parsing\ParserMode\Media;
+use easywiki\Parsing\ParserMode\Windowssharelink;
 
 require_once 'parser.inc.php';
 
@@ -15,7 +15,7 @@ require_once 'parser.inc.php';
  *
  * @group parser_links
 */
-class TestOfDoku_Parser_Links extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Links extends TestOfWiki_Parser {
 
     function testExternalLinkSimple() {
         $this->P->addMode('externallink',new Externallink());

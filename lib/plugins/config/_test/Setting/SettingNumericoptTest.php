@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\config\test\Setting;
+namespace easywiki\plugin\config\test\Setting;
 
 /**
  * @group plugin_config

@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAclRequiredException;
-use dokuwiki\Extension\AuthPlugin;
+use easywiki\Action\Exception\ActionAclRequiredException;
+use easywiki\Extension\AuthPlugin;
 
 /**
  * Class AbstractAclAction
  *
  * An action that requires the ACL subsystem to be enabled (eg. useacl=1)
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 abstract class AbstractAclAction extends AbstractAction
 {

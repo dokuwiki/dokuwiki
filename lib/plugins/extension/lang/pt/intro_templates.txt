@@ -1,1 +1,1 @@
-Estes são os modelos atualmente instalados em seu DokuWiki. Você pode selecionar o modelo a ser usado no [[?do=admin&page=config|Gerenciador de Configuração]].
+Estes são os modelos atualmente instalados em seu EasyWiki. Você pode selecionar o modelo a ser usado no [[?do=admin&page=config|Gerenciador de Configuração]].

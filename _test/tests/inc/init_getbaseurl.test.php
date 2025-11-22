@@ -1,6 +1,6 @@
 <?php
 
-class init_getBaseURL_test extends DokuWikiTest {
+class init_getBaseURL_test extends EasyWikiTest {
 
     /**
      * Apache, mod_php, subdirectory
@@ -15,14 +15,14 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/doku.php?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki.php?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = null;
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/easywiki/wiki.php';
 
-        $this->assertEquals(getBaseURL(),'/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/easywiki/');
     }
 
     /**
@@ -39,13 +39,13 @@ class init_getBaseURL_test extends DokuWikiTest {
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/localhost';
         $_SERVER['HTTP_HOST']       = 'localhost';
         $_SERVER['SCRIPT_FILENAME'] = '/usr/lib/cgi-bin/php4';
-        $_SERVER['REQUEST_URI']     = '/~bengen/dokuwiki/doku.php?do=debug';
+        $_SERVER['REQUEST_URI']     = '/~bengen/easywiki/wiki.php?do=debug';
         $_SERVER['SCRIPT_NAME']     = '/cgi-bin/php4';
-        $_SERVER['PATH_INFO']       = '/~bengen/dokuwiki/doku.php';
-        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/~bengen/dokuwiki/doku.php';
+        $_SERVER['PATH_INFO']       = '/~bengen/easywiki/wiki.php';
+        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/~bengen/easywiki/wiki.php';
 
-        $this->assertEquals(getBaseURL(),'/~bengen/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/~bengen/easywiki/');
     }
 
     /**
@@ -62,13 +62,13 @@ class init_getBaseURL_test extends DokuWikiTest {
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/localhost';
         $_SERVER['HTTP_HOST']       = 'localhost';
         $_SERVER['SCRIPT_FILENAME'] = '/var/run/php-fastcgi/fcgi-bin/bengen/php4';
-        $_SERVER['REQUEST_URI']     = '/~bengen/dokuwiki/doku.php?do=debug';
+        $_SERVER['REQUEST_URI']     = '/~bengen/easywiki/wiki.php?do=debug';
         $_SERVER['SCRIPT_NAME']     = '/fcgi-bin/php4-bengen';
-        $_SERVER['PATH_INFO']       = '/~bengen/dokuwiki/doku.php';
-        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/~bengen/dokuwiki/doku.php';
+        $_SERVER['PATH_INFO']       = '/~bengen/easywiki/wiki.php';
+        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/~bengen/easywiki/wiki.php';
 
-        $this->assertEquals(getBaseURL(),'/~bengen/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/~bengen/easywiki/');
     }
 
     /**
@@ -84,14 +84,14 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/localhost';
         $_SERVER['HTTP_HOST']       = 'localhost';
-        $_SERVER['SCRIPT_FILENAME'] = '/home/bengen/public_html/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/~bengen/dokuwiki/doku.php?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/~bengen/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/home/bengen/public_html/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/~bengen/easywiki/wiki.php?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/~bengen/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = null;
-        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/~bengen/dokuwiki/doku.php';
+        $_SERVER['PATH_TRANSLATED'] = '/home/bengen/public_html/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/~bengen/easywiki/wiki.php';
 
-        $this->assertEquals(getBaseURL(),'/~bengen/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/~bengen/easywiki/');
     }
 
     /**
@@ -109,10 +109,10 @@ class init_getBaseURL_test extends DokuWikiTest {
         $_SERVER['HTTP_HOST']       = 'intranet';
         $_SERVER['SCRIPT_FILENAME'] = null;
         $_SERVER['REQUEST_URI']     = null; 
-        $_SERVER['SCRIPT_NAME']     = '/wiki/doku.php';
-        $_SERVER['PATH_INFO']       = '/wiki/doku.php';
-        $_SERVER['PATH_TRANSLATED'] = 'C:\\Inetpub\\wwwroot\\wiki\\doku.php';
-        $_SERVER['PHP_SELF']        = '/wiki/doku.php';
+        $_SERVER['SCRIPT_NAME']     = '/wiki/wiki.php';
+        $_SERVER['PATH_INFO']       = '/wiki/wiki.php';
+        $_SERVER['PATH_TRANSLATED'] = 'C:\\Inetpub\\wwwroot\\wiki\\wiki.php';
+        $_SERVER['PHP_SELF']        = '/wiki/wiki.php';
     
         $this->assertEquals(getBaseURL(),'/wiki/');
     }
@@ -130,7 +130,7 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/home/websites/wiki/htdocs';
         $_SERVER['HTTP_HOST']       = 'wiki.linuxwan.net';
-        $_SERVER['SCRIPT_FILENAME'] = '/home/websites/wiki/htdocs/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/home/websites/wiki/htdocs/wiki.php';
         $_SERVER['REQUEST_URI']     = '/wiki/syntax?do=debug';
         $_SERVER['SCRIPT_NAME']     = '/wiki/syntax';
         $_SERVER['PATH_INFO']       = null;
@@ -153,14 +153,14 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'localhost';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/doku.php?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki.php?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = '';
         $_SERVER['PATH_TRANSLATED'] = null;
         $_SERVER['PHP_SELF']        = '';
    
-        $this->assertEquals(getBaseURL(),'/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/easywiki/');
     }
 
     /**
@@ -176,14 +176,14 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/doku.php/wiki/syntax?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki.php/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = '/wiki/syntax';
         $_SERVER['PATH_TRANSLATED'] = '/var/www/wiki/syntax';
-        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php/wiki/syntax';
+        $_SERVER['PHP_SELF']        = '/easywiki/wiki.php/wiki/syntax';
 
-        $this->assertEquals(getBaseURL(),'/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/easywiki/');
     }
 
     /**
@@ -199,14 +199,14 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/wiki/syntax?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = null;
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/easywiki/wiki.php';
 
-        $this->assertEquals(getBaseURL(),'/dokuwiki/');
+        $this->assertEquals(getBaseURL(),'/easywiki/');
     }
 
     /**
@@ -217,10 +217,10 @@ class init_getBaseURL_test extends DokuWikiTest {
     function test10(){
         // values for $conf['baseurl'] and expected results
         $tests = array(
-          'http://www.mysite.com' => 'http://www.mysite.com/dokuwiki/',
-          'http://www.mysite.com/' => 'http://www.mysite.com/dokuwiki/',
-          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
-          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+          'http://www.mysite.com' => 'http://www.mysite.com/easywiki/',
+          'http://www.mysite.com/' => 'http://www.mysite.com/easywiki/',
+          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/easywiki/',
+          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/easywiki/',
          );
 
         global $conf;
@@ -229,12 +229,12 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/wiki/syntax?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = null;
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/easywiki/wiki.php';
 
         foreach ($tests as $test => $correct_result) {
           $conf['baseurl'] = $test;
@@ -249,24 +249,24 @@ class init_getBaseURL_test extends DokuWikiTest {
     function test11(){
         // values for $conf['baseurl'] and expected results
         $tests = array(
-          'http://www.mysite.com' => 'http://www.mysite.com/dokuwiki/',
-          'http://www.mysite.com/' => 'http://www.mysite.com/dokuwiki/',
-          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
-          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/dokuwiki/',
+          'http://www.mysite.com' => 'http://www.mysite.com/easywiki/',
+          'http://www.mysite.com/' => 'http://www.mysite.com/easywiki/',
+          'http://www.mysite.com/path/to/wiki' => 'http://www.mysite.com/path/to/wiki/easywiki/',
+          'http://www.mysite.com/path/to/wiki/' => 'http://www.mysite.com/path/to/wiki/easywiki/',
          );
 
         global $conf;
-        $conf['basedir'] = '/dokuwiki';
+        $conf['basedir'] = '/easywiki';
         $conf['baseurl'] = '';
 
         $_SERVER['DOCUMENT_ROOT']   = '/var/www/';
         $_SERVER['HTTP_HOST']       = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI']     = '/dokuwiki/wiki/syntax?do=debug';
-        $_SERVER['SCRIPT_NAME']     = '/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI']     = '/easywiki/wiki/syntax?do=debug';
+        $_SERVER['SCRIPT_NAME']     = '/easywiki/wiki.php';
         $_SERVER['PATH_INFO']       = null;
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['PHP_SELF']        = '/dokuwiki/doku.php';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['PHP_SELF']        = '/easywiki/wiki.php';
 
         foreach ($tests as $test => $correct_result) {
           $conf['baseurl'] = $test;
@@ -288,15 +288,15 @@ class init_getBaseURL_test extends DokuWikiTest {
 
         $_SERVER['DOCUMENT_ROOT'] = '/srv/http/';
         $_SERVER['HTTP_HOST'] = '[fd00::6592:39ed:a2ed:2c78]';
-        $_SERVER['SCRIPT_FILENAME'] = '/srv/http/~michitux/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI'] = '/~michitux/dokuwiki/doku.php?do=debug';
-        $_SERVER['SCRIPT_NAME'] = '/~michitux/dokuwiki/doku.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/srv/http/~michitux/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI'] = '/~michitux/easywiki/wiki.php?do=debug';
+        $_SERVER['SCRIPT_NAME'] = '/~michitux/easywiki/wiki.php';
         $_SERVER['PATH_INFO'] = null;
         $_SERVER['PATH_TRANSLATED'] = null;
-        $_SERVER['PHP_SELF'] = '/~michitux/dokuwiki/doku.php';
+        $_SERVER['PHP_SELF'] = '/~michitux/easywiki/wiki.php';
         $_SERVER['SERVER_PORT'] = '80';
         $_SERVER['SERVER_NAME'] = '[fd00';
-        $this->assertEquals(getBaseURL(true), 'http://[fd00::6592:39ed:a2ed:2c78]/~michitux/dokuwiki/');
+        $this->assertEquals(getBaseURL(true), 'http://[fd00::6592:39ed:a2ed:2c78]/~michitux/easywiki/');
     }
 }
 

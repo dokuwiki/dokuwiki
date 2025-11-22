@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\TreeBuilder\Node;
+namespace easywiki\TreeBuilder\Node;
 
 /**
  * A node representing the top of the tree

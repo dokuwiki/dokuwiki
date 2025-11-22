@@ -1,6 +1,6 @@
 Dobrý den!
 
-Někdo požádal o nové heslo k vašemu uživatelskému účtu na wiki @TITLE@ (@DOKUWIKIURL@)
+Někdo požádal o nové heslo k vašemu uživatelskému účtu na wiki @TITLE@ (@EASYWIKIURL@)
 
 Pokud jste o nové heslo nežádali, ignorujte prosím tento e-mail.
 

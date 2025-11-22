@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Input;
+namespace easywiki\Input;
 
 /**
- * Internal class used for $_GET access in dokuwiki\Input\Input class
+ * Internal class used for $_GET access in easywiki\Input\Input class
  */
 class Get extends Input
 {

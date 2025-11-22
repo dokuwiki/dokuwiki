@@ -113,8 +113,8 @@ $lang['install_url']                  = 'Install from URL:';
 $lang['install_upload']               = 'Upload Extension:';
 
 $lang['repo_badresponse']             = 'The plugin repository returned an invalid response.';
-$lang['repo_error']                   = 'The plugin repository could not be contacted. Make sure your server is allowed to contact www.dokuwiki.org and check your proxy settings.';
-$lang['nossl']                        = 'Your PHP seems to miss SSL support. Downloading will not work for many DokuWiki extensions.';
+$lang['repo_error']                   = 'The plugin repository could not be contacted. Make sure your server is allowed to contact www.EasyWiki.org and check your proxy settings.';
+$lang['nossl']                        = 'Your PHP seems to miss SSL support. Downloading will not work for many EasyWiki extensions.';
 
 $lang['popularity_high'] = 'This is one of the most popular extensions';
 $lang['popularity_medium'] = 'This extension is quite popular';

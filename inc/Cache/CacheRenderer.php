@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Cache;
+namespace easywiki\Cache;
 
 /**
  * Caching of data of renderer
@@ -71,7 +71,7 @@ class CacheRenderer extends CacheParser
         }
 
         // renderer cache file dependencies ...
-        $files = [DOKU_INC . 'inc/parser/' . $this->mode . '.php'];
+        $files = [WIKI_INC . 'inc/parser/' . $this->mode . '.php'];
 
         // page implies metadata and possibly some other dependencies
         if (isset($this->page)) {

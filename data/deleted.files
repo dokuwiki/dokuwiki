@@ -1,5 +1,5 @@
-# This is a list of files that were present in previous DokuWiki releases
-# but were removed later. An up to date DokuWiki should not have any of
+# This is a list of files that were present in previous EasyWiki releases
+# but were removed later. An up to date EasyWiki should not have any of
 # the files installed
 
 # removed on 2024-12-09
@@ -241,7 +241,7 @@ inc/feedcreator.class.php
 inc/lessc.inc.php
 inc/plugin.php
 lib/images/loading.gif
-lib/tpl/dokuwiki/css/_search.css
+lib/tpl/easywiki/css/_search.css
 vendor/easybook/geshi
 vendor/phpseclib/phpseclib/composer.lock
 
@@ -261,11 +261,11 @@ lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_0_aaaaaa_40x100.png
 lib/scripts/jquery/jquery-ui-theme/images/ui-bg_flat_75_ffffff_40x100.png
 lib/scripts/jquery/jquery-ui.js
 lib/scripts/jquery/jquery.js
-lib/tpl/dokuwiki/css/_admin.css
+lib/tpl/easywiki/css/_admin.css
 
 # removed on 2016-06-26
 inc/cliopts.php
-lib/tpl/dokuwiki/css/mixins.less
+lib/tpl/easywiki/css/mixins.less
 
 # removed on 2015-08-10
 inc/TarLib.class.php
@@ -668,13 +668,13 @@ lib/tpl/default/print.css
 lib/tpl/default/rtl.css
 lib/tpl/default/style.ini
 lib/tpl/default/template.info.txt
-lib/tpl/dokuwiki/css/basic.css
-lib/tpl/dokuwiki/css/content.css
-lib/tpl/dokuwiki/css/design.css
-lib/tpl/dokuwiki/css/includes.css
-lib/tpl/dokuwiki/css/mobile.css
-lib/tpl/dokuwiki/css/pagetools.css
-lib/tpl/dokuwiki/css/structure.css
+lib/tpl/easywiki/css/basic.css
+lib/tpl/easywiki/css/content.css
+lib/tpl/easywiki/css/design.css
+lib/tpl/easywiki/css/includes.css
+lib/tpl/easywiki/css/mobile.css
+lib/tpl/easywiki/css/pagetools.css
+lib/tpl/easywiki/css/structure.css
 
 # removed on 2013-05-10
 lib/plugins/info/lang/sl/lang.php

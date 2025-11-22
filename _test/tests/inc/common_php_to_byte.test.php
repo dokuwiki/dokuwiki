@@ -1,6 +1,6 @@
 <?php
 
-class common_php_to_byte_test extends DokuWikiTest {
+class common_php_to_byte_test extends EasyWikiTest {
 
 
     public function data() {

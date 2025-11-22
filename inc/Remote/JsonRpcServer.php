@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
 /**
  * Provide the Remote XMLRPC API as a JSON based API

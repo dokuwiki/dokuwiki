@@ -4,11 +4,11 @@
  * XMLRPC API backend
  */
 
-use dokuwiki\Remote\XmlRpcServer;
+use easywiki\Remote\XmlRpcServer;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
 
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 session_write_close();  //close session
 
 $server = new XmlRpcServer(true);

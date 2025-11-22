@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\test\mock\AuthPlugin;
+use easywiki\test\mock\AuthPlugin;
 
-class auth_acl_test extends DokuWikiTest {
+class auth_acl_test extends EasyWikiTest {
 
     protected $oldAuthAcl;
 

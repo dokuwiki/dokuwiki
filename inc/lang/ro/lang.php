@@ -139,7 +139,7 @@ $lang['regfail']               = 'Utilizatorul nu a putut fi creat.';
 $lang['regmailfail']           = 'Se pare că a fost o eroare la trimiterea parolei prin e-mail. Contactează administratorul!';
 $lang['regbadmail']            = 'Adresa de e-mail este nevalidă - dacă ești de părere că este o eroare contactează administratorul.';
 $lang['regbadpass']            = 'Cele două parole furnizate nu sunt identice; încearcă din nou.';
-$lang['regpwmail']             = 'Parola ta DokuWiki';
+$lang['regpwmail']             = 'Parola ta EasyWiki';
 $lang['reghere']               = 'Încă nu ai un cont? Creează unul!';
 $lang['profna']                = 'Acest wiki nu permite modificarea profilului';
 $lang['profnochange']          = 'Nici o modificare; nimic de făcut.';
@@ -295,26 +295,26 @@ $lang['subscr_style_digest']   = 'e-mail cu sumar al modificărilor pentru fieca
 $lang['subscr_style_list']     = 'lista paginilor modificate de la ultimul e-mail (la fiecare %.2f zile)';
 $lang['authtempfail']          = 'Autentificarea utilizatorului este temporar indisponibilă. Contactează administratorul.';
 $lang['i_chooselang']          = 'Alege limba';
-$lang['i_installer']           = 'Installer DokuWiki';
+$lang['i_installer']           = 'Installer EasyWiki';
 $lang['i_wikiname']            = 'Numele acestui wiki';
 $lang['i_enableacl']           = 'Activează ACL (liste de control a accesului) (recomandat)';
 $lang['i_superuser']           = 'Utilizator privilegiat';
 $lang['i_problems']            = 'Programul de instalare a găsit câteva probleme, indicate mai jos. Nu poți continua până nu le rezolvi.';
-$lang['i_modified']            = 'Din motive de securitate, acest script va funcționa doar cu o instalare nouă și nemodificată a DokuWiki.
-Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare DokuWiki la <a href="https://www.dokuwiki.org/install">';
+$lang['i_modified']            = 'Din motive de securitate, acest script va funcționa doar cu o instalare nouă și nemodificată a EasyWiki.
+Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare EasyWiki la <a href="https://www.EasyWiki.org/install">';
 $lang['i_funcna']              = 'Funcția PHP <code>%s</code> nu este disponibilă. Probabil provider-ul tău a dezactivat-o pentru un motiv anume.';
 $lang['i_disabled']            = 'a fost dezactivat de furnizorul tău';
-$lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.dokuwiki.org/plugin:smtp">modulul stmp</a>.	';
+$lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.EasyWiki.org/plugin:smtp">modulul stmp</a>.	';
 $lang['i_phpver']              = 'Versiunea ta de PHP <code>%s</code> este mai veche decât cea necesară (<code>%s</code>). Trebuie să îți actualizezi instalarea PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload trebuie să fie dezactivată în php.ini pentru a rula DokuWiki.';
-$lang['i_urandom']             = 'DokuWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code>/dev/urandom</code> adecvat.';
-$lang['i_permfail']            = '<code>%s</code> nu poate fi scris de către DokuWiki. Trebuie să modifici permisiunile pe acest director.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload trebuie să fie dezactivată în php.ini pentru a rula EasyWiki.';
+$lang['i_urandom']             = 'EasyWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code>/dev/urandom</code> adecvat.';
+$lang['i_permfail']            = '<code>%s</code> nu poate fi scris de către EasyWiki. Trebuie să modifici permisiunile pe acest director.';
 $lang['i_confexists']          = '<code>%s</code> există deja';
 $lang['i_writeerr']            = 'Nu s-a putut crea <code>%s</code>. Trebuie să verifici permisiunile directorului/fișierului și să creezi fișierul manual.';
-$lang['i_badhash']             = 'dokuwiki.php nu a fost recunoscut sau a fost modificat (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php nu a fost recunoscut sau a fost modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valoare nepemisă sau neintrodusă';
-$lang['i_success']             = 'Configurarea a fost finalizată cu succes. Acum poți sterge fișierul install.php. Poți accesa <a href="doku.php?id=wiki:welcome">noua ta instanță DokuWiki</a>.';
-$lang['i_failure']             = 'Au apărut erori la scrierea fișierelor de configurare. Va trebui să le corectezi manual înainte de a putea folosi <a href="doku.php?id=wiki:welcome">noua ta instanță DokuWiki</a>.';
+$lang['i_success']             = 'Configurarea a fost finalizată cu succes. Acum poți sterge fișierul install.php. Poți accesa <a href="wiki.php?id=wiki:welcome">noua ta instanță EasyWiki</a>.';
+$lang['i_failure']             = 'Au apărut erori la scrierea fișierelor de configurare. Va trebui să le corectezi manual înainte de a putea folosi <a href="wiki.php?id=wiki:welcome">noua ta instanță EasyWiki</a>.';
 $lang['i_policy']              = 'Politica ACL (liste de control a accesului) inițială';
 $lang['i_pol0']                = 'Wiki deschis (oricine poate citi, scrie și încărca fișiere)';
 $lang['i_pol1']                = 'Wiki public (oricine poate citi, utilizatorii înregistrați pot scrie și încărca fișiere)';
@@ -323,8 +323,8 @@ $lang['i_allowreg']            = 'Permite utilizatorilor sa se inregistreze sing
 $lang['i_retry']               = 'Încearcă din nou';
 $lang['i_license']             = 'Te rugăm să alegi licența sub care dorești să publici conținutul:';
 $lang['i_license_none']        = 'Nu arata nici o informatie despre licenta.';
-$lang['i_pop_field']           = 'Te rog, ajuta-ne sa imbunatatim experienta DokuWiki.';
-$lang['i_pop_label']           = 'Odata pe luna, trimite date catre dezvoltatorii DokuWiki in mod anonim.';
+$lang['i_pop_field']           = 'Te rog, ajuta-ne sa imbunatatim experienta EasyWiki.';
+$lang['i_pop_label']           = 'Odata pe luna, trimite date catre dezvoltatorii EasyWiki in mod anonim.';
 $lang['recent_global']         = 'În acest moment vizualizezi modificările în interiorul spațiului de nume <b>%s</b>. De asemenea poți <a href="%s">vizualiza modificările recente în întregului wiki-ul</a>.';
 $lang['years']                 = 'acum %d ani';
 $lang['months']                = 'acum %d luni';
@@ -364,5 +364,5 @@ $lang['searchresult']          = 'Rezultatul cautarii';
 $lang['plainhtml']             = 'HTML simplu';
 $lang['page_nonexist_rev']     = 'Pagina nu a existat la %s. Ulterior a fost creat la <a href="%s">%s </a>.';
 $lang['unable_to_parse_date']  = 'Imposibil de analizat la parametrul "%s".';
-$lang['email_signature_text']  = 'Acest e-mail a fost generat de DokuWiki la
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Acest e-mail a fost generat de EasyWiki la
+@EASYWIKIURL@';

@@ -8,9 +8,9 @@
  * @author     Tom N Harris <tnharris@whoopdedo.org>
  */
 
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Extension\Event;
-use dokuwiki\Search\Indexer;
+use easywiki\Utf8\Clean;
+use easywiki\Extension\Event;
+use easywiki\Search\Indexer;
 
 // Version tag used to force rebuild on upgrade
 define('INDEXER_VERSION', 8);
@@ -38,10 +38,10 @@ function idx_get_version()
     if ($indexer_version == null) {
         $version = INDEXER_VERSION;
 
-        // DokuWiki version is included for the convenience of plugins
-        $data = ['dokuwiki' => $version];
+        // EasyWiki version is included for the convenience of plugins
+        $data = ['easywiki' => $version];
         Event::createAndTrigger('INDEXER_VERSION_GET', $data, null, false);
-        unset($data['dokuwiki']); // this needs to be first
+        unset($data['easywiki']); // this needs to be first
         ksort($data);
         foreach ($data as $plugin => $vers)
             $version .= '+' . $plugin . '=' . $vers;
@@ -99,7 +99,7 @@ function & idx_get_stopwords()
     static $stopwords = null;
     if (is_null($stopwords)) {
         global $conf;
-        $swfile = DOKU_INC . 'inc/lang/' . $conf['lang'] . '/stopwords.txt';
+        $swfile = WIKI_INC . 'inc/lang/' . $conf['lang'] . '/stopwords.txt';
         if (file_exists($swfile)) {
             $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
         } else {
@@ -127,13 +127,13 @@ function idx_addPage($page, $verbose = false, $force = false)
     // check if page was deleted but is still in the index
     if (!page_exists($page)) {
         if (!file_exists($idxtag)) {
-            if ($verbose) echo "Indexer: $page does not exist, ignoring" . DOKU_LF;
+            if ($verbose) echo "Indexer: $page does not exist, ignoring" . WIKI_LF;
             return false;
         }
         $Indexer = idx_get_indexer();
         $result = $Indexer->deletePage($page);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked" . DOKU_LF;
+            if ($verbose) echo "Indexer: locked" . WIKI_LF;
             return false;
         }
         @unlink($idxtag);
@@ -145,7 +145,7 @@ function idx_addPage($page, $verbose = false, $force = false)
         if (trim(io_readFile($idxtag)) == idx_get_version()) {
             $last = @filemtime($idxtag);
             if ($last > @filemtime(wikiFN($page))) {
-                if ($verbose) echo "Indexer: index for $page up to date" . DOKU_LF;
+                if ($verbose) echo "Indexer: index for $page up to date" . WIKI_LF;
                 return false;
             }
         }
@@ -158,19 +158,19 @@ function idx_addPage($page, $verbose = false, $force = false)
             $Indexer = idx_get_indexer();
             $result = $Indexer->deletePage($page);
             if ($result === "locked") {
-                if ($verbose) echo "Indexer: locked" . DOKU_LF;
+                if ($verbose) echo "Indexer: locked" . WIKI_LF;
                 return false;
             }
             @unlink($idxtag);
         }
-        if ($verbose) echo "Indexer: index disabled for $page" . DOKU_LF;
+        if ($verbose) echo "Indexer: index disabled for $page" . WIKI_LF;
         return $result;
     }
 
     $Indexer = idx_get_indexer();
     $pid = $Indexer->getPID($page);
     if ($pid === false) {
-        if ($verbose) echo "Indexer: getting the PID failed for $page" . DOKU_LF;
+        if ($verbose) echo "Indexer: getting the PID failed for $page" . WIKI_LF;
         return false;
     }
     $body = '';
@@ -193,14 +193,14 @@ function idx_addPage($page, $verbose = false, $force = false)
 
     $result = $Indexer->addPageWords($page, $body);
     if ($result === "locked") {
-        if ($verbose) echo "Indexer: locked" . DOKU_LF;
+        if ($verbose) echo "Indexer: locked" . WIKI_LF;
         return false;
     }
 
     if ($result) {
         $result = $Indexer->addMetaKeys($page, $metadata);
         if ($result === "locked") {
-            if ($verbose) echo "Indexer: locked" . DOKU_LF;
+            if ($verbose) echo "Indexer: locked" . WIKI_LF;
             return false;
         }
     }
@@ -208,7 +208,7 @@ function idx_addPage($page, $verbose = false, $force = false)
     if ($result)
         io_saveFile(metaFN($page, '.indexed'), idx_get_version());
     if ($verbose) {
-        echo "Indexer: finished" . DOKU_LF;
+        echo "Indexer: finished" . WIKI_LF;
         return true;
     }
     return $result;

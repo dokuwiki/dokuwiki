@@ -1,25 +1,25 @@
 <?php
 
 /**
- * Common DokuWiki functions
+ * Common EasyWiki functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\PassHash;
-use dokuwiki\Draft;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Conversion;
-use dokuwiki\Cache\CacheRenderer;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\File\PageFile;
-use dokuwiki\Subscriptions\PageSubscriptionSender;
-use dokuwiki\Subscriptions\SubscriberManager;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
-use dokuwiki\Ip;
+use easywiki\PassHash;
+use easywiki\Draft;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Conversion;
+use easywiki\Cache\CacheRenderer;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\File\PageFile;
+use easywiki\Subscriptions\PageSubscriptionSender;
+use easywiki\Subscriptions\SubscriberManager;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
+use easywiki\Ip;
 
 use function PHP81_BC\strftime;
 
@@ -224,7 +224,7 @@ function pageinfo()
 
     $info = basicinfo($ID);
 
-    // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
+    // include ID & REV not redundant, as some parts of EasyWiki may temporarily change $ID, e.g. p_wiki_xhtml
     // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
     $info['id'] = $ID;
     $info['rev'] = $REV;
@@ -291,7 +291,7 @@ function pageinfo()
         $info['user'] = $revinfo['user'];
         $info['sum'] = $revinfo['sum'];
         // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
-        // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
+        // Use $INFO['meta']['last_change']['type']===WIKI_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
         $info['editor'] = $revinfo['user'] ?: $revinfo['ip'];
     } else {
@@ -405,11 +405,11 @@ function breadcrumbs()
     global $INFO;
 
     //first visit?
-    $crumbs = $_SESSION[DOKU_COOKIE]['bc'] ?? [];
+    $crumbs = $_SESSION[WIKI_COOKIE]['bc'] ?? [];
     //we only save on show and existing visible readable wiki documents
     $file = wikiFN($ID);
     if ($ACT != 'show' || $INFO['perm'] < AUTH_READ || isHiddenPage($ID) || !file_exists($file)) {
-        $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
+        $_SESSION[WIKI_COOKIE]['bc'] = $crumbs;
         return $crumbs;
     }
 
@@ -435,7 +435,7 @@ function breadcrumbs()
         array_shift($crumbs);
     }
     //save to session
-    $_SESSION[DOKU_COOKIE]['bc'] = $crumbs;
+    $_SESSION[WIKI_COOKIE]['bc'] = $crumbs;
     return $crumbs;
 }
 
@@ -446,8 +446,8 @@ function breadcrumbs()
  * currently used to replace the colon with something else
  * on Windows (non-IIS) systems and to have proper URL encoding
  *
- * See discussions at https://github.com/dokuwiki/dokuwiki/pull/84 and
- * https://github.com/dokuwiki/dokuwiki/pull/173 why we use a whitelist of
+ * See discussions at https://github.com/easywiki/easywiki/pull/84 and
+ * https://github.com/easywiki/easywiki/pull/173 why we use a whitelist of
  * unaffected servers instead of blacklisting affected servers here.
  *
  * Urlencoding is ommitted when the second parameter is false
@@ -514,22 +514,22 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
     }
     $id = idfilter($id);
     if ($absolute) {
-        $xlink = DOKU_URL;
+        $xlink = WIKI_URL;
     } else {
-        $xlink = DOKU_BASE;
+        $xlink = WIKI_BASE;
     }
 
     if ($conf['userewrite'] == 2) {
-        $xlink .= DOKU_SCRIPT . '/' . $id;
+        $xlink .= WIKI_SCRIPT . '/' . $id;
         if ($urlParameters) $xlink .= '?' . $urlParameters;
     } elseif ($conf['userewrite']) {
         $xlink .= $id;
         if ($urlParameters) $xlink .= '?' . $urlParameters;
     } elseif ($id !== '') {
-        $xlink .= DOKU_SCRIPT . '?id=' . $id;
+        $xlink .= WIKI_SCRIPT . '?id=' . $id;
         if ($urlParameters) $xlink .= $separator . $urlParameters;
     } else {
-        $xlink .= DOKU_SCRIPT;
+        $xlink .= WIKI_SCRIPT;
         if ($urlParameters) $xlink .= '?' . $urlParameters;
     }
 
@@ -561,19 +561,19 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
     $format = rawurlencode($format);
     $id = idfilter($id);
     if ($abs) {
-        $xlink = DOKU_URL;
+        $xlink = WIKI_URL;
     } else {
-        $xlink = DOKU_BASE;
+        $xlink = WIKI_BASE;
     }
 
     if ($conf['userewrite'] == 2) {
-        $xlink .= DOKU_SCRIPT . '/' . $id . '?do=export_' . $format;
+        $xlink .= WIKI_SCRIPT . '/' . $id . '?do=export_' . $format;
         if ($urlParameters) $xlink .= $sep . $urlParameters;
     } elseif ($conf['userewrite'] == 1) {
         $xlink .= '_export/' . $format . '/' . $id;
         if ($urlParameters) $xlink .= '?' . $urlParameters;
     } else {
-        $xlink .= DOKU_SCRIPT . '?do=export_' . $format . $sep . 'id=' . $id;
+        $xlink .= WIKI_SCRIPT . '?do=export_' . $format . $sep . 'id=' . $id;
         if ($urlParameters) $xlink .= $sep . $urlParameters;
     }
 
@@ -633,9 +633,9 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
     }
 
     if ($abs) {
-        $xlink = DOKU_URL;
+        $xlink = WIKI_URL;
     } else {
-        $xlink = DOKU_BASE;
+        $xlink = WIKI_BASE;
     }
 
     // external URLs are always direct without rewriting
@@ -676,9 +676,9 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
 }
 
 /**
- * Returns the URL to the DokuWiki base script
+ * Returns the URL to the EasyWiki base script
  *
- * Consider using wl() instead, unless you absoutely need the doku.php endpoint
+ * Consider using wl() instead, unless you absoutely need the wiki.php endpoint
  *
  * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -686,7 +686,7 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
  */
 function script()
 {
-    return DOKU_BASE . DOKU_SCRIPT;
+    return WIKI_BASE . WIKI_SCRIPT;
 }
 
 /**
@@ -1607,7 +1607,7 @@ function shorten($keep, $short, $max, $min = 9, $char = '…')
  * @param bool $textonly true returns only plain text, true allows returning html
  * @return string html or plain text(not escaped) of formatted user name
  *
- * @author Andy Webber <dokuwiki AT andywebber DOT com>
+ * @author Andy Webber <easywiki AT andywebber DOT com>
  */
 function editorinfo($username, $textonly = false)
 {
@@ -1681,7 +1681,7 @@ function userlink($username = null, $textonly = false)
             }
         }
 
-        /** @var Doku_Renderer_xhtml $xhtml_renderer */
+        /** @var Wiki_Renderer_xhtml $xhtml_renderer */
         static $xhtml_renderer = null;
 
         if (!$data['textonly'] && empty($data['link']['url'])) {
@@ -1758,7 +1758,7 @@ function license_img($type)
         $try[] = 'lib/images/license/' . $type . '/cc.png';
     }
     foreach ($try as $src) {
-        if (file_exists(DOKU_INC . $src)) return $src;
+        if (file_exists(WIKI_INC . $src)) return $src;
     }
     return '';
 }
@@ -1821,7 +1821,7 @@ function send_redirect($url)
     if (isset($MSG) && count($MSG) && !defined('NOSESSION')) {
         //reopen session, store data and close session again
         @session_start();
-        $_SESSION[DOKU_COOKIE]['msg'] = $MSG;
+        $_SESSION[WIKI_COOKIE]['msg'] = $MSG;
     }
 
     // always close the session
@@ -1840,7 +1840,7 @@ function send_redirect($url)
     }
 
     // no exits during unit tests
-    if (defined('DOKU_UNITTEST')) {
+    if (defined('WIKI_UNITTEST')) {
         // pass info about the redirect back to the test suite
         $testRequest = TestRequest::getRunning();
         if ($testRequest !== null) {
@@ -1882,7 +1882,7 @@ function valid_input_set($param, $valid_values, $array, $exc = '')
 }
 
 /**
- * Read a preference from the DokuWiki cookie
+ * Read a preference from the EasyWiki cookie
  * (remembering both keys & values are urlencoded)
  *
  * @param string $pref preference key
@@ -1892,8 +1892,8 @@ function valid_input_set($param, $valid_values, $array, $exc = '')
 function get_doku_pref($pref, $default)
 {
     $enc_pref = urlencode($pref);
-    if (isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+    if (isset($_COOKIE['WIKI_PREFS']) && strpos($_COOKIE['WIKI_PREFS'], $enc_pref) !== false) {
+        $parts = explode('#', $_COOKIE['WIKI_PREFS']);
         $cnt = count($parts);
 
         // due to #2721 there might be duplicate entries,
@@ -1908,8 +1908,8 @@ function get_doku_pref($pref, $default)
 }
 
 /**
- * Add a preference to the DokuWiki cookie
- * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
+ * Add a preference to the EasyWiki cookie
+ * (remembering $_COOKIE['WIKI_PREFS'] is urlencoded)
  * Remove it by setting $val to false
  *
  * @param string $pref preference key
@@ -1922,7 +1922,7 @@ function set_doku_pref($pref, $val)
     $cookieVal = '';
 
     if ($orig !== false && ($orig !== $val)) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
+        $parts = explode('#', $_COOKIE['WIKI_PREFS']);
         $cnt = count($parts);
         // urlencode $pref for the comparison
         $enc_pref = rawurlencode($pref);
@@ -1946,15 +1946,15 @@ function set_doku_pref($pref, $val)
         }
         $cookieVal = implode('#', $parts);
     } elseif ($orig === false && $val !== false) {
-        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
+        $cookieVal = (isset($_COOKIE['WIKI_PREFS']) ? $_COOKIE['WIKI_PREFS'] . '#' : '') .
             rawurlencode($pref) . '#' . rawurlencode($val);
     }
 
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if (defined('DOKU_UNITTEST')) {
-        $_COOKIE['DOKU_PREFS'] = $cookieVal;
+    $cookieDir = empty($conf['cookiedir']) ? WIKI_REL : $conf['cookiedir'];
+    if (defined('WIKI_UNITTEST')) {
+        $_COOKIE['WIKI_PREFS'] = $cookieVal;
     } else {
-        setcookie('DOKU_PREFS', $cookieVal, [
+        setcookie('WIKI_PREFS', $cookieVal, [
             'expires' => time() + 365 * 24 * 3600,
             'path' => $cookieDir,
             'secure' => ($conf['securecookie'] && Ip::isSsl()),

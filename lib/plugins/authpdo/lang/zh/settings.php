@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Phy <dokuwiki@phy25.com>
+ * @author Phy <easywiki@phy25.com>
  * @author Aaron Zhou <iradio@163.com>
  */
 $lang['debug']                 = '打印详细的错误信息。应该在设定完成后禁用。';

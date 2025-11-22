@@ -1,6 +1,6 @@
 <?php
 
-class auth_nameencode_test extends DokuWikiTest {
+class auth_nameencode_test extends EasyWikiTest {
 
     function tearDown() : void {
         global $cache_authname;

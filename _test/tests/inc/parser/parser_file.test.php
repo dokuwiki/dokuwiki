@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\File;
+use easywiki\Parsing\ParserMode\File;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_File extends TestOfDoku_Parser {
+class TestOfWiki_Parser_File extends TestOfWiki_Parser {
 
     function setUp() : void {
         parent::setUp();

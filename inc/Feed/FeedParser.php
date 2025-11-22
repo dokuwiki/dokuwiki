@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
 use SimplePie\File;
 use SimplePie\SimplePie;

@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\test\mock\AuthCaseInsensitivePlugin;
+use easywiki\test\mock\AuthCaseInsensitivePlugin;
 
-class auth_acl_caseinsensitive_test extends DokuWikiTest {
+class auth_acl_caseinsensitive_test extends EasyWikiTest {
     protected $oldAuth;
     protected $oldAuthAcl;
 

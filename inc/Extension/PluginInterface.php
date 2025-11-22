@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
- * DokuWiki Plugin Interface
+ * EasyWiki Plugin Interface
  *
- * Defines the public contract all DokuWiki plugins will adhere to. The actual code
- * to do so is defined in dokuwiki\Extension\PluginTrait
+ * Defines the public contract all EasyWiki plugins will adhere to. The actual code
+ * to do so is defined in easywiki\Extension\PluginTrait
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
@@ -141,7 +141,7 @@ interface PluginInterface
     public function external_link($link, $title = '', $class = '', $target = '', $more = '');
 
     /**
-     * output text string through the parser, allows dokuwiki markup to be used
+     * output text string through the parser, allows easywiki markup to be used
      * very ineffecient for small pieces of data - try not to use
      *
      * @param string $text wiki markup to parse
@@ -151,7 +151,7 @@ interface PluginInterface
     public function render_text($text, $format = 'xhtml');
 
     /**
-     * Allow the plugin to prevent DokuWiki from reusing an instance
+     * Allow the plugin to prevent EasyWiki from reusing an instance
      *
      * @return bool   false if the plugin has to be instantiated
      */

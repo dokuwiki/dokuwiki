@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test\Extension;
+namespace easywiki\test\Extension;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
-class EventTest extends \DokuWikiTest
+class EventTest extends \EasyWikiTest
 {
     static public function staticFunc(&$data)
     {

@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Utf8\Unicode;
+use easywiki\Utf8\Unicode;
 
 /**
  * Class to safely store UTF-8 in a Filename

@@ -1,6 +1,6 @@
 Ciao @FULLNAME@!
 
-Qualcuno ha richiesto una nuova password per il tuo accesso @TITLE@ a @DOKUWIKIURL@
+Qualcuno ha richiesto una nuova password per il tuo accesso @TITLE@ a @EASYWIKIURL@
 
 Se non hai richiesto tu la nuova password ignora questa email.
 

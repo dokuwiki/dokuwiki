@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
 class GuiExtension extends Gui
 {
@@ -91,9 +91,9 @@ class GuiExtension extends Gui
             $img['src'] = $thumb;
             $img['alt'] = $link['title'];
         } elseif ($this->extension->isTemplate()) {
-            $img['src'] = DOKU_BASE . 'lib/plugins/extension/images/template.png';
+            $img['src'] = WIKI_BASE . 'lib/plugins/extension/images/template.png';
         } else {
-            $img['src'] = DOKU_BASE . 'lib/plugins/extension/images/plugin.png';
+            $img['src'] = WIKI_BASE . 'lib/plugins/extension/images/plugin.png';
         }
 
         $html = '';
@@ -319,7 +319,7 @@ class GuiExtension extends Gui
         if (!$popularity) return '';
         if ($this->extension->isBundled()) return '';
 
-        $popimg = '<img src="' . DOKU_BASE . 'lib/plugins/extension/images/fire.svg" alt="🔥" />';
+        $popimg = '<img src="' . WIKI_BASE . 'lib/plugins/extension/images/fire.svg" alt="🔥" />';
 
         if ($popularity > 0.25) {
             $title = $this->getLang('popularity_high');
@@ -403,7 +403,7 @@ class GuiExtension extends Gui
     /**
      * Create an attributes array for a link
      *
-     * Handles interwiki links to dokuwiki.org
+     * Handles interwiki links to easywiki.org
      *
      * @param string $url The URL to link to
      * @param string $class Additional classes to add
@@ -425,7 +425,7 @@ class GuiExtension extends Gui
             $attributes['rel'] .= ' ugc nofollow';
         }
 
-        if (preg_match('/^https?:\/\/(www\.)?dokuwiki\.org\//i', $url)) {
+        if (preg_match('/^https?:\/\/(www\.)?easywiki\.org\//i', $url)) {
             $attributes['class'] = 'interwiki iw_doku';
             $attributes['target'] = $conf['target']['interwiki'];
             $attributes['rel'] = '';

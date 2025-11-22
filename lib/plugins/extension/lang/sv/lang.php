@@ -90,4 +90,4 @@ $lang['git']                   = 'Tillägget installerades via git, du kanske vi
 $lang['auth']                  = 'Det här "auth" pluginet är inte aktiverat i konfigurationen, överväg att avaktivera det.';
 $lang['install_url']           = 'Installera från URL:';
 $lang['install_upload']        = 'Ladda upp tillägg:';
-$lang['nossl']                 = 'Din PHP tycks sakna SSL-stöd. Nedladdning kommer inte att fungera för många DokuWiki-tillägg.';
+$lang['nossl']                 = 'Din PHP tycks sakna SSL-stöd. Nedladdning kommer inte att fungera för många EasyWiki-tillägg.';

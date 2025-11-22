@@ -1,5 +1,5 @@
 ===== Piszkozatot találtunk =====
 
-A legutóbbi szerkesztés váratlanul fejeződött be. A DokuWiki elmentette piszkozatként, így most folytathatod a szerkesztést. A mentett változat alább tekinthető meg.
+A legutóbbi szerkesztés váratlanul fejeződött be. A EasyWiki elmentette piszkozatként, így most folytathatod a szerkesztést. A mentett változat alább tekinthető meg.
 
 Válassz a //helyreállítás// vagy a //törlés// lehetőségek közül a piszkozat sorsát illetően, vagy //szakítsd meg// a szerkesztési folyamatot.

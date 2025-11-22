@@ -1,2 +1,2 @@
-Her finner du malene som nå er installert i denne DokuWikien. Her velger du malen som brukes i siden for [[?do=admin&page=config|konfigurasjonsinnstillinger]].
+Her finner du malene som nå er installert i denne EasyWikien. Her velger du malen som brukes i siden for [[?do=admin&page=config|konfigurasjonsinnstillinger]].
 

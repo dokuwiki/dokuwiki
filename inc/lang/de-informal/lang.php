@@ -22,13 +22,13 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
  * @author Janosch <janosch@moinzen.de>
- * @author rnck <dokuwiki@rnck.de>
+ * @author rnck <easywiki@rnck.de>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -153,7 +153,7 @@ $lang['regfail']               = 'Der Benutzer konnte nicht erstellt werden.';
 $lang['regmailfail']           = 'Offenbar ist ein Fehler beim Versenden der Passwortmail aufgetreten. Bitte wende dich an den Wiki-Admin.';
 $lang['regbadmail']            = 'Die angegebene Mail-Adresse scheint ungültig zu sein. Falls dies ein Fehler ist, wende dich bitte an den Wiki-Admin.';
 $lang['regbadpass']            = 'Die beiden eingegeben Passwörter stimmen nicht überein. Bitte versuche es noch einmal.';
-$lang['regpwmail']             = 'Ihr DokuWiki-Passwort';
+$lang['regpwmail']             = 'Ihr EasyWiki-Passwort';
 $lang['reghere']               = 'Du hast noch keinen Zugang? Hier registrieren';
 $lang['profna']                = 'Änderung des Benutzerprofils in diesem Wiki nicht möglich.';
 $lang['profnochange']          = 'Keine Änderungen, nichts zu tun.';
@@ -311,25 +311,25 @@ $lang['subscr_style_digest']   = 'E-Mail mit zusammengefasster Übersicht der Se
 $lang['subscr_style_list']     = 'Auflistung aller geänderten Seiten seit der letzten E-Mail (alle %.2f Tage)';
 $lang['authtempfail']          = 'Benutzerüberprüfung momentan nicht möglich. Falls das Problem andauert, wende dich an den Admin.';
 $lang['i_chooselang']          = 'Wähle deine Sprache';
-$lang['i_installer']           = 'DokuWiki-Installation';
+$lang['i_installer']           = 'EasyWiki-Installation';
 $lang['i_wikiname']            = 'Wiki-Name';
 $lang['i_enableacl']           = 'Zugriffskontrolle (ACL) aktivieren (empfohlen)';
 $lang['i_superuser']           = 'Benutzername des Administrators';
 $lang['i_problems']            = 'Das Installationsprogramm hat unten aufgeführte Probleme festgestellt, die zunächst behoben werden müssen, bevor du mit der Installation fortfahren kannst.';
-$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten DokuWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.dokuwiki.org/install">Dokuwiki-Installationsanleitung</a> konsultieren.';
+$lang['i_modified']            = 'Aus Sicherheitsgründen arbeitet dieses Skript nur mit einer neuen bzw. nicht modifizierten EasyWiki-Installation. Du solltest entweder alle Dateien noch einmal frisch installieren oder die <a href="https://www.EasyWiki.org/install">EasyWiki-Installationsanleitung</a> konsultieren.';
 $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht verfügbar. Unter Umständen wurde sie von deinem Hoster deaktiviert?';
 $lang['i_disabled']            = 'Es wurde von deinem Provider deaktiviert.';
-$lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ kansnt du das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
+$lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ kansnt du das <a href="https://www.EasyWiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Deine PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisiere deine PHP-Installation.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload muss in php.in deaktiviert werden um DokuWiki auszuführen.';
-$lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchtest du die "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
-$lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Du musst die Berechtigungen dieses Ordners ändern!';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload muss in php.in deaktiviert werden um EasyWiki auszuführen.';
+$lang['i_urandom']             = 'EasyWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchtest du die "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
+$lang['i_permfail']            = '<code>%s</code> ist nicht durch EasyWiki beschreibbar. Du musst die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';
 $lang['i_writeerr']            = '<code>%s</code> konnte nicht erzeugt werden. Du solltest die Verzeichnis-/Datei-Rechte überprüfen und die Datei manuell anlegen.';
-$lang['i_badhash']             = 'Unbekannte oder modifizierte dokuwiki.php (Hash=<code>%s</code>)';
+$lang['i_badhash']             = 'Unbekannte oder modifizierte easywiki.php (Hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - unerlaubter oder leerer Wert';
-$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> ist jetzt für dich bereit.';
-$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="doku.php?id=wiki:welcome">neues DokuWiki</a> nutzen kannst.';
+$lang['i_success']             = 'Die Konfiguration wurde erfolgreich abgeschlossen. Du kannst jetzt die install.php löschen. Dein <a href="wiki.php?id=wiki:welcome">neues EasyWiki</a> ist jetzt für dich bereit.';
+$lang['i_failure']             = 'Es sind Fehler beim Schreiben der Konfigurationsdateien aufgetreten. Du musst diese von Hand beheben, bevor du dein <a href="wiki.php?id=wiki:welcome">neues EasyWiki</a> nutzen kannst.';
 $lang['i_policy']              = 'Anfangseinstellungen der Zugriffskontrolle (ACL)';
 $lang['i_pol0']                = 'Offenes Wiki (lesen, schreiben und hochladen für alle Benutzer)';
 $lang['i_pol1']                = 'Öffentliches Wiki (Lesen für alle, Schreiben und Hochladen nur für registrierte Benutzer)';
@@ -338,8 +338,8 @@ $lang['i_allowreg']            = 'Benutzer können sich selbst registrieren';
 $lang['i_retry']               = 'Wiederholen';
 $lang['i_license']             = 'Bitte wähle die Lizenz aus unter der die Wiki-Inhalte veröffentlicht werden sollen:';
 $lang['i_license_none']        = 'Keine Lizenzinformationen anzeigen';
-$lang['i_pop_field']           = 'Bitte helfe uns, die DokuWiki-Erfahrung zu verbessern';
-$lang['i_pop_label']           = 'Sende einmal im Monat anonyme Nutzungsdaten an die DokuWiki Entwickler';
+$lang['i_pop_field']           = 'Bitte helfe uns, die EasyWiki-Erfahrung zu verbessern';
+$lang['i_pop_label']           = 'Sende einmal im Monat anonyme Nutzungsdaten an die EasyWiki Entwickler';
 $lang['recent_global']         = 'Im Moment siehst du die Änderungen im Namensraum <b>%s</b>. Du kannst auch <a href="%s">die Änderungen im gesamten Wiki sehen</a>.';
 $lang['years']                 = 'vor %d Jahren';
 $lang['months']                = 'vor %d Monaten';
@@ -380,5 +380,5 @@ $lang['plainhtml']             = 'Reines HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Seite existierte nicht an der Stelle %s. Sie wurde an folgende Stelle erstellt: <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Parameter "%s" kann nicht geparsed werden.';
-$lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom DokuWiki unter
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Diese E-Mail wurde erzeugt vom EasyWiki unter
+@EASYWIKIURL@';

@@ -1,7 +1,7 @@
 <?php
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC')) {
+// must be run within EasyWiki
+if (!defined('WIKI_INC')) {
     die();
 }
 
@@ -12,7 +12,7 @@ if (!defined('DOKU_INC')) {
  *
  * @group  fulltext
  */
-class fulltext_query_test extends DokuWikiTest
+class fulltext_query_test extends EasyWikiTest
 {
     public function test_parse_query()
     {

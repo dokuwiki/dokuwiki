@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
 /**
- * DokuWiki Backlinks Interface
+ * EasyWiki Backlinks Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Backlinks extends Ui
 {

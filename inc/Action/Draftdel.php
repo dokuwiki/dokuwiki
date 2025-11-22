@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Draft;
-use dokuwiki\Action\Exception\ActionAbort;
+use easywiki\Draft;
+use easywiki\Action\Exception\ActionAbort;
 
 /**
  * Class Draftdel
  *
  * Delete a draft
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Draftdel extends AbstractAction
 {

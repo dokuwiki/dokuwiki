@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
  * Auth Plugin Prototype
@@ -162,9 +162,9 @@ abstract class AuthPlugin extends Plugin
      * Set $this->cando['external'] = true when implemented
      *
      * If this function is implemented it will be used to
-     * authenticate a user - all other DokuWiki internals
+     * authenticate a user - all other EasyWiki internals
      * will not be used for authenticating (except this
-     * function returns null, in which case, DokuWiki will
+     * function returns null, in which case, EasyWiki will
      * still run auth_login as a fallback, which may call
      * checkPass()). If this function is not returning null,
      * implementing checkPass() is not needed here anymore.
@@ -181,7 +181,7 @@ abstract class AuthPlugin extends Plugin
      * by other means (cookie, environment).
      *
      * The function needs to set some globals needed by
-     * DokuWiki like auth_login() does.
+     * EasyWiki like auth_login() does.
      *
      * @see     auth_login()
      * @author  Andreas Gohr <andi@splitbrain.org>
@@ -207,9 +207,9 @@ abstract class AuthPlugin extends Plugin
         $USERINFO['mail'] = 'FIXME';
         $USERINFO['grps'] = array('FIXME');
         $_SERVER['REMOTE_USER'] = $user;
-        $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-        $_SESSION[DOKU_COOKIE]['auth']['pass'] = $pass;
-        $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+        $_SESSION[WIKI_COOKIE]['auth']['user'] = $user;
+        $_SESSION[WIKI_COOKIE]['auth']['pass'] = $pass;
+        $_SESSION[WIKI_COOKIE]['auth']['info'] = $USERINFO;
         return true;
 
         */
@@ -429,10 +429,10 @@ abstract class AuthPlugin extends Plugin
     /**
      * Check Session Cache validity [implement only where required/possible]
      *
-     * DokuWiki caches user info in the user's session for the timespan defined
+     * EasyWiki caches user info in the user's session for the timespan defined
      * in $conf['auth_security_timeout'].
      *
-     * This makes sure slow authentication backends do not slow down DokuWiki.
+     * This makes sure slow authentication backends do not slow down EasyWiki.
      * This also means that changes to the user database will not be reflected
      * on currently logged in users.
      *
@@ -454,6 +454,6 @@ abstract class AuthPlugin extends Plugin
     public function useSessionCache($user)
     {
         global $conf;
-        return ($_SESSION[DOKU_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'] . '/sessionpurge'));
+        return ($_SESSION[WIKI_COOKIE]['auth']['time'] >= @filemtime($conf['cachedir'] . '/sessionpurge'));
     }
 }

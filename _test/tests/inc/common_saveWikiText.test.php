@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
 
 /**
  * saveWikiText() stores files in pages/, attic/ and adds entries to changelog
  */
-class common_saveWikiText_test extends DokuWikiTest {
+class common_saveWikiText_test extends EasyWikiTest {
 
     /** Delay writes of old revisions by a second. */
     public function handle_write(Doku_Event $event, $param) {
@@ -109,7 +109,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 1;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => '1st save',
             'sizechange' => 10, // = strlen('teststring')
         );
@@ -138,7 +138,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectPrev = $expect;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => '3rd save',
             'sizechange' => 5,
         );
@@ -157,7 +157,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 3;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => '4th save',
             'sizechange' => 0,
         );
@@ -177,7 +177,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 4;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_MINOR_EDIT,
+            'type' => WIKI_CHANGE_TYPE_MINOR_EDIT,
             'sum'  => '5th save',
             'sizechange' => -4,
         );
@@ -194,7 +194,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 5;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
-            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'type' => WIKI_CHANGE_TYPE_DELETE,
             'sum'  => '6th save',
             'sizechange' => -11,
         );
@@ -215,7 +215,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 6;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_REVERT,
+            'type' => WIKI_CHANGE_TYPE_REVERT,
             'sum'  => '7th save',
             'sizechange' => 11,
         );
@@ -235,7 +235,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 6; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'external edit',
             'sizechange' => 14,
         );
@@ -254,7 +254,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 8;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => '8th save',
             'sizechange' => -14,
         );
@@ -277,7 +277,7 @@ class common_saveWikiText_test extends DokuWikiTest {
     function test_savesequence2() {
         // add an additional delay when saving files to make sure
         // nobody relies on the saving happening in the same second
-        /** @var $EVENT_HANDLER \dokuwiki\Extension\EventHandler */
+        /** @var $EVENT_HANDLER \easywiki\Extension\EventHandler */
         global $EVENT_HANDLER;
         $EVENT_HANDLER->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'handle_write');
 
@@ -293,7 +293,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 1;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'Test 2, 1st save',
             'sizechange' => 10, // = strlen('teststring')
         );
@@ -310,7 +310,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
-            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'type' => WIKI_CHANGE_TYPE_DELETE,
             'sum'  => 'Test 2, 2nd save',
             'sizechange' => -10,
         );
@@ -327,7 +327,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'created - external edit',
             'sizechange' => 11,
         );
@@ -346,7 +346,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 4; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'Test 2, 3rd save',
             'sizechange' => 0,
         );
@@ -365,7 +365,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 4; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'external edit',
             'sizechange' => 15,
         );
@@ -384,7 +384,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 6; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'Test 2, 4th save',
             'sizechange' => -15,
         );
@@ -414,7 +414,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expect = false;
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'created - external edit',
             'sizechange' => 10,
         );
@@ -433,7 +433,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 0; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,  // not DOKU_CHANGE_TYPE_EDIT
+            'type' => WIKI_CHANGE_TYPE_CREATE,  // not WIKI_CHANGE_TYPE_EDIT
             'sum'  => 'created - external edit',
             'sizechange' => 24,
         );
@@ -452,7 +452,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'Test 3, first save',
             'sizechange' => -13,
         );
@@ -467,7 +467,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2;
         $expectExternal = array(
           //'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'type' => WIKI_CHANGE_TYPE_DELETE,
             'sum'  => 'removed - external edit (Unknown date)',
             'sizechange' => -11,
         );
@@ -496,7 +496,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expect = false;
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'created - external edit',
             'sizechange' => 10,
         );
@@ -515,7 +515,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'Test 4, first save',
             'sizechange' => 1,
         );
@@ -535,7 +535,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 2; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod + 1,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'external edit (Unknown date)',
             'sizechange' => 16,
         );
@@ -568,7 +568,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 1;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'Test 5, 1st save',
             'sizechange' => 10, // = strlen('teststring')
         );
@@ -587,7 +587,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 1; // external edit is not yet in changelog
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'external edit',
             'sizechange' => 14,
         );
@@ -606,7 +606,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 3; // two more revisions now!
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'type' => WIKI_CHANGE_TYPE_EDIT,
             'sum'  => 'Test 5, 2nd save',
             'sizechange' => -2,
         );
@@ -623,7 +623,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 4;
         $expect = array(
           //'date' => $lastmod, // ignore from lastRev assertion, but confirm attic file existence
-            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'type' => WIKI_CHANGE_TYPE_DELETE,
             'sum'  => 'Test 5 3rd save',
             'sizechange' => -22,
         );
@@ -641,7 +641,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 5;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'Test 5, 4th save',
             'sizechange' => 18, // = strlen('teststring revived')
         );
@@ -657,7 +657,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 5;
         $expectExternal = array(
           //'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'type' => WIKI_CHANGE_TYPE_DELETE,
             'sum'  => 'removed - external edit (Unknown date)',
             'sizechange' => -18,
         );
@@ -676,7 +676,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $expectedRevs = 7;
         $expect = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'type' => WIKI_CHANGE_TYPE_CREATE,
             'sum'  => 'Test 5, 5th save',
             'sizechange' => 20, // = strlen('teststring revived 2')
         );

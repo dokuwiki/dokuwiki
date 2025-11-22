@@ -1,4 +1,4 @@
-Một tập tin đã được tải lên DokuWiki của bạn. Đây là những thông tin chi tiết:
+Một tập tin đã được tải lên EasyWiki của bạn. Đây là những thông tin chi tiết:
 
 Tập tin        : @MEDIA@
 Phiên bản cũ: @OLD@

@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace easywiki\plugin\config\core;
 
-use dokuwiki\plugin\config\core\Setting\Setting;
-use dokuwiki\Logger;
+use easywiki\plugin\config\core\Setting\Setting;
+use easywiki\Logger;
 
 /**
  * Writes the settings to the correct local file
@@ -11,7 +11,7 @@ use dokuwiki\Logger;
 class Writer
 {
     /** @var string header info */
-    protected $header = 'Dokuwiki\'s Main Configuration File - Local Settings';
+    protected $header = 'EasyWiki\'s Main Configuration File - Local Settings';
 
     /** @var string the file where the config will be saved to */
     protected $savefile;
@@ -68,7 +68,7 @@ class Writer
     /**
      * Update last modified time stamp of the config file
      *
-     * Will invalidate all DokuWiki caches
+     * Will invalidate all EasyWiki caches
      *
      * @throws \Exception when the config isn't writable
      */

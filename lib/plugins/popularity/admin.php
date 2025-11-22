@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
+use easywiki\Extension\AdminPlugin;
 
 /**
  * Popularity Feedback Plugin

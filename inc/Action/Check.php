@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionAbort;
 
 /**
  * Class Check
  *
  * Adds some debugging info before aborting to show
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Check extends AbstractAction
 {

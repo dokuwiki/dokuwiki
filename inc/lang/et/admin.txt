@@ -1,3 +1,3 @@
 ====== Administreerimine ======
 
-Alljärgnevalt leiate nimekirja administratiivsetest tegevustest, mida DokuWiki võimaldab.
+Alljärgnevalt leiate nimekirja administratiivsetest tegevustest, mida EasyWiki võimaldab.

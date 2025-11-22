@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Input;
+namespace easywiki\Input;
 
 /**
- * Internal class used for $_POST access in dokuwiki\Input\Input class
+ * Internal class used for $_POST access in easywiki\Input\Input class
  */
 class Post extends Input
 {

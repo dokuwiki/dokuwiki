@@ -1,6 +1,6 @@
 <?php
 
-class init_noNS_test extends DokuWikiTest {
+class init_noNS_test extends EasyWikiTest {
 
     /**
      * @dataProvider noNSProvider

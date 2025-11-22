@@ -6,4 +6,4 @@ Sidorna i namnrymden @PAGE@ för wikin @TITLE@ har ändrats. Följande sidor har
 @DIFF@
 --------------------------------------------------------
 
-För att inaktivera sidnotifieringar, logga in på wikin (@DOKUWIKIURL@), gå till @SUBSCRIBE@ och avanmäl dig från sid-och/eller namnrymd-ändringar.
+För att inaktivera sidnotifieringar, logga in på wikin (@EASYWIKIURL@), gå till @SUBSCRIBE@ och avanmäl dig från sid-och/eller namnrymd-ändringar.

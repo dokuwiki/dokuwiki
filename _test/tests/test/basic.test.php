@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsBasicTest extends DokuWikiTest {
+class InttestsBasicTest extends EasyWikiTest {
 
     private $some_headers =  array(
           'Content-Type: image/png',
@@ -24,7 +24,7 @@ class InttestsBasicTest extends DokuWikiTest {
 
     /**
      * Execute the simplest possible request and expect
-     * a dokuwiki page which obviously has the word "DokuWiki"
+     * a easywiki page which obviously has the word "EasyWiki"
      * in it somewhere.
      */
     function testSimpleRun() {
@@ -33,8 +33,8 @@ class InttestsBasicTest extends DokuWikiTest {
         $response = $request->execute();
 
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') !== false,
-            'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'EasyWiki') !== false,
+            'EasyWiki was not a word in the output'
         );
     }
 
@@ -44,7 +44,7 @@ class InttestsBasicTest extends DokuWikiTest {
         $input = array(
             'string' => 'A string',
             'array'  => array(1, 2, 3),
-            'id'     => 'wiki:dokuwiki'
+            'id'     => 'wiki:easywiki'
         );
 
         $response = $request->post($input);
@@ -52,12 +52,12 @@ class InttestsBasicTest extends DokuWikiTest {
         // server var check
         $this->assertEquals('POST',$request->getServer('REQUEST_METHOD'));
         $this->assertEquals('',$request->getServer('QUERY_STRING'));
-        $this->assertEquals('/doku.php',$request->getServer('REQUEST_URI'));
+        $this->assertEquals('/wiki.php',$request->getServer('REQUEST_URI'));
 
         // variable setup check
         $this->assertEquals('A string', $request->getPost('string'));
         $this->assertEquals(array(1, 2, 3), $request->getPost('array'));
-        $this->assertEquals('wiki:dokuwiki', $request->getPost('id'));
+        $this->assertEquals('wiki:easywiki', $request->getPost('id'));
 
         // output check
         $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') !== false);
@@ -71,17 +71,17 @@ class InttestsBasicTest extends DokuWikiTest {
             'array'  => array(1, 2, 3),
         );
 
-        $response = $request->post($input,'/doku.php?id=wiki:dokuwiki');
+        $response = $request->post($input,'/wiki.php?id=wiki:easywiki');
 
         // server var check
         $this->assertEquals('POST',$request->getServer('REQUEST_METHOD'));
-        $this->assertEquals('?id=wiki:dokuwiki',$request->getServer('QUERY_STRING'));
-        $this->assertEquals('/doku.php?id=wiki:dokuwiki',$request->getServer('REQUEST_URI'));
+        $this->assertEquals('?id=wiki:easywiki',$request->getServer('QUERY_STRING'));
+        $this->assertEquals('/wiki.php?id=wiki:easywiki',$request->getServer('REQUEST_URI'));
 
         // variable setup check
         $this->assertEquals('A string', $request->getPost('string'));
         $this->assertEquals(array(1, 2, 3), $request->getPost('array'));
-        $this->assertEquals('wiki:dokuwiki', $request->getGet('id'));
+        $this->assertEquals('wiki:easywiki', $request->getGet('id'));
 
         // output check
         $this->assertTrue(strpos($response->getContent(), 'Andreas Gohr') !== false);
@@ -96,23 +96,23 @@ class InttestsBasicTest extends DokuWikiTest {
             'test'   => 'bar'
         );
 
-        $response = $request->get($input,'/doku.php?id=wiki:dokuwiki&test=foo');
+        $response = $request->get($input,'/wiki.php?id=wiki:easywiki&test=foo');
 
         // server var check
         $this->assertEquals('GET',$request->getServer('REQUEST_METHOD'));
         $this->assertEquals(
-            '?id=wiki:dokuwiki&test=bar&string=A+string&array[0]=1&array[1]=2&array[2]=3',
+            '?id=wiki:easywiki&test=bar&string=A+string&array[0]=1&array[1]=2&array[2]=3',
             $request->getServer('QUERY_STRING')
         );
         $this->assertEquals(
-            '/doku.php?id=wiki:dokuwiki&test=bar&string=A+string&array[0]=1&array[1]=2&array[2]=3',
+            '/wiki.php?id=wiki:easywiki&test=bar&string=A+string&array[0]=1&array[1]=2&array[2]=3',
             $request->getServer('REQUEST_URI')
         );
 
         // variable setup check
         $this->assertEquals('A string', $request->getGet('string'));
         $this->assertEquals(array(1, 2, 3), $request->getGet('array'));
-        $this->assertEquals('wiki:dokuwiki', $request->getGet('id'));
+        $this->assertEquals('wiki:easywiki', $request->getGet('id'));
         $this->assertEquals('bar', $request->getGet('test'));
 
         // output check
@@ -122,19 +122,19 @@ class InttestsBasicTest extends DokuWikiTest {
     function testScripts() {
         $request = new TestRequest();
 
-        // doku
+        // wiki
         $response = $request->get();
-        $this->assertEquals('doku.php',$request->getScript());
+        $this->assertEquals('wiki.php',$request->getScript());
 
-        $response = $request->get(array(),'/doku.php?id=wiki:dokuwiki&test=foo');
-        $this->assertEquals('doku.php',$request->getScript());
+        $response = $request->get(array(),'/wiki.php?id=wiki:easywiki&test=foo');
+        $this->assertEquals('wiki.php',$request->getScript());
 
         // fetch
-        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
+        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:easywiki-128.png');
         $this->assertEquals('lib/exe/fetch.php',$request->getScript());
 
         // detail
-        $response = $request->get(array(),'/lib/exe/detail.php?id=start&media=wiki:dokuwiki-128.png');
+        $response = $request->get(array(),'/lib/exe/detail.php?id=start&media=wiki:easywiki-128.png');
         $this->assertEquals('lib/exe/detail.php',$request->getScript());
     }
 
@@ -148,7 +148,7 @@ class InttestsBasicTest extends DokuWikiTest {
         }
 
         $request = new TestRequest();
-        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:dokuwiki-128.png');
+        $response = $request->get(array(),'/lib/exe/fetch.php?media=wiki:easywiki-128.png');
         $headers = $response->getHeaders();
         $this->assertTrue(!empty($headers));
     }
@@ -171,7 +171,7 @@ class InttestsBasicTest extends DokuWikiTest {
     
     function testINPUT() {
         $request = new TestRequest();
-        $response = $request->get(array('id' => 'mailinglist'), '/doku.php');
+        $response = $request->get(array('id' => 'mailinglist'), '/wiki.php');
 
         // output check
         $this->assertTrue(strpos($response->getContent(), 'Netiquette') !== false);

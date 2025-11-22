@@ -1,6 +1,6 @@
 ====== Ver registros ======
 
-Esta interfaz te permite ver los diversos registros que son escritos por DokuWiki. Por defecto, no debería haber mucho
+Esta interfaz te permite ver los diversos registros que son escritos por EasyWiki. Por defecto, no debería haber mucho
 aquí (depende de tu [[doku>config:dontlog|configuración de registros]]). Sin embargo, si algo va mal, es muy probable que
 que encuentres información útil sobre el problema.
 

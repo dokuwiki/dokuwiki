@@ -7,7 +7,7 @@
  * range. This are upper case letters only.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @see    \dokuwiki\Utf8\Clean::deaccent()
+ * @see    \easywiki\Utf8\Clean::deaccent()
  */
 
 return [

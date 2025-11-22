@@ -1,15 +1,15 @@
 <?php
 
 /**
- * DokuWiki IP address and reverse proxy functions.
+ * EasyWiki IP address and reverse proxy functions.
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Zebra North <mrzebra@mrzebra.co.uk>
  */
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Input\Input;
+use easywiki\Input\Input;
 use Exception;
 
 class Ip

@@ -1,20 +1,20 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\AuthPlugin;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Extension\Event;
 
 /**
  * Popularity Feedback Plugin
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
-class helper_plugin_popularity extends Dokuwiki_Plugin
+class helper_plugin_popularity extends EasyWiki_Plugin
 {
     /**
      * The url where the data should be sent
      */
-    public $submitUrl = 'https://update.dokuwiki.org/popularity.php';
+    public $submitUrl = 'https://update.easywiki.org/popularity.php';
 
     /**
      * Name of the file which determine if the the autosubmit is enabled,
@@ -131,7 +131,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     protected function gather()
     {
         global $conf;
-        /** @var $auth DokuWiki_Auth_Plugin */
+        /** @var $auth EasyWiki_Auth_Plugin */
         global $auth;
         $data = [];
         $phptime = ini_get('max_execution_time');
@@ -223,7 +223,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         }
 
         // calculate edits per day
-        $list = (array) @file($conf['metadir'] . '/_dokuwiki.changes');
+        $list = (array) @file($conf['metadir'] . '/_easywiki.changes');
         $count = count($list);
         if ($count > 2) {
             $first = (int) substr(array_shift($list), 0, 10);
@@ -277,7 +277,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     }
 
     /**
-     * Callback to search and count the content of directories in DokuWiki
+     * Callback to search and count the content of directories in EasyWiki
      *
      * @param array &$data  Reference to the result data structure, init with initEmptySearchList()
      * @param string $base  Base usually $conf['datadir']

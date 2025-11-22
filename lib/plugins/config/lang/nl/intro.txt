@@ -1,6 +1,6 @@
 ====== Configuratie Manager ======
 
-Gebruik deze pagina om de instellingen van je DokuWiki te bekijken en/of te wijzigen. Voor hulp over specifieke instellingen kun je kijken op  [[doku>config]]. Voor meer informatie over deze plugin zie [[doku>plugin:config]].
+Gebruik deze pagina om de instellingen van je EasyWiki te bekijken en/of te wijzigen. Voor hulp over specifieke instellingen kun je kijken op  [[doku>config]]. Voor meer informatie over deze plugin zie [[doku>plugin:config]].
 
 Instellingen met een rode achtergond kunnen niet worden gewijzigd met deze plugin. Instellingen met een blauwe achtergrond hebben de default waarde, en instellingen met een witte achtergrond zijn lokaal gewijzigd voor deze specifieke installatie. Zowel blauwe als witte instellingen kunnen worden gewijzigd.
 

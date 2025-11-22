@@ -5,7 +5,7 @@ require_once(__DIR__ . '/httpclient_mock.php');
 /**
  * Tests are executed against an instance of go-httpbin
  */
-class httpclient_http_test extends DokuWikiTest
+class httpclient_http_test extends EasyWikiTest
 {
     protected $server = 'http://httpbingo.org';
 
@@ -294,7 +294,7 @@ class httpclient_http_test extends DokuWikiTest
     public function test_wikimatrix()
     {
         $http = new HTTPMockClient();
-        $data = $http->get('http://www.wikimatrix.org/cfeed/dokuwiki/-/-');
+        $data = $http->get('http://www.wikimatrix.org/cfeed/easywiki/-/-');
         if ($http->noconnection()) {
             $this->markTestSkipped('connection timed out');
         }

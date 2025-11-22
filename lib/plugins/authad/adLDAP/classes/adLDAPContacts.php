@@ -38,7 +38,7 @@
 require_once(dirname(__FILE__) . '/../adLDAP.php');
 require_once(dirname(__FILE__) . '/../collections/adLDAPContactCollection.php');
 
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\Sort;
 
 class adLDAPContacts {
     /**

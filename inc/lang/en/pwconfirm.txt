@@ -1,6 +1,6 @@
 Hi @FULLNAME@!
 
-Someone requested a new password for your @TITLE@ login at @DOKUWIKIURL@
+Someone requested a new password for your @TITLE@ login at @EASYWIKIURL@
 
 If you did not request a new password then just ignore this email.
 

@@ -8,4 +8,4 @@ Na obrazcu zgoraj je mogoče pregledovati in spreminjati dovoljenja za izbranega
 
 V preglednici spodaj so prikazana vsa pravila nadzora. Ta je mogoče hitro spreminjati ali brisati.
 
-Več podrobnosti o delovanju nadzora dostopa sistema DokuWiki je mogoče najti v [[doku>acl|uradni dokumentaciji ACL]].
+Več podrobnosti o delovanju nadzora dostopa sistema EasyWiki je mogoče najti v [[doku>acl|uradni dokumentaciji ACL]].

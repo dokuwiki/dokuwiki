@@ -1,6 +1,6 @@
 Hai @FULLNAME@!
 
-Seseorang telah meminta password baru untuk @TITLE@ Anda login ke @DOKUWIKIURL@
+Seseorang telah meminta password baru untuk @TITLE@ Anda login ke @EASYWIKIURL@
 
 Jika Anda tidak meminta password baru, mohon mengacuhkan email ini.
 

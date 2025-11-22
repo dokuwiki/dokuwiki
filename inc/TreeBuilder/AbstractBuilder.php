@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\TreeBuilder;
+namespace easywiki\TreeBuilder;
 
-use dokuwiki\test\mock\Doku_Renderer;
-use dokuwiki\TreeBuilder\Node\AbstractNode;
-use dokuwiki\TreeBuilder\Node\ExternalLink;
-use dokuwiki\TreeBuilder\Node\Top;
+use easywiki\test\mock\Wiki_Renderer;
+use easywiki\TreeBuilder\Node\AbstractNode;
+use easywiki\TreeBuilder\Node\ExternalLink;
+use easywiki\TreeBuilder\Node\Top;
 
 /**
  * Abstract class to generate a tree
@@ -200,12 +200,12 @@ abstract class AbstractBuilder
      *
      * This is mostly an example implementation. You probably want to implement your own.
      *
-     * @param Doku_Renderer $R The current renderer
+     * @param Wiki_Renderer $R The current renderer
      * @param AbstractNode $top The node to start from, use null to start from the top node
      * @param int $level current nesting level, starting at 1
      * @return void
      */
-    public function render(Doku_Renderer $R, $top = null, $level = 1): void
+    public function render(Wiki_Renderer $R, $top = null, $level = 1): void
     {
         if ($top === null) $top = $this->getTop();
 

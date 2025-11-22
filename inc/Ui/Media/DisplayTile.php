@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Ui\Media;
+namespace easywiki\Ui\Media;
 
-use dokuwiki\File\MediaFile;
+use easywiki\File\MediaFile;
 
 /**
  * Display a MediaFile in the FullScreen MediaManager

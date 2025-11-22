@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\TreeBuilder;
+namespace easywiki\TreeBuilder;
 
-use dokuwiki\File\PageResolver;
-use dokuwiki\TreeBuilder\Node\AbstractNode;
-use dokuwiki\TreeBuilder\Node\ExternalLink;
-use dokuwiki\TreeBuilder\Node\Top;
-use dokuwiki\TreeBuilder\Node\WikiPage;
+use easywiki\File\PageResolver;
+use easywiki\TreeBuilder\Node\AbstractNode;
+use easywiki\TreeBuilder\Node\ExternalLink;
+use easywiki\TreeBuilder\Node\Top;
+use easywiki\TreeBuilder\Node\WikiPage;
 
 /**
  * A tree builder that generates a tree from a control page

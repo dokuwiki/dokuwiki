@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class ValueElement
@@ -9,7 +9,7 @@ namespace dokuwiki\Form;
  *
  * What the value is (tag name, content, etc) is defined by the actual implementations
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 abstract class ValueElement extends Element
 {

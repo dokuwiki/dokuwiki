@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\test\Feed;
+namespace easywiki\test\Feed;
 
-use dokuwiki\Feed\FeedCreator;
-use dokuwiki\Feed\FeedCreatorOptions;
-use dokuwiki\HTTP\DokuHTTPClient;
+use easywiki\Feed\FeedCreator;
+use easywiki\Feed\FeedCreatorOptions;
+use easywiki\HTTP\DokuHTTPClient;
 
 /**
  * @group internet
  */
-class FeedCreatorTest extends \DokuWikiTest
+class FeedCreatorTest extends \EasyWikiTest
 {
 
     /**

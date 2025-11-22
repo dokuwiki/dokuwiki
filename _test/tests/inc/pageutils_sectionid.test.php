@@ -1,6 +1,6 @@
 <?php
 
-class sectionid_test extends Dokuwikitest
+class sectionid_test extends EasyWikitest
 {
     /**
      * DataProvider

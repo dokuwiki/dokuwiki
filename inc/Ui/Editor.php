@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Draft;
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
+use easywiki\Draft;
+use easywiki\Extension\Event;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Page Editor
+ * EasyWiki Page Editor
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Editor extends Ui
 {
@@ -163,7 +163,7 @@ class Editor extends Ui
         echo '<div class="toolbar group">';
         echo '<div id="tool__bar" class="tool__bar">';
         if ($wr && $data['media_manager']) {
-            echo '<a href="' . DOKU_BASE . 'lib/exe/mediamanager.php?ns=' . $INFO['namespace'] . '" target="_blank">';
+            echo '<a href="' . WIKI_BASE . 'lib/exe/mediamanager.php?ns=' . $INFO['namespace'] . '" target="_blank">';
             echo $lang['mediaselect'];
             echo '</a>';
         }

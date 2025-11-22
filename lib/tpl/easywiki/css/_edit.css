@@ -1,0 +1,142 @@
+/**
+ * This file provides styles for the edit view (?do=edit), preview
+ * and section edit buttons.
+ */
+
+/* edit view
+********************************************************************/
+
+.easywiki div.editBox {
+}
+
+/*____________ toolbar ____________*/
+
+.easywiki div.toolbar {
+    display: inline-block;
+    margin-bottom: .5em;
+}
+#draft__status {
+    float: right;
+    color: @ini_text_alt;
+    background-color: inherit;
+}
+[dir=rtl] #draft__status {
+    float: left;
+}
+#tool__bar {
+    float: left;
+}
+[dir=rtl] #tool__bar {
+    float: right;
+}
+
+/* buttons inside of toolbar */
+.easywiki div.toolbar button.toolbutton {
+}
+/* picker popups (outside of .easywiki) */
+div.picker {
+    width: 300px;
+    border: 1px solid @ini_border;
+    background-color: @ini_background_alt;
+    color: inherit;
+}
+/* picker for headlines */
+div.picker.pk_hl {
+    width: auto;
+}
+
+/* buttons inside of picker */
+div.picker button.pickerbutton,
+div.picker button.toolbutton {
+    padding: .1em .35em;
+    border-width: 0;
+}
+
+/*____________ edit textarea ____________*/
+
+.easywiki textarea.edit {
+    width: 100%;
+    margin-bottom: .5em;
+    resize: vertical;
+}
+
+/*____________ below the textarea ____________*/
+
+.easywiki div.editBar {
+    overflow: hidden;
+    margin-bottom: .5em;
+}
+
+/* size and wrap controls */
+#size__ctl {
+    float: right;
+}
+[dir=rtl] #size__ctl {
+    float: left;
+}
+#size__ctl img {
+    cursor: pointer;
+}
+
+/* edit buttons */
+.easywiki .editBar .editButtons {
+    display: inline;
+    margin-right: 1em;
+}
+[dir=rtl] .easywiki .editBar .editButtons {
+    margin-right: 0;
+    margin-left: 1em;
+}
+.easywiki .editBar .editButtons button {
+}
+
+/* summary input and minor changes checkbox */
+.easywiki .editBar .summary {
+    display: inline;
+}
+.easywiki .editBar .summary label {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.easywiki .editBar .summary label span {
+    vertical-align: middle;
+}
+.easywiki .editBar .summary input {
+}
+/* change background colour if summary is missing */
+.easywiki .editBar .summary input.missing {
+    color: @ini_text;
+    background-color: #ffcccc;
+}
+
+/* preview
+********************************************************************/
+
+.easywiki div.preview {
+    border: dotted @ini_border;
+    border-width: .2em 0;
+    padding: 1.4em 0;
+    margin-bottom: 1.4em;
+}
+
+/* section edit buttons
+********************************************************************/
+
+.easywiki .secedit {
+    float: right;
+    margin-top: -1.4em;
+}
+[dir=rtl] .easywiki .secedit {
+    float: left;
+}
+.easywiki .secedit button {
+    font-size: 75%;
+}
+
+/* style for section highlighting */
+.easywiki div.section_highlight {
+    margin: 0 -1em; /* negative side margin = side padding + side border */
+    padding: 0 .5em;
+    border: solid @ini_background_alt;
+    border-width: 0 .5em;
+}

@@ -11,9 +11,9 @@
  */
 
 // phpcs:disable PSR1.Files.SideEffects
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
 if (!defined('NOSESSION')) define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -47,7 +47,7 @@ require_once(DOKU_INC . 'inc/init.php');
 <body>
 <?php
 // get merged style.ini
-$styleUtils = new \dokuwiki\StyleUtils($conf['template']);
+$styleUtils = new \easywiki\StyleUtils($conf['template']);
 $ini = $styleUtils->cssStyleini();
 
 if (!empty($ini)) {

@@ -1,19 +1,19 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Sort;
-use dokuwiki\Logger;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Sort;
+use easywiki\Logger;
 
 /**
- * Active Directory authentication backend for DokuWiki
+ * Active Directory authentication backend for EasyWiki
  *
  * This makes authentication with a Active Directory server much easier
  * than when using the normal LDAP backend by utilizing the adLDAP library
  *
  * Usage:
- *   Set DokuWiki's local.protected.php auth setting to read
+ *   Set EasyWiki's local.protected.php auth setting to read
  *
  *   $conf['authtype']       = 'authad';
  *
@@ -38,7 +38,7 @@ use dokuwiki\Logger;
  *
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author  James Van Lommel <jamesvl@gmail.com>
- * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
+ * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-easywiki/
  * @author  Andreas Gohr <andi@splitbrain.org>
  * @author  Jan Schumann <js@schumann-it.com>
  */
@@ -79,8 +79,8 @@ class auth_plugin_authad extends AuthPlugin
         global $INPUT;
         parent::__construct();
 
-        require_once(DOKU_PLUGIN . 'authad/adLDAP/adLDAP.php');
-        require_once(DOKU_PLUGIN . 'authad/adLDAP/classes/adLDAPUtils.php');
+        require_once(WIKI_PLUGIN . 'authad/adLDAP/adLDAP.php');
+        require_once(WIKI_PLUGIN . 'authad/adLDAP/classes/adLDAPUtils.php');
 
         // we load the config early to modify it a bit here
         $this->loadConfig();
@@ -116,7 +116,7 @@ class auth_plugin_authad extends AuthPlugin
                 $INPUT->server->set('REMOTE_USER', $this->cleanUser($INPUT->server->str('REMOTE_USER')));
 
                 // we need to simulate a login
-                if (empty($_COOKIE[DOKU_COOKIE])) {
+                if (empty($_COOKIE[WIKI_COOKIE])) {
                     $INPUT->set('u', $INPUT->server->str('REMOTE_USER'));
                     $INPUT->set('p', 'sso_only');
                 }
@@ -295,7 +295,7 @@ class auth_plugin_authad extends AuthPlugin
     }
 
     /**
-     * Make AD group names usable by DokuWiki.
+     * Make AD group names usable by EasyWiki.
      *
      * Removes backslashes ('\'), pound signs ('#'), and converts spaces to underscores.
      *
@@ -503,7 +503,7 @@ class auth_plugin_authad extends AuthPlugin
     /**
      * Bulk retrieval of user data
      *
-     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
+     * @author  Dominik Eckelmann <easywiki@cosmocode.de>
      *
      * @param   int $start index of first user to be returned
      * @param   int $limit max number of users to be returned

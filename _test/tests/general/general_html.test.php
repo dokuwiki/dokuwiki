@@ -5,7 +5,7 @@
  *
  * @group internet
  */
-class general_html_test extends DokuWikiTest
+class general_html_test extends EasyWikiTest
 {
     /** @var string[] we consider these hits shortcomings in the validator and not errors */
     protected $allowedErrors = [
@@ -20,14 +20,14 @@ class general_html_test extends DokuWikiTest
     public function requestProvider()
     {
         return [
-            ['/doku.php', 'GET', []],
-            ['/doku.php', 'GET', ['do' => 'recent']],
-            ['/doku.php', 'GET', ['do' => 'index']],
-            ['/doku.php', 'GET', ['do' => 'login']],
-            ['/doku.php', 'GET', ['do' => 'search', 'q' => 'wiki']],
-            ['/doku.php', 'GET', ['id' => 'wiki:syntax']],
-            ['/doku.php', 'GET', ['id' => 'wiki:syntax', 'ns' => 'wiki', 'image' => 'wiki:dokuwiki-128.png', 'do' => 'media']],
-            ['/lib/exe/detail.php', 'GET', ['id' => 'wiki:syntax', 'media' => 'wiki:dokuwiki-128.png']],
+            ['/wiki.php', 'GET', []],
+            ['/wiki.php', 'GET', ['do' => 'recent']],
+            ['/wiki.php', 'GET', ['do' => 'index']],
+            ['/wiki.php', 'GET', ['do' => 'login']],
+            ['/wiki.php', 'GET', ['do' => 'search', 'q' => 'wiki']],
+            ['/wiki.php', 'GET', ['id' => 'wiki:syntax']],
+            ['/wiki.php', 'GET', ['id' => 'wiki:syntax', 'ns' => 'wiki', 'image' => 'wiki:easywiki-128.png', 'do' => 'media']],
+            ['/lib/exe/detail.php', 'GET', ['id' => 'wiki:syntax', 'media' => 'wiki:easywiki-128.png']],
         ];
     }
 
@@ -40,7 +40,7 @@ class general_html_test extends DokuWikiTest
      */
     protected function validate($html)
     {
-        $http = new \dokuwiki\HTTP\DokuHTTPClient();
+        $http = new \easywiki\HTTP\DokuHTTPClient();
         $http->headers['Content-Type'] = 'text/html; charset=utf-8';
         $result = $http->post('https://validator.w3.org/nu/?out=json&level=error', $html);
 

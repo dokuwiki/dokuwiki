@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
-use dokuwiki\Utf8\PhpString;
+use easywiki\Utf8\PhpString;
 use IXR\DataType\Base64;
 use IXR\DataType\Date;
 
@@ -23,17 +23,17 @@ class LegacyApiCore extends ApiCore
         return array_merge(
             $methods,
             [
-                'dokuwiki.getVersion' => new ApiCall([$this, 'legacyGetVersion'], 'legacy'),
-                'dokuwiki.login' => (new ApiCall([$this, 'legacyLogin'], 'legacy'))->setPublic(),
-                'dokuwiki.logoff' => new ApiCall([$this, 'legacyLogoff'], 'legacy'),
-                'dokuwiki.getPagelist' => new ApiCall([$this, 'legacyGetPagelist'], 'legacy'),
-                'dokuwiki.search' => new ApiCall([$this, 'legacySearch'], 'legacy'),
-                'dokuwiki.getTime' => new ApiCall([$this, 'legacyGetTime'], 'legacy'),
-                'dokuwiki.setLocks' => new ApiCall([$this, 'legacySetLocks'], 'legacy'),
-                'dokuwiki.getTitle' => (new ApiCall([$this, 'legacyGetTitle'], 'legacy'))->setPublic(),
-                'dokuwiki.appendPage' => new ApiCall([$this, 'legacyAppendPage'], 'legacy'),
-                'dokuwiki.createUser' => new ApiCall([$this, 'legacyCreateUser'], 'legacy'),
-                'dokuwiki.deleteUsers' => new ApiCall([$this, 'legacyDeleteUsers'], 'legacy'),
+                'easywiki.getVersion' => new ApiCall([$this, 'legacyGetVersion'], 'legacy'),
+                'easywiki.login' => (new ApiCall([$this, 'legacyLogin'], 'legacy'))->setPublic(),
+                'easywiki.logoff' => new ApiCall([$this, 'legacyLogoff'], 'legacy'),
+                'easywiki.getPagelist' => new ApiCall([$this, 'legacyGetPagelist'], 'legacy'),
+                'easywiki.search' => new ApiCall([$this, 'legacySearch'], 'legacy'),
+                'easywiki.getTime' => new ApiCall([$this, 'legacyGetTime'], 'legacy'),
+                'easywiki.setLocks' => new ApiCall([$this, 'legacySetLocks'], 'legacy'),
+                'easywiki.getTitle' => (new ApiCall([$this, 'legacyGetTitle'], 'legacy'))->setPublic(),
+                'easywiki.appendPage' => new ApiCall([$this, 'legacyAppendPage'], 'legacy'),
+                'easywiki.createUser' => new ApiCall([$this, 'legacyCreateUser'], 'legacy'),
+                'easywiki.deleteUsers' => new ApiCall([$this, 'legacyDeleteUsers'], 'legacy'),
                 'wiki.getPage' => new ApiCall([$this, 'legacyGetPage'], 'legacy'),
                 'wiki.getPageVersion' => new ApiCall([$this, 'legacyGetPageVersion'], 'legacy'),
                 'wiki.getPageHTML' => new ApiCall([$this, 'legacyGetPageHTML'], 'legacy'),
@@ -53,7 +53,7 @@ class LegacyApiCore extends ApiCore
                 'wiki.deleteAttachment' => new ApiCall([$this, 'legacyDeleteAttachment'], 'legacy'),
                 'wiki.getAttachment' => new ApiCall([$this, 'legacyGetAttachment'], 'legacy'),
                 'wiki.getAttachmentInfo' => new ApiCall([$this, 'legacyGetAttachmentInfo'], 'legacy'),
-                'dokuwiki.getXMLRPCAPIVersion' => (new ApiCall([$this, 'legacyGetXMLRPCAPIVersion'], 'legacy'))
+                'easywiki.getXMLRPCAPIVersion' => (new ApiCall([$this, 'legacyGetXMLRPCAPIVersion'], 'legacy'))
                     ->setPublic(),
                 'wiki.getRPCVersionSupported' => (new ApiCall([$this, 'legacyGetRPCVersionSupported'], 'legacy'))
                     ->setPublic(),

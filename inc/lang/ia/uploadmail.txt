@@ -1,4 +1,4 @@
-Un file ha essite incargate in tu DokuWiki. Ecce le detalios:
+Un file ha essite incargate in tu EasyWiki. Ecce le detalios:
 
 File : @MEDIA@
 Data : @DATE@

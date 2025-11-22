@@ -10,13 +10,13 @@
 .project
 .settings/
 
-# DokuWiki
+# EasyWiki
 .htaccess
 /conf/*
 !/conf/.htaccess
 !/conf/*.dist
 !/conf/acronyms.conf
-!/conf/dokuwiki.php
+!/conf/easywiki.php
 !/conf/entities.conf
 !/conf/interwiki.conf
 !/conf/license.php
@@ -42,7 +42,7 @@
 /data/pages/*
 !data/pages/wiki/
 /lib/tpl/*
-!/lib/tpl/dokuwiki
+!/lib/tpl/easywiki
 !/lib/tpl/index.php
 /lib/plugins/*
 !/lib/plugins/acl

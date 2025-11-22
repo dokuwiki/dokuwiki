@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\test\Action;
+namespace easywiki\test\Action;
 
-use dokuwiki\Action\AbstractAclAction;
-use dokuwiki\Action\AbstractUserAction;
-use dokuwiki\Action\Exception\ActionAclRequiredException;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Action\Exception\ActionUserRequiredException;
+use easywiki\Action\AbstractAclAction;
+use easywiki\Action\AbstractUserAction;
+use easywiki\Action\Exception\ActionAclRequiredException;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Action\Exception\ActionUserRequiredException;
 
-class ActionTest extends \DokuWikiTest
+class ActionTest extends \EasyWikiTest
 {
 
     public function dataProvider()
@@ -78,8 +78,8 @@ class ActionTest extends \DokuWikiTest
         global $INFO;
         $INFO = $info;
 
-        $classname = 'dokuwiki\\Action\\' . $name;
-        /** @var \dokuwiki\Action\AbstractAction $class */
+        $classname = 'easywiki\\Action\\' . $name;
+        /** @var \easywiki\Action\AbstractAction $class */
         $class = new $classname();
 
         $this->assertSame($expected, $class->minimumPermission());
@@ -96,8 +96,8 @@ class ActionTest extends \DokuWikiTest
         $this->assertTrue(true); // mark as not risky
         if ($name == 'Show') return; // disabling show does not work
 
-        $classname = 'dokuwiki\\Action\\' . $name;
-        /** @var \dokuwiki\Action\AbstractAction $class */
+        $classname = 'easywiki\\Action\\' . $name;
+        /** @var \easywiki\Action\AbstractAction $class */
         $class = new $classname();
 
         global $conf;
@@ -107,7 +107,7 @@ class ActionTest extends \DokuWikiTest
         $_SERVER['REMOTE_USER'] = 'someone';
 
         try {
-            \dokuwiki\ActionRouter::getInstance(true)->checkAction($class);
+            \easywiki\ActionRouter::getInstance(true)->checkAction($class);
         } catch (\Exception $e) {
             $this->assertNotSame(ActionDisabledException::class, get_class($e));
         }
@@ -115,7 +115,7 @@ class ActionTest extends \DokuWikiTest
         $conf['disableactions'] = $class->getActionName();
 
         try {
-            \dokuwiki\ActionRouter::getInstance(true)->checkAction($class);
+            \easywiki\ActionRouter::getInstance(true)->checkAction($class);
         } catch (\Exception $e) {
             $this->assertSame(ActionDisabledException::class, get_class($e), $e);
         }
@@ -129,8 +129,8 @@ class ActionTest extends \DokuWikiTest
      */
     public function testBaseClassAclPermission($name)
     {
-        $classname = 'dokuwiki\\Action\\' . $name;
-        /** @var \dokuwiki\Action\AbstractAction $class */
+        $classname = 'easywiki\\Action\\' . $name;
+        /** @var \easywiki\Action\AbstractAction $class */
         $class = new $classname();
         $this->assertTrue(true); // mark as not risky
         if (!is_a($class, AbstractAclAction::class)) return;
@@ -162,8 +162,8 @@ class ActionTest extends \DokuWikiTest
      */
     public function testBaseClassUserPermission($name)
     {
-        $classname = 'dokuwiki\\Action\\' . $name;
-        /** @var \dokuwiki\Action\AbstractAction $class */
+        $classname = 'easywiki\\Action\\' . $name;
+        /** @var \easywiki\Action\AbstractAction $class */
         $class = new $classname();
         $this->assertTrue(true); // mark as not risky
         if (!is_a($class, AbstractUserAction::class)) return;

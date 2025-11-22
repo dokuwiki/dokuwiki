@@ -1,6 +1,6 @@
 <?php
 
-class html_scedit_pattern_test extends DokuWikiTest {
+class html_scedit_pattern_test extends EasyWikiTest {
 
 
     public function dataProviderForTestSecEditPattern() {

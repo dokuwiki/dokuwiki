@@ -1,16 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-use dokuwiki\Extension\CLIPlugin;
-use dokuwiki\Extension\PluginController;
+use easywiki\Extension\CLIPlugin;
+use easywiki\Extension\PluginController;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('WIKI_INC')) define('WIKI_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 class PluginCLI extends CLI
 {

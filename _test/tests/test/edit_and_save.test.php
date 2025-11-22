@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class EditAndSaveTest extends DokuWikiTest {
+class EditAndSaveTest extends EasyWikiTest {
 
     /**
      * Execute the following requests:
@@ -54,7 +54,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $this->assertEquals($input['hid'], $idA[1]);
 
         // Post the input fields (= do a section edit)
-        $response = $request->post($input, '/doku.php');
+        $response = $request->post($input, '/wiki.php');
         $content = $response->getContent();
 
         // Our header id should have been sent back to us in the edit
@@ -77,7 +77,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $input['do'] = 'save';
 
         // Post the input fields (= save page)
-        $response = $request->post($input, '/doku.php');
+        $response = $request->post($input, '/wiki.php');
 
         // The response should carry a notification that a redirect
         // was executed to our header ID
@@ -137,7 +137,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $this->assertEquals($input['hid'], $idB[1]);
 
         // Post the input fields (= do a section edit)
-        $response = $request->post($input, '/doku.php');
+        $response = $request->post($input, '/wiki.php');
         $content = $response->getContent();
 
         // Our header id should have been sent back to us in the edit
@@ -160,7 +160,7 @@ class EditAndSaveTest extends DokuWikiTest {
         $input['do'] = 'save';
 
         // Post the input fields (= save page)
-        $response = $request->post($input, '/doku.php');
+        $response = $request->post($input, '/wiki.php');
 
         // The response should carry a notification that a redirect
         // was executed to our header ID

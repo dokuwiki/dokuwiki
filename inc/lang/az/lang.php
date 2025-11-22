@@ -66,7 +66,7 @@ $lang['regsuccess2']           = 'İstifadəçi yaradıldı.';
 $lang['regmailfail']           = 'Deyəsən, xəta şifrə e-maila göndərildikdə baş verdi. Xaiş olunur, ki administrator ilə əlaqə saxlayasınız!';
 $lang['regbadmail']            = 'Deyəsən, daxil edilmiş e-mail ünvanı səhvdir. Əgər şübhəniz var isə administrator ilə əlaqə saxlayın.';
 $lang['regbadpass']            = 'Daxil edilmiş iki şifrə fərqlidir. Xaiş olunur ki, yenidən daxil edəsiniz.';
-$lang['regpwmail']             = 'Sizin DokuWiki sistemi üçün şifrəniz';
+$lang['regpwmail']             = 'Sizin EasyWiki sistemi üçün şifrəniz';
 $lang['reghere']               = 'Sizin hələ istifadəçi adınız yoxdur? Buyurun əldə edin';
 $lang['profna']                = 'Bu wiki profilin dəyişdirilməsini dəstəkləmir';
 $lang['profnochange']          = 'Dəyişiklər edilmədi, profil yenilənmədi.';
@@ -197,23 +197,23 @@ $lang['img_camera']            = 'Model:';
 $lang['img_keywords']          = 'Açar sözlər:';
 $lang['authtempfail']          = 'İstifadəçilərin autentifikasiyası müvəqqəti dayandırılıb. Əgər bu problem uzun müddət davam edir sə, administrator ilə əlaqə saxlayın.';
 $lang['i_chooselang']          = 'Dili seçin/Language';
-$lang['i_installer']           = 'DokuWiki quraşdırılır';
+$lang['i_installer']           = 'EasyWiki quraşdırılır';
 $lang['i_wikiname']            = 'wiki-nin adı';
 $lang['i_enableacl']           = 'Haqlar kontrolu siyahısının istifadəsinə icazə ver (tövsiyə edilir)';
 $lang['i_superuser']           = 'Super-istifadəci';
 $lang['i_problems']            = 'Quraşdırma proqramı aşağıdakı problemlər ilə üzləşdi. Davam etmək üçün onları həll etmək lazımdır. ';
-$lang['i_modified']            = 'Təhlükəsizlik baxımından bu proqram ancaq yeni, dəyişməmiş halda olan DokuWiki üzərində işləyir.
-                         Siz ya yüklənmiş quraşdırma paketini yenidən açmalısınız, ya da <a href="https://www.dokuwiki.org/install">DokuWiki-nin tam quraşdırma instruksiyasına</a> müraciyət etməlisiniz';
+$lang['i_modified']            = 'Təhlükəsizlik baxımından bu proqram ancaq yeni, dəyişməmiş halda olan EasyWiki üzərində işləyir.
+                         Siz ya yüklənmiş quraşdırma paketini yenidən açmalısınız, ya da <a href="https://www.EasyWiki.org/install">EasyWiki-nin tam quraşdırma instruksiyasına</a> müraciyət etməlisiniz';
 $lang['i_funcna']              = 'PHP-nin <code>%s</code> funksiyası mövcud deyil. Bəlkə, o hansı sa səbəbdən sizin host-unuz tərəfindən blok edilib?';
 $lang['i_phpver']              = 'Sizin PHP-nin versiyası (<code>%s</code>) tələb olunan versiyadan aşagıdır (<code>%s</code>). Quraşdırılmış PHP-nin versiyasını yeniləyin.';
-$lang['i_permfail']            = '<code>%s</code> DokuWiki-yə yazı üçün bağlıdır. Bu qovluğun giriş haqlarını yoxlamaq lazımdır!';
+$lang['i_permfail']            = '<code>%s</code> EasyWiki-yə yazı üçün bağlıdır. Bu qovluğun giriş haqlarını yoxlamaq lazımdır!';
 $lang['i_confexists']          = '<code>%s</code> artıq mövcuddur';
 $lang['i_writeerr']            = '<code>%s</code> yaradıla bilmədi. Faylın/qovluqların giriş haqlarını yaxlamaq lazımdır. Və faylı əl ilə yaradın. ';
-$lang['i_badhash']             = 'dokuwiki.php tanıla bilmir və ya dəyişdirilmişdir (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php tanıla bilmir və ya dəyişdirilmişdir (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - səhv ya boş qiymətdir';
 $lang['i_success']             = 'Konfiqurasiya uğurla başa çatdı. İndi siz install.php faylını silə bilərsiniz.
-                        <a href="doku.php?id=wiki:welcome">Yeni DokuWiki-nizə</a> xoş gəlmişsiniz!';
-$lang['i_failure']             = 'Konfiqurasiya fayllarına məlumat yazan zaman səhvlər tapıldı. Yəgin ki, <a href="doku.php?id=wiki:welcome">yeni DokuWiki-nizi</a> istifadə etmədən öncə, Siz o xətaları əl ilə düzəltməli olacaqsınız.';
+                        <a href="wiki.php?id=wiki:welcome">Yeni EasyWiki-nizə</a> xoş gəlmişsiniz!';
+$lang['i_failure']             = 'Konfiqurasiya fayllarına məlumat yazan zaman səhvlər tapıldı. Yəgin ki, <a href="wiki.php?id=wiki:welcome">yeni EasyWiki-nizi</a> istifadə etmədən öncə, Siz o xətaları əl ilə düzəltməli olacaqsınız.';
 $lang['i_policy']              = 'İlkin giriş haqları siyasəti';
 $lang['i_pol0']                = 'Tam açıq wiki (oxumaq, yazmaq, fayl yükləmək hamıya olar)';
 $lang['i_pol1']                = 'Acıq wiki (oxumaq hamıya olar, yazmaq və fayl yükləmək ancaq üzv olan istifadəçilərə olar)';
@@ -227,5 +227,5 @@ $lang['days']                  = '%d gün əvvəl';
 $lang['hours']                 = '%d saat əvvəl';
 $lang['minutes']               = '%d dəqiqə əvvəl';
 $lang['seconds']               = '%d saniyə əvvəl';
-$lang['email_signature_text']  = 'DokuWiki aşağıdakı adresdə yerləşir
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'EasyWiki aşağıdakı adresdə yerləşir
+@EASYWIKIURL@';

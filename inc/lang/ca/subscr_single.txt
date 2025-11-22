@@ -13,4 +13,4 @@ Resum edició: @SUMMARY@
 Versió vella: @OLDPAGE@ 
 Nova versió: @NEWPAGE@
 
-Per cancel·lar la pàgina de notificacions, entra a la wiki a  @DOKUWIKIURL@ i llavors ves a @SUBSCRIBE@ i desinscriu-te dels canvis dels noms d'espai(namespace) i pàgines.
+Per cancel·lar la pàgina de notificacions, entra a la wiki a  @EASYWIKIURL@ i llavors ves a @SUBSCRIBE@ i desinscriu-te dels canvis dels noms d'espai(namespace) i pàgines.

@@ -8,4 +8,4 @@ I kassen for oven giver dig mulighed for at se og ændre tilladelser for en best
 
 Nedenstående skema viser dig alle de satte regler for adgangskontrol. Du kan bruge den til hurtigt at slette eller ændre nogle af dem.
 
-Ved at læse [[doku>acl|den officielle vejledning til ACL]] kan du opnå yderligere hjælp til at blive sat helt ind i, hvordan adgangskontrol virker i DokuWiki.
+Ved at læse [[doku>acl|den officielle vejledning til ACL]] kan du opnå yderligere hjælp til at blive sat helt ind i, hvordan adgangskontrol virker i EasyWiki.

@@ -6,7 +6,7 @@
  * @author Yustinus Waruwu <juswaruwu@gmail.com>
  */
 $lang['renderer_xhtml']        = 'Fake Renderer ba zito\'ölö (XHTML) Wiki-output.';
-$lang['renderer__core']        = '%s (dokuwiki core)';
+$lang['renderer__core']        = '%s (easywiki core)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['rss_type']              = 'Tipe XML feed';
 $lang['rss_linkto']            = 'XML feed links khö';
@@ -29,7 +29,7 @@ $lang['typography_o_1']        = 'Ha sitombua kutip';
 $lang['typography_o_2']        = 'Fefu nikutip (itataria lömohalöwö)';
 $lang['userewrite_o_0']        = 'lö\'ö';
 $lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki bakha';
+$lang['userewrite_o_2']        = 'EasyWiki bakha';
 $lang['deaccent_o_0']          = 'ofolai';
 $lang['deaccent_o_1']          = 'heta aksen';
 $lang['deaccent_o_2']          = 'romanize';

@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\ChangeLog;
+namespace easywiki\ChangeLog;
 
-use dokuwiki\Logger;
+use easywiki\Logger;
 
 /**
  * ChangeLog Prototype; methods for handling changelog
@@ -79,7 +79,7 @@ abstract class ChangeLog
      *
      * The "current" revision means current version of the page or media file. It is either
      * identical with or newer than the "last" revision, that depends on whether the file
-     * has modified, created or deleted outside of DokuWiki.
+     * has modified, created or deleted outside of EasyWiki.
      * The value of identifier can be determined by timestamp as far as the file exists,
      * otherwise it must be assigned larger than any other revisions to keep them sortable.
      *
@@ -572,14 +572,14 @@ abstract class ChangeLog
      *
      * When the file has not modified since its last revision, the information of the last
      * change that had already recorded in the changelog is returned as current change info.
-     * Otherwise, the change information since the last revision caused outside DokuWiki
+     * Otherwise, the change information since the last revision caused outside EasyWiki
      * should be returned, which is referred as "external revision".
      *
      * The change date of the file can be determined by timestamp as far as the file exists,
-     * however this is not possible when the file has already deleted outside of DokuWiki.
+     * however this is not possible when the file has already deleted outside of EasyWiki.
      * In such case we assign 1 sec before current time() for the external deletion.
      * As a result, the value of current revision identifier may change each time because:
-     *   1) the file has again modified outside of DokuWiki, or
+     *   1) the file has again modified outside of EasyWiki, or
      *   2) the value is essentially volatile for deleted but once existed files.
      *
      * @return bool|array false when page had never existed or array with entries:
@@ -621,7 +621,7 @@ abstract class ChangeLog
         if (!$fileRev && $lastRev) {                 // item file does not exist
             // check consistency against changelog
             $revInfo = $this->getRevisionInfo($lastRev, false);
-            if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            if ($revInfo['type'] == WIKI_CHANGE_TYPE_DELETE) {
                 $this->currentRevision = $lastRev;
                 return $revInfo;
             }
@@ -630,7 +630,7 @@ abstract class ChangeLog
             $revInfo = [
                 'date' => max($lastRev + 1, time() - 1), // 1 sec before now or new page save
                 'ip'   => '127.0.0.1',
-                'type' => DOKU_CHANGE_TYPE_DELETE,
+                'type' => WIKI_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
                 'user' => '',
                 'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
@@ -643,7 +643,7 @@ abstract class ChangeLog
             // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
             $isJustCreated = $lastRev === false || (
                     $fileRev > $lastRev &&
-                    $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
+                    $this->getRevisionInfo($lastRev, false)['type'] == WIKI_CHANGE_TYPE_DELETE
             );
             $filesize_new = filesize($this->getFilename());
             $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
@@ -669,7 +669,7 @@ abstract class ChangeLog
             $revInfo = [
                 'date' => $timestamp ?: $lastRev + 1,
                 'ip'   => '127.0.0.1',
-                'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
+                'type' => $isJustCreated ? WIKI_CHANGE_TYPE_CREATE : WIKI_CHANGE_TYPE_EDIT,
                 'id'   => $this->id,
                 'user' => '',
                 'sum'  => $sum,

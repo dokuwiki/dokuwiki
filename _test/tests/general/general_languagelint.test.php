@@ -1,14 +1,14 @@
 <?php
 
-class general_languagelint_test extends DokuWikiTest {
+class general_languagelint_test extends EasyWikiTest {
 
 
     function test_core() {
-        $this->checkFiles(glob(DOKU_INC.'inc/lang/*/*.php'));
+        $this->checkFiles(glob(WIKI_INC.'inc/lang/*/*.php'));
     }
 
     function test_plugins() {
-        $this->checkFiles(glob(DOKU_INC.'lib/plugins/*/lang/*/*.php'));
+        $this->checkFiles(glob(WIKI_INC.'lib/plugins/*/lang/*/*.php'));
     }
 
     /**

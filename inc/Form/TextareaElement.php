@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class TextareaElement
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class TextareaElement extends InputElement
 {

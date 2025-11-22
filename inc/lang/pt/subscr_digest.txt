@@ -11,6 +11,6 @@ Revisão Antiga: @OLDPAGE@
 Revisão Nova: @NEWPAGE@
 
 Para cancelar as notificações de página, inicie sessão no wiki em
-@DOKUWIKIURL@, então visite
+@EASYWIKIURL@, então visite
 @SUBSCRIBE@
 e des-subscreva as alterações à página e/ou namespace.

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\usermanager\test;
+namespace easywiki\plugin\usermanager\test;
 
 /**
  * Simple Auth Plugin for testing
@@ -8,7 +8,7 @@ namespace dokuwiki\plugin\usermanager\test;
  * All users are stored in a simple array
  * @todo This might be useful for other tests and could replace the remaining mock auth plugins
  */
-class AuthPlugin extends \dokuwiki\Extension\AuthPlugin {
+class AuthPlugin extends \easywiki\Extension\AuthPlugin {
 
     public $loggedOff = false;
 

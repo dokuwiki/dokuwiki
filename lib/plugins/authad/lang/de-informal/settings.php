@@ -5,9 +5,9 @@
  *
  * @author MaWi <drmaxxis@gmail.com>
  * @author Frank Loizzi <contact@software.bacal.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author rnck <dokuwiki@rnck.de>
+ * @author rnck <easywiki@rnck.de>
  * @author Felix <j.felix@mueller-donath.de>
  */
 $lang['account_suffix']        = 'Dein Account-Suffix. Z.B. <code>@my.domain.org</code>';

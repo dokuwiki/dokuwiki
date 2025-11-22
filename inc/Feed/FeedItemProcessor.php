@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
-use dokuwiki\Extension\AuthPlugin;
+use easywiki\Extension\AuthPlugin;
 use RuntimeException;
 
 /**
@@ -159,10 +159,10 @@ abstract class FeedItemProcessor
 
         // make URLs work when canonical is not set, regexp instead of rerendering!
         if (!$conf['canonical']) {
-            $base = preg_quote(DOKU_REL, '/');
+            $base = preg_quote(WIKI_REL, '/');
             $html = preg_replace(
                 '/(<a href|<img src)="(' . $base . ')/s',
-                '$1="' . DOKU_URL,
+                '$1="' . WIKI_URL,
                 $html
             );
         }

@@ -1,6 +1,6 @@
 <?php
 
-class common_blank_test extends DokuWikiTest {
+class common_blank_test extends EasyWikiTest {
 
     private $nope;
 

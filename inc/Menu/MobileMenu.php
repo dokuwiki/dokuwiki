@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Menu;
+namespace easywiki\Menu;
 
-use dokuwiki\Menu\Item\AbstractItem;
+use easywiki\Menu\Item\AbstractItem;
 
 /**
  * Class MobileMenu
@@ -45,7 +45,7 @@ class MobileMenu implements MenuInterface
     }
 
     /**
-     * Print a dropdown menu with all DokuWiki actions
+     * Print a dropdown menu with all EasyWiki actions
      *
      * Note: this will not use any pretty URLs
      *

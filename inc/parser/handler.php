@@ -1,20 +1,20 @@
 <?php
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Extension\SyntaxPlugin;
-use dokuwiki\Parsing\Handler\Block;
-use dokuwiki\Parsing\Handler\CallWriter;
-use dokuwiki\Parsing\Handler\CallWriterInterface;
-use dokuwiki\Parsing\Handler\Lists;
-use dokuwiki\Parsing\Handler\Nest;
-use dokuwiki\Parsing\Handler\Preformatted;
-use dokuwiki\Parsing\Handler\Quote;
-use dokuwiki\Parsing\Handler\Table;
+use easywiki\Extension\Event;
+use easywiki\Extension\SyntaxPlugin;
+use easywiki\Parsing\Handler\Block;
+use easywiki\Parsing\Handler\CallWriter;
+use easywiki\Parsing\Handler\CallWriterInterface;
+use easywiki\Parsing\Handler\Lists;
+use easywiki\Parsing\Handler\Nest;
+use easywiki\Parsing\Handler\Preformatted;
+use easywiki\Parsing\Handler\Quote;
+use easywiki\Parsing\Handler\Table;
 
 /**
- * Class Doku_Handler
+ * Class Wiki_Handler
  */
-class Doku_Handler
+class Wiki_Handler
 {
     /** @var CallWriterInterface */
     protected $callWriter;
@@ -37,7 +37,7 @@ class Doku_Handler
     protected $footnote;
 
     /**
-     * Doku_Handler constructor.
+     * Wiki_Handler constructor.
      */
     public function __construct()
     {
@@ -267,7 +267,7 @@ class Doku_Handler
     /**
      * The following methods define the handlers for the different Syntax modes
      *
-     * The handlers are called from dokuwiki\Parsing\Lexer\Lexer\invokeParser()
+     * The handlers are called from easywiki\Parsing\Lexer\Lexer\invokeParser()
      *
      * @todo it might make sense to move these into their own class or merge them with the
      *       ParserMode classes some time.
@@ -834,7 +834,7 @@ class Doku_Handler
             $link[1] = null;
         } elseif (preg_match('/^\{\{[^\}]+\}\}$/', $link[1])) {
             // If the title is an image, convert it to an array containing the image details
-            $link[1] = Doku_Handler_Parse_Media($link[1]);
+            $link[1] = Wiki_Handler_Parse_Media($link[1]);
         }
         $link[0] = trim($link[0]);
 
@@ -920,7 +920,7 @@ class Doku_Handler
      */
     public function media($match, $state, $pos)
     {
-        $p = Doku_Handler_Parse_Media($match);
+        $p = Wiki_Handler_Parse_Media($match);
 
         $this->addCall(
             $p['type'],
@@ -1066,7 +1066,7 @@ class Doku_Handler
 }
 
 //------------------------------------------------------------------------
-function Doku_Handler_Parse_Media($match)
+function Wiki_Handler_Parse_Media($match)
 {
 
     // Strip the opening and closing markup

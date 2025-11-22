@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
-use dokuwiki\Extension\RemotePlugin;
-use dokuwiki\Logger;
-use dokuwiki\test\Remote\Mock\ApiCore as MockApiCore;
+use easywiki\Extension\RemotePlugin;
+use easywiki\Logger;
+use easywiki\test\Remote\Mock\ApiCore as MockApiCore;
 
 /**
  * This class provides information about remote access to the wiki.
  *
  * == Types of methods ==
  * There are two types of remote methods. The first is the core methods.
- * These are always available and provided by dokuwiki.
+ * These are always available and provided by easywiki.
  * The other is plugin methods. These are provided by remote plugins.
  *
  * == Information structure ==
@@ -29,18 +29,18 @@ use dokuwiki\test\Remote\Mock\ApiCore as MockApiCore;
  * )
  *
  * plugin names are formed the following:
- *   core methods begin by a 'dokuwiki' or 'wiki' followed by a . and the method name itself.
- *   i.e.: dokuwiki.version or wiki.getPage
+ *   core methods begin by a 'easywiki' or 'wiki' followed by a . and the method name itself.
+ *   i.e.: easywiki.version or wiki.getPage
  *
  * plugin methods are formed like 'plugin.<plugin name>.<method name>'.
  * i.e.: plugin.clock.getTime or plugin.clock_gmt.getTime
  */
 class Api
 {
-    /** @var ApiCall[] core methods provided by dokuwiki */
+    /** @var ApiCall[] core methods provided by easywiki */
     protected $coreMethods;
 
-    /** @var ApiCall[] remote methods provided by dokuwiki plugins */
+    /** @var ApiCall[] remote methods provided by easywiki plugins */
     protected $pluginMethods;
 
     /**
@@ -86,7 +86,7 @@ class Api
             /** @var RemotePlugin $plugin */
             $plugin = plugin_load('remote', $pluginName);
             if (!is_subclass_of($plugin, RemotePlugin::class)) {
-                Logger::error("Remote Plugin $pluginName does not implement dokuwiki\Extension\RemotePlugin");
+                Logger::error("Remote Plugin $pluginName does not implement easywiki\Extension\RemotePlugin");
                 continue;
             }
 

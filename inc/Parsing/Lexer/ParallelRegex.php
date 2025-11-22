@@ -8,7 +8,7 @@
  * @author Marcus Baker http://www.lastcraft.com
  */
 
-namespace dokuwiki\Parsing\Lexer;
+namespace easywiki\Parsing\Lexer;
 
 /**
  * Compounded regular expression.

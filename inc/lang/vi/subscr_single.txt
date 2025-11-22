@@ -14,6 +14,6 @@ Phiên bản mới        : @NEWPAGE@
 Ngày của phiên bản mới: @DATE@
 
 Để hủy thông báo trang, đăng nhập vào wiki tại
-@DOKUWIKIURL@ sau đó truy cập
+@EASYWIKIURL@ sau đó truy cập
 @SUBSCRIBE@
 và hủy đăng ký trang và/hoặc thay đổi không gian tên.

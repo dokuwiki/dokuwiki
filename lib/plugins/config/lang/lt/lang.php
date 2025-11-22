@@ -22,7 +22,7 @@ $lang['security']                      = 'Saugos įspėjimas: pakeitus šį para
 
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager']        = 'Konfigūracijos tvarkytuvė';
-$lang['_header_dokuwiki']              = 'DokuWiki';
+$lang['_header_easywiki']              = 'EasyWiki';
 $lang['_header_plugin']                = 'Įskiepis';
 $lang['_header_template']              = 'Šablonas';
 $lang['_header_undefined']             = 'Neapibrėžti nustatymai';
@@ -57,7 +57,7 @@ $lang['tagline']                       = 'Šūkis (jei šablonas palaiko)';
 $lang['sidebar']                       = 'Šoninio stulpelio puslapio pavadinimas (jei šablonas tai palaiko), tuščias laukas išjungia šoninį stulpelį';
 $lang['license']                       = 'Licencija, su kuria skelbiamas Jūsų turinys';
 $lang['savedir']                       = 'Katalogas duomenų saugojimui';
-$lang['basedir']                       = 'Serverio kelio pavadinimas (pvz., <code>/dokuwiki/</code>). Palikite tuščią automatiniam aptikimui.';
+$lang['basedir']                       = 'Serverio kelio pavadinimas (pvz., <code>/easywiki/</code>). Palikite tuščią automatiniam aptikimui.';
 $lang['baseurl']                       = 'Serverio URL (pvz., <code>http://www.jususerveris.lt</code>). Palikite tuščią automatiniam aptikimui.';
 $lang['cookiedir']                     = 'Slapuko kelio pavadinimas. Palikite tuščią, jei naudojamas baseurl.';
 $lang['dmode']                         = 'Katalogo kūrimo režimas';
@@ -81,7 +81,7 @@ $lang['maxseclevel']                   = 'Mažiausias antraštės lygmuo, kuriam
 $lang['camelcase']                     = 'Naudoti CamelCase nuorodoms';
 $lang['deaccent']                      = 'Kaip valyti puslapių pavadinimus';
 $lang['useheading']                    = 'Naudoti pirmąją antraštę puslapių pavadinimui';
-$lang['sneaky_index']                  = 'Pagal nutylėjimą DokuWiki svetainės žemėlapyje rodo visas vardų erdves. Įjungus šią parinktį bus rodomos tik tos, kurios naudotojas gali skaityti. Tai gali lemti, kad kai kurios aukščiau medyje esančios vardų erdvės, kurias vartotojas gali skaityti, bus jam nerodomos, todėl gali būti, kad sąrašas taps nenaudingas su tam tikromis prieigos valdymo sąrankos nuostatomis.';
+$lang['sneaky_index']                  = 'Pagal nutylėjimą EasyWiki svetainės žemėlapyje rodo visas vardų erdves. Įjungus šią parinktį bus rodomos tik tos, kurios naudotojas gali skaityti. Tai gali lemti, kad kai kurios aukščiau medyje esančios vardų erdvės, kurias vartotojas gali skaityti, bus jam nerodomos, todėl gali būti, kad sąrašas taps nenaudingas su tam tikromis prieigos valdymo sąrankos nuostatomis.';
 $lang['hidepages']                     = 'Slėpti puslapius, atitinkančius šią reguliariąją išraišką, iš paieškos, žemėlapio ir kitų automatiškai sukurtų indeksų';
 
 /* Authentication Settings */
@@ -94,7 +94,7 @@ $lang['superuser']                     = 'Superuser - grupė, vartotojas arba ka
 $lang['manager']                       = 'Vadybininkas - grupė, vartotojas arba kableliu atskirtas vartotojų sąrašas user1,@group1,user2 su prieiga prie tam tikrų tvarkymo funkcijų';
 $lang['profileconfirm']                = 'Patvirtinti profilio pakeitimus slaptažodžiu';
 $lang['rememberme']                    = 'Leisti nuolatinį prisijungimo slapuką (prisimink mane)';
-$lang['disableactions']                = 'Išjungti DokuWiki veiksmus';
+$lang['disableactions']                = 'Išjungti EasyWiki veiksmus';
 $lang['disableactions_check']          = 'Tikrinti';
 $lang['disableactions_subscription']   = 'Prenumeruoti/atsisakyti prenumeratos';
 $lang['disableactions_wikicode']       = 'Peržiūrėti šaltinį/eksportuoti neapdorotą';
@@ -161,7 +161,7 @@ $lang['rss_media_o_pages']             = 'puslapiai';
 $lang['rss_media_o_media']             = 'media';
 
 /* Advanced Options */
-$lang['updatecheck']                   = 'Tikrinti naujinimus ir saugumo pranešimus? DokuWiki turi susisiekti su update.dokuwiki.org šiai funkcijai.';
+$lang['updatecheck']                   = 'Tikrinti naujinimus ir saugumo pranešimus? EasyWiki turi susisiekti su update.easywiki.org šiai funkcijai.';
 $lang['userewrite']                    = 'Naudoti gražius URL';
 $lang['useslash']                      = 'Naudoti pasvirą brūkšnį kaip tarpiklio skirtuką URL';
 $lang['sepchar']                       = 'Puslapio pavadinimo žodžių skirtukas';
@@ -176,7 +176,7 @@ $lang['send404']                       = 'Siųsti "HTTP 404/Puslapis nerastas" u
 $lang['broken_iua']                    = 'Ar ignore_user_abort funkcija sugadinta jūsų sistemoje? Tai gali sukelti neveikiantį paieškos indeksą. IIS+PHP/CGI žinoma sugadinta.';
 $lang['xsendfile']                     = 'Naudoti X-Sendfile antraštę, leidžianti serveriui pristatyti statinius failus? Jūsų serveris turi palaikyti šią funkciją.';
 $lang['renderer_xhtml']                = 'Naudojamas pagrindiniam (xhtml) wiki išvesties modeliui';
-$lang['renderer__core']                = '%s (dokuwiki pagrindinė)';
+$lang['renderer__core']                = '%s (easywiki pagrindinė)';
 $lang['renderer__plugin']              = '%s (įskiepis)';
 $lang['search_nslimit']                = 'Paieškos ribojimas iki dabartinio X tarpiklio. Kai paieška vykdoma iš puslapio gilesniame tarpinyje, pirmi X tarpiniais bus pridėti kaip filtras';
 $lang['search_fragment']               = 'Nurodykite numatytąjį fragmento paieškos elgesį';
@@ -190,7 +190,7 @@ $lang['defer_js']                      = 'Atidėti javascript vykdymą po puslap
 $lang['hidewarnings']                  = 'Nerodyti jokių PHP išvestuose įspėjimų. Tai gali palengvinti perėjimą prie PHP8+. Įspėjimai vis tiek bus užregistruoti klaidų žurnale ir turėtų būti pranešti.';
 
 /* Network Options */
-$lang['dnslookups']                    = 'DokuWiki ieškos vartotojų, redaguojančių puslapius, nuotolinių IP adresų vardų. Jei turite lėtą arba neveikiantį DNS serverį arba nenorite šios funkcijos, išjunkite šią parinktį.';
+$lang['dnslookups']                    = 'EasyWiki ieškos vartotojų, redaguojančių puslapius, nuotolinių IP adresų vardų. Jei turite lėtą arba neveikiantį DNS serverį arba nenorite šios funkcijos, išjunkite šią parinktį.';
 
 /* jQuery CDN options */
 $lang['jquerycdn']                     = 'Ar jQuery ir jQuery UI skriptų failai turi būti įkelti iš CDN? Tai prideda papildomų HTTP užklausų, bet failai gali įsikelti greičiau, ir naudotojai gali juos jau turėti pakeistus.';
@@ -217,7 +217,7 @@ $lang['typography_o_2']                = 'įskaitant viengubas kabutes (gali ne 
 /* userewrite options */
 $lang['userewrite_o_0']                = 'nėra';
 $lang['userewrite_o_1']                = '.htaccess';
-$lang['userewrite_o_2']                = 'DokuWiki vidinis';
+$lang['userewrite_o_2']                = 'EasyWiki vidinis';
 
 /* deaccent options */
 $lang['deaccent_o_0']                  = 'išjungta';

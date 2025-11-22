@@ -1,4 +1,4 @@
-S'ha enviat un archiu al seu DokuWiki. Les senyes:
+S'ha enviat un archiu al seu EasyWiki. Les senyes:
 
 Arxiu: @MEDIA@
 Data: @DATE@

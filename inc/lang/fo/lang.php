@@ -65,8 +65,8 @@ $lang['regsuccess2']           = 'Tú ert nú stovnavur sum brúkari.';
 $lang['regmailfail']           = 'Títt loyniorð bleiv ikki sent. Fá vinarliga samband við administratorin.';
 $lang['regbadmail']            = 'T-post adressan er ógildig. Fá vinarliga samband við administratorin, um tú heldur at hetta er eitt brek.';
 $lang['regbadpass']            = 'Bæði loyniorðini eru ikki eins, royn vinarliga umaftur.';
-$lang['regpwmail']             = 'Títt DokuWiki loyniorð';
-$lang['reghere']               = 'Upprætta eina DokuWiki-konto her';
+$lang['regpwmail']             = 'Títt EasyWiki loyniorð';
+$lang['reghere']               = 'Upprætta eina EasyWiki-konto her';
 $lang['profna']                = 'Tað er ikki møguligt at broyta tína vangamynd í hesu wiki';
 $lang['profnochange']          = 'Ongar broytingar, onki tillaga.';
 $lang['profnoempty']           = 'Tómt navn ella t-post adressa er ikki loyvt.';
@@ -166,5 +166,5 @@ $lang['img_format']            = 'Snið:';
 $lang['img_camera']            = 'Fototól:';
 $lang['img_keywords']          = 'Evnisorð:';
 $lang['authtempfail']          = 'Validering av brúkara virkar fyribils ikki. Um hetta er varandi, fá so samband við umboðsstjóran á hesi wiki.';
-$lang['email_signature_text'] = 'Hesin t-postur var skaptur av DokuWiki á
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'Hesin t-postur var skaptur av EasyWiki á
+@EASYWIKIURL@';

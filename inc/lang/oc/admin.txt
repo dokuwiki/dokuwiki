@@ -1,2 +1,2 @@
 ====== Administracion ======
-Çai-jos trobaretz una liste de las tascas administrativas disponiblas dins DokuWiki.
+Çai-jos trobaretz una liste de las tascas administrativas disponiblas dins EasyWiki.

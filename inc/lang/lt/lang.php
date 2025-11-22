@@ -99,7 +99,7 @@ $lang['regfail']     = 'Nepavyko sukurti vartotojo.';
 $lang['regmailfail'] = 'Siunčiant slaptažodį el. paštu įvyko klaida - susisiekite su administracija!';
 $lang['regbadmail']  = 'Nurodytas el. pašto adresas yra neteisingas - jei manote, kad tai klaida, susisiekite su administracija';
 $lang['regbadpass']  = 'Įvesti slaptažodžiai nesutampa, bandykite dar kartą.';
-$lang['regpwmail']   = 'Jūsų DokuWiki slaptažodis';
+$lang['regpwmail']   = 'Jūsų EasyWiki slaptažodis';
 $lang['reghere']     = 'Dar neužsiregistravote? Padarykite tai dabar';
 
 $lang['profna']                = 'Ši vikisvetainė neleidžia pakeisti profilio';
@@ -182,7 +182,7 @@ $lang['js']['media_done_btn']      = 'Baigta';
 $lang['js']['media_drop']          = 'Padėkite failus čia, norėdami įkelti';
 $lang['js']['media_cancel']        = 'pašalinti';
 $lang['js']['media_overwrt']       = 'Perrašyti esamus failus';
-$lang['js']['data_insecure']       = 'ĮSPĖJIMAS: Atrodo, kad jūsų duomenų aplankas nėra tinkamai apsaugotas. Prašome perskaityti apie <a href="https://www.dokuwiki.org/security#web_access_security">DokuWiki saugumą</a>.';
+$lang['js']['data_insecure']       = 'ĮSPĖJIMAS: Atrodo, kad jūsų duomenų aplankas nėra tinkamai apsaugotas. Prašome perskaityti apie <a href="https://www.EasyWiki.org/security#web_access_security">EasyWiki saugumą</a>.';
 
 $lang['rssfailed']    = 'Siunčiant šį feed\'ą įvyko klaida: ';
 $lang['nothingfound'] = 'Paieškos rezultatų nėra.';
@@ -343,31 +343,31 @@ $lang['authtempfail'] = 'Vartotojo tapatumo nustatymas laikinai nepasiekiamas. J
 
 // installer strings
 $lang['i_chooselang'] = 'Pasirinkite kalbą';
-$lang['i_installer']  = 'DokuWiki diegiklis';
+$lang['i_installer']  = 'EasyWiki diegiklis';
 $lang['i_wikiname']   = 'Wiki pavadinimas';
 $lang['i_enableacl']  = 'Įjungti ACL (rekomenduojama)';
 $lang['i_superuser']  = 'Supervartotojas';
 $lang['i_problems']   = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemiau. Kol nebus pašalintos priežastys tęsti negalima.';
 
-$lang['i_modified'] = 'Dėl saugumo priežasčių šis scenarijus veiks tik diegiant naują ir nepakeistą Dokuwiki.
+$lang['i_modified'] = 'Dėl saugumo priežasčių šis scenarijus veiks tik diegiant naują ir nepakeistą EasyWiki.
                       Turėtumėte iš naujo išskleisti failus iš parsisiųsto archyvo arba pasižiūrėti
-                      <a href="https://www.dokuwiki.org/install">Dokuwiki diegimo instrukcijas</a>';
+                      <a href="https://www.EasyWiki.org/install">EasyWiki diegimo instrukcijas</a>';
 $lang['i_funcna']    = 'PHP funkcija <code>%s</code> nepasiekiama. Galbūt Jūsų hostingo tiekėjas ją išjungė?';
 $lang['i_disabled']  = 'Ją išjungė jūsų tiekėjas.';
 $lang['i_funcnmail'] = '<b>Pastaba:</b> PHP elektroninio pašto funkcija nepasiekiama. %s' .
-    ' Jei jos įjungti neišeis, galite įdiegti <a href="https://www.dokuwiki.org/plugin:smtp">smtp įskiepį</a>.';
+    ' Jei jos įjungti neišeis, galite įdiegti <a href="https://www.EasyWiki.org/plugin:smtp">smtp įskiepį</a>.';
 $lang['i_phpver']         = 'Jūsų PHP versija <code>%s</code> yra žemesnė nei reikalinga <code>%s</code>. Jums reikia atnaujinti PHP.';
-$lang['i_mbfuncoverload'] = 'mbstring.func_overload turi būti išjungta php.ini, kad DokuWiki galėtų veikti.';
-$lang['i_urandom']        = 'DokuWiki negali sukurti šifravimo tikrų atsitiktinių skaičių slapukams. Patikrinkite savo php.ini failo open_basedir nustatymus, kad būtų tinkama <code>/dev/urandom</code> prieiga.';
-$lang['i_permfail']       = 'Į aplanką <code>%s</code> DokuWiki negali rašyti!. Jums reikia taisyti šio aplanko leidimų nustatymus!';
+$lang['i_mbfuncoverload'] = 'mbstring.func_overload turi būti išjungta php.ini, kad EasyWiki galėtų veikti.';
+$lang['i_urandom']        = 'EasyWiki negali sukurti šifravimo tikrų atsitiktinių skaičių slapukams. Patikrinkite savo php.ini failo open_basedir nustatymus, kad būtų tinkama <code>/dev/urandom</code> prieiga.';
+$lang['i_permfail']       = 'Į aplanką <code>%s</code> EasyWiki negali rašyti!. Jums reikia taisyti šio aplanko leidimų nustatymus!';
 $lang['i_confexists']     = '<code>%s</code> jau egzistuoja';
 $lang['i_writeerr']       = 'Nepavyko sukurti <code>%s</code>. Turėsite patikrinti aplanko / failo leidimus ir sukurti failą rankiniu būdu.';
-$lang['i_badhash']        = 'nepažįstamas arba pakeistas dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']        = 'nepažįstamas arba pakeistas easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']         = '<code>%s</code> - netinkama arba tuščia reikšmė';
 $lang['i_success']        = 'Konfigūracija sėkmingai baigta. Galite ištrinti install.php failą. Keliaukite į
-                   <a href="doku.php?id=wiki:welcome">savo naują DokuWiki</a>.';
+                   <a href="wiki.php?id=wiki:welcome">savo naują EasyWiki</a>.';
 $lang['i_failure'] = 'Rašant konfigūracijos failus įvyko klaidų. Jums gali tekti jas ištaisyti rankiniu būdu prieš
-                    naudojant <a href="doku.php?id=wiki:welcome">savąją naują DokuWiki</a>.';
+                    naudojant <a href="wiki.php?id=wiki:welcome">savąją naują EasyWiki</a>.';
 $lang['i_policy']       = 'Pirminė ACL politika';
 $lang['i_pol0']         = 'Atvira Wiki (skaityti, rašyti, įkelti kiekvienam)';
 $lang['i_pol1']         = 'Viešoji Wiki (skaityti galima visiems, rašyti ir įkelti failus – tik registruotiems vartotojams)';
@@ -376,8 +376,8 @@ $lang['i_allowreg']     = 'Leisti vartotojams registruotis patiems';
 $lang['i_retry']        = 'Bandykite dar kartą';
 $lang['i_license']      = 'Prašome pasirinkti licenciją, kuri bus taikoma wiki turiniui:';
 $lang['i_license_none'] = 'Nerodyti jokios licencijos informacijos';
-$lang['i_pop_field']    = 'Prašome padėti mums pagerinti DokuWiki patirtį:';
-$lang['i_pop_label']    = 'Kartą per mėnesį siųsti anoniminius naudojimo duomenis DokuWiki kūrėjams';
+$lang['i_pop_field']    = 'Prašome padėti mums pagerinti EasyWiki patirtį:';
+$lang['i_pop_label']    = 'Kartą per mėnesį siųsti anoniminius naudojimo duomenis EasyWiki kūrėjams';
 
 $lang['recent_global'] = 'Šiuo metu stebite pakeitimus <b>%s</b> vardų erdvėje. Taip pat galite <a href="%s">žiūrėti visos wiki naujausius pakeitimus</a>.';
 $lang['years']         = 'prieš %d metus';
@@ -422,8 +422,8 @@ $lang['plainhtml']            = 'Paprastas HTML';
 $lang['wikimarkup']           = 'Wiki žymėjimas';
 $lang['page_nonexist_rev']    = 'Puslapis neegzistavo %s. Jis vėliau buvo sukurtas adresu <a href="%s">%s</a>.';
 $lang['unable_to_parse_date'] = 'Nepavyko analizuoti parametro "at" reikšmės "%s".';
-$lang['email_signature_text'] = 'Šis laiškas buvo sugeneruotas DokuWiki
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'Šis laiškas buvo sugeneruotas EasyWiki
+@EASYWIKIURL@';
 // $lang['email_signature_html'] = ''; # the empty default will copy the text signature, you can override it in a local lang file
 
 $lang['log_file_too_large']      = 'Žurnalo failas per ilgas. Ankstesnės eilutės praleistos!';

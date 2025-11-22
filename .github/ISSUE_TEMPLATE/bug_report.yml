@@ -1,5 +1,5 @@
 name: 🐛 Report a bug
-description: Use this to report a bug in DokuWiki
+description: Use this to report a bug in EasyWiki
 labels: [ "Bug" ]
 body:
   - type: markdown
@@ -7,19 +7,19 @@ body:
       value: >
         ### ✋ **This is bug tracker, not a support forum**
 
-        If you have questions or need help, [**get in touch at the forum**](https://forum.dokuwiki.org/).
+        If you have questions or need help, [**get in touch at the forum**](https://forum.easywiki.org/).
 
 
         ---
 
-        **Thank you for wanting to report a bug in DokuWiki!**
+        **Thank you for wanting to report a bug in EasyWiki!**
 
 
         If this is the first time you are doing this, please take a few moments to read
-        through our wiki page on [Reporting DokuWiki Bugs](https://www.dokuwiki.org/bugs).
+        through our wiki page on [Reporting EasyWiki Bugs](https://www.easywiki.org/bugs).
 
 
-        You are about to report a bug in **DokuWiki**. Bugs in plugins should be reported
+        You are about to report a bug in **EasyWiki**. Bugs in plugins should be reported
         at their respective places, usually the plugin's repository.
   - type: textarea
     attributes:
@@ -44,7 +44,7 @@ body:
         ## Environment
   - type: input
     attributes:
-      label: Version of DokuWiki
+      label: Version of EasyWiki
       description: Can be found in the admin screen or in the `VERSION` file.
       placeholder: 2024-02-14a "Kaos"
     validations:
@@ -52,7 +52,7 @@ body:
   - type: input
     attributes:
       label: PHP Version
-      description: The version of PHP you are using to run DokuWiki
+      description: The version of PHP you are using to run EasyWiki
       placeholder: "8.3"
     validations:
       required: true
@@ -76,7 +76,7 @@ body:
           * Provider-, server- and network-setup like proxies, firewalls, Single-Sign-On environments etc.
           * Any installed plugins or templates that might be relevant to the problem
           * Your configuration settings related to the problem
-          * Any custom changes you made to the DokuWiki core or plugins
+          * Any custom changes you made to the EasyWiki core or plugins
   - type: markdown
     attributes:
       value: |
@@ -88,13 +88,13 @@ body:
 
           * Your browser's JavaScript console, if you are reporting a problem with the
             user interface.
-          * Related entries in DokuWiki's log files. Especially when the error message states that more info has been
+          * Related entries in EasyWiki's log files. Especially when the error message states that more info has been
             written to the log file.
           * Related entries in your webserver's error log files.
           * If possible, screenshots or videos showing the problem, especially if you
             are reporting a problem with the user interface!
 
-        Again, refer to [Reporting DokuWiki Bugs](https://www.dokuwiki.org/bugs) on how to obtain these infos.
+        Again, refer to [Reporting EasyWiki Bugs](https://www.easywiki.org/bugs) on how to obtain these infos.
   - type: textarea
     attributes:
       label: Relevant logs and/or error messages

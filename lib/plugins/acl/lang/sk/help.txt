@@ -8,4 +8,4 @@ Formulár zobrazený vyššie Vám dovoľuje prehliadať a meniť oprávnenia pr
 
 V tabuľke nižšie sú zobrazené všetky aktuálne prístupové pravidlá. Môžete v nej rýchlo rušiť alebo meniť viacero pravidiel súčasne.
 
-Prečítanie [[doku>acl|oficiálnej dokumentácie ACL]] Vám môže pomôcť plne pochopiť spôsob ako fungujú prístupové pravidlá (oprávnenia) v DokuWiki.
+Prečítanie [[doku>acl|oficiálnej dokumentácie ACL]] Vám môže pomôcť plne pochopiť spôsob ako fungujú prístupové pravidlá (oprávnenia) v EasyWiki.

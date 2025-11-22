@@ -1,4 +1,4 @@
-S'ha penjat un fitxer al vostre DokuWiki. Heus ací els detalls:
+S'ha penjat un fitxer al vostre EasyWiki. Heus ací els detalls:
 
 Fitxer: @MEDIA@
 Data: @DATE@

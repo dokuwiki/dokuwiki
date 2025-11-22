@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Form\Form;
-use dokuwiki\Menu\Item\Register;
-use dokuwiki\Menu\Item\Resendpwd;
+use easywiki\Form\Form;
+use easywiki\Menu\Item\Register;
+use easywiki\Menu\Item\Resendpwd;
 
 /**
- * DokuWiki User Login Interface (Login Form)
+ * EasyWiki User Login Interface (Login Form)
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Login extends Ui
 {

@@ -1,6 +1,6 @@
 <?php
 
-class common_infofunctions_test extends DokuWikiTest {
+class common_infofunctions_test extends EasyWikiTest {
 
     function setup() : void {
         parent::setup();

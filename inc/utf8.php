@@ -4,15 +4,15 @@
  * UTF8 helper functions
  *
  * This file now only intitializes the UTF-8 capability detection and defines helper
- * functions if needed. All actual code is in the \dokuwiki\Utf8 classes
+ * functions if needed. All actual code is in the \easywiki\Utf8 classes
  *
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\Conversion;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Unicode;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\Conversion;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Unicode;
 
 /**
  * check for mb_string support

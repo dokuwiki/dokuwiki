@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\PageDiff;
-use dokuwiki\Ui;
+use easywiki\Ui\PageDiff;
+use easywiki\Ui;
 
 /**
  * Class Diff
  *
  * Show the differences between two revisions
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Diff extends AbstractAction
 {

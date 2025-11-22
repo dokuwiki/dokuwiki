@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\plugin\extension\test;
+namespace easywiki\plugin\extension\test;
 
-use dokuwiki\plugin\extension\Extension;
-use dokuwiki\plugin\extension\Local;
-use DokuWikiTest;
+use easywiki\plugin\extension\Extension;
+use easywiki\plugin\extension\Local;
+use EasyWikiTest;
 
 /**
  * Tests for the Local class
@@ -12,7 +12,7 @@ use DokuWikiTest;
  * @group plugin_extension
  * @group plugins
  */
-class LocalTest extends DokuWikiTest
+class LocalTest extends EasyWikiTest
 {
 
     public function testGetTemplates()
@@ -26,7 +26,7 @@ class LocalTest extends DokuWikiTest
             $this->assertTrue($template->isTemplate());
         }
 
-        $this->assertArrayHasKey('template:dokuwiki', $templates);
+        $this->assertArrayHasKey('template:easywiki', $templates);
     }
 
     public function testGetPlugins()
@@ -53,7 +53,7 @@ class LocalTest extends DokuWikiTest
             $this->assertInstanceOf(Extension::class, $extension);
         }
 
-        $this->assertArrayHasKey('template:dokuwiki', $extensions);
+        $this->assertArrayHasKey('template:easywiki', $extensions);
         $this->assertArrayHasKey('extension', $extensions);
     }
 }

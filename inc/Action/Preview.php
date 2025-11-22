@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\Editor;
-use dokuwiki\Ui\PageView;
-use dokuwiki\Draft;
-use dokuwiki\Ui;
+use easywiki\Ui\Editor;
+use easywiki\Ui\PageView;
+use easywiki\Draft;
+use easywiki\Ui;
 
 /**
  * Class Preview
  *
  * preview during editing
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Preview extends Edit
 {

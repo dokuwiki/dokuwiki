@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Extension\AuthPlugin;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Extension\AuthPlugin;
 
 /**
  * Class ProfileDelete
  *
  * Delete a user account
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class ProfileDelete extends AbstractUserAction
 {

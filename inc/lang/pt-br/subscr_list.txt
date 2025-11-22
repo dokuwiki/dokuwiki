@@ -9,16 +9,16 @@ Estas são as páginas modificadas:
 --------------------------------------------------------
 
 Para cancelar as notificações de alterações, entre em
-@DOKUWIKIURL@, vá até @SUBSCRIBE@
+@EASYWIKIURL@, vá até @SUBSCRIBE@
 e cancele o monitoramento da página e/ou do espaço de
 nomes.
 
 
-Para cancelar as notificações de páginas, entre na wiki @DOKUWIKIURL@
+Para cancelar as notificações de páginas, entre na wiki @EASYWIKIURL@
 e então visite @SUBSCRIBE@ e cancele a inscrição de edição da página ou namespace.
 
 
-Para cancelar a página de notificações, entre na wiki @DOKUWIKIURL@,
+Para cancelar a página de notificações, entre na wiki @EASYWIKIURL@,
 visite a página de @SUBSCRIBE@ e cancele a inscrição de edição da página ou namespace.
 
 

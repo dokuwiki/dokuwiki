@@ -9,6 +9,6 @@ Queste sono le pagine modificate:
 --------------------------------------------------------
 
 Per non ricevere più queste notifiche collegati al
-wiki @DOKUWIKIURL@ e poi visita @SUBSCRIBE@
+wiki @EASYWIKIURL@ e poi visita @SUBSCRIBE@
 e rimuovi la sottoscrizione alle modifiche delle
 pagine e/o categorie.

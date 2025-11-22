@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote\Response;
+namespace easywiki\Remote\Response;
 
 /**
  * Represents a single change in a wiki page

@@ -1,6 +1,6 @@
 Chào @FULLNAME@!
 
-Ai đó đã yêu cầu mật khẩu mới cho bạn đăng nhập @TITLE@ tại @DOKUWIKIURL@
+Ai đó đã yêu cầu mật khẩu mới cho bạn đăng nhập @TITLE@ tại @EASYWIKIURL@
 
 Nếu bạn không yêu cầu mật khẩu mới thì hãy bỏ qua thư điện tử này.
 

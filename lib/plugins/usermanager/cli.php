@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\Extension\CLIPlugin;
-use dokuwiki\Extension\AuthPlugin;
+use easywiki\Extension\CLIPlugin;
+use easywiki\Extension\AuthPlugin;
 use splitbrain\phpcli\Options;
 use splitbrain\phpcli\TableFormatter;
 
@@ -20,7 +20,7 @@ class cli_plugin_usermanager extends CLIPlugin
     {
         // general setup
         $options->setHelp(
-            "Manage users for this DokuWiki instance\n"
+            "Manage users for this EasyWiki instance\n"
         );
 
         // list
@@ -290,7 +290,7 @@ class cli_plugin_usermanager extends CLIPlugin
 
     /**
      * Plugins triggered during user modification may cause failures and output messages via
-     * DokuWiki's msg() function
+     * EasyWiki's msg() function
      */
     protected function printErrorMessages()
     {

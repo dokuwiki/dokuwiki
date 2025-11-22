@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class AbstractItem
  *
- * This class defines a single Item to be displayed in one of DokuWiki's menus. Plugins
+ * This class defines a single Item to be displayed in one of EasyWiki's menus. Plugins
  * can extend those menus through action plugins and add their own instances of this class,
  * overwriting some of its properties.
  *
@@ -41,7 +41,7 @@ abstract class AbstractItem
     /** @var string this item's label may contain a placeholder, which is replaced with this */
     protected $replacement = '';
     /** @var string the full path to the SVG icon of this menu item */
-    protected $svg = DOKU_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
+    protected $svg = WIKI_INC . 'lib/images/menu/00-default_checkbox-blank-circle-outline.svg';
     /** @var string can be set to overwrite the default lookup in $lang.btn_* */
     protected $label = '';
     /** @var string the tooltip title, defaults to $label */

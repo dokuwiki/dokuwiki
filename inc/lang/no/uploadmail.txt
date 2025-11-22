@@ -1,4 +1,4 @@
-En fil ble lastet opp på din DokuWiki. Her er detaljene:
+En fil ble lastet opp på din EasyWiki. Her er detaljene:
 
 Fil : @MEDIA@
 Gammel versjon: @OLD@

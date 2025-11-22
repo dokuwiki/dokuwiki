@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Menu;
+namespace easywiki\Menu;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Menu\Item\AbstractItem;
+use easywiki\Extension\Event;
+use easywiki\Menu\Item\AbstractItem;
 
 /**
  * Class AbstractMenu
@@ -62,7 +62,7 @@ abstract class AbstractMenu implements MenuInterface
     {
         foreach ($this->types as $class) {
             try {
-                $class = "\\dokuwiki\\Menu\\Item\\$class";
+                $class = "\\easywiki\\Menu\\Item\\$class";
                 /** @var AbstractItem $item */
                 $item = new $class();
                 $data['items'][] = $item;

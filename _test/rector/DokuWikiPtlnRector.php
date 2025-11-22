@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\test\rector;
+namespace easywiki\test\rector;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
@@ -13,7 +13,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * Replace ptln() calls with echo
  */
-class DokuWikiPtlnRector extends AbstractRector
+class EasyWikiPtlnRector extends AbstractRector
 {
 
     /** @inheritdoc */

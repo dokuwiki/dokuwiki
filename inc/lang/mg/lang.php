@@ -116,4 +116,4 @@ $lang['js']['del_confirm']= 'Hofafana ilay andalana?';
 
 //Setup VIM: ex: et ts=2 :
 $lang['email_signature_text'] = 'Ity imailaka ity dia navoakan\'ny wiki tao amin\'ny
-@DOKUWIKIURL@';
+@EASYWIKIURL@';

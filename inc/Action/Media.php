@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
 /**
  * Class Media
  *
  * The full screen media manager
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Media extends AbstractAction
 {

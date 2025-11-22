@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\plugin\usermanager\test;
+namespace easywiki\plugin\usermanager\test;
 
-use dokuwiki\Remote\AccessDeniedException;
-use dokuwiki\Remote\Api;
-use dokuwiki\Remote\RemoteException;
-use DokuWikiTest;
+use easywiki\Remote\AccessDeniedException;
+use easywiki\Remote\Api;
+use easywiki\Remote\RemoteException;
+use EasyWikiTest;
 
 /**
  * Remote API tests for the usermanager plugin
@@ -13,7 +13,7 @@ use DokuWikiTest;
  * @group plugin_usermanager
  * @group plugins
  */
-class RemoteApiTest extends DokuWikiTest
+class RemoteApiTest extends EasyWikiTest
 {
     /** @var  Api */
     protected $remote;

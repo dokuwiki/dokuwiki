@@ -1,4 +1,4 @@
-Tiedosto ladattiin DokuWikillesi. Tässä yksityiskohtaiset tiedot:
+Tiedosto ladattiin EasyWikillesi. Tässä yksityiskohtaiset tiedot:
 
 Tiedosto : @MEDIA@
 PVM : @DATE@

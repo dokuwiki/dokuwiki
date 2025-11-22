@@ -8,6 +8,6 @@ Tässä ovat muuttuneet sivut:
 --------------------------------------------------------
 
 Peruuttaaksesi sivuilmoitukset kirjaudu wikiin osoitteessa
-@DOKUWIKIURL@ , jonka jälkeen katso
+@EASYWIKIURL@ , jonka jälkeen katso
 @SUBSCRIBE@
 ja peruuta tilauksesi sivun ja/tai nimiavaruuden muutoksista.

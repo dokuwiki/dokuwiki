@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class CheckableElement
  *
  * For Radio- and Checkboxes
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class CheckableElement extends InputElement
 {
@@ -71,9 +71,9 @@ class CheckableElement extends InputElement
     public function toHTML()
     {
         if ($this->label) {
-            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF
-                . $this->mainElementHTML() . DOKU_LF
-                . '<span>' . $this->label->val() . '</span>' . DOKU_LF
+            return '<label ' . buildAttributes($this->label->attrs()) . '>' . WIKI_LF
+                . $this->mainElementHTML() . WIKI_LF
+                . '<span>' . $this->label->val() . '</span>' . WIKI_LF
                 . '</label>';
         } else {
             return $this->mainElementHTML();

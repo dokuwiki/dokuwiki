@@ -1,21 +1,21 @@
 <?php
 
-use dokuwiki\Parsing\Parser;
+use easywiki\Parsing\Parser;
 
-require_once DOKU_INC . 'inc/parser/parser.php';
-require_once DOKU_INC . 'inc/parser/handler.php';
-if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL', "\n");   // add this to make handling test cases simpler
+require_once WIKI_INC . 'inc/parser/parser.php';
+require_once WIKI_INC . 'inc/parser/handler.php';
+if (!defined('WIKI_PARSER_EOL')) define('WIKI_PARSER_EOL', "\n");   // add this to make handling test cases simpler
 
-abstract class TestOfDoku_Parser extends DokuWikiTest {
+abstract class TestOfWiki_Parser extends EasyWikiTest {
 
     /** @var  Parser */
     protected $P;
-    /** @var  Doku_Handler */
+    /** @var  Wiki_Handler */
     protected $H;
 
     function setUp() : void {
         parent::setUp();
-        $this->H = new Doku_Handler();
+        $this->H = new Wiki_Handler();
         $this->P = new Parser($this->H);
     }
 

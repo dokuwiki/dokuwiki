@@ -1,6 +1,6 @@
 ====== Configurazione Wiki ======
 
-Usa questa pagina per gestire la configurazione della tua installazione DokuWiki. Per la guida sulle singole impostazioni fai riferimento alla pagina [[doku>config|Configurazione]]. Per ulteriori dettagli su questo plugin vedi [[doku>plugin:config|Plugin di configurazione]].
+Usa questa pagina per gestire la configurazione della tua installazione EasyWiki. Per la guida sulle singole impostazioni fai riferimento alla pagina [[doku>config|Configurazione]]. Per ulteriori dettagli su questo plugin vedi [[doku>plugin:config|Plugin di configurazione]].
 
 Le impostazioni con lo sfondo rosso chiaro sono protette e non possono essere modificate con questo plugin. Le impostazioni con lo sfondo blu contengono i valori predefiniti, e le impostazioni con lo sfondo bianco sono relative solo a questa particolare installazione. Sia le impostazioni su sfondo blu che quelle su sfondo bianco possono essere modificate.
 

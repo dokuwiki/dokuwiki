@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Debug\DebugHelper;
+use easywiki\Debug\DebugHelper;
 
 DebugHelper::dbgDeprecatedFunction(
     'Autoloading',

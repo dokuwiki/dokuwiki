@@ -8,6 +8,6 @@ Nachfolgenden findest du die geänderten Seiten:
 --------------------------------------------------------
 
 Um die Benachrichtigungen zu deaktivieren, melde dich am Wiki unter
-@DOKUWIKIURL@ an, gehe zur Seite
+@EASYWIKIURL@ an, gehe zur Seite
 @SUBSCRIBE@
 und deaktiviere das Abonnement für die Seite und/oder den Namensraum.

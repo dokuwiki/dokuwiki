@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 /**
  * Handler for paragraphs
@@ -40,10 +40,10 @@ class Block
      */
     public function __construct()
     {
-        global $DOKU_PLUGINS;
+        global $WIKI_PLUGINS;
         //check if syntax plugins were loaded
-        if (empty($DOKU_PLUGINS['syntax'])) return;
-        foreach ($DOKU_PLUGINS['syntax'] as $n => $p) {
+        if (empty($WIKI_PLUGINS['syntax'])) return;
+        foreach ($WIKI_PLUGINS['syntax'] as $n => $p) {
             $ptype = $p->getPType();
             if ($ptype == 'block') {
                 $this->blockOpen[]  = 'plugin_' . $n;

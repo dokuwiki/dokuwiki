@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Extension\CLIPlugin;
-use dokuwiki\plugin\extension\Exception as ExtensionException;
-use dokuwiki\plugin\extension\Extension;
-use dokuwiki\plugin\extension\Installer;
-use dokuwiki\plugin\extension\Local;
-use dokuwiki\plugin\extension\Notice;
-use dokuwiki\plugin\extension\Repository;
+use easywiki\Extension\CLIPlugin;
+use easywiki\plugin\extension\Exception as ExtensionException;
+use easywiki\plugin\extension\Extension;
+use easywiki\plugin\extension\Installer;
+use easywiki\plugin\extension\Local;
+use easywiki\plugin\extension\Notice;
+use easywiki\plugin\extension\Repository;
 use splitbrain\phpcli\Colors;
 use splitbrain\phpcli\Exception;
 use splitbrain\phpcli\Options;
@@ -28,10 +28,10 @@ class cli_plugin_extension extends CLIPlugin
         // general setup
         $options->useCompactHelp();
         $options->setHelp(
-            "Manage plugins and templates for this DokuWiki instance\n\n" .
+            "Manage plugins and templates for this EasyWiki instance\n\n" .
             "Status codes:\n" .
             "   i - installed                    " . Notice::symbol(Notice::SECURITY) . " - security issue\n" .
-            "   b - bundled with DokuWiki        " . Notice::symbol(Notice::ERROR) . " - extension error\n" .
+            "   b - bundled with EasyWiki        " . Notice::symbol(Notice::ERROR) . " - extension error\n" .
             "   g - installed via git            " . Notice::symbol(Notice::WARNING) . " - extension warning\n" .
             "   d - disabled                     " . Notice::symbol(Notice::INFO) . " - extension info\n" .
             "   u - update available\n"

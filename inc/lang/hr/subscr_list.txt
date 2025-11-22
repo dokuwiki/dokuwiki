@@ -6,6 +6,6 @@ Stranice u imeničkom prostoru @PAGE@ na @TITLE@ wiki-u su izmijenjene. Ovo su i
 @DIFF@
 --------------------------------------------------------
 
-Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
+Da poništite obavijesti o izmjenama prijavite se na wiki @EASYWIKIURL@ i zatim posjetite
 @SUBSCRIBE@
 i odjavite se s promjena na stranici i/ili imeničkom prostoru.

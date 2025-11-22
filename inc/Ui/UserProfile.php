@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Form\Form;
-use dokuwiki\JWT;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Form\Form;
+use easywiki\JWT;
 
 /**
- * DokuWiki User Profile Interface
+ * EasyWiki User Profile Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class UserProfile extends Ui
 {

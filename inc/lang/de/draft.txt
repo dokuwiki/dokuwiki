@@ -1,5 +1,5 @@
 ====== Entwurf gefunden ======
 
-Ihre letzte Bearbeitungssitzung wurde nicht ordnungsgemäß abgeschlossen. DokuWiki hat während Ihrer Arbeit automatisch einen Zwischenentwurf gespeichert, den Sie jetzt nutzen können, um Ihre Arbeit fortzusetzen. Unten sehen Sie die Daten, die bei Ihrer letzten Sitzung gespeichert wurden.
+Ihre letzte Bearbeitungssitzung wurde nicht ordnungsgemäß abgeschlossen. EasyWiki hat während Ihrer Arbeit automatisch einen Zwischenentwurf gespeichert, den Sie jetzt nutzen können, um Ihre Arbeit fortzusetzen. Unten sehen Sie die Daten, die bei Ihrer letzten Sitzung gespeichert wurden.
 
 Bitte entscheiden Sie, ob Sie den Entwurf //wiederherstellen// oder //löschen// wollen, oder ob Sie die Bearbeitung //abbrechen// möchten.

@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author François Kooman <fkooman.tuxed.net>
- * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
+ * @author Jack van Klaren <easywiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
  * @author Koen Huybrechts <huybkoen@gmail.com>
  * @author Wouter Schoot <wouter@schoot.org>

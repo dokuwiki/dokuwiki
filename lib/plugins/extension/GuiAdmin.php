@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
-use dokuwiki\Form\Form;
+use easywiki\Form\Form;
 
 class GuiAdmin extends Gui
 {

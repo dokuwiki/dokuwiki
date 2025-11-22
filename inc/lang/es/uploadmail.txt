@@ -1,4 +1,4 @@
-Se ha subido un fichero a tu DokuWiki. Estos son los detalles:
+Se ha subido un fichero a tu EasyWiki. Estos son los detalles:
 
 Archivo : @MEDIA@
 Ultima revisión: @OLD@

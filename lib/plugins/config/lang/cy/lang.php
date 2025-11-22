@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
- * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Matthias Schulte <easywiki@lupo49.de>
  * @author     Alan Davies <ben.brynsadler@gmail.com>
  */
 
@@ -25,7 +25,7 @@ $lang['security']   = 'Rhybudd Diogelwch: Gall newid yr opsiwn hwn achosi risg d
 
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager'] = 'Rheolwr Ffurfwedd'; //same as heading in intro.txt
-$lang['_header_dokuwiki'] = 'DokuWiki';
+$lang['_header_easywiki'] = 'EasyWiki';
 $lang['_header_plugin'] = 'Ategyn';
 $lang['_header_template'] = 'Templed';
 $lang['_header_undefined'] = 'Gosodiadau Amhenodol';
@@ -59,7 +59,7 @@ $lang['tagline']     = 'Taglinell (os yw\'r templed yn ei gynnal)';
 $lang['sidebar']     = 'Enw tudalen y bar ochr (os yw\'r templed yn ei gynnal), Mae maes gwag yn analluogi\'r bar ochr';
 $lang['license']     = 'O dan ba drwydded dylai\'ch cynnwys gael ei ryddhau?';
 $lang['savedir']     = 'Ffolder ar gyfer cadw data';
-$lang['basedir']     = 'Llwybr y gweinydd (ee. <code>/dokuwiki/</code>). Gadewch yn wag ar gyfer awtoddatgeliad.';
+$lang['basedir']     = 'Llwybr y gweinydd (ee. <code>/easywiki/</code>). Gadewch yn wag ar gyfer awtoddatgeliad.';
 $lang['baseurl']     = 'URL y gweinydd (ee. <code>http://www.yourserver.com</code>). Gadewch yn wag ar gyfer awtoddatgeliad.';
 $lang['cookiedir']   = 'Llwybr cwcis. Gadewch yn wag i ddefnyddio \'baseurl\'.';
 $lang['dmode']       = 'Modd creu ffolderi';
@@ -83,7 +83,7 @@ $lang['maxseclevel'] = 'Lefel uchaf adran olygu';
 $lang['camelcase']   = 'Defnyddio CamelCase ar gyfer dolenni';
 $lang['deaccent']    = 'Sut i lanhau enwau tudalennau';
 $lang['useheading']  = 'Defnyddio\'r pennawd cyntaf ar gyfer enwau tudalennau';
-$lang['sneaky_index'] = 'Yn ddiofyn, bydd DokuWiki yn dangos pob namespace yn y map safle. Bydd galluogi yr opsiwn hwn yn cuddio\'r rheiny lle \'sdim hawliau darllen gan y defnyddiwr. Gall hwn achosi cuddio subnamespaces cyraeddadwy a fydd yn gallu peri\'r indecs i beidio â gweithio gyda gosodiadau ACL penodol.'; //namespace
+$lang['sneaky_index'] = 'Yn ddiofyn, bydd EasyWiki yn dangos pob namespace yn y map safle. Bydd galluogi yr opsiwn hwn yn cuddio\'r rheiny lle \'sdim hawliau darllen gan y defnyddiwr. Gall hwn achosi cuddio subnamespaces cyraeddadwy a fydd yn gallu peri\'r indecs i beidio â gweithio gyda gosodiadau ACL penodol.'; //namespace
 $lang['hidepages']   = 'Cuddio tudalennau sy\'n cydweddu gyda\'r mynegiad rheolaidd o\'r chwiliad, y map safle ac indecsau awtomatig eraill';
 
 /* Authentication Settings */
@@ -96,7 +96,7 @@ $lang['superuser']   = 'Uwchddefnyddiwr - grŵp, defnyddiwr neu restr gwahanwyd 
 $lang['manager']     = 'Rheolwr - grŵp, defnyddiwr neu restr gwahanwyd gan goma defnyddiwr1,@group1,defnyddiwr2 gyda mynediad i swyddogaethau rheoli penodol';
 $lang['profileconfirm'] = 'Cadrnhau newidiadau proffil gyda chyfrinair';
 $lang['rememberme'] = 'Caniatáu cwcis mewngofnodi parhaol (cofio fi)';
-$lang['disableactions'] = 'Analluogi gweithredoedd DokuWiki';
+$lang['disableactions'] = 'Analluogi gweithredoedd EasyWiki';
 $lang['disableactions_check'] = 'Gwirio';
 $lang['disableactions_subscription'] = 'Tanysgrifio/Dad-tanysgrifio';
 $lang['disableactions_wikicode'] = 'Dangos ffynhonnell/Allforio Crai';
@@ -154,7 +154,7 @@ $lang['rss_show_summary'] = 'Dangos crynodeb mewn teitl y ffrwd XML';
 $lang['rss_media']   = 'Pa fath newidiadau a ddylai cael eu rhestru yn y ffrwd XML??';
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Gwirio am ddiweddariadau a rhybuddion diogelwch? Mae\'n rhaid i DokuWiki gysylltu ag update.dokuwiki.org ar gyfer y nodwedd hon.';
+$lang['updatecheck'] = 'Gwirio am ddiweddariadau a rhybuddion diogelwch? Mae\'n rhaid i EasyWiki gysylltu ag update.easywiki.org ar gyfer y nodwedd hon.';
 $lang['userewrite']  = 'Defnyddio URLs pert';
 $lang['useslash']    = 'Defnyddio slaes fel gwahanydd namespace mewn URL';
 $lang['sepchar']     = 'Gwanahydd geiriau mewn enw tudalennau';
@@ -166,14 +166,14 @@ $lang['gzip_output'] = 'Defnyddio gzip Content-Encoding ar gyfer xhtml'; //pwy a
 $lang['compress']    = 'Cywasgu allbwn CSS a javascript';
 $lang['cssdatauri']  = 'Uchafswm maint mewn beitiau ar gyfer delweddau i\'w cyfeirio atynt mewn ffeiliau CSS a ddylai cael eu mewnosod i\'r ddalen arddull i leihau gorbenion pennyn cais HTTP. Mae <code>400</code> i <code>600</code> beit yn werth da. Gosodwch i <code>0</code> i\'w analluogi.';
 $lang['send404']     = 'Anfon "HTTP 404/Page Not Found" ar gyfer tudalennau sy ddim yn bodoli';
-$lang['broken_iua']  = 'Ydy\'r swyddogaeth ignore_user_abort wedi torri ar eich system? Gall hwn achosi\'r indecs chwilio i beidio â gweithio. Rydym yn gwybod bod IIS+PHP/CGI wedi torri. Gweler <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> am wybodaeth bellach.';
+$lang['broken_iua']  = 'Ydy\'r swyddogaeth ignore_user_abort wedi torri ar eich system? Gall hwn achosi\'r indecs chwilio i beidio â gweithio. Rydym yn gwybod bod IIS+PHP/CGI wedi torri. Gweler <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">Bug 852</a> am wybodaeth bellach.';
 $lang['xsendfile']   = 'Defnyddio\'r pennyn X-Sendfile i ganiatáu\'r gweinydd gwe i ddanfon ffeiliau statig? Mae\'n rhaid bod eich gweinydd gwe yn caniatáu hyn.';
 $lang['renderer_xhtml']   = 'Cyflwynydd i ddefnyddio ar gyfer prif allbwn (xhtml) y wici';
-$lang['renderer__core']   = '%s (craidd dokuwiki)';
+$lang['renderer__core']   = '%s (craidd easywiki)';
 $lang['renderer__plugin'] = '%s (ategyn)';
 
 /* Network Options */
-$lang['dnslookups'] = 'Bydd DokuWiki yn edrych i fyny enwau gwesteiwyr ar gyfer cyfeiriadau IP pell y defnyddwyr hynny sy\'n golygu tudalennau. Os oes gweinydd DNS sy\'n araf neu sy ddim yn gweithio \'da chi neu \'dych chi ddim am ddefnyddio\'r nodwedd hon, analluogwch yr opsiwn hwn.';
+$lang['dnslookups'] = 'Bydd EasyWiki yn edrych i fyny enwau gwesteiwyr ar gyfer cyfeiriadau IP pell y defnyddwyr hynny sy\'n golygu tudalennau. Os oes gweinydd DNS sy\'n araf neu sy ddim yn gweithio \'da chi neu \'dych chi ddim am ddefnyddio\'r nodwedd hon, analluogwch yr opsiwn hwn.';
 
 /* Proxy Options */
 $lang['proxy____host']    = 'Enw\'r gweinydd procsi';
@@ -194,7 +194,7 @@ $lang['typography_o_2'] = 'cynnwys dyfynodau sengl (efallai ddim yn gweithio pob
 /* userewrite options */
 $lang['userewrite_o_0'] = 'dim';
 $lang['userewrite_o_1'] = '.htaccess';
-$lang['userewrite_o_2'] = 'DokuWiki mewnol';
+$lang['userewrite_o_2'] = 'EasyWiki mewnol';
 
 /* deaccent options */
 $lang['deaccent_o_0'] = 'bant';

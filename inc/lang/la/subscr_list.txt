@@ -8,6 +8,6 @@ Hae mutationes sunt:
 --------------------------------------------------------
 
 Ut adnotationes deleas, preme hic
-@DOKUWIKIURL@ then visit
+@EASYWIKIURL@ then visit
 @SUBSCRIBE@
 et paginarum et\aut generum mutationes tollis.

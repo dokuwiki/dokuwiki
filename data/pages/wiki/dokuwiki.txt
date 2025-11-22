@@ -1,62 +1,62 @@
-====== DokuWiki ======
+====== EasyWiki ======
 
-[[doku>wiki:dokuwiki|{{wiki:dokuwiki-128.png }}]] DokuWiki is a simple to use and highly versatile Open Source [[wp>wiki]] software that doesn't require a database. It is loved by users for its clean and readable [[wiki:syntax]]. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [[doku>acl|access controls]] and [[doku>auth|authentication connectors]] make DokuWiki especially useful in the enterprise context and the large number of [[doku>plugins]] contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
+[[doku>wiki:easywiki|{{wiki:easywiki-128.png }}]] EasyWiki is a simple to use and highly versatile Open Source [[wp>wiki]] software that doesn't require a database. It is loved by users for its clean and readable [[wiki:syntax]]. The ease of maintenance, backup and integration makes it an administrator's favorite. Built in [[doku>acl|access controls]] and [[doku>auth|authentication connectors]] make EasyWiki especially useful in the enterprise context and the large number of [[doku>plugins]] contributed by its vibrant community allow for a broad range of use cases beyond a traditional wiki.
 
-Read the [[doku>manual|DokuWiki Manual]] to unleash the full power of DokuWiki.
+Read the [[doku>manual|EasyWiki Manual]] to unleash the full power of EasyWiki.
 
 ===== Download =====
 
-DokuWiki is available at https://download.dokuwiki.org/
+EasyWiki is available at https://download.easywiki.org/
 
 
 ===== Read More =====
 
-All documentation and additional information besides the [[syntax|syntax description]] is maintained in the DokuWiki at [[doku>|www.dokuwiki.org]].
+All documentation and additional information besides the [[syntax|syntax description]] is maintained in the EasyWiki at [[doku>|www.easywiki.org]].
 
-**About DokuWiki**
+**About EasyWiki**
 
   * [[doku>features|A feature list]] :!:
   * [[doku>users|Happy Users]]
   * [[doku>press|Who wrote about it]]
   * [[doku>blogroll|What Bloggers think]]
-  * [[https://www.wikimatrix.org/show/DokuWiki|Compare it with other wiki software]]
+  * [[https://www.wikimatrix.org/show/EasyWiki|Compare it with other wiki software]]
 
-**Installing DokuWiki**
+**Installing EasyWiki**
 
   * [[doku>requirements|System Requirements]]
-  * [[https://download.dokuwiki.org/|Download DokuWiki]] :!:
+  * [[https://download.easywiki.org/|Download EasyWiki]] :!:
   * [[doku>changes|Change Log]]
   * [[doku>Install|How to install or upgrade]] :!:
   * [[doku>config|Configuration]]
 
-**Using DokuWiki**
+**Using EasyWiki**
 
   * [[doku>syntax|Wiki Syntax]]
   * [[doku>manual|The manual]] :!:
   * [[doku>FAQ|Frequently Asked Questions (FAQ)]]
   * [[doku>glossary|Glossary]]
 
-**Customizing DokuWiki**
+**Customizing EasyWiki**
 
   * [[doku>tips|Tips and Tricks]]
   * [[doku>Template|How to create and use templates]]
   * [[doku>plugins|Installing plugins]]
   * [[doku>development|Development Resources]]
 
-**DokuWiki Feedback and Community**
+**EasyWiki Feedback and Community**
 
   * [[doku>newsletter|Subscribe to the newsletter]] :!:
   * [[doku>mailinglist|Join the mailing list]]
-  * [[https://forum.dokuwiki.org|Check out the user forum]]
+  * [[https://forum.easywiki.org|Check out the user forum]]
   * [[doku>irc|Talk to other users in the IRC channel]]
-  * [[https://github.com/splitbrain/dokuwiki/issues|Submit bugs and feature wishes]]
+  * [[https://github.com/splitbrain/EasyWiki/issues|Submit bugs and feature wishes]]
   * [[doku>thanks|Some humble thanks]]
 
 
 ===== Copyright =====
 
-2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.dokuwiki.org|forum]] instead)) and the DokuWiki Community
+2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.easywiki.org|forum]] instead)) and the EasyWiki Community
 
-The DokuWiki engine is licensed under [[https://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use DokuWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
+The EasyWiki engine is licensed under [[https://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use EasyWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
 
 Not sure what this means? See the [[doku>faq:license|FAQ on the Licenses]].

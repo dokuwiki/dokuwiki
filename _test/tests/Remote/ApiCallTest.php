@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
 use ArgumentCountError;
-use dokuwiki\Remote\ApiCall;
-use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+use easywiki\Remote\ApiCall;
+use easywiki\Remote\OpenApiDoc\DocBlockMethod;
 use InvalidArgumentException;
 
-class ApiCallTest extends \DokuWikiTest
+class ApiCallTest extends \EasyWikiTest
 {
     /**
      * This is a test

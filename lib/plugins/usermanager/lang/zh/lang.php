@@ -4,7 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Haolin Xue <tzbkk@outlook.com>
- * @author Phy <dokuwiki@phy25.com>
+ * @author Phy <easywiki@phy25.com>
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html
  * @author Simon zhan <simonzhan@21cn.com>

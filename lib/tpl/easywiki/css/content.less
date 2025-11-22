@@ -1,0 +1,404 @@
+/**
+ * This file provides the main design styles for the page content.
+ *
+ * @author Anika Henke <anika@selfthinker.org>
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Clarence Lee <clarencedglee@gmail.com>
+ */
+
+/*____________ section indenting ____________
+
+.easywiki .page  h1 {margin-left: 0;}
+.easywiki .page  h2 {margin-left: .666em;}
+.easywiki .page  h3 {margin-left: 1.776em;}
+.easywiki .page  h4 {margin-left: 3em;}
+.easywiki .page  h5 {margin-left: 4.5712em;}
+.easywiki .page  div.level1 {margin-left: 0;}
+.easywiki .page  div.level2 {margin-left: 1em;}
+.easywiki .page  div.level3 {margin-left: 2em;}
+.easywiki .page  div.level4 {margin-left: 3em;}
+.easywiki .page  div.level5 {margin-left: 4em;}
+
+[dir=rtl] .easywiki .page h1 {margin-left: 0; margin-right: 0;}
+[dir=rtl] .easywiki .page h2 {margin-left: 0; margin-right: .666em;}
+[dir=rtl] .easywiki .page h3 {margin-left: 0; margin-right: 1.776em;}
+[dir=rtl] .easywiki .page h4 {margin-left: 0; margin-right: 3em;}
+[dir=rtl] .easywiki .page h5 {margin-left: 0; margin-right: 4.5712em;}
+[dir=rtl] .easywiki .page div.level1 {margin-left: 0; margin-right: 0;}
+[dir=rtl] .easywiki .page div.level2 {margin-left: 0; margin-right: 1em;}
+[dir=rtl] .easywiki .page div.level3 {margin-left: 0; margin-right: 2em;}
+[dir=rtl] .easywiki .page div.level4 {margin-left: 0; margin-right: 3em;}
+[dir=rtl] .easywiki .page div.level5 {margin-left: 0; margin-right: 4em;}
+*/
+/* hx margin-left = (1 / font-size) * .levelx-margin */
+
+/*____________ links to wiki pages (addition to _links) ____________*/
+
+/* existing wikipage */
+.easywiki a.wikilink1 {
+    color: @ini_existing;
+    background-color: inherit;
+}
+
+/* not existing wikipage */
+.easywiki a.wikilink2 {
+    color: @ini_missing;
+    background-color: inherit;
+}
+
+/*____________ images ____________*/
+
+/* embedded images (styles are already partly set in lib/styles/all.css) */
+.easywiki img.media {
+    margin: .2em 0;
+}
+
+.easywiki img.medialeft {
+    margin: .2em 1em .2em 0;
+}
+
+.easywiki img.mediaright {
+    margin: .2em 0 .2em 1em;
+}
+
+.easywiki img.mediacenter {
+    margin: .2em auto;
+}
+
+/*____________ lists ____________*/
+
+.easywiki .page,
+.easywiki .aside {
+    ul li {
+        color: @ini_text_alt;
+    }
+
+    ol li {
+        color: @ini_text_neu;
+    }
+
+    li .li {
+        color: @ini_text;
+    }
+}
+
+/*____________ tables ____________*/
+
+/* div around each table */
+.easywiki div.table {
+    overflow-x: auto;
+    margin-bottom: 1.4em;
+    min-width: 50%;
+}
+
+.easywiki div.table table {
+    margin-bottom: 0;
+}
+
+.easywiki table.inline {
+    min-width: 50%;
+}
+
+.easywiki table.inline tr:hover td {
+    background-color: @ini_background_alt;
+}
+
+.easywiki table.inline tr:hover th {
+    background-color: @ini_border;
+}
+
+/*____________ code ____________*/
+
+/* fix if background-color hides underlining */
+.easywiki em.u code {
+    text-decoration: underline;
+}
+
+/* filenames for downloadable file and code blocks */
+.easywiki dl.code,
+.easywiki dl.file {
+    dt {
+        background-color: @ini_background_site;
+        background: linear-gradient(to bottom, @ini_background_alt 0%, @ini_background_site 100%);
+        color: inherit;
+        border: 1px solid @ini_border;
+        border-bottom-color: @ini_background_site;
+        border-top-left-radius: .3em;
+        border-top-right-radius: .3em;
+        padding: .3em .6em .1em;
+        margin-bottom: -1px;
+        float: left;
+
+        a {
+            background-color: transparent;
+            font-size: 0.875em;
+            font-weight: normal;
+            display: block;
+            min-height: 16px;
+        }
+    }
+
+    dd {
+        margin: 0;
+        clear: left;
+    }
+
+    pre {
+        box-shadow: inset -4px -4px .5em -.3em @ini_border;
+    }
+}
+
+[dir=rtl] .easywiki dl.code,
+[dir=rtl] .easywiki dl.file {
+    dt {
+        float: right;
+    }
+
+    dd {
+        clear: right;
+    }
+}
+
+/* for code in <file> */
+.easywiki dl.file {
+    pre,
+    dt {
+        border-style: dashed;
+    }
+    dt {
+        border-bottom-style: solid;
+    }
+}
+
+/*____________ JS popup ____________*/
+
+.JSpopup {
+    background-color: @ini_background;
+    color: @ini_text;
+    border: 1px solid @ini_border;
+    box-shadow: .1em .1em .1em @ini_border;
+    border-radius: 2px;
+    padding: .3em .5em;
+    font-size: .9em;
+}
+
+.easywiki form.search div.ajax_qsearch {
+    top: -.35em;
+    font-size: 1em;
+    text-overflow: ellipsis;
+}
+
+.JSpopup ul,
+.JSpopup ol {
+    padding-left: 0;
+}
+
+[dir=rtl] .JSpopup ul,
+[dir=rtl] .JSpopup ol {
+    padding-right: 0;
+}
+
+/* changes to underscored CSS files
+********************************************************************/
+
+#acl__tree li {
+    margin: 0;
+}
+
+#easywiki__content span.curid a {
+    font-weight: normal;
+}
+
+#easywiki__content strong span.curid a {
+    font-weight: bold;
+}
+
+/*____________ changes to _edit ____________*/
+
+.easywiki div.toolbar {
+    button.toolbutton {
+        border-radius: 0;
+        border-left-width: 0;
+        padding: .1em .35em;
+    }
+
+    button.toolbutton:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-left-width: 1px;
+    }
+
+    button.toolbutton:last-child {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+}
+
+[dir=rtl] .easywiki div.toolbar {
+    button.toolbutton:last-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-left-width: 1px;
+    }
+
+    button.toolbutton:first-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-left-width: 0;
+        border-right-width: 1px;
+    }
+}
+
+.easywiki div.section_highlight {
+    margin: 0 -2em;
+    padding: 0 1em;
+    border-width: 0 1em;
+}
+
+.easywiki textarea.edit {
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Bitstream Vera Sans Mono", "Nimbus Mono L", Monaco, "Courier New", monospace;
+}
+
+.easywiki div.preview {
+    margin: 0 -2em;
+    padding: 0 2em;
+}
+
+.easywiki.hasSidebar div.preview {
+    border-right: @ini_sidebar_width solid @ini_background_alt;
+}
+
+[dir=rtl] .easywiki.hasSidebar div.preview {
+    border-right-width: 0;
+    border-left: @ini_sidebar_width solid @ini_background_alt;
+}
+
+.easywiki div.preview div.pad {
+    padding: 1.556em 0 2em;
+}
+
+/*____________ changes to _toc ____________*/
+
+#dw__toc {
+    margin: -1.556em -2em .5em 1.4em;
+    width: @ini_sidebar_width;
+    border-left: 1px solid @ini_border;
+    background: @ini_background;
+    color: inherit;
+}
+
+[dir=rtl] #dw__toc {
+    margin: -1.556em 1.4em .5em -2em;
+    border-left-width: 0;
+    border-right: 1px solid @ini_border;
+}
+
+.easywiki.export #dw__toc {
+    margin-top: 0;
+    margin-right: 0;
+}
+
+[dir=rtl] .easywiki.export #dw__toc {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.easywiki h3.toggle {
+    padding: .5em 1em;
+    margin-bottom: 0;
+    font-size: .875em;
+    letter-spacing: .1em;
+}
+
+#easywiki__aside h3.toggle {
+    display: none;
+}
+
+.easywiki .toggle strong {
+    background: transparent url(images/toc-arrows.png) 0 0;
+    width: 8px;
+    height: 5px;
+    margin: .4em 0 0;
+}
+
+.easywiki .toggle.closed strong {
+    background-position: 0 -5px;
+}
+
+.easywiki .toggle strong span {
+    display: none;
+}
+
+#dw__toc {
+    > div {
+        font-size: 0.875em;
+        padding: .5em 1em 1em;
+    }
+
+    ul {
+        padding: 0 0 0 1.2em;
+
+        li {
+            list-style-image: url(images/toc-bullet.png);
+        }
+    }
+
+    ul li.clear {
+        list-style: none;
+    }
+
+    ul li div.li {
+        padding: .2em 0;
+    }
+}
+
+[dir=rtl] #dw__toc ul {
+    padding: 0 1.5em 0 0;
+}
+
+/*____________ changes to _imgdetail ____________*/
+
+#easywiki__detail {
+    padding: 0;
+
+    img {
+        float: none;
+        margin-bottom: 1.4em;
+    }
+
+    div.img_detail {
+        float: none;
+    }
+
+    div.img_detail dl {
+        overflow: hidden;
+    }
+
+    div.img_detail dl dt {
+        float: left;
+        width: 9em;
+        text-align: right;
+        clear: left;
+    }
+
+    div.img_detail dl dd {
+        margin-left: 9.5em;
+    }
+}
+
+[dir=rtl] #easywiki__detail div.img_detail {
+    dl dt {
+        float: right;
+        text-align: left;
+        clear: right;
+    }
+
+    dl dd {
+        margin-left: 0;
+        margin-right: 9.5em;
+    }
+}

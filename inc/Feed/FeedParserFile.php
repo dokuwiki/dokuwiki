@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
-use dokuwiki\HTTP\DokuHTTPClient;
+use easywiki\HTTP\DokuHTTPClient;
 use SimplePie\File;
 use SimplePie\SimplePie;
 

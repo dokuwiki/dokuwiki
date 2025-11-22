@@ -1,7 +1,7 @@
 <?php
 // phpcs:disable PSR1.Files.SideEffects
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../../');
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../../');
+require_once(WIKI_INC . 'inc/init.php');
 //close session
 session_write_close();
 header('Content-Type: text/html; charset=utf-8');
@@ -25,7 +25,7 @@ $plugin->handle();
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(['favicon']) ?>
 </head>
-<body class="dokuwiki">
+<body class="easywiki">
     <?php $plugin->html() ?>
 </body>
 </html>

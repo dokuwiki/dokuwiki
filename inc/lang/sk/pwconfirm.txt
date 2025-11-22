@@ -1,6 +1,6 @@
 Ahoj @FULLNAME@!
 
-Niekto žiadal o nové heslo pre vaše @TITLE@ konto na @DOKUWIKIURL@
+Niekto žiadal o nové heslo pre vaše @TITLE@ konto na @EASYWIKIURL@
 
 Ak ste nežiadali o nové heslo, potom iba ignorujte tento mail.
 

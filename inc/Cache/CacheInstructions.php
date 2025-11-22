@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Cache;
+namespace easywiki\Cache;
 
 /**
  * Caching of parser instructions

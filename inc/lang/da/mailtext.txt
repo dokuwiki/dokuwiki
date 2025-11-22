@@ -1,4 +1,4 @@
-Et dokument i din DokuWiki blev ændret eller tilføjet. Her er detajlerne:
+Et dokument i din EasyWiki blev ændret eller tilføjet. Her er detajlerne:
 
 Dato               : @DATE@
 Browser            : @BROWSER@

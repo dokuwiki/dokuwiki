@@ -7,8 +7,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\Plugin;
-use dokuwiki\Extension\SyntaxPlugin;
+use easywiki\Extension\Plugin;
+use easywiki\Extension\SyntaxPlugin;
 
 /**
  * Allowed chars in $language for code highlighting
@@ -19,15 +19,15 @@ define('PREG_PATTERN_VALID_LANGUAGE', '#[^a-zA-Z0-9\-_]#');
 /**
  * An empty renderer, produces no output
  *
- * Inherits from dokuwiki\Extension\Plugin for giving additional functions to render plugins
+ * Inherits from easywiki\Extension\Plugin for giving additional functions to render plugins
  *
  * The renderer transforms the syntax instructions created by the parser and handler into the
  * desired output format. For each instruction a corresponding method defined in this class will
  * be called. That method needs to produce the desired output for the instruction and add it to the
  * $doc field. When all instructions are processed, the $doc field contents will be cached by
- * DokuWiki and sent to the user.
+ * EasyWiki and sent to the user.
  */
-abstract class Doku_Renderer extends Plugin
+abstract class Wiki_Renderer extends Plugin
 {
     /** @var array Settings, control the behavior of the renderer */
     public $info = [
@@ -69,9 +69,9 @@ abstract class Doku_Renderer extends Plugin
     }
 
     /**
-     * Allow the plugin to prevent DokuWiki from reusing an instance
+     * Allow the plugin to prevent EasyWiki from reusing an instance
      *
-     * Since most renderer plugins fail to implement Doku_Renderer::reset() we default
+     * Since most renderer plugins fail to implement Wiki_Renderer::reset() we default
      * to reinstantiating the renderer here
      *
      * @return bool   false if the plugin has to be instantiated
@@ -144,9 +144,9 @@ abstract class Doku_Renderer extends Plugin
     }
 
     /**
-     * dummy closing instruction issued by Doku_Handler_Nest
+     * dummy closing instruction issued by Wiki_Handler_Nest
      *
-     * normally the syntax mode should override this instruction when instantiating Doku_Handler_Nest -
+     * normally the syntax mode should override this instruction when instantiating Wiki_Handler_Nest -
      * however plugins will not be able to - as their instructions require data.
      */
     public function nest_close()

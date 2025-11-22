@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class ButtonElement
  *
  * Represents a simple button
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class ButtonElement extends Element
 {

@@ -2,7 +2,7 @@
 
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
  * Controls the registration and execution of all events,

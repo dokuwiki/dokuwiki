@@ -1,6 +1,6 @@
 <?php
 
-class form_test extends DokuWikiTest {
+class form_test extends EasyWikiTest {
 
   function _testform() {
     $form = new Doku_Form(array('id' => 'dw__testform', 'action' => '/test'));

@@ -1,6 +1,6 @@
 <?php
 
-class init_creationmodes_test extends DokuWikiTest
+class init_creationmodes_test extends EasyWikiTest
 {
 
     protected $oldumask;

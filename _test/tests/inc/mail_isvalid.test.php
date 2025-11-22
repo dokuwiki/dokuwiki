@@ -1,6 +1,6 @@
 <?php
 
-class mail_isvalid_test extends DokuWikiTest {
+class mail_isvalid_test extends EasyWikiTest {
 
     public function provider() {
         return array(

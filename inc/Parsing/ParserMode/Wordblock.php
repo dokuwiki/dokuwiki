@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Parsing\ParserMode;
+namespace easywiki\Parsing\ParserMode;
 
-use dokuwiki\Parsing\Lexer\Lexer;
+use easywiki\Parsing\Lexer\Lexer;
 
 /**
  * @fixme is this actually used?

@@ -8,4 +8,4 @@ O formulário acima permite a visualização e modificação das permissões de 
 
 Na tabela abaixo são exibidas todas as regras de controle de acesso definidas. Você pode usá-la para excluir ou mudar rapidamente várias regras.
 
-A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no DokuWiki.
+A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no EasyWiki.

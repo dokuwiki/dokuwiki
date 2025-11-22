@@ -7,6 +7,6 @@ Labdien!
 --------------------------------------------------------
 
 Lai atceltu izmaiņu paziņošanu, ielogojieties
-@DOKUWIKIURL@, apmeklējiet
+@EASYWIKIURL@, apmeklējiet
 @SUBSCRIBE@
 un atsakieties no lapas vai nodaļas izmaiņu paziņojumiem .

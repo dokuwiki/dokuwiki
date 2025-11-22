@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Edit
@@ -61,7 +61,7 @@ class Edit extends AbstractItem
             'source' => '05-source_file-xml.svg'
         ];
         if (isset($icons[$this->type])) {
-            $this->svg = DOKU_INC . 'lib/images/menu/' . $icons[$this->type];
+            $this->svg = WIKI_INC . 'lib/images/menu/' . $icons[$this->type];
         }
     }
 }

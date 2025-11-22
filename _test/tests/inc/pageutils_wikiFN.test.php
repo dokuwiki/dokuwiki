@@ -1,6 +1,6 @@
 <?php
 
-class wikifn_test extends DokuWikiTest {
+class wikifn_test extends EasyWikiTest {
 
 
     function test_cache_cleaning_cleanToUnclean(){

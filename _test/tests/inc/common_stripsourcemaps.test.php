@@ -1,6 +1,6 @@
 <?php
 
-class common_stripsourcemaps_test extends DokuWikiTest {
+class common_stripsourcemaps_test extends EasyWikiTest {
 
     function test_all() {
 

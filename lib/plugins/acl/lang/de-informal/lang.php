@@ -7,7 +7,7 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>

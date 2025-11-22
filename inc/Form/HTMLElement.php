@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class HTMLElement
  *
  * Holds arbitrary HTML that is added as is to the Form
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class HTMLElement extends ValueElement
 {

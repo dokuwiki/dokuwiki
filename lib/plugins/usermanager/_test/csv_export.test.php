@@ -8,7 +8,7 @@
  */
 require_once(dirname(__FILE__).'/mocks.class.php');
 
-class plugin_usermanager_csv_export_test extends DokuWikiTest {
+class plugin_usermanager_csv_export_test extends EasyWikiTest {
 
     protected  $usermanager;
 

@@ -4,12 +4,12 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('WIKI_INC')) define('WIKI_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 /**
- * Remove unwanted languages from a DokuWiki install
+ * Remove unwanted languages from a EasyWiki install
  */
 class StripLangsCLI extends CLI
 {

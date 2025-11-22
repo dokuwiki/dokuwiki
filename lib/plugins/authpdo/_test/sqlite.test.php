@@ -25,7 +25,7 @@ class testable_auth_plugin_authpdo extends auth_plugin_authpdo {
  * @group plugin_authpdo
  * @group plugins
  */
-class sqlite_plugin_authpdo_test extends DokuWikiTest {
+class sqlite_plugin_authpdo_test extends EasyWikiTest {
 
     protected $dbfile;
 

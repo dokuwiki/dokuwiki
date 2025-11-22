@@ -1,13 +1,13 @@
 <?php
 // phpcs:ignoreFile
-use dokuwiki\Cache\Cache as NewCache;
-use dokuwiki\Cache\CacheParser;
-use dokuwiki\Cache\CacheInstructions;
-use dokuwiki\Cache\CacheRenderer;
-use dokuwiki\Debug\DebugHelper;
+use easywiki\Cache\Cache as NewCache;
+use easywiki\Cache\CacheParser;
+use easywiki\Cache\CacheInstructions;
+use easywiki\Cache\CacheRenderer;
+use easywiki\Debug\DebugHelper;
 
 /**
- * @deprecated since 2019-02-02 use \dokuwiki\Cache\Cache instead!
+ * @deprecated since 2019-02-02 use \easywiki\Cache\Cache instead!
  */
 class cache extends NewCache
 {
@@ -19,7 +19,7 @@ class cache extends NewCache
 }
 
 /**
- * @deprecated since 2019-02-02 use \dokuwiki\Cache\CacheParser instead!
+ * @deprecated since 2019-02-02 use \easywiki\Cache\CacheParser instead!
  */
 class cache_parser extends CacheParser
 {
@@ -33,7 +33,7 @@ class cache_parser extends CacheParser
 }
 
 /**
- * @deprecated since 2019-02-02 use \dokuwiki\Cache\CacheRenderer instead!
+ * @deprecated since 2019-02-02 use \easywiki\Cache\CacheRenderer instead!
  */
 class cache_renderer extends CacheRenderer
 {
@@ -46,7 +46,7 @@ class cache_renderer extends CacheRenderer
 }
 
 /**
- * @deprecated since 2019-02-02 use \dokuwiki\Cache\CacheInstructions instead!
+ * @deprecated since 2019-02-02 use \easywiki\Cache\CacheInstructions instead!
  */
 class cache_instructions extends CacheInstructions
 {

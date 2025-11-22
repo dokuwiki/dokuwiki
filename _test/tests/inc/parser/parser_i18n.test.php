@@ -1,14 +1,14 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Header;
-use dokuwiki\Parsing\ParserMode\Internallink;
-use dokuwiki\Parsing\ParserMode\Table;
+use easywiki\Parsing\ParserMode\Acronym;
+use easywiki\Parsing\ParserMode\Formatting;
+use easywiki\Parsing\ParserMode\Header;
+use easywiki\Parsing\ParserMode\Internallink;
+use easywiki\Parsing\ParserMode\Table;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
+class TestOfWiki_Parser_i18n extends TestOfWiki_Parser {
 
     function testFormatting() {
         $formats = array (

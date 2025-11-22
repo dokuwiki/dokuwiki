@@ -1,8 +1,8 @@
 <?php
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../');
-require_once(DOKU_INC . 'vendor/autoload.php');
-require_once DOKU_INC . 'inc/load.php';
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../');
+require_once(WIKI_INC . 'vendor/autoload.php');
+require_once WIKI_INC . 'inc/load.php';
 
 /**
  * Command Line utility to gather and check data for building a release
@@ -12,7 +12,7 @@ class Release extends splitbrain\phpcli\CLI
     const TYPES = ['stable', 'hotfix', 'rc'];
 
     // base URL to fetch raw files from the stable branch
-    protected $BASERAW = 'https://raw.githubusercontent.com/dokuwiki/dokuwiki/stable/';
+    protected $BASERAW = 'https://raw.githubusercontent.com/easywiki/easywiki/stable/';
 
     /** @inheritdoc */
     public function __construct($autocatch = true)
@@ -140,10 +140,10 @@ class Release extends splitbrain\phpcli\CLI
      */
     protected function getLocalVersion()
     {
-        $versioninfo = \dokuwiki\Info::parseVersionString(trim(file_get_contents('VERSION')));
-        $doku = file_get_contents('doku.php');
-        if (!preg_match('/\$updateVersion = "(\d+(\.\d+)?)";/', $doku, $m)) {
-            throw new \Exception('Could not find $updateVersion in doku.php');
+        $versioninfo = \easywiki\Info::parseVersionString(trim(file_get_contents('VERSION')));
+        $wiki = file_get_contents('wiki.php');
+        if (!preg_match('/\$updateVersion = "(\d+(\.\d+)?)";/', $wiki, $m)) {
+            throw new \Exception('Could not find $updateVersion in wiki.php');
         }
         $versioninfo['update'] = floatval($m[1]);
         return $versioninfo;
@@ -158,12 +158,12 @@ class Release extends splitbrain\phpcli\CLI
     protected function getUpstreamVersion()
     {
         // basic version info
-        $versioninfo = \dokuwiki\Info::parseVersionString(trim(file_get_contents($this->BASERAW . 'VERSION')));
+        $versioninfo = \easywiki\Info::parseVersionString(trim(file_get_contents($this->BASERAW . 'VERSION')));
 
-        // update version grepped from the doku.php file
-        $doku = file_get_contents($this->BASERAW . 'doku.php');
-        if (!preg_match('/\$updateVersion = "(\d+(\.\d+)?)";/', $doku, $m)) {
-            throw new \Exception('Could not find $updateVersion in doku.php');
+        // update version grepped from the wiki.php file
+        $wiki = file_get_contents($this->BASERAW . 'wiki.php');
+        if (!preg_match('/\$updateVersion = "(\d+(\.\d+)?)";/', $wiki, $m)) {
+            throw new \Exception('Could not find $updateVersion in wiki.php');
         }
         $versioninfo['update'] = floatval($m[1]);
 

@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
  * Popularity Feedback Plugin

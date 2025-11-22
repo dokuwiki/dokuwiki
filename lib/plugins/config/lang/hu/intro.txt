@@ -1,6 +1,6 @@
 ====== Beállító központ ======
 
-Ezzel az oldallal finomhangolhatod a DokuWiki rendszeredet. Az egyes beállításokhoz [[doku>config|itt]] kaphatsz segítséget. A bővítmények (pluginek) beállításaihoz [[doku>plugin:config|ezt]] az oldalt látogasd meg.
+Ezzel az oldallal finomhangolhatod a EasyWiki rendszeredet. Az egyes beállításokhoz [[doku>config|itt]] kaphatsz segítséget. A bővítmények (pluginek) beállításaihoz [[doku>plugin:config|ezt]] az oldalt látogasd meg.
 
 A világospiros hátterű beállítások védettek, ezzel a bővítménnyel nem módosíthatóak.
 

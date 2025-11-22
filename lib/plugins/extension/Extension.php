@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
-use dokuwiki\Extension\PluginController;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Extension\PluginController;
+use easywiki\Utf8\PhpString;
 use RuntimeException;
 
 class Extension
@@ -220,7 +220,7 @@ class Extension
         if ($this->isTemplate()) {
             $dir = dirname(tpl_incdir()) . '/' . $this->base;
         } else {
-            $dir = DOKU_PLUGIN . $this->base;
+            $dir = WIKI_PLUGIN . $this->base;
         }
 
         return fullpath($dir);
@@ -281,7 +281,7 @@ class Extension
     }
 
     /**
-     * Get the URL of the extension, usually a page on dokuwiki.org
+     * Get the URL of the extension, usually a page on easywiki.org
      *
      * @return string
      */
@@ -289,7 +289,7 @@ class Extension
     {
         return $this->getTag(
             'url',
-            'https://www.dokuwiki.org/' .
+            'https://www.EasyWiki.org/' .
             ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase()
         );
     }
@@ -445,7 +445,7 @@ class Extension
                 'testing',
                 'usermanager',
                 'logviewer',
-                'template:dokuwiki'
+                'template:easywiki'
             ]
         );
     }
@@ -540,7 +540,7 @@ class Extension
     }
 
     /**
-     * Get a list of tags this extension is tagged with at dokuwiki.org
+     * Get a list of tags this extension is tagged with at easywiki.org
      *
      * @return string[]
      */
@@ -672,7 +672,7 @@ class Extension
     }
 
     /**
-     * Get a list of DokuWiki versions this plugin is marked as compatible with
+     * Get a list of EasyWiki versions this plugin is marked as compatible with
      *
      * @return string[][] date -> version
      */

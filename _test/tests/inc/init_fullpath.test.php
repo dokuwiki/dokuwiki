@@ -1,11 +1,11 @@
 <?php
 
-class init_fullpath_test extends DokuWikiTest {
+class init_fullpath_test extends EasyWikiTest {
 
     function test_unix_paths(){
         $base = $_SERVER['SCRIPT_FILENAME'];
         $_SERVER['SCRIPT_FILENAME'] = '/absolute/path/self.php';
-        $GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS'] = false;
+        $GLOBALS['WIKI_UNITTEST_ASSUME_WINDOWS'] = false;
 
         // paths to check
         $tests = array(
@@ -33,13 +33,13 @@ class init_fullpath_test extends DokuWikiTest {
 
 
         $_SERVER['SCRIPT_FILENAME'] = $base;
-        unset($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
+        unset($GLOBALS['WIKI_UNITTEST_ASSUME_WINDOWS']);
     }
 
     function test_windows_paths(){
         $base = $_SERVER['SCRIPT_FILENAME'];
         $_SERVER['SCRIPT_FILENAME'] = '/absolute/path/self.php';
-        $GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS'] = true;
+        $GLOBALS['WIKI_UNITTEST_ASSUME_WINDOWS'] = true;
 
         // paths to check
         $tests = array(
@@ -82,7 +82,7 @@ class init_fullpath_test extends DokuWikiTest {
 
 
         $_SERVER['SCRIPT_FILENAME'] = $base;
-        unset($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']);
+        unset($GLOBALS['WIKI_UNITTEST_ASSUME_WINDOWS']);
     }
 
 }

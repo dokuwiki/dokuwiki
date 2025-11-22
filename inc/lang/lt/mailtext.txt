@@ -1,4 +1,4 @@
-Jūsų DokuWiki buvo sukurtas arba pakeistas puslapis. Detalės:
+Jūsų EasyWiki buvo sukurtas arba pakeistas puslapis. Detalės:
 
 Data        : @DATE@
 Naršyklė     : @BROWSER@

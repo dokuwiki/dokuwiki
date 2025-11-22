@@ -1,30 +1,30 @@
 <?php
 /**
- * Test Suite bootstrapping for DokuWiki
+ * Test Suite bootstrapping for EasyWiki
  */
 
-if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
-require_once DOKU_UNITTEST.'vendor/autoload.php';
-require_once DOKU_UNITTEST.'core/phpQuery-onefile.php'; // deprecated
-require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
-require_once DOKU_UNITTEST.'core/TestResponse.php';
-require_once DOKU_UNITTEST.'core/TestRequest.php';
-require_once DOKU_UNITTEST.'core/TestUtils.php';
+if(!defined('WIKI_UNITTEST')) define('WIKI_UNITTEST',dirname(__FILE__).'/');
+require_once WIKI_UNITTEST.'vendor/autoload.php';
+require_once WIKI_UNITTEST.'core/phpQuery-onefile.php'; // deprecated
+require_once WIKI_UNITTEST.'core/EasyWikiTest.php';
+require_once WIKI_UNITTEST.'core/TestResponse.php';
+require_once WIKI_UNITTEST.'core/TestRequest.php';
+require_once WIKI_UNITTEST.'core/TestUtils.php';
 
 
 // backward compatibility to old test suite
 define('SIMPLE_TEST', true);
 
 // basic behaviours
-define('DOKU_E_LEVEL',E_ALL ^ E_NOTICE);
-error_reporting(DOKU_E_LEVEL);
+define('WIKI_E_LEVEL',E_ALL ^ E_NOTICE);
+error_reporting(WIKI_E_LEVEL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
 // prepare temporary directories; str_replace is for WIN
-define('DOKU_INC', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+define('WIKI_INC', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
 define('TMP_DIR', str_replace('\\', '/', sys_get_temp_dir()) . '/dwtests-'.microtime(true));
-define('DOKU_CONF', TMP_DIR.'/conf/');
+define('WIKI_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
 // default plugins
@@ -46,10 +46,10 @@ $default_server_vars = array(
     'REQUEST_METHOD' => 'GET',
     'CONTENT_TYPE' => '',
     'CONTENT_LENGTH' => '',
-    'SCRIPT_NAME' => '/doku.php',
-    'REQUEST_URI' => '/doku.php?id=',
-    'DOCUMENT_URI' => '/doku.php',
-    'DOCUMENT_ROOT' => DOKU_INC,
+    'SCRIPT_NAME' => '/wiki.php',
+    'REQUEST_URI' => '/wiki.php?id=',
+    'DOCUMENT_URI' => '/wiki.php',
+    'DOCUMENT_ROOT' => WIKI_INC,
     'SERVER_PROTOCOL' => 'HTTP/1.1',
     'SERVER_SOFTWARE' => 'nginx/0.7.67',
     'REMOTE_ADDR' => '172.17.18.19',
@@ -58,7 +58,7 @@ $default_server_vars = array(
     'SERVER_PORT' => '80',
     'SERVER_NAME' => 'wiki.example.com',
     'REDIRECT_STATUS' => '200',
-    'SCRIPT_FILENAME' => DOKU_INC.'doku.php',
+    'SCRIPT_FILENAME' => WIKI_INC.'wiki.php',
     'HTTP_HOST' => 'wiki.example.com',
     'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; OpenBSD amd64; rv:11.0) Gecko/20100101 Firefox/11.0',
     'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -66,7 +66,7 @@ $default_server_vars = array(
     'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
     'HTTP_CONNECTION' => 'keep-alive',
     'HTTP_CACHE_CONTROL' => 'max-age=0',
-    'PHP_SELF' => '/doku.php',
+    'PHP_SELF' => '/wiki.php',
     'REQUEST_TIME' => time(),
 );
 
@@ -90,23 +90,23 @@ if (getenv('PRESERVE_TMP') != 'true') {
 }
 
 // populate default dirs for initial setup
-DokuWikiTest::setupDataDir();
-DokuWikiTest::setupConfDir();
+EasyWikiTest::setupDataDir();
+EasyWikiTest::setupConfDir();
 
 // disable all non-default plugins by default
-$dh = dir(DOKU_INC.'lib/plugins/');
+$dh = dir(WIKI_INC.'lib/plugins/');
 while (false !== ($entry = $dh->read())) {
     if ($entry == '.' || $entry == '..') {
         continue;
     }
 
-    if (!is_dir(DOKU_INC.'lib/plugins/'.$entry)) {
+    if (!is_dir(WIKI_INC.'lib/plugins/'.$entry)) {
         continue;
     }
 
     if (!in_array($entry, $default_plugins)) {
         // disable this plugin
-        TestUtils::fappend(DOKU_CONF.'plugins.local.php', "\$plugins['$entry'] = 0;\n");
+        TestUtils::fappend(WIKI_CONF.'plugins.local.php', "\$plugins['$entry'] = 0;\n");
     }
 }
 $dh->close();
@@ -115,9 +115,9 @@ $dh->close();
 if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
 
 // load dw
-require_once(DOKU_INC.'inc/init.php');
+require_once(WIKI_INC.'inc/init.php');
 
 // load the parser so $PARSER_MODES is defined before the tests start
 // otherwise PHPUnit unsets $PARSER_MODES in some cases which breaks p_get_parsermodes()
-require_once(DOKU_INC.'inc/parser/parser.php');
+require_once(WIKI_INC.'inc/parser/parser.php');
 

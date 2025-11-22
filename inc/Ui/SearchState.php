@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
 class SearchState
 {

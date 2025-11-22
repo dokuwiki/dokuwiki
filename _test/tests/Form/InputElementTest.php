@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Form;
+namespace easywiki\test\Form;
 
-use dokuwiki\Form;
+use easywiki\Form;
 use DOMWrap\Document;
 
-class InputElementTest extends \DokuWikiTest {
+class InputElementTest extends \EasyWikiTest {
 
     function testDefaults() {
         $form = new Form\Form();

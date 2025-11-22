@@ -8,6 +8,6 @@ Das sind die geänderten Seiten:
 --------------------------------------------------------
 
 Um das Abonnement für diese Seite aufzulösen, melden Sie sich im Wiki an
-@DOKUWIKIURL@, besuchen dann
+@EASYWIKIURL@, besuchen dann
 @SUBSCRIBE@
 und klicken auf die Taste 'Änderungen abbestellen'.

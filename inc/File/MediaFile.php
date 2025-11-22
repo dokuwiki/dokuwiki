@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\File;
+namespace easywiki\File;
 
 use JpegMeta;
 

@@ -1,21 +1,21 @@
 <?php
 
 /**
- * DokuWiki media passthrough file
+ * EasyWiki media passthrough file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Input\Input;
-use dokuwiki\Extension\Event;
+use easywiki\Input\Input;
+use easywiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1);
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
+if (!defined('WIKI_DISABLE_GZIP_OUTPUT')) define('WIKI_DISABLE_GZIP_OUTPUT', 1);
+require_once(WIKI_INC . 'inc/init.php');
 session_write_close(); //close session
 
-require_once(DOKU_INC . 'inc/fetch.functions.php');
+require_once(WIKI_INC . 'inc/fetch.functions.php');
 
 if (defined('SIMPLE_TEST')) {
     $INPUT = new Input();

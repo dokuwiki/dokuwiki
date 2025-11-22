@@ -1,6 +1,6 @@
 <?php return array(
     'root' => array(
-        'name' => 'dokuwiki/dokuwiki',
+        'name' => 'easywiki/easywiki',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
         'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',
@@ -19,7 +19,7 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'dokuwiki/dokuwiki' => array(
+        'easywiki/easywiki' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',

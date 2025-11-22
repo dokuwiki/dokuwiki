@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class FieldsetCloseElement
  *
  * Closes an open Fieldset
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class FieldsetCloseElement extends TagCloseElement
 {

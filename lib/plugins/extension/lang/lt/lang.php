@@ -90,7 +90,7 @@
  $lang['error_download']               = 'Nepavyksta atsisiųsti failo: %s';
  $lang['error_decompress']             = 'Nepavyksta išskleisti atsisiųsto failo. Tai gali būti dėl blogo atsisiuntimo, tuo atveju bandoma dar kartą; arba suspaudimo formatas gali būti nežinomas, tuo atveju reikės atsisiųsti ir įdiegti rankiniu būdu.';
  $lang['error_findfolder']             = 'Nepavyksta nustatyti plėtinio katalogo, jį reikia atsisiųsti ir įdiegti rankiniu būdu';
- $lang['error_copy']                   = 'Failo kopijavimo klaida bandant įdiegti failus į katalogą <em>%s</em>: diskas gali būti pilnas arba failo prieigos teisės gali būti neteisingos. Dėl to įskiepis gali būti įdiegtas tik dalinai, ir dėl to Jūsų DokuWiki gali veikti nestabiliai';
+ $lang['error_copy']                   = 'Failo kopijavimo klaida bandant įdiegti failus į katalogą <em>%s</em>: diskas gali būti pilnas arba failo prieigos teisės gali būti neteisingos. Dėl to įskiepis gali būti įdiegtas tik dalinai, ir dėl to Jūsų EasyWiki gali veikti nestabiliai';
 
  $lang['noperms']                      = 'Plėtinio katalogas neturi rašymo teisių';
  $lang['notplperms']                   = 'Šablonų katalogas neturi rašymo teisių';
@@ -102,8 +102,8 @@
  $lang['install_upload']               = 'Įkelti plėtinį:';
 
  $lang['repo_badresponse']             = 'Įskiepių saugykla grąžino neteisingą atsakymą.';
- $lang['repo_error']                   = 'Nepavyksta susisiekti su įskiepių saugykla. Įsitikinkite, kad jūsų serveris turi teisę susisiekti su www.dokuwiki.org ir patikrinkite savo įgaliotojo serverio nustatymus.';
- $lang['nossl']                        = 'Jūsų PHP atrodo neturi SSL palaikymo. Dauguma DokuWiki plėtinių atveju atsisiuntimas neveiks.';
+ $lang['repo_error']                   = 'Nepavyksta susisiekti su įskiepių saugykla. Įsitikinkite, kad jūsų serveris turi teisę susisiekti su www.EasyWiki.org ir patikrinkite savo įgaliotojo serverio nustatymus.';
+ $lang['nossl']                        = 'Jūsų PHP atrodo neturi SSL palaikymo. Dauguma EasyWiki plėtinių atveju atsisiuntimas neveiks.';
 
  $lang['js']['display_viewoptions']    = 'Peržiūros parinktys:';
  $lang['js']['display_enabled']        = 'įjungta';

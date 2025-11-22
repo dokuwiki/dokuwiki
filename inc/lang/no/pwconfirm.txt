@@ -1,6 +1,6 @@
 Hei @FULLNAME@!
 
-Noen har bedt om nytt passord for din @TITLE@ innlogging på @DOKUWIKIURL@
+Noen har bedt om nytt passord for din @TITLE@ innlogging på @EASYWIKIURL@
 
 Om du ikke ba om nytt passord kan du bare overse denne e-posten.
 

@@ -1,4 +1,4 @@
-Sebuah file telah diupload di DokuWiki Anda. Berikut detailnya:
+Sebuah file telah diupload di EasyWiki Anda. Berikut detailnya:
 
 File : @MEDIA@
 Date : @DATE@

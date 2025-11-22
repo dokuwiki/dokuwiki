@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\File\MediaFile;
-use dokuwiki\Ui\Media\Display;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\File\MediaFile;
+use easywiki\Ui\Media\Display;
 
 class FeedMediaProcessor extends FeedItemProcessor
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 /**
  * Generic call writer class to handle nesting of rendering instructions

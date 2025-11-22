@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\test\Subscriptions;
+namespace easywiki\test\Subscriptions;
 
-use dokuwiki\Subscriptions\BulkSubscriptionSender;
-use dokuwiki\Subscriptions\SubscriberManager;
-use dokuwiki\test\mock\MailerMock;
-use DokuWikiTest;
+use easywiki\Subscriptions\BulkSubscriptionSender;
+use easywiki\Subscriptions\SubscriberManager;
+use easywiki\test\mock\MailerMock;
+use EasyWikiTest;
 
-class BulkSubscriptionsSenderTest extends DokuWikiTest
+class BulkSubscriptionsSenderTest extends EasyWikiTest
 {
 
     private $originalSubscriptionConfig;

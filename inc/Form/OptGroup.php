@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 class OptGroup extends Element
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
 /**
- * DokuWiki Index Interface
+ * EasyWiki Index Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Index extends Ui
 {

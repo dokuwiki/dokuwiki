@@ -1,6 +1,6 @@
 <?php
 
-class TestOfDoku_Handler_ParseHighlightOptions extends DokuWikiTest {
+class TestOfWiki_Handler_ParseHighlightOptions extends EasyWikiTest {
 
     public function dataProvider() {
         return [
@@ -47,7 +47,7 @@ class TestOfDoku_Handler_ParseHighlightOptions extends DokuWikiTest {
      * @throws ReflectionException
      */
     public function testOptionParser($input, $expect) {
-        $h = new Doku_Handler();
+        $h = new Wiki_Handler();
 
         $output = $this->callInaccessibleMethod($h, 'parse_highlight_options', [$input]);
 

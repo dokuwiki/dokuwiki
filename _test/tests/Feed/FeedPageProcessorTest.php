@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Feed;
+namespace easywiki\test\Feed;
 
-use dokuwiki\Feed\FeedPageProcessor;
+use easywiki\Feed\FeedPageProcessor;
 use DOMWrap\Document;
 
-class FeedPageProcessorTest extends \DokuWikiTest
+class FeedPageProcessorTest extends \EasyWikiTest
 {
 
     public function provideData()
@@ -16,7 +16,7 @@ class FeedPageProcessorTest extends \DokuWikiTest
                 'date' => 1705501370,
                 'ip' => '::1',
                 'type' => 'E',
-                'id' => 'wiki:dokuwiki',
+                'id' => 'wiki:easywiki',
                 'user' => 'testuser',
                 'sum' => 'test editing',
                 'extra' => '',
@@ -32,7 +32,7 @@ class FeedPageProcessorTest extends \DokuWikiTest
         // an Item returned by FeedCreator::fetchItemsFromNamespace()
         yield ([
             [
-                'id' => 'wiki:dokuwiki',
+                'id' => 'wiki:easywiki',
                 'ns' => 'wiki',
                 'perm' => 8,
                 'type' => 'f',
@@ -47,7 +47,7 @@ class FeedPageProcessorTest extends \DokuWikiTest
         // an Item returned by FeedCreator::fetchItemsFromSearch()
         yield ([
             [
-                'id' => 'wiki:dokuwiki',
+                'id' => 'wiki:easywiki',
             ],
             null, // current revision
             ['anonymous@undisclosed.example.com', 'Anonymous'], // unknown author
@@ -67,7 +67,7 @@ class FeedPageProcessorTest extends \DokuWikiTest
         $conf['useheading'] = 1;
 
         // if no expected mtime is given, we expect the filemtime of the page
-        // see https://github.com/dokuwiki/dokuwiki/pull/4156#issuecomment-1911842452 why we can't
+        // see https://github.com/easywiki/easywiki/pull/4156#issuecomment-1911842452 why we can't
         // create this in the data provider
         if ($expectedMtime === null) {
             $expectedMtime = filemtime(wikiFN($data['id']));
@@ -75,8 +75,8 @@ class FeedPageProcessorTest extends \DokuWikiTest
 
         $proc = new FeedPageProcessor($data);
 
-        $this->assertEquals('wiki:dokuwiki', $proc->getId());
-        $this->assertEquals('DokuWiki', $proc->getTitle());
+        $this->assertEquals('wiki:easywiki', $proc->getId());
+        $this->assertEquals('EasyWiki', $proc->getTitle());
         $this->assertEquals($expectedAuthor, $proc->getAuthor());
         $this->assertEquals($expectedMtime, $proc->getRev());
         $this->assertEquals(null, $proc->getPrev());
@@ -86,19 +86,19 @@ class FeedPageProcessorTest extends \DokuWikiTest
         $this->assertEquals($expectedSummary, $proc->getSummary());
 
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime",
+            "http://wiki.example.com/wiki.php?id=wiki:easywiki&rev=$expectedMtime",
             $proc->getURL('page')
         );
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=revisions",
+            "http://wiki.example.com/wiki.php?id=wiki:easywiki&rev=$expectedMtime&do=revisions",
             $proc->getURL('rev')
         );
         $this->assertEquals(
-            'http://wiki.example.com/doku.php?id=wiki:dokuwiki',
+            'http://wiki.example.com/wiki.php?id=wiki:easywiki',
             $proc->getURL('current')
         );
         $this->assertEquals(
-            "http://wiki.example.com/doku.php?id=wiki:dokuwiki&rev=$expectedMtime&do=diff",
+            "http://wiki.example.com/wiki.php?id=wiki:easywiki&rev=$expectedMtime&do=diff",
             $proc->getURL('diff')
         );
 
@@ -113,7 +113,7 @@ class FeedPageProcessorTest extends \DokuWikiTest
 
         $doc = new Document();
         $doc->html($proc->getBody('html'));
-        $home = $doc->find('a[href^="https://www.dokuwiki.org/manual"]');
+        $home = $doc->find('a[href^="https://www.EasyWiki.org/manual"]');
         $this->assertGreaterThanOrEqual(1, $home->count());
 
         $this->assertStringContainsString('standards compliant', $proc->getBody('abstract'));

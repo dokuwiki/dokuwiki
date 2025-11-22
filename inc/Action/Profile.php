@@ -1,19 +1,19 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\UserProfile;
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Ui;
+use easywiki\Ui\UserProfile;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Ui;
 
 /**
  * Class Profile
  *
  * Handle the profile form
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Profile extends AbstractUserAction
 {

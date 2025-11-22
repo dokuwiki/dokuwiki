@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\test\Form;
+namespace easywiki\test\Form;
 
-use dokuwiki\Form;
+use easywiki\Form;
 use DOMWrap\Document;
-use dokuwiki\test\Form\Form as TestForm;
+use easywiki\test\Form\Form as TestForm;
 
-class FormTest extends \DokuWikiTest
+class FormTest extends \EasyWikiTest
 {
 
     /**

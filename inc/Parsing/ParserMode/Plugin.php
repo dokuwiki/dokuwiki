@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Parsing\ParserMode;
+namespace easywiki\Parsing\ParserMode;
 
-use dokuwiki\Extension\PluginInterface;
-use dokuwiki\Extension\PluginTrait;
+use easywiki\Extension\PluginInterface;
+use easywiki\Extension\PluginTrait;
 
 /**
  * A syntax Plugin is a ParserMode

@@ -92,5 +92,5 @@ $lang['git']                   = 'Udvidelsen blev installeret via git - du bør 
 $lang['auth']                  = 'Auth-udvidelse er ikke aktiveret i konfigurationen - overvej at deaktivere den.';
 $lang['install_url']           = 'Installér fra URL:';
 $lang['install_upload']        = 'Upload udvidelse:';
-$lang['repo_error']            = 'Udvidelses-arkivet kunne ikke kontaktes. Kontrollér at din server kan kontakte www.dokuwiki.org kontrollér dine proxy-indstillinger.';
-$lang['nossl']                 = 'Din PHP lader til at mangle understøttelse for SSL. Mange DokuWiki udvidelser vil ikke kunne downloades.';
+$lang['repo_error']            = 'Udvidelses-arkivet kunne ikke kontaktes. Kontrollér at din server kan kontakte www.EasyWiki.org kontrollér dine proxy-indstillinger.';
+$lang['nossl']                 = 'Din PHP lader til at mangle understøttelse for SSL. Mange EasyWiki udvidelser vil ikke kunne downloades.';

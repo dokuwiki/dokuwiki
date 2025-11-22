@@ -1,4 +1,4 @@
-Sizin DokuWiki-də səhifə yaradılıb ya dəyişdirilib. Ətraflı məlumat:
+Sizin EasyWiki-də səhifə yaradılıb ya dəyişdirilib. Ətraflı məlumat:
 
 Tarix                 : @DATE@
 Brauzer               : @BROWSER@

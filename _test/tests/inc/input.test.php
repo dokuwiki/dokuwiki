@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Input\Input;
+use easywiki\Input\Input;
 
 /**
- * Tests for the dokuwiki\Input\Input class
+ * Tests for the easywiki\Input\Input class
  */
-class input_test extends DokuWikiTest {
+class input_test extends EasyWikiTest {
 
     private $data = array(
         'array'  => array('foo', 'bar'),

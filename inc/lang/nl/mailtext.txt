@@ -1,4 +1,4 @@
-Er is een pagina in je DokuWiki toegevoegd of gewijzigd. Hier zijn de details:
+Er is een pagina in je EasyWiki toegevoegd of gewijzigd. Hier zijn de details:
 
 Datum         : @DATE@
 Browser       : @BROWSER@

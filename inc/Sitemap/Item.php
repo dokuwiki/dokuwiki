@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Sitemap;
+namespace easywiki\Sitemap;
 
 /**
  * An item of a sitemap.

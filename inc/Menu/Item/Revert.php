@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Revert
@@ -22,6 +22,6 @@ class Revert extends AbstractItem
         }
         $this->params['rev'] = $REV;
         $this->params['sectok'] = getSecurityToken();
-        $this->svg = DOKU_INC . 'lib/images/menu/06-revert_replay.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/06-revert_replay.svg';
     }
 }

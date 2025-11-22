@@ -4,7 +4,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesMk.php?view=co
@@ -69,7 +69,7 @@ $lang['regsuccess2']           = 'Корисникот е креиран.';
 $lang['regmailfail']           = 'Изгледа дека се појави грешка при испраќањето на е-пошта со лозинката. Ве молам контактирајте го администраторот!';
 $lang['regbadmail']            = 'Дадената адреса за е-пошта изгледа невалидна - ако мислите дека ова е грешка, контактирајте го администраторот';
 $lang['regbadpass']            = 'Двете наведени лозинки не се исти, ве молам пробајте повторно.';
-$lang['regpwmail']             = 'Вашата DokuWiki лозинка';
+$lang['regpwmail']             = 'Вашата EasyWiki лозинка';
 $lang['reghere']               = 'Се уште немаш сметка? Направи веќе една';
 $lang['profna']                = 'Ова вики не поддржува измена на профилот';
 $lang['profnochange']          = 'Нема промени, ништо за правење.';
@@ -197,21 +197,21 @@ $lang['subscr_m_receive']      = 'Прими';
 $lang['subscr_style_every']    = 'е-пошта за секоја промена';
 $lang['authtempfail']          = 'Автентикација на корисник е привремено недостапна. Ако оваа ситуација истрајува, ве молам известете го вики администратор.';
 $lang['i_chooselang']          = 'Избере јазик';
-$lang['i_installer']           = 'Инсталер за DokuWiki';
+$lang['i_installer']           = 'Инсталер за EasyWiki';
 $lang['i_wikiname']            = 'вики име';
 $lang['i_enableacl']           = 'Овозможи ACL (препорачано)';
 $lang['i_superuser']           = 'Супер корисник';
 $lang['i_problems']            = 'Инсталерот пронајде неколку проблеми кои се прикажани подолу. Не можете да продолжите понатаму се додека не ги поправите.';
-$lang['i_modified']            = 'За безбедносни причини оваа скрипта ќе работи само со нова и неизменета инсталација од DokuWiki. Или извадете ги повторно датотеките од симнатиот пакет или консултирајте се со комплетните <a href="https://www.dokuwiki.org/install">Dokuwiki инструкции за инсталација</a>';
+$lang['i_modified']            = 'За безбедносни причини оваа скрипта ќе работи само со нова и неизменета инсталација од EasyWiki. Или извадете ги повторно датотеките од симнатиот пакет или консултирајте се со комплетните <a href="https://www.EasyWiki.org/install">EasyWiki инструкции за инсталација</a>';
 $lang['i_funcna']              = 'PHP функцијата <code>%s</code> не е достапна. Можеби вашиот хостинг провајдер ја оневозможил со причина?';
 $lang['i_phpver']              = 'Вашата верзија на PHP <code>%s</code> е пониска од потребната <code>%s</code>. Треба да ја надградите вашата PHP инсталација.';
-$lang['i_permfail']            = '<code>%s</code> не е запишлива од DokuWiki. Треба да ги поправите подесувањата за пермисии на овој директориум!';
+$lang['i_permfail']            = '<code>%s</code> не е запишлива од EasyWiki. Треба да ги поправите подесувањата за пермисии на овој директориум!';
 $lang['i_confexists']          = '<code>%s</code> веќе постои';
 $lang['i_writeerr']            = 'Не може да се креира <code>%s</code>. Треба да ги проверите пермисиите на директориумот/датотеката и рачно да ја креирате датотеката.';
-$lang['i_badhash']             = 'непозната или изменете dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'непозната или изменете easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - нелегална или празна вредност';
-$lang['i_success']             = 'Конфигурацијата успешно заврши. Сега можете да ја избришете датотеката install.php. Продолжете до <a href="doku.php?id=wiki:welcome">вашето ново DokuWiki</a>.';
-$lang['i_failure']             = 'Се појавија некои грешки при запишувањето на конфигурациските датотеки. Можеби треба да ги поравите рачно пред да можете да го користите <a href="doku.php?id=wiki:welcome">вашето ново DokuWiki</a>.';
+$lang['i_success']             = 'Конфигурацијата успешно заврши. Сега можете да ја избришете датотеката install.php. Продолжете до <a href="wiki.php?id=wiki:welcome">вашето ново EasyWiki</a>.';
+$lang['i_failure']             = 'Се појавија некои грешки при запишувањето на конфигурациските датотеки. Можеби треба да ги поравите рачно пред да можете да го користите <a href="wiki.php?id=wiki:welcome">вашето ново EasyWiki</a>.';
 $lang['i_policy']              = 'Почетна ACL политика';
 $lang['i_pol0']                = 'Отвори вики (читај, запиши, качи за сите)';
 $lang['i_pol1']                = 'Јавно вики (читај за сите, запиши и качи за регистрирани корисници)';

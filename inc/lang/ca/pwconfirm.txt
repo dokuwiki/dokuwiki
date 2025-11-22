@@ -1,6 +1,6 @@
 ¡Hola @FULLNAME@!
 
-Algú ha sol·licitat una nova contrasenya per al vostre compte d'usuari en @TITLE@ @DOKUWIKIURL@
+Algú ha sol·licitat una nova contrasenya per al vostre compte d'usuari en @TITLE@ @EASYWIKIURL@
 
 Si no heu fet aquesta sol·licitud, simplement no feu cas de la resta del missatge.
 

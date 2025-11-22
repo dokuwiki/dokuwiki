@@ -1,6 +1,6 @@
 <?php
 
-class toolbar_test extends DokuWikiTest {
+class toolbar_test extends EasyWikiTest {
 
     function test_encode_toolbar_signature() {
         global $conf, $INFO, $INPUT;

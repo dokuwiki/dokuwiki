@@ -1,4 +1,4 @@
-Fails augšupielādēts DokuWiki. Sīkākas ziņas:
+Fails augšupielādēts EasyWiki. Sīkākas ziņas:
 
 Fails         : @MEDIA@
 Datums        : @DATE@

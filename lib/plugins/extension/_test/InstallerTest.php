@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\extension\test;
+namespace easywiki\plugin\extension\test;
 
-use dokuwiki\plugin\extension\Installer;
-use DokuWikiTest;
+use easywiki\plugin\extension\Installer;
+use EasyWikiTest;
 
 /**
  * Installer tests for the extension plugin
@@ -11,7 +11,7 @@ use DokuWikiTest;
  * @group plugin_extension
  * @group plugins
  */
-class InstallerTest extends DokuWikiTest
+class InstallerTest extends EasyWikiTest
 {
 
     /**

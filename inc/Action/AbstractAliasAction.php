@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\FatalException;
+use easywiki\Action\Exception\FatalException;
 
 /**
  * Class AbstractAliasAction
@@ -12,7 +12,7 @@ use dokuwiki\Action\Exception\FatalException;
  * Be sure to implement preProcess() and throw an ActionAbort exception
  * with the proper action.
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 abstract class AbstractAliasAction extends AbstractAction
 {

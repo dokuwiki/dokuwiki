@@ -62,23 +62,23 @@ jobs:
           mkdir -p data/pages/playground
           echo "====== PlayGround ======" > data/pages/playground/playground.txt
           cd ..
-          mv ${{ github.event.repository.name }} "dokuwiki-${{ env.current_file }}"
-          tar -czvf "dokuwiki-${{ env.current_file }}.tgz" dokuwiki-${{ env.current_file }}
-          zip -r "dokuwiki-${{ env.current_file }}.zip" dokuwiki-${{ env.current_file }}
-          rm -rf "dokuwiki-${{ env.current_file }}"
+          mv ${{ github.event.repository.name }} "easywiki-${{ env.current_file }}"
+          tar -czvf "easywiki-${{ env.current_file }}.tgz" easywiki-${{ env.current_file }}
+          zip -r "easywiki-${{ env.current_file }}.zip" easywiki-${{ env.current_file }}
+          rm -rf "easywiki-${{ env.current_file }}"
           mkdir ${{ github.event.repository.name }}
-          mv "dokuwiki-${{ env.current_version }}.tgz" ${{ github.event.repository.name }}/
-          mv "dokuwiki-${{ env.current_version }}.zip" ${{ github.event.repository.name }}/
+          mv "easywiki-${{ env.current_version }}.tgz" ${{ github.event.repository.name }}/
+          mv "easywiki-${{ env.current_version }}.zip" ${{ github.event.repository.name }}/
 
       - name: Release to Github
         id: release
         uses: softprops/action-gh-release@v1
         with:
-          name: DokuWiki ${{ env.current_raw }} [${{ env.current_update }}]
+          name: EasyWiki ${{ env.current_raw }} [${{ env.current_update }}]
           tag_name: release-${{ env.current_version }}
           files: |
-            dokuwiki-${{ env.current_file }}.tgz
-            dokuwiki-${{ env.current_file }}.zip
+            easywiki-${{ env.current_file }}.tgz
+            easywiki-${{ env.current_file }}.zip
     outputs:
       version: ${{ env.current_version }}
       file: ${{ env.current_file }}
@@ -91,7 +91,7 @@ jobs:
     steps:
       - name: Download
         run: |
-          wget ${{ needs.build.outputs.url }} -O dokuwiki-${{ needs.build.outputs.file }}.tgz
+          wget ${{ needs.build.outputs.url }} -O easywiki-${{ needs.build.outputs.file }}.tgz
 
       - name: Setup SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -102,5 +102,5 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          scp "dokuwiki-${{ needs.build.outputs.file }}.tgz" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:htdocs/src/dokuwiki/
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd htdocs/src/dokuwiki/ && tar -xzvf dokuwiki-${{ needs.build.outputs.file }}.tgz"
+          scp "easywiki-${{ needs.build.outputs.file }}.tgz" ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:htdocs/src/easywiki/
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd htdocs/src/easywiki/ && tar -xzvf easywiki-${{ needs.build.outputs.file }}.tgz"

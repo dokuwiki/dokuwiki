@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Ui;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Ui;
 
 /**
  * Class Login
  *
  * The login form. Actual logins are handled in inc/auth.php
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Login extends AbstractAclAction
 {

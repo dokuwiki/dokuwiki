@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\ChangeLog;
+namespace easywiki\ChangeLog;
 
 /**
  * Class RevisionInfo
  *
- * Provides methods to show Revision Information in DokuWiki Ui components:
+ * Provides methods to show Revision Information in EasyWiki Ui components:
  *  - Ui\Recent
  *  - Ui\PageRevisions
  *  - Ui\MediaRevisions
@@ -113,7 +113,7 @@ class RevisionInfo
             return media_printicon($id);
         } elseif ($this->val('mode') == self::MODE_PAGE) {
             // page revision
-            return '<img class="icon" src="' . DOKU_BASE . 'lib/images/fileicons/file.png" alt="' . $id . '" />';
+            return '<img class="icon" src="' . WIKI_BASE . 'lib/images/fileicons/file.png" alt="' . $id . '" />';
         }
     }
 
@@ -201,7 +201,7 @@ class RevisionInfo
             //revision is not in attic
             return $display_name;
         }
-        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+        if ($this->val('type') == WIKI_CHANGE_TYPE_DELETE) {
             $class = 'wikilink2';
         }
         return '<a href="' . $href . '" class="' . $class . '">' . $display_name . '</a>';
@@ -246,7 +246,7 @@ class RevisionInfo
             //revision is not in attic
             return $id . ' [' . $date . ']';
         }
-        if ($this->val('type') == DOKU_CHANGE_TYPE_DELETE) {
+        if ($this->val('type') == WIKI_CHANGE_TYPE_DELETE) {
             $class = 'wikilink2';
         }
         return '<bdi><a class="' . $class . '" href="' . $href . '">' . $id . ' [' . $date . ']' . '</a></bdi>';
@@ -279,18 +279,18 @@ class RevisionInfo
             // page revision
             // when a page just created anyway, it is natural to expect no older revisions
             // even if it had once existed but deleted before. Simply ignore to check changelog.
-            if ($this->val('type') !== DOKU_CHANGE_TYPE_CREATE) {
+            if ($this->val('type') !== WIKI_CHANGE_TYPE_CREATE) {
                 $href = wl($id, ['do' => 'diff'], false, '&');
             }
         }
 
         if ($href) {
             return '<a href="' . $href . '" class="diff_link">'
-                  . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
+                  . '<img src="' . WIKI_BASE . 'lib/images/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
         } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
+            return '<img src="' . WIKI_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
         }
     }
 
@@ -322,11 +322,11 @@ class RevisionInfo
 
         if ($href) {
             return '<a href="' . $href . '" class="diff_link">'
-                  . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
+                  . '<img src="' . WIKI_BASE . 'lib/images/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
         } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
+            return '<img src="' . WIKI_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
         }
     }
 
@@ -354,7 +354,7 @@ class RevisionInfo
             $href = wl($id, ['do' => 'revisions'], false, '&');
         }
         return '<a href="' . $href . '" class="revisions_link">'
-              . '<img src="' . DOKU_BASE . 'lib/images/history.png" width="12" height="14"'
+              . '<img src="' . WIKI_BASE . 'lib/images/history.png" width="12" height="14"'
               . ' title="' . $lang['btn_revs'] . '" alt="' . $lang['btn_revs'] . '" />'
               . '</a>';
     }

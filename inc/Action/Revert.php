@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionException;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionException;
 
 /**
  * Class Revert
  *
  * Quick revert to an old revision
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Revert extends AbstractUserAction
 {

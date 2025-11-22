@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote\Response;
+namespace easywiki\Remote\Response;
 
 /**
  * These are simple data objects that hold the response data API calls

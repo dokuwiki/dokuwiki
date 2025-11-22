@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
 
-use dokuwiki\test\Remote\Mock\JsonRpcServer;
+use easywiki\test\Remote\Mock\JsonRpcServer;
 
 /**
  * @todo test different request formats
  */
-class JsonRpcServerTest extends \DokuWikiTest
+class JsonRpcServerTest extends \EasyWikiTest
 {
     protected $server;
 
@@ -67,8 +67,8 @@ class JsonRpcServerTest extends \DokuWikiTest
 
         $expect = json_encode([
             'type' => 'internal',
-            'page' => 'wiki:dokuwiki',
-            'href' => 'https://www.dokuwiki.org/wiki:dokuwiki'
+            'page' => 'wiki:easywiki',
+            'href' => 'https://www.EasyWiki.org/wiki:easywiki'
         ]);
 
         $response = json_encode($this->server->serve('[]')['result']);

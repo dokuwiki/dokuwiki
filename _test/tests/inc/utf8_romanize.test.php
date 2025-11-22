@@ -5,7 +5,7 @@ if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 /**
  * @group slow
  */
-class utf8_romanize_test extends DokuWikiTest {
+class utf8_romanize_test extends EasyWikiTest {
 
     /**
      * Check Japanese romanization
@@ -18,7 +18,7 @@ class utf8_romanize_test extends DokuWikiTest {
         foreach($tests as $test){
             list($jap,$rom) = explode(';',trim($test));
 
-            $chk = \dokuwiki\Utf8\Clean::romanize($jap);
+            $chk = \easywiki\Utf8\Clean::romanize($jap);
             $this->assertEquals($rom,$chk,"$jap\t->\t$chk\t!=\t$rom\t($line)");
             $line++;
         }
@@ -31,14 +31,14 @@ class utf8_romanize_test extends DokuWikiTest {
      * @author Andreas Gohr <andi@splitbrain.org>
      */
     function test_deaccented(){
-        $this->assertEquals("a A a A a o O",\dokuwiki\Utf8\Clean::romanize("å Å ä Ä ä ö Ö"));
+        $this->assertEquals("a A a A a o O",\easywiki\Utf8\Clean::romanize("å Å ä Ä ä ö Ö"));
     }
 
     /**
      * Greeklish romanization
      */
     function test_greeklish(){
-        $this->assertEquals('kalimera pos eiste',\dokuwiki\Utf8\Clean::romanize('Καλημέρα πώς είστε'));
+        $this->assertEquals('kalimera pos eiste',\easywiki\Utf8\Clean::romanize('Καλημέρα πώς είστε'));
     }
 
 }

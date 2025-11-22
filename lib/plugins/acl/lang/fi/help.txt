@@ -8,4 +8,4 @@ Yllä olevan kaavakkeen avulla voit katsoa ja muokata oikeuksia valitulle käytt
 
 Alla olevassa taulukossa on näkyvissä päällä olevat pääsyoikeudet. Voit käyttää sitä muokataksesi tai poistaaksesi useita oikeuksia.
 
-[[doku>acl|Virallisen käyttöoikeus (ACL) dokumentaation]]  lukeminen voi helpottaa sinua täysin ymmärtämään mitän käyttöoikeudet toimivat DokuWikissä.
+[[doku>acl|Virallisen käyttöoikeus (ACL) dokumentaation]]  lukeminen voi helpottaa sinua täysin ymmärtämään mitän käyttöoikeudet toimivat EasyWikissä.

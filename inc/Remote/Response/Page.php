@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Remote\Response;
+namespace easywiki\Remote\Response;
 
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
 
 /**
  * Represents a single page revision in the wiki.

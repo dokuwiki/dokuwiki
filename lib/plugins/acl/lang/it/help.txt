@@ -8,4 +8,4 @@ Il campo sopra ti permette di vedere e modificare i permessi di un utente o grup
 
 Nella tabella sotto, sono riportate tutte le regole di controllo degli accessi attualmente impostate. Puoi utilizzarla per eliminare o cambiare al volo varie regole.
 
-Leggere la [[doku>acl|documentazione ufficale delle ACL]] può aiutarti a capire pienamente come funziona il controllo degli accessi in DokuWiki.
+Leggere la [[doku>acl|documentazione ufficale delle ACL]] può aiutarti a capire pienamente come funziona il controllo degli accessi in EasyWiki.

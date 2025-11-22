@@ -8,5 +8,5 @@ A felső form segít a kiválasztott felhasználó vagy csoport jogosultságaina
 
 Az alsó táblázat mutatja az összes jelenleg érvényes hozzáférési szabályt. Ennek segítségével gyorsan törölhetők vagy megváltoztathatók a szabályok.
 
-A [[doku>acl|hivatalos ACL dokumentáció]] segíthet a DokuWiki hozzáférés-kezelés működésének megértésében.
+A [[doku>acl|hivatalos ACL dokumentáció]] segíthet a EasyWiki hozzáférés-kezelés működésének megértésében.
 

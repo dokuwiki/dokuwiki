@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
 use IXR\DataType\Base64;
 use IXR\DataType\Date;

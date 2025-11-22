@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 class Manifest
 {
@@ -12,7 +12,7 @@ class Manifest
 
         global $conf;
 
-        $manifest['scope'] = DOKU_REL;
+        $manifest['scope'] = WIKI_REL;
 
         if (empty($manifest['name'])) {
             $manifest['name'] = strip_tags($conf['title']);
@@ -27,7 +27,7 @@ class Manifest
         }
 
         if (empty($manifest['start_url'])) {
-            $manifest['start_url'] = DOKU_REL;
+            $manifest['start_url'] = WIKI_REL;
         }
 
         $styleUtil = new StyleUtils();
@@ -57,7 +57,7 @@ class Manifest
             $look = [
                 ':wiki:logo.svg',
                 ':logo.svg',
-                ':wiki:dokuwiki.svg'
+                ':wiki:easywiki.svg'
             ];
 
             foreach ($look as $svgLogo) {

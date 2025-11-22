@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\Event;
+use easywiki\Form\Form;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Sort;
 
 class Search extends Ui
 {

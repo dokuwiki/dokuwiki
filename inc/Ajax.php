@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Ui\MediaDiff;
-use dokuwiki\Ui\Index;
-use dokuwiki\Ui;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\Event;
+use easywiki\Ui\MediaDiff;
+use easywiki\Ui\Index;
+use easywiki\Ui;
+use easywiki\Utf8\Sort;
 
 /**
  * Manage all builtin AJAX calls
  *
  * @todo The calls should be refactored out to their own proper classes
- * @package dokuwiki
+ * @package easywiki
  */
 class Ajax
 {
@@ -235,7 +235,7 @@ class Ajax
     {
         global $IMG, $JUMPTO, $REV, $fullscreen, $INPUT;
         $fullscreen = true;
-        require_once(DOKU_INC . 'lib/exe/mediamanager.php');
+        require_once(WIKI_INC . 'lib/exe/mediamanager.php');
 
         $image = '';
         if ($INPUT->has('image')) $image = cleanID($INPUT->str('image'));

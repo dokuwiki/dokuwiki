@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
 
 /**
  * Tests for requesting revisions of a page with getRevisions()
@@ -9,7 +9,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrevisionsaround_test extends DokuWikiTest {
+class changelog_getrevisionsaround_test extends EasyWikiTest {
 
     /**
      * list of revisions in mailinglist.changes

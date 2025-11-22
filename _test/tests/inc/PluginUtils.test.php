@@ -1,6 +1,6 @@
 <?php
 
-class PluginUtilsTest extends DokuWikiTest
+class PluginUtilsTest extends EasyWikiTest
 {
     /**
      * @covers ::plugin_list()

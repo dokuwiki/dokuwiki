@@ -11,6 +11,6 @@ Versiune anterioară: @OLDPAGE@
 Versiune curentă: @NEWPAGE@
 
 Pentru a anula notificarea paginii, autentifică-te pe wiki la
-@DOKUWIKIURL@ apoi accesează
+@EASYWIKIURL@ apoi accesează
 @SUBSCRIBE@
 și dezabonează-te de la pagină și/sau modificările spațiului de nume.

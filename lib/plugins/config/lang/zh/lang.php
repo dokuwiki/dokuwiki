@@ -11,7 +11,7 @@
  * @author 小李 <szsd5257@foxmail.com>
  * @author VinnieChow <zsz33@qq.com>
  * @author Lakejason0 <lakesarchive@outlook.com>
- * @author Phy <dokuwiki@phy25.com>
+ * @author Phy <easywiki@phy25.com>
  * @author Jenxi <seow@jenxi.com>
  * @author FENG.JIE <ahx@qq.com>
  * @author Xin <chenxin1034@gmail.com>
@@ -45,7 +45,7 @@ $lang['danger']                = '危险：更改这个选项可能会使用你�
 $lang['warning']               = '注意：更改这个选项可能会造成未知结果。';
 $lang['security']              = '安全提示：更改这个选项可能会有安全隐患。';
 $lang['_configuration_manager'] = '配置管理器';
-$lang['_header_dokuwiki']      = 'DokuWiki 设置';
+$lang['_header_easywiki']      = 'EasyWiki 设置';
 $lang['_header_plugin']        = '插件设置';
 $lang['_header_template']      = '模板设置';
 $lang['_header_undefined']     = '其他设置';
@@ -94,7 +94,7 @@ $lang['maxseclevel']           = '段落编辑的最多层次';
 $lang['camelcase']             = '对链接使用 CamelCase';
 $lang['deaccent']              = '清理页面名称';
 $lang['useheading']            = '使用“标题 H1”作为页面名称';
-$lang['sneaky_index']          = '默认情况下，DokuWiki 在索引页会显示所有 namespace。启用该选项能隐藏那些用户没有权限阅读的页面。但也可能将用户能够阅读的子页面一并隐藏。这有可能导致在特定 ACL 设置下，索引功能不可用。';
+$lang['sneaky_index']          = '默认情况下，EasyWiki 在索引页会显示所有 namespace。启用该选项能隐藏那些用户没有权限阅读的页面。但也可能将用户能够阅读的子页面一并隐藏。这有可能导致在特定 ACL 设置下，索引功能不可用。';
 $lang['hidepages']             = '隐藏匹配的界面（正则表达式）';
 $lang['useacl']                = '使用访问控制列表（ACL）';
 $lang['autopasswd']            = '自动生成密码';
@@ -105,7 +105,7 @@ $lang['superuser']             = '超级用户 - 不论 ACL 如何设置，都�
 $lang['manager']               = '管理员 - 能访问相应管理功能的用户组/用户';
 $lang['profileconfirm']        = '更新个人信息时需要输入当前密码';
 $lang['rememberme']            = '允许在本地机长期保留登录cookies信息（记住我）';
-$lang['disableactions']        = '停用 DokuWiki 功能';
+$lang['disableactions']        = '停用 EasyWiki 功能';
 $lang['disableactions_check']  = '检查';
 $lang['disableactions_subscription'] = '订阅/退订';
 $lang['disableactions_wikicode'] = '查看源文件/导出源文件';
@@ -159,7 +159,7 @@ $lang['rss_media']             = '在 XML 源中应该列出何种类型的更�
 $lang['rss_media_o_both']      = '两者均可';
 $lang['rss_media_o_pages']     = '页面';
 $lang['rss_media_o_media']     = '媒体';
-$lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 DokuWiki 将自动访问 update.dokuwiki.org。';
+$lang['updatecheck']           = '自动检查更新并接收安全警告吗？开启该功能后 EasyWiki 将自动访问 update.easywiki.org。';
 $lang['userewrite']            = '使用更整洁的 URL';
 $lang['useslash']              = '在 URL 中使用斜杠作为命名空间的分隔符';
 $lang['sepchar']               = '页面名称中的单词分隔符';
@@ -174,7 +174,7 @@ $lang['send404']               = '发送 "HTTP 404/页面没有找到" 错误信
 $lang['broken_iua']            = 'ignore_user_abort 功能失效了？这有可能导致搜索索引不可用。IIS+PHP/CGI 已损坏。请参阅 <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Bug 852</a> 获取更多信息。';
 $lang['xsendfile']             = '使用 X-Sendfile 头让服务器发送状态文件？您的服务器需要支持该功能。';
 $lang['renderer_xhtml']        = '主维基页面 (xhtml) 输出使用的渲染';
-$lang['renderer__core']        = '%s（DokuWiki 内核）';
+$lang['renderer__core']        = '%s（EasyWiki 内核）';
 $lang['renderer__plugin']      = '%s（插件）';
 $lang['search_nslimit']        = '限制搜索范围为当前若干层命名空间。当搜索在更深的命名空间中被执行时，前若干层命名空间将会被用来筛选';
 $lang['search_fragment']       = '指定默认的分段搜索方式';
@@ -185,7 +185,7 @@ $lang['search_fragment_o_contains'] = '包含';
 $lang['_feature_flags']        = '功能标志';
 $lang['defer_js']              = '推迟在页面HTML解析后执行的JavaScript。提高了页面的感知速度，但可能会破坏少量插件。';
 $lang['hidewarnings']          = '不显示 PHP 发出的任何警告。这可以简化到 PHP8+ 的转换。警告仍将记录在错误日志中，并应报告。';
-$lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
+$lang['dnslookups']            = 'EasyWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
 $lang['jquerycdn_o_0']         = '不使用CDN，只使用本地库';
@@ -203,7 +203,7 @@ $lang['typography_o_1']        = '仅限双引号';
 $lang['typography_o_2']        = '所有引号（不一定能正常运行）';
 $lang['userewrite_o_0']        = '无';
 $lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki 内部控制';
+$lang['userewrite_o_2']        = 'EasyWiki 内部控制';
 $lang['deaccent_o_0']          = '关闭';
 $lang['deaccent_o_1']          = '移除重音符号';
 $lang['deaccent_o_2']          = '用罗马字拼写';

@@ -1,1 +1,1 @@
-Toto sú aktuálne nainštalované rozšírenia vo Vašom systéme DokuWiki. Tu ich môžete povoliť, zakázať alebo odinštalovať. Tiež tu nájdete aj aktualizácie rozšírení. Pred aktualizovaním si prečítajte dokumentáciu rozšírenia.
+Toto sú aktuálne nainštalované rozšírenia vo Vašom systéme EasyWiki. Tu ich môžete povoliť, zakázať alebo odinštalovať. Tiež tu nájdete aj aktualizácie rozšírení. Pred aktualizovaním si prečítajte dokumentáciu rozšírenia.

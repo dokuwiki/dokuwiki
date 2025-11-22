@@ -27,7 +27,7 @@ define('MSG_ADMINS_ONLY', 4);
 
 /**
  * Lexer constants
- * @see \dokuwiki\Parsing\Lexer\Lexer
+ * @see \easywiki\Parsing\Lexer\Lexer
  */
 define('DOKU_LEXER_ENTER', 1);
 define('DOKU_LEXER_MATCHED', 2);
@@ -39,11 +39,11 @@ define('DOKU_LEXER_SPECIAL', 5);
  * Constants for known core changelog line types.
  * @file inc/changelog.php
  */
-define('DOKU_CHANGE_TYPE_CREATE', 'C');
-define('DOKU_CHANGE_TYPE_EDIT', 'E');
-define('DOKU_CHANGE_TYPE_MINOR_EDIT', 'e');
-define('DOKU_CHANGE_TYPE_DELETE', 'D');
-define('DOKU_CHANGE_TYPE_REVERT', 'R');
+define('WIKI_CHANGE_TYPE_CREATE', 'C');
+define('WIKI_CHANGE_TYPE_EDIT', 'E');
+define('WIKI_CHANGE_TYPE_MINOR_EDIT', 'e');
+define('WIKI_CHANGE_TYPE_DELETE', 'D');
+define('WIKI_CHANGE_TYPE_REVERT', 'R');
 
 /**
  * Changelog filter constants
@@ -60,10 +60,10 @@ define('RECENTS_ONLY_CREATION', 64);
  * Media error types
  * @file inc/media.php
  */
-define('DOKU_MEDIA_DELETED', 1);
-define('DOKU_MEDIA_NOT_AUTH', 2);
-define('DOKU_MEDIA_INUSE', 4);
-define('DOKU_MEDIA_EMPTY_NS', 8);
+define('WIKI_MEDIA_DELETED', 1);
+define('WIKI_MEDIA_NOT_AUTH', 2);
+define('WIKI_MEDIA_INUSE', 4);
+define('WIKI_MEDIA_EMPTY_NS', 8);
 
 /**
  * Unusable password hash

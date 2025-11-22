@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\Remote\Mock;
+namespace easywiki\test\Remote\Mock;
 
-class XmlRpcServer extends \dokuwiki\Remote\XmlRpcServer
+class XmlRpcServer extends \easywiki\Remote\XmlRpcServer
 {
     public $output;
 

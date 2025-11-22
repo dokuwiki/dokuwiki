@@ -8,14 +8,14 @@
  * @todo       Combine similar functions like {wiki,media,meta}FN()
  */
 
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\File\Resolver;
-use dokuwiki\Extension\Event;
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\File\MediaResolver;
-use dokuwiki\File\PageResolver;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Clean;
+use easywiki\File\Resolver;
+use easywiki\Extension\Event;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\File\MediaResolver;
+use easywiki\File\PageResolver;
 
 /**
  * Fetch the an ID from request
@@ -481,12 +481,12 @@ function mediaFN($id, $rev = '', $clean = true)
 function localeFN($id, $ext = 'txt')
 {
     global $conf;
-    $file = DOKU_CONF . 'lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
+    $file = WIKI_CONF . 'lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
     if (!file_exists($file)) {
-        $file = DOKU_INC . 'inc/lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
+        $file = WIKI_INC . 'inc/lang/' . $conf['lang'] . '/' . $id . '.' . $ext;
         if (!file_exists($file)) {
             //fall back to english
-            $file = DOKU_INC . 'inc/lang/en/' . $id . '.' . $ext;
+            $file = WIKI_INC . 'inc/lang/en/' . $id . '.' . $ext;
         }
     }
     return $file;

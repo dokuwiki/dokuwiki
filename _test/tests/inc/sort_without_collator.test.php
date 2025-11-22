@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\Sort;
 
 require_once __DIR__ . '/sort_with_collator.test.php';
 

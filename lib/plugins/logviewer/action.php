@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
- * DokuWiki Plugin logviewer (Action Component)
+ * EasyWiki Plugin logviewer (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -22,7 +22,7 @@ class action_plugin_logviewer extends ActionPlugin
     /**
      * Event handler for INDEXER_TASKS_RUN
      *
-     * @see https://www.dokuwiki.org/devel:events:INDEXER_TASKS_RUN
+     * @see https://www.EasyWiki.org/devel:events:INDEXER_TASKS_RUN
      * @param Event $event Event object
      * @param mixed $param optional parameter passed when event was registered
      * @return void

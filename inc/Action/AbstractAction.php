@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Action\Exception\FatalException;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Action\Exception\FatalException;
 
 /**
  * Class AbstractAction
  *
  * Base class for all actions
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 abstract class AbstractAction
 {

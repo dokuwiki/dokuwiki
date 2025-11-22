@@ -11,6 +11,6 @@ Revisão antiga:@OLDPAGE@
 Nova Revisão:@NEWPAGE@
 
 Para cancelar as notificações de mudanças, entre em
-@DOKUWIKIURL@, vá até @SUBSCRIBE@
+@EASYWIKIURL@, vá até @SUBSCRIBE@
 e cancele o monitoramento da página e/ou do espaço de
 nomes.

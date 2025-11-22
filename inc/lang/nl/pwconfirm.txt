@@ -1,6 +1,6 @@
 Beste @FULLNAME@!
 
-Iemand heeft een nieuw wachtwoord aangevraagd voor je @TITLE@ login op @DOKUWIKIURL@
+Iemand heeft een nieuw wachtwoord aangevraagd voor je @TITLE@ login op @EASYWIKIURL@
 
 Als je geen nieuw wachtwoord hebt aangevraagd kun je deze e-mail negeren.
 

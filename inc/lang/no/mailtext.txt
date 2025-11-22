@@ -1,4 +1,4 @@
-En side i din DokuWiki har blitt lagt til eller blitt endret. Informasjon om endringen:
+En side i din EasyWiki har blitt lagt til eller blitt endret. Informasjon om endringen:
 
 Dato                 : @DATE@
 Nettleser            : @BROWSER@

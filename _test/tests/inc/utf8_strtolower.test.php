@@ -1,6 +1,6 @@
 <?php
 
-class utf8_strtolower_test extends DokuWikiTest
+class utf8_strtolower_test extends EasyWikiTest
 {
 
     /**
@@ -28,7 +28,7 @@ class utf8_strtolower_test extends DokuWikiTest
      */
     public function testGivens($input, $expected)
     {
-        $this->assertEquals($expected, \dokuwiki\Utf8\PhpString::strtolower($input));
+        $this->assertEquals($expected, \easywiki\Utf8\PhpString::strtolower($input));
         // just make sure our data was correct
         $this->assertEquals($expected, mb_strtolower($input, 'utf-8'), 'mbstring check');
     }

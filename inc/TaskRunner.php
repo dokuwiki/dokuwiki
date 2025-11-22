@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Sitemap\Mapper;
-use dokuwiki\Subscriptions\BulkSubscriptionSender;
-use dokuwiki\ChangeLog\ChangeLog;
+use easywiki\Extension\Event;
+use easywiki\Sitemap\Mapper;
+use easywiki\Subscriptions\BulkSubscriptionSender;
+use easywiki\ChangeLog\ChangeLog;
 
 /**
  * Class TaskRunner

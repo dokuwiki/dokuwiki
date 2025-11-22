@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class MediaManager
@@ -21,7 +21,7 @@ class MediaManager extends AbstractItem
             throw new \RuntimeException("media manager link only with upload permissions");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
         $this->type = 'mediaManager';
         $this->params = ['ns' => $imgNS, 'image' => $IMG, 'do' => 'media'];
     }

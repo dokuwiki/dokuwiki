@@ -301,24 +301,24 @@ $lang['subscr_style_digest']   = 'הודעת דוא״ל המציגה את כל �
 $lang['subscr_style_list']     = 'רשימת השינויים בדפים מאז הודעת הדוא״ל האחרונה (בכל %.2f ימים)';
 $lang['authtempfail']          = 'אימות משתמשים אינו זמין כרגע. אם מצב זה נמשך נא ליידע את מנהל הוויקי.';
 $lang['i_chooselang']          = 'נא לבחור שפה';
-$lang['i_installer']           = 'תכנית ההתקנה של DokuWiki';
+$lang['i_installer']           = 'תכנית ההתקנה של EasyWiki';
 $lang['i_wikiname']            = 'שם הוויקי';
 $lang['i_enableacl']           = 'הפעלת ACL (מומלץ)';
 $lang['i_superuser']           = 'משתמש־על';
 $lang['i_problems']            = 'תכנית ההתקנה זיהתה מספר בעיות המפורטות להלן. אין באפשרותך להמשיך לפני תיקונן.';
-$lang['i_modified']            = 'משיקולי אבטחה סקריפט זה יעבוד אך ורק עם התקנת DokuWiki חדשה שלא עברה כל שינוי.
+$lang['i_modified']            = 'משיקולי אבטחה סקריפט זה יעבוד אך ורק עם התקנת EasyWiki חדשה שלא עברה כל שינוי.
                          עליך לחלץ שנית את הקבצים מהחבילה שהורדה או להיעזר בדף
-                         <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                         <a href="https://www.EasyWiki.org/install">EasyWiki installation instructions</a>';
 $lang['i_funcna']              = 'פונקציית ה-PHP&#8207; <code>%s</code> אינה זמינה. יתכן כי מארח האתר חסם אותה מסיבה כלשהי?';
 $lang['i_phpver']              = 'גרסת PHP שלך <code>%s</code> נמוכה מ <code>%s</code> הצורך. אתה צריך לשדרג PHP שלך להתקין.';
-$lang['i_mbfuncoverload']      = 'יש לבטל את mbstring.func_overload בphp.ini בכדי להריץ את DokuWiki';
-$lang['i_permfail']            = '<code>%s</code> אינה ניתנת לכתיבה על ידי DokuWiki. עליך לשנות הרשאות תיקייה זו!';
+$lang['i_mbfuncoverload']      = 'יש לבטל את mbstring.func_overload בphp.ini בכדי להריץ את EasyWiki';
+$lang['i_permfail']            = '<code>%s</code> אינה ניתנת לכתיבה על ידי EasyWiki. עליך לשנות הרשאות תיקייה זו!';
 $lang['i_confexists']          = '<code>%s</code> כבר קיים';
 $lang['i_writeerr']            = 'אין אפשרות ליצור את <code>%s</code>. נא לבדוק את הרשאות הקובץ/תיקייה וליצור את הקובץ ידנית.';
-$lang['i_badhash']             = 'הקובץ Dokuwiki.php אינו מזוהה או שעבר שינויים (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'הקובץ EasyWiki.php אינו מזוהה או שעבר שינויים (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - הערך אינו חוקי או ריק';
-$lang['i_success']             = 'תהליך ההגדרה הסתיים בהצלחה. כעת ניתן למחוק את הקובץ install.php ולהמשיך אל ה־<a href="doku.php?id=wiki:welcome">DokuWiki החדש שלך</a>.';
-$lang['i_failure']             = 'מספר שגיאות אירעו בעת כתיבת קובצי התצורה. יתכן כי יהיה צורך לתקנם ידנית לפני שניתן יהיה להשתמש ב־<a href="doku.php?id=wiki:welcome">DokuWiki החדש שלך</a>.';
+$lang['i_success']             = 'תהליך ההגדרה הסתיים בהצלחה. כעת ניתן למחוק את הקובץ install.php ולהמשיך אל ה־<a href="wiki.php?id=wiki:welcome">EasyWiki החדש שלך</a>.';
+$lang['i_failure']             = 'מספר שגיאות אירעו בעת כתיבת קובצי התצורה. יתכן כי יהיה צורך לתקנם ידנית לפני שניתן יהיה להשתמש ב־<a href="wiki.php?id=wiki:welcome">EasyWiki החדש שלך</a>.';
 $lang['i_policy']              = 'מדיניות ACL התחלתית';
 $lang['i_pol0']                = 'ויקי פתוח (קריאה, כתיבה והעלאה לכולם)';
 $lang['i_pol1']                = ' ויקי ציבורי (קריאה לכולם, כתיבה והעלאה למשתמשים רשומים)';
@@ -327,8 +327,8 @@ $lang['i_allowreg']            = 'אפשר למשתמשים לרשום את עצ
 $lang['i_retry']               = 'ניסיון נוסף';
 $lang['i_license']             = 'נא לבחור את הרישיון שיחול על התוכן שבוויקי שלך:';
 $lang['i_license_none']        = 'אל תציג כל מידע רישיון';
-$lang['i_pop_field']           = 'אנא, עזרו לנו לשפר את חווית ה DokuWiki:';
-$lang['i_pop_label']           = 'פעם בחודש, לשלוח את נתוני שימוש אנונימיים למפתחי DokuWiki';
+$lang['i_pop_field']           = 'אנא, עזרו לנו לשפר את חווית ה EasyWiki:';
+$lang['i_pop_label']           = 'פעם בחודש, לשלוח את נתוני שימוש אנונימיים למפתחי EasyWiki';
 $lang['recent_global']         = 'נכון לעכשיו מתנהל על ידיך מעקב אחר מרחב השם <b>%s</b>. כמו כן, באפשרותך <a href="%s">לצפות בשינויים האחרונים בוויקי כולו</a>.';
 $lang['years']                 = 'לפני %d שנים';
 $lang['months']                = 'לפני %d חודשים';
@@ -367,8 +367,8 @@ $lang['searchresult']          = 'תוצאות חיפוש';
 $lang['plainhtml']             = 'HTML פשוט';
 $lang['page_nonexist_rev']     = 'העמוד לא קיים ב%s. העמוד נוצר במקום זאת ב<a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'לא ניתן לפענח פרמטר "%s".';
-$lang['email_signature_text']  = 'הודעת דוא״ל זו נוצרה על ידי ה־DokuWiki הזמין בכתובת
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'הודעת דוא״ל זו נוצרה על ידי ה־EasyWiki הזמין בכתובת
+@EASYWIKIURL@';
 $lang['log_file_too_large']    = 'קובץ התיעוד גדול מדי, מדלג על שורות קודמות';
 $lang['log_file_failed_to_open'] = 'שגיאה בפתיחת קובץ תיעוד';
 $lang['log_file_failed_to_read'] = 'התרחשה שגיאה בקריאת קובץ התיעוד';

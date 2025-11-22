@@ -1,19 +1,19 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\UserRegister;
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Ui;
+use easywiki\Ui\UserRegister;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Ui;
 
 /**
  * Class Register
  *
  * Self registering a new user
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Register extends AbstractAclAction
 {

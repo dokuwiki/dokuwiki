@@ -4,12 +4,12 @@
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('WIKI_INC')) define('WIKI_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 /**
- * Easily manage DokuWiki git repositories
+ * Easily manage EasyWiki git repositories
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -24,7 +24,7 @@ class GitToolCLI extends CLI
     protected function setup(Options $options)
     {
         $options->setHelp(
-            "Manage git repositories for DokuWiki and its plugins and templates.\n\n" .
+            "Manage git repositories for EasyWiki and its plugins and templates.\n\n" .
             "$> ./bin/gittool.php clone gallery template:ach\n" .
             "$> ./bin/gittool.php repos\n" .
             "$> ./bin/gittool.php origin -v"
@@ -38,7 +38,7 @@ class GitToolCLI extends CLI
 
         $options->registerCommand(
             'clone',
-            'Tries to install a known plugin or template (prefix with template:) via git. Uses the DokuWiki.org ' .
+            'Tries to install a known plugin or template (prefix with template:) via git. Uses the EasyWiki.org ' .
             'plugin repository to find the proper git repository. Multiple extensions can be given as parameters'
         );
         $options->registerArgument(
@@ -62,13 +62,13 @@ class GitToolCLI extends CLI
 
         $options->registerCommand(
             'repos',
-            'Lists all git repositories found in this DokuWiki installation'
+            'Lists all git repositories found in this EasyWiki installation'
         );
 
         $options->registerCommand(
             '*',
             'Any unknown commands are assumed to be arguments to git and will be executed in all repositories ' .
-            'found within this DokuWiki installation'
+            'found within this EasyWiki installation'
         );
     }
 
@@ -257,7 +257,7 @@ class GitToolCLI extends CLI
         if (str_starts_with($ext, 'template:')) {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
         } else {
-            $target = DOKU_PLUGIN . $ext;
+            $target = WIKI_PLUGIN . $ext;
         }
 
         $this->info("cloning $ext from $repo to $target");
@@ -273,7 +273,7 @@ class GitToolCLI extends CLI
     }
 
     /**
-     * Returns all git repositories in this DokuWiki install
+     * Returns all git repositories in this EasyWiki install
      *
      * Looks in root, template and plugin directories only.
      *
@@ -283,8 +283,8 @@ class GitToolCLI extends CLI
     {
         $this->info('Looking for .git directories');
         $data = array_merge(
-            glob(DOKU_INC . '.git', GLOB_ONLYDIR),
-            glob(DOKU_PLUGIN . '*/.git', GLOB_ONLYDIR),
+            glob(WIKI_INC . '.git', GLOB_ONLYDIR),
+            glob(WIKI_PLUGIN . '*/.git', GLOB_ONLYDIR),
             glob(fullpath(tpl_incdir() . '../') . '/*/.git', GLOB_ONLYDIR)
         );
 

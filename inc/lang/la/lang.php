@@ -4,7 +4,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesLa.php?view=co
@@ -233,16 +233,16 @@ $lang['i_wikiname']            = 'Nomen Vicis';
 $lang['i_enableacl']           = 'ICA aptum facias (consulatum est)';
 $lang['i_superuser']           = 'Magister\stra';
 $lang['i_problems']            = 'Creator hos errores habes. Continuare potes postquam omnia soluentur.';
-$lang['i_modified']            = 'Hoc scriptum solum cum noua forma Dokuuicis est. Hoc rursum capere in pagina, in qua haec machina capta est, potes aut i ad <a href="https://www.dokuwiki.org/install">Dokuuicis installation instructions</a>';
+$lang['i_modified']            = 'Hoc scriptum solum cum noua forma Dokuuicis est. Hoc rursum capere in pagina, in qua haec machina capta est, potes aut i ad <a href="https://www.EasyWiki.org/install">Dokuuicis installation instructions</a>';
 $lang['i_funcna']              = 'PHP functio <code>%s</code> inepta est.';
 $lang['i_phpver']              = 'Forma tua PHP <code>%s</code> minor quam illa necessaria <code>%s</code>.';
 $lang['i_permfail']            = '<code>%s</code> non a uice scribitur. Facultates inspicere.';
 $lang['i_confexists']          = '<code>%s</code> iam est.';
 $lang['i_writeerr']            = '<code>%s</code> non creari potest. Manu illum creas.';
-$lang['i_badhash']             = 'Ignotum uel mutatum dokuwiki.php (<code>%s</code>)';
+$lang['i_badhash']             = 'Ignotum uel mutatum easywiki.php (<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> non legitimum uel uacuom';
-$lang['i_success']             = 'Administratio feliciter perficitur. Delere install.php documentum potes. I ad <a href="doku.php?id=wiki:welcome">hanc paginam</a> ut continues.';
-$lang['i_failure']             = 'Aliqui errores dum documenta administrantur sunt. Manu onerare omnes potes priusquam <a href="doku.php?id=wiki:welcome">tuo nouo uice</a> uteris.';
+$lang['i_success']             = 'Administratio feliciter perficitur. Delere install.php documentum potes. I ad <a href="wiki.php?id=wiki:welcome">hanc paginam</a> ut continues.';
+$lang['i_failure']             = 'Aliqui errores dum documenta administrantur sunt. Manu onerare omnes potes priusquam <a href="wiki.php?id=wiki:welcome">tuo nouo uice</a> uteris.';
 $lang['i_policy']              = 'ICA ratio prima';
 $lang['i_pol0']                = 'Vicem aperire (omnes legere, scribere, onerare possunt)';
 $lang['i_pol1']                = 'Publicus uicis (omnes legere, Sodales scribere et onerare possunt)';
@@ -258,4 +258,4 @@ $lang['minutes']               = 'a minutis %d';
 $lang['seconds']               = 'a secundis %d';
 $lang['wordblock']             = 'Mutationes non seruantur, eo quod mala uerba contenit';
 $lang['email_signature_text'] = 'Hic cursus generatus a
-@DOKUWIKIURL@';
+@EASYWIKIURL@';

@@ -94,7 +94,7 @@ $lang['regfail']               = 'The user could not be created.';
 $lang['regmailfail']           = 'Looks like there was an error on sending the password mail. Please contact the admin!';
 $lang['regbadmail']            = 'The given email address looks invalid - if you think this is an error, contact the admin';
 $lang['regbadpass']            = 'The two given passwords are not identical, please try again.';
-$lang['regpwmail']             = 'Your DokuWiki password';
+$lang['regpwmail']             = 'Your EasyWiki password';
 $lang['reghere']               = 'You don\'t have an account yet? Just get one';
 
 $lang['profna']                = 'This wiki does not support profile modification';
@@ -176,7 +176,7 @@ $lang['js']['media_done_btn']      = 'Done';
 $lang['js']['media_drop']          = 'Drop files here to upload';
 $lang['js']['media_cancel']        = 'remove';
 $lang['js']['media_overwrt']       = 'Overwrite existing files';
-$lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not properly secured. Please read about <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not properly secured. Please read about <a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security in EasyWiki</a>.';
 
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
@@ -318,30 +318,30 @@ $lang['authtempfail']          = 'User authentication is temporarily unavailable
 
 /* installer strings */
 $lang['i_chooselang']          = 'Choose your language';
-$lang['i_installer']           = 'DokuWiki Installer';
+$lang['i_installer']           = 'EasyWiki Installer';
 $lang['i_wikiname']            = 'Wiki Name';
 $lang['i_enableacl']           = 'Enable ACL (recommended)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'The installer found some problems, indicated below. You can not continue until you have fixed them.';
-$lang['i_modified']            = 'For security reasons this script will only work with a new and unmodified Dokuwiki installation.
+$lang['i_modified']            = 'For security reasons this script will only work with a new and unmodified EasyWiki installation.
                                   You should either re-extract the files from the downloaded package or consult the complete
-                                  <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
+                                  <a href="https://www.EasyWiki.org/install">EasyWiki installation instructions</a>';
 $lang['i_funcna']              = 'PHP function <code>%s</code> is not available. Maybe your hosting provider disabled it for some reason?';
 $lang['i_disabled']            =  'It has been disabled by your provider.';
 $lang['i_funcnmail']           = '<b>Note:</b> The PHP mail function is not available. %s' .
-                                 ' If it remains unavailable, you may install the <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
+                                 ' If it remains unavailable, you may install the <a href="https://www.EasyWiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run DokuWiki.';
-$lang['i_urandom']             = 'DokuWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
-$lang['i_permfail']            = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run EasyWiki.';
+$lang['i_urandom']             = 'EasyWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
+$lang['i_permfail']            = '<code>%s</code> is not writable by EasyWiki. You need to fix the permission settings of this directory!';
 $lang['i_confexists']          = '<code>%s</code> already exists';
 $lang['i_writeerr']            = 'Unable to create <code>%s</code>. You will need to check directory/file permissions and create the file manually.';
-$lang['i_badhash']             = 'unrecognised or modified dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'unrecognised or modified easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - illegal or empty value';
 $lang['i_success']             = 'The configuration was finished successfully. You may delete the install.php file now. Continue to
-                                 <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
+                                 <a href="wiki.php?id=wiki:welcome">your new EasyWiki</a>.';
 $lang['i_failure']             = 'Some errors occurred while writing the configuration files. You may need to fix them manually before
-                                  you can use <a href="doku.php?id=wiki:welcome">your new DokuWiki</a>.';
+                                  you can use <a href="wiki.php?id=wiki:welcome">your new EasyWiki</a>.';
 $lang['i_policy']              = 'Initial ACL policy';
 $lang['i_pol0']                = 'Open Wiki (read, write, upload for everyone)';
 $lang['i_pol1']                = 'Public Wiki (read for everyone, write and upload for registered users)';
@@ -350,8 +350,8 @@ $lang['i_allowreg']            = 'Allow users to register themselves';
 $lang['i_retry']               = 'Retry';
 $lang['i_license']             = 'Please choose the license you want to put your content under:';
 $lang['i_license_none']        = 'Do not show any license information';
-$lang['i_pop_field']           = 'Please, help us to improve the DokuWiki experience:';
-$lang['i_pop_label']           = 'Once a month, send anonymous usage data to the DokuWiki developers';
+$lang['i_pop_field']           = 'Please, help us to improve the EasyWiki experience:';
+$lang['i_pop_label']           = 'Once a month, send anonymous usage data to the EasyWiki developers';
 
 $lang['recent_global']         = 'You\'re currently watching the changes inside the <b>%s</b> namespace. You can also <a href="%s">view the recent changes of the whole wiki</a>.';
 $lang['years']                 = '%d years ago';
@@ -396,8 +396,8 @@ $lang['plainhtml']             = 'Plain HTML';
 $lang['wikimarkup']            = 'Wiki Markup';
 $lang['page_nonexist_rev']     = 'Page did not exist at %s. It was subsequently created at <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Unable to parse at parameter "%s".';
-$lang['email_signature_text'] = 'This mail was generated by DokuWiki at
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'This mail was generated by EasyWiki at
+@EASYWIKIURL@';
 #$lang['email_signature_html'] = ''; # the empty default will copy the text signature, you can override it in a local lang file
 
 $lang['log_file_too_large']    = 'Log file too large. Previous lines skipped!';

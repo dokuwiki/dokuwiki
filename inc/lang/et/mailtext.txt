@@ -1,4 +1,4 @@
-Sinu lehte DokuWiki-s on muudetud. Alljärgnevalt detailid:
+Sinu lehte EasyWiki-s on muudetud. Alljärgnevalt detailid:
 
 Kuupäev           : @DATE@
 Brauser           : @BROWSER@

@@ -1,6 +1,6 @@
 Pozdravljeni, @FULLNAME@!
 
-S podatki vašega imena je bila poslana zahteva za pridobitev novega gesla za uporabniško ime @TITLE@ na wiki spletišču @DOKUWIKIURL@.
+S podatki vašega imena je bila poslana zahteva za pridobitev novega gesla za uporabniško ime @TITLE@ na wiki spletišču @EASYWIKIURL@.
 
  - V kolikor novega gesla niste zahtevali, prezrite to sporočilo.
 

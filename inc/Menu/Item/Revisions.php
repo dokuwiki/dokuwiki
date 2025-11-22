@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Revisions
@@ -16,6 +16,6 @@ class Revisions extends AbstractItem
 
         $this->accesskey = 'o';
         $this->type = 'revs';
-        $this->svg = DOKU_INC . 'lib/images/menu/07-revisions_history.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/07-revisions_history.svg';
     }
 }

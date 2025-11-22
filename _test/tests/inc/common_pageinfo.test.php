@@ -4,7 +4,7 @@
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
-class common_pageinfo_test extends DokuWikiTest {
+class common_pageinfo_test extends EasyWikiTest {
 
     function setup() : void {
         parent::setup();

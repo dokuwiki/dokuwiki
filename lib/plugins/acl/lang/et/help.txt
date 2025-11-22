@@ -6,4 +6,4 @@ Käesoleval leheküljel saad oma wiki nimeruumidele ja lehekülgedele lisada nin
   * Allolevas tabelis näidatakse kõiki hetkel sättestatud reegleid ligipääsudele.
 Saad seda kasutada reeglite hulgi muutmiseks või kustutamiseks
 
-Mõistmaks paremini DokuWiki ligipääsu halduse toimimist, võiks abiks olla [[doku>acl|ACL-i ametliku dokumentatsiooniga]] tutvumine.
+Mõistmaks paremini EasyWiki ligipääsu halduse toimimist, võiks abiks olla [[doku>acl|ACL-i ametliku dokumentatsiooniga]] tutvumine.

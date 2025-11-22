@@ -1,16 +1,16 @@
 <?php
 
-use dokuwiki\Parsing\Handler\Lists;
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Linebreak;
-use dokuwiki\Parsing\ParserMode\Listblock;
-use dokuwiki\Parsing\ParserMode\Unformatted;
+use easywiki\Parsing\Handler\Lists;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Footnote;
+use easywiki\Parsing\ParserMode\Formatting;
+use easywiki\Parsing\ParserMode\Linebreak;
+use easywiki\Parsing\ParserMode\Listblock;
+use easywiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Lists extends TestOfWiki_Parser {
 
     function testUnorderedList() {
         $this->P->addMode('listblock',new Listblock());

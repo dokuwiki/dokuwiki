@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\test\Remote\Mock;
+namespace easywiki\test\Remote\Mock;
 
-use dokuwiki\Extension\RemotePlugin;
-use dokuwiki\Remote\ApiCall;
+use easywiki\Extension\RemotePlugin;
+use easywiki\Remote\ApiCall;
 
 class TestPlugin1 extends RemotePlugin
 {

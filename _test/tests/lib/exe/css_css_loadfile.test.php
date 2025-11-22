@@ -1,8 +1,8 @@
 <?php
 
-require_once DOKU_INC.'lib/exe/css.php';
+require_once WIKI_INC.'lib/exe/css.php';
 
-class css_css_loadfile_test extends DokuWikiTest {
+class css_css_loadfile_test extends EasyWikiTest {
 
     protected $file = '';
 

@@ -1,4 +1,4 @@
-Er is een bestand geüpload naar uw DokuWiki. Hier zijn de details;
+Er is een bestand geüpload naar uw EasyWiki. Hier zijn de details;
 
 Bestand  : @MEDIA@
 Oude revisie: @OLD@

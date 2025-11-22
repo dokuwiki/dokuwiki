@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\HTTP;
+namespace easywiki\HTTP;
 
 /**
  * Utilities to send HTTP Headers

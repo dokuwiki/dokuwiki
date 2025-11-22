@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Top
@@ -15,10 +15,10 @@ class Top extends AbstractItem
     {
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/10-top_arrow-up.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/10-top_arrow-up.svg';
         $this->accesskey = 't';
         $this->params = ['do' => ''];
-        $this->id = '#dokuwiki__top';
+        $this->id = '#easywiki__top';
         $this->context = self::CTX_DESKTOP;
     }
 

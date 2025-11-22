@@ -1,6 +1,6 @@
 <?php
 
-class search_test extends DokuWikiTest {
+class search_test extends EasyWikiTest {
 
     function strip_index_data($entry) {
         $n_entry = array();

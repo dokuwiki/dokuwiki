@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Subscriptions;
+namespace easywiki\Subscriptions;
 
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Input\Input;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Input\Input;
 use Exception;
 
 class BulkSubscriptionSender extends SubscriptionSender
@@ -87,7 +87,7 @@ class BulkSubscriptionSender extends SubscriptionSender
                     while (
                         !is_null($rev) && $rev['date'] >= $lastupdate &&
                         ($INPUT->server->str('REMOTE_USER') === $rev['user'] ||
-                            $rev['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT)
+                            $rev['type'] === WIKI_CHANGE_TYPE_MINOR_EDIT)
                     ) {
                         $revisions = $pagelog->getRevisions($n++, 1);
                         $rev = ($revisions !== []) ? $pagelog->getRevisionInfo($revisions[0]) : null;

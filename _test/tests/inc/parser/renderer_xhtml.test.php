@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Parsing\Handler\Lists;
+use easywiki\Parsing\Handler\Lists;
 
 /**
  * Class renderer_xhtml_test
  */
-class renderer_xhtml_test extends DokuWikiTest {
-    /** @var Doku_Renderer_xhtml */
+class renderer_xhtml_test extends EasyWikiTest {
+    /** @var Wiki_Renderer_xhtml */
     protected $R;
 
     /**
@@ -16,7 +16,7 @@ class renderer_xhtml_test extends DokuWikiTest {
      */
     function setUp() : void {
         parent::setUp();
-        $this->R = new Doku_Renderer_xhtml();
+        $this->R = new Wiki_Renderer_xhtml();
     }
 
     function tearDown() : void {
@@ -269,7 +269,7 @@ class renderer_xhtml_test extends DokuWikiTest {
         $this->assertSame('0', $header);
 
         $this->R->internallink($id);
-        $expected = '<a href="/doku.php?id='.$id.'" class="wikilink1" title="'.$id.'" data-wiki-id="blanktest">0</a>';
+        $expected = '<a href="/wiki.php?id='.$id.'" class="wikilink1" title="'.$id.'" data-wiki-id="blanktest">0</a>';
         $this->assertEquals($expected, trim($this->R->doc));
     }
 }

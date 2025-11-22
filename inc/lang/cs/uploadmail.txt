@@ -1,4 +1,4 @@
-Do DokuWiki byl nahrán nový dokument. Zde jsou podrobnosti:
+Do EasyWiki byl nahrán nový dokument. Zde jsou podrobnosti:
 
 Soubor : @MEDIA@
 Datum : @DATE@

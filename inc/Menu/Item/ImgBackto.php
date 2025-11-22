@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class ImgBackto
@@ -15,7 +15,7 @@ class ImgBackto extends AbstractItem
         global $ID;
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/12-back_arrow-left.svg';
         $this->type = 'img_backto';
         $this->params = [];
         $this->accesskey = 'b';

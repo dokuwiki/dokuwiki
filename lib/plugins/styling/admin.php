@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\StyleUtils;
+use easywiki\Extension\AdminPlugin;
+use easywiki\StyleUtils;
 
 /**
- * DokuWiki Plugin styling (Admin Component)
+ * EasyWiki Plugin styling (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -69,7 +69,7 @@ class admin_plugin_styling extends AdminPlugin
         $replacements = $styleini['replacements'];
 
         if ($this->ispopup) {
-            $target = DOKU_BASE . 'lib/plugins/styling/popup.php';
+            $target = WIKI_BASE . 'lib/plugins/styling/popup.php';
         } else {
             $target = wl($ID, ['do' => 'admin', 'page' => 'styling']);
         }
@@ -213,7 +213,7 @@ class admin_plugin_styling extends AdminPlugin
     protected function replaceIni($new)
     {
         global $conf;
-        $ini = DOKU_CONF . "tpl/" . $conf['template'] . "/style.ini";
+        $ini = WIKI_CONF . "tpl/" . $conf['template'] . "/style.ini";
         if (file_exists($ini)) {
             $old = io_readFile($ini);
             $old = preg_replace('/\[replacements\]\n.*?(\n\[.*]|$)/s', '\\1', $old);

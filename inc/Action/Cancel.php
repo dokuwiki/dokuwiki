@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionAbort;
 
 /**
  * Class Cancel
  *
  * Alias for show. Aborts editing
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Cancel extends AbstractAliasAction
 {

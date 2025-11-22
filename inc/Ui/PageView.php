@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
- * DokuWiki PageView Interface
+ * EasyWiki PageView Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class PageView extends Ui
 {
@@ -75,7 +75,7 @@ class PageView extends Ui
     /**
      * Show a revision warning
      *
-     * @author Szymon Olewniczak <dokuwiki@imz.re>
+     * @author Szymon Olewniczak <easywiki@imz.re>
      */
     public function showrev()
     {

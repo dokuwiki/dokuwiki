@@ -4,7 +4,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesIa.php?view=co
@@ -70,7 +70,7 @@ $lang['regsuccess2']           = 'Le conto ha essite create.';
 $lang['regmailfail']           = 'Il pare que un error occurreva durante le invio del message con le contrasigno. Per favor contacta le administrator!';
 $lang['regbadmail']            = 'Le adresse de e-mail date pare esser invalide. Si tu pensa que isto es un error, contacta le administrator.';
 $lang['regbadpass']            = 'Le duo contrasignos date non es identic. Per favor reproba.';
-$lang['regpwmail']             = 'Tu contrasigno de DokuWiki';
+$lang['regpwmail']             = 'Tu contrasigno de EasyWiki';
 $lang['reghere']               = 'Tu non ha ancora un conto? Crea un, simplemente.';
 $lang['profna']                = 'Iste wiki non supporta le modification de profilos.';
 $lang['profnochange']          = 'Nulle modification, nihil a facer.';
@@ -226,24 +226,24 @@ $lang['subscr_m_receive']      = 'Reciper';
 $lang['subscr_style_every']    = 'un message pro cata modification';
 $lang['authtempfail']          = 'Le authentication de usator temporarimente non es disponibile. Si iste situation persiste, per favor informa le administrator de tu wiki.';
 $lang['i_chooselang']          = 'Selige tu lingua';
-$lang['i_installer']           = 'Installator de DokuWiki';
+$lang['i_installer']           = 'Installator de EasyWiki';
 $lang['i_wikiname']            = 'Nomine del wiki';
 $lang['i_enableacl']           = 'Activar ACL (recommendate)';
 $lang['i_superuser']           = 'Superusator';
 $lang['i_problems']            = 'Le installator ha trovate alcun problemas, indicate hic infra. Tu debe resolver iste problemas pro poter continuar.';
-$lang['i_modified']            = 'Pro motivos de securitate, iste script functiona solmente con un installation de DokuWiki nove e non modificate.
-Tu debe re-extraher le files del pacchetto discargate, o consultar le <a href="https://www.dokuwiki.org/install">instructiones de installation</a> complete pro altere optiones.';
+$lang['i_modified']            = 'Pro motivos de securitate, iste script functiona solmente con un installation de EasyWiki nove e non modificate.
+Tu debe re-extraher le files del pacchetto discargate, o consultar le <a href="https://www.EasyWiki.org/install">instructiones de installation</a> complete pro altere optiones.';
 $lang['i_funcna']              = 'Le function PHP <code>%s</code> non es disponibile. Pote esser que tu albergo web lo ha disactivate pro un ration o altere.';
 $lang['i_phpver']              = 'Le version de PHP <code>%s</code> es plus ancian que le version requisite <code>%s</code>. Es necessari actualisar le installation de PHP.';
-$lang['i_permfail']            = '<code>%s</code> non permitte le accesso de scriptura a DokuWiki. Tu debe reparar le permissiones de iste directorio!';
+$lang['i_permfail']            = '<code>%s</code> non permitte le accesso de scriptura a EasyWiki. Tu debe reparar le permissiones de iste directorio!';
 $lang['i_confexists']          = '<code>%s</code> ja existe';
 $lang['i_writeerr']            = 'Impossibile crear <code>%s</code>. Tu debe verificar le permissiones de directorios/files e crear iste file manualmente.';
-$lang['i_badhash']             = 'dokuwiki.php non recognoscite o modificate (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php non recognoscite o modificate (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor vacue o invalide';
 $lang['i_success']             = 'Le configuration ha succedite. Tu pote ora deler le file install.php. Continua a
-<a href="doku.php?id=wiki:welcome">tu nove DokuWiki</a>.';
+<a href="wiki.php?id=wiki:welcome">tu nove EasyWiki</a>.';
 $lang['i_failure']             = 'Alcun errores occurreva durante le scriptura del files de configuration. Es possibile que tu debe remediar iste errores manualmente ante que
-tu pote usar <a href="doku.php?id=wiki:welcome">tu nove DokuWiki</a>.';
+tu pote usar <a href="wiki.php?id=wiki:welcome">tu nove EasyWiki</a>.';
 $lang['i_policy']              = 'Politica de ACL interne';
 $lang['i_pol0']                = 'Wiki aperte (lectura, scriptura, incargamento pro omnes)';
 $lang['i_pol1']                = 'Wiki public (lectura pro omnes, scriptura e incargamento pro usatores registrate)';
@@ -257,5 +257,5 @@ $lang['days']                  = '%d dies retro';
 $lang['hours']                 = '%d horas retro';
 $lang['minutes']               = '%d minutas retro';
 $lang['seconds']               = '%d secundas retro';
-$lang['email_signature_text'] = 'Iste message ha essite generate per DokuWiki a
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'Iste message ha essite generate per EasyWiki a
+@EASYWIKIURL@';

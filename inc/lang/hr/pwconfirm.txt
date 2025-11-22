@@ -1,6 +1,6 @@
 Pozdrav @FULLNAME@!
 
-Netko je zatražio novu lozinku za vašu @TITLE@ prijavu na @DOKUWIKIURL@.
+Netko je zatražio novu lozinku za vašu @TITLE@ prijavu na @EASYWIKIURL@.
 
 Ako to niste bili Vi, molimo da samo ignorirate ovu poruku.
 

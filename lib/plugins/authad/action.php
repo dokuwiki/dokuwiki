@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
- * DokuWiki Plugin addomain (Action Component)
+ * EasyWiki Plugin addomain (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <gohr@cosmocode.de>
@@ -65,7 +65,7 @@ class action_plugin_authad extends ActionPlugin
         $domains = $auth->getConfiguredDomains();
         if (count($domains) <= 1) return; // no choice at all
 
-        /** @var dokuwiki\Form\Form $form */
+        /** @var easywiki\Form\Form $form */
         $form =& $event->data;
 
         // find the username input box

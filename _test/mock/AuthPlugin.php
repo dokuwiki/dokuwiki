@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test\mock;
+namespace easywiki\test\mock;
 
 /**
- * Class dokuwiki\Plugin\DokuWiki_Auth_Plugin
+ * Class easywiki\Plugin\EasyWiki_Auth_Plugin
  */
-class AuthPlugin extends \dokuwiki\Extension\AuthPlugin {
+class AuthPlugin extends \easywiki\Extension\AuthPlugin {
 
 }

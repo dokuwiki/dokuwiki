@@ -97,5 +97,5 @@ $lang['git']                   = 'De uitbreiding werd geïnstalleerd via git, u 
 $lang['auth']                  = 'Deze auth plugin is niet geactiveerd in de configuratie, overweeg het om uit te schakelen.';
 $lang['install_url']           = 'Installeer vanaf URL:';
 $lang['install_upload']        = 'Upload Uitbreiding:';
-$lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.dokuwiki.org en controleer de proxy instellingen.';
-$lang['nossl']                 = 'Je PHP mist SSL ondersteuning. Downloaden werkt niet met veel DokuWiki extensies.';
+$lang['repo_error']            = 'Er kon geen verbinding worden gemaakt met de centrale plugin opslag. Controleer of de server verbinding mag maken met www.EasyWiki.org en controleer de proxy instellingen.';
+$lang['nossl']                 = 'Je PHP mist SSL ondersteuning. Downloaden werkt niet met veel EasyWiki extensies.';

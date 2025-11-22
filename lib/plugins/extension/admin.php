@@ -1,15 +1,15 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\plugin\extension\Exception as RepoException;
-use dokuwiki\plugin\extension\Extension;
-use dokuwiki\plugin\extension\Gui;
-use dokuwiki\plugin\extension\GuiAdmin;
-use dokuwiki\plugin\extension\Installer;
-use dokuwiki\plugin\extension\Repository;
+use easywiki\Extension\AdminPlugin;
+use easywiki\plugin\extension\Exception as RepoException;
+use easywiki\plugin\extension\Extension;
+use easywiki\plugin\extension\Gui;
+use easywiki\plugin\extension\GuiAdmin;
+use easywiki\plugin\extension\Installer;
+use easywiki\plugin\extension\Repository;
 
 /**
- * DokuWiki Plugin extension (Admin Component)
+ * EasyWiki Plugin extension (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  */

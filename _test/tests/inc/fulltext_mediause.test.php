@@ -1,14 +1,14 @@
 <?php
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC')) die();
+// must be run within EasyWiki
+if (!defined('WIKI_INC')) die();
 
 /**
  * Test cases for the media usage index
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-class fultext_mediause_test extends DokuWikiTest {
+class fultext_mediause_test extends EasyWikiTest {
 
     public function test_internalmedia() {
         saveWikiText('test:internalmedia_usage', '{{internalmedia.png}} {{..:internal media.png}}', 'Test initialization');
@@ -19,7 +19,7 @@ class fultext_mediause_test extends DokuWikiTest {
     }
 
     public function test_media_in_links() {
-        saveWikiText('test:medialinks', '[[doku>wiki:dokuwiki|{{wiki:logo.png}}]] [[http://www.example.com|{{example.png?200x800}}]]', 'Test init');
+        saveWikiText('test:medialinks', '[[wiki>wiki:easywiki|{{wiki:logo.png}}]] [[http://www.example.com|{{example.png?200x800}}]]', 'Test init');
         idx_addPage('test:medialinks');
 
         $this->assertEquals(array('test:medialinks'), ft_mediause('wiki:logo.png'));
@@ -44,7 +44,7 @@ class fultext_mediause_test extends DokuWikiTest {
     public function test_media_in_hidden_pages() {
         global $conf;
         $conf['hidepages'] = 'hidden:.*';
-        saveWikiText('hidden:medias', '[[doku>wiki:dokuwiki|{{wiki:hiddenlogo.png}}]]', 'Test initialization');
+        saveWikiText('hidden:medias', '[[wiki>wiki:easywiki|{{wiki:hiddenlogo.png}}]]', 'Test initialization');
         idx_addPage('hidden:medias');
 
         $this->assertEquals(array(), ft_mediause('wiki:hiddenlogo.png'));
@@ -65,7 +65,7 @@ class fultext_mediause_test extends DokuWikiTest {
 
         $_SERVER['REMOTE_USER'] = 'eve';
 
-        saveWikiText('secret:medias', '[[doku>wiki:dokuwiki|{{wiki:secretlogo.png}}]]', 'Test initialization');
+        saveWikiText('secret:medias', '[[wiki>wiki:easywiki|{{wiki:secretlogo.png}}]]', 'Test initialization');
         idx_addPage('secret:medias');
 
         $this->assertEquals(array(), ft_mediause('wiki:secretlogo.png'));

@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Extension\AuthPlugin;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Extension\AuthPlugin;
 
 /**
  * Class Logout
  *
  * Log out a user
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Logout extends AbstractUserAction
 {

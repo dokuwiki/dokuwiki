@@ -1,4 +1,4 @@
-Súbor bol nahraný do DokuWiki. Tu sú podrobnosti:
+Súbor bol nahraný do EasyWiki. Tu sú podrobnosti:
 
 Súbor : @MEDIA@
 Dátum : @DATE@

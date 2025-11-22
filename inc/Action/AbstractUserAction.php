@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionUserRequiredException;
+use easywiki\Action\Exception\ActionUserRequiredException;
 
 /**
  * Class AbstractUserAction
  *
  * An action that requires a logged in user
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 abstract class AbstractUserAction extends AbstractAclAction
 {

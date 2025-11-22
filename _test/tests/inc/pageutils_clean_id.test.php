@@ -1,6 +1,6 @@
 <?php
 
-class init_clean_id_test extends DokuWikiTest
+class init_clean_id_test extends EasyWikiTest
 {
 
     /** @inheritDoc */
@@ -118,7 +118,7 @@ class init_clean_id_test extends DokuWikiTest
      */
     function testCleanId($input, $expected, $ascii, $sepchar, $deaccent, $useslash)
     {
-        // set dokuwiki defaults
+        // set easywiki defaults
         global $conf;
         $conf['sepchar'] = $sepchar;
         $conf['deaccent'] = $deaccent;

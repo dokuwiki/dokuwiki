@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
-use dokuwiki\Extension\PluginController;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Extension\PluginController;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Utf8\PhpString;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use splitbrain\PHPArchive\ArchiveCorruptedException;
@@ -288,7 +288,7 @@ class Installer
         $http = new DokuHTTPClient();
         $http->max_bodysize = 0;
         $http->keep_alive = false; // we do single ops here, no need for keep-alive
-        $http->agent = 'DokuWiki HTTP Client (Extension Manager)';
+        $http->agent = 'EasyWiki HTTP Client (Extension Manager)';
 
         // large downloads may take a while on slow connections, so we try to extend the timeout to 4 minutes
         // 4 minutes was chosen, because HTTP servers and proxies often have a 5 minute timeout
@@ -354,7 +354,7 @@ class Installer
      */
     public static function purgeCache()
     {
-        // expire dokuwiki caches
+        // expire easywiki caches
         // touching local.php expires wiki page, JS and CSS caches
         global $config_cascade;
         @touch(reset($config_cascade['main']['local']));

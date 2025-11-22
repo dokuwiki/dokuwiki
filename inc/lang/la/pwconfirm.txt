@@ -1,6 +1,6 @@
 Aue, @FULLNAME@!
 
-Aliquis tesseram nouam @TITLE@ ut ineas in @DOKUWIKIURL@
+Aliquis tesseram nouam @TITLE@ ut ineas in @EASYWIKIURL@
 
 Si nouam tesseram non petiuisti, hoc nuntium ignorat.
 

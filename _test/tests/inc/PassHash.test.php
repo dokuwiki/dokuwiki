@@ -1,13 +1,13 @@
 <?php
 
-use dokuwiki\PassHash;
+use easywiki\PassHash;
 
 /**
  * Class PassHash_test
  *
  * most tests are in auth_password.test.php
  */
-class PassHash_test extends DokuWikiTest {
+class PassHash_test extends EasyWikiTest {
 
     function test_hmac(){
         // known hashes taken from https://code.google.com/p/yii/issues/detail?id=1942

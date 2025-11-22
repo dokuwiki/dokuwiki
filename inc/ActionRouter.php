@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Action\AbstractAction;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Action\Exception\FatalException;
-use dokuwiki\Action\Exception\NoActionException;
-use dokuwiki\Action\Plugin;
+use easywiki\Extension\Event;
+use easywiki\Action\AbstractAction;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Action\Exception\FatalException;
+use easywiki\Action\Exception\NoActionException;
+use easywiki\Action\Plugin;
 
 /**
  * Class ActionRouter
- * @package dokuwiki
+ * @package easywiki
  */
 class ActionRouter
 {
@@ -58,7 +58,7 @@ class ActionRouter
      */
     public static function getInstance($reinit = false)
     {
-        if ((!self::$instance instanceof \dokuwiki\ActionRouter) || $reinit) {
+        if ((!self::$instance instanceof \easywiki\ActionRouter) || $reinit) {
             self::$instance = new ActionRouter();
         }
         return self::$instance;
@@ -156,7 +156,7 @@ class ActionRouter
         } else {
             http_status(500);
         }
-        if (defined('DOKU_UNITTEST')) {
+        if (defined('WIKI_UNITTEST')) {
             throw $e;
         }
         ErrorHandler::logException($e);
@@ -184,7 +184,7 @@ class ActionRouter
         $parts = explode('_', $actionname);
         while ($parts !== []) {
             $load = implode('_', $parts);
-            $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
+            $class = 'easywiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
             if (class_exists($class)) {
                 return new $class($actionname);
             }

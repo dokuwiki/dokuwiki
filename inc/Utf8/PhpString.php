@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Utf8;
+namespace easywiki\Utf8;
 
 /**
  * UTF-8 aware equivalents to PHP's string functions
@@ -252,7 +252,7 @@ class PhpString
      *
      * @param string $string
      * @return string
-     * @see    \dokuwiki\Utf8\PhpString::strtoupper()
+     * @see    \easywiki\Utf8\PhpString::strtoupper()
      *
      * @author Leo Feyer <leo@typolight.org>
      * @see    strtolower()
@@ -276,7 +276,7 @@ class PhpString
      *
      * @param string $string
      * @return string
-     * @see    \dokuwiki\Utf8\PhpString::strtoupper()
+     * @see    \easywiki\Utf8\PhpString::strtoupper()
      *
      * @author Leo Feyer <leo@typolight.org>
      * @see    strtoupper()

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 interface CallWriterInterface
 {

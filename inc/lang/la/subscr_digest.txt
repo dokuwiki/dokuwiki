@@ -11,6 +11,6 @@ Vetus recensio: @OLDPAGE@
 Noua recensio: @NEWPAGE@
 
 Ut paginae adnotationes deleas, in uicem ineas in
-@DOKUWIKIURL@, deinde uideas
+@EASYWIKIURL@, deinde uideas
 @SUBSCRIBE@
 et paginarum generum optiones mutes.

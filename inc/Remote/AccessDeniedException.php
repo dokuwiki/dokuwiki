@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
 /**
  * Class AccessDeniedException

@@ -7,7 +7,7 @@
  *
  * @group plugins
  */
-class userdata_test extends DokuWikiTest
+class userdata_test extends EasyWikiTest
 {
     /** @var  auth_plugin_authplain */
     protected $auth;

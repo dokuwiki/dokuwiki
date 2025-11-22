@@ -8,13 +8,13 @@
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Pierre Corell <info@joomla-praxis.de>
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Mateng Schimmerlos <mateng@firemail.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author rnck <dokuwiki@rnck.de>
+ * @author rnck <easywiki@rnck.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Konfiguration wurde nicht aktualisiert auf Grund eines ungültigen Wertes. Bitte überprüfe deine Änderungen und versuche es erneut.<br />Die/der ungültige(n) Wert(e) werden durch eine rote Umrandung hervorgehoben.';
@@ -25,7 +25,7 @@ $lang['danger']                = '**Achtung**: Eine Änderung dieser Einstellung
 $lang['warning']               = 'Achtung: Eine Änderungen dieser Option kann zu unbeabsichtigtem Verhalten führen.';
 $lang['security']              = 'Sicherheitswarnung: Eine Änderungen dieser Option können ein Sicherheitsrisiko bedeuten.';
 $lang['_configuration_manager'] = 'Konfigurations-Manager';
-$lang['_header_dokuwiki']      = 'DokuWiki';
+$lang['_header_easywiki']      = 'EasyWiki';
 $lang['_header_plugin']        = 'Plugin';
 $lang['_header_template']      = 'Template';
 $lang['_header_undefined']     = 'Unbekannte Werte';
@@ -74,7 +74,7 @@ $lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editier
 $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
 $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
-$lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Indexansicht an. Bei Aktivierung dieser Einstellung werden alle Namensräume versteckt, in welchen der Benutzer keine Leserechte hat. Dies könnte dazu führen, dass lesbare Unternamensräume versteckt werden. Dies kann die Indexansicht bei bestimmten Zugangskontrolleinstellungen unbenutzbar machen.';
+$lang['sneaky_index']          = 'Standardmäßig zeigt EasyWiki alle Namensräume in der Indexansicht an. Bei Aktivierung dieser Einstellung werden alle Namensräume versteckt, in welchen der Benutzer keine Leserechte hat. Dies könnte dazu führen, dass lesbare Unternamensräume versteckt werden. Dies kann die Indexansicht bei bestimmten Zugangskontrolleinstellungen unbenutzbar machen.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['useacl']                = 'Benutze Zugriffskontrollliste';
 $lang['autopasswd']            = 'Automatisch erzeugte Passwörter';
@@ -85,7 +85,7 @@ $lang['superuser']             = 'Administrator - Eine Gruppe oder Benutzer mit 
 $lang['manager']               = 'Manager - Eine Gruppe oder Benutzer mit Zugriff auf einige Administrationswerkzeuge.';
 $lang['profileconfirm']        = 'Änderungen am Benutzerprofil mit Passwort bestätigen';
 $lang['rememberme']            = 'Permanente Login-Cookies erlauben (Auf diesem Computer eingeloggt bleiben)';
-$lang['disableactions']        = 'Deaktiviere DokuWiki\'s Zugriffe';
+$lang['disableactions']        = 'Deaktiviere EasyWiki\'s Zugriffe';
 $lang['disableactions_check']  = 'Check';
 $lang['disableactions_subscription'] = 'Bestellen/Abbestellen';
 $lang['disableactions_wikicode'] = 'Zeige Quelle/Exportiere Rohdaten';
@@ -136,7 +136,7 @@ $lang['rss_media']             = 'Welche Änderungen sollen im XML-Feed angezeig
 $lang['rss_media_o_both']      = 'beide';
 $lang['rss_media_o_pages']     = 'Seiten';
 $lang['rss_media_o_media']     = 'Medien';
-$lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
+$lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? EasyWiki muss sich dafür mit update.easywiki.org verbinden.';
 $lang['userewrite']            = 'Benutze schöne URLs';
 $lang['useslash']              = 'Benutze Schrägstrich als Namensraumtrenner in URLs';
 $lang['sepchar']               = 'Worttrenner für Seitennamen in URLs';
@@ -151,7 +151,7 @@ $lang['send404']               = 'Sende "HTTP 404/Seite nicht gefunden" für nic
 $lang['broken_iua']            = 'Falls die Funktion ignore_user_abort auf deinem System nicht funktioniert, könnte der Such-Index nicht funktionieren. IIS+PHP/CGI ist bekannt dafür.';
 $lang['xsendfile']             = 'Den X-Sendfile-Header nutzen, um Dateien direkt vom Webserver ausliefern zu lassen? Dein Webserver muss dies unterstützen!';
 $lang['renderer_xhtml']        = 'Standard-Renderer für die normale (XHTML) Wiki-Ausgabe.';
-$lang['renderer__core']        = '%s (DokuWiki Kern)';
+$lang['renderer__core']        = '%s (EasyWiki Kern)';
 $lang['renderer__plugin']      = '%s (Erweiterung)';
 $lang['search_nslimit']        = 'Beschränke die Suche auf die jetzigen X Namensräume. Wenn eine Suche von einer Seite in einem tieferen Namensraum aus ausgeführt wird, werden die ersten X Namensräume als Filter hinzugefügt';
 $lang['search_fragment']       = 'Spezifiziere das vorgegebenen Fragment-Suchverhalten';
@@ -161,7 +161,7 @@ $lang['search_fragment_o_ends_with'] = 'endet mit';
 $lang['search_fragment_o_contains'] = 'enthält';
 $lang['_feature_flags']        = 'Feature-Flags';
 $lang['defer_js']              = 'JavaScript-Ausführung verzögern bis das HTML der gesamten Seite verarbeitet wurde. Erhöht die gefühlte Geschwindigkeit des Seitenaufbaus, kann aber mit einigen wenigen Plugins inkompatibel sein.';
-$lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
+$lang['dnslookups']            = 'EasyWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
 $lang['jquerycdn']             = 'Sollen die jQuery und jQuery UI Skriptdateien von einem CDN geladen werden? Das verursacht zusätzliche HTTP Anfragen, aber die Dateien werden möglicherweise schneller geladen und Nutzer haben sie vielleicht bereits im Cache.';
 $lang['jquerycdn_o_0']         = 'Kein CDN, nur lokale Auslieferung';
 $lang['jquerycdn_o_jquery']    = 'CDN bei code.jquery.com';
@@ -178,7 +178,7 @@ $lang['typography_o_1']        = 'ohne einfache Anführungszeichen';
 $lang['typography_o_2']        = 'mit einfachen Anführungszeichen (funktioniert nicht immer)';
 $lang['userewrite_o_0']        = 'nichts';
 $lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'DokuWiki intern';
+$lang['userewrite_o_2']        = 'EasyWiki intern';
 $lang['deaccent_o_0']          = 'aus';
 $lang['deaccent_o_1']          = 'Entferne Akzente';
 $lang['deaccent_o_2']          = 'romanisieren';

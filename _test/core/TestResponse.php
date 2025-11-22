@@ -70,7 +70,7 @@ class TestResponse {
     /**
      * Access the http status code
      *
-     * in the test environment, only status codes explicitly set by dokuwiki are likely to be returned
+     * in the test environment, only status codes explicitly set by easywiki are likely to be returned
      * this means succcessful status codes (e.g. 200 OK) will not be present, but error codes will be
      *
      * @return  int  http status code

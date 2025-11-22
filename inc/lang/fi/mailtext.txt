@@ -1,4 +1,4 @@
-DokuWikiisi lisättiin tai siellä muutettiin sivua. Tässä yksityiskohdat
+EasyWikiisi lisättiin tai siellä muutettiin sivua. Tässä yksityiskohdat
 
 Päivämäärä : @DATE@
 Selain: @BROWSER@

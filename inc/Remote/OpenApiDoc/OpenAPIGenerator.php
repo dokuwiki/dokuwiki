@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Remote\OpenApiDoc;
+namespace easywiki\Remote\OpenApiDoc;
 
-use dokuwiki\Remote\Api;
-use dokuwiki\Remote\ApiCall;
-use dokuwiki\Remote\ApiCore;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Remote\Api;
+use easywiki\Remote\ApiCall;
+use easywiki\Remote\ApiCore;
+use easywiki\Utf8\PhpString;
 use ReflectionClass;
 use ReflectionException;
 use stdClass;
 
 /**
- * Generates the OpenAPI documentation for the DokuWiki API
+ * Generates the OpenAPI documentation for the EasyWiki API
  */
 class OpenAPIGenerator
 {
@@ -39,8 +39,8 @@ class OpenAPIGenerator
         $this->documentation = [];
         $this->documentation['openapi'] = '3.1.0';
         $this->documentation['info'] = [
-            'title' => 'DokuWiki API',
-            'description' => 'The DokuWiki API OpenAPI specification',
+            'title' => 'EasyWiki API',
+            'description' => 'The EasyWiki API OpenAPI specification',
             'version' => ((string)ApiCore::API_VERSION),
             'x-locale' => 'en-US',
         ];
@@ -63,7 +63,7 @@ class OpenAPIGenerator
      */
     public function getErrorCodes()
     {
-        $lines = file(DOKU_INC . 'inc/Remote/ApiCore.php');
+        $lines = file(WIKI_INC . 'inc/Remote/ApiCore.php');
 
         $codes = [];
         $method = '';
@@ -99,7 +99,7 @@ class OpenAPIGenerator
 
 
     /**
-     * Add the current DokuWiki instance as a server
+     * Add the current EasyWiki instance as a server
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class OpenAPIGenerator
     {
         $this->documentation['servers'] = [
             [
-                'url' => DOKU_URL . 'lib/exe/jsonrpc.php',
+                'url' => WIKI_URL . 'lib/exe/jsonrpc.php',
             ],
         ];
     }
@@ -311,7 +311,7 @@ class OpenAPIGenerator
                 return true;
             case 'string':
                 if ($name === 'page') return 'playground:playground';
-                if ($name === 'media') return 'wiki:dokuwiki-128.png';
+                if ($name === 'media') return 'wiki:easywiki-128.png';
                 return 'some-' . $name;
             case 'array':
                 return ['some-' . $name, 'other-' . $name];
@@ -321,14 +321,14 @@ class OpenAPIGenerator
     }
 
     /**
-     * Generates a markdown link from a dokuwiki.org URL
+     * Generates a markdown link from a easywiki.org URL
      *
      * @param $url
      * @return mixed|string
      */
     protected function generateLink($url)
     {
-        if (preg_match('/^https?:\/\/(www\.)?dokuwiki\.org\/(.+)$/', $url, $match)) {
+        if (preg_match('/^https?:\/\/(www\.)?easywiki\.org\/(.+)$/', $url, $match)) {
             $name = $match[2];
 
             $name = str_replace(['_', '#', ':'], [' ', ' ', ' '], $name);

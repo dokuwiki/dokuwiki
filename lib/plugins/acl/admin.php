@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Utf8\Sort;
 
 /**
  * ACL administration functions
@@ -13,7 +13,7 @@ use dokuwiki\Utf8\Sort;
  */
 
 /**
- * All DokuWiki plugins to extend the admin function
+ * All EasyWiki plugins to extend the admin function
  * need to inherit from this class
  */
 class admin_plugin_acl extends AdminPlugin
@@ -537,10 +537,10 @@ class admin_plugin_acl extends AdminPlugin
         // namespace or page?
         if ($item['type'] == 'd') {
             if ($item['open']) {
-                $img = DOKU_BASE . 'lib/images/minus.gif';
+                $img = WIKI_BASE . 'lib/images/minus.gif';
                 $alt = '−';
             } else {
-                $img = DOKU_BASE . 'lib/images/plus.gif';
+                $img = WIKI_BASE . 'lib/images/plus.gif';
                 $alt = '+';
             }
             $ret .= '<img src="' . $img . '" alt="' . $alt . '" />';

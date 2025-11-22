@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Hold the options for feed generation

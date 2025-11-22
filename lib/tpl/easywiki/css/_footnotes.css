@@ -1,0 +1,31 @@
+/**
+ * This file provides styles for footnotes.
+ */
+
+/*____________ footnotes inside the text ____________*/
+
+/* link to footnote inside the text */
+.easywiki sup a.fn_top {
+}
+/* JSpopup */
+div.insitu-footnote {
+    max-width: 40%;
+    min-width: 5em;
+}
+
+/*____________ footnotes at the bottom of the page ____________*/
+
+.easywiki div.footnotes {
+    border-top: 1px solid @ini_border;
+    padding: .5em 0 0 0;
+    margin: 1em 0 0 0;
+    clear: both;
+}
+.easywiki div.footnotes div.fn {
+}
+.easywiki div.footnotes div.fn div.content {
+    display: inline;
+}
+.easywiki div.footnotes div.fn sup a.fn_bot {
+    font-weight: bold;
+}

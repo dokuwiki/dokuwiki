@@ -7,21 +7,21 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Ui\MediaRevisions;
-use dokuwiki\Cache\CacheImageMod;
+use easywiki\Ui\MediaRevisions;
+use easywiki\Cache\CacheImageMod;
 use splitbrain\slika\Exception;
-use dokuwiki\PassHash;
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Extension\Event;
-use dokuwiki\Form\Form;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Logger;
-use dokuwiki\Subscriptions\MediaSubscriptionSender;
-use dokuwiki\Ui\Media\DisplayRow;
-use dokuwiki\Ui\Media\DisplayTile;
-use dokuwiki\Ui\MediaDiff;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Sort;
+use easywiki\PassHash;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\Extension\Event;
+use easywiki\Form\Form;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Logger;
+use easywiki\Subscriptions\MediaSubscriptionSender;
+use easywiki\Ui\Media\DisplayRow;
+use easywiki\Ui\Media\DisplayTile;
+use easywiki\Ui\MediaDiff;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Sort;
 use splitbrain\slika\Slika;
 
 /**
@@ -99,7 +99,7 @@ function media_metasave($id, $auth, $data)
         $sizechange = $filesize_new - $filesize_old;
 
         // add a log entry to the media changelog
-        addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, $lang['media_meta_edited'], '', null, $sizechange);
+        addMediaLogEntry($new, $id, WIKI_CHANGE_TYPE_EDIT, $lang['media_meta_edited'], '', null, $sizechange);
 
         msg($lang['metasaveok'], 1);
         return $id;
@@ -154,7 +154,7 @@ function media_metaform($id, $auth)
     global $lang;
 
     if ($auth < AUTH_UPLOAD) {
-        echo '<div class="nothing">' . $lang['media_perm_upload'] . '</div>' . DOKU_LF;
+        echo '<div class="nothing">' . $lang['media_perm_upload'] . '</div>' . WIKI_LF;
         return false;
     }
 
@@ -250,17 +250,17 @@ function media_inuse($id)
  * @param string $id media id
  * @param int $auth no longer used
  * @return int One of: 0,
- *                     DOKU_MEDIA_DELETED,
- *                     DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS,
- *                     DOKU_MEDIA_NOT_AUTH,
- *                     DOKU_MEDIA_INUSE
+ *                     WIKI_MEDIA_DELETED,
+ *                     WIKI_MEDIA_DELETED | WIKI_MEDIA_EMPTY_NS,
+ *                     WIKI_MEDIA_NOT_AUTH,
+ *                     WIKI_MEDIA_INUSE
  */
 function media_delete($id, $auth)
 {
     global $lang;
     $auth = auth_quickaclcheck(ltrim(getNS($id) . ':*', ':'));
-    if ($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
-    if (media_inuse($id)) return DOKU_MEDIA_INUSE;
+    if ($auth < AUTH_DELETE) return WIKI_MEDIA_NOT_AUTH;
+    if (media_inuse($id)) return WIKI_MEDIA_INUSE;
 
     $file = mediaFN($id);
 
@@ -284,7 +284,7 @@ function media_delete($id, $auth)
         $data['unl'] = @unlink($file);
         if ($data['unl']) {
             $sizechange = 0 - $data['size'];
-            addMediaLogEntry(time(), $id, DOKU_CHANGE_TYPE_DELETE, $lang['deleted'], '', null, $sizechange);
+            addMediaLogEntry(time(), $id, WIKI_CHANGE_TYPE_DELETE, $lang['deleted'], '', null, $sizechange);
 
             $data['del'] = io_sweepNS($id, 'mediadir');
         }
@@ -293,10 +293,10 @@ function media_delete($id, $auth)
     unset($evt);
 
     if ($data['unl'] && $data['del']) {
-        return DOKU_MEDIA_DELETED | DOKU_MEDIA_EMPTY_NS;
+        return WIKI_MEDIA_DELETED | WIKI_MEDIA_EMPTY_NS;
     }
 
-    return $data['unl'] ? DOKU_MEDIA_DELETED : 0;
+    return $data['unl'] ? WIKI_MEDIA_DELETED : 0;
 }
 
 /**
@@ -567,16 +567,16 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
             addMediaLogEntry(
                 $new,
                 $id,
-                DOKU_CHANGE_TYPE_REVERT,
+                WIKI_CHANGE_TYPE_REVERT,
                 sprintf($lang['restored'], dformat($REV)),
                 $REV,
                 null,
                 $sizechange
             );
         } elseif ($overwrite) {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
+            addMediaLogEntry($new, $id, WIKI_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         } else {
-            addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
+            addMediaLogEntry($new, $id, WIKI_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
         }
         return $id;
     } else {
@@ -608,14 +608,14 @@ function media_saveOldRevision($id)
         // there is no log entry for current version of file
         $sizechange = filesize($oldf);
         if (!file_exists(mediaMetaFN($id, '.changes'))) {
-            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
+            addMediaLogEntry($date, $id, WIKI_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
         } else {
             $oldRev = $medialog->getRevisions(-1, 1); // from changelog
             $oldRev = (int) (empty($oldRev) ? 0 : $oldRev[0]);
             $filesize_old = filesize(mediaFN($id, $oldRev));
             $sizechange -= $filesize_old;
 
-            addMediaLogEntry($date, $id, DOKU_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
+            addMediaLogEntry($date, $id, WIKI_CHANGE_TYPE_EDIT, '', '', null, $sizechange);
         }
     }
 
@@ -1482,10 +1482,10 @@ function media_printicon($filename, $size = '')
 {
     [$ext] = mimetype(mediaFN($filename), false);
 
-    if (file_exists(DOKU_INC . 'lib/images/fileicons/' . $size . '/' . $ext . '.png')) {
-        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/' . $ext . '.png';
+    if (file_exists(WIKI_INC . 'lib/images/fileicons/' . $size . '/' . $ext . '.png')) {
+        $icon = WIKI_BASE . 'lib/images/fileicons/' . $size . '/' . $ext . '.png';
     } else {
-        $icon = DOKU_BASE . 'lib/images/fileicons/' . $size . '/file.png';
+        $icon = WIKI_BASE . 'lib/images/fileicons/' . $size . '/file.png';
     }
 
     return '<img src="' . $icon . '" alt="' . $filename . '" class="icon" />';
@@ -1562,7 +1562,7 @@ function media_uploadform($ns, $auth, $fullscreen = false)
         'enctype' => 'multipart/form-data',
         'action' => ($fullscreen)
                     ? media_managerURL(['tab_files' => 'files', 'tab_details' => 'view'], '&')
-                    : DOKU_BASE . 'lib/exe/mediamanager.php',
+                    : WIKI_BASE . 'lib/exe/mediamanager.php',
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', hsc($ns));  // FIXME hsc required?
@@ -1586,20 +1586,20 @@ function media_uploadform($ns, $auth, $fullscreen = false)
     $form->addTagClose('div');
 
     if (!$fullscreen) {
-        echo '<div class="upload">' . $lang['mediaupload'] . '</div>' . DOKU_LF;
+        echo '<div class="upload">' . $lang['mediaupload'] . '</div>' . WIKI_LF;
     } else {
-        echo DOKU_LF;
+        echo WIKI_LF;
     }
 
-    echo '<div id="mediamanager__uploader">' . DOKU_LF;
+    echo '<div id="mediamanager__uploader">' . WIKI_LF;
     echo $form->toHTML('Upload');
-    echo '</div>' . DOKU_LF;
+    echo '</div>' . WIKI_LF;
 
     echo '<p class="maxsize">';
     printf($lang['maxuploadsize'], filesize_h(media_getuploadsize()));
     echo ' <a class="allowedmime" href="#">' . $lang['allowedmime'] . '</a>';
     echo ' <span>' . implode(', ', array_keys(getMimeTypes())) . '</span>';
-    echo '</p>' . DOKU_LF;
+    echo '</p>' . WIKI_LF;
 }
 
 /**
@@ -1644,7 +1644,7 @@ function media_searchform($ns, $query = '', $fullscreen = false)
         'id'     => 'dw__mediasearch',
         'action' => ($fullscreen)
                     ? media_managerURL([], '&')
-                    : DOKU_BASE . 'lib/exe/mediamanager.php',
+                    : WIKI_BASE . 'lib/exe/mediamanager.php',
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', $ns);
@@ -1739,7 +1739,7 @@ function media_nstree_item($item)
 
     $ret  = '';
     if ($INPUT->str('do') != 'media')
-    $ret .= '<a href="' . DOKU_BASE . 'lib/exe/mediamanager.php?ns=' . idfilter($item['id']) . '" class="idx_dir">';
+    $ret .= '<a href="' . WIKI_BASE . 'lib/exe/mediamanager.php?ns=' . idfilter($item['id']) . '" class="idx_dir">';
     else $ret .= '<a href="' . media_managerURL(['ns' => idfilter($item['id'], false), 'tab_files' => 'files'])
         . '" class="idx_dir">';
     $ret .= $item['label'];
@@ -1762,11 +1762,11 @@ function media_nstree_li($item)
     $class = 'media level' . $item['level'];
     if ($item['open']) {
         $class .= ' open';
-        $img   = DOKU_BASE . 'lib/images/minus.gif';
+        $img   = WIKI_BASE . 'lib/images/minus.gif';
         $alt   = '−';
     } else {
         $class .= ' closed';
-        $img   = DOKU_BASE . 'lib/images/plus.gif';
+        $img   = WIKI_BASE . 'lib/images/plus.gif';
         $alt   = '+';
     }
     // TODO: only deliver an image if it actually has a subtree...

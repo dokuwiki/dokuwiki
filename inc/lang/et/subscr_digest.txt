@@ -11,7 +11,7 @@ Muudatustest lähemalt:
 Endine: @OLDPAGE@
 Uus: @NEWPAGE@
 
-Lehekülje teavituste katkestamiseks, sisene wiki-sse aadressil @DOKUWIKIURL@
+Lehekülje teavituste katkestamiseks, sisene wiki-sse aadressil @EASYWIKIURL@
 ja mine:
 @SUBSCRIBE@
 ning loobu lehekülje ja/või nimeruumi muudatuste teavitustest.

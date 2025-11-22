@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
 /**
  * Class Ui
  *
- * Abstract base class for all DokuWiki screens
+ * Abstract base class for all EasyWiki screens
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 abstract class Ui
 {

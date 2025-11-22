@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Backlink
@@ -13,6 +13,6 @@ class Backlink extends AbstractItem
     public function __construct()
     {
         parent::__construct();
-        $this->svg = DOKU_INC . 'lib/images/menu/08-backlink_link-variant.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/08-backlink_link-variant.svg';
     }
 }

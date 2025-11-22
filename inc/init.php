@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Initialize some defaults needed for DokuWiki
+ * Initialize some defaults needed for EasyWiki
  */
 
-use dokuwiki\Extension\PluginController;
-use dokuwiki\ErrorHandler;
-use dokuwiki\Input\Input;
-use dokuwiki\Extension\Event;
-use dokuwiki\Extension\EventHandler;
+use easywiki\Extension\PluginController;
+use easywiki\ErrorHandler;
+use easywiki\Input\Input;
+use easywiki\Extension\Event;
+use easywiki\Extension\EventHandler;
 
 /**
- * timing Dokuwiki execution
+ * timing EasyWiki execution
  *
  * @param integer $start
  *
@@ -21,7 +21,7 @@ function delta_time($start = 0)
 {
     return microtime(true) - ((float)$start);
 }
-define('DOKU_START_TIME', delta_time());
+define('WIKI_START_TIME', delta_time());
 
 global $config_cascade;
 $config_cascade = [];
@@ -31,26 +31,26 @@ $preload = fullpath(__DIR__) . '/preload.php';
 if (file_exists($preload)) include($preload);
 
 // define the include path
-if (!defined('DOKU_INC')) define('DOKU_INC', fullpath(__DIR__ . '/../') . '/');
+if (!defined('WIKI_INC')) define('WIKI_INC', fullpath(__DIR__ . '/../') . '/');
 
 // define Plugin dir
-if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+if (!defined('WIKI_PLUGIN'))  define('WIKI_PLUGIN', WIKI_INC . 'lib/plugins/');
 
-// define config path (packagers may want to change this to /etc/dokuwiki/)
-if (!defined('DOKU_CONF')) define('DOKU_CONF', DOKU_INC . 'conf/');
+// define config path (packagers may want to change this to /etc/easywiki/)
+if (!defined('WIKI_CONF')) define('WIKI_CONF', WIKI_INC . 'conf/');
 
 // check for error reporting override or set error reporting to sane values
-if (!defined('DOKU_E_LEVEL') && file_exists(DOKU_CONF . 'report_e_all')) {
-    define('DOKU_E_LEVEL', E_ALL);
+if (!defined('WIKI_E_LEVEL') && file_exists(WIKI_CONF . 'report_e_all')) {
+    define('WIKI_E_LEVEL', E_ALL);
 }
-if (!defined('DOKU_E_LEVEL')) {
+if (!defined('WIKI_E_LEVEL')) {
     error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 } else {
-    error_reporting(DOKU_E_LEVEL);
+    error_reporting(WIKI_E_LEVEL);
 }
 
 // autoloader
-require_once(DOKU_INC . 'inc/load.php');
+require_once(WIKI_INC . 'inc/load.php');
 
 // avoid caching issues #1594
 header('Vary: Cookie');
@@ -69,7 +69,7 @@ global $cache_metadata;
 
 // always include 'inc/config_cascade.php'
 // previously in preload.php set fields of $config_cascade will be merged with the defaults
-include(DOKU_INC . 'inc/config_cascade.php');
+include(WIKI_INC . 'inc/config_cascade.php');
 
 //prepare config array()
 global $conf;
@@ -118,45 +118,45 @@ $INPUT = new Input();
 
 
 // define baseURL
-if (!defined('DOKU_REL')) define('DOKU_REL', getBaseURL(false));
-if (!defined('DOKU_URL')) define('DOKU_URL', getBaseURL(true));
-if (!defined('DOKU_BASE')) {
+if (!defined('WIKI_REL')) define('WIKI_REL', getBaseURL(false));
+if (!defined('WIKI_URL')) define('WIKI_URL', getBaseURL(true));
+if (!defined('WIKI_BASE')) {
     if ($conf['canonical']) {
-        define('DOKU_BASE', DOKU_URL);
+        define('WIKI_BASE', WIKI_URL);
     } else {
-        define('DOKU_BASE', DOKU_REL);
+        define('WIKI_BASE', WIKI_REL);
     }
 }
 
 // define whitespace
 if (!defined('NL')) define('NL', "\n");
-if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
+if (!defined('WIKI_LF')) define('WIKI_LF', "\n");
+if (!defined('WIKI_TAB')) define('WIKI_TAB', "\t");
 
 // define cookie and session id, append server port when securecookie is configured FS#1664
-if (!defined('DOKU_COOKIE')) {
+if (!defined('WIKI_COOKIE')) {
     $serverPort = $_SERVER['SERVER_PORT'] ?? '';
-    define('DOKU_COOKIE', 'DW' . md5(DOKU_REL . (($conf['securecookie']) ? $serverPort : '')));
+    define('WIKI_COOKIE', 'DW' . md5(WIKI_REL . (($conf['securecookie']) ? $serverPort : '')));
     unset($serverPort);
 }
 
 // define main script
-if (!defined('DOKU_SCRIPT')) define('DOKU_SCRIPT', 'doku.php');
+if (!defined('WIKI_SCRIPT')) define('WIKI_SCRIPT', 'wiki.php');
 
-if (!defined('DOKU_TPL')) {
+if (!defined('WIKI_TPL')) {
     /**
      * @deprecated 2012-10-13 replaced by more dynamic method
      * @see tpl_basedir()
      */
-    define('DOKU_TPL', DOKU_BASE . 'lib/tpl/' . $conf['template'] . '/');
+    define('WIKI_TPL', WIKI_BASE . 'lib/tpl/' . $conf['template'] . '/');
 }
 
-if (!defined('DOKU_TPLINC')) {
+if (!defined('WIKI_TPLINC')) {
     /**
      * @deprecated 2012-10-13 replaced by more dynamic method
      * @see tpl_incdir()
      */
-    define('DOKU_TPLINC', DOKU_INC . 'lib/tpl/' . $conf['template'] . '/');
+    define('WIKI_TPLINC', WIKI_INC . 'lib/tpl/' . $conf['template'] . '/');
 }
 
 // make session rewrites XHTML compliant
@@ -174,10 +174,10 @@ $conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
 global $ACT;
 if (
     $conf['gzip_output'] &&
-        !defined('DOKU_DISABLE_GZIP_OUTPUT') &&
+        !defined('WIKI_DISABLE_GZIP_OUTPUT') &&
         function_exists('ob_gzhandler') &&
         // Disable compression when a (compressed) sitemap might be delivered
-        // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
+        // See https://bugs.EasyWiki.org/index.php?do=details&task_id=2576
         $ACT != 'sitemap'
 ) {
     ob_start('ob_gzhandler');
@@ -185,21 +185,21 @@ if (
 
 // init session
 if (!headers_sent() && !defined('NOSESSION')) {
-    if (!defined('DOKU_SESSION_NAME'))     define('DOKU_SESSION_NAME', "DokuWiki");
-    if (!defined('DOKU_SESSION_LIFETIME')) define('DOKU_SESSION_LIFETIME', 0);
-    if (!defined('DOKU_SESSION_PATH')) {
-        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-        define('DOKU_SESSION_PATH', $cookieDir);
+    if (!defined('WIKI_SESSION_NAME'))     define('WIKI_SESSION_NAME', "EasyWiki");
+    if (!defined('WIKI_SESSION_LIFETIME')) define('WIKI_SESSION_LIFETIME', 0);
+    if (!defined('WIKI_SESSION_PATH')) {
+        $cookieDir = empty($conf['cookiedir']) ? WIKI_REL : $conf['cookiedir'];
+        define('WIKI_SESSION_PATH', $cookieDir);
     }
-    if (!defined('DOKU_SESSION_DOMAIN'))   define('DOKU_SESSION_DOMAIN', '');
+    if (!defined('WIKI_SESSION_DOMAIN'))   define('WIKI_SESSION_DOMAIN', '');
 
     // start the session
     init_session();
 
     // load left over messages
-    if (isset($_SESSION[DOKU_COOKIE]['msg'])) {
-        $MSG = $_SESSION[DOKU_COOKIE]['msg'];
-        unset($_SESSION[DOKU_COOKIE]['msg']);
+    if (isset($_SESSION[WIKI_COOKIE]['msg'])) {
+        $MSG = $_SESSION[WIKI_COOKIE]['msg'];
+        unset($_SESSION[WIKI_COOKIE]['msg']);
     }
 }
 
@@ -216,12 +216,12 @@ if (empty($plugin_controller_class)) $plugin_controller_class = PluginController
 ErrorHandler::register();
 
 // disable gzip if not available
-define('DOKU_HAS_BZIP', function_exists('bzopen'));
-define('DOKU_HAS_GZIP', function_exists('gzopen'));
-if ($conf['compression'] == 'bz2' && !DOKU_HAS_BZIP) {
+define('WIKI_HAS_BZIP', function_exists('bzopen'));
+define('WIKI_HAS_GZIP', function_exists('gzopen'));
+if ($conf['compression'] == 'bz2' && !WIKI_HAS_BZIP) {
     $conf['compression'] = 'gz';
 }
-if ($conf['compression'] == 'gz' && !DOKU_HAS_GZIP) {
+if ($conf['compression'] == 'gz' && !WIKI_HAS_GZIP) {
     $conf['compression'] = 0;
 }
 
@@ -245,7 +245,7 @@ if (!defined('NOSESSION')) {
 mail_setup();
 
 $nil = null;
-Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
+Event::createAndTrigger('EASYWIKI_INIT_DONE', $nil, null, false);
 
 /**
  * Initializes the session
@@ -258,19 +258,19 @@ Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);
 function init_session()
 {
     global $conf;
-    session_name(DOKU_SESSION_NAME);
+    session_name(WIKI_SESSION_NAME);
     session_set_cookie_params([
-        'lifetime' => DOKU_SESSION_LIFETIME,
-        'path' => DOKU_SESSION_PATH,
-        'domain' => DOKU_SESSION_DOMAIN,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'lifetime' => WIKI_SESSION_LIFETIME,
+        'path' => WIKI_SESSION_PATH,
+        'domain' => WIKI_SESSION_DOMAIN,
+        'secure' => ($conf['securecookie'] && \easywiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
 
     // make sure the session cookie contains a valid session ID
-    if (isset($_COOKIE[DOKU_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[DOKU_SESSION_NAME])) {
-        unset($_COOKIE[DOKU_SESSION_NAME]);
+    if (isset($_COOKIE[WIKI_SESSION_NAME]) && !preg_match('/^[-,a-zA-Z0-9]{22,256}$/', $_COOKIE[WIKI_SESSION_NAME])) {
+        unset($_COOKIE[WIKI_SESSION_NAME]);
     }
 
     session_start();
@@ -318,7 +318,7 @@ function init_paths()
         unset($conf['changelog_old']);
     }
     // hardcoded changelog because it is now a cache that lives in meta
-    $conf['changelog'] = $conf['metadir'] . '/_dokuwiki.changes';
+    $conf['changelog'] = $conf['metadir'] . '/_easywiki.changes';
     $conf['media_changelog'] = $conf['metadir'] . '/_media.changes';
 }
 
@@ -334,7 +334,7 @@ function init_lang($langCode)
     $lang = [];
 
     //load the language files
-    require(DOKU_INC . 'inc/lang/en/lang.php');
+    require(WIKI_INC . 'inc/lang/en/lang.php');
     foreach ($config_cascade['lang']['core'] as $config_file) {
         if (file_exists($config_file . 'en/lang.php')) {
             include($config_file . 'en/lang.php');
@@ -342,8 +342,8 @@ function init_lang($langCode)
     }
 
     if ($langCode && $langCode != 'en') {
-        if (file_exists(DOKU_INC . "inc/lang/$langCode/lang.php")) {
-            require(DOKU_INC . "inc/lang/$langCode/lang.php");
+        if (file_exists(WIKI_INC . "inc/lang/$langCode/lang.php")) {
+            require(WIKI_INC . "inc/lang/$langCode/lang.php");
         }
         foreach ($config_cascade['lang']['core'] as $config_file) {
             if (file_exists($config_file . "$langCode/lang.php")) {
@@ -378,7 +378,7 @@ function init_files()
 /**
  * Returns absolute path
  *
- * This tries the given path first, then checks in DOKU_INC.
+ * This tries the given path first, then checks in WIKI_INC.
  * Check for accessibility on directories as well.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -392,7 +392,7 @@ function init_path($path)
     // check existence
     $p = fullpath($path);
     if (!file_exists($p)) {
-        $p = fullpath(DOKU_INC . $path);
+        $p = fullpath(WIKI_INC . $path);
         if (!file_exists($p)) {
             return '';
         }
@@ -446,7 +446,7 @@ function init_creationmodes()
 
 /**
  * Returns the full absolute URL to the directory where
- * DokuWiki is installed in (includes a trailing slash)
+ * EasyWiki is installed in (includes a trailing slash)
  *
  * !! Can not access $_SERVER values through $INPUT
  * !! here as this function is called before $INPUT is
@@ -497,12 +497,12 @@ function getBaseURL($abs = null)
     if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
-    $hostname = \dokuwiki\Ip::hostName();
+    $hostname = \easywiki\Ip::hostName();
     $parsed_host = parse_url('http://' . $hostname);
     $host = $parsed_host['host'] ?? '';
     $port = $parsed_host['port'] ?? '';
 
-    if (!\dokuwiki\Ip::isSsl()) {
+    if (!\easywiki\Ip::isSsl()) {
         $proto = 'http://';
         if ($port == '80') {
             $port = '';
@@ -525,7 +525,7 @@ function getBaseURL($abs = null)
 function is_ssl()
 {
     dbg_deprecated('Ip::isSsl()');
-    return \dokuwiki\Ip::isSsl();
+    return \easywiki\Ip::isSsl();
 }
 
 /**
@@ -547,17 +547,17 @@ function nice_die($msg)
     echo<<<EOT
 <!DOCTYPE html>
 <html>
-<head><title>DokuWiki Setup Error</title></head>
+<head><title>EasyWiki Setup Error</title></head>
 <body style="font-family: Arial, sans-serif">
     <div style="width:60%; margin: auto; background-color: #fcc;
                 border: 1px solid #faa; padding: 0.5em 1em;">
-        <h1 style="font-size: 120%">DokuWiki Setup Error</h1>
+        <h1 style="font-size: 120%">EasyWiki Setup Error</h1>
         <p>$msg</p>
     </div>
 </body>
 </html>
 EOT;
-    if (defined('DOKU_UNITTEST')) {
+    if (defined('WIKI_UNITTEST')) {
         throw new RuntimeException('nice_die: ' . $msg);
     }
     exit(1);
@@ -582,7 +582,7 @@ function fullpath($path, $exists = false)
 {
     static $run = 0;
     $root  = '';
-    $iswin = (isWindows() || !empty($GLOBALS['DOKU_UNITTEST_ASSUME_WINDOWS']));
+    $iswin = (isWindows() || !empty($GLOBALS['WIKI_UNITTEST_ASSUME_WINDOWS']));
 
     // find the (indestructable) root of the path - keeps windows stuff intact
     if ($path[0] == '/') {
@@ -624,7 +624,7 @@ function fullpath($path, $exists = false)
     $finalpath = $root . implode('/', $newpath);
 
     // check for existence when needed (except when unit testing)
-    if ($exists && !defined('DOKU_UNITTEST') && !file_exists($finalpath)) {
+    if ($exists && !defined('WIKI_UNITTEST') && !file_exists($finalpath)) {
         return false;
     }
     return $finalpath;

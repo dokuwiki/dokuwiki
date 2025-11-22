@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Form\Form;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki User Registration Interface (Register Form)
+ * EasyWiki User Registration Interface (Register Form)
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class UserRegister extends Ui
 {

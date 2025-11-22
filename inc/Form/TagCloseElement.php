@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class TagCloseElement
@@ -8,7 +8,7 @@ namespace dokuwiki\Form;
  * Creates an HTML close tag. You have to make sure it has been opened
  * before or this will produce invalid HTML
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class TagCloseElement extends ValueElement
 {

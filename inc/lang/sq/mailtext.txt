@@ -1,4 +1,4 @@
-Një faqe në DokuWiki-n tuaj u shtua ose u ndryshua. Këto janë detajet:
+Një faqe në EasyWiki-n tuaj u shtua ose u ndryshua. Këto janë detajet:
 
 Data: @DATE@
 Shfletuesi: @BROWSER@
@@ -12,5 +12,5 @@ Përdoruesi: @USER@
 @DIFF@
 
 ---
-Ky email u gjenerua nga DokuWiki në
-@DOKUWIKIURL@
+Ky email u gjenerua nga EasyWiki në
+@EASYWIKIURL@

@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Subscriptions;
+namespace easywiki\test\Subscriptions;
 
-use dokuwiki\Subscriptions\SubscriberManager;
-use DokuWikiTest;
+use easywiki\Subscriptions\SubscriberManager;
+use EasyWikiTest;
 
-class SubscriberManagerTest extends DokuWikiTest
+class SubscriberManagerTest extends EasyWikiTest
 {
     private $originalSubscriptionConfig;
 
@@ -30,26 +30,26 @@ class SubscriberManagerTest extends DokuWikiTest
 
         // no subscriptions
         $this->assertArrayNotHasKey(
-            'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            'wiki:easywiki',
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // add page subscription
-        $sub->add('wiki:dokuwiki', 'testuser', 'every');
+        $sub->add('wiki:easywiki', 'testuser', 'every');
 
         // one subscription
         $this->assertArrayHasKey(
-            'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            'wiki:easywiki',
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // remove page subscription
-        $sub->remove('wiki:dokuwiki', 'testuser');
+        $sub->remove('wiki:easywiki', 'testuser');
 
         // no subscription
         $this->assertArrayNotHasKey(
-            'wiki:dokuwiki',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            'wiki:easywiki',
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // add namespace subscription
@@ -58,16 +58,16 @@ class SubscriberManagerTest extends DokuWikiTest
         // one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // remove (non existing) page subscription
-        $sub->remove('wiki:dokuwiki', 'testuser');
+        $sub->remove('wiki:easywiki', 'testuser');
 
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // change namespace subscription
@@ -76,13 +76,13 @@ class SubscriberManagerTest extends DokuWikiTest
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // check contents
         $this->assertEquals(
             ['wiki:' => ['testuser' => ['digest', '1234567']]],
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // change subscription data
@@ -91,13 +91,13 @@ class SubscriberManagerTest extends DokuWikiTest
         // still one subscription
         $this->assertArrayHasKey(
             'wiki:',
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
 
         // check contents
         $this->assertEquals(
             ['wiki:' => ['testuser' => ['digest', '7654321']]],
-            $sub->subscribers('wiki:dokuwiki', null, ['every', 'list', 'digest'])
+            $sub->subscribers('wiki:easywiki', null, ['every', 'list', 'digest'])
         );
     }
 

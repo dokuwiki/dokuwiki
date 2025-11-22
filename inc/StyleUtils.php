@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
 /**
  * Class StyleUtils
@@ -156,7 +156,7 @@ class StyleUtils
     /**
      * Returns the web base path for the given level/group in config cascade.
      * Style resources are relative to the template directory for the main (default) styles
-     * but relative to DOKU_BASE for everything else"
+     * but relative to WIKI_BASE for everything else"
      *
      * @param string $config_group
      * @return string
@@ -166,7 +166,7 @@ class StyleUtils
         if ($config_group === 'default') {
             return tpl_basedir($this->tpl);
         } else {
-            return DOKU_BASE;
+            return WIKI_BASE;
         }
     }
 

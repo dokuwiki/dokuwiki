@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Remote\OpenApiDoc;
+namespace easywiki\test\Remote\OpenApiDoc;
 
-use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
-use dokuwiki\Remote\OpenApiDoc\Type;
+use easywiki\Remote\OpenApiDoc\DocBlockMethod;
+use easywiki\Remote\OpenApiDoc\Type;
 
-class DocBlockMethodTest extends \DokuWikiTest {
+class DocBlockMethodTest extends \EasyWikiTest {
 
 
     /**

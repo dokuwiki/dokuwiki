@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsScopeTest extends DokuWikiTest {
+class InttestsScopeTest extends EasyWikiTest {
 
     public $triggered = false;
 
@@ -13,7 +13,7 @@ class InttestsScopeTest extends DokuWikiTest {
 
         global $EVENT_HANDLER;
         $self = $this;
-        $EVENT_HANDLER->register_hook('DOKUWIKI_STARTED', 'AFTER', null,
+        $EVENT_HANDLER->register_hook('EASYWIKI_STARTED', 'AFTER', null,
             function() use ($self) {
                 $self->triggered = true;
             }

@@ -1,11 +1,11 @@
 <?php
 
-require_once DOKU_INC.'inc/DifferenceEngine.php';
+require_once WIKI_INC.'inc/DifferenceEngine.php';
 
 /**
  * Class difference_engine_test
  */
-class difference_engine_test extends DokuWikiTest {
+class difference_engine_test extends EasyWikiTest {
     public $x = "zzz\n\naaa\n\nbbb\n\nccc\n\nddd\n\nddd\n\nddd\n\neee\n\nfff";
     public $y = "ddd\n\naaa\n\nbbb\n\nbbb\n\nccc\n\nccc\n\neee";
 

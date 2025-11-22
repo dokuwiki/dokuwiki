@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\ParserMode;
+namespace easywiki\Parsing\ParserMode;
 
 class Windowssharelink extends AbstractMode
 {

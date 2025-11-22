@@ -1,4 +1,4 @@
-Un file è stato caricato sul tuo DokuWiki. Seguono i dettagli:
+Un file è stato caricato sul tuo EasyWiki. Seguono i dettagli:
 
 File : @MEDIA@
 Data : @DATE@

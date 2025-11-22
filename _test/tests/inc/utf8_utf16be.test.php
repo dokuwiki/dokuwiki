@@ -3,7 +3,7 @@
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class utf8_utf16be_test extends DokuWikiTest {
+class utf8_utf16be_test extends EasyWikiTest {
     // some chars from various code regions
     protected $utf8  = '鈩ℵŁöx';
     protected $utf16 = "\x92\x29\x21\x35\x1\x41\x0\xf6\x0\x78";
@@ -12,14 +12,14 @@ class utf8_utf16be_test extends DokuWikiTest {
      * Convert from UTF-8 to UTF-16BE
      */
     function test_to16be(){
-        $this->assertEquals(\dokuwiki\Utf8\Conversion::toUtf16Be($this->utf8), $this->utf16);
+        $this->assertEquals(\easywiki\Utf8\Conversion::toUtf16Be($this->utf8), $this->utf16);
     }
 
     /**
      * Convert from UTF-16BE to UTF-8
      */
     function test_from16be(){
-        $this->assertEquals(\dokuwiki\Utf8\Conversion::fromUtf16Be($this->utf16),$this->utf8);
+        $this->assertEquals(\easywiki\Utf8\Conversion::fromUtf16Be($this->utf16),$this->utf8);
     }
 }
 

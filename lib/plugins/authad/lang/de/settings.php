@@ -6,7 +6,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author C!own77 <clown77@posteo.de>
  * @author Frank Loizzi <contact@software.bacal.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Ben Fey <benedikt.fey@beck-heun.de>
  * @author Jonas Gröger <jonas.groeger@gmail.com>
  * @author Carsten Perthel <carsten@cpesoft.com>

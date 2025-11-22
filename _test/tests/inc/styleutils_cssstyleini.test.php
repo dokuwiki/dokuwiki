@@ -1,17 +1,17 @@
 <?php
 
-class styleutils_cssstyleini_test extends DokuWikiTest {
+class styleutils_cssstyleini_test extends EasyWikiTest {
 
     function test_mergedstyleini() {
-        $util = new \dokuwiki\StyleUtils('dokuwiki', false, true);
+        $util = new \easywiki\StyleUtils('easywiki', false, true);
 
         $expected = array (
             'stylesheets' =>
                 array (
                     'screen' =>
                         array (
-                            DOKU_CONF . 'tpl/dokuwiki/css/_tests.less' => '/',
-                            DOKU_INC . 'lib/tpl/dokuwiki/css/content.less' => '/lib/tpl/dokuwiki/',
+                            WIKI_CONF . 'tpl/easywiki/css/_tests.less' => '/',
+                            WIKI_INC . 'lib/tpl/easywiki/css/content.less' => '/lib/tpl/easywiki/',
                         ),
                 ),
             'replacements' =>
@@ -19,7 +19,7 @@ class styleutils_cssstyleini_test extends DokuWikiTest {
                     '__text__' => '#333',
                     '__background__' => '#f2ecec',
                     '__custom_variable__' => '#5e4040',
-                    '__custom_variable_two__' => 'url(' . DOKU_BASE . 'test/foo.png)',
+                    '__custom_variable_two__' => 'url(' . WIKI_BASE . 'test/foo.png)',
                 ),
         );
 

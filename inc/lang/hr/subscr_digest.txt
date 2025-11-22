@@ -10,6 +10,6 @@ Ovdje su promjene:
 Stara izmjena: @OLDPAGE@
 Nova izmjena: @NEWPAGE@
 
-Da poništite obavijesti o izmjenama prijavite se na wiki @DOKUWIKIURL@ i zatim posjetite
+Da poništite obavijesti o izmjenama prijavite se na wiki @EASYWIKIURL@ i zatim posjetite
 @SUBSCRIBE@
 i odjavite se s promjena na stranici i/ili imeničkom prostoru.

@@ -5,4 +5,4 @@ Na této stránce můžete přidávat a odebírat oprávnění pro jmenné prost
   * Formulář výše umožňuje vidět a modifikovat oprávnění vybraného uživatele nebo skupiny.
   * V tabulce uvedené níže jsou zobrazeny všechna aktuální pravidla pro řízení přístupu (oprávnění). Zde můžete rychle odebírat a měnit více položek (oprávnění) najednou.
 
-Pro detailnější nápovědu si přečtěte stránku [[doku>acl|oficiální dokumentace ACL]], která Vám může pomoci plně pochopit princip, na kterém řízení přístupu na DokuWiki funguje.
+Pro detailnější nápovědu si přečtěte stránku [[doku>acl|oficiální dokumentace ACL]], která Vám může pomoci plně pochopit princip, na kterém řízení přístupu na EasyWiki funguje.

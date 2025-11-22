@@ -91,5 +91,5 @@ $lang['git']                   = 'Denne utvidelsen ble installert via git, du vl
 $lang['auth']                  = 'Denne autentiseringsutvidelser er i konfigurasjonsinstillingene ikke slått på. vurder å slå den av.';
 $lang['install_url']           = 'Installer fra URL:';
 $lang['install_upload']        = 'Last opp utvidelse:';
-$lang['repo_error']            = 'Lageret for programtillegg kunne ikke kontaktes. Kontroller at din server har rettigheter til å kontakte www.dokuwiki.org, sjekk også instillinger for hurtiglager (proxy).';
-$lang['nossl']                 = 'DIn PHP-installasjon mangler støtte for SSL. Nedlastning vil derfor ikke virke for mange DokuWIki-utvidelser.';
+$lang['repo_error']            = 'Lageret for programtillegg kunne ikke kontaktes. Kontroller at din server har rettigheter til å kontakte www.EasyWiki.org, sjekk også instillinger for hurtiglager (proxy).';
+$lang['nossl']                 = 'DIn PHP-installasjon mangler støtte for SSL. Nedlastning vil derfor ikke virke for mange EasyWiki-utvidelser.';

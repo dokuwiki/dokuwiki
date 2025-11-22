@@ -8,4 +8,4 @@
 
 下方表格顯示了目前所有的存取控制表 (ACL)，你可以用它快速刪除或更改多項規則。
 
-閱讀 [[doku>acl|official documentation on ACL]] 可以幫助你完整地了解 DokuWiki 存取控制的運作。
+閱讀 [[doku>acl|official documentation on ACL]] 可以幫助你完整地了解 EasyWiki 存取控制的運作。

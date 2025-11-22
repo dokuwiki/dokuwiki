@@ -1,6 +1,6 @@
 <?php
 
-class common_pagetemplate_test extends DokuWikiTest {
+class common_pagetemplate_test extends EasyWikiTest {
 
     function test_none(){
         global $conf;

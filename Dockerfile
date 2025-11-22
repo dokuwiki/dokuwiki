@@ -3,7 +3,7 @@ FROM php:8.1-apache
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies and PHP extensions required by DokuWiki
+# Install system dependencies and PHP extensions required by EasyWiki
 # This layer is cached unless dependencies change
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev \
@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Configure Apache for DokuWiki (cached layer)
+# Configure Apache for EasyWiki (cached layer)
 RUN a2enmod rewrite \
     && sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 

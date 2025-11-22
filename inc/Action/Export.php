@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Extension\Event;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Extension\Event;
 
 /**
  * Class Export
  *
  * Handle exporting by calling the appropriate renderer
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Export extends AbstractAction
 {
@@ -57,20 +57,20 @@ class Export extends AbstractAction
                 $output = rawWiki($ID, $REV);
                 break;
             case 'xhtml':
-                $pre .= '<!DOCTYPE html>' . DOKU_LF;
-                $pre .= '<html lang="' . $conf['lang'] . '" dir="' . $lang['direction'] . '">' . DOKU_LF;
-                $pre .= '<head>' . DOKU_LF;
-                $pre .= '  <meta charset="utf-8" />' . DOKU_LF; // FIXME improve wrapper
-                $pre .= '  <title>' . $ID . '</title>' . DOKU_LF;
+                $pre .= '<!DOCTYPE html>' . WIKI_LF;
+                $pre .= '<html lang="' . $conf['lang'] . '" dir="' . $lang['direction'] . '">' . WIKI_LF;
+                $pre .= '<head>' . WIKI_LF;
+                $pre .= '  <meta charset="utf-8" />' . WIKI_LF; // FIXME improve wrapper
+                $pre .= '  <title>' . $ID . '</title>' . WIKI_LF;
 
                 // get metaheaders
                 ob_start();
                 tpl_metaheaders();
                 $pre .= ob_get_clean();
 
-                $pre .= '</head>' . DOKU_LF;
-                $pre .= '<body>' . DOKU_LF;
-                $pre .= '<div class="dokuwiki export">' . DOKU_LF;
+                $pre .= '</head>' . WIKI_LF;
+                $pre .= '<body>' . WIKI_LF;
+                $pre .= '<div class="easywiki export">' . WIKI_LF;
 
                 // get toc
                 $pre .= tpl_toc(true);
@@ -78,9 +78,9 @@ class Export extends AbstractAction
                 $headers['Content-Type'] = 'text/html; charset=utf-8';
                 $output = p_wiki_xhtml($ID, $REV, false);
 
-                $post .= '</div>' . DOKU_LF;
-                $post .= '</body>' . DOKU_LF;
-                $post .= '</html>' . DOKU_LF;
+                $post .= '</div>' . WIKI_LF;
+                $post .= '</body>' . WIKI_LF;
+                $post .= '</html>' . WIKI_LF;
                 break;
             case 'xhtmlbody':
                 $headers['Content-Type'] = 'text/html; charset=utf-8';

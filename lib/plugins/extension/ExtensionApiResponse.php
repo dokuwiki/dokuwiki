@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
-use dokuwiki\Remote\Response\ApiResponse;
+use easywiki\Remote\Response\ApiResponse;
 
 class ExtensionApiResponse extends ApiResponse
 {
@@ -38,7 +38,7 @@ class ExtensionApiResponse extends ApiResponse
     /** @var bool Whether an update is available */
     public $updateAvailable;
 
-    /** @var bool Whether this extension is bundled with DokuWiki */
+    /** @var bool Whether this extension is bundled with EasyWiki */
     public $isBundled;
 
     /** @var bool Whether this extension is under git control */

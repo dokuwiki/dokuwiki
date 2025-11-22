@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Logger;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Logger;
+use easywiki\Utf8\Sort;
 
 /**
  * Plaintext authentication backend

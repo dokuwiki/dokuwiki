@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
-    <description>Coding Standard used for DokuWiki</description>
+<ruleset name="EasyWiki Coding Standard Standard" namespace="EasyWiki\CS\Standard">
+    <description>Coding Standard used for EasyWiki</description>
 
     <!-- default config -->
     <arg name="colors"/>
@@ -13,7 +13,7 @@
     <file>../inc</file>
     <file>../lib</file>
     <file>../bin</file>
-    <file>../doku.php</file>
+    <file>../wiki.php</file>
     <file>../index.php</file>
     <file>../feed.php</file>
     <file>../install.php</file>

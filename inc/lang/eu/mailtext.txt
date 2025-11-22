@@ -1,4 +1,4 @@
-DokuWiki-Eskuliburuetan orriren bat aldatu edo gehitu da. Hemen dituzu xehetasunak
+EasyWiki-Eskuliburuetan orriren bat aldatu edo gehitu da. Hemen dituzu xehetasunak
 
 Data                : @DATE@
 Nabigatzailea       : @BROWSER@

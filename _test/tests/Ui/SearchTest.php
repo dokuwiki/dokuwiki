@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\Ui;
+namespace easywiki\test\Ui;
 
-class SearchTest extends \DokuWikiTest
+class SearchTest extends \EasyWikiTest
 {
 
     /**
@@ -151,7 +151,7 @@ class SearchTest extends \DokuWikiTest
      */
     function test_simpleshort($inputParsedQuery, $expectedPageName, $msg)
     {
-        $search = new \dokuwiki\Ui\Search([], [], []);
+        $search = new \easywiki\Ui\Search([], [], []);
 
         $actualPageName = $search->createPagenameFromQuery($inputParsedQuery);
 

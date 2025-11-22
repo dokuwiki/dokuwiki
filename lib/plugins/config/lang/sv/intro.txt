@@ -1,6 +1,6 @@
 ====== Hantera inställningar ======
 
-Använd den här sidan för att göra inställningar i din Dokuwiki. För hjälp angående specifika inställningar, se [[doku>config]]. För mer detaljer om den här insticksmodulen, se [[doku>plugin:config]].
+Använd den här sidan för att göra inställningar i din EasyWiki. För hjälp angående specifika inställningar, se [[doku>config]]. För mer detaljer om den här insticksmodulen, se [[doku>plugin:config]].
 
 Inställningar med en rosa bakgrund är skyddade och kan inte ändras med den här insticksmodulen. Inställningar med en blå bakgrund är standardvärden, och inställningar som visas med en vit bakgrund har ändrats i den här installationen. Både blåa och vita inställningar kan ändras.
 

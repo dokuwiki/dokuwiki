@@ -42,7 +42,7 @@ function mail_setup()
     global $INPUT;
 
     // auto constructed address
-    $host = @parse_url(DOKU_URL, PHP_URL_HOST);
+    $host = @parse_url(WIKI_URL, PHP_URL_HOST);
     if (!$host) $host = 'example.com';
     $noreply = 'noreply@' . $host;
 

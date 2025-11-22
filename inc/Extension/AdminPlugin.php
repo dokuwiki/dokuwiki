@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
  * Admin Plugin Prototype
@@ -45,7 +45,7 @@ abstract class AdminPlugin extends Plugin
     public function getMenuIcon()
     {
         $plugin = $this->getPluginName();
-        return DOKU_PLUGIN . $plugin . '/admin.svg';
+        return WIKI_PLUGIN . $plugin . '/admin.svg';
     }
 
     /**

@@ -10,5 +10,5 @@ Cyfeiriad-IP : @IPADDRESS@
 Gwesteiwr    : @HOSTNAME@
 
 -- 
-Cafodd y neges hon ei generadu gan DokuWiki ar
-@DOKUWIKIURL@
+Cafodd y neges hon ei generadu gan EasyWiki ar
+@EASYWIKIURL@

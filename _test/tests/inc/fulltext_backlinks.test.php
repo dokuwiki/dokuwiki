@@ -1,14 +1,14 @@
 <?php
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC')) die();
+// must be run within EasyWiki
+if (!defined('WIKI_INC')) die();
 
 /**
  * Test cases for the link index
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-class fulltext_backlinks_test extends DokuWikiTest {
+class fulltext_backlinks_test extends EasyWikiTest {
 
     public function test_internallink() {
         saveWikiText('test:internallinks', '[[internälLink]] [[..:internal link]]', 'Test initialization');

@@ -1,12 +1,12 @@
 ====== Formatting Syntax ======
 
-[[doku>DokuWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing "Edit this page". If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
+[[doku>EasyWiki]] supports some simple markup language, which tries to make the datafiles to be as readable as possible. This page contains all possible syntax you may use when editing the pages. Simply have a look at the source of this page by pressing "Edit this page". If you want to try something, just use the [[playground:playground|playground]] page. The simpler markup is easily accessible via [[doku>toolbar|quickbuttons]], too.
 
 ===== Basic Text Formatting =====
 
-DokuWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts. Of course you can **__//''combine''//__** all these.
+EasyWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts. Of course you can **__//''combine''//__** all these.
 
-  DokuWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts.
+  EasyWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts.
   Of course you can **__//''combine''//__** all these.
 
 You can use <sub>subscript</sub> and <sup>superscript</sup>, too.
@@ -31,13 +31,13 @@ You should use forced newlines only if really needed.
 
 ===== Links =====
 
-DokuWiki supports multiple ways of creating links.
+EasyWiki supports multiple ways of creating links.
 
 ==== External ====
 
 External links are recognized automagically: http://www.google.com or simply www.google.com - You can set the link text as well: [[http://www.google.com|This Link points to google]]. Email addresses like this one: <andi@splitbrain.org> are recognized, too.
 
-  DokuWiki supports multiple ways of creating links. External links are recognized
+  EasyWiki supports multiple ways of creating links. External links are recognized
   automagically: http://www.google.com or simply www.google.com - You can set
   link text as well: [[http://www.google.com|This Link points to google]]. Email
   addresses like this one: <andi@splitbrain.org> are recognized, too.
@@ -64,14 +64,14 @@ Linking to a specific section is possible, too. Just add the section name behind
 Notes:
 
   * Links to [[syntax|existing pages]] are shown in a different style from [[nonexisting]] ones.
-  * DokuWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behavior can be enabled in the [[doku>config]] file. Hint: If DokuWiki is a link, then it's enabled.
+  * EasyWiki does not use [[wp>CamelCase]] to automatically create links by default, but this behavior can be enabled in the [[doku>config]] file. Hint: If EasyWiki is a link, then it's enabled.
   * When a section's heading is changed, its bookmark changes, too. So don't rely on section linking too much.
 
 ==== Interwiki ====
 
-DokuWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
+EasyWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis. For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
-  DokuWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis.
+  EasyWiki supports [[doku>Interwiki]] links. These are quick links to other Wikis.
   For example this is a link to Wikipedia's page about Wikis: [[wp>Wiki]].
 
 ==== Windows Shares ====
@@ -96,9 +96,9 @@ $lang['js']['nosmblinks'] = '';
 
 You can also use an image to link to another internal or external page by combining the syntax for links and [[#images_and_other_files|images]] (see below) like this:
 
-  [[http://php.net|{{wiki:dokuwiki-128.png}}]]
+  [[http://php.net|{{wiki:easywiki-128.png}}]]
 
-[[http://php.net|{{wiki:dokuwiki-128.png}}]]
+[[http://php.net|{{wiki:easywiki-128.png}}]]
 
 Please note: The image formatting is the only formatting syntax accepted in link names.
 
@@ -130,43 +130,43 @@ By using four or more dashes, you can make a horizontal line:
 
 You can include external and internal [[doku>images|images, videos and audio files]] with curly brackets. Optionally you can specify the size of them.
 
-Real size:                        {{wiki:dokuwiki-128.png}}
+Real size:                        {{wiki:easywiki-128.png}}
 
-Resize to given width:            {{wiki:dokuwiki-128.png?50}}
+Resize to given width:            {{wiki:easywiki-128.png?50}}
 
-Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:dokuwiki-128.png?200x50}}
+Resize to given width and height((when the aspect ratio of the given width and height doesn't match that of the image, it will be cropped to the new ratio before resizing)): {{wiki:easywiki-128.png?200x50}}
 
 Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
-  Real size:                        {{wiki:dokuwiki-128.png}}
-  Resize to given width:            {{wiki:dokuwiki-128.png?50}}
-  Resize to given width and height: {{wiki:dokuwiki-128.png?200x50}}
+  Real size:                        {{wiki:easywiki-128.png}}
+  Resize to given width:            {{wiki:easywiki-128.png?50}}
+  Resize to given width and height: {{wiki:easywiki-128.png?200x50}}
   Resized external image:           {{https://secure.php.net/images/php.gif?200x50}}
 
 
 By using left or right whitespaces you can choose the alignment.
 
-{{ wiki:dokuwiki-128.png}}
+{{ wiki:easywiki-128.png}}
 
-{{wiki:dokuwiki-128.png }}
+{{wiki:easywiki-128.png }}
 
-{{ wiki:dokuwiki-128.png }}
+{{ wiki:easywiki-128.png }}
 
-  {{ wiki:dokuwiki-128.png}}
-  {{wiki:dokuwiki-128.png }}
-  {{ wiki:dokuwiki-128.png }}
+  {{ wiki:easywiki-128.png}}
+  {{wiki:easywiki-128.png }}
+  {{ wiki:easywiki-128.png }}
 
 Of course, you can add a title (displayed as a tooltip by most browsers), too.
 
-{{ wiki:dokuwiki-128.png |This is the caption}}
+{{ wiki:easywiki-128.png |This is the caption}}
 
-  {{ wiki:dokuwiki-128.png |This is the caption}}
+  {{ wiki:easywiki-128.png |This is the caption}}
 
 For linking an image to another page see [[#Image Links]] above.
 
 ==== Supported Media Formats ====
 
-DokuWiki can embed the following media formats directly.
+EasyWiki can embed the following media formats directly.
 
 | Image | ''gif'', ''jpg'', ''png''  |
 | Video | ''webm'', ''ogv'', ''mp4'' |
@@ -177,9 +177,9 @@ If you specify a filename that is not a supported media format, then it will be 
 
 By adding ''?linkonly'' you provide a link to the media without displaying it inline
 
-  {{wiki:dokuwiki-128.png?linkonly}}
+  {{wiki:easywiki-128.png?linkonly}}
 
-{{wiki:dokuwiki-128.png?linkonly}} This is just a link to the image.
+{{wiki:easywiki-128.png?linkonly}} This is just a link to the image.
 
 ==== Fallback Formats ====
 
@@ -189,13 +189,13 @@ For example consider this embedded mp4 video:
 
   {{video.mp4|A funny video}}
 
-When you upload a ''video.webm'' and ''video.ogv'' next to the referenced ''video.mp4'', DokuWiki will automatically add them as alternatives so that one of the three files is understood by your browser.
+When you upload a ''video.webm'' and ''video.ogv'' next to the referenced ''video.mp4'', EasyWiki will automatically add them as alternatives so that one of the three files is understood by your browser.
 
-Additionally DokuWiki supports a "poster" image which will be shown before the video has started. That image needs to have the same filename as the video and be either a jpg or png file. In the example above a ''video.jpg'' file would work.
+Additionally EasyWiki supports a "poster" image which will be shown before the video has started. That image needs to have the same filename as the video and be either a jpg or png file. In the example above a ''video.jpg'' file would work.
 
 ===== Lists =====
 
-Dokuwiki supports ordered and unordered lists. To create a list item, indent your text by two spaces and use a ''*'' for unordered lists or a ''-'' for ordered ones.
+EasyWiki supports ordered and unordered lists. To create a list item, indent your text by two spaces and use a ''*'' for unordered lists or a ''-'' for ordered ones.
 
   * This is a list
   * The second item
@@ -223,13 +223,13 @@ Also take a look at the [[doku>faq:lists|FAQ on list items]].
 
 ===== Text Conversions =====
 
-DokuWiki can convert certain pre-defined characters or strings into images or other text or HTML.
+EasyWiki can convert certain pre-defined characters or strings into images or other text or HTML.
 
 The text to image conversion is mainly done for smileys. And the text to HTML conversion is used for typography replacements, but can be configured to use other HTML as well.
 
 ==== Text to Image Conversions ====
 
-DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents. Those [[doku>Smileys]] and other images can be configured and extended. Here is an overview of Smileys included in DokuWiki:
+EasyWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents. Those [[doku>Smileys]] and other images can be configured and extended. Here is an overview of Smileys included in EasyWiki:
 
   * 8-) %%  8-)  %%
   * 8-O %%  8-O  %%
@@ -255,7 +255,7 @@ DokuWiki converts commonly used [[wp>emoticon]]s to their graphical equivalents.
 
 ==== Text to HTML Conversions ====
 
-Typography: [[DokuWiki]] can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
+Typography: [[EasyWiki]] can convert simple text characters to their typographically correct entities. Here is an example of recognized characters.
 
 -> <- <-> => <= <=> >> << -- --- 640x480 (c) (tm) (r)
 "He thought 'It's a man's world'..."
@@ -301,7 +301,7 @@ I think we should do it
 
 ===== Tables =====
 
-DokuWiki supports a simple syntax to create tables.
+EasyWiki supports a simple syntax to create tables.
 
 ^ Heading 1      ^ Heading 2       ^ Heading 3          ^
 | Row 1 Col 1    | Row 1 Col 2     | Row 1 Col 3        |
@@ -403,7 +403,7 @@ Those blocks were created by this source:
 
 ==== Syntax Highlighting ====
 
-[[wiki:DokuWiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
+[[wiki:easywiki]] can highlight sourcecode, which makes it easier to read. It uses the [[http://qbnz.com/highlighter/|GeSHi]] Generic Syntax Highlighter -- so any language supported by GeSHi is supported. The syntax uses the same code and file blocks described in the previous section, but this time the name of the language syntax to be highlighted is included inside the tag, e.g. ''<nowiki><code java></nowiki>'' or ''<nowiki><file java></nowiki>''.
 
 <code java>
 /**
@@ -438,7 +438,7 @@ When you use the ''%%<code>%%'' or ''%%<file>%%'' syntax as above, you might wan
 If you don't want any highlighting but want a downloadable file, specify a dash (''-'') as the language code: ''%%<code - myfile.foo>%%''.
 
 ===== RSS/ATOM Feed Aggregation =====
-[[DokuWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in DokuWiki as well. You can influence the rendering by multiple additional space separated parameters:
+[[EasyWiki]] can integrate data from external XML feeds. For parsing the XML feeds, [[http://simplepie.org/|SimplePie]] is used. All formats understood by SimplePie can be used in EasyWiki as well. You can influence the rendering by multiple additional space separated parameters:
 
 ^ Parameter  ^ Description ^
 | any number | will be used as maximum number items to show, defaults to 8 |
@@ -449,7 +449,7 @@ If you don't want any highlighting but want a downloadable file, specify a dash 
 | nosort     | do not sort the items in the feed |
 | //n//[dhm] | refresh period, where d=days, h=hours, m=minutes. (e.g. 12h = 12 hours). |
 
-The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:DokuWiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:DokuWiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
+The refresh period defaults to 4 hours. Any value below 10 minutes will be treated as 10 minutes. [[wiki:easywiki]] will generally try to supply a cached version of a page, obviously this is inappropriate when the page contains dynamic external content. The parameter tells [[wiki:easywiki]] to re-render the page if it is more than //refresh period// since the page was last rendered.
 
 By default the feed will be sorted by date, newest items first. You can sort it by oldest first using the ''reverse'' parameter, or display the feed as is with ''nosort''.
 
@@ -462,14 +462,14 @@ By default the feed will be sorted by date, newest items first. You can sort it 
 
 ===== Control Macros =====
 
-Some syntax influences how DokuWiki renders a page without creating any output it self. The following control macros are availble:
+Some syntax influences how EasyWiki renders a page without creating any output it self. The following control macros are availble:
 
 ^ Macro           ^ Description |
 | %%~~NOTOC~~%%   | If this macro is found on the page, no table of contents will be created |
-| %%~~NOCACHE~~%% | DokuWiki caches all output by default. Sometimes this might not be wanted (eg. when the %%<php>%% syntax above is used), adding this macro will force DokuWiki to rerender a page on every call |
+| %%~~NOCACHE~~%% | EasyWiki caches all output by default. Sometimes this might not be wanted (eg. when the %%<php>%% syntax above is used), adding this macro will force EasyWiki to rerender a page on every call |
 
 ===== Syntax Plugins =====
 
-DokuWiki's syntax can be extended by [[doku>plugins|Plugins]]. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular DokuWiki installation:
+EasyWiki's syntax can be extended by [[doku>plugins|Plugins]]. How the installed plugins are used is described on their appropriate description pages. The following syntax plugins are available in this particular EasyWiki installation:
 
 ~~INFO:syntaxplugins~~

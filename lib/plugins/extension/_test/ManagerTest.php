@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\plugin\extension\test;
+namespace easywiki\plugin\extension\test;
 
-use dokuwiki\plugin\extension\Extension;
-use dokuwiki\plugin\extension\Manager;
-use DokuWikiTest;
+use easywiki\plugin\extension\Extension;
+use easywiki\plugin\extension\Manager;
+use EasyWikiTest;
 use org\bovigo\vfs\vfsStream;
 
 /**
@@ -13,7 +13,7 @@ use org\bovigo\vfs\vfsStream;
  * @group plugin_extension
  * @group plugins
  */
-class ManagerTest extends DokuWikiTest
+class ManagerTest extends EasyWikiTest
 {
     protected $pluginsEnabled = ['extension'];
 

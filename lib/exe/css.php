@@ -1,22 +1,22 @@
 <?php
 
 /**
- * DokuWiki StyleSheet creator
+ * EasyWiki StyleSheet creator
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
 use LesserPHP\Lessc;
-use dokuwiki\StyleUtils;
-use dokuwiki\Cache\Cache;
-use dokuwiki\Extension\Event;
+use easywiki\StyleUtils;
+use easywiki\Cache\Cache;
+use easywiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
 if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+if (!defined('WIKI_DISABLE_GZIP_OUTPUT')) define('WIKI_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
 if (!defined('NL')) define('NL', "\n");
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 // Main (don't run when UNIT test)
 if (!defined('SIMPLE_TEST')) {
@@ -61,7 +61,7 @@ function css_out()
     $tplinc = tpl_incdir($tpl);
     $cache_files = getConfigFiles('main');
     $cache_files[] = $tplinc . 'style.ini';
-    $cache_files[] = DOKU_CONF . "tpl/$tpl/style.ini";
+    $cache_files[] = WIKI_CONF . "tpl/$tpl/style.ini";
     $cache_files[] = __FILE__;
     if ($INPUT->bool('preview')) {
         $cache_files[] = $conf['cachedir'] . '/preview.ini';
@@ -74,12 +74,12 @@ function css_out()
         $files = [];
 
         // load core styles
-        $files[DOKU_INC . 'lib/styles/' . $mediatype . '.css'] = DOKU_BASE . 'lib/styles/';
+        $files[WIKI_INC . 'lib/styles/' . $mediatype . '.css'] = WIKI_BASE . 'lib/styles/';
 
         // load jQuery-UI theme
         if ($mediatype == 'screen') {
-            $files[DOKU_INC . 'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] =
-                DOKU_BASE . 'lib/scripts/jquery/jquery-ui-theme/';
+            $files[WIKI_INC . 'lib/scripts/jquery/jquery-ui-theme/smoothness.css'] =
+                WIKI_BASE . 'lib/scripts/jquery/jquery-ui-theme/';
         }
         // load plugin styles
         $files = array_merge($files, css_pluginstyles($mediatype));
@@ -90,7 +90,7 @@ function css_out()
         // load user styles
         if (isset($config_cascade['userstyle'][$mediatype]) && is_array($config_cascade['userstyle'][$mediatype])) {
             foreach ($config_cascade['userstyle'][$mediatype] as $userstyle) {
-                $files[$userstyle] = DOKU_BASE;
+                $files[$userstyle] = WIKI_BASE;
             }
         }
 
@@ -116,7 +116,7 @@ function css_out()
         $_SERVER['HTTP_HOST'] .
         $_SERVER['SERVER_PORT'] .
         $INPUT->bool('preview') .
-        DOKU_BASE .
+        WIKI_BASE .
         $tpl .
         $type,
         '.css'
@@ -155,7 +155,7 @@ function css_out()
 
         // load files
         foreach ($cssData['files'] as $file => $location) {
-            $display = str_replace(fullpath(DOKU_INC), '', fullpath($file));
+            $display = str_replace(fullpath(WIKI_INC), '', fullpath($file));
             echo "\n/* XXXXXXXXX $display XXXXXXXXX */\n";
             echo css_loadfile($file, $location);
         }
@@ -189,7 +189,7 @@ function css_out()
 
     // embed small images right into the stylesheet
     if ($conf['cssdatauri']) {
-        $base = preg_quote(DOKU_BASE, '#');
+        $base = preg_quote(WIKI_BASE, '#');
         $css = preg_replace_callback('#(url\([ \'"]*)(' . $base . ')(.*?(?:\.(png|gif)))#i', 'css_datauri', $css);
     }
 
@@ -210,10 +210,10 @@ function css_parseless($css)
     global $conf;
 
     $less = new Lessc();
-    $less->setImportDir([DOKU_INC]);
+    $less->setImportDir([WIKI_INC]);
     $less->setPreserveComments(!$conf['compress']);
 
-    if (defined('DOKU_UNITTEST')) {
+    if (defined('WIKI_UNITTEST')) {
         $less->addImportDir(TMP_DIR);
     }
 
@@ -244,7 +244,7 @@ function css_parseless($css)
             'If you recently installed a new plugin or template it ' .
             'might be broken and you should try disabling it again. [' . $msg . ']';
 
-        echo ".dokuwiki:before {
+        echo ".easywiki:before {
             content: '$error';
             background-color: red;
             display: block;
@@ -312,7 +312,7 @@ function css_filewrapper($mediatype, $files = [])
 }
 
 /**
- * Prints the @media encapsulated default styles of DokuWiki
+ * Prints the @media encapsulated default styles of EasyWiki
  *
  * This function is being called by a CSS_STYLES_INCLUDED event
  * The event can be distinguished by the mediatype which is:
@@ -345,7 +345,7 @@ function css_interwiki()
 
     // default style
     echo 'a.interwiki {';
-    echo ' background: transparent url(' . DOKU_BASE . 'lib/images/interwiki.svg) 0 0 no-repeat;';
+    echo ' background: transparent url(' . WIKI_BASE . 'lib/images/interwiki.svg) 0 0 no-repeat;';
     echo ' background-size: 1.2em;';
     echo ' padding: 0 0 0 1.4em;';
     echo '}';
@@ -357,9 +357,9 @@ function css_interwiki()
         foreach (['svg', 'png', 'gif'] as $ext) {
             $file = 'lib/images/interwiki/' . $iw . '.' . $ext;
 
-            if (file_exists(DOKU_INC . $file)) {
+            if (file_exists(WIKI_INC . $file)) {
                 echo "a.iw_$class {";
-                echo '  background-image: url(' . DOKU_BASE . $file . ')';
+                echo '  background-image: url(' . WIKI_BASE . $file . ')';
                 echo '}';
                 break;
             }
@@ -377,7 +377,7 @@ function css_filetypes()
 
     // default style
     echo '.mediafile {';
-    echo ' background: transparent url(' . DOKU_BASE . 'lib/images/fileicons/svg/file.svg) 0px 1px no-repeat;';
+    echo ' background: transparent url(' . WIKI_BASE . 'lib/images/fileicons/svg/file.svg) 0px 1px no-repeat;';
     echo ' background-size: 1.2em;';
     echo ' padding-left: 1.5em;';
     echo '}';
@@ -385,7 +385,7 @@ function css_filetypes()
     // additional styles when icon available
     // scan directory for all icons
     $exts = [];
-    if ($dh = opendir(DOKU_INC . 'lib/images/fileicons/svg')) {
+    if ($dh = opendir(WIKI_INC . 'lib/images/fileicons/svg')) {
         while (false !== ($file = readdir($dh))) {
             if (preg_match('/(.*?)\.svg$/i', $file, $match)) {
                 $exts[] = strtolower($match[1]);
@@ -396,7 +396,7 @@ function css_filetypes()
     foreach ($exts as $ext) {
         $class = preg_replace('/[^_\-a-z0-9]+/', '_', $ext);
         echo ".mf_$class {";
-        echo '  background-image: url(' . DOKU_BASE . 'lib/images/fileicons/svg/' . $ext . '.svg)';
+        echo '  background-image: url(' . WIKI_BASE . 'lib/images/fileicons/svg/' . $ext . '.svg)';
         echo '}';
     }
 }
@@ -411,7 +411,7 @@ function css_filetypes()
  */
 function css_loadfile($file, $location = '')
 {
-    $css_file = new DokuCssFile($file);
+    $css_file = new WikiCssFile($file);
     return $css_file->load($location);
 }
 
@@ -420,7 +420,7 @@ function css_loadfile($file, $location = '')
  *
  * @author Chris Smith <chris@jalakai.co.uk>
  */
-class DokuCssFile
+class WikiCssFile
 {
     protected $filepath;             // file system path to the CSS/Less file
     protected $location;             // base url location of the CSS/Less file
@@ -433,7 +433,7 @@ class DokuCssFile
 
     /**
      * Load the contents of the css/less file and adjust any relative paths/urls (relative to this file) to be
-     * relative to the dokuwiki root: the web root (DOKU_BASE) for most files; the file system root (DOKU_INC)
+     * relative to the easywiki root: the web root (WIKI_BASE) for most files; the file system root (WIKI_INC)
      * for less files.
      *
      * @param string $location base url for this file
@@ -455,7 +455,7 @@ class DokuCssFile
     }
 
     /**
-     * Get the relative file system path of this file, relative to dokuwiki's root folder, DOKU_INC
+     * Get the relative file system path of this file, relative to easywiki's root folder, WIKI_INC
      *
      * @return string   relative file system path
      */
@@ -463,10 +463,10 @@ class DokuCssFile
     {
 
         if (is_null($this->relative_path)) {
-            $basedir = [DOKU_INC];
+            $basedir = [WIKI_INC];
 
             // during testing, files may be found relative to a second base dir, TMP_DIR
-            if (defined('DOKU_UNITTEST')) {
+            if (defined('WIKI_UNITTEST')) {
                 $basedir[] = realpath(TMP_DIR);
             }
 
@@ -480,7 +480,7 @@ class DokuCssFile
 
     /**
      * preg_replace callback to adjust relative urls from relative to this file to relative
-     * to the appropriate dokuwiki root location as described in the code
+     * to the appropriate easywiki root location as described in the code
      *
      * @param array $match see http://php.net/preg_replace_callback
      * @return string   see http://php.net/preg_replace_callback
@@ -519,7 +519,7 @@ function css_datauri($match)
     $url = unslash($match[3]);
     $ext = unslash($match[4]);
 
-    $local = DOKU_INC . $url;
+    $local = WIKI_INC . $url;
     $size = @filesize($local);
     if ($size && $size < $conf['cssdatauri']) {
         $data = base64_encode(file_get_contents($local));
@@ -546,12 +546,12 @@ function css_pluginstyles($mediatype = 'screen')
     $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p) {
-        $list[DOKU_PLUGIN . "$p/$mediatype.css"] = DOKU_BASE . "lib/plugins/$p/";
-        $list[DOKU_PLUGIN . "$p/$mediatype.less"] = DOKU_BASE . "lib/plugins/$p/";
+        $list[WIKI_PLUGIN . "$p/$mediatype.css"] = WIKI_BASE . "lib/plugins/$p/";
+        $list[WIKI_PLUGIN . "$p/$mediatype.less"] = WIKI_BASE . "lib/plugins/$p/";
         // alternative for screen.css
         if ($mediatype == 'screen') {
-            $list[DOKU_PLUGIN . "$p/style.css"] = DOKU_BASE . "lib/plugins/$p/";
-            $list[DOKU_PLUGIN . "$p/style.less"] = DOKU_BASE . "lib/plugins/$p/";
+            $list[WIKI_PLUGIN . "$p/style.css"] = WIKI_BASE . "lib/plugins/$p/";
+            $list[WIKI_PLUGIN . "$p/style.less"] = WIKI_BASE . "lib/plugins/$p/";
         }
     }
     return $list;

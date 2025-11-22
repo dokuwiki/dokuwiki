@@ -1,29 +1,29 @@
 <?php
 
-use \dokuwiki\Input\Input;
+use \easywiki\Input\Input;
 
-class common_getGoogleQuery_test extends DokuWikiTest {
+class common_getGoogleQuery_test extends EasyWikiTest {
 
     /**
-     * https://github.com/dokuwiki/dokuwiki/issues/2848
+     * https://github.com/easywiki/easywiki/issues/2848
      */
     function test_google_form(){
         global $INPUT;
-        $_SERVER['HTTP_REFERER'] = 'https://www.google.com/url?q=https://www.dokuwiki.org/&sa=D&ust=a&usg=b';
+        $_SERVER['HTTP_REFERER'] = 'https://www.google.com/url?q=https://www.EasyWiki.org/&sa=D&ust=a&usg=b';
         $INPUT = new Input();
         $this->assertEquals('', getGoogleQuery());
     }
 
     function test_google_url(){
         global $INPUT;
-        $_SERVER['HTTP_REFERER'] = 'https://www.google.com/url?sa=t&source=web&rct=j&url=https://www.dokuwiki.org/&ved=a';
+        $_SERVER['HTTP_REFERER'] = 'https://www.google.com/url?sa=t&source=web&rct=j&url=https://www.EasyWiki.org/&ved=a';
         $INPUT = new Input();
         $this->assertEquals('', getGoogleQuery());
     }
 
     function test_uncommon_url(){
         global $INPUT;
-        $_SERVER['HTTP_REFERER'] = 'http://search.example.com/search?q=DokuWiki';
+        $_SERVER['HTTP_REFERER'] = 'http://search.example.com/search?q=EasyWiki';
         $INPUT = new Input();
         $this->assertEquals('', getGoogleQuery());
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu;
+namespace easywiki\Menu;
 
 /**
  * Class SiteMenu

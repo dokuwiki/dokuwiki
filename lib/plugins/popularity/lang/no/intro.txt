@@ -1,9 +1,9 @@
 ======  Tilbakemelding om popularitet ======
 
-Dette verktøyet samler anonyme data om din wiki og sender disse tilbake til DokuWikis utviklere. Dette hjelper utviklerne til å forstå hvordan DokuWiki blir brukt, og gjør at fremtidig beslutninger om videre utvikling kan baseres på statistikk fra virkelig bruk.
+Dette verktøyet samler anonyme data om din wiki og sender disse tilbake til EasyWikis utviklere. Dette hjelper utviklerne til å forstå hvordan EasyWiki blir brukt, og gjør at fremtidig beslutninger om videre utvikling kan baseres på statistikk fra virkelig bruk.
 
 Du oppfordres herved til å gjenta innsendingen fra tid til annen for å holde utviklerne informert når din wiki vokser. Dine datasett vil bli  identifisert ved hjelp av en anonym identifikator.
 
-De data som samles inn inneholder informasjon om din DokuWiki-versjon, antallet og størrelsen på sider og filer, installerte utvidelser og informasjon om hvilken versjon av PHP som er installert.
+De data som samles inn inneholder informasjon om din EasyWiki-versjon, antallet og størrelsen på sider og filer, installerte utvidelser og informasjon om hvilken versjon av PHP som er installert.
 
 Rådata som blir sendt vises nedenfor. Bruk knappen "Send data" for å overføre denne informasjonen.

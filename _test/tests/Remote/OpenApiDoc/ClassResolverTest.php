@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test\Remote\OpenApiDoc;
+namespace easywiki\test\Remote\OpenApiDoc;
 
-use dokuwiki\Remote\OpenApiDoc\ClassResolver;
+use easywiki\Remote\OpenApiDoc\ClassResolver;
 
-class ClassResolverTest extends \DokuWikiTest
+class ClassResolverTest extends \EasyWikiTest
 {
 
 
@@ -17,7 +17,7 @@ class ClassResolverTest extends \DokuWikiTest
 
         // resolve in same namespace
         $this->assertEquals(
-            'dokuwiki\test\Remote\OpenApiDoc\Something\Else',
+            'easywiki\test\Remote\OpenApiDoc\Something\Else',
             $resolver->resolve('Something\Else', self::class)
         );
 

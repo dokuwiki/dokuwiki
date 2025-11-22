@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Cache;
+namespace easywiki\Cache;
 
-use dokuwiki\Debug\PropertyDeprecationHelper;
-use dokuwiki\Extension\Event;
+use easywiki\Debug\PropertyDeprecationHelper;
+use easywiki\Extension\Event;
 
 /**
  * Generic handling of caching
@@ -103,7 +103,7 @@ class Cache
      *
      * can be overridden
      *
-     * @internal This method may only be called by the event handler! Call \dokuwiki\Cache\Cache::useCache instead!
+     * @internal This method may only be called by the event handler! Call \easywiki\Cache\Cache::useCache instead!
      *
      * @return bool               see useCache()
      */

@@ -2,16 +2,16 @@
 
 LesserPHP is a compiler for LESS written in PHP. It is based on `lessphp` by [@leafo](https://github.com/leafo/lessphp). The original has been abandoned in 2014. The fork by [@MarcusSchwarz](https://github.com/MarcusSchwarz/lesserphp) has been mostly abandoned in 2021. There are other forks with dubious status.
 
-This is an opinionated fork with the goal to modernize the code base enough to be somewhat easier to maintain without completely rewriting it. It is meant to be used as a stable base for [DokuWiki](https://www.dokuwiki.org). This means features not needed for this goal are removed. 
+This is an opinionated fork with the goal to modernize the code base enough to be somewhat easier to maintain without completely rewriting it. It is meant to be used as a stable base for [EasyWiki](https://www.dokuwiki.org). This means features not needed for this goal are removed. 
 
 Please note that this fork is based on the `0.6.0-dev` branch of `MarcusSchwarz/lesserphp`, not the much modernized `master` branch. This has two reasons:
 
-1. The `master` was not up-to-date with all the bug fixes in the `0.6.0-dev` branch (some of which had been contributed by DokuWiki developers)
+1. The `master` was not up-to-date with all the bug fixes in the `0.6.0-dev` branch (some of which had been contributed by EasyWiki developers)
 2. I simply only noticed the considerable refactoring Marcus had done in the `master` branch after I had already started my own refactoring. I did not want to start over again. His approach is much more radical than mine and probably took more than the long weekend I had available for this.  
 
 ## Contributing and Bugs
 
-Please report bugs to the [issue tracker](https://github.com/splitbrain/lesserphp/issues). Fixes are only likely when DokuWiki needs them, or you provide a pull request.
+Please report bugs to the [issue tracker](https://github.com/splitbrain/lesserphp/issues). Fixes are only likely when EasyWiki needs them, or you provide a pull request.
 
 Feature Requests will be ignored unless accompanied by a pull request.
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\PageRevisions;
-use dokuwiki\Ui;
+use easywiki\Ui\PageRevisions;
+use easywiki\Ui;
 
 /**
  * Class Revisions
  *
  * Show the list of old revisions of the current page
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Revisions extends AbstractAction
 {

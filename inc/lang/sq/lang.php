@@ -7,7 +7,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesSq.php?view=co
@@ -102,7 +102,7 @@ $lang['regsuccess2']           = 'Llogarija e Përdoruesit u krijua';
 $lang['regmailfail']           = 'Duket se ka ndodhur një gabim gjatë dërgimit të fjalëkalimit me e-mail. Ju lutemi kontaktoni administratorin!';
 $lang['regbadmail']            = 'Adresa email e dhënë nuk mund të pranohet sepse nuk duket e rregullt. Ju lutem fusni një adresë të rregullt ose boshatisni kutinë e shtypit.';
 $lang['regbadpass']            = 'Dy fjalëkalimet e dhëna nuk janë njësoj, ju lutemi provoni përsëri.';
-$lang['regpwmail']             = 'Fjalëkalimi juaj i DokuWiki-it.';
+$lang['regpwmail']             = 'Fjalëkalimi juaj i EasyWiki-it.';
 $lang['reghere']               = 'Ende nuk keni llogari? Hap një';
 $lang['profna']                = 'Ky wiki nuk e lejon ndryshimin e profilit.';
 $lang['profnochange']          = 'Asnjë ndryshim, asgjë për të bërë.';
@@ -226,22 +226,22 @@ $lang['subscr_m_receive']      = 'Mer';
 $lang['subscr_style_every']    = 'email mbi çdo ndryshim';
 $lang['authtempfail']          = 'Autentikimi i përdoruesve është përkohësisht i padisponueshëm. Nëse kjo gjendje vazhdon, ju lutemi të informoni Administratorin tuaj të Wiki-it.';
 $lang['i_chooselang']          = 'Zgjidhni gjuhën tuaj';
-$lang['i_installer']           = 'Installer-i DokuWiki';
+$lang['i_installer']           = 'Installer-i EasyWiki';
 $lang['i_wikiname']            = 'Emri Wiki-it';
 $lang['i_enableacl']           = 'Aktivizo ACL (rekomanduar)';
 $lang['i_superuser']           = 'Superpërdorues';
 $lang['i_problems']            = 'Installer-i gjeti disa probleme, të shfaqura më poshtë. Nuk mund të vazhdoni derisa t\'i keni rregulluar.';
-$lang['i_modified']            = 'Për arsye sigurie ky skript do të punojë vetëm me një instalim të ri dhe të pamodifikuar DokuWiki.
-Ose duhet të ekstraktoni skedarët nga e para nga pakoja e shkarkimit ose konsultohuni me <a href="https://www.dokuwiki.org/install">Dokuwiki installation instructions</a>';
+$lang['i_modified']            = 'Për arsye sigurie ky skript do të punojë vetëm me një instalim të ri dhe të pamodifikuar EasyWiki.
+Ose duhet të ekstraktoni skedarët nga e para nga pakoja e shkarkimit ose konsultohuni me <a href="https://www.EasyWiki.org/install">EasyWiki installation instructions</a>';
 $lang['i_funcna']              = 'Funksioni PHP <code>%s</code> nuk është i disponueshëm. Mbase siguruesi juaj i host-it e ka çaktivizuar për ndonjë arsye?';
 $lang['i_phpver']              = 'Versioni juaj i PHP <code>%s</code> është më i vogël se ai i duhuri <code>%s</code>. Duhet të përditësoni instalimin tuaj të PHP-së.';
-$lang['i_permfail']            = '<code>%s</code> nuk është e shkruajtshme nga DokuWiki. Duhet të rregulloni lejet e përdorimit për këtë direktori.';
+$lang['i_permfail']            = '<code>%s</code> nuk është e shkruajtshme nga EasyWiki. Duhet të rregulloni lejet e përdorimit për këtë direktori.';
 $lang['i_confexists']          = '<code>%s</code> ekziston njëherë';
 $lang['i_writeerr']            = '<code>%s</code> nuk mundi të krijohej. Duhet të kontrolloni lejet e dirkektorisë/skedarit dhe ta krijoni skedarin manualisht.';
-$lang['i_badhash']             = 'dokuwiki.php e panjohur ose e ndryshuar (hash=code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php e panjohur ose e ndryshuar (hash=code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - vlerë e palejuar ose boshe';
-$lang['i_success']             = 'Konfigurimi u mbarua me sukses. Tani mund ta fshini skedarin install.php. Vazhdoni tek <a href="doku.php?id=wiki:welcome">DokuWiki juaj i ri.</a>.';
-$lang['i_failure']             = 'Ndodhën disa gabime gjatë shkrimit të skedarit të konfigurimit. Do t\'ju duhet t\'i rregulloni manualisht para se të përdorni <a href="doku.php?id=wiki:welcome">DokuWiki-in tuaj të ri.</a>.';
+$lang['i_success']             = 'Konfigurimi u mbarua me sukses. Tani mund ta fshini skedarin install.php. Vazhdoni tek <a href="wiki.php?id=wiki:welcome">EasyWiki juaj i ri.</a>.';
+$lang['i_failure']             = 'Ndodhën disa gabime gjatë shkrimit të skedarit të konfigurimit. Do t\'ju duhet t\'i rregulloni manualisht para se të përdorni <a href="wiki.php?id=wiki:welcome">EasyWiki-in tuaj të ri.</a>.';
 $lang['i_policy']              = 'Veprimi fillestar ACL';
 $lang['i_pol0']                = 'Wiki i Hapur (lexim, shkrim, ngarkim për këdo)';
 $lang['i_pol1']                = 'Wiki Publike (lexim për këdo, shkrim dhe ngarkim për përdoruesit e regjistruar)';
@@ -255,5 +255,5 @@ $lang['days']                  = '%d ditë më parë';
 $lang['hours']                 = '%d orë më parë';
 $lang['minutes']               = '%d minuta më parë';
 $lang['seconds']               = '%d sekonda më parë';
-$lang['email_signature_text']  = 'Ky email u gjenerua nga DokuWiki në
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Ky email u gjenerua nga EasyWiki në
+@EASYWIKIURL@';

@@ -14,6 +14,6 @@ Revisión Antiga: @OLDPAGE@
 Revisión Nova: @NEWPAGE@
 
 Para cancelares as notificacións da páxina inicia sesión no wiki en
-@DOKUWIKIURL@ e logo visita
+@EASYWIKIURL@ e logo visita
 @SUBSCRIBE@
 e desubscríbete do seguimento dos trocos da páxina e/ou nome de espazo.

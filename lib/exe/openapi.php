@@ -1,9 +1,9 @@
 <?php
 
-use dokuwiki\Remote\OpenApiDoc\OpenAPIGenerator;
+use easywiki\Remote\OpenApiDoc\OpenAPIGenerator;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
+require_once(WIKI_INC . 'inc/init.php');
 global $INPUT;
 
 if ($INPUT->has('spec')) {
@@ -17,7 +17,7 @@ if ($INPUT->has('spec')) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>DokuWiki API Explorer</title>
+    <title>EasyWiki API Explorer</title>
     <script src="https://unpkg.com/openapi-explorer/dist/browser/openapi-explorer.min.js" type="module"
             defer=""></script>
     <style>
@@ -28,19 +28,19 @@ if ($INPUT->has('spec')) {
 </head>
 <body>
 <openapi-explorer
-    spec-url="<?php echo DOKU_URL ?>lib/exe/openapi.php?spec=1"
+    spec-url="<?php echo WIKI_URL ?>lib/exe/openapi.php?spec=1"
     hide-server-selection="true"
     use-path-in-nav-bar="true"
 >
     <div slot="overview-api-description">
         <p>
             This is an auto generated description and OpenAPI specification for the
-            <a href="https://www.dokuwiki.org/devel/jsonrpc">DokuWiki JSON-RPC API</a>.
+            <a href="https://www.EasyWiki.org/devel/jsonrpc">EasyWiki JSON-RPC API</a>.
             It is generated from the source code and the inline documentation.
         </p>
 
         <p>
-            <a href="<?php echo DOKU_BASE ?>lib/exe/openapi.php?spec=1" download="dokuwiki.json">Download
+            <a href="<?php echo WIKI_BASE ?>lib/exe/openapi.php?spec=1" download="easywiki.json">Download
                 the API Spec</a>
         </p>
 

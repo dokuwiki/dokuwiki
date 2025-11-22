@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class DropdownElement
  *
  * Represents a HTML select. Please not that prefilling with input data only works for single values.
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class DropdownElement extends InputElement
 {

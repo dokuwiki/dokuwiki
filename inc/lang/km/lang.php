@@ -198,4 +198,4 @@ $lang['i_pol1']                = 'វីគីសធារណៈ';
 $lang['i_pol2']                = 'វីគីបិទជិត';
 $lang['i_retry']               = 'ម្តងទៀត';
 $lang['email_signature_text']  = 'អ៊ីមេលនេះបន្ចេអពីឌោគូវីគីនៅ
-@DOKUWIKIURL@';
+@EASYWIKIURL@';

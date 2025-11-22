@@ -3,8 +3,8 @@
 /**
  * Class renderer_xhtml_test
  */
-class renderer_metadata_test extends DokuWikiTest {
-    /** @var Doku_Renderer_xhtml */
+class renderer_metadata_test extends EasyWikiTest {
+    /** @var Wiki_Renderer_xhtml */
     protected $R;
 
     /**
@@ -14,7 +14,7 @@ class renderer_metadata_test extends DokuWikiTest {
      */
     function setUp() : void {
         parent::setUp();
-        $this->R = new Doku_Renderer_metadata();
+        $this->R = new Wiki_Renderer_metadata();
     }
 
     function tearDown() : void {
@@ -33,7 +33,7 @@ class renderer_metadata_test extends DokuWikiTest {
         $this->R->cdata("abstract: ");
 
         $this->R->footnote_open();
-        $this->R->cdata(str_pad("footnote: ", Doku_Renderer_metadata::ABSTRACT_MAX, "lotsa junk "));
+        $this->R->cdata(str_pad("footnote: ", Wiki_Renderer_metadata::ABSTRACT_MAX, "lotsa junk "));
         $this->R->footnote_close();
 
         $this->R->cdata("abstract end.");

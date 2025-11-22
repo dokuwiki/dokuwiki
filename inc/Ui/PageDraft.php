@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Draft;
-use dokuwiki\Form\Form;
+use easywiki\Draft;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Page Draft Interface
+ * EasyWiki Page Draft Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class PageDraft extends Ui
 {

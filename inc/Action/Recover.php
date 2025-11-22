@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionAbort;
 
 /**
  * Class Recover
  *
  * Recover a draft
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Recover extends AbstractAliasAction
 {

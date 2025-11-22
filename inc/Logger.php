@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Log messages to a daily log file
@@ -241,7 +241,7 @@ class Logger
      */
     protected function writeLogLines($lines, $logfile)
     {
-        if (defined('DOKU_UNITTEST')) {
+        if (defined('WIKI_UNITTEST')) {
             // our tests may expect certain log messages
             if ($this->expected) {
                 $expected = array_shift($this->expected);

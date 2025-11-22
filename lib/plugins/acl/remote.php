@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\Extension\RemotePlugin;
-use dokuwiki\Remote\AccessDeniedException;
+use easywiki\Extension\RemotePlugin;
+use easywiki\Remote\AccessDeniedException;
 
 /**
  * Class remote_plugin_acl

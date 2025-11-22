@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
- * DokuWiki Plugin safefnrecode (Action Component)
+ * EasyWiki Plugin safefnrecode (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>

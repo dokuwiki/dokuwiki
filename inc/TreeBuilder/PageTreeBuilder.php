@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\TreeBuilder;
+namespace easywiki\TreeBuilder;
 
-use dokuwiki\File\PageResolver;
-use dokuwiki\TreeBuilder\Node\AbstractNode;
-use dokuwiki\TreeBuilder\Node\Top;
-use dokuwiki\TreeBuilder\Node\WikiNamespace;
-use dokuwiki\TreeBuilder\Node\WikiPage;
-use dokuwiki\TreeBuilder\Node\WikiStartpage;
-use dokuwiki\Utf8\PhpString;
+use easywiki\File\PageResolver;
+use easywiki\TreeBuilder\Node\AbstractNode;
+use easywiki\TreeBuilder\Node\Top;
+use easywiki\TreeBuilder\Node\WikiNamespace;
+use easywiki\TreeBuilder\Node\WikiPage;
+use easywiki\TreeBuilder\Node\WikiStartpage;
+use easywiki\Utf8\PhpString;
 
 /**
  * A tree builder for wiki pages and namespaces

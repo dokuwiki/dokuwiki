@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\Login;
-use dokuwiki\Extension\Event;
-use dokuwiki\Ui;
+use easywiki\Ui\Login;
+use easywiki\Extension\Event;
+use easywiki\Ui;
 
 /**
  * Class Denied
  *
  * Show the access denied screen
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Denied extends AbstractAction
 {

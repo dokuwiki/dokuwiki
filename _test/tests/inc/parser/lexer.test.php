@@ -5,15 +5,15 @@
 * @subpackage Tests
 */
 
-use dokuwiki\Parsing\Lexer\Lexer;
-use dokuwiki\Parsing\Lexer\ParallelRegex;
-use dokuwiki\Parsing\Lexer\StateStack;
+use easywiki\Parsing\Lexer\Lexer;
+use easywiki\Parsing\Lexer\ParallelRegex;
+use easywiki\Parsing\Lexer\StateStack;
 
 /**
 * @package Doku
 * @subpackage Tests
 */
-class TestOfLexerParallelRegex extends DokuWikiTest {
+class TestOfLexerParallelRegex extends EasyWikiTest {
 
     function testNoPatterns() {
         $regex = new ParallelRegex(false);
@@ -119,7 +119,7 @@ class TestOfLexerParallelRegex extends DokuWikiTest {
 }
 
 
-class TestOfLexerStateStack extends DokuWikiTest {
+class TestOfLexerStateStack extends EasyWikiTest {
     function testStartState() {
         $stack = new StateStack("one");
         $this->assertEquals($stack->getCurrent(), "one");
@@ -155,7 +155,7 @@ class TestParser {
     }
 }
 
-class TestOfLexer extends DokuWikiTest {
+class TestOfLexer extends EasyWikiTest {
     function testNoPatterns() {
         $handler = $this->createMock('TestParser');
         $handler->expects($this->never())->method('accept');
@@ -222,7 +222,7 @@ class TestOfLexer extends DokuWikiTest {
     }
 }
 
-class TestOfLexerModes extends DokuWikiTest {
+class TestOfLexerModes extends EasyWikiTest {
     function testIsolatedPattern() {
         $aArguments = [
             ["a", DOKU_LEXER_MATCHED, 0],
@@ -372,7 +372,7 @@ class TestOfLexerModes extends DokuWikiTest {
     }
 }
 
-class TestOfLexerHandlers extends DokuWikiTest {
+class TestOfLexerHandlers extends EasyWikiTest {
     function testModeMapping() {
         $aArguments = [
             ["aa", DOKU_LEXER_MATCHED, 0],
@@ -412,7 +412,7 @@ class TestParserByteIndex {
     function caught() {}
 }
 
-class TestOfLexerByteIndices extends DokuWikiTest {
+class TestOfLexerByteIndices extends EasyWikiTest {
 
     function testIndex() {
         $doc = "aaa<file>bcd</file>eee";

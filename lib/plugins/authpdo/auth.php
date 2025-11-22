@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\PassHash;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\AuthPlugin;
+use easywiki\PassHash;
+use easywiki\Utf8\Sort;
 
 /**
- * DokuWiki Plugin authpdo (Auth Component)
+ * EasyWiki Plugin authpdo (Auth Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -700,7 +700,7 @@ class auth_plugin_authpdo extends AuthPlugin
             // report the caller's line
             $trace = debug_backtrace();
             $line = $trace[0]['line'];
-            $dsql = $this->debugSQL($sql, $params, !defined('DOKU_UNITTEST'));
+            $dsql = $this->debugSQL($sql, $params, !defined('WIKI_UNITTEST'));
             $this->debugMsg($e, -1, $line);
             $this->debugMsg("SQL: <pre>$dsql</pre>", -1, $line);
         }
@@ -727,7 +727,7 @@ class auth_plugin_authpdo extends AuthPlugin
             $msg = $message;
         }
 
-        if (defined('DOKU_UNITTEST')) {
+        if (defined('WIKI_UNITTEST')) {
             printf("\n%s, %s:%d\n", $msg, __FILE__, $line);
         } else {
             msg('authpdo: ' . $msg, $err, $line, __FILE__);

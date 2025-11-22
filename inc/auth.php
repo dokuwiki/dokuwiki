@@ -10,14 +10,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\ErrorHandler;
-use dokuwiki\JWT;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
-use dokuwiki\Extension\PluginController;
-use dokuwiki\PassHash;
-use dokuwiki\Subscriptions\RegistrationSubscriptionSender;
+use easywiki\ErrorHandler;
+use easywiki\JWT;
+use easywiki\Utf8\PhpString;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
+use easywiki\Extension\PluginController;
+use easywiki\PassHash;
+use easywiki\Subscriptions\RegistrationSubscriptionSender;
 use phpseclib3\Crypt\AES;
 use phpseclib3\Crypt\Common\SymmetricKey;
 use phpseclib3\Exception\BadDecryptionException;
@@ -88,7 +88,7 @@ function auth_setup()
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
-    if (!$INPUT->str('u') && empty($_COOKIE[DOKU_COOKIE]) && !empty($INPUT->server->str('PHP_AUTH_USER'))) {
+    if (!$INPUT->str('u') && empty($_COOKIE[WIKI_COOKIE]) && !empty($INPUT->server->str('PHP_AUTH_USER'))) {
         $INPUT->set('u', $INPUT->server->str('PHP_AUTH_USER'));
         $INPUT->set('p', $INPUT->server->str('PHP_AUTH_PW'));
         $INPUT->set('http_credentials', true);
@@ -186,7 +186,7 @@ function auth_tokenlogin()
 {
     global $USERINFO;
     global $INPUT;
-    /** @var DokuWiki_Auth_Plugin $auth */
+    /** @var EasyWiki_Auth_Plugin $auth */
     global $auth;
     if (!$auth) return false;
 
@@ -215,9 +215,9 @@ function auth_tokenlogin()
         if ($type !== 'Bearer') $token = ''; // not the token we want
     }
 
-    // check x-dokuwiki-token header
-    if (isset($headers['x-dokuwiki-token'])) {
-        $token = $headers['x-dokuwiki-token'];
+    // check x-easywiki-token header
+    if (isset($headers['x-easywiki-token'])) {
+        $token = $headers['x-easywiki-token'];
     }
 
     if (empty($token)) return false;
@@ -237,9 +237,9 @@ function auth_tokenlogin()
 
     // the code is correct, set up user
     $INPUT->server->set('REMOTE_USER', $user);
-    $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-    $_SESSION[DOKU_COOKIE]['auth']['pass'] = 'nope';
-    $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+    $_SESSION[WIKI_COOKIE]['auth']['user'] = $user;
+    $_SESSION[WIKI_COOKIE]['auth']['pass'] = 'nope';
+    $_SESSION[WIKI_COOKIE]['auth']['info'] = $USERINFO;
 
     return true;
 }
@@ -328,8 +328,8 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
             // we got a cookie - see if we can trust it
 
             // get session info
-            if (isset($_SESSION[DOKU_COOKIE])) {
-                $session = $_SESSION[DOKU_COOKIE]['auth'] ?? [];
+            if (isset($_SESSION[WIKI_COOKIE])) {
+                $session = $_SESSION[WIKI_COOKIE]['auth'] ?? [];
                 if (
                     ($session !== []) &&
                     $auth->useSessionCache($user) &&
@@ -521,22 +521,22 @@ function auth_logoff($keepbc = false)
     // make sure the session is writable (it usually is)
     @session_start();
 
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['user']))
-        unset($_SESSION[DOKU_COOKIE]['auth']['user']);
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['pass']))
-        unset($_SESSION[DOKU_COOKIE]['auth']['pass']);
-    if (isset($_SESSION[DOKU_COOKIE]['auth']['info']))
-        unset($_SESSION[DOKU_COOKIE]['auth']['info']);
-    if (!$keepbc && isset($_SESSION[DOKU_COOKIE]['bc']))
-        unset($_SESSION[DOKU_COOKIE]['bc']);
+    if (isset($_SESSION[WIKI_COOKIE]['auth']['user']))
+        unset($_SESSION[WIKI_COOKIE]['auth']['user']);
+    if (isset($_SESSION[WIKI_COOKIE]['auth']['pass']))
+        unset($_SESSION[WIKI_COOKIE]['auth']['pass']);
+    if (isset($_SESSION[WIKI_COOKIE]['auth']['info']))
+        unset($_SESSION[WIKI_COOKIE]['auth']['info']);
+    if (!$keepbc && isset($_SESSION[WIKI_COOKIE]['bc']))
+        unset($_SESSION[WIKI_COOKIE]['bc']);
     $INPUT->server->remove('REMOTE_USER');
     $USERINFO = null; //FIXME
 
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    setcookie(DOKU_COOKIE, '', [
+    $cookieDir = empty($conf['cookiedir']) ? WIKI_REL : $conf['cookiedir'];
+    setcookie(WIKI_COOKIE, '', [
         'expires' => time() - 600000,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && \easywiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
@@ -1140,7 +1140,7 @@ function updateprofile()
         // make sure the session is writable
         @session_start();
         // invalidate session cache
-        $_SESSION[DOKU_COOKIE]['auth']['time'] = 0;
+        $_SESSION[WIKI_COOKIE]['auth']['time'] = 0;
         session_write_close();
     }
 
@@ -1397,22 +1397,22 @@ function auth_setCookie($user, $pass, $sticky)
 
     // set cookie
     $cookie    = base64_encode($user) . '|' . ((int) $sticky) . '|' . base64_encode($pass);
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+    $cookieDir = empty($conf['cookiedir']) ? WIKI_REL : $conf['cookiedir'];
     $time      = $sticky ? (time() + 60 * 60 * 24 * 365) : 0; //one year
-    setcookie(DOKU_COOKIE, $cookie, [
+    setcookie(WIKI_COOKIE, $cookie, [
         'expires' => $time,
         'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && \easywiki\Ip::isSsl()),
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
 
     // set session
-    $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
-    $_SESSION[DOKU_COOKIE]['auth']['pass'] = sha1($pass);
-    $_SESSION[DOKU_COOKIE]['auth']['buid'] = auth_browseruid();
-    $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
-    $_SESSION[DOKU_COOKIE]['auth']['time'] = time();
+    $_SESSION[WIKI_COOKIE]['auth']['user'] = $user;
+    $_SESSION[WIKI_COOKIE]['auth']['pass'] = sha1($pass);
+    $_SESSION[WIKI_COOKIE]['auth']['buid'] = auth_browseruid();
+    $_SESSION[WIKI_COOKIE]['auth']['info'] = $USERINFO;
+    $_SESSION[WIKI_COOKIE]['auth']['time'] = time();
 
     return true;
 }
@@ -1424,10 +1424,10 @@ function auth_setCookie($user, $pass, $sticky)
  */
 function auth_getCookie()
 {
-    if (!isset($_COOKIE[DOKU_COOKIE])) {
+    if (!isset($_COOKIE[WIKI_COOKIE])) {
         return [null, null, null];
     }
-    [$user, $sticky, $pass] = sexplode('|', $_COOKIE[DOKU_COOKIE], 3, '');
+    [$user, $sticky, $pass] = sexplode('|', $_COOKIE[WIKI_COOKIE], 3, '');
     $sticky = (bool) $sticky;
     $pass   = base64_decode($pass);
     $user   = base64_decode($user);

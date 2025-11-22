@@ -9,7 +9,7 @@
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Marton Sebok <sebokmarton@gmail.com>
  */
-$lang['name']                  = 'Visszajelzés a DokuWiki használatáról (sok időt vehet igénybe a betöltése)';
+$lang['name']                  = 'Visszajelzés a EasyWiki használatáról (sok időt vehet igénybe a betöltése)';
 $lang['submit']                = 'Adatok elküldése';
 $lang['autosubmit']            = 'Adatok havonkénti automatikus elküldése.';
 $lang['submissionFailed']      = 'Az adatok a következő hiba miatt nem kerültek elküldésre:';

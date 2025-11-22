@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\ChangeLog;
+namespace easywiki\ChangeLog;
 
 /**
  * Class PageChangeLog; handles changelog of a wiki page

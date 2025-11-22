@@ -11,7 +11,7 @@
 $lang['menu']                  = 'ตั้งค่าการปรับแต่ง';
 $lang['updated']               = 'การปรับแต่งค่าถูกบันทึกเรียบร้อย';
 $lang['_configuration_manager'] = 'จัดการการปรับตั้งค่า';
-$lang['_header_dokuwiki']      = 'การตั้งค่า DokuWiki';
+$lang['_header_easywiki']      = 'การตั้งค่า EasyWiki';
 $lang['_header_plugin']        = 'การตั้งค่า Plugin';
 $lang['_header_template']      = 'การตั้งค่าเทมเพลต';
 $lang['_basic']                = 'การตั้งค่าพื้นฐาน';
@@ -61,7 +61,7 @@ $lang['userewrite']            = 'แสดงที่อยู่เว็บ 
 $lang['gzip_output']           = 'ใช้ gzip Content-Encoding สำหรับ xhtml';
 $lang['compress']              = 'บีบย่อ CSS และ javascript (เพื่อให้แสดงหน้าเว็บเร็วขึ้น)';
 $lang['send404']               = 'ให้แสดง "HTTP 404/Page Not Found" เมื่อไม่พบข้อมูลหน้านั้น';
-$lang['renderer__core']        = '%s (แกนหลักของ dokuwiki)';
+$lang['renderer__core']        = '%s (แกนหลักของ easywiki)';
 $lang['renderer__plugin']      = '%s (โปรแกรมเสริม - plugin)';
 $lang['proxy____host']         = 'ชื่อ server ของ proxy';
 $lang['proxy____port']         = 'port ของ proxy';

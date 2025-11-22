@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\plugin\config\test\Setting;
+namespace easywiki\plugin\config\test\Setting;
 
-use dokuwiki\plugin\config\core\Setting\Setting;
+use easywiki\plugin\config\core\Setting\Setting;
 
-abstract class AbstractSettingTest extends \DokuWikiTest {
+abstract class AbstractSettingTest extends \EasyWikiTest {
 
     /** @var string the class to test */
     protected $class;
@@ -17,7 +17,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
         parent::setUp();
         $class = get_class($this);
         $class = substr($class, strrpos($class, '\\') + 1, -4);
-        $class = 'dokuwiki\\plugin\\config\\core\\Setting\\' . $class;
+        $class = 'easywiki\\plugin\\config\\core\\Setting\\' . $class;
         $this->class = $class;
     }
 
@@ -47,7 +47,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
 
         $setting = new $this->class('test');
         $this->assertEquals(
-            '<a href="https://www.dokuwiki.org/config:test">test</a>',
+            '<a href="https://www.EasyWiki.org/config:test">test</a>',
             $setting->getPrettyKey(true)
         );
 
@@ -56,7 +56,7 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
 
         $setting = new $this->class('start');
         $this->assertEquals(
-            '<a href="https://www.dokuwiki.org/config:startpage">start</a>',
+            '<a href="https://www.EasyWiki.org/config:startpage">start</a>',
             $setting->getPrettyKey(true)
         );
     }
@@ -64,10 +64,10 @@ abstract class AbstractSettingTest extends \DokuWikiTest {
     public function testType() {
         /** @var Setting $setting */
         $setting = new $this->class('test');
-        $this->assertEquals('dokuwiki', $setting->getType());
+        $this->assertEquals('easywiki', $setting->getType());
 
         $setting = new $this->class('test_foo');
-        $this->assertEquals('dokuwiki', $setting->getType());
+        $this->assertEquals('easywiki', $setting->getType());
 
         $setting = new $this->class('plugin____test');
         $this->assertEquals('plugin', $setting->getType());

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\File;
+namespace easywiki\File;
 
 /**
  * Resolving relative IDs to absolute ones

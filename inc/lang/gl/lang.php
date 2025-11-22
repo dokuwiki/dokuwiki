@@ -69,7 +69,7 @@ $lang['regsuccess2']           = 'O usuario foi creado.';
 $lang['regmailfail']           = 'Semella que houbo un erro ao tentar enviar o correo-e co contrasinal. Por favor, contacta co administrador!';
 $lang['regbadmail']            = 'O enderezo de correo-e proporcionado semella incorrecto - se consideras que isto é un erro, contacta co administrador';
 $lang['regbadpass']            = 'Os dous contrasinais inseridos non coinciden, por favor téntao de novo.';
-$lang['regpwmail']             = 'O teu contrasinal do DokuWiki';
+$lang['regpwmail']             = 'O teu contrasinal do EasyWiki';
 $lang['reghere']               = 'Aínda non tes unha conta? Crea a túa';
 $lang['profna']                = 'Este wiki non permite modificacións dos perfís';
 $lang['profnochange']          = 'Non hai trocos, nada que facer.';
@@ -257,25 +257,25 @@ $lang['subscr_m_receive']      = 'Recibir';
 $lang['subscr_style_every']    = 'correo-e en cada troco';
 $lang['authtempfail']          = 'A autenticación de usuario non está dispoñible de xeito temporal. De persistir esta situación, por favor, informa ao Administrador do teu Wiki.';
 $lang['i_chooselang']          = 'Escolle o teu idioma';
-$lang['i_installer']           = 'Instalador do DokuWiki';
+$lang['i_installer']           = 'Instalador do EasyWiki';
 $lang['i_wikiname']            = 'Nome do Wiki';
 $lang['i_enableacl']           = 'Activar ACL (recomendado)';
 $lang['i_superuser']           = 'Super-usuario';
 $lang['i_problems']            = 'O instalador atopou algúns problemas, que se amosan de seguido. Non poderás continuar até que os soluciones.';
-$lang['i_modified']            = 'Por razóns de seguridade este script só funcionará cunha instalación nova e sen modificar do Dokuwiki.
+$lang['i_modified']            = 'Por razóns de seguridade este script só funcionará cunha instalación nova e sen modificar do EasyWiki.
                          Podes ou ben extraer de novo os arquivos dende o paquete descargado ou consultar as
-                         <a href="https://www.dokuwiki.org/install">instruccións completas de instalación do Dokuwiki</a>';
+                         <a href="https://www.EasyWiki.org/install">instruccións completas de instalación do EasyWiki</a>';
 $lang['i_funcna']              = 'A función <code>%s</code> do PHP non está dispoñíbel. Pode que o teu provedor de hospedaxe a desactivase por algún motivo?';
 $lang['i_phpver']              = 'A túa versión <code>%s</code> do PHP é inferior á <code>%s</code> precisa. Debes actualizar a túa instalación do PHP.';
-$lang['i_permfail']            = '<code>%s</code> non é escribíbel polo DokuWiki. Debes corrixir a configuración de permisos deste directorio!';
+$lang['i_permfail']            = '<code>%s</code> non é escribíbel polo EasyWiki. Debes corrixir a configuración de permisos deste directorio!';
 $lang['i_confexists']          = '<code>%s</code> xa existe';
 $lang['i_writeerr']            = 'Non se puido crear <code>%s</code>. Terás de comprobar os permisos do directorio/arquivo e crear o ficheiro de xeito manual.';
-$lang['i_badhash']             = 'dokuwiki.php irrecoñecíbel ou modificado (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php irrecoñecíbel ou modificado (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ilegal ou valor baleiro';
 $lang['i_success']             = 'A configuración rematou correctamente. Agora podes eliminar o arquivo install.php. Continúa deica o
-                        <a href="doku.php?id=wiki:welcome">teu novo DokuWiki</a>.';
+                        <a href="wiki.php?id=wiki:welcome">teu novo EasyWiki</a>.';
 $lang['i_failure']             = 'Houbo algúns erros ao tentar escribir os arquivos de configuración. Pode que precises solucionalos de xeito manual antes
-                         de poderes empregar <a href="doku.php?id=wiki:welcome">o teu novo DokuWiki</a>.';
+                         de poderes empregar <a href="wiki.php?id=wiki:welcome">o teu novo EasyWiki</a>.';
 $lang['i_policy']              = 'Regras iniciais da ACL';
 $lang['i_pol0']                = 'Wiki Aberto (lectura, escritura, subida de arquivos para todas as persoas)';
 $lang['i_pol1']                = 'Wiki Público (lectura para todas as persoas, escritura e subida de arquivos para usuarios rexistrados)';
@@ -314,5 +314,5 @@ $lang['media_perm_read']       = 'Sentímolo, non tes permisos suficientes para 
 $lang['media_perm_upload']     = 'Sentímolo, non tes permisos suficientes para subir arquivos.';
 $lang['media_update']          = 'Subir nova versión';
 $lang['media_restore']         = 'Restaurar esta versión';
-$lang['email_signature_text'] = 'Este correo foi xerado polo DokuWiki en
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'Este correo foi xerado polo EasyWiki en
+@EASYWIKIURL@';

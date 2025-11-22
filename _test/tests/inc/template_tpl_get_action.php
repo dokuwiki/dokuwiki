@@ -1,6 +1,6 @@
 <?php
 
-class template_tpl_get_action_test extends DokuWikiTest {
+class template_tpl_get_action_test extends EasyWikiTest {
 
     public function setUp() : void {
         parent::setUp();
@@ -280,7 +280,7 @@ class template_tpl_get_action_test extends DokuWikiTest {
         $expect = array(
             'accesskey' => 't',
             'type' => 'top',
-            'id' => '#dokuwiki__top',
+            'id' => '#easywiki__top',
             'method' => 'get',
             'params' => array(
                 'do' => '',
@@ -444,7 +444,7 @@ class template_tpl_get_action_test extends DokuWikiTest {
 
     public function test_mediaManager() {
         global $IMG;
-        $IMG = 'wiki:dokuwiki.png';
+        $IMG = 'wiki:easywiki.png';
 
         $expect = array(
             'accesskey' => null,
@@ -454,7 +454,7 @@ class template_tpl_get_action_test extends DokuWikiTest {
             'params' => array(
                 'do' => 'media',
                 'ns' => 'wiki',
-                'image' => 'wiki:dokuwiki.png'
+                'image' => 'wiki:easywiki.png'
             ),
             'nofollow' => true,
             'replacement' => '',

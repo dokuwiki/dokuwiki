@@ -1,4 +1,4 @@
-Un pagina in tu DokuWiki ha essite addite o modificate. Ecce le detalios:
+Un pagina in tu EasyWiki ha essite addite o modificate. Ecce le detalios:
 
 Data : @DATE@
 Navigator : @BROWSER@

@@ -1,15 +1,15 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Hr;
-use dokuwiki\Parsing\ParserMode\Multiplyentity;
-use dokuwiki\Parsing\ParserMode\Smiley;
-use dokuwiki\Parsing\ParserMode\Wordblock;
+use easywiki\Parsing\ParserMode\Acronym;
+use easywiki\Parsing\ParserMode\Entity;
+use easywiki\Parsing\ParserMode\Hr;
+use easywiki\Parsing\ParserMode\Multiplyentity;
+use easywiki\Parsing\ParserMode\Smiley;
+use easywiki\Parsing\ParserMode\Wordblock;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Replacements extends TestOfWiki_Parser {
 
     function testSingleAcronym() {
         $this->P->addMode('acronym',new Acronym(array('FOOBAR')));

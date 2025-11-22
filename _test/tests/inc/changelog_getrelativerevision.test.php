@@ -1,7 +1,7 @@
 <?php
 
-use dokuwiki\ChangeLog\ChangeLog;
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\ChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
 
 /**
  * Tests for requesting revisioninfo of a revision of a page with getRevisionInfo()
@@ -10,7 +10,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
  * - data/pages/mailinglist.txt
  * - data/meta/mailinglist.changes
  */
-class changelog_getrelativerevision_test extends DokuWikiTest {
+class changelog_getrelativerevision_test extends EasyWikiTest {
 
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';

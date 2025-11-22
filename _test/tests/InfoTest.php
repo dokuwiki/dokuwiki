@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test;
+namespace easywiki\test;
 
-class InfoTest extends \DokuWikiTest
+class InfoTest extends \EasyWikiTest
 {
 
     /**
@@ -52,7 +52,7 @@ class InfoTest extends \DokuWikiTest
      */
     public function testParseVersionString($version, $expected)
     {
-        $this->assertEquals($expected, \dokuwiki\Info::parseVersionString($version));
+        $this->assertEquals($expected, \easywiki\Info::parseVersionString($version));
     }
 
 }

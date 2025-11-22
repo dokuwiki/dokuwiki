@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsResetTest extends DokuWikiTest {
+class InttestsResetTest extends EasyWikiTest {
     /**
      * It should be possible to have two test cases within one test class.
      */
@@ -11,8 +11,8 @@ class InttestsResetTest extends DokuWikiTest {
         $request = new TestRequest();
         $response = $request->execute();
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') >= 0,
-            'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'EasyWiki') >= 0,
+            'EasyWiki was not a word in the output'
         );
     }
 
@@ -23,8 +23,8 @@ class InttestsResetTest extends DokuWikiTest {
         $request = new TestRequest();
         $response = $request->execute();
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') >= 0,
-            'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'EasyWiki') >= 0,
+            'EasyWiki was not a word in the output'
         );
     }
 
@@ -35,15 +35,15 @@ class InttestsResetTest extends DokuWikiTest {
         $request = new TestRequest();
         $response = $request->execute();
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') >= 0,
-            'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'EasyWiki') >= 0,
+            'EasyWiki was not a word in the output'
         );
 
         $request = new TestRequest();
         $response = $request->execute();
         $this->assertTrue(
-            strpos($response->getContent(), 'DokuWiki') >= 0,
-            'DokuWiki was not a word in the output'
+            strpos($response->getContent(), 'EasyWiki') >= 0,
+            'EasyWiki was not a word in the output'
         );
     }
 }

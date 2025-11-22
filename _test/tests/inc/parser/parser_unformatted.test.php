@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Unformatted;
+use easywiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Unformatted extends TestOfWiki_Parser {
 
     function testNowiki() {
         $this->P->addMode('unformatted',new Unformatted());

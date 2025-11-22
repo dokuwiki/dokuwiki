@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsPluginsTest extends DokuWikiTest {
+class InttestsPluginsTest extends EasyWikiTest {
 
     function setUp() : void {
         $this->pluginsEnabled = array(

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Utf8;
+namespace easywiki\Utf8;
 
 /**
  * Methods and constants to handle Asian "words"

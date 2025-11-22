@@ -1,19 +1,19 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\UserResendPwd;
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Ui;
+use easywiki\Ui\UserResendPwd;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Ui;
 
 /**
  * Class Resendpwd
  *
  * Handle password recovery
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Resendpwd extends AbstractAclAction
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Exception;
+namespace easywiki\Exception;
 
 /**
  * Fatal Errors are converted into this Exception in out Shutdown handler

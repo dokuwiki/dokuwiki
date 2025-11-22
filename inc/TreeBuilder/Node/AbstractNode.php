@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\TreeBuilder\Node;
+namespace easywiki\TreeBuilder\Node;
 
 /**
  * A node represents one entry in the tree. It can have a parent and children.

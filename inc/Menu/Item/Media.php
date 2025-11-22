@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Media
@@ -15,7 +15,7 @@ class Media extends AbstractItem
         global $ID;
         parent::__construct();
 
-        $this->svg = DOKU_INC . 'lib/images/menu/folder-multiple-image.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/folder-multiple-image.svg';
         $this->params['ns'] = getNS($ID);
     }
 }

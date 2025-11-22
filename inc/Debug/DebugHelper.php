@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Debug;
+namespace easywiki\Debug;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Logger;
+use easywiki\Extension\Event;
+use easywiki\Extension\EventHandler;
+use easywiki\Logger;
 
 class DebugHelper
 {
@@ -37,7 +37,7 @@ class DebugHelper
      * @param string $alternative (optional) The function or method that should be used instead
      * @param int $callerOffset (optional) How far the deprecated method is removed from this one
      * @param string $thing (optional) The deprecated thing, defaults to the calling method
-     * @triggers \dokuwiki\Debug::INFO_DEPRECATION_LOG_EVENT
+     * @triggers \easywiki\Debug::INFO_DEPRECATION_LOG_EVENT
      */
     public static function dbgDeprecatedFunction($alternative = '', $callerOffset = 1, $thing = '')
     {
@@ -84,7 +84,7 @@ class DebugHelper
      * @param string $class The class with the deprecated property
      * @param string $propertyName The name of the deprecated property
      *
-     * @triggers \dokuwiki\Debug::INFO_DEPRECATION_LOG_EVENT
+     * @triggers \easywiki\Debug::INFO_DEPRECATION_LOG_EVENT
      */
     public static function dbgDeprecatedProperty($class, $propertyName)
     {

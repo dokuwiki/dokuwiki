@@ -1,15 +1,15 @@
 <?php
 
 /**
- * DokuWiki search functions
+ * EasyWiki search functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\File\MediaFile;
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\PhpString;
+use easywiki\File\MediaFile;
+use easywiki\Utf8\Sort;
 
 /**
  * Recurse directory
@@ -205,7 +205,7 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
     $info['id']   = pathID($file, true);
     if ($info['id'] !== cleanID($info['id'])) {
         if (!empty($opts['showmsg']))
-            msg(hsc($info['id']) . ' is not a valid file name for DokuWiki - skipped', -1);
+            msg(hsc($info['id']) . ' is not a valid file name for EasyWiki - skipped', -1);
         return false; // skip non-valid files
     }
 
@@ -272,7 +272,7 @@ function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
     $id   = pathID($file, true);
     if ($id != cleanID($id)) {
         if ($opts['showmsg'])
-            msg(hsc($id) . ' is not a valid file name for DokuWiki - skipped', -1);
+            msg(hsc($id) . ' is not a valid file name for EasyWiki - skipped', -1);
         return false; // skip non-valid files
     }
 
@@ -507,7 +507,7 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
     $item['id'] = pathID($file, ($type == 'd' || !empty($opts['keeptxt'])));
     if ($item['id'] !== cleanID($item['id'])) {
         if (!empty($opts['showmsg'])) {
-            msg(hsc($item['id']) . ' is not a valid file name for DokuWiki - skipped', -1);
+            msg(hsc($item['id']) . ' is not a valid file name for EasyWiki - skipped', -1);
         }
         return false; // skip non-valid files
     }

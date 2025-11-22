@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\FatalException;
-use dokuwiki\Sitemap\Mapper;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Action\Exception\FatalException;
+use easywiki\Sitemap\Mapper;
+use easywiki\Utf8\PhpString;
 
 /**
  * Class Sitemap
  *
  * Generate an XML sitemap for search engines. Do not confuse with Index
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Sitemap extends AbstractAction
 {

@@ -1,4 +1,4 @@
-Una pagina su DokuWiki è stata aggiunta o modificata. Questi sono i dettagli:
+Una pagina su EasyWiki è stata aggiunta o modificata. Questi sono i dettagli:
 
 Data : @DATE@
 Browser : @BROWSER@

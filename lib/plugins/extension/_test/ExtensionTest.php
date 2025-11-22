@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\extension\test;
+namespace easywiki\plugin\extension\test;
 
-use dokuwiki\plugin\extension\Extension;
-use DokuWikiTest;
+use easywiki\plugin\extension\Extension;
+use EasyWikiTest;
 
 /**
  * Tests for the extension plugin
@@ -11,7 +11,7 @@ use DokuWikiTest;
  * @group plugin_extension
  * @group plugins
  */
-class ExtensionTest extends DokuWikiTest
+class ExtensionTest extends EasyWikiTest
 {
     protected $pluginsEnabled = ['extension'];
 
@@ -27,14 +27,14 @@ class ExtensionTest extends DokuWikiTest
         $this->assertEquals('extension', $extension->getBase());
         $this->assertEquals('extension', $extension->getId());
         $this->assertEquals('`extension`', $extension->getId(true));
-        $this->assertEquals(DOKU_INC.'lib/plugins/extension', $extension->getCurrentDir());
-        $this->assertEquals(DOKU_INC.'lib/plugins/extension', $extension->getInstallDir());
+        $this->assertEquals(WIKI_INC.'lib/plugins/extension', $extension->getCurrentDir());
+        $this->assertEquals(WIKI_INC.'lib/plugins/extension', $extension->getInstallDir());
         $this->assertEquals('Extension Manager', $extension->getDisplayName());
         $this->assertEquals('Andreas Gohr', $extension->getAuthor());
         $this->assertEquals('andi@splitbrain.org', $extension->getEmail());
         $this->assertEquals(md5('andi@splitbrain.org'), $extension->getEmailID());
         $this->assertStringContainsString('plugins', $extension->getDescription());
-        $this->assertEquals('https://www.dokuwiki.org/plugin:extension', $extension->getURL());
+        $this->assertEquals('https://www.EasyWiki.org/plugin:extension', $extension->getURL());
         $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Admin', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());
@@ -52,25 +52,25 @@ class ExtensionTest extends DokuWikiTest
     }
 
     /**
-     * Run checks against the dokuwiki template
+     * Run checks against the easywiki template
      */
-    public function testDokuWikiTemplate()
+    public function testEasyWikiTemplate()
     {
-        $extension = Extension::createFromDirectory(__DIR__.'/../../../tpl/dokuwiki/');
+        $extension = Extension::createFromDirectory(__DIR__.'/../../../tpl/easywiki/');
 
         $this->assertTrue($extension->isTemplate());
         $this->assertEquals('template', $extension->getType());
-        $this->assertEquals('dokuwiki', $extension->getBase());
-        $this->assertEquals('template:dokuwiki', $extension->getId());
-        $this->assertEquals('`template:dokuwiki`', $extension->getId(true));
-        $this->assertEquals(DOKU_INC.'lib/tpl/dokuwiki', $extension->getCurrentDir());
-        $this->assertEquals(DOKU_INC.'lib/tpl/dokuwiki', $extension->getInstallDir());
-        $this->assertEquals('DokuWiki Template', $extension->getDisplayName());
+        $this->assertEquals('easywiki', $extension->getBase());
+        $this->assertEquals('template:easywiki', $extension->getId());
+        $this->assertEquals('`template:easywiki`', $extension->getId(true));
+        $this->assertEquals(WIKI_INC.'lib/tpl/easywiki', $extension->getCurrentDir());
+        $this->assertEquals(WIKI_INC.'lib/tpl/easywiki', $extension->getInstallDir());
+        $this->assertEquals('EasyWiki Template', $extension->getDisplayName());
         $this->assertEquals('Anika Henke', $extension->getAuthor());
         $this->assertEquals('anika@selfthinker.org', $extension->getEmail());
         $this->assertEquals(md5('anika@selfthinker.org'), $extension->getEmailID());
         $this->assertStringContainsString('default template', $extension->getDescription());
-        $this->assertEquals('https://www.dokuwiki.org/template:dokuwiki', $extension->getURL());
+        $this->assertEquals('https://www.EasyWiki.org/template:easywiki', $extension->getURL());
         $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Template', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());

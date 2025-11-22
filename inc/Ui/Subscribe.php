@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Form\Form;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Subscribe Interface
+ * EasyWiki Subscribe Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Subscribe extends Ui
 {

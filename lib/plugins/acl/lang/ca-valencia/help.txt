@@ -12,4 +12,4 @@ En la taula de baix es mostren totes les regles d'accés actuals. Pot
 usar-la per a canviar o borrar ràpidament vàries regles.
 
 Llegint la [[doku>acl|documentació oficial sobre ACL]] podrà
-comprendre millor com funciona el control d'accés en DokuWiki.
+comprendre millor com funciona el control d'accés en EasyWiki.

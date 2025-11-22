@@ -8,6 +8,6 @@ Her er endringene:
 --------------------------------------------------------
 
 For å avslutte varslinga, logg inn på
-@DOKUWIKIURL@ og gå til
+@EASYWIKIURL@ og gå til
 @SUBSCRIBE@
 og avslutt abonnementet på endringer av sida eller i navnerommet.

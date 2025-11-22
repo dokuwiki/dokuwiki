@@ -12,7 +12,7 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
- * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Daniel Ejsing-Duun <easywiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
@@ -146,7 +146,7 @@ $lang['regfail']               = 'Brugeren kunne ikke oprettes.';
 $lang['regmailfail']           = 'Dit adgangskode blev ikke sendt. Kontakt venligst administratoren.';
 $lang['regbadmail']            = 'E-mail-adressen er ugyldig. Kontakt venligst administratoren, hvis du mener dette er en fejl.';
 $lang['regbadpass']            = 'De to adgangskoder er ikke ens, prøv venligst igen.';
-$lang['regpwmail']             = 'Din adgangskode til DokuWiki';
+$lang['regpwmail']             = 'Din adgangskode til EasyWiki';
 $lang['reghere']               = 'Har du ikke en brugerkonto? Opret en nu';
 $lang['profna']                = 'Denne wiki understøtter ikke ændring af profiler';
 $lang['profnochange']          = 'Ingen ændringer, intet modificeret.';
@@ -302,27 +302,27 @@ $lang['subscr_style_digest']   = 'opsummeringsmail med ændringer for hver side 
 $lang['subscr_style_list']     = 'list af ændrede sider siden sidste email (hver %.2f dage)';
 $lang['authtempfail']          = 'Brugervalidering er midlertidigt ude af drift. Hvis dette er vedvarende, kontakt venligst wikiens administrator.';
 $lang['i_chooselang']          = 'Vælg dit sprog';
-$lang['i_installer']           = 'DokuWiki Installer';
+$lang['i_installer']           = 'EasyWiki Installer';
 $lang['i_wikiname']            = 'Wiki Navn';
 $lang['i_enableacl']           = 'Brug ACL (foreslået)';
 $lang['i_superuser']           = 'Superbruger';
 $lang['i_problems']            = 'Installeren fandt nogle problemer, vist nedenunder. Du kan ikke fortsætte før du har rettet dem.';
-$lang['i_modified']            = 'Af sikkerheds hensyn vil dette script kun virke på en ny og umodificeret Dokuwiki installation.
+$lang['i_modified']            = 'Af sikkerheds hensyn vil dette script kun virke på en ny og umodificeret EasyWiki installation.
 Du burde enten gen-udpakke filerne fra den hentede pakke eller tjekke den fuldstændige
-<a href="https://www.dokuwiki.org/install">DokuWiki installations instruktioner</a>';
+<a href="https://www.EasyWiki.org/install">EasyWiki installations instruktioner</a>';
 $lang['i_funcna']              = 'PHP funtionen <code>%s</code> er ikke tilgængelig. Måske har din udbyder slået det fra af en eller anden grund?';
 $lang['i_disabled']            = 'Det er blevet slået fra af din udbyder.';
-$lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="https://www.dokuwiki.org/plugin:smtp">SMTP udvidelsen</a>.';
+$lang['i_funcnmail']           = '<b>Bemærk:</b> PHP mail funktionen er ikke tilgængelig. %s Hvis den forbliver utilgængelig, kan du installere <a href="https://www.EasyWiki.org/plugin:smtp">SMTP udvidelsen</a>.';
 $lang['i_phpver']              = 'Din PHP version <code>%s</code> er mindre en den nødvendige <code>%s</code>. Du er nød til at opgradere din PHP installation.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload skal være deaktiveret i php.ini for at køre DokuWiki.';
-$lang['i_urandom']             = 'DokuWiki kan ikke oprette kryptografisk sikre numre til cookies. Du bør måske kontrollere dine open_basedir indstillinger i php.ini for korrekt <code>/dev/urandom</code> adgang.';
-$lang['i_permfail']            = 'DokuWiki kan ikke skrive til <code>%s</code>. Du er nød til at rette tilladelses indstillingerne for denne mappe!';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload skal være deaktiveret i php.ini for at køre EasyWiki.';
+$lang['i_urandom']             = 'EasyWiki kan ikke oprette kryptografisk sikre numre til cookies. Du bør måske kontrollere dine open_basedir indstillinger i php.ini for korrekt <code>/dev/urandom</code> adgang.';
+$lang['i_permfail']            = 'EasyWiki kan ikke skrive til <code>%s</code>. Du er nød til at rette tilladelses indstillingerne for denne mappe!';
 $lang['i_confexists']          = '<code>%s</code> eksisterer allerede';
 $lang['i_writeerr']            = 'Kunne ikke oprette <code>%s</code>. Du bliver nød til at tjekke mappe/fil- tilladelserne og oprette filen manuelt.';
-$lang['i_badhash']             = 'uigenkendelig eller modificeret dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'uigenkendelig eller modificeret easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - ulovlig eller tom værdi';
-$lang['i_success']             = 'Konfigurationen fulførtedes med success.  Du kan nu slette install.php filen. Fortsætte til <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
-$lang['i_failure']             = 'Nogle fejl forekom mens konfigurations filerne skulle skrives. Du er mulighvis nød til at fixe dem manuelt før du kan bruge <a href="doku.php?id=wiki:welcome">din nye DokuWiki</a>.';
+$lang['i_success']             = 'Konfigurationen fulførtedes med success.  Du kan nu slette install.php filen. Fortsætte til <a href="wiki.php?id=wiki:welcome">din nye EasyWiki</a>.';
+$lang['i_failure']             = 'Nogle fejl forekom mens konfigurations filerne skulle skrives. Du er mulighvis nød til at fixe dem manuelt før du kan bruge <a href="wiki.php?id=wiki:welcome">din nye EasyWiki</a>.';
 $lang['i_policy']              = 'Begyndende ACL politik';
 $lang['i_pol0']                = 'Åben Wiki (alle kan læse, skrive og uploade)';
 $lang['i_pol1']                = 'Offentlig Wiki (alle kan læse, kun registrerede brugere kan skrive og overføre)';
@@ -331,8 +331,8 @@ $lang['i_allowreg']            = 'Tillad at brugere kan registrere sig selv';
 $lang['i_retry']               = 'Forsøg igen';
 $lang['i_license']             = 'Vælg venligst licensen du vil tilføje dit indhold under:';
 $lang['i_license_none']        = 'Vis ikke licensinformationer';
-$lang['i_pop_field']           = 'Hjælp os venligst med at forbedre oplevelsen af DokuWiki:';
-$lang['i_pop_label']           = 'Send anonymt brugsdata til DokuWikis udviklere, én gang om måneden';
+$lang['i_pop_field']           = 'Hjælp os venligst med at forbedre oplevelsen af EasyWiki:';
+$lang['i_pop_label']           = 'Send anonymt brugsdata til EasyWikis udviklere, én gang om måneden';
 $lang['recent_global']         = 'Du ser lige nu ændringerne i <b>%s</b> navnerummet. Du kan også <a href="%s">se de sidste ændringer for hele wiki siden </a>';
 $lang['years']                 = '%d år siden';
 $lang['months']                = '%d måned siden';
@@ -373,5 +373,5 @@ $lang['plainhtml']             = 'Ren HTML';
 $lang['wikimarkup']            = 'Wiki Opmærkning';
 $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterfølgende oprettet ved <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Kan ikke fortolke parameteren "%s".';
-$lang['email_signature_text']  = 'Denne e-mail blev genereret af DokuWiki på
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Denne e-mail blev genereret af EasyWiki på
+@EASYWIKIURL@';

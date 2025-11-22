@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
 class Local
 {
@@ -29,7 +29,7 @@ class Local
      */
     public function getTemplates()
     {
-        $templates = $this->readExtensionsFromDirectory(DOKU_INC . 'lib/tpl/');
+        $templates = $this->readExtensionsFromDirectory(WIKI_INC . 'lib/tpl/');
         ksort($templates);
         return $templates;
     }
@@ -45,7 +45,7 @@ class Local
      */
     public function getPlugins()
     {
-        $plugins = $this->readExtensionsFromDirectory(DOKU_PLUGIN);
+        $plugins = $this->readExtensionsFromDirectory(WIKI_PLUGIN);
         ksort($plugins);
         return $plugins;
     }

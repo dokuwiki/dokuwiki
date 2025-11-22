@@ -1,6 +1,6 @@
 <?php
 
-class io_rmdir_test extends DokuWikiTest {
+class io_rmdir_test extends EasyWikiTest {
 
     function test_nopes(){
         // set up test dir

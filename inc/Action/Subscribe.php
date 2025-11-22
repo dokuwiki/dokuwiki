@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Subscriptions\SubscriberManager;
-use dokuwiki\Extension\Event;
-use dokuwiki\Ui;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionDisabledException;
+use easywiki\Subscriptions\SubscriberManager;
+use easywiki\Extension\Event;
+use easywiki\Ui;
 use Exception;
 
 /**
@@ -14,7 +14,7 @@ use Exception;
  *
  * E-Mail subscription handling
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Subscribe extends AbstractUserAction
 {

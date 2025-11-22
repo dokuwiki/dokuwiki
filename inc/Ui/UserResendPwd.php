@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Form\Form;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Resend Password Request Interface
+ * EasyWiki Resend Password Request Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class UserResendPwd extends Ui
 {

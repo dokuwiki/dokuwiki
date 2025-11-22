@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Back
@@ -24,6 +24,6 @@ class Back extends AbstractItem
         $this->id = $parent;
         $this->params = ['do' => ''];
         $this->accesskey = 'b';
-        $this->svg = DOKU_INC . 'lib/images/menu/12-back_arrow-left.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/12-back_arrow-left.svg';
     }
 }

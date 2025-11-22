@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\core\Setting;
+namespace easywiki\plugin\config\core\Setting;
 
-use dokuwiki\plugin\config\core\Configuration;
+use easywiki\plugin\config\core\Configuration;
 
 /**
  * Class Setting
@@ -136,7 +136,7 @@ class Setting
     /**
      * Get the key of this setting marked up human readable
      *
-     * @param bool $url link to dokuwiki.org manual?
+     * @param bool $url link to easywiki.org manual?
      * @return string
      */
     public function getPrettyKey($url = true)
@@ -145,9 +145,9 @@ class Setting
         if ($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
             if ($out == 'start') {
                 // exception, because this config name is clashing with our actual start page
-                return '<a href="https://www.dokuwiki.org/config:startpage">' . $out . '</a>';
+                return '<a href="https://www.EasyWiki.org/config:startpage">' . $out . '</a>';
             } else {
-                return '<a href="https://www.dokuwiki.org/config:' . $out . '">' . $out . '</a>';
+                return '<a href="https://www.EasyWiki.org/config:' . $out . '">' . $out . '</a>';
             }
         }
         return $out;
@@ -172,7 +172,7 @@ class Setting
      *
      * 'plugin' for plugin configuration
      * 'template' for template configuration
-     * 'dokuwiki' for core configuration
+     * 'easywiki' for core configuration
      *
      * @return string
      */
@@ -183,7 +183,7 @@ class Setting
         } elseif (str_starts_with($this->getKey(), 'tpl' . Configuration::KEYMARKER)) {
             return 'template';
         } else {
-            return 'dokuwiki';
+            return 'easywiki';
         }
     }
 

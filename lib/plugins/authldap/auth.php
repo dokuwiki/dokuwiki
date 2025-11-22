@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\PassHash;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\AuthPlugin;
+use easywiki\PassHash;
+use easywiki\Utf8\Sort;
 
 /**
  * LDAP authentication backend
@@ -403,7 +403,7 @@ class auth_plugin_authldap extends AuthPlugin
      * @param int $limit max number of users to be returned
      * @param array $filter array of field/pattern pairs, null for no filter
      * @return  array of userinfo (refer getUserData for internal userinfo details)
-     * @author  Dominik Eckelmann <dokuwiki@cosmocode.de>
+     * @author  Dominik Eckelmann <easywiki@cosmocode.de>
      */
     public function retrieveUsers($start = 0, $limit = 0, $filter = [])
     {

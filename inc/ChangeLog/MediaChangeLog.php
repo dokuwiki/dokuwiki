@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\ChangeLog;
+namespace easywiki\ChangeLog;
 
 /**
  * Class MediaChangeLog; handles changelog of a media file

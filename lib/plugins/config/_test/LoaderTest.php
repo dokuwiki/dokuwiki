@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\config\test;
+namespace easywiki\plugin\config\test;
 
-use dokuwiki\plugin\config\core\ConfigParser;
-use dokuwiki\plugin\config\core\Loader;
+use easywiki\plugin\config\core\ConfigParser;
+use easywiki\plugin\config\core\Loader;
 
 /**
  * @group plugin_config
@@ -11,7 +11,7 @@ use dokuwiki\plugin\config\core\Loader;
  * @group plugins
  * @group bundled_plugins
  */
-class LoaderTest extends \DokuWikiTest {
+class LoaderTest extends \EasyWikiTest {
 
     protected $pluginsEnabled = ['testing'];
 
@@ -48,7 +48,7 @@ class LoaderTest extends \DokuWikiTest {
 
         // basic defaults
         $this->assertArrayHasKey('title', $conf);
-        $this->assertEquals('DokuWiki', $conf['title']);
+        $this->assertEquals('EasyWiki', $conf['title']);
 
         // plugin defaults
         $this->assertArrayHasKey('plugin____testing____schnibble', $conf);

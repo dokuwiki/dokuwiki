@@ -1,4 +1,4 @@
-Tavā DokuWiki pievienota vai labota lapa. Šeit ir sīkākas ziņas:
+Tavā EasyWiki pievienota vai labota lapa. Šeit ir sīkākas ziņas:
 
 Datums       : @DATE@
 Pārlūks      : @BROWSER@

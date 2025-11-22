@@ -7,27 +7,27 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Ui\MediaRevisions;
-use dokuwiki\Form\Form;
-use dokuwiki\Action\Denied;
-use dokuwiki\Action\Locked;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
-use dokuwiki\Ui\Backlinks;
-use dokuwiki\Ui\Editor;
-use dokuwiki\Ui\Index;
-use dokuwiki\Ui\Login;
-use dokuwiki\Ui\PageConflict;
-use dokuwiki\Ui\PageDiff;
-use dokuwiki\Ui\PageDraft;
-use dokuwiki\Ui\PageRevisions;
-use dokuwiki\Ui\PageView;
-use dokuwiki\Ui\Recent;
-use dokuwiki\Ui\UserProfile;
-use dokuwiki\Ui\UserRegister;
-use dokuwiki\Ui\UserResendPwd;
-use dokuwiki\Utf8\Clean;
+use easywiki\Ui\MediaRevisions;
+use easywiki\Form\Form;
+use easywiki\Action\Denied;
+use easywiki\Action\Locked;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
+use easywiki\Ui\Backlinks;
+use easywiki\Ui\Editor;
+use easywiki\Ui\Index;
+use easywiki\Ui\Login;
+use easywiki\Ui\PageConflict;
+use easywiki\Ui\PageDiff;
+use easywiki\Ui\PageDraft;
+use easywiki\Ui\PageRevisions;
+use easywiki\Ui\PageView;
+use easywiki\Ui\Recent;
+use easywiki\Ui\UserProfile;
+use easywiki\Ui\UserRegister;
+use easywiki\Ui\UserResendPwd;
+use easywiki\Utf8\Clean;
 
 if (!defined('SEC_EDIT_PATTERN')) {
     define('SEC_EDIT_PATTERN', '#<!-- EDIT({.*?}) -->#');
@@ -45,7 +45,7 @@ if (!defined('SEC_EDIT_PATTERN')) {
  */
 function html_wikilink($id, $name = null, $search = '')
 {
-    /** @var Doku_Renderer_xhtml $xhtml_renderer */
+    /** @var Wiki_Renderer_xhtml $xhtml_renderer */
     static $xhtml_renderer = null;
     if (is_null($xhtml_renderer)) {
         $xhtml_renderer = p_get_renderer('xhtml');
@@ -177,7 +177,7 @@ function html_topbtn()
 {
     global $lang;
 
-    return '<a class="nolink" href="#dokuwiki__top">'
+    return '<a class="nolink" href="#easywiki__top">'
         . '<button class="button" onclick="window.scrollTo(0, 0)" title="' . $lang['btn_top'] . '">'
         . $lang['btn_top']
         . '</button></a>';
@@ -212,11 +212,11 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
 
     //make nice URLs even for buttons
     if ($conf['userewrite'] == 2) {
-        $script = DOKU_BASE . DOKU_SCRIPT . '/' . $id;
+        $script = WIKI_BASE . WIKI_SCRIPT . '/' . $id;
     } elseif ($conf['userewrite']) {
-        $script = DOKU_BASE . $id;
+        $script = WIKI_BASE . $id;
     } else {
-        $script = DOKU_BASE . DOKU_SCRIPT;
+        $script = WIKI_BASE . WIKI_SCRIPT;
         $params['id'] = $id;
     }
 
@@ -249,7 +249,7 @@ function html_btn($name, $id, $akey, $params, $method = 'get', $tooltip = '', $l
 /**
  * show a revision warning
  *
- * @author Szymon Olewniczak <dokuwiki@imz.re>
+ * @author Szymon Olewniczak <easywiki@imz.re>
  * @deprecated 2020-07-18
  */
 function html_showrev()
@@ -747,15 +747,15 @@ function html_debug()
     print_r($cnf);
     echo '</pre>';
 
-    echo '<b>DOKU_BASE:</b><pre>';
-    echo DOKU_BASE;
+    echo '<b>WIKI_BASE:</b><pre>';
+    echo WIKI_BASE;
     echo '</pre>';
 
-    echo '<b>abs DOKU_BASE:</b><pre>';
-    echo DOKU_URL;
+    echo '<b>abs WIKI_BASE:</b><pre>';
+    echo WIKI_URL;
     echo '</pre>';
 
-    echo '<b>rel DOKU_BASE:</b><pre>';
+    echo '<b>rel WIKI_BASE:</b><pre>';
     echo dirname($_SERVER['PHP_SELF']) . '/';
     echo '</pre>';
 
@@ -774,7 +774,7 @@ function html_debug()
     if ($auth instanceof AuthPlugin) {
         echo '<b>Auth backend capabilities:</b><pre>';
         foreach ($auth->getCapabilities() as $cando) {
-            echo '   ' . str_pad($cando, 16) . ' => ' . (int)$auth->canDo($cando) . DOKU_LF;
+            echo '   ' . str_pad($cando, 16) . ' => ' . (int)$auth->canDo($cando) . WIKI_LF;
         }
         echo '</pre>';
     }
@@ -832,15 +832,15 @@ function html_TOC($toc)
 {
     if ($toc === []) return '';
     global $lang;
-    $out  = '<!-- TOC START -->' . DOKU_LF;
-    $out .= '<div id="dw__toc" class="dw__toc">' . DOKU_LF;
+    $out  = '<!-- TOC START -->' . WIKI_LF;
+    $out .= '<div id="dw__toc" class="dw__toc">' . WIKI_LF;
     $out .= '<h3 class="toggle">';
     $out .= $lang['toc'];
-    $out .= '</h3>' . DOKU_LF;
-    $out .= '<div>' . DOKU_LF;
+    $out .= '</h3>' . WIKI_LF;
+    $out .= '<div>' . WIKI_LF;
     $out .= html_buildlist($toc, 'toc', 'html_list_toc', null, true);
-    $out .= '</div>' . DOKU_LF . '</div>' . DOKU_LF;
-    $out .= '<!-- TOC END -->' . DOKU_LF;
+    $out .= '</div>' . WIKI_LF . '</div>' . WIKI_LF;
+    $out .= '<!-- TOC END -->' . WIKI_LF;
     return $out;
 }
 
@@ -895,7 +895,7 @@ function html_mktocitem($link, $text, $level, $hash = '#')
  */
 function html_form($name, $form)
 {
-    dbg_deprecated('use dokuwiki\Form\Form instead of Doku_Form');
+    dbg_deprecated('use easywiki\Form\Form instead of Doku_Form');
     // Safety check in case the caller forgets.
     $form->endFieldset();
     Event::createAndTrigger('HTML_' . strtoupper($name) . 'FORM_OUTPUT', $form, 'html_form_output', false);

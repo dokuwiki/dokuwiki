@@ -1,14 +1,14 @@
 <?php
 
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\PhpString;
 
 /**
  * A simple renderer that allows downloading of code and file snippets
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class Doku_Renderer_code extends Doku_Renderer
+class Wiki_Renderer_code extends Wiki_Renderer
 {
     protected $_codeblock = 0;
 

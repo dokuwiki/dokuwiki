@@ -1,6 +1,6 @@
 <?php
 
-class io_deletefromfile_test extends DokuWikiTest {
+class io_deletefromfile_test extends EasyWikiTest {
 
     function test_delete(){
         $file = TMP_DIR.'/test.txt';

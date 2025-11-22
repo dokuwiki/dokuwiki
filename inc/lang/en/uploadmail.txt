@@ -1,4 +1,4 @@
-A file was uploaded to your DokuWiki. Here are the details:
+A file was uploaded to your EasyWiki. Here are the details:
 
 File        : @MEDIA@
 Old revision: @OLD@

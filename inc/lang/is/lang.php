@@ -7,7 +7,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesIs.php?view=co
@@ -81,7 +81,7 @@ $lang['regsuccess2']           = 'Notandi hefur verið búinn til.';
 $lang['regmailfail']           = 'Það lítur út fyrir villu við sendingu aðgangsorðs. Vinsamlegast hafðu samband við stjórnanda.';
 $lang['regbadmail']            = 'Uppgefinn tölvupóstur virðist ógildur - teljir þú þetta vera villu, hafðu þá samband við stjórnanda.';
 $lang['regbadpass']            = 'Aðgangsorðin tvö eru ekki eins, vinsamlegast reyndu aftur.';
-$lang['regpwmail']             = 'DokuWiki aðgangsorðið þitt';
+$lang['regpwmail']             = 'EasyWiki aðgangsorðið þitt';
 $lang['reghere']               = 'Ertu ekki með reikning? Skráðu þig';
 $lang['profna']                = 'Þessi wiki leyfir ekki breytingar á notendaupplýsingum';
 $lang['profnochange']          = 'Enga breytingar vistaðar';

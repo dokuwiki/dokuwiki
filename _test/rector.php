@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-define('DOKU_INC', __DIR__ . '/../');
+define('WIKI_INC', __DIR__ . '/../');
 
-use dokuwiki\test\rector\DokuWikiPtlnRector;
-use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
+use easywiki\test\rector\EasyWikiPtlnRector;
+use easywiki\test\rector\EasyWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\ClassMethod\ExplicitReturnNullRector;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
@@ -46,8 +46,8 @@ use Rector\DeadCode\Rector\If_\ReduceAlwaysFalseIfOrRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
-    require_once __DIR__ . '/rector/DokuWikiPtlnRector.php';
-    require_once __DIR__ . '/rector/DokuWikiRenamePrintToEcho.php';
+    require_once __DIR__ . '/rector/EasyWikiPtlnRector.php';
+    require_once __DIR__ . '/rector/EasyWikiRenamePrintToEcho.php';
 
     // tune parallel task settings (see rectorphp/rector#8396)
     $rectorConfig->parallel(120, 16, 10);
@@ -140,24 +140,24 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         // see inc/deprecated.php
-        'RemoteAccessDeniedException' => 'dokuwiki\Remote\AccessDeniedException',
-        'RemoteException' => 'dokuwiki\Remote\RemoteException',
-        'setting' => 'dokuwiki\plugin\config\core\Setting\Setting',
-        'setting_authtype' => 'dokuwiki\plugin\config\core\Setting\SettingAuthtype',
-        'setting_string' => 'dokuwiki\plugin\config\core\Setting\SettingString',
-        'PageChangelog' => 'dokuwiki\ChangeLog\PageChangeLog',
-        'MediaChangelog' => 'dokuwiki\ChangeLog\MediaChangeLog',
-        'Input' => 'dokuwiki\Input\Input',
-        'PostInput' => 'dokuwiki\Input\Post',
-        'GetInput' => 'dokuwiki\Input\Get',
-        'ServerInput' => 'dokuwiki\Input\Server',
-        'PassHash' => 'dokuwiki\PassHash',
-        'HTTPClientException' => 'dokuwiki\HTTP\HTTPClientException',
-        'HTTPClient' => 'dokuwiki\HTTP\HTTPClient',
-        'DokuHTTPClient' => 'dokuwiki\HTTP\DokuHTTPClient',
-        'Doku_Plugin_Controller' => 'dokuwiki\Extension\PluginController',
-        'Doku_Indexer' => 'dokuwiki\Search\Indexer',
-        'IXR_Client' => 'dokuwiki\Remote\IXR\Client',
+        'RemoteAccessDeniedException' => 'easywiki\Remote\AccessDeniedException',
+        'RemoteException' => 'easywiki\Remote\RemoteException',
+        'setting' => 'easywiki\plugin\config\core\Setting\Setting',
+        'setting_authtype' => 'easywiki\plugin\config\core\Setting\SettingAuthtype',
+        'setting_string' => 'easywiki\plugin\config\core\Setting\SettingString',
+        'PageChangelog' => 'easywiki\ChangeLog\PageChangeLog',
+        'MediaChangelog' => 'easywiki\ChangeLog\MediaChangeLog',
+        'Input' => 'easywiki\Input\Input',
+        'PostInput' => 'easywiki\Input\Post',
+        'GetInput' => 'easywiki\Input\Get',
+        'ServerInput' => 'easywiki\Input\Server',
+        'PassHash' => 'easywiki\PassHash',
+        'HTTPClientException' => 'easywiki\HTTP\HTTPClientException',
+        'HTTPClient' => 'easywiki\HTTP\HTTPClient',
+        'DokuHTTPClient' => 'easywiki\HTTP\DokuHTTPClient',
+        'Doku_Plugin_Controller' => 'easywiki\Extension\PluginController',
+        'Doku_Indexer' => 'easywiki\Search\Indexer',
+        'IXR_Client' => 'easywiki\Remote\IXR\Client',
         'IXR_ClientMulticall' => 'IXR\Client\ClientMulticall',
         'IXR_Server' => 'IXR\Server\Server',
         'IXR_IntrospectionServer' => 'IXR\Server\IntrospectionServer',
@@ -169,50 +169,50 @@ return static function (RectorConfig $rectorConfig): void {
         'IXR_Value' => 'IXR\DataType\Value',
 
         // see inc/legacy.php
-        'Doku_Event_Handler' => 'dokuwiki\Extension\EventHandler',
-        'Doku_Event' => 'dokuwiki\Extension\Event',
-        'DokuWiki_Action_Plugin' => 'dokuwiki\Extension\ActionPlugin',
-        'DokuWiki_Admin_Plugin' => 'dokuwiki\Extension\AdminPlugin',
-        'DokuWiki_Auth_Plugin' => 'dokuwiki\Extension\AuthPlugin',
-        'DokuWiki_CLI_Plugin' => 'dokuwiki\Extension\CLIPlugin',
-        'DokuWiki_Plugin' => 'dokuwiki\Extension\Plugin',
-        'DokuWiki_Remote_Plugin' => 'dokuwiki\Extension\RemotePlugin',
-        'DokuWiki_Syntax_Plugin' => 'dokuwiki\Extension\SyntaxPlugin',
+        'Doku_Event_Handler' => 'easywiki\Extension\EventHandler',
+        'Doku_Event' => 'easywiki\Extension\Event',
+        'EasyWiki_Action_Plugin' => 'easywiki\Extension\ActionPlugin',
+        'EasyWiki_Admin_Plugin' => 'easywiki\Extension\AdminPlugin',
+        'EasyWiki_Auth_Plugin' => 'easywiki\Extension\AuthPlugin',
+        'EasyWiki_CLI_Plugin' => 'easywiki\Extension\CLIPlugin',
+        'EasyWiki_Plugin' => 'easywiki\Extension\Plugin',
+        'EasyWiki_Remote_Plugin' => 'easywiki\Extension\RemotePlugin',
+        'EasyWiki_Syntax_Plugin' => 'easywiki\Extension\SyntaxPlugin',
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
         // see inc/deprecated.php
-        'Doku_Lexer_Escape' => 'dokuwiki\Parsing\Lexer\Lexer::escape',
+        'Doku_Lexer_Escape' => 'easywiki\Parsing\Lexer\Lexer::escape',
 
         // see inc/utf8.php
-        'utf8_isASCII' => 'dokuwiki\Utf8\Clean::isASCII',
-        'utf8_strip' => 'dokuwiki\Utf8\Clean::strip',
-        'utf8_check' => 'dokuwiki\Utf8\Clean::isUtf8',
-        'utf8_basename' => 'dokuwiki\Utf8\PhpString::basename',
-        'utf8_strlen' => 'dokuwiki\Utf8\PhpString::strlen',
-        'utf8_substr' => 'dokuwiki\Utf8\PhpString::substr',
-        'utf8_substr_replace' => 'dokuwiki\Utf8\PhpString::substr_replace',
-        'utf8_ltrim' => 'dokuwiki\Utf8\PhpString::ltrim',
-        'utf8_rtrim' => 'dokuwiki\Utf8\PhpString::rtrim',
-        'utf8_trim' => 'dokuwiki\Utf8\PhpString::trim',
-        'utf8_strtolower' => 'dokuwiki\Utf8\PhpString::strtolower',
-        'utf8_strtoupper' => 'dokuwiki\Utf8\PhpString::strtoupper',
-        'utf8_ucfirst' => 'dokuwiki\Utf8\PhpString::ucfirst',
-        'utf8_ucwords' => 'dokuwiki\Utf8\PhpString::ucwords',
-        'utf8_deaccent' => 'dokuwiki\Utf8\Clean::deaccent',
-        'utf8_romanize' => 'dokuwiki\Utf8\Clean::romanize',
-        'utf8_stripspecials' => 'dokuwiki\Utf8\Clean::stripspecials',
-        'utf8_strpos' => 'dokuwiki\Utf8\PhpString::strpos',
-        'utf8_tohtml' => 'dokuwiki\Utf8\Conversion::toHtml',
-        'utf8_unhtml' => 'dokuwiki\Utf8\Conversion::fromHtml',
-        'utf8_to_unicode' => 'dokuwiki\Utf8\Conversion::fromUtf8',
-        'unicode_to_utf8' => 'dokuwiki\Utf8\Conversion::toUtf8',
-        'utf8_to_utf16be' => 'dokuwiki\Utf8\Conversion::toUtf16be',
-        'utf16be_to_utf8' => 'dokuwiki\Utf8\Conversion::fromUtf16be',
-        'utf8_bad_replace' => 'dokuwiki\Utf8\Clean::replaceBadBytes',
-        'utf8_correctIdx' => 'dokuwiki\Utf8\Clean::correctIdx',
+        'utf8_isASCII' => 'easywiki\Utf8\Clean::isASCII',
+        'utf8_strip' => 'easywiki\Utf8\Clean::strip',
+        'utf8_check' => 'easywiki\Utf8\Clean::isUtf8',
+        'utf8_basename' => 'easywiki\Utf8\PhpString::basename',
+        'utf8_strlen' => 'easywiki\Utf8\PhpString::strlen',
+        'utf8_substr' => 'easywiki\Utf8\PhpString::substr',
+        'utf8_substr_replace' => 'easywiki\Utf8\PhpString::substr_replace',
+        'utf8_ltrim' => 'easywiki\Utf8\PhpString::ltrim',
+        'utf8_rtrim' => 'easywiki\Utf8\PhpString::rtrim',
+        'utf8_trim' => 'easywiki\Utf8\PhpString::trim',
+        'utf8_strtolower' => 'easywiki\Utf8\PhpString::strtolower',
+        'utf8_strtoupper' => 'easywiki\Utf8\PhpString::strtoupper',
+        'utf8_ucfirst' => 'easywiki\Utf8\PhpString::ucfirst',
+        'utf8_ucwords' => 'easywiki\Utf8\PhpString::ucwords',
+        'utf8_deaccent' => 'easywiki\Utf8\Clean::deaccent',
+        'utf8_romanize' => 'easywiki\Utf8\Clean::romanize',
+        'utf8_stripspecials' => 'easywiki\Utf8\Clean::stripspecials',
+        'utf8_strpos' => 'easywiki\Utf8\PhpString::strpos',
+        'utf8_tohtml' => 'easywiki\Utf8\Conversion::toHtml',
+        'utf8_unhtml' => 'easywiki\Utf8\Conversion::fromHtml',
+        'utf8_to_unicode' => 'easywiki\Utf8\Conversion::fromUtf8',
+        'unicode_to_utf8' => 'easywiki\Utf8\Conversion::toUtf8',
+        'utf8_to_utf16be' => 'easywiki\Utf8\Conversion::toUtf16be',
+        'utf16be_to_utf8' => 'easywiki\Utf8\Conversion::fromUtf16be',
+        'utf8_bad_replace' => 'easywiki\Utf8\Clean::replaceBadBytes',
+        'utf8_correctIdx' => 'easywiki\Utf8\Clean::correctIdx',
     ]);
 
-    $rectorConfig->rule(DokuWikiPtlnRector::class);
-    $rectorConfig->rule(DokuWikiRenamePrintToEcho::class);
+    $rectorConfig->rule(EasyWikiPtlnRector::class);
+    $rectorConfig->rule(EasyWikiRenamePrintToEcho::class);
 };

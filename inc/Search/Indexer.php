@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Search;
+namespace easywiki\Search;
 
-use dokuwiki\Utf8\Asian;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Extension\Event;
+use easywiki\Utf8\Asian;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\PhpString;
+use easywiki\Extension\Event;
 
 /**
  * Class that encapsulates operations on the indexer database.
@@ -577,7 +577,7 @@ class Indexer
         // avoid expensive addIndexKey operation for the most recently requested pages by using a cache
         if (isset($this->pidCache[$page])) return $this->pidCache[$page];
         $pid = $this->addIndexKey('page', '', $page);
-        // limit cache to 10 entries by discarding the oldest element as in DokuWiki usually only the most recently
+        // limit cache to 10 entries by discarding the oldest element as in EasyWiki usually only the most recently
         // added item will be requested again
         if (count($this->pidCache) > 10) array_shift($this->pidCache);
         $this->pidCache[$page] = $pid;

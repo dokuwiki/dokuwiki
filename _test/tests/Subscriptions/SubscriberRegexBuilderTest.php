@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Subscriptions;
+namespace easywiki\test\Subscriptions;
 
-use dokuwiki\Subscriptions\SubscriberRegexBuilder;
-use DokuWikiTest;
+use easywiki\Subscriptions\SubscriberRegexBuilder;
+use EasyWikiTest;
 
-class SubscriberRegexBuilderTest extends DokuWikiTest
+class SubscriberRegexBuilderTest extends EasyWikiTest
 {
 
     public function regexTestdataProvider()

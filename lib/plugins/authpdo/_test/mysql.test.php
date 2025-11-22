@@ -6,7 +6,7 @@
  * @group plugin_authpdo
  * @group plugins
  */
-class mysql_plugin_authpdo_test extends DokuWikiTest {
+class mysql_plugin_authpdo_test extends EasyWikiTest {
 
     protected $driver = 'mysql';
     protected $host = '';
@@ -17,7 +17,7 @@ class mysql_plugin_authpdo_test extends DokuWikiTest {
 
     public function setUp() : void {
         parent::setUp();
-        $configuration = DOKU_UNITTEST . "{$this->driver}.conf.php";
+        $configuration = WIKI_UNITTEST . "{$this->driver}.conf.php";
         if(!file_exists($configuration)) {
             return;
         }

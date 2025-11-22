@@ -1,4 +1,4 @@
-Një skedar u ngarkua në DokuWiki-n tënd. Detajet janë:
+Një skedar u ngarkua në EasyWiki-n tënd. Detajet janë:
 
 Skedar: @MEDIA@
 Data: @DATE@

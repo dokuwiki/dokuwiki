@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\File;
+namespace easywiki\File;
 
 /**
  * Creates an absolute media ID from a relative one

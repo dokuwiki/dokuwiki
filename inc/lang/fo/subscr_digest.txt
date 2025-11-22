@@ -11,6 +11,6 @@ Gamla skjalið: @OLDPAGE@
 Nýggja skjalið: @NEWPAGE@
 
 Fyri at avmelda síðu kunngerðir, logga inn í wikiina á
-@DOKUWIKIURL@ vitja so
+@EASYWIKIURL@ vitja so
 @SUBSCRIBE@
 og avmelda hald á síðu og/ella navnaøkis broytingar.

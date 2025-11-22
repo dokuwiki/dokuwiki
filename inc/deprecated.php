@@ -6,12 +6,12 @@
  * Note: when adding to this file, please also add appropriate actions to _test/rector.php
  */
 
-use dokuwiki\Debug\DebugHelper;
+use easywiki\Debug\DebugHelper;
 
 /**
- * @deprecated since 2021-11-11 use \dokuwiki\Remote\IXR\Client instead!
+ * @deprecated since 2021-11-11 use \easywiki\Remote\IXR\Client instead!
  */
-class IXR_Client extends \dokuwiki\Remote\IXR\Client
+class IXR_Client extends \easywiki\Remote\IXR\Client
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class IXR_Client extends \dokuwiki\Remote\IXR\Client
      */
     public function __construct($server, $path = false, $port = 80, $timeout = 15, $timeout_io = null)
     {
-        DebugHelper::dbgDeprecatedFunction(dokuwiki\Remote\IXR\Client::class);
+        DebugHelper::dbgDeprecatedFunction(easywiki\Remote\IXR\Client::class);
         parent::__construct($server, $path, $port, $timeout, $timeout_io);
     }
 }

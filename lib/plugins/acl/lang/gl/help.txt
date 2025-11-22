@@ -8,4 +8,4 @@ O formulario de enriba permíteche ver e modificares os permisos do usuario ou g
 
 Na táboa de embaixo amósanse todas as regras de control de accesos estabelecidas. Podes empregala para mudares ou eliminares varias regras dun xeito rápido.
 
-A lectura da [[doku>acl|documentación oficial da ACL]] pode servirche de axuda para comprenderes como funciona o control de accesos no Dokuwiki.
+A lectura da [[doku>acl|documentación oficial da ACL]] pode servirche de axuda para comprenderes como funciona o control de accesos no EasyWiki.

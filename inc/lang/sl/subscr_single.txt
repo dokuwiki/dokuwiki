@@ -14,6 +14,6 @@ Stara različica  : @OLDPAGE@
 Nova različica   : @NEWPAGE@
 
 Preklic obveščanja o spremembah strani je mogoče določiti
-na Wiki naslovu @DOKUWIKIURL@ in z obiskom @NEWPAGE@,
+na Wiki naslovu @EASYWIKIURL@ in z obiskom @NEWPAGE@,
 kjer se je mogoče odjaviti od spremljanja strani ali
 imenskega prostora.

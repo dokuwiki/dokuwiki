@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
-use dokuwiki\Remote\AccessDeniedException;
-use dokuwiki\Remote\Api;
-use dokuwiki\Remote\ApiCall;
-use dokuwiki\Remote\RemoteException;
-use dokuwiki\test\mock\AuthPlugin;
-use dokuwiki\test\Remote\Mock\ApiCore;
-use dokuwiki\test\Remote\Mock\TestPlugin1;
-use dokuwiki\test\Remote\Mock\TestPlugin2;
+use easywiki\Remote\AccessDeniedException;
+use easywiki\Remote\Api;
+use easywiki\Remote\ApiCall;
+use easywiki\Remote\RemoteException;
+use easywiki\test\mock\AuthPlugin;
+use easywiki\test\Remote\Mock\ApiCore;
+use easywiki\test\Remote\Mock\TestPlugin1;
+use easywiki\test\Remote\Mock\TestPlugin2;
 
-class ApiTest extends \DokuWikiTest
+class ApiTest extends \EasyWikiTest
 {
 
     protected $userinfo;
@@ -30,7 +30,7 @@ class ApiTest extends \DokuWikiTest
         parent::setUp();
 
         // mock plugin controller to return our test plugins
-        $pluginManager = $this->createMock('dokuwiki\Extension\PluginController');
+        $pluginManager = $this->createMock('easywiki\Extension\PluginController');
         $pluginManager->method('getList')->willReturn(array('testplugin', 'testplugin2'));
         $pluginManager->method('load')->willReturnCallback(
             function ($type, $plugin) {

@@ -1,14 +1,14 @@
 <?php
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-define('DOKU_MEDIAMANAGER', 1);
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
+define('WIKI_MEDIAMANAGER', 1);
 
 // for multi uploader:
 @ini_set('session.use_only_cookies', 0);
 
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 global $INPUT;
 global $lang;
@@ -109,15 +109,15 @@ if ($DEL) {
     if (checkSecurityToken()) {
         $res = media_delete($DEL, $AUTH);
     }
-    if ($res & DOKU_MEDIA_DELETED) {
+    if ($res & WIKI_MEDIA_DELETED) {
         $msg = sprintf($lang['deletesucc'], noNS($DEL));
-        if ($res & DOKU_MEDIA_EMPTY_NS && !$fullscreen) {
+        if ($res & WIKI_MEDIA_EMPTY_NS && !$fullscreen) {
             // current namespace was removed. redirecting to root ns passing msg along
-            send_redirect(DOKU_URL . 'lib/exe/mediamanager.php?msg1=' .
+            send_redirect(WIKI_URL . 'lib/exe/mediamanager.php?msg1=' .
                 rawurlencode($msg) . '&edid=' . $INPUT->str('edid'));
         }
         msg($msg, 1);
-    } elseif ($res & DOKU_MEDIA_INUSE) {
+    } elseif ($res & WIKI_MEDIA_INUSE) {
         msg(sprintf($lang['mediainuse'], noNS($DEL)), 0);
     } else {
         msg(sprintf($lang['deletefail'], noNS($DEL)), -1);

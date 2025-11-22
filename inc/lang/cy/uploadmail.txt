@@ -1,4 +1,4 @@
-Cafodd ffeil ei lanlwytho i'ch DokuWiki. Dyma'r manylion:
+Cafodd ffeil ei lanlwytho i'ch EasyWiki. Dyma'r manylion:
 
 Ffeil         : @MEDIA@
 Hen adolygiad : @OLD@
@@ -11,5 +11,5 @@ Teip MIME     : @MIME@
 Defnyddiwr    : @USER@
 
 -- 
-Cafodd y neges hon ei generadu gan DokuWiki ar
-@DOKUWIKIURL@
+Cafodd y neges hon ei generadu gan EasyWiki ar
+@EASYWIKIURL@

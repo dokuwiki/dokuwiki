@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test\Remote\Mock;
+namespace easywiki\test\Remote\Mock;
 
 
-use dokuwiki\Remote\ApiCall;
-use dokuwiki\Remote\Response\Link;
+use easywiki\Remote\ApiCall;
+use easywiki\Remote\Response\Link;
 
 class ApiCore
 {
@@ -78,6 +78,6 @@ class ApiCore
 
     function getStructuredData()
     {
-        return new Link('internal', 'wiki:dokuwiki', 'https://www.dokuwiki.org/wiki:dokuwiki');
+        return new Link('internal', 'wiki:easywiki', 'https://www.EasyWiki.org/wiki:easywiki');
     }
 }

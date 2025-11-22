@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class FieldsetOpenElement
  *
  * Opens a Fieldset with an optional legend
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class FieldsetOpenElement extends TagOpenElement
 {
@@ -33,7 +33,7 @@ class FieldsetOpenElement extends TagOpenElement
     {
         $html = '<fieldset ' . buildAttributes($this->attrs()) . '>';
         $legend = $this->val();
-        if ($legend) $html .= DOKU_LF . '<legend>' . hsc($legend) . '</legend>';
+        if ($legend) $html .= WIKI_LF . '<legend>' . hsc($legend) . '</legend>';
         return $html;
     }
 }

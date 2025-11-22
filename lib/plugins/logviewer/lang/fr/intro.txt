@@ -1,6 +1,6 @@
 ====== Visualisation des journaux ======
 
-Cette interface permet de visualier les divers journaux que DokuWiki
+Cette interface permet de visualier les divers journaux que EasyWiki
 écrit.  Par défaut, il ne devrait pas y avoir grand chose ici ;
 cela dépend du [[doku>fr:config:dontlog|réglage des journaux]].
 Cependant si quelque chose se passe mal, il y a de fortes chances

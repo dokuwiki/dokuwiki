@@ -3,5 +3,5 @@ author Chris Smith
 email  chris@jalakai.co.uk
 date   2015-07-15
 name   User Manager
-desc   Manage DokuWiki user accounts
-url    https://www.dokuwiki.org/plugin:usermanager
+desc   Manage EasyWiki user accounts
+url    https://www.EasyWiki.org/plugin:usermanager

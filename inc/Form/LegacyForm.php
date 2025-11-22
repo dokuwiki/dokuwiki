@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class LegacyForm
@@ -10,7 +10,7 @@ namespace dokuwiki\Form;
  * This can be used to work with the modern API on forms provided by old events for
  * example. When you start new forms, just use Form\Form
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class LegacyForm extends Form
 {
@@ -163,9 +163,9 @@ class LegacyForm extends Form
         $legacy = new \Doku_Form($this->attrs());
         $legacy->_hidden = $this->hidden;
         foreach ($this->elements as $element) {
-            if (is_a($element, 'dokuwiki\Form\HTMLElement')) {
+            if (is_a($element, 'easywiki\Form\HTMLElement')) {
                 $legacy->_content[] = $element->toHTML();
-            } elseif (is_a($element, 'dokuwiki\Form\InputElement')) {
+            } elseif (is_a($element, 'easywiki\Form\InputElement')) {
                 /** @var InputElement $element */
                 $data = $element->attrs();
                 $data['_elem'] = $this->legacyType($element->getType());

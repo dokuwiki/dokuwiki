@@ -1,0 +1,70 @@
+/**
+ * This file provides styles for all types of links.
+ */
+
+/*____________ links to wiki pages ____________*/
+
+/* existing wikipage */
+.easywiki a.wikilink1 {
+}
+/* not existing wikipage */
+.easywiki a.wikilink2 {
+    text-decoration: none;
+}
+.easywiki a.wikilink2:link,
+.easywiki a.wikilink2:visited {
+    border-bottom: 1px dashed;
+}
+.easywiki a.wikilink2:hover,
+.easywiki a.wikilink2:active,
+.easywiki a.wikilink2:focus {
+    border-bottom-width: 0;
+}
+
+/* any link to current page */
+.easywiki span.curid a {
+    font-weight: bold;
+}
+
+/*____________ other link types ____________*/
+
+.easywiki a.urlextern,
+.easywiki a.windows,
+.easywiki a.mail,
+.easywiki a.mediafile,
+.easywiki a.interwiki {
+    background-size: 1.2em;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+    padding: 0 0 0 1.4em;
+}
+/* external link */
+.easywiki a.urlextern {
+    background-image: url(../../images/external-link.svg);
+}
+/* windows share */
+.easywiki a.windows {
+    background-image: url(../../images/unc.svg);
+}
+/* email link */
+.easywiki a.mail {
+    background-image: url(../../images/email.svg);
+}
+
+/* icons of the following are set by EasyWiki in lib/exe/css.php */
+/* link to some embedded media */
+.easywiki a.mediafile {
+}
+/* interwiki link */
+.easywiki a.interwiki {
+}
+
+/* RTL corrections; if link icons don't work as expected, remove the following lines */
+[dir=rtl] .easywiki a.urlextern,
+[dir=rtl] .easywiki a.windows,
+[dir=rtl] .easywiki a.mail,
+[dir=rtl] .easywiki a.interwiki,
+[dir=rtl] .easywiki a.mediafile {
+    background-position: right center;
+    padding: 0 18px 0 0;
+}

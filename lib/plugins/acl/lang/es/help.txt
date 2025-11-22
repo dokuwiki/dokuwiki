@@ -5,4 +5,4 @@ En esta página puedes añadir y quitar permisos para espacios de nombres y pág
   * El formulario superior te permite ver y modificar los permisos de un usuario o grupo seleccionado.
   * En la tabla inferior se muestra todas las reglas de control de acceso actualmente definidas. Puedes usarla para eliminar o modificar varias reglas rápidamente.
 
-Leer la [[doku>es:acl|documentación oficial sobre ACL]] puede ayudarte a comprender completamente como funciona el control de acceso en DokuWiki.
+Leer la [[doku>es:acl|documentación oficial sobre ACL]] puede ayudarte a comprender completamente como funciona el control de acceso en EasyWiki.

@@ -1,6 +1,6 @@
 <?php
 
-class init_getID_test extends DokuWikiTest {
+class init_getID_test extends EasyWikiTest {
 
     /**
      * id=0 case
@@ -10,8 +10,8 @@ class init_getID_test extends DokuWikiTest {
         $conf['basedir'] = '/';
         $conf['userewrite'] = 0;
 
-        $_SERVER['SCRIPT_FILENAME'] = '/doku.php';
-        $_SERVER['REQUEST_URI'] = '/doku.php?id=0&do=edit';
+        $_SERVER['SCRIPT_FILENAME'] = '/wiki.php';
+        $_SERVER['REQUEST_URI'] = '/wiki.php?id=0&do=edit';
         $_REQUEST['id'] = '0';
 
         $this->assertSame('0', getID('id'));
@@ -47,10 +47,10 @@ class init_getID_test extends DokuWikiTest {
         $conf['useslash'] = '1';
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
         $_SERVER['HTTP_HOST'] = 'xerxes.my.home';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/lib/exe/detail.php';
-        $_SERVER['PHP_SELF'] = '/dokuwiki/lib/exe/detail.php/wiki/discussion/button-dw.png';
-        $_SERVER['REQUEST_URI'] = '/dokuwiki/lib/exe/detail.php/wiki/discussion/button-dw.png?id=test&debug=1';
-        $_SERVER['SCRIPT_NAME'] = '/dokuwiki/lib/exe/detail.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/lib/exe/detail.php';
+        $_SERVER['PHP_SELF'] = '/easywiki/lib/exe/detail.php/wiki/discussion/button-dw.png';
+        $_SERVER['REQUEST_URI'] = '/easywiki/lib/exe/detail.php/wiki/discussion/button-dw.png?id=test&debug=1';
+        $_SERVER['SCRIPT_NAME'] = '/easywiki/lib/exe/detail.php';
         $_SERVER['PATH_INFO'] = '/wiki/discussion/button-dw.png';
         $_SERVER['PATH_TRANSLATED'] = '/var/www/wiki/discussion/button-dw.png';
 
@@ -59,7 +59,7 @@ class init_getID_test extends DokuWikiTest {
     }
 
     /**
-     * getID with given id in url and userewrite=2, no basedir set, dokuwiki not in document root.
+     * getID with given id in url and userewrite=2, no basedir set, easywiki not in document root.
      */
     function test3() {
         global $conf;
@@ -67,14 +67,14 @@ class init_getID_test extends DokuWikiTest {
         $conf['userewrite'] = '2';
         $conf['baseurl'] = '';
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
-        $_SERVER['SCRIPT_FILENAME'] = '/usr/share/dokuwiki/doku.php';
-        $_SERVER['SCRIPT_NAME'] = '/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI'] = '/dokuwiki/doku.php/wiki:dokuwiki';
-        $_SERVER['PATH_INFO'] = '/wiki:dokuwiki';
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/wiki:dokuwiki';
-        $_SERVER['PHP_SELF'] = '/dokuwiki/doku.php/wiki:dokuwiki';
+        $_SERVER['SCRIPT_FILENAME'] = '/usr/share/easywiki/wiki.php';
+        $_SERVER['SCRIPT_NAME'] = '/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI'] = '/easywiki/wiki.php/wiki:easywiki';
+        $_SERVER['PATH_INFO'] = '/wiki:easywiki';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/wiki:easywiki';
+        $_SERVER['PHP_SELF'] = '/easywiki/wiki.php/wiki:easywiki';
 
-        $this->assertEquals(getID(), 'wiki:dokuwiki');
+        $this->assertEquals(getID(), 'wiki:easywiki');
     }
 
     /**
@@ -88,14 +88,14 @@ class init_getID_test extends DokuWikiTest {
         $conf['useslash'] = '1';
 
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/vhosts/example.com/htdocs';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/vhosts/example.com/htdocs/doku.php';
-        $_SERVER['SCRIPT_NAME'] = '/doku.php';
-        $_SERVER['REQUEST_URI'] = '/doku.php/wiki/dokuwiki';
-        $_SERVER['PATH_INFO'] = '/wiki/dokuwiki';
-        $_SERVER['PATH_TRANSLATED'] = '/var/www/vhosts/example.com/htdocs/doku.php';
-        $_SERVER['PHP_SELF'] = '/doku.php/wiki/dokuwiki';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/vhosts/example.com/htdocs/wiki.php';
+        $_SERVER['SCRIPT_NAME'] = '/wiki.php';
+        $_SERVER['REQUEST_URI'] = '/wiki.php/wiki/easywiki';
+        $_SERVER['PATH_INFO'] = '/wiki/easywiki';
+        $_SERVER['PATH_TRANSLATED'] = '/var/www/vhosts/example.com/htdocs/wiki.php';
+        $_SERVER['PHP_SELF'] = '/wiki.php/wiki/easywiki';
 
-        $this->assertEquals(getID(), 'wiki:dokuwiki');
+        $this->assertEquals(getID(), 'wiki:easywiki');
     }
 
     /**
@@ -107,12 +107,12 @@ class init_getID_test extends DokuWikiTest {
         $conf['userewrite'] = '2';
         $conf['baseurl'] = '';
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/';
-        $_SERVER['SCRIPT_FILENAME'] = '/var/www/dokuwiki/doku.php';
-        $_SERVER['SCRIPT_NAME'] = '/dokuwiki/doku.php';
-        $_SERVER['REQUEST_URI'] = '/dokuwiki/doku.php/?do=debug';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/easywiki/wiki.php';
+        $_SERVER['SCRIPT_NAME'] = '/easywiki/wiki.php';
+        $_SERVER['REQUEST_URI'] = '/easywiki/wiki.php/?do=debug';
         $_SERVER['PATH_INFO'] = '/';
         $_SERVER['PATH_TRANSLATED'] = '/var/www/index.html';
-        $_SERVER['PHP_SELF'] = '/dokuwiki/doku.php/';
+        $_SERVER['PHP_SELF'] = '/easywiki/wiki.php/';
 
         $this->assertEquals(getID(), cleanID($conf['start']));
     }

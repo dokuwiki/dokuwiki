@@ -8,4 +8,4 @@ Formā augšpusē var redzēt un grozīt norādītā lietotāja vai grupas ties�
 
 Apakšā tabulā  parādīts visu tiesību saraksts. To var lietot, lai ātri mainītu vairākus pieejas tiesību noteikumus.
 
-[[doku>acl|Officiālajos piekļuves tiesību noteikumu dokumentos]] var atrast izvērstu informāciju, kā darbojas DokuWiki sistēmas piekļuves tiesību kontrole.
+[[doku>acl|Officiālajos piekļuves tiesību noteikumu dokumentos]] var atrast izvērstu informāciju, kā darbojas EasyWiki sistēmas piekļuves tiesību kontrole.

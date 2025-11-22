@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Extension\AdminPlugin;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Extension\AdminPlugin;
 
 /**
  * Class Admin
  *
  * Action to show the admin interface or admin plugins
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Admin extends AbstractUserAction
 {

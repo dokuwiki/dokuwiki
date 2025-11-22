@@ -1,4 +1,4 @@
-Sinu DokuWiki-sse lisati fail.
+Sinu EasyWiki-sse lisati fail.
 Lähemalt:
 
   Fail                 : @MEDIA@

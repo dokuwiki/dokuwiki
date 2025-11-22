@@ -1,0 +1,38 @@
+/**
+ * This file provides styles for the image detail page (detail.php).
+ */
+
+#easywiki__detail {
+    padding: 1em;
+}
+#easywiki__detail h1 {
+}
+
+#easywiki__detail img {
+    float: left;
+    margin: 0 1.5em .5em 0;
+}
+[dir=rtl] #easywiki__detail div.content img {
+    float: right;
+    margin-right: 0;
+    margin-left: 1.5em;
+}
+#easywiki__detail div.img_detail {
+    float: left;
+}
+[dir=rtl] #easywiki__detail div.content div.img_detail {
+    float: right
+}
+
+#easywiki__detail div.img_detail h2 {
+}
+#easywiki__detail div.img_detail dl {
+}
+#easywiki__detail div.img_detail dl dt {
+}
+#easywiki__detail div.img_detail dl dd {
+}
+
+#easywiki__detail p.back {
+    clear: both;
+}

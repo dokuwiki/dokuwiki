@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Cache\CacheRenderer;
+use easywiki\Cache\CacheRenderer;
 
-class cache_stalecheck_test extends DokuWikiTest {
+class cache_stalecheck_test extends EasyWikiTest {
 	function test_staleness() {
 		global $ID;
 

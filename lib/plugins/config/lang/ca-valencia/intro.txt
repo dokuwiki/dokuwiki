@@ -1,6 +1,6 @@
 ====== Gestor de configuració ======
 
-Controle des d'esta pàgina els ajusts de DokuWiki.
+Controle des d'esta pàgina els ajusts de EasyWiki.
 Per a obtindre ajuda sobre cada ajust vaja a [[doku>config]].
 Per a més informació al voltant d'este plúgin vaja a [[doku>config]].
 

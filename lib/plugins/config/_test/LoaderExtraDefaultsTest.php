@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\plugin\config\test;
+namespace easywiki\plugin\config\test;
 
-use dokuwiki\plugin\config\core\ConfigParser;
-use dokuwiki\plugin\config\core\Loader;
+use easywiki\plugin\config\core\ConfigParser;
+use easywiki\plugin\config\core\Loader;
 
 /**
  * @group plugin_config
@@ -11,7 +11,7 @@ use dokuwiki\plugin\config\core\Loader;
  * @group plugins
  * @group bundled_plugins
  */
-class LoaderExtraDefaultsTest extends \DokuWikiTest
+class LoaderExtraDefaultsTest extends \EasyWikiTest
 {
 
     protected $pluginsEnabled = ['testing'];
@@ -29,12 +29,12 @@ class LoaderExtraDefaultsTest extends \DokuWikiTest
         $out .= "\$conf['plugin']['testing']['schnibble'] = 1;\n";
         $out .= "\$conf['plugin']['testing']['second'] = 'New default setting';\n";
 
-        $file = DOKU_CONF . 'otherdefaults.php';
+        $file = WIKI_CONF . 'otherdefaults.php';
         file_put_contents($file, $out);
 
         //store original settings
         $this->oldSetting = $config_cascade['main']['default'];
-        //add second file with defaults, which override the defaults of DokuWiki
+        //add second file with defaults, which override the defaults of EasyWiki
         $config_cascade['main']['default'][] = $file;
 
         parent::setUp();
@@ -68,7 +68,7 @@ class LoaderExtraDefaultsTest extends \DokuWikiTest
         global $config_cascade;
 
         $config_cascade['main']['default'] = $this->oldSetting;
-        unlink(DOKU_CONF . 'otherdefaults.php');
+        unlink(WIKI_CONF . 'otherdefaults.php');
 
         parent::tearDown();
     }

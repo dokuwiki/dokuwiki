@@ -10,6 +10,6 @@ Här är ändringarna:
 Äldre versionen: @OLDPAGE@
 Ny version: @NEWPAGE@
 
-För att avbryta meddelanden om sidändringar logga in till wikin @DOKUWIKIURL@, besök sedan
+För att avbryta meddelanden om sidändringar logga in till wikin @EASYWIKIURL@, besök sedan
 @SUBSCRIBE@
 och avbeställ ändringar av sidor och/eller namespace.

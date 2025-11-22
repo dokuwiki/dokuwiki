@@ -1,24 +1,24 @@
 <?php
 
 /**
- * DokuWiki template functions
+ * EasyWiki template functions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\ActionRouter;
-use dokuwiki\Action\Exception\FatalException;
-use dokuwiki\Extension\PluginInterface;
-use dokuwiki\Ui\Admin;
-use dokuwiki\StyleUtils;
-use dokuwiki\Menu\Item\AbstractItem;
-use dokuwiki\Form\Form;
-use dokuwiki\Menu\MobileMenu;
-use dokuwiki\Ui\Subscribe;
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Extension\Event;
-use dokuwiki\File\PageResolver;
+use easywiki\ActionRouter;
+use easywiki\Action\Exception\FatalException;
+use easywiki\Extension\PluginInterface;
+use easywiki\Ui\Admin;
+use easywiki\StyleUtils;
+use easywiki\Menu\Item\AbstractItem;
+use easywiki\Form\Form;
+use easywiki\Menu\MobileMenu;
+use easywiki\Ui\Subscribe;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Extension\Event;
+use easywiki\File\PageResolver;
 
 /**
  * Access a template file
@@ -35,16 +35,16 @@ function template($file)
 {
     global $conf;
 
-    if (@is_readable(DOKU_INC . 'lib/tpl/' . $conf['template'] . '/' . $file))
-        return DOKU_INC . 'lib/tpl/' . $conf['template'] . '/' . $file;
+    if (@is_readable(WIKI_INC . 'lib/tpl/' . $conf['template'] . '/' . $file))
+        return WIKI_INC . 'lib/tpl/' . $conf['template'] . '/' . $file;
 
-    return DOKU_INC . 'lib/tpl/dokuwiki/' . $file;
+    return WIKI_INC . 'lib/tpl/easywiki/' . $file;
 }
 
 /**
  * Convenience function to access template dir from local FS
  *
- * This replaces the deprecated DOKU_TPLINC constant
+ * This replaces the deprecated WIKI_TPLINC constant
  *
  * @param string $tpl The template to use, default to current one
  * @return string
@@ -55,13 +55,13 @@ function tpl_incdir($tpl = '')
 {
     global $conf;
     if (!$tpl) $tpl = $conf['template'];
-    return DOKU_INC . 'lib/tpl/' . $tpl . '/';
+    return WIKI_INC . 'lib/tpl/' . $tpl . '/';
 }
 
 /**
  * Convenience function to access template dir from web
  *
- * This replaces the deprecated DOKU_TPL constant
+ * This replaces the deprecated WIKI_TPL constant
  *
  * @param string $tpl The template to use, default to current one
  * @return string
@@ -72,7 +72,7 @@ function tpl_basedir($tpl = '')
 {
     global $conf;
     if (!$tpl) $tpl = $conf['template'];
-    return DOKU_BASE . 'lib/tpl/' . $tpl . '/';
+    return WIKI_BASE . 'lib/tpl/' . $tpl . '/';
 }
 
 /**
@@ -242,22 +242,22 @@ function tpl_metaheaders($alt = true)
     // prepare seed for js and css
     $tseed = $updateVersion;
     $depends = getConfigFiles('main');
-    $depends[] = DOKU_CONF . "tpl/" . $conf['template'] . "/style.ini";
+    $depends[] = WIKI_CONF . "tpl/" . $conf['template'] . "/style.ini";
     foreach ($depends as $f) $tseed .= @filemtime($f);
     $tseed = md5($tseed);
 
     // the usual stuff
-    $head['meta'][] = ['name' => 'generator', 'content' => 'DokuWiki'];
+    $head['meta'][] = ['name' => 'generator', 'content' => 'EasyWiki'];
     if (actionOK('search')) {
         $head['link'][] = [
             'rel' => 'search',
             'type' => 'application/opensearchdescription+xml',
-            'href' => DOKU_BASE . 'lib/exe/opensearch.php',
+            'href' => WIKI_BASE . 'lib/exe/opensearch.php',
             'title' => $conf['title']
         ];
     }
 
-    $head['link'][] = ['rel' => 'start', 'href' => DOKU_BASE];
+    $head['link'][] = ['rel' => 'start', 'href' => WIKI_BASE];
     if (actionOK('index')) {
         $head['link'][] = [
             'rel' => 'contents',
@@ -269,7 +269,7 @@ function tpl_metaheaders($alt = true)
     if (actionOK('manifest')) {
         $head['link'][] = [
             'rel' => 'manifest',
-            'href' => DOKU_BASE . 'lib/exe/manifest.php',
+            'href' => WIKI_BASE . 'lib/exe/manifest.php',
             'crossorigin' => 'use-credentials' // See issue #4322
         ];
     }
@@ -290,13 +290,13 @@ function tpl_metaheaders($alt = true)
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => $lang['btn_recent'],
-                'href' => DOKU_BASE . 'feed.php'
+                'href' => WIKI_BASE . 'feed.php'
             ];
             $head['link'][] = [
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => $lang['currentns'],
-                'href' => DOKU_BASE . 'feed.php?mode=list&ns=' . (isset($INFO) ? $INFO['namespace'] : '')
+                'href' => WIKI_BASE . 'feed.php?mode=list&ns=' . (isset($INFO) ? $INFO['namespace'] : '')
             ];
         }
         if (($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -312,7 +312,7 @@ function tpl_metaheaders($alt = true)
                 'rel' => 'alternate',
                 'type' => 'application/rss+xml',
                 'title' => $lang['searchresult'],
-                'href' => DOKU_BASE . 'feed.php?mode=search&q=' . $QUERY
+                'href' => WIKI_BASE . 'feed.php?mode=search&q=' . $QUERY
             ];
         }
 
@@ -346,13 +346,13 @@ function tpl_metaheaders($alt = true)
             }
             $canonicalUrl = wl($ID, '', true, '&');
             if ($ID == $conf['start']) {
-                $canonicalUrl = DOKU_URL;
+                $canonicalUrl = WIKI_URL;
             }
             $head['link'][] = ['rel' => 'canonical', 'href' => $canonicalUrl];
         } else {
             $head['meta'][] = ['name' => 'robots', 'content' => 'noindex,follow'];
         }
-    } elseif (defined('DOKU_MEDIADETAIL')) {
+    } elseif (defined('WIKI_MEDIADETAIL')) {
         $head['meta'][] = ['name' => 'robots', 'content' => 'index,follow'];
     } else {
         $head['meta'][] = ['name' => 'robots', 'content' => 'noindex,nofollow'];
@@ -371,7 +371,7 @@ function tpl_metaheaders($alt = true)
     // load stylesheets
     $head['link'][] = [
         'rel' => 'stylesheet',
-        'href' => DOKU_BASE . 'lib/exe/css.php?t=' . rawurlencode($conf['template']) . '&tseed=' . $tseed
+        'href' => WIKI_BASE . 'lib/exe/css.php?t=' . rawurlencode($conf['template']) . '&tseed=' . $tseed
     ];
 
     $script = "var NS='" . (isset($INFO) ? $INFO['namespace'] : '') . "';";
@@ -395,7 +395,7 @@ function tpl_metaheaders($alt = true)
     // load our javascript dispatcher
     $head['script'][] = [
             '_data' => '',
-            'src' => DOKU_BASE . 'lib/exe/js.php' . '?t=' . rawurlencode($conf['template']) . '&tseed=' . $tseed
+            'src' => WIKI_BASE . 'lib/exe/js.php' . '?t=' . rawurlencode($conf['template']) . '&tseed=' . $tseed
         ] + ($conf['defer_js'] ? ['defer' => 'defer'] : []);
 
     // trigger event here
@@ -561,7 +561,7 @@ function tpl_button($type, $return = false)
          * @var array $params
          */
         extract($data);
-        if ($id === '#dokuwiki__top') {
+        if ($id === '#easywiki__top') {
             $out = html_topbtn();
         } else {
             $out = html_btn($type, $id, $accesskey, $params, $method);
@@ -653,7 +653,7 @@ function tpl_get_action($type)
     if ($type == 'subscription') $type = 'subscribe';
     if ($type == 'img_backto') $type = 'imgBackto';
 
-    $class = '\\dokuwiki\\Menu\\Item\\' . ucfirst($type);
+    $class = '\\easywiki\\Menu\\Item\\' . ucfirst($type);
     if (class_exists($class)) {
         try {
             /** @var AbstractItem $item */
@@ -1260,7 +1260,7 @@ function tpl_indexerWebBug()
     global $ID;
 
     $p = [];
-    $p['src'] = DOKU_BASE . 'lib/exe/taskrunner.php?id=' . rawurlencode($ID) .
+    $p['src'] = WIKI_BASE . 'lib/exe/taskrunner.php?id=' . rawurlencode($ID) .
         '&' . time();
     $p['width'] = 2; //no more 1x1 px image because we live in times of ad blockers...
     $p['height'] = 1;
@@ -1385,7 +1385,7 @@ function tpl_localeFN($id)
 {
     $path = tpl_incdir() . 'lang/';
     global $conf;
-    $file = DOKU_CONF . 'template_lang/' . $conf['template'] . '/' . $conf['lang'] . '/' . $id . '.txt';
+    $file = WIKI_CONF . 'template_lang/' . $conf['template'] . '/' . $conf['lang'] . '/' . $id . '.txt';
     if (!file_exists($file)) {
         $file = $path . $conf['lang'] . '/' . $id . '.txt';
         if (!file_exists($file)) {
@@ -1594,7 +1594,7 @@ function tpl_mediaTree()
 }
 
 /**
- * Print a dropdown menu with all DokuWiki actions
+ * Print a dropdown menu with all EasyWiki actions
  *
  * Note: this will not use any pretty URLs
  *
@@ -1638,7 +1638,7 @@ function tpl_license($img = 'badge', $imgonly = false, $return = false, $wrap = 
         $src = license_img($img);
         if ($src) {
             $out .= '<a href="' . $lic['url'] . '" rel="license"' . $target;
-            $out .= '><img src="' . DOKU_BASE . $src . '" alt="' . $lic['name'] . '" /></a>';
+            $out .= '><img src="' . WIKI_BASE . $src . '" alt="' . $lic['name'] . '" /></a>';
             if (!$imgonly) $out .= ' ';
         }
     }
@@ -1746,7 +1746,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
     if (!file_exists($file)) {
         // give result for fallback image
         if ($fallback) {
-            $file = DOKU_INC . 'lib/images/blank.gif';
+            $file = WIKI_INC . 'lib/images/blank.gif';
             // stop process if false result is required (if $fallback is false)
         } else {
             return false;
@@ -1763,7 +1763,7 @@ function tpl_getMediaFile($search, $abs = false, &$imginfo = null, $fallback = t
         $url = ml($img, '', true, '', $abs);
     } else {
         $url = tpl_basedir() . $img;
-        if ($abs) $url = DOKU_URL . substr($url, strlen(DOKU_REL));
+        if ($abs) $url = WIKI_URL . substr($url, strlen(WIKI_REL));
     }
 
     return $url;
@@ -1851,7 +1851,7 @@ function tpl_media()
 {
     global $NS, $IMG, $JUMPTO, $REV, $lang, $fullscreen, $INPUT;
     $fullscreen = true;
-    require_once DOKU_INC . 'lib/exe/mediamanager.php';
+    require_once WIKI_INC . 'lib/exe/mediamanager.php';
 
     $rev = '';
     $image = cleanID($INPUT->str('image'));
@@ -1900,7 +1900,7 @@ function tpl_classes()
     global $INPUT;
 
     $classes = [
-        'dokuwiki',
+        'easywiki',
         'mode_' . $ACT,
         'tpl_' . $conf['template'],
         $INPUT->server->bool('REMOTE_USER') ? 'loggedIn' : '',

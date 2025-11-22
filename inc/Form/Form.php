@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Class Form
  *
  * Represents the whole Form. This is what you work on, and add Elements to
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class Form extends Element
 {
@@ -169,7 +169,7 @@ class Form extends Element
      */
     public function addElement(Element $element, $pos = -1)
     {
-        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+        if (is_a($element, '\easywiki\Form\Form')) throw new \InvalidArgumentException(
             'You can\'t add a form to a form'
         );
         if ($pos < 0) {
@@ -188,7 +188,7 @@ class Form extends Element
      */
     public function replaceElement(Element $element, $pos)
     {
-        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+        if (is_a($element, '\easywiki\Form\Form')) throw new \InvalidArgumentException(
             'You can\'t add a form to a form'
         );
         array_splice($this->elements, $pos, 1, [$element]);
@@ -338,7 +338,7 @@ class Form extends Element
     {
         $element = new LabelElement($content);
 
-        if (is_a($for, '\dokuwiki\Form\Element')) {
+        if (is_a($for, '\easywiki\Form\Element')) {
             /** @var Element $for */
             $for = $for->id();
         }

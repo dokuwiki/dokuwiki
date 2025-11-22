@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author rnck <dokuwiki@rnck.de>
+ * @author rnck <easywiki@rnck.de>
  */
 $lang['userexists']            = 'Der Benutzername existiert leider schon.';
 $lang['usernotexists']         = 'Entschuldigung, dieser Nutzer existiert nicht.';

@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  dokuwiki:
+  easywiki:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: dokuwiki
+    container_name: easywiki
     ports:
       - "8080:80"
     volumes:

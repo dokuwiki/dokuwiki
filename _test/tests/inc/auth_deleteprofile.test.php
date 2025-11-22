@@ -1,9 +1,9 @@
 <?php
 
-use dokuwiki\Input\Input;
-use dokuwiki\test\mock\AuthDeletePlugin;
+use easywiki\Input\Input;
+use easywiki\test\mock\AuthDeletePlugin;
 
-class auth_deleteprofile_test extends DokuWikiTest {
+class auth_deleteprofile_test extends EasyWikiTest {
 
     /*
      * Tests:

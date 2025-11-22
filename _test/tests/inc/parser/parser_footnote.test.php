@@ -1,20 +1,20 @@
 <?php
 
-use dokuwiki\Parsing\Handler\Lists;
-use dokuwiki\Parsing\ParserMode\Code;
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Hr;
-use dokuwiki\Parsing\ParserMode\Listblock;
-use dokuwiki\Parsing\ParserMode\Preformatted;
-use dokuwiki\Parsing\ParserMode\Quote;
-use dokuwiki\Parsing\ParserMode\Table;
-use dokuwiki\Parsing\ParserMode\Unformatted;
+use easywiki\Parsing\Handler\Lists;
+use easywiki\Parsing\ParserMode\Code;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Footnote;
+use easywiki\Parsing\ParserMode\Formatting;
+use easywiki\Parsing\ParserMode\Hr;
+use easywiki\Parsing\ParserMode\Listblock;
+use easywiki\Parsing\ParserMode\Preformatted;
+use easywiki\Parsing\ParserMode\Quote;
+use easywiki\Parsing\ParserMode\Table;
+use easywiki\Parsing\ParserMode\Unformatted;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Footnote extends TestOfWiki_Parser {
 
     function setUp() : void {
         parent::setUp();
@@ -94,13 +94,13 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('p_open',array()),
-            array('cdata',array('Foo '.DOKU_PARSER_EOL.'X')),
+            array('cdata',array('Foo '.WIKI_PARSER_EOL.'X')),
             array('nest', array ( array (
               array('footnote_open',array()),
               array('cdata',array(" test\ning ")),
               array('footnote_close',array()),
             ))),
-            array('cdata',array('Y'.DOKU_PARSER_EOL.' Bar')),
+            array('cdata',array('Y'.WIKI_PARSER_EOL.' Bar')),
             array('p_close',array()),
             array('document_end',array()),
         );

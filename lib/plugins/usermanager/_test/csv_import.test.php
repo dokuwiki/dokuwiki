@@ -14,7 +14,7 @@ require_once(dirname(__FILE__).'/mocks.class.php');
  *
  *  At present, users imported in individual tests remain in the user list for subsequent tests
  */
-class plugin_usermanager_csv_import_test extends DokuWikiTest
+class plugin_usermanager_csv_import_test extends EasyWikiTest
 {
     private $old_files;
     protected $usermanager;

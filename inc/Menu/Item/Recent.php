@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Recent
@@ -15,6 +15,6 @@ class Recent extends AbstractItem
         parent::__construct();
 
         $this->accesskey = 'r';
-        $this->svg = DOKU_INC . 'lib/images/menu/calendar-clock.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/calendar-clock.svg';
     }
 }

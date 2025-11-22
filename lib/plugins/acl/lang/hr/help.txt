@@ -8,4 +8,4 @@ Forma iznad ti omogućuje pregled i mijenjanje dozvola odabranom korisniku ili g
 
 U tablici ispod prikazana su sva trenutno postavljena pravila kontrole pristupa. Koristite je za višestruko brisanje ili mijenjanje pravila.
 
-Čitanje [[doku>acl|službena dokumentacija o ACL]] može vam pomoći potpuno razumijeti kako kontrola pristupa radi u DokuWiki.
+Čitanje [[doku>acl|službena dokumentacija o ACL]] može vam pomoći potpuno razumijeti kako kontrola pristupa radi u EasyWiki.

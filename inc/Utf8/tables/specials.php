@@ -12,7 +12,7 @@
  * These chars are _not_ in the array either:  _ (0x5f), : 0x3a, . 0x2e, - 0x2d, * 0x2a
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @see    \dokuwiki\Utf8\Clean::stripspecials()
+ * @see    \easywiki\Utf8\Clean::stripspecials()
  */
 
 return [

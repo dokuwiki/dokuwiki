@@ -3,7 +3,7 @@
 /**
  * @group internet
  */
-class fetch_statuscodes_external_test extends DokuWikiTest {
+class fetch_statuscodes_external_test extends EasyWikiTest {
 
     private $media = 'http://www.google.com/images/srpr/logo3w.png'; //used in media_get_from_url test too
     private $width = 200;

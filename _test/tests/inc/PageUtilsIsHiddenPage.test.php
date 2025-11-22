@@ -1,6 +1,6 @@
 <?php
 
-class PageUtilsIsHiddenPageTest extends DokuWikiTest {
+class PageUtilsIsHiddenPageTest extends EasyWikiTest {
 
     function prepare($hidePages = '^:test$', $act = 'show') {
         global $conf;

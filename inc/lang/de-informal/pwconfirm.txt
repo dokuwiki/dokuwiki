@@ -1,6 +1,6 @@
 Hallo @FULLNAME@!
 
-Jemand hat ein neues Passwort für deinen @TITLE@ Login auf @DOKUWIKIURL@ angefordert.
+Jemand hat ein neues Passwort für deinen @TITLE@ Login auf @EASYWIKIURL@ angefordert.
 
 Wenn du diese Änderung nicht angefordert hast, ignoriere diese E-Mail einfach.
 

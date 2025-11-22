@@ -1,14 +1,14 @@
 <?php
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
-if (!defined('DOKU_MEDIADETAIL')) define('DOKU_MEDIADETAIL', 1);
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
+if (!defined('WIKI_MEDIADETAIL')) define('WIKI_MEDIADETAIL', 1);
 
-// define all DokuWiki globals here (needed within test requests but also helps to keep track)
+// define all EasyWiki globals here (needed within test requests but also helps to keep track)
 global $INPUT, $INFO, $IMG, $ID, $REV, $SRC, $ERROR, $AUTH;
 
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 $IMG = getID('media');
 $ID = cleanID($INPUT->str('id'));

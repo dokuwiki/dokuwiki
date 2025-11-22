@@ -1,4 +1,4 @@
-Sizin DokuWiki-yə fayl yuklənildi. Ətraflı məlumat:
+Sizin EasyWiki-yə fayl yuklənildi. Ətraflı məlumat:
 
 Fayl        : @MEDIA@
 Tarix       : @DATE@

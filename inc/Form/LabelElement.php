@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class Label
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class LabelElement extends ValueElement
 {

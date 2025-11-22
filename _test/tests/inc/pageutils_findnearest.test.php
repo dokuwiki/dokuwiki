@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\test\mock\AuthPlugin;
+use easywiki\test\mock\AuthPlugin;
 
-class pageutils_findnearest_test extends DokuWikiTest {
+class pageutils_findnearest_test extends EasyWikiTest {
 
     protected $oldAuthAcl;
 

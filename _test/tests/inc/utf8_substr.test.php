@@ -2,7 +2,7 @@
 // use no mbstring help here
 if(!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING',1);
 
-class utf8_substr_test extends DokuWikiTest {
+class utf8_substr_test extends EasyWikiTest {
 
 
     function test1(){
@@ -21,7 +21,7 @@ class utf8_substr_test extends DokuWikiTest {
         $tests[] = array('живπά우리をあöä',-6,-2,'우리をあ');
 
         foreach($tests as $test){
-            $this->assertEquals(\dokuwiki\Utf8\PhpString::substr($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\easywiki\Utf8\PhpString::substr($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 
@@ -34,7 +34,7 @@ class utf8_substr_test extends DokuWikiTest {
         $tests[] = array($str,0,66002,$str);
 
         foreach($tests as $test){
-            $this->assertEquals(\dokuwiki\Utf8\PhpString::substr($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\easywiki\Utf8\PhpString::substr($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 

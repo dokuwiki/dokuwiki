@@ -2,7 +2,7 @@
 
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
-namespace dokuwiki;
+namespace easywiki;
 
 /**
  * Password Hashing Class
@@ -877,7 +877,7 @@ class PassHash
         try {
             return random_int($min, $max);
         } catch (\Exception $e) {
-            // availability of random source is checked elsewhere in DokuWiki
+            // availability of random source is checked elsewhere in EasyWiki
             // we demote this to an unchecked runtime exception here
             throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
         }

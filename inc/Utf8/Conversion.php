@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Utf8;
+namespace easywiki\Utf8;
 
 /**
  * Methods to convert from and to UTF-8 strings
@@ -42,8 +42,8 @@ class Conversion
      * are handled as well. Avoids the problem that would occur if you
      * had to decode "&amp;#38;&#38;amp;#38;"
      *
-     * unhtmlspecialchars(\dokuwiki\Utf8\Conversion::fromHtml($s)) -> "&#38;&#38;"
-     * \dokuwiki\Utf8\Conversion::fromHtml(unhtmlspecialchars($s)) -> "&&amp#38;"
+     * unhtmlspecialchars(\easywiki\Utf8\Conversion::fromHtml($s)) -> "&#38;&#38;"
+     * \easywiki\Utf8\Conversion::fromHtml(unhtmlspecialchars($s)) -> "&&amp#38;"
      * what it should be                   -> "&#38;&amp#38;"
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>

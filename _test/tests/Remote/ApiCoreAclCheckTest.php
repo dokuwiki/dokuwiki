@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
-use dokuwiki\Remote\Api;
+use easywiki\Remote\Api;
 
 /**
  * Class remoteapicore_test
  */
-class ApiCoreAclCheckTest extends \DokuWikiTest {
+class ApiCoreAclCheckTest extends \EasyWikiTest {
 
     protected $userinfo;
     protected $oldAuthAcl;

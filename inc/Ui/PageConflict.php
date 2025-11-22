@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Form\Form;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Page Conflict Interface
+ * EasyWiki Page Conflict Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class PageConflict extends Ui
 {

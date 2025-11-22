@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Ui\Media;
+namespace easywiki\Ui\Media;
 
-use dokuwiki\File\MediaFile;
+use easywiki\File\MediaFile;
 
 class Display
 {
@@ -57,8 +57,8 @@ class Display
     public function getIconUrl()
     {
         $link = 'lib/images/fileicons/svg/' . $this->mediaFile->getIcoClass() . '.svg';
-        if (!file_exists(DOKU_INC . $link)) $link = 'lib/images/fileicons/svg/file.svg';
-        return DOKU_BASE . $link;
+        if (!file_exists(WIKI_INC . $link)) $link = 'lib/images/fileicons/svg/file.svg';
+        return WIKI_BASE . $link;
     }
 
     /**

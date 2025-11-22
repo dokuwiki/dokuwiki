@@ -1,14 +1,14 @@
 <?php
 
 /**
- * DokuWiki Actions
+ * EasyWiki Actions
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\ActionRouter;
-use dokuwiki\Extension\Event;
+use easywiki\ActionRouter;
+use easywiki\Extension\Event;
 
 /**
  * All action processing starts here

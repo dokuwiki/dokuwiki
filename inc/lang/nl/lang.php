@@ -10,7 +10,7 @@
  * @author Andy <astolker@icloud.com>
  * @author Harriet Neitz <harrietneitz@gmail.com>
  * @author François Kooman <fkooman.tuxed.net>
- * @author Jack van Klaren <dokuwiki@afentoe.xs4all.nl>
+ * @author Jack van Klaren <easywiki@afentoe.xs4all.nl>
  * @author Riny Heijdendael <riny@heijdendael.nl>
  * @author Koen Huybrechts <huybkoen@gmail.com>
  * @author Wouter Schoot <wouter@schoot.org>
@@ -32,7 +32,7 @@
  * @author Wesley de Weerd <wesleytiel@gmail.com>
  * @author Sjoerd <sjoerd@sjomar.eu>
  * @author Joachim David <joa_david@hotmail.com>
- * @author stafmans <dokuwiki@stafmans.net>
+ * @author stafmans <easywiki@stafmans.net>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -159,7 +159,7 @@ $lang['regfail']               = 'Gebruiker kon niet aangemaakt worden.';
 $lang['regmailfail']           = 'Het lijkt erop dat het sturen van de wachtwoordmail mislukt is. Neem contact op met de beheerder!';
 $lang['regbadmail']            = 'Het opgegeven e-mailadres lijkt ongeldig - als je denkt dat dit niet klopt neem dan contact op met de beheerder.';
 $lang['regbadpass']            = 'De twee ingevoerde wachtwoorden zijn niet identiek. Probeer het nog eens.';
-$lang['regpwmail']             = 'Je DokuWiki wachtwoord';
+$lang['regpwmail']             = 'Je EasyWiki wachtwoord';
 $lang['reghere']               = 'Je hebt nog geen account? Vraag er eentje aan';
 $lang['profna']                = 'Deze wiki ondersteunt geen profielwijzigingen';
 $lang['profnochange']          = 'Geen wijzigingen, niets gedaan';
@@ -316,23 +316,23 @@ $lang['subscr_style_digest']   = 'Samenvattings-email met wijzigingen per pagina
 $lang['subscr_style_list']     = 'Lijst van veranderde pagina\'s sinds laatste email (elke %.2f dagen)';
 $lang['authtempfail']          = 'Gebruikersauthenticatie is tijdelijk niet beschikbaar. Als deze situatie zich blijft voordoen, informeer dan de wikibeheerder.';
 $lang['i_chooselang']          = 'Kies je taal';
-$lang['i_installer']           = 'DokuWiki Installer';
+$lang['i_installer']           = 'EasyWiki Installer';
 $lang['i_wikiname']            = 'Wikinaam';
 $lang['i_enableacl']           = 'ACLs inschakelen (aanbevolen)';
 $lang['i_superuser']           = 'Superuser';
 $lang['i_problems']            = 'De installer vond problemen, hieronder aangegeven. Verhelp deze voor je doorgaat.';
-$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde DokuWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="https://www.dokuwiki.org/install">Dokuwiki installatie-instructies</a>';
+$lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script alleen met nieuwe en onveranderde EasyWiki-installaties. Pak de bestanden opnieuw uit of raadpleeg de <a href="https://www.EasyWiki.org/install">EasyWiki installatie-instructies</a>';
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_disabled']            = 'Niet toegestaan door je provider';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
-$lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
-$lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';
+$lang['i_mbfuncoverload']      = 'Om EasyWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
+$lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor EasyWiki. Pas de permissie-instellingen van deze directory aan.';
 $lang['i_confexists']          = '<code>%s</code> bestaat reeds';
 $lang['i_writeerr']            = 'Niet mogelijk om <code>%s</code> aan te maken. Controleer de directory/bestandspermissies en maak het bestand handmatig aan.';
-$lang['i_badhash']             = 'Onbekende of aangepaste dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'Onbekende of aangepaste easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - onjuiste of lege waarde';
-$lang['i_success']             = 'De configuratie is succesvol afgerond. Je kunt nu het bestand install.php verwijderen. Ga naar <a href="doku.php?id=wiki:welcome">je nieuwe DokuWiki</a>.';
-$lang['i_failure']             = 'Fouten deden zich voor tijdens het schrijven naar de configuratiebestanden. Pas deze aan voor je gebruik kunt maken van <a href="doku.php?id=wiki:welcome">je nieuwe DokuWiki</a>.';
+$lang['i_success']             = 'De configuratie is succesvol afgerond. Je kunt nu het bestand install.php verwijderen. Ga naar <a href="wiki.php?id=wiki:welcome">je nieuwe EasyWiki</a>.';
+$lang['i_failure']             = 'Fouten deden zich voor tijdens het schrijven naar de configuratiebestanden. Pas deze aan voor je gebruik kunt maken van <a href="wiki.php?id=wiki:welcome">je nieuwe EasyWiki</a>.';
 $lang['i_policy']              = 'Initieel ACL-beleid';
 $lang['i_pol0']                = 'Open wiki (lezen, schrijven, uploaden voor iedereen)';
 $lang['i_pol1']                = 'Publieke wiki (lezen voor iedereen, schrijven en uploaden voor geregistreerde gebruikers)';
@@ -341,8 +341,8 @@ $lang['i_allowreg']            = 'Toestaan dat gebruikers zichzelf registeren';
 $lang['i_retry']               = 'Opnieuw';
 $lang['i_license']             = 'Kies a.u.b. een licentie die u voor uw inhoud wilt gebruiken:';
 $lang['i_license_none']        = 'Toon geen licentie-informatie';
-$lang['i_pop_field']           = 'Help ons om je DokuWiki ervaring te verbeteren';
-$lang['i_pop_label']           = 'Stuur eens per maand geanonimiseerde gebruiksstatistieken naar de Dokuwiki ontwikkelaars';
+$lang['i_pop_field']           = 'Help ons om je EasyWiki ervaring te verbeteren';
+$lang['i_pop_label']           = 'Stuur eens per maand geanonimiseerde gebruiksstatistieken naar de EasyWiki ontwikkelaars';
 $lang['recent_global']         = 'Je bekijkt momenteel de wijzigingen binnen de <b>%s</b> namespace. Je kunt ook de <a href="%s">recente wijzigingen van de hele wiki</a> bekijken.';
 $lang['years']                 = '%d jaar geleden';
 $lang['months']                = '%d maand geleden';
@@ -383,5 +383,5 @@ $lang['plainhtml']             = 'Alleen HTML';
 $lang['wikimarkup']            = 'Wiki Opmaak';
 $lang['page_nonexist_rev']     = 'Pagina bestaat niet bij %s. Het is vervolgens aangemaakt bij <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Begrijp het niet bij parameter "%s".';
-$lang['email_signature_text']  = 'Deze mail werd gegenereerd door DokuWiki op
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Deze mail werd gegenereerd door EasyWiki op
+@EASYWIKIURL@';

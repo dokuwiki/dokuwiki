@@ -1,6 +1,6 @@
 Olá @FULLNAME@!
 
-Alguém solicitou uma nova senha para o seu perfil @TITLE@ em @DOKUWIKIURL@
+Alguém solicitou uma nova senha para o seu perfil @TITLE@ em @EASYWIKIURL@
 
 Se não foi você que solicitou então ignore esta mensagem.
 

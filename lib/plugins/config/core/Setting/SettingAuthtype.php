@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\config\core\Setting;
+namespace easywiki\plugin\config\core\Setting;
 
 /**
  * Class setting_authtype
@@ -10,7 +10,7 @@ class SettingAuthtype extends SettingMultichoice
     /** @inheritdoc */
     public function initialize($default = null, $local = null, $protected = null)
     {
-        /** @var $plugin_controller \dokuwiki\Extension\PluginController */
+        /** @var $plugin_controller \easywiki\Extension\PluginController */
         global $plugin_controller;
 
         // retrieve auth types provided by plugins
@@ -24,7 +24,7 @@ class SettingAuthtype extends SettingMultichoice
     /** @inheritdoc */
     public function update($input)
     {
-        /** @var $plugin_controller \dokuwiki\Extension\PluginController */
+        /** @var $plugin_controller \easywiki\Extension\PluginController */
         global $plugin_controller;
 
         // is an update possible/requested?

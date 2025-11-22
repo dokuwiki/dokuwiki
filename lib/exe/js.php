@@ -1,23 +1,23 @@
 <?php
 
 /**
- * DokuWiki JavaScript creator
+ * EasyWiki JavaScript creator
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Cache\Cache;
-use dokuwiki\Extension\Event;
+use easywiki\Utf8\PhpString;
+use easywiki\Cache\Cache;
+use easywiki\Extension\Event;
 use splitbrain\JSStrip\Exception as JSStripException;
 use splitbrain\JSStrip\JSStrip;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
 if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
 if (!defined('NL')) define('NL', "\n");
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_DISABLE_GZIP_OUTPUT')) define('WIKI_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+require_once(WIKI_INC . 'inc/init.php');
 
 // Main (don't run when UNIT test)
 if (!defined('SIMPLE_TEST')) {
@@ -46,29 +46,29 @@ function js_out()
 
     // array of core files
     $files = [
-        DOKU_INC . 'lib/scripts/jquery/jquery.cookie.js',
-        DOKU_INC . 'inc/lang/' . $conf['lang'] . '/jquery.ui.datepicker.js',
-        DOKU_INC . "lib/scripts/fileuploader.js",
-        DOKU_INC . "lib/scripts/fileuploaderextended.js",
-        DOKU_INC . 'lib/scripts/helpers.js',
-        DOKU_INC . 'lib/scripts/delay.js',
-        DOKU_INC . 'lib/scripts/cookie.js',
-        DOKU_INC . 'lib/scripts/script.js',
-        DOKU_INC . 'lib/scripts/qsearch.js',
-        DOKU_INC . 'lib/scripts/search.js',
-        DOKU_INC . 'lib/scripts/tree.js',
-        DOKU_INC . 'lib/scripts/index.js',
-        DOKU_INC . 'lib/scripts/textselection.js',
-        DOKU_INC . 'lib/scripts/toolbar.js',
-        DOKU_INC . 'lib/scripts/edit.js',
-        DOKU_INC . 'lib/scripts/editor.js',
-        DOKU_INC . 'lib/scripts/locktimer.js',
-        DOKU_INC . 'lib/scripts/linkwiz.js',
-        DOKU_INC . 'lib/scripts/media.js',
-        DOKU_INC . 'lib/scripts/compatibility.js',
-        # disabled for FS#1958                DOKU_INC.'lib/scripts/hotkeys.js',
-        DOKU_INC . 'lib/scripts/behaviour.js',
-        DOKU_INC . 'lib/scripts/page.js',
+        WIKI_INC . 'lib/scripts/jquery/jquery.cookie.js',
+        WIKI_INC . 'inc/lang/' . $conf['lang'] . '/jquery.ui.datepicker.js',
+        WIKI_INC . "lib/scripts/fileuploader.js",
+        WIKI_INC . "lib/scripts/fileuploaderextended.js",
+        WIKI_INC . 'lib/scripts/helpers.js',
+        WIKI_INC . 'lib/scripts/delay.js',
+        WIKI_INC . 'lib/scripts/cookie.js',
+        WIKI_INC . 'lib/scripts/script.js',
+        WIKI_INC . 'lib/scripts/qsearch.js',
+        WIKI_INC . 'lib/scripts/search.js',
+        WIKI_INC . 'lib/scripts/tree.js',
+        WIKI_INC . 'lib/scripts/index.js',
+        WIKI_INC . 'lib/scripts/textselection.js',
+        WIKI_INC . 'lib/scripts/toolbar.js',
+        WIKI_INC . 'lib/scripts/edit.js',
+        WIKI_INC . 'lib/scripts/editor.js',
+        WIKI_INC . 'lib/scripts/locktimer.js',
+        WIKI_INC . 'lib/scripts/linkwiz.js',
+        WIKI_INC . 'lib/scripts/media.js',
+        WIKI_INC . 'lib/scripts/compatibility.js',
+        # disabled for FS#1958                WIKI_INC.'lib/scripts/hotkeys.js',
+        WIKI_INC . 'lib/scripts/behaviour.js',
+        WIKI_INC . 'lib/scripts/page.js',
         tpl_incdir($tpl) . 'script.js',
     ];
 
@@ -99,11 +99,11 @@ function js_out()
     ob_start();
 
     // add some global variables
-    echo "var DOKU_BASE   = '" . DOKU_BASE . "';";
-    echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
-    echo "var DOKU_COOKIE_PARAM = " . json_encode([
-            'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-            'secure' => $conf['securecookie'] && \dokuwiki\Ip::isSsl(),
+    echo "var WIKI_BASE   = '" . WIKI_BASE . "';";
+    echo "var WIKI_TPL    = '" . tpl_basedir($tpl) . "';";
+    echo "var WIKI_COOKIE_PARAM = " . json_encode([
+            'path' => empty($conf['cookiedir']) ? WIKI_REL : $conf['cookiedir'],
+            'secure' => $conf['securecookie'] && \easywiki\Ip::isSsl(),
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
     echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
@@ -128,15 +128,15 @@ function js_out()
     foreach ($files as $file) {
         if (!file_exists($file)) continue;
         $ismin = str_ends_with($file, '.min.js');
-        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
+        $debugjs = ($conf['allowdebug'] && strpos($file, WIKI_INC . 'lib/scripts/') !== 0);
 
-        echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
+        echo "\n\n/* XXXXXXXXXX begin of " . str_replace(WIKI_INC, '', $file) . " XXXXXXXXXX */\n\n";
         if ($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";
         if ($debugjs) echo "\ntry {\n";
         js_load($file);
-        if ($debugjs) echo "\n} catch (e) {\n   logError(e, '" . str_replace(DOKU_INC, '', $file) . "');\n}\n";
+        if ($debugjs) echo "\n} catch (e) {\n   logError(e, '" . str_replace(WIKI_INC, '', $file) . "');\n}\n";
         if ($ismin) echo "\n/* END NOCOMPRESS */\n";
-        echo "\n\n/* XXXXXXXXXX end of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
+        echo "\n\n/* XXXXXXXXXX end of " . str_replace(WIKI_INC, '', $file) . " XXXXXXXXXX */\n\n";
     }
 
     // init stuff
@@ -180,7 +180,7 @@ function js_load($file)
     static $loaded = [];
 
     $data = io_readFile($file);
-    while (preg_match('#/\*\s*DOKUWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#', $data, $match)) {
+    while (preg_match('#/\*\s*EASYWIKI:include(_once)?\s+([\w\.\-_/]+)\s*\*/#', $data, $match)) {
         $ifile = $match[2];
 
         // is it a include_once?
@@ -219,7 +219,7 @@ function js_pluginscripts()
     $list = [];
     $plugins = plugin_list();
     foreach ($plugins as $p) {
-        $list[] = DOKU_PLUGIN . "$p/script.js";
+        $list[] = WIKI_PLUGIN . "$p/script.js";
     }
     return $list;
 }
@@ -240,7 +240,7 @@ function js_pluginstrings()
     $pluginstrings = [];
     $plugins = plugin_list();
     foreach ($plugins as $p) {
-        $path = DOKU_PLUGIN . $p . '/lang/';
+        $path = WIKI_PLUGIN . $p . '/lang/';
 
         if (isset($lang)) unset($lang);
         if (file_exists($path . "en/lang.php")) {

@@ -1,6 +1,6 @@
 ====== Manajemen Konfigurasi ======
 
-Gunakan halaman ini untuk mengontrol pengaturan instalasi DokuWiki anda. Untuk bantuan tentang pengaturan individual, lihat [[doku>config]]. Untuk detail lebih lanjut tentang plugin ini lihat [[doku>plugin:config]].
+Gunakan halaman ini untuk mengontrol pengaturan instalasi EasyWiki anda. Untuk bantuan tentang pengaturan individual, lihat [[doku>config]]. Untuk detail lebih lanjut tentang plugin ini lihat [[doku>plugin:config]].
 
 Pengaturan yang ditunjukkan dengan latar belakang merah muda dilindungi dan tidak dapat diubah dengan plugin ini. Pengaturan yang ditunjukkan dengan latar belakang biru adalah nilai bawaan (default) dan pengaturan yang ditunjukkan dengan latar belakang putih telah diatur secara lokal oleh anda. Pengaturan biru dan putih dapat diubah.
 

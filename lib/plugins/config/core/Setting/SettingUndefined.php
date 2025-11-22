@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\core\Setting;
+namespace easywiki\plugin\config\core\Setting;
 
-use dokuwiki\plugin\config\core\Configuration;
+use easywiki\plugin\config\core\Configuration;
 
 /**
  * A do-nothing class used to detect settings with no metadata entry.

@@ -1,4 +1,4 @@
-Eng Datei gouf op däin DokuWiki eropgelueden. Hei sinn d'Deteiler:
+Eng Datei gouf op däin EasyWiki eropgelueden. Hei sinn d'Deteiler:
 
 Datei       : @MEDIA@
 Datum       : @DATE@

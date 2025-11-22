@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 /**
  * A ReWriter takes over from the orignal call writer and handles all new calls itself until

@@ -3,5 +3,5 @@ author Andreas Gohr
 email  andi@splitbrain.org
 date   2015-07-18
 name   Plain Auth Plugin
-desc   Provides user authentication against DokuWiki's local password storage
-url    https://www.dokuwiki.org/plugin:authplain
+desc   Provides user authentication against EasyWiki's local password storage
+url    https://www.EasyWiki.org/plugin:authplain

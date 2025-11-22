@@ -2,9 +2,9 @@
 
 // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
-use dokuwiki\Logger;
+use easywiki\Logger;
 
 /**
  * The Action plugin event
@@ -56,7 +56,7 @@ class Event
      * if these methods are used by functions outside of this object, they must
      * properly handle correct processing of any default action and issue an
      * advise_after() signal. e.g.
-     *    $evt = new dokuwiki\Plugin\Doku_Event(name, data);
+     *    $evt = new easywiki\Plugin\Doku_Event(name, data);
      *    if ($evt->advise_before(canPreventDefault) {
      *      // default action code block
      *    }

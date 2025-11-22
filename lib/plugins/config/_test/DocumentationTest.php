@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\plugin\config\test;
+namespace easywiki\plugin\config\test;
 
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\plugin\config\core\Configuration;
-use dokuwiki\plugin\config\core\Setting\SettingFieldset;
-use dokuwiki\plugin\config\core\Setting\SettingHidden;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\plugin\config\core\Configuration;
+use easywiki\plugin\config\core\Setting\SettingFieldset;
+use easywiki\plugin\config\core\Setting\SettingHidden;
 
 /**
- * Ensure config options have documentation at dokuwiki.org
+ * Ensure config options have documentation at easywiki.org
  *
  * @group plugin_config
  * @group admin_plugins
@@ -16,7 +16,7 @@ use dokuwiki\plugin\config\core\Setting\SettingHidden;
  * @group bundled_plugins
  * @group internet
  */
-class DocumentationTest extends \DokuWikiTest
+class DocumentationTest extends \EasyWikiTest
 {
     /**
      * @return \Generator|array[]

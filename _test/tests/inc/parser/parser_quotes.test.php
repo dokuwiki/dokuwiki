@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Quotes;
+use easywiki\Parsing\ParserMode\Quotes;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Quotes extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Quotes extends TestOfWiki_Parser {
 
     function setUp() : void {
         parent::setUp();

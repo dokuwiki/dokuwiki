@@ -8,6 +8,6 @@ Here are the changed pages:
 --------------------------------------------------------
 
 To cancel the page notifications, log into the wiki at
-@DOKUWIKIURL@ then visit
+@EASYWIKIURL@ then visit
 @SUBSCRIBE@
 and unsubscribe page and/or namespace changes.

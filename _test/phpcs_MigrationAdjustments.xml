@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Migration Adjustments for the DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
-    <description>These are exceptions to the Coding Standard used for DokuWiki that are intended to be removed over time.</description>
+<ruleset name="Migration Adjustments for the EasyWiki Coding Standard Standard" namespace="EasyWiki\CS\Standard">
+    <description>These are exceptions to the Coding Standard used for EasyWiki that are intended to be removed over time.</description>
 
     <!-- extend the standard configuration -->
     <rule ref="./phpcs.xml">
@@ -17,7 +17,7 @@
         <exclude-pattern>*/inc/pluginutils.php</exclude-pattern>
         <exclude-pattern>*/inc/indexer.php</exclude-pattern>
         <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
-        <exclude-pattern>*/doku.php</exclude-pattern>
+        <exclude-pattern>*/wiki.php</exclude-pattern>
         <exclude-pattern>*/install.php</exclude-pattern>
         <exclude-pattern>*/inc/utf8.php</exclude-pattern>
         <exclude-pattern>*/feed.php</exclude-pattern>

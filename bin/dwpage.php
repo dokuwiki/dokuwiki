@@ -3,11 +3,11 @@
 
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Utf8\PhpString;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
+if (!defined('WIKI_INC')) define('WIKI_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
-require_once(DOKU_INC . 'inc/init.php');
+require_once(WIKI_INC . 'inc/init.php');
 
 /**
  * Checkout and commit pages from the command line while maintaining the history
@@ -38,7 +38,7 @@ class PageCLI extends CLI
             'username'
         );
         $options->setHelp(
-            'Utility to help command line Dokuwiki page editing, allow ' .
+            'Utility to help command line EasyWiki page editing, allow ' .
             'pages to be checked out for editing then committed after changes'
         );
 

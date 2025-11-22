@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Extension\SyntaxPlugin;
-use dokuwiki\Extension\PluginInterface;
+use easywiki\Extension\SyntaxPlugin;
+use easywiki\Extension\PluginInterface;
 
 /**
- * Info Plugin: Displays information about various DokuWiki internals
+ * Info Plugin: Displays information about various EasyWiki internals
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -50,10 +50,10 @@ class syntax_plugin_info extends SyntaxPlugin
      * @param string $match The text matched by the patterns
      * @param int $state The lexer state for the match
      * @param int $pos The character position of the matched text
-     * @param Doku_Handler $handler The Doku_Handler object
+     * @param Wiki_Handler $handler The Wiki_Handler object
      * @return  array Return an array with all data you want to use in render
      */
-    public function handle($match, $state, $pos, Doku_Handler $handler)
+    public function handle($match, $state, $pos, Wiki_Handler $handler)
     {
         $match = substr($match, 7, -2); //strip ~~INFO: from start and ~~ from end
         return [strtolower($match)];
@@ -63,14 +63,14 @@ class syntax_plugin_info extends SyntaxPlugin
      * Create output
      *
      * @param string $format string     output format being rendered
-     * @param Doku_Renderer $renderer the current renderer object
+     * @param Wiki_Renderer $renderer the current renderer object
      * @param array $data data created by handler()
      * @return  boolean                 rendered correctly?
      */
-    public function render($format, Doku_Renderer $renderer, $data)
+    public function render($format, Wiki_Renderer $renderer, $data)
     {
         if ($format == 'xhtml') {
-            /** @var Doku_Renderer_xhtml $renderer */
+            /** @var Wiki_Renderer_xhtml $renderer */
             //handle various info stuff
             switch ($data[0]) {
                 case 'syntaxmodes':
@@ -123,9 +123,9 @@ class syntax_plugin_info extends SyntaxPlugin
      * uses some of the original renderer methods
      *
      * @param string $type
-     * @param Doku_Renderer $renderer
+     * @param Wiki_Renderer $renderer
      */
-    protected function renderPlugins($type, Doku_Renderer $renderer)
+    protected function renderPlugins($type, Wiki_Renderer $renderer)
     {
         global $lang;
         $plugins = plugin_list($type);
@@ -164,9 +164,9 @@ class syntax_plugin_info extends SyntaxPlugin
      *
      * uses some of the original renderer methods
      *
-     * @param Doku_Renderer_xhtml $renderer
+     * @param Wiki_Renderer_xhtml $renderer
      */
-    protected function renderHelperMethods(Doku_Renderer_xhtml $renderer)
+    protected function renderHelperMethods(Wiki_Renderer_xhtml $renderer)
     {
         $plugins = plugin_list('helper');
         foreach ($plugins as $p) {
@@ -282,9 +282,9 @@ class syntax_plugin_info extends SyntaxPlugin
     /**
      * Render all currently registered event handlers
      *
-     * @param Doku_Renderer $renderer
+     * @param Wiki_Renderer $renderer
      */
-    protected function renderHooks(Doku_Renderer $renderer)
+    protected function renderHooks(Wiki_Renderer $renderer)
     {
         global $EVENT_HANDLER;
 
@@ -319,10 +319,10 @@ class syntax_plugin_info extends SyntaxPlugin
      *
      * @param string $text
      * @param int $level
-     * @param Doku_Renderer_xhtml $renderer
+     * @param Wiki_Renderer_xhtml $renderer
      * @return string
      */
-    protected function addToToc($text, $level, Doku_Renderer_xhtml $renderer)
+    protected function addToToc($text, $level, Wiki_Renderer_xhtml $renderer)
     {
         global $conf;
 

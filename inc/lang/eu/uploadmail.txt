@@ -1,4 +1,4 @@
-Fitxategi bat igo da zure DokuWikira. Hona hemen xehetasunak:
+Fitxategi bat igo da zure EasyWikira. Hona hemen xehetasunak:
 
 Fitxategia : @MEDIA@
 Data : @DATE@

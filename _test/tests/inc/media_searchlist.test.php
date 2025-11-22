@@ -2,7 +2,7 @@
 
 use DOMWrap\Document;
 
-class media_searchlist_test extends DokuWikiTest
+class media_searchlist_test extends EasyWikiTest
 {
 
     /**

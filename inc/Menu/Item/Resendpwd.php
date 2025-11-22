@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Resendpwd
@@ -19,6 +19,6 @@ class Resendpwd extends AbstractItem
             throw new \RuntimeException("no resendpwd when already logged in");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/lock-reset.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/lock-reset.svg';
     }
 }

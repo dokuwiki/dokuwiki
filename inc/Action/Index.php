@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui;
+use easywiki\Ui;
 
 /**
  * Class Index
  *
  * Show the human readable sitemap. Do not confuse with Sitemap
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Index extends AbstractAction
 {

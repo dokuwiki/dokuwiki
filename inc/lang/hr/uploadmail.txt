@@ -1,4 +1,4 @@
-Datoteka je učitana na Vaš DokuWiki. Ovdje su detalji:
+Datoteka je učitana na Vaš EasyWiki. Ovdje su detalji:
 
 Datoteka     : @MEDIA@
 Stara izmjena: @OLD@

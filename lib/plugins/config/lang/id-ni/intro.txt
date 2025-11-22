@@ -1,6 +1,6 @@
 ====== Fakake famöfö'ö ======
 
-Plugin da'e itolo ba wangehaogö fakake moroi ba DokuWiki. Fanolo bawamöfö'ö tesöndra tou [[doku>config]]. Lala wangiila Plugin tanöbö'ö tesöndra tou ba [[doku>plugin:config]].
+Plugin da'e itolo ba wangehaogö fakake moroi ba EasyWiki. Fanolo bawamöfö'ö tesöndra tou [[doku>config]]. Lala wangiila Plugin tanöbö'ö tesöndra tou ba [[doku>plugin:config]].
 
 Famöfö'ö zura furi la'a soyo no laproteksi, lötesöndra bakha ba Plugin andre. Famöfö'ö zura furi la'a sobalau ya'ia wamöfö'ö sito'ölö...
 

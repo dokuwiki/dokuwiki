@@ -7,10 +7,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\ChangeLog\ChangeLog;
-use dokuwiki\ChangeLog\RevisionInfo;
-use dokuwiki\File\PageFile;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\ChangeLog;
+use easywiki\ChangeLog\RevisionInfo;
+use easywiki\File\PageFile;
 
 /**
  * parses a changelog line into it's components
@@ -36,7 +36,7 @@ function parseChangelogLine($line)
  *
  * @param int    $date      Timestamp of the change
  * @param String $id        Name of the affected page
- * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
+ * @param String $type      Type of the change see WIKI_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
  * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
@@ -52,13 +52,13 @@ function parseChangelogLine($line)
 function addLogEntry(
     $date,
     $id,
-    $type = DOKU_CHANGE_TYPE_EDIT,
+    $type = WIKI_CHANGE_TYPE_EDIT,
     $summary = '',
     $extra = '',
     $flags = null,
     $sizechange = null
 ) {
-    // no more used in DokuWiki core, but left for third-party plugins
+    // no more used in EasyWiki core, but left for third-party plugins
     dbg_deprecated('see ' . PageFile::class . '::saveWikiText()');
 
     /** @var Input $INPUT */
@@ -102,7 +102,7 @@ function addLogEntry(
  *
  * @param int    $date      Timestamp of the change
  * @param String $id        Name of the affected page
- * @param String $type      Type of the change see DOKU_CHANGE_TYPE_*
+ * @param String $type      Type of the change see WIKI_CHANGE_TYPE_*
  * @param String $summary   Summary of the change
  * @param mixed  $extra     In case of a revert the revision (timestamp) of the reverted page
  * @param array  $flags     Additional flags in a key value array.
@@ -113,7 +113,7 @@ function addLogEntry(
 function addMediaLogEntry(
     $date,
     $id,
-    $type = DOKU_CHANGE_TYPE_EDIT,
+    $type = WIKI_CHANGE_TYPE_EDIT,
     $summary = '',
     $extra = '',
     $flags = null,
@@ -337,10 +337,10 @@ function _handleRecentLogLine($line, $ns, $flags, &$seen)
     if (isset($seen[$recent['id']])) return false;
 
     // skip changes, of only new items are requested
-    if ($recent['type'] !== DOKU_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
+    if ($recent['type'] !== WIKI_CHANGE_TYPE_CREATE && ($flags & RECENTS_ONLY_CREATION)) return false;
 
     // skip minors
-    if ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
+    if ($recent['type'] === WIKI_CHANGE_TYPE_MINOR_EDIT && ($flags & RECENTS_SKIP_MINORS)) return false;
 
     // remember in seen to skip additional sights
     $seen[$recent['id']] = 1;

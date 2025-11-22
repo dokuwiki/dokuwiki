@@ -1,4 +1,4 @@
-S'ha afegit o modificat una pàgina en el seu DokuWiki. Les senyes són:
+S'ha afegit o modificat una pàgina en el seu EasyWiki. Les senyes són:
 
 Data: @DATE@
 Navegador: @BROWSER@

@@ -4,9 +4,9 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author MaWi <drmaxxis@gmail.com>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Volker Bödker <volker@boedker.de>
- * @author rnck <dokuwiki@rnck.de>
+ * @author rnck <easywiki@rnck.de>
  * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['server']                = 'Adresse zum LDAP-Server. Entweder als Hostname (<code>localhost</code>) oder als FQDN (<code>ldap://server.tld:389</code>).';
@@ -26,7 +26,7 @@ $lang['userscope']             = 'Die Suchweite nach Benutzeraccounts.';
 $lang['groupscope']            = 'Die Suchweite nach Benutzergruppen.';
 $lang['userkey']               = 'Attribut, das den Benutzernamen enthält; muss konsistent zum userfilter sein.';
 $lang['groupkey']              = 'Gruppieren der Benutzeraccounts anhand eines beliebigen Benutzerattributes z. B. Telefonnummer oder Abteilung, anstelle der Standard-Gruppen).';
-$lang['modPass']               = 'Kann das LDAP Passwort via dokuwiki geändert werden?';
+$lang['modPass']               = 'Kann das LDAP Passwort via easywiki geändert werden?';
 $lang['debug']                 = 'Debug-Informationen beim Auftreten von Fehlern anzeigen?';
 $lang['deref_o_0']             = 'LDAP_DEREF_NIEMALS';
 $lang['deref_o_1']             = 'LDAP_DEREF_SUCHEN';

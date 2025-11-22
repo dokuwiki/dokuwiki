@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsPluginsDefaultTest extends DokuWikiTest {
+class InttestsPluginsDefaultTest extends EasyWikiTest {
 
     function testTestingPluginDisabledDefault() {
         global $EVENT_HANDLER;

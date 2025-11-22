@@ -10,9 +10,9 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Extension\Event;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Clean;
+use easywiki\Extension\Event;
 
 /**
  * Mail Handling
@@ -43,13 +43,13 @@ class Mailer
         /* @var Input $INPUT */
         global $INPUT;
 
-        $server = parse_url(DOKU_URL, PHP_URL_HOST);
+        $server = parse_url(WIKI_URL, PHP_URL_HOST);
         if (strpos($server, '.') === false) $server .= '.localhost';
 
         $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8) . '@' . $server;
         $this->boundary = '__________' . md5(uniqid(random_int(0, mt_getrandmax()), true));
 
-        $listid = implode('.', array_reverse(explode('/', DOKU_BASE))) . $server;
+        $listid = implode('.', array_reverse(explode('/', WIKI_BASE))) . $server;
         $listid = strtolower(trim($listid, '.'));
 
         $messageid = uniqid(random_int(0, mt_getrandmax()), true) . "@$server";
@@ -60,10 +60,10 @@ class Mailer
         if (!empty($conf['mailreturnpath'])) {
             $this->setHeader('Return-Path', $conf['mailreturnpath']);
         }
-        $this->setHeader('X-Mailer', 'DokuWiki');
-        $this->setHeader('X-DokuWiki-User', $INPUT->server->str('REMOTE_USER'));
-        $this->setHeader('X-DokuWiki-Title', $conf['title']);
-        $this->setHeader('X-DokuWiki-Server', $server);
+        $this->setHeader('X-Mailer', 'EasyWiki');
+        $this->setHeader('X-EasyWiki-User', $INPUT->server->str('REMOTE_USER'));
+        $this->setHeader('X-EasyWiki-Title', $conf['title']);
+        $this->setHeader('X-EasyWiki-Server', $server);
         $this->setHeader('X-Auto-Response-Suppress', 'OOF');
         $this->setHeader('List-Id', $conf['title'] . ' <' . $listid . '>');
         $this->setHeader('Date', date('r'), false);
@@ -668,15 +668,15 @@ class Mailer
             'IPADDRESS' => $ip,
             'HOSTNAME' => $cip,
             'TITLE' => $conf['title'],
-            'DOKUWIKIURL' => DOKU_URL,
+            'EASYWIKIURL' => WIKI_URL,
             'USER' => $INPUT->server->str('REMOTE_USER'),
             'NAME' => $name,
             'MAIL' => $mail
         ];
 
         $signature = str_replace(
-            '@DOKUWIKIURL@',
-            $this->replacements['text']['DOKUWIKIURL'],
+            '@EASYWIKIURL@',
+            $this->replacements['text']['EASYWIKIURL'],
             $lang['email_signature_text']
         );
         $this->replacements['text']['EMAILSIGNATURE'] = "\n-- \n" . $signature . "\n";
@@ -687,7 +687,7 @@ class Mailer
             'IPADDRESS' => '<code>' . hsc($ip) . '</code>',
             'HOSTNAME' => '<code>' . hsc($cip) . '</code>',
             'TITLE' => hsc($conf['title']),
-            'DOKUWIKIURL' => '<a href="' . DOKU_URL . '">' . DOKU_URL . '</a>',
+            'EASYWIKIURL' => '<a href="' . WIKI_URL . '">' . WIKI_URL . '</a>',
             'USER' => hsc($INPUT->server->str('REMOTE_USER')),
             'NAME' => hsc($name),
             'MAIL' => '<a href="mailto:"' . hsc($mail) . '">' . hsc($mail) . '</a>'
@@ -697,8 +697,8 @@ class Mailer
             $signature = $lang['email_signature_html'];
         }
         $signature = str_replace(
-            ['@DOKUWIKIURL@', "\n"],
-            [$this->replacements['html']['DOKUWIKIURL'], '<br />'],
+            ['@EASYWIKIURL@', "\n"],
+            [$this->replacements['html']['EASYWIKIURL'], '<br />'],
             $signature
         );
         $this->replacements['html']['EMAILSIGNATURE'] = $signature;

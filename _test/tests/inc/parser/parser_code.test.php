@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Code;
+use easywiki\Parsing\ParserMode\Code;
 
 require_once 'parser.inc.php';
 
@@ -9,7 +9,7 @@ require_once 'parser.inc.php';
  *
  * @group parser_code
  */
-class TestOfDoku_Parser_Code extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Code extends TestOfWiki_Parser {
 
     function setUp() : void {
         parent::setUp();

@@ -12,5 +12,5 @@ Korábbi változat: @OLDPAGE@
 Jelenlegi változat: @NEWPAGE@
 
 Ha nem szeretnél további értesítéseket kapni erről az oldalról, akkor
-jelentkezz be a következő oldalon: @DOKUWIKIURL@;
+jelentkezz be a következő oldalon: @EASYWIKIURL@;
 ezt követően itt iratkozhatsz le: @SUBSCRIBE@.

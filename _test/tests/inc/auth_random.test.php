@@ -3,7 +3,7 @@
 /**
  * Tests the random generator functions
  */
-class auth_random_test extends DokuWikiTest {
+class auth_random_test extends EasyWikiTest {
     function testRandomRange() {
         $rand = auth_random(300, 2000);
         $this->assertTrue($rand <= 2000, 'The generated number was above the limit');

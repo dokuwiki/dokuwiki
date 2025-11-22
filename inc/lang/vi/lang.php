@@ -111,7 +111,7 @@ $lang['js']['media_done_btn']  = 'Xong';
 $lang['js']['media_drop']      = 'Kéo tập tin vào đây để tải lên';
 $lang['js']['media_cancel']    = 'xóa';
 $lang['js']['media_overwrt']   = 'Ghi đè các tập tin hiện có';
-$lang['js']['data_insecure']   = 'CẢNH BÁO: Có vẻ như đường dẫn dữ liệu của bạn không được bảo mật đúng cách. Xin vui lòng đọc <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['js']['data_insecure']   = 'CẢNH BÁO: Có vẻ như đường dẫn dữ liệu của bạn không được bảo mật đúng cách. Xin vui lòng đọc <a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security in EasyWiki</a>.';
 $lang['search_exact_match']    = 'Khớp chính xác';
 $lang['search_starts_with']    = 'Bắt đầu với';
 $lang['search_ends_with']      = 'Kết thúc bằng';
@@ -132,7 +132,7 @@ $lang['regfail']               = 'Không thể tạo thành viên.';
 $lang['regmailfail']           = 'Có vẻ như đã xảy ra lỗi khi gửi thư mật khẩu. Vui lòng liên hệ với quản trị viên!';
 $lang['regbadmail']            = 'Địa chỉ thư điện tử được cung cấp có vẻ không hợp lệ - nếu bạn nghĩ đây là lỗi, hãy liên hệ với quản trị viên';
 $lang['regbadpass']            = 'Hai mật khẩu đã nhập không giống nhau, vui lòng thử lại.';
-$lang['regpwmail']             = 'Mật khẩu DokuWiki của bạn';
+$lang['regpwmail']             = 'Mật khẩu EasyWiki của bạn';
 $lang['reghere']               = 'Bạn chưa có tài khoản? Hãy tạo một cái';
 $lang['profna']                = 'Wiki này không hỗ trợ sửa đổi hồ sơ';
 $lang['profnochange']          = 'Không có thay đổi, không có gì để làm.';
@@ -293,29 +293,29 @@ $lang['subscr_style_digest']   = 'Thông báo thư điện tử về các thay �
 $lang['subscr_style_list']     = 'danh sách các trang đã thay đổi kể từ thư điện tử cuối cùng (mỗi %.2f ngày)';
 $lang['authtempfail']          = 'Xác thực thành viên tạm thời không có sẵn. Nếu tình trạng này vẫn còn, vui lòng thông báo cho Quản trị viên Wiki của bạn.';
 $lang['i_chooselang']          = 'Chọn ngôn ngữ của bạn';
-$lang['i_installer']           = 'Trình cài đặt DokuWiki';
+$lang['i_installer']           = 'Trình cài đặt EasyWiki';
 $lang['i_wikiname']            = 'Tên Wiki';
 $lang['i_enableacl']           = 'Kích hoạt Danh sách kiểm soát truy cập (ACL) (khuyến nghị)';
 $lang['i_superuser']           = 'Siêu thành viên';
 $lang['i_problems']            = 'Trình cài đặt tìm thấy một số vấn đề, được chỉ ra bên dưới. Bạn không thể tiếp tục cho đến khi bạn đã sửa chúng.';
-$lang['i_modified']            = 'Vì lý do bảo mật, tập lệnh này sẽ chỉ hoạt động với bản cài đặt Dokuwiki mới và chưa được sửa đổi.
+$lang['i_modified']            = 'Vì lý do bảo mật, tập lệnh này sẽ chỉ hoạt động với bản cài đặt EasyWiki mới và chưa được sửa đổi.
                                   Bạn nên trích xuất lại các tập tin từ gói đã tải xuống hoặc tham khảo
-                    <a href="https://www.dokuwiki.org/install">Hướng dẫn cài đặt Dokuwiki</a> đầy đủ';
+                    <a href="https://www.EasyWiki.org/install">Hướng dẫn cài đặt EasyWiki</a> đầy đủ';
 $lang['i_funcna']              = 'Hàm PHP <code>%s</code> không có sẵn. Có lẽ nhà cung cấp dịch vụ lưu trữ của bạn đã vô hiệu hóa nó vì một số lý do?';
 $lang['i_disabled']            = 'Nó đã bị vô hiệu hóa bởi nhà cung cấp của bạn.';
-$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>Lưu ý:</b> Không có sẵn hàm PHP mail. %s Nếu nó vẫn không có sẵn, bạn có thể cài đặt <a href="https://www.EasyWiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Phiên bản PHP <code>%s</code> hiện taị thấp hơn mức <code>%s</code> cần thiết. Bạn cần nâng cấp cài đặt PHP của bạn.';
-$lang['i_mbfuncoverload']      = 'mbopes.func_overload phải bị vô hiệu trong php.ini để chạy DokuWiki.';
-$lang['i_urandom']             = 'DokuWiki không thể tạo số mật mã an toàn cho cookie. Bạn có thể muốn kiểm tra cài đặt open_basingir trong php.ini để truy cập <code>/dev/urandom</code> thích hợp.';
-$lang['i_permfail']            = 'DokuWiki không thể ghi được <code>%s</code>. Bạn cần sửa đổi các thiết lập quyền của đường dẫn này!';
+$lang['i_mbfuncoverload']      = 'mbopes.func_overload phải bị vô hiệu trong php.ini để chạy EasyWiki.';
+$lang['i_urandom']             = 'EasyWiki không thể tạo số mật mã an toàn cho cookie. Bạn có thể muốn kiểm tra cài đặt open_basingir trong php.ini để truy cập <code>/dev/urandom</code> thích hợp.';
+$lang['i_permfail']            = 'EasyWiki không thể ghi được <code>%s</code>. Bạn cần sửa đổi các thiết lập quyền của đường dẫn này!';
 $lang['i_confexists']          = '<code>%s</code> đã tồn tại';
 $lang['i_writeerr']            = 'Không thể tạo <code>%s</code>. Bạn sẽ cần kiểm tra quyền truy cập thư mục/tập tin và tạo tập tin thủ công.';
-$lang['i_badhash']             = 'Không thể công nhận hoặc sửa đổi dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'Không thể công nhận hoặc sửa đổi easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - giá trị bất hợp pháp hoặc trống';
 $lang['i_success']             = 'Đã hoàn thành việc cấu hình thành công. Bạn có thể xóa tập tin install.php ngay bây giờ. Tiếp tục với
-                                 <a href="doku.php?id=wiki:welcome">DokuWiki mới của bạn</a>';
+                                 <a href="wiki.php?id=wiki:welcome">EasyWiki mới của bạn</a>';
 $lang['i_failure']             = 'Một số lỗi xảy ra trong khi viết tập tin cấu hình. Bạn có thể cần phải sửa chúng thủ công trước khi
-                                  bạn có thể sử dụng <a href="doku.php?id=wiki:welcome">DokuWiki mới của bạn</a>.';
+                                  bạn có thể sử dụng <a href="wiki.php?id=wiki:welcome">EasyWiki mới của bạn</a>.';
 $lang['i_policy']              = 'Chính sách ACL (Danh sách kiểm soát truy cập) ban đầu';
 $lang['i_pol0']                = 'Wiki mở (bất kỳ ai cũng có thể đọc, viết, tải lên)';
 $lang['i_pol1']                = 'Wiki công cộng (bất kỳ ai cũng có thể xem, thành viên đã đăng ký có thể viết và tải lên)';
@@ -324,8 +324,8 @@ $lang['i_allowreg']            = 'Cho phép người dùng tự đăng ký';
 $lang['i_retry']               = 'Thử lại';
 $lang['i_license']             = 'Vui lòng chọn giấy phép bạn muốn đặt nội dung của bạn dưới:';
 $lang['i_license_none']        = 'Không hiển thị bất kỳ thông tin giấy phép nào';
-$lang['i_pop_field']           = 'Vui lòng giúp chúng tôi cải thiện trải nghiệm DokuWiki:';
-$lang['i_pop_label']           = 'Mỗi tháng một lần, gửi dữ liệu sử dụng ẩn danh đến các nhà phát triển DokuWiki';
+$lang['i_pop_field']           = 'Vui lòng giúp chúng tôi cải thiện trải nghiệm EasyWiki:';
+$lang['i_pop_label']           = 'Mỗi tháng một lần, gửi dữ liệu sử dụng ẩn danh đến các nhà phát triển EasyWiki';
 $lang['recent_global']         = 'Bạn hiện đang xem những thay đổi bên trong không gian tên <b>%s</b>. Bạn cũng có thể <a href="%s">xem những thay đổi gần đây trên toàn bộ wiki</a>.';
 $lang['years']                 = '%d năm trước';
 $lang['months']                = '%d tháng trước';
@@ -366,8 +366,8 @@ $lang['plainhtml']             = 'HTML thuần túy';
 $lang['wikimarkup']            = 'Đánh dấu Wiki';
 $lang['page_nonexist_rev']     = 'Trang không tồn tại tại %s. Sau đó, nó đã được tạo ở <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'Không thể phân tích cú pháp tại tham số "%s".';
-$lang['email_signature_text']  = 'Thư này được tạo bởi DokuWiki tại
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'Thư này được tạo bởi EasyWiki tại
+@EASYWIKIURL@';
 $lang['log_file_too_large']    = 'Tệp nhật ký quá lớn. Những dòng trước đã bị bỏ qua!';
 $lang['log_file_failed_to_open'] = 'Không thể mở tệp nhật ký.';
 $lang['log_file_failed_to_read'] = 'Đã xảy ra lỗi khi đọc nhật ký.';

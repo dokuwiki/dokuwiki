@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Cache;
+namespace easywiki\Cache;
 
 /**
  * Handle the caching of modified (resized/cropped) images

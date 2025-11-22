@@ -32,11 +32,11 @@
 #RewriteRule ^index.php$               doku.php
 #
 ## Not all installations will require the following line.  If you do,
-## change "/dokuwiki" to the path to your dokuwiki directory relative
+## change "/easywiki" to the path to your easywiki directory relative
 ## to your document root.
-#RewriteBase /dokuwiki
+#RewriteBase /easywiki
 #
-## If you enable DokuWikis XML-RPC interface, you should consider to
+## If you enable EasyWikis XML-RPC interface, you should consider to
 ## restrict access to it over HTTPS only! Uncomment the following two
 ## rules if your server setup allows HTTPS.
 #RewriteCond %{HTTPS} !=on

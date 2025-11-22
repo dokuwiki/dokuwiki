@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\PageConflict;
-use dokuwiki\Ui;
+use easywiki\Ui\PageConflict;
+use easywiki\Ui;
 
 /**
  * Class Conflict
  *
  * Show the conflict resolution screen
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Conflict extends AbstractAction
 {

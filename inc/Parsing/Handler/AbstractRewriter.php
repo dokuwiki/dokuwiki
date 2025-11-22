@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 /**
  * Basic implementation of the rewriter interface to be specialized by children

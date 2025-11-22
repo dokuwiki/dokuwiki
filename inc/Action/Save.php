@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionException;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionException;
 
 /**
  * Class Save
  *
  * Save at the end of an edit session
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Save extends AbstractAction
 {

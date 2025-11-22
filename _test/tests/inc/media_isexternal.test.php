@@ -1,6 +1,6 @@
 <?php
 
-class media_isexternal_test extends DokuWikiTest {
+class media_isexternal_test extends EasyWikiTest {
 
 
     public function test_external(){

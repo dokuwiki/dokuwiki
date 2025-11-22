@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class TagElement
  *
  * Creates a self closing HTML tag
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class TagElement extends ValueElement
 {

@@ -10,7 +10,7 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
- * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Daniel Ejsing-Duun <easywiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>

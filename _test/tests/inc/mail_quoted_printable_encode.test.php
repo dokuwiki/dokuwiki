@@ -1,6 +1,6 @@
 <?php
 
-class mail_quotedprintable_encode extends DokuWikiTest {
+class mail_quotedprintable_encode extends EasyWikiTest {
 
     function test_simple(){
         $in  = 'hello';

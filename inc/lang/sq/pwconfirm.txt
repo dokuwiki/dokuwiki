@@ -1,6 +1,6 @@
 Përshëndetje @FULLNAME@!
 
-Dikush kërkoi një fjalëkalim të ri për hyrjen tuaj @TITLE@ në @DOKUWIKIURL@
+Dikush kërkoi një fjalëkalim të ri për hyrjen tuaj @TITLE@ në @EASYWIKIURL@
 
 Nëse nuk kërkuat një fjalëkalim të ri atëherë thjesht injorojeni këtë email.
 

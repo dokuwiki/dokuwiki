@@ -18,7 +18,7 @@
         </exclude>
     </coverage>
     <testsuites>
-        <testsuite name="DokuWiki Tests">
+        <testsuite name="EasyWiki Tests">
             <directory suffix=".test.php">tests/</directory>
             <directory suffix="Test.php">tests/</directory>
         </testsuite>

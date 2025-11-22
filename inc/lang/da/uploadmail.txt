@@ -1,4 +1,4 @@
-En fil blev overført til din DokuWiki. Her er detaljerne:
+En fil blev overført til din EasyWiki. Her er detaljerne:
 
 Fil         : @MEDIA@
 Gammel revision: @OLD@

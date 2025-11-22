@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class InputElement
@@ -9,7 +9,7 @@ namespace dokuwiki\Form;
  * text is given.
  *
  * @todo figure out how to make wrapping or related label configurable
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 class InputElement extends Element
 {
@@ -159,9 +159,9 @@ class InputElement extends Element
     public function toHTML()
     {
         if ($this->label) {
-            return '<label ' . buildAttributes($this->label->attrs()) . '>' . DOKU_LF
-                . '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF
-                . $this->mainElementHTML() . DOKU_LF
+            return '<label ' . buildAttributes($this->label->attrs()) . '>' . WIKI_LF
+                . '<span>' . hsc($this->label->val()) . '</span>' . WIKI_LF
+                . $this->mainElementHTML() . WIKI_LF
                 . '</label>';
         } else {
             return $this->mainElementHTML();

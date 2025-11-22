@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote\OpenApiDoc;
+namespace easywiki\Remote\OpenApiDoc;
 
 class Type
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\PageDraft;
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\Ui;
+use easywiki\Ui\PageDraft;
+use easywiki\Action\Exception\ActionException;
+use easywiki\Ui;
 
 /**
  * Class Draft
  *
  * Screen to see and recover a draft
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  * @fixme combine with Recover?
  */
 class Draft extends AbstractAction

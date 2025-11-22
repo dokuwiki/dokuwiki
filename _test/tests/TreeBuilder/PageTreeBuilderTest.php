@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Treebuilder;
+namespace easywiki\test\Treebuilder;
 
-use dokuwiki\TreeBuilder\PageTreeBuilder;
-use DokuWikiTest;
+use easywiki\TreeBuilder\PageTreeBuilder;
+use EasyWikiTest;
 
-class PageTreeBuilderTest extends DokuWikiTest
+class PageTreeBuilderTest extends EasyWikiTest
 {
     protected $originalDataDir;
 

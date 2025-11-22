@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\ChangeLog\RevisionInfo;
-use dokuwiki\Form\Form;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\RevisionInfo;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki PageRevisions Interface
+ * EasyWiki PageRevisions Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class PageRevisions extends Revisions
 {
@@ -73,7 +73,7 @@ class PageRevisions extends Revisions
             $RevInfo = new RevisionInfo($info);
             $RevInfo->isCurrent($changelog->isCurrentRevision($rev));
 
-            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
+            $class = ($RevInfo->val('type') === WIKI_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
 

@@ -1,6 +1,6 @@
 Merhaba @FULLNAME@!
 
-@DOKUWIKIURL@ adresinde kullanılan @TITLE@ hesabı için parola talebinde bulunuldu.
+@EASYWIKIURL@ adresinde kullanılan @TITLE@ hesabı için parola talebinde bulunuldu.
 
 Eğer böyle bir talebiniz olmadıysa, bu e-postayı görmezden gelebilirsiniz.
 

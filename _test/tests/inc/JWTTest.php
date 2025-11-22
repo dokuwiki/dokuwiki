@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test;
+namespace easywiki\test;
 
-use dokuwiki\JWT;
+use easywiki\JWT;
 
-class JWTTest extends \DokuWikiTest
+class JWTTest extends \EasyWikiTest
 {
 
 
@@ -82,11 +82,11 @@ class JWTTest extends \DokuWikiTest
 
     public function testLoginAlternativeHeader()
     {
-        $_SERVER['HTTP_X-DOKUWIKI-TOKEN'] =  JWT::fromUser('testuser')->getToken();
+        $_SERVER['HTTP_X-EASYWIKI-TOKEN'] =  JWT::fromUser('testuser')->getToken();
 
         $this->assertArrayNotHasKey('REMOTE_USER', $_SERVER);
         auth_tokenlogin();
         $this->assertEquals('testuser', $_SERVER['REMOTE_USER']);
-        unset($_SERVER['HTTP_X-DOKUWIKI-TOKEN']);
+        unset($_SERVER['HTTP_X-EASYWIKI-TOKEN']);
     }
 }

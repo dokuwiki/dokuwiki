@@ -1,4 +1,4 @@
-Halaman di DokuWiki Anda telah bertamah atau berubah, dengan detil sebagai berikut:
+Halaman di EasyWiki Anda telah bertamah atau berubah, dengan detil sebagai berikut:
 
 Date        : @DATE@
 Browser     : @BROWSER@

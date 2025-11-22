@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Form;
+namespace easywiki\test\Form;
 
-use dokuwiki\Form;
+use easywiki\Form;
 use DOMWrap\Document;
 
-class DropdownElementTest extends \DokuWikiTest
+class DropdownElementTest extends \EasyWikiTest
 {
 
     function testDefaults()

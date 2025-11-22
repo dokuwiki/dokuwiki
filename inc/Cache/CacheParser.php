@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Cache;
+namespace easywiki\Cache;
 
 /**
  * Parser caching
@@ -50,8 +50,8 @@ class CacheParser extends Cache
         // parser cache file dependencies ...
         $files = [
             $this->file, // source
-            DOKU_INC . 'inc/Parsing/Parser.php', // parser
-            DOKU_INC . 'inc/parser/handler.php', // handler
+            WIKI_INC . 'inc/Parsing/Parser.php', // parser
+            WIKI_INC . 'inc/parser/handler.php', // handler
         ];
         $files = array_merge($files, getConfigFiles('main')); // wiki settings
 

@@ -1,6 +1,6 @@
 <?php
 
-class media_get_from_url_test extends DokuWikiTest {
+class media_get_from_url_test extends EasyWikiTest {
 
     /**
      * @group internet

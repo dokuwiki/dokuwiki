@@ -1,10 +1,10 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\AdminPlugin;
+use easywiki\ChangeLog\PageChangeLog;
 
 /**
- * All DokuWiki plugins to extend the admin function
+ * All EasyWiki plugins to extend the admin function
  * need to inherit from this class
  */
 class admin_plugin_revert extends AdminPlugin
@@ -140,7 +140,7 @@ class admin_plugin_revert extends AdminPlugin
             $cnt++;
             $date = dformat($recent['date']);
 
-            echo ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
+            echo ($recent['type'] === WIKI_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';
             echo '<input type="checkbox" name="revert[]" value="' . hsc($recent['id']) .
                 '" checked="checked" id="revert__' . $cnt . '" />';
@@ -148,7 +148,7 @@ class admin_plugin_revert extends AdminPlugin
 
             echo '<a href="' . wl($recent['id'], "do=diff") . '">';
             $p = [];
-            $p['src']    = DOKU_BASE . 'lib/images/diff.png';
+            $p['src']    = WIKI_BASE . 'lib/images/diff.png';
             $p['width']  = 15;
             $p['height'] = 11;
             $p['title']  = $lang['diff'];
@@ -159,7 +159,7 @@ class admin_plugin_revert extends AdminPlugin
 
             echo '<a href="' . wl($recent['id'], "do=revisions") . '">';
             $p = [];
-            $p['src']    = DOKU_BASE . 'lib/images/history.png';
+            $p['src']    = WIKI_BASE . 'lib/images/history.png';
             $p['width']  = 12;
             $p['height'] = 14;
             $p['title']  = $lang['btn_revs'];

@@ -1,6 +1,6 @@
 Kaixo @FULLNAME@!
 
-Norbaitek zure @TITLE@ erabiltzailearentzat pasahitz berria eskatu du @DOKUWIKIURL@ gunean.
+Norbaitek zure @TITLE@ erabiltzailearentzat pasahitz berria eskatu du @EASYWIKIURL@ gunean.
 
 Ez baduzu zuk eskatu pasahitz berria, ez kasurik egin posta honi.
 

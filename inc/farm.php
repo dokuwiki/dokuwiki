@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This overwrites DOKU_CONF. Each animal gets its own configuration and data directory.
+ * This overwrites WIKI_CONF. Each animal gets its own configuration and data directory.
  * This can be used together with preload.php. See preload.php.dist for an example setup.
- * For more information see http://www.dokuwiki.org/farms.
+ * For more information see http://www.EasyWiki.org/farms.
  *
  * The farm directory (constant DOKU_FARMDIR) can be any directory and needs to be set.
  * Animals are direct subdirectories of the farm directory.
@@ -23,9 +23,9 @@
  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
 
-// DOKU_FARMDIR needs to be set in preload.php, the fallback is the same as DOKU_INC would be (if it was set already)
+// DOKU_FARMDIR needs to be set in preload.php, the fallback is the same as WIKI_INC would be (if it was set already)
 if (!defined('DOKU_FARMDIR')) define('DOKU_FARMDIR', fullpath(__DIR__ . '/../') . '/');
-if (!defined('DOKU_CONF')) define('DOKU_CONF', farm_confpath(DOKU_FARMDIR));
+if (!defined('WIKI_CONF')) define('WIKI_CONF', farm_confpath(DOKU_FARMDIR));
 if (!defined('DOKU_FARM')) define('DOKU_FARM', false);
 
 /**
@@ -88,71 +88,71 @@ function farm_confpath($farm)
         return "$farm/default/conf/";
     }
     // farmer
-    return DOKU_INC . 'conf/';
+    return WIKI_INC . 'conf/';
 }
 
 /* Use default config files and local animal config files */
 $config_cascade = [
     'main' => [
-        'default' => [DOKU_INC . 'conf/dokuwiki.php'],
-        'local' => [DOKU_CONF . 'local.php'],
-        'protected' => [DOKU_CONF . 'local.protected.php']
+        'default' => [WIKI_INC . 'conf/easywiki.php'],
+        'local' => [WIKI_CONF . 'local.php'],
+        'protected' => [WIKI_CONF . 'local.protected.php']
     ],
     'acronyms' => [
-        'default' => [DOKU_INC . 'conf/acronyms.conf'],
-        'local' => [DOKU_CONF . 'acronyms.local.conf']
+        'default' => [WIKI_INC . 'conf/acronyms.conf'],
+        'local' => [WIKI_CONF . 'acronyms.local.conf']
     ],
     'entities' => [
-        'default' => [DOKU_INC . 'conf/entities.conf'],
-        'local' => [DOKU_CONF . 'entities.local.conf']
+        'default' => [WIKI_INC . 'conf/entities.conf'],
+        'local' => [WIKI_CONF . 'entities.local.conf']
     ],
     'interwiki' => [
-        'default' => [DOKU_INC . 'conf/interwiki.conf'],
-        'local' => [DOKU_CONF . 'interwiki.local.conf']
+        'default' => [WIKI_INC . 'conf/interwiki.conf'],
+        'local' => [WIKI_CONF . 'interwiki.local.conf']
     ],
     'license' => [
-        'default' => [DOKU_INC . 'conf/license.php'],
-        'local' => [DOKU_CONF . 'license.local.php']
+        'default' => [WIKI_INC . 'conf/license.php'],
+        'local' => [WIKI_CONF . 'license.local.php']
     ],
     'mediameta' => [
-        'default' => [DOKU_INC . 'conf/mediameta.php'],
-        'local' => [DOKU_CONF . 'mediameta.local.php']
+        'default' => [WIKI_INC . 'conf/mediameta.php'],
+        'local' => [WIKI_CONF . 'mediameta.local.php']
     ],
     'mime' => [
-        'default' => [DOKU_INC . 'conf/mime.conf'],
-        'local' => [DOKU_CONF . 'mime.local.conf']
+        'default' => [WIKI_INC . 'conf/mime.conf'],
+        'local' => [WIKI_CONF . 'mime.local.conf']
     ],
     'scheme' => [
-        'default' => [DOKU_INC . 'conf/scheme.conf'],
-        'local' => [DOKU_CONF . 'scheme.local.conf']
+        'default' => [WIKI_INC . 'conf/scheme.conf'],
+        'local' => [WIKI_CONF . 'scheme.local.conf']
     ],
     'smileys' => [
-        'default' => [DOKU_INC . 'conf/smileys.conf'],
-        'local' => [DOKU_CONF . 'smileys.local.conf']
+        'default' => [WIKI_INC . 'conf/smileys.conf'],
+        'local' => [WIKI_CONF . 'smileys.local.conf']
     ],
     'wordblock' => [
-        'default' => [DOKU_INC . 'conf/wordblock.conf'],
-        'local' => [DOKU_CONF . 'wordblock.local.conf']
+        'default' => [WIKI_INC . 'conf/wordblock.conf'],
+        'local' => [WIKI_CONF . 'wordblock.local.conf']
     ],
     'acl' => [
-        'default' => DOKU_CONF . 'acl.auth.php'
+        'default' => WIKI_CONF . 'acl.auth.php'
     ],
     'plainauth.users' => [
-        'default' => DOKU_CONF . 'users.auth.php'
+        'default' => WIKI_CONF . 'users.auth.php'
     ],
     'plugins' => [
         // needed since Angua
-        'default' => [DOKU_INC . 'conf/plugins.php'],
-        'local' => [DOKU_CONF . 'plugins.local.php'],
-        'protected' => [DOKU_INC . 'conf/plugins.required.php', DOKU_CONF . 'plugins.protected.php'],
+        'default' => [WIKI_INC . 'conf/plugins.php'],
+        'local' => [WIKI_CONF . 'plugins.local.php'],
+        'protected' => [WIKI_INC . 'conf/plugins.required.php', WIKI_CONF . 'plugins.protected.php'],
     ],
     'userstyle' => [
-        'screen' => [DOKU_CONF . 'userstyle.css', DOKU_CONF . 'userstyle.less'],
-        'print' => [DOKU_CONF . 'userprint.css', DOKU_CONF . 'userprint.less'],
-        'feed' => [DOKU_CONF . 'userfeed.css', DOKU_CONF . 'userfeed.less'],
-        'all' => [DOKU_CONF . 'userall.css', DOKU_CONF . 'userall.less']
+        'screen' => [WIKI_CONF . 'userstyle.css', WIKI_CONF . 'userstyle.less'],
+        'print' => [WIKI_CONF . 'userprint.css', WIKI_CONF . 'userprint.less'],
+        'feed' => [WIKI_CONF . 'userfeed.css', WIKI_CONF . 'userfeed.less'],
+        'all' => [WIKI_CONF . 'userall.css', WIKI_CONF . 'userall.less']
     ],
     'userscript' => [
-        'default' => [DOKU_CONF . 'userscript.js']
+        'default' => [WIKI_CONF . 'userscript.js']
     ]
 ];

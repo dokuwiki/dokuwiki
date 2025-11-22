@@ -1,6 +1,6 @@
 Ola @FULLNAME@!
 
-Alguén solicitou un novo contrasinal para o teu inicio de sesión @TITLE@ en @DOKUWIKIURL@
+Alguén solicitou un novo contrasinal para o teu inicio de sesión @TITLE@ en @EASYWIKIURL@
 
 Se non fuches ti quen o fixo podes ignorar este correo-e.
 

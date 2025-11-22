@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Action\Exception;
+namespace easywiki\Action\Exception;
 
 /**
  * Class ActionAbort
@@ -13,7 +13,7 @@ namespace dokuwiki\Action\Exception;
  *
  * The message will NOT be shown to the enduser
  *
- * @package dokuwiki\Action\Exception
+ * @package easywiki\Action\Exception
  */
 class ActionAbort extends ActionException
 {

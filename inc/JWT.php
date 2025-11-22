@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
 /**
  * Minimal JWT implementation
@@ -68,7 +68,7 @@ class JWT
         if ($header['typ'] !== 'JWT') {
             throw new \Exception('Unsupported JWT type');
         }
-        if ($payload['iss'] !== 'dokuwiki') {
+        if ($payload['iss'] !== 'easywiki') {
             throw new \Exception('Unsupported JWT issuer');
         }
         if (isset($payload['exp']) && $payload['exp'] < time()) {
@@ -127,7 +127,7 @@ class JWT
         $header = base64_encode(json_encode($header));
 
         $payload = [
-            'iss' => 'dokuwiki',
+            'iss' => 'easywiki',
             'sub' => $this->user,
             'iat' => $this->issued,
         ];

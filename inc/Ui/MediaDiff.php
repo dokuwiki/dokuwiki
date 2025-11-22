@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\ChangeLog\RevisionInfo;
-use dokuwiki\Form\Form;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\RevisionInfo;
+use easywiki\Form\Form;
 use InvalidArgumentException;
 use JpegMeta;
 
 /**
- * DokuWiki MediaDiff Interface
+ * EasyWiki MediaDiff Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class MediaDiff extends Diff
 {
@@ -38,7 +38,7 @@ class MediaDiff extends Diff
         }
 
         // init preference
-        $this->preference['fromAjax'] = false;  // see dokuwiki\Ajax::callMediadiff()
+        $this->preference['fromAjax'] = false;  // see easywiki\Ajax::callMediadiff()
         $this->preference['showIntro'] = false;
         $this->preference['difftype'] = 'both'; // diff view type: both, opacity or portions
 

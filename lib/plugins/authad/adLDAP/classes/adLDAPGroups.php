@@ -37,7 +37,7 @@
 require_once(dirname(__FILE__) . '/../adLDAP.php');
 require_once(dirname(__FILE__) . '/../collections/adLDAPGroupCollection.php');
 
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\Sort;
 
 /**
 * GROUP FUNCTIONS

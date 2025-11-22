@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\HTTP\Headers;
-use dokuwiki\Utf8\PhpString;
+use easywiki\HTTP\Headers;
+use easywiki\Utf8\PhpString;
 
 /**
  * Functions used by lib/exe/fetch.php
- * (not included by other parts of dokuwiki)
+ * (not included by other parts of easywiki)
  */
 
 /**
@@ -26,7 +26,7 @@ use dokuwiki\Utf8\PhpString;
  * @param array $csp The ContentSecurityPolicy to send
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
- * @author Gerry Weissbach <dokuwiki@gammaproduction.de>
+ * @author Gerry Weissbach <easywiki@gammaproduction.de>
  *
  */
 function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp = [])

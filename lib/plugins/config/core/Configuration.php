@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace easywiki\plugin\config\core;
 
-use dokuwiki\plugin\config\core\Setting\Setting;
-use dokuwiki\plugin\config\core\Setting\SettingNoClass;
-use dokuwiki\plugin\config\core\Setting\SettingNoDefault;
-use dokuwiki\plugin\config\core\Setting\SettingNoKnownClass;
-use dokuwiki\plugin\config\core\Setting\SettingUndefined;
+use easywiki\plugin\config\core\Setting\Setting;
+use easywiki\plugin\config\core\Setting\SettingNoClass;
+use easywiki\plugin\config\core\Setting\SettingNoDefault;
+use easywiki\plugin\config\core\Setting\SettingNoKnownClass;
+use easywiki\plugin\config\core\Setting\SettingUndefined;
 
 /**
  * Holds all the current settings and proxies the Loader and Writer
@@ -215,7 +215,7 @@ class Configuration
         // try namespaced class first
         if (is_string($class)) {
             $modern = str_replace('_', '', ucwords($class, '_'));
-            $modern = '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
+            $modern = '\\easywiki\\plugin\\config\\core\\Setting\\Setting' . $modern;
             if ($modern && class_exists($modern)) return $modern;
             // try class as given
             if (class_exists($class)) return $class;
@@ -225,6 +225,6 @@ class Configuration
             // no class given, add to errors
             $this->undefined[$key] = new SettingNoClass($key);
         }
-        return '\\dokuwiki\\plugin\\config\\core\\Setting\\Setting';
+        return '\\easywiki\\plugin\\config\\core\\Setting\\Setting';
     }
 }

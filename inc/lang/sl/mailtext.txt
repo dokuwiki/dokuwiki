@@ -1,4 +1,4 @@
-Stran na vašem DokuWiki je bila dodana ali spremenjena. Podrobnosti:
+Stran na vašem EasyWiki je bila dodana ali spremenjena. Podrobnosti:
 
 Datum            : @DATE@
 Brskalnik        : @BROWSER@

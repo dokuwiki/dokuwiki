@@ -1,4 +1,4 @@
-A page in your DokuWiki was added or changed. Here are the details:
+A page in your EasyWiki was added or changed. Here are the details:
 
 Browser             : @BROWSER@
 IP Address          : @IPADDRESS@

@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\Utf8;
+namespace easywiki\Utf8;
 
-use dokuwiki\Logger;
+use easywiki\Logger;
 
 /**
- * DokuWiki sort functions
+ * EasyWiki sort functions
  *
  * When "intl" extension is available, all sorts are done using a collator.
  * Otherwise, primitive PHP functions are called.

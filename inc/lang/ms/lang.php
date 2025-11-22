@@ -4,7 +4,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesMs.php?view=co
@@ -66,7 +66,7 @@ $lang['regsuccess']            = 'Akaun pengguna telah dicipta dan kata laluan t
 $lang['regsuccess2']           = 'Akaun pegguna telah dicipta.';
 $lang['regbadmail']            = 'Format alamat e-mel tidak sah. Sila masukkan semula ataupun kosongkan sahaja medan tersebut.';
 $lang['regbadpass']            = 'Kedua-dua kata laluan tidak sama. Sila masukkan semula.';
-$lang['regpwmail']             = 'Kata laluan Dokuwiki anda';
+$lang['regpwmail']             = 'Kata laluan EasyWiki anda';
 $lang['reghere']               = 'Belum mendaftar akaun? Dapat akaun baru';
 $lang['profna']                = 'Wiki ini tidak menyokong modifikasi profil';
 $lang['profnoempty']           = 'Medan nama pengguna atau e-mel yang kosong tidak dibenarkan.';

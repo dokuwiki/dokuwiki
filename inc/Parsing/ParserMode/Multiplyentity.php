@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\ParserMode;
+namespace easywiki\Parsing\ParserMode;
 
 /**
  * Implements the 640x480 replacement

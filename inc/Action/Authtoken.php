@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Action\Exception\ActionException;
-use dokuwiki\JWT;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Action\Exception\ActionException;
+use easywiki\JWT;
 
 class Authtoken extends AbstractUserAction
 {

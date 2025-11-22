@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\test\mock;
+namespace easywiki\test\mock;
 
 class MailerMock extends \Mailer
 {

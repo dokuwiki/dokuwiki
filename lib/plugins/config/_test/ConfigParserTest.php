@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\test;
+namespace easywiki\plugin\config\test;
 
-use dokuwiki\plugin\config\core\ConfigParser;
+use easywiki\plugin\config\core\ConfigParser;
 
 /**
  * @group plugin_config
@@ -10,7 +10,7 @@ use dokuwiki\plugin\config\core\ConfigParser;
  * @group plugins
  * @group bundled_plugins
  */
-class ConfigParserTest extends \DokuWikiTest {
+class ConfigParserTest extends \EasyWikiTest {
 
     function test_readconfig() {
         $parser = new ConfigParser();

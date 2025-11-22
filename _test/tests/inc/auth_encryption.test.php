@@ -3,7 +3,7 @@
 /**
  * Tests the auth_decrypt and auth_encrypt-functions
  */
-class auth_encryption_test extends DokuWikiTest
+class auth_encryption_test extends EasyWikiTest
 {
     function testDeEncrypt()
     {

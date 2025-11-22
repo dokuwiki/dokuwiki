@@ -1,15 +1,15 @@
 <?php
 
-use dokuwiki\Extension\RemotePlugin;
-use dokuwiki\plugin\extension\Extension;
-use dokuwiki\plugin\extension\ExtensionApiResponse;
-use dokuwiki\plugin\extension\Installer;
-use dokuwiki\plugin\extension\Local;
-use dokuwiki\plugin\extension\Repository;
-use dokuwiki\Remote\AccessDeniedException;
+use easywiki\Extension\RemotePlugin;
+use easywiki\plugin\extension\Extension;
+use easywiki\plugin\extension\ExtensionApiResponse;
+use easywiki\plugin\extension\Installer;
+use easywiki\plugin\extension\Local;
+use easywiki\plugin\extension\Repository;
+use easywiki\Remote\AccessDeniedException;
 
 /**
- * DokuWiki Plugin extension (Remote Component)
+ * EasyWiki Plugin extension (Remote Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author Andreas Gohr <andi@splitbrain.org>

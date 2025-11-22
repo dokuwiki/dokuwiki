@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace easywiki\plugin\config\core;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Configuration loader
@@ -46,14 +46,14 @@ class Loader
     {
         // load main file
         $meta = [];
-        include DOKU_PLUGIN . 'config/settings/config.metadata.php';
+        include WIKI_PLUGIN . 'config/settings/config.metadata.php';
 
         // plugins
         foreach ($this->plugins as $plugin) {
             $meta = array_merge(
                 $meta,
                 $this->loadExtensionMeta(
-                    DOKU_PLUGIN . $plugin . '/conf/metadata.php',
+                    WIKI_PLUGIN . $plugin . '/conf/metadata.php',
                     'plugin',
                     $plugin
                 )
@@ -91,7 +91,7 @@ class Loader
             $conf = array_merge(
                 $conf,
                 $this->loadExtensionConf(
-                    DOKU_PLUGIN . $plugin . '/conf/default.php',
+                    WIKI_PLUGIN . $plugin . '/conf/default.php',
                     'plugin',
                     $plugin
                 )
@@ -132,7 +132,7 @@ class Loader
             $lang = array_merge(
                 $lang,
                 $this->loadExtensionLang(
-                    DOKU_PLUGIN . $plugin . '/',
+                    WIKI_PLUGIN . $plugin . '/',
                     'plugin',
                     $plugin
                 )

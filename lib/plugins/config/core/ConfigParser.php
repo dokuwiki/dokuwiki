@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\config\core;
+namespace easywiki\plugin\config\core;
 
 /**
  * A naive PHP file parser

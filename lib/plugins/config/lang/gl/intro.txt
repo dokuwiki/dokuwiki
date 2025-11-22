@@ -1,6 +1,6 @@
 ====== Xestor de Configuración ======
 
-Usa esta páxina para controlares a configuración da túa instalación do Dokuwiki.  Para atopares axuda verbo de cada opción da configuración vai a [[doku>config]]. Para obteres pormenores desta extensión bota un ollo a [[doku>plugin:config]].
+Usa esta páxina para controlares a configuración da túa instalación do EasyWiki.  Para atopares axuda verbo de cada opción da configuración vai a [[doku>config]]. Para obteres pormenores desta extensión bota un ollo a [[doku>plugin:config]].
 
 As opcións que amosan un fondo de cor vermella clara están protexidas e non poden ser alteradas con esta extensión. As opcións que amosan un fondo de cor azul son valores predeterminados e as opcións que teñen fondo branco foron configuradas de xeito local para esta instalación en concreto. Ámbalas dúas, as opcións azuis e brancas, poden ser alteradas.
 

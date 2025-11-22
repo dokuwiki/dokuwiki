@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\File;
+namespace easywiki\File;
 
-use dokuwiki\Cache\CacheInstructions;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\Event;
-use dokuwiki\Input\Input;
-use dokuwiki\Logger;
+use easywiki\Cache\CacheInstructions;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\Event;
+use easywiki\Input\Input;
+use easywiki\Logger;
 use RuntimeException;
 
 /**
@@ -56,7 +56,7 @@ class PageFile
     {
         if ($rev !== null) {
             $revInfo = $rev ? $this->changelog->getRevisionInfo($rev) : false;
-            return (!$revInfo || $revInfo['type'] == DOKU_CHANGE_TYPE_DELETE)
+            return (!$revInfo || $revInfo['type'] == WIKI_CHANGE_TYPE_DELETE)
                 ? '' // attic stores complete last page version for a deleted page
                 : io_readWikiPage($this->getPath($rev), $this->id, $rev); // retrieve from attic
         } else {
@@ -80,9 +80,9 @@ class PageFile
     {
         /* Note to developers:
            This code is subtle and delicate. Test the behavior of
-           the attic and changelog with dokuwiki and external edits
+           the attic and changelog with easywiki and external edits
            after any changes. External edits change the wiki page
-           directly without using php or dokuwiki.
+           directly without using php or easywiki.
          */
         global $conf;
         global $lang;
@@ -117,19 +117,19 @@ class PageFile
         // determine tentatively change type and relevant elements of event data
         if ($data['revertFrom']) {
             // new text may differ from exact revert revision
-            $data['changeType'] = DOKU_CHANGE_TYPE_REVERT;
+            $data['changeType'] = WIKI_CHANGE_TYPE_REVERT;
             $data['changeInfo'] = $REV;
         } elseif (trim($data['newContent']) == '') {
             // empty or whitespace only content deletes
-            $data['changeType'] = DOKU_CHANGE_TYPE_DELETE;
+            $data['changeType'] = WIKI_CHANGE_TYPE_DELETE;
         } elseif (!file_exists($pagefile)) {
-            $data['changeType'] = DOKU_CHANGE_TYPE_CREATE;
+            $data['changeType'] = WIKI_CHANGE_TYPE_CREATE;
         } else {
             // minor edits allowable only for logged in users
             $is_minor_change = ($minor && $conf['useacl'] && $INPUT->server->str('REMOTE_USER'));
             $data['changeType'] = $is_minor_change
-                ? DOKU_CHANGE_TYPE_MINOR_EDIT
-                : DOKU_CHANGE_TYPE_EDIT;
+                ? WIKI_CHANGE_TYPE_MINOR_EDIT
+                : WIKI_CHANGE_TYPE_EDIT;
         }
 
         $this->data = $data;
@@ -152,13 +152,13 @@ class PageFile
         } else {
             // pagefile has modified by plugin's event handler, confirm sizechange
             $filesize_old = (
-                $data['changeType'] == DOKU_CHANGE_TYPE_CREATE || (
-                $data['changeType'] == DOKU_CHANGE_TYPE_REVERT && !file_exists($pagefile))
+                $data['changeType'] == WIKI_CHANGE_TYPE_CREATE || (
+                $data['changeType'] == WIKI_CHANGE_TYPE_REVERT && !file_exists($pagefile))
             ) ? 0 : filesize($pagefile);
         }
 
         // make change to the current file
-        if ($data['changeType'] == DOKU_CHANGE_TYPE_DELETE) {
+        if ($data['changeType'] == WIKI_CHANGE_TYPE_DELETE) {
             // nothing to do when the file has already deleted
             if (!file_exists($pagefile)) return;
             // autoset summary on deletion
@@ -230,7 +230,7 @@ class PageFile
         // only interested in external revision
         if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
 
-        if ($revInfo['type'] != DOKU_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
+        if ($revInfo['type'] != WIKI_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
             // file is older than last revision, that is erroneous/incorrect occurence.
             // try to change file modification time
             $fileLastMod = $this->getPath();
@@ -288,10 +288,10 @@ class PageFile
 
         ['date' => $date, 'type' => $changeType, 'user' => $user, ] = $logEntry;
 
-        $wasRemoved   = ($changeType === DOKU_CHANGE_TYPE_DELETE);
-        $wasCreated   = ($changeType === DOKU_CHANGE_TYPE_CREATE);
-        $wasReverted  = ($changeType === DOKU_CHANGE_TYPE_REVERT);
-        $wasMinorEdit = ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT);
+        $wasRemoved   = ($changeType === WIKI_CHANGE_TYPE_DELETE);
+        $wasCreated   = ($changeType === WIKI_CHANGE_TYPE_CREATE);
+        $wasReverted  = ($changeType === WIKI_CHANGE_TYPE_REVERT);
+        $wasMinorEdit = ($changeType === WIKI_CHANGE_TYPE_MINOR_EDIT);
 
         $createdDate = @filectime($this->getPath());
 

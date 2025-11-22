@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\test\rector;
+namespace easywiki\test\rector;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\Print_;
@@ -13,7 +13,7 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 /**
  * Replace print calls with echo
  */
-class DokuWikiRenamePrintToEcho extends AbstractRector
+class EasyWikiRenamePrintToEcho extends AbstractRector
 {
 
     /** @inheritdoc */

@@ -1,10 +1,10 @@
 <?php
 
-namespace dokuwiki\test\Remote\OpenApiDoc;
+namespace easywiki\test\Remote\OpenApiDoc;
 
-use dokuwiki\Remote\OpenApiDoc\Type;
+use easywiki\Remote\OpenApiDoc\Type;
 
-class TypeTest extends \DokuWikiTest
+class TypeTest extends \EasyWikiTest
 {
 
     public function provideBaseTypes()
@@ -36,7 +36,7 @@ class TypeTest extends \DokuWikiTest
             ['foo[]', 'array', 'array'],
             ['foo[]', 'array', 'array', self::class],
             ['Foo', 'Foo', 'object'],
-            ['Foo', 'dokuwiki\\test\\Remote\\OpenApiDoc\\Foo', 'object', self::class],
+            ['Foo', 'easywiki\\test\\Remote\\OpenApiDoc\\Foo', 'object', self::class],
             ['\\Foo', 'Foo', 'object'],
             ['\\Foo', 'Foo', 'object', self::class],
         ];
@@ -78,7 +78,7 @@ class TypeTest extends \DokuWikiTest
             ['string[][]', ['array', 'array', 'string']],
             ['array[][]', ['array', 'array', 'array']],
             ['Foo[][]', ['array', 'array', 'Foo']],
-            ['Foo[][]', ['array', 'array', 'dokuwiki\\test\\Remote\\OpenApiDoc\\Foo'], self::class],
+            ['Foo[][]', ['array', 'array', 'easywiki\\test\\Remote\\OpenApiDoc\\Foo'], self::class],
         ];
     }
 

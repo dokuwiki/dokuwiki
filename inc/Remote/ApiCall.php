@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Remote;
+namespace easywiki\Remote;
 
-use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
+use easywiki\Remote\OpenApiDoc\DocBlockMethod;
 use InvalidArgumentException;
 use ReflectionException;
 use ReflectionFunction;

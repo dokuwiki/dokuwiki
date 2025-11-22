@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Utf8;
+namespace easywiki\Utf8;
 
 /**
  * Provides static access to the UTF-8 conversion tables

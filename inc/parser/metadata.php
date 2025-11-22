@@ -1,13 +1,13 @@
 <?php
 
-use dokuwiki\File\MediaResolver;
-use dokuwiki\File\PageResolver;
-use dokuwiki\Utf8\PhpString;
+use easywiki\File\MediaResolver;
+use easywiki\File\PageResolver;
+use easywiki\Utf8\PhpString;
 
 /**
  * The MetaData Renderer
  *
- * Metadata is additional information about a DokuWiki page that gets extracted mainly from the page's content
+ * Metadata is additional information about a EasyWiki page that gets extracted mainly from the page's content
  * but also it's own filesystem data (like the creation time). All metadata is stored in the fields $meta and
  * $persistent.
  *
@@ -15,7 +15,7 @@ use dokuwiki\Utf8\PhpString;
  *
  * @author Esther Brunner <wikidesign@gmail.com>
  */
-class Doku_Renderer_metadata extends Doku_Renderer
+class Wiki_Renderer_metadata extends Wiki_Renderer
 {
     /** the approximate byte lenght to capture for the abstract */
     public const ABSTRACT_LEN = 250;
@@ -175,7 +175,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
         $this->toc_additem($hid, $text, $level);
 
         // add to summary
-        $this->cdata(DOKU_LF . $text . DOKU_LF);
+        $this->cdata(WIKI_LF . $text . WIKI_LF);
     }
 
     /**
@@ -183,7 +183,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function p_open()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -191,7 +191,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function p_close()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -199,7 +199,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function linebreak()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -207,7 +207,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function hr()
     {
-        $this->cdata(DOKU_LF . '----------' . DOKU_LF);
+        $this->cdata(WIKI_LF . '----------' . WIKI_LF);
     }
 
     /**
@@ -256,7 +256,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function listu_open()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -264,7 +264,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function listo_open()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -275,7 +275,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function listitem_open($level, $node = false)
     {
-        $this->cdata(str_repeat(DOKU_TAB, $level) . '* ');
+        $this->cdata(str_repeat(WIKI_TAB, $level) . '* ');
     }
 
     /**
@@ -283,7 +283,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function listitem_close()
     {
-        $this->cdata(DOKU_LF);
+        $this->cdata(WIKI_LF);
     }
 
     /**
@@ -301,7 +301,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function quote_open()
     {
-        $this->cdata(DOKU_LF . DOKU_TAB . '"');
+        $this->cdata(WIKI_LF . WIKI_TAB . '"');
     }
 
     /**
@@ -309,7 +309,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function quote_close()
     {
-        $this->cdata('"' . DOKU_LF);
+        $this->cdata('"' . WIKI_LF);
     }
 
     /**
@@ -321,7 +321,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function file($text, $lang = null, $file = null)
     {
-        $this->cdata(DOKU_LF . $text . DOKU_LF);
+        $this->cdata(WIKI_LF . $text . WIKI_LF);
     }
 
     /**
@@ -333,7 +333,7 @@ class Doku_Renderer_metadata extends Doku_Renderer
      */
     public function code($text, $language = null, $file = null)
     {
-        $this->cdata(DOKU_LF . $text . DOKU_LF);
+        $this->cdata(WIKI_LF . $text . WIKI_LF);
     }
 
     /**

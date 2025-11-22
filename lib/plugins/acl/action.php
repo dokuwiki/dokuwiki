@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
  * AJAX call handler for ACL plugin
@@ -18,7 +18,7 @@ class action_plugin_acl extends ActionPlugin
     /**
      * Registers a callback function for a given event
      *
-     * @param EventHandler $controller DokuWiki's event controller object
+     * @param EventHandler $controller EasyWiki's event controller object
      * @return void
      */
     public function register(EventHandler $controller)

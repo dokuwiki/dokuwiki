@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\Cache\CacheRenderer;
+use easywiki\Cache\CacheRenderer;
 
 /**
  * Class cache_use_test
@@ -9,7 +9,7 @@ use dokuwiki\Cache\CacheRenderer;
  *
  * @todo tests marked as flaky until Ticket #694 has been fixed
  */
-class cache_use_test extends DokuWikiTest {
+class cache_use_test extends EasyWikiTest {
     /** @var CacheRenderer $cache */
     private $cache;
 

@@ -1,0 +1,84 @@
+/**
+ * This file provides the styles for general tabs.
+ */
+
+.easywiki .tabs > ul,
+.easywiki ul.tabs {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+/* border underneath */
+.easywiki .tabs > ul:after,
+.easywiki ul.tabs:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid @ini_border;
+}
+
+.easywiki .tabs > ul li,
+.easywiki ul.tabs li {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+[dir=rtl] .easywiki .tabs > ul li,
+[dir=rtl] .easywiki ul.tabs li {
+    float: right;
+}
+
+.easywiki .tabs > ul li a,
+.easywiki ul.tabs li strong,
+.easywiki ul.tabs li a {
+    display: inline-block;
+    padding: .3em .8em;
+    margin: 0 0 0 .3em;
+    background-color: @ini_background_neu;
+    color: @ini_text;
+    border: 1px solid @ini_border;
+    border-radius: .5em .5em 0 0;
+    position: relative;
+    z-index: 0;
+}
+[dir=rtl] .easywiki .tabs > ul li a,
+[dir=rtl] .easywiki ul.tabs li strong,
+[dir=rtl] .easywiki ul.tabs li a {
+    margin: 0 .3em 0 0;
+}
+
+.easywiki ul.tabs li strong {
+    font-weight: normal;
+}
+
+.easywiki ul.tabs li a:link,
+.easywiki ul.tabs li a:visited {
+}
+.easywiki .tabs > ul li a:hover,
+.easywiki .tabs > ul li a:active,
+.easywiki .tabs > ul li a:focus,
+.easywiki .tabs > ul li .curid a,
+.easywiki .tabs > ul .active a,
+.easywiki ul.tabs li a:hover,
+.easywiki ul.tabs li a:active,
+.easywiki ul.tabs li a:focus,
+.easywiki ul.tabs li.active a,
+.easywiki ul.tabs li strong {
+    background-color: @ini_background_alt;
+    color: @ini_text;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.easywiki .tabs > ul li .curid a,
+.easywiki .tabs > ul li .active a,
+.easywiki .tabs > ul li .active a,
+.easywiki ul.tabs li.active a,
+.easywiki ul.tabs li strong {
+    z-index: 2;
+    border-bottom-color: @ini_background_alt;
+}

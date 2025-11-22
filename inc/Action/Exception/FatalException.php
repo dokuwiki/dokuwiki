@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Action\Exception;
+namespace easywiki\Action\Exception;
 
 /**
  * Class FatalException
@@ -10,7 +10,7 @@ namespace dokuwiki\Action\Exception;
  * Will abort all handling and display some info to the user. The HTTP status code
  * can be defined.
  *
- * @package dokuwiki\Action\Exception
+ * @package easywiki\Action\Exception
  */
 class FatalException extends \Exception
 {

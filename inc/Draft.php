@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Class Draft
  *
- * @package dokuwiki
+ * @package easywiki
  */
 class Draft
 {

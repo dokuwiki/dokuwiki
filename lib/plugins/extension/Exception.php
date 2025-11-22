@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
 use Throwable;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Remote\Response;
+namespace easywiki\Remote\Response;
 
-use dokuwiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\MediaChangeLog;
 
 /**
  * Represents a single media revision in the wiki.

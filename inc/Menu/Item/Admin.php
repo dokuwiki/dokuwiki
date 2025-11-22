@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Admin
@@ -25,6 +25,6 @@ class Admin extends AbstractItem
             throw new \RuntimeException("admin is only for managers and above");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/settings.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/settings.svg';
     }
 }

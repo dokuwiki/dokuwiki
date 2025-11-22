@@ -134,7 +134,7 @@ oma serveri administraatoriga!';
 $lang['regbadmail']            = 'Tundub, et Sinu antud e-posti aadress ei toimi - kui Sa arvad, et tegemist on
 ekstitusega, suhtle oma serveri administraatoriga';
 $lang['regbadpass']            = 'Uus parool on kirjutatud erinevalt. Proovi uuesti.';
-$lang['regpwmail']             = 'Sinu DokuWiki parool';
+$lang['regpwmail']             = 'Sinu EasyWiki parool';
 $lang['reghere']               = 'Sul ei olegi veel kasutajakontot? No aga tekita see siis endale!';
 $lang['profna']                = 'Viki ei toeta profiili muudatusi';
 $lang['profnochange']          = 'Muutused puuduvad.';
@@ -282,22 +282,22 @@ $lang['subscr_style_digest']   = 'kokkuvõte ekirjaga toimetamistest igal lehek�
 $lang['subscr_style_list']     = 'Peale viimast ekirja (iga %.2f päeva järel) toimetaud lehekülgede loend.';
 $lang['authtempfail']          = 'Kasutajate autentimine on ajutiselt rivist väljas. Kui see olukord mõne aja jooksul ei parane, siis teavita sellest serveri haldajat.';
 $lang['i_chooselang']          = 'Vali keel';
-$lang['i_installer']           = 'DokuWiki paigaldaja';
+$lang['i_installer']           = 'EasyWiki paigaldaja';
 $lang['i_wikiname']            = 'Wiki nimi';
 $lang['i_enableacl']           = 'Kas lubada kasutajate haldus (soovitatav)';
 $lang['i_superuser']           = 'Superkasutaja';
 $lang['i_problems']            = 'Paigaldaja leidis mõned vead, mis on allpool välja toodud. Enne vigade eemaldamist ei saa jätkata.';
-$lang['i_modified']            = 'Õnnetuste vältimiseks läheb see skript käima ainult värskelt paigaldatud ja muutmata Dokuwiki peal.
-                       Sa peaksid ilmselt kogu koodi uuesti lahti pakkima. Vaata ka <a href="https://www.dokuwiki.org/install">Dokuwiki installeerimis juhendit</a>';
+$lang['i_modified']            = 'Õnnetuste vältimiseks läheb see skript käima ainult värskelt paigaldatud ja muutmata EasyWiki peal.
+                       Sa peaksid ilmselt kogu koodi uuesti lahti pakkima. Vaata ka <a href="https://www.EasyWiki.org/install">EasyWiki installeerimis juhendit</a>';
 $lang['i_funcna']              = 'PHP funktsiooni <code>%s</code> ei ole olemas.võibolla sinu serveri hooldaja on selle mingil põhjusel keelanud?';
 $lang['i_phpver']              = 'Sinu PHP versioon <code>%s</code> on vanem nõutavast <code>%s</code>. Pead oma paigaldatud PHP-d uuendama.';
-$lang['i_permfail']            = 'Dokuwiki ei saa kirjutada faili <code>%s</code>. Kontrolli serveris failide õigused üle.';
+$lang['i_permfail']            = 'EasyWiki ei saa kirjutada faili <code>%s</code>. Kontrolli serveris failide õigused üle.';
 $lang['i_confexists']          = '<code>%s</code> on juba olemas';
 $lang['i_writeerr']            = 'Faili <code>%s</code> ei lubata tekitada. Kontrolli kataloogi ja faili õigusi.';
-$lang['i_badhash']             = 'Tundmatu või muutunud dokuwiki.php (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'Tundmatu või muutunud easywiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - lubamatu või tühi väärtus';
-$lang['i_success']             = 'Seadistamine on õnnelikult lõpule viidud. Sa võid nüüd kustutada faili install.php. Alusta oma <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitmist.';
-$lang['i_failure']             = 'Konfiguratsiooni faili kirjutamisel esines vigu. Võimalik, et pead need käsitsi parandama enne <a href="doku.php?id=wiki:welcome">uue DokuWiki</a> täitma asumist.';
+$lang['i_success']             = 'Seadistamine on õnnelikult lõpule viidud. Sa võid nüüd kustutada faili install.php. Alusta oma <a href="wiki.php?id=wiki:welcome">uue EasyWiki</a> täitmist.';
+$lang['i_failure']             = 'Konfiguratsiooni faili kirjutamisel esines vigu. Võimalik, et pead need käsitsi parandama enne <a href="wiki.php?id=wiki:welcome">uue EasyWiki</a> täitma asumist.';
 $lang['i_policy']              = 'Wiki õiguste algne poliitika';
 $lang['i_pol0']                = 'Avatud (lugemine, kirjutamine ja üleslaadimine kõigile lubatud)';
 $lang['i_pol1']                = 'Avalikuks lugemiseks (lugeda saavad kõik, kirjutada ja üles laadida vaid registreeritud kasutajad)';
@@ -306,8 +306,8 @@ $lang['i_allowreg']            = 'Luba kasutajail endid ise arvele võtta';
 $lang['i_retry']               = 'Proovi uuesti';
 $lang['i_license']             = 'Vali leping, mille alusel wiki sisu avaldatakse:';
 $lang['i_license_none']        = 'Ära näita mingit lepingu teavet';
-$lang['i_pop_field']           = 'Aitake meil täiendada DokuWiki kasutuskogemsut:';
-$lang['i_pop_label']           = 'Kord kuus, saada DokuWiki arendajatele anonüümseid kasutus andmeid.';
+$lang['i_pop_field']           = 'Aitake meil täiendada EasyWiki kasutuskogemsut:';
+$lang['i_pop_label']           = 'Kord kuus, saada EasyWiki arendajatele anonüümseid kasutus andmeid.';
 $lang['recent_global']         = 'Uurid hetkel nimeruumi <b>%s</b> muudatusi. Võid uurida ka <a href="%s">kogu selle wiki</a> muudatusi.';
 $lang['years']                 = '%d aasta eest';
 $lang['months']                = '%d kuu eest';
@@ -344,5 +344,5 @@ $lang['currentns']             = 'Hetke nimeruum';
 $lang['searchresult']          = 'Otsingu tulemus';
 $lang['plainhtml']             = 'Liht-HTML';
 $lang['wikimarkup']            = 'Wiki märgistus';
-$lang['email_signature_text']  = 'See meil on saadetud DokuWiki poolt
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'See meil on saadetud EasyWiki poolt
+@EASYWIKIURL@';

@@ -8,6 +8,6 @@ Podrobnosti sprememb so navedene spodaj.
 ------------------------------------------------
 
 Za odjavo prejemanja podrobnosti sprememb, se je treba prijaviti na spletišče
-@DOKUWIKIURL@ in med možnostmi naročanja
+@EASYWIKIURL@ in med možnostmi naročanja
 @SUBSCRIBE@
 odjaviti prejemanje poročil sprememb strani ali imenskega prostora.

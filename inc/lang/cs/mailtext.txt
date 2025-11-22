@@ -1,4 +1,4 @@
-Stránka ve vaší DokuWiki byla změněna. Zde jsou podrobnosti:
+Stránka ve vaší EasyWiki byla změněna. Zde jsou podrobnosti:
 
 Datum       : @DATE@
 Prohlížeč   : @BROWSER@

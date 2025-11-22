@@ -1,6 +1,6 @@
 <?php
 
-class html_hilight_test extends DokuWikiTest {
+class html_hilight_test extends EasyWikiTest {
 
     function testHighlightOneWord() {
         $html = 'Foo bar Foo';

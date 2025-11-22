@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\mock;
+namespace easywiki\test\mock;
 
-class Doku_Renderer extends \Doku_Renderer {
+class Wiki_Renderer extends \Wiki_Renderer {
 
     /** @inheritdoc */
     public function getFormat() {

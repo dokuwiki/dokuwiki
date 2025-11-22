@@ -2,9 +2,9 @@
 
 /**
  * Language file tests inspired by the script by schplurtz
- * @link https://www.dokuwiki.org/teams:i18n:translation-check
+ * @link https://www.EasyWiki.org/teams:i18n:translation-check
  */
-class lang_test extends DokuWikiTest
+class lang_test extends EasyWikiTest
 {
     /**
      * returen all languages except english
@@ -13,7 +13,7 @@ class lang_test extends DokuWikiTest
      */
     protected function findLanguages()
     {
-        $languages = glob(DOKU_INC . 'inc/lang/*', GLOB_ONLYDIR);
+        $languages = glob(WIKI_INC . 'inc/lang/*', GLOB_ONLYDIR);
         $languages = array_map('basename', $languages);
         $languages = array_filter($languages, function ($in) {
             return $in !== 'en';
@@ -30,7 +30,7 @@ class lang_test extends DokuWikiTest
      */
     protected function findPlugins()
     {
-        $plugins = glob(DOKU_INC . 'lib/plugins/*', GLOB_ONLYDIR);
+        $plugins = glob(WIKI_INC . 'lib/plugins/*', GLOB_ONLYDIR);
         return $plugins;
     }
 
@@ -43,7 +43,7 @@ class lang_test extends DokuWikiTest
      */
     protected function findTemplates()
     {
-        $templates = glob(DOKU_INC . 'lib/tpl/*', GLOB_ONLYDIR);
+        $templates = glob(WIKI_INC . 'lib/tpl/*', GLOB_ONLYDIR);
         return $templates;
     }
 
@@ -70,7 +70,7 @@ class lang_test extends DokuWikiTest
     public function provideLanguageFiles()
     {
         $bases = array_merge(
-            [DOKU_INC . 'inc'],
+            [WIKI_INC . 'inc'],
             $this->findPlugins(),
             $this->findTemplates()
         );
@@ -80,7 +80,7 @@ class lang_test extends DokuWikiTest
                 foreach (['lang.php', 'settings.php'] as $file) {
                     $englishFile = "$base/lang/en/$file";
                     $foreignFile = "$base/lang/$code/$file";
-                    $name = substr($foreignFile, strlen(DOKU_INC));
+                    $name = substr($foreignFile, strlen(WIKI_INC));
                     $name = '…'.substr($name, -35);
 
                     if (file_exists($foreignFile)) {

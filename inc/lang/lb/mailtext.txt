@@ -1,4 +1,4 @@
-Et gouf eng Säit an dengem DokuWiki g'ännert oder nei erstallt. Hei sinn d'Detailer:
+Et gouf eng Säit an dengem EasyWiki g'ännert oder nei erstallt. Hei sinn d'Detailer:
 
 Datum          : @DATE@
 Browser        : @BROWSER@

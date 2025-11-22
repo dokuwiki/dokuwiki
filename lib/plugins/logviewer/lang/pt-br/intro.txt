@@ -1,6 +1,6 @@
 ====== Exibir registros ======
 
-Esta interface permite que você visualize os vários logs que são escritos pelo DokuWiki. Por padrão, não deve haver muito
+Esta interface permite que você visualize os vários logs que são escritos pelo EasyWiki. Por padrão, não deve haver muito
 aqui (depende das suas [[doku>config:dontlog|log settings]]). No entanto, se algo der errado, as chances são altas
 você encontrará informações úteis sobre o problema.
 

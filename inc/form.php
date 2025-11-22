@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DokuWiki XHTML Form
+ * EasyWiki XHTML Form
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Tom N Harris <tnharris@whoopdedo.org>
@@ -26,7 +26,7 @@
  *
  * See the form_make* functions later in this file.
  *
- * Please note that even though this class is technically deprecated (use dokuwiki\Form instead),
+ * Please note that even though this class is technically deprecated (use easywiki\Form instead),
  * it is still widely used in the core and the related form events. Until those have been rewritten,
  * this will continue to be used
  *
@@ -279,7 +279,7 @@ class Doku_Form
         global $lang;
         $form = '';
         $this->params['accept-charset'] = $lang['encoding'];
-        $form .= '<form ' . buildAttributes($this->params, false) . '><div class="no">' . DOKU_LF;
+        $form .= '<form ' . buildAttributes($this->params, false) . '><div class="no">' . WIKI_LF;
         if (!empty($this->_hidden)) {
             foreach ($this->_hidden as $name => $value)
                 $form .= form_hidden(array('name' => $name, 'value' => $value));
@@ -288,14 +288,14 @@ class Doku_Form
             if (is_array($element)) {
                 $elem_type = $element['_elem'];
                 if (function_exists('form_' . $elem_type)) {
-                    $form .= call_user_func('form_' . $elem_type, $element) . DOKU_LF;
+                    $form .= call_user_func('form_' . $elem_type, $element) . WIKI_LF;
                 }
             } else {
                 $form .= $element;
             }
         }
-        if ($this->_infieldset) $form .= form_closefieldset() . DOKU_LF;
-        $form .= '</div></form>' . DOKU_LF;
+        if ($this->_infieldset) $form .= form_closefieldset() . WIKI_LF;
+        $form .= '</div></form>' . WIKI_LF;
 
         return $form;
     }
@@ -835,7 +835,7 @@ function form_wikitext($attrs)
     unset($attrs['name']);
     unset($attrs['id']);
     return '<textarea name="wikitext" id="wiki__text" dir="auto" '
-                . buildAttributes($attrs, true) . '>' . DOKU_LF
+                . buildAttributes($attrs, true) . '>' . WIKI_LF
                 . formText($attrs['_text'])
                 . '</textarea>';
 }
@@ -1079,7 +1079,7 @@ function form_menufield($attrs)
     if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
     if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
     $s .= '><span>' . $attrs['_text'] . '</span>';
-    $s .= ' <select ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
+    $s .= ' <select ' . buildAttributes($attrs, true) . '>' . WIKI_LF;
     if (!empty($attrs['_options'])) {
         $selected = false;
 
@@ -1099,7 +1099,7 @@ function form_menufield($attrs)
     } else {
         $s .= '<option></option>';
     }
-    $s .= DOKU_LF . '</select></label>';
+    $s .= WIKI_LF . '</select></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;
@@ -1126,7 +1126,7 @@ function form_listboxfield($attrs)
     if ($attrs['_class']) $s .= ' class="' . $attrs['_class'] . '"';
     if (!empty($attrs['id'])) $s .= ' for="' . $attrs['id'] . '"';
     $s .= '><span>' . $attrs['_text'] . '</span> ';
-    $s .= '<select ' . buildAttributes($attrs, true) . '>' . DOKU_LF;
+    $s .= '<select ' . buildAttributes($attrs, true) . '>' . WIKI_LF;
     if (!empty($attrs['_options'])) {
         foreach ($attrs['_options'] as $opt) {
             @list($value, $text, $select, $disabled) = $opt;
@@ -1140,7 +1140,7 @@ function form_listboxfield($attrs)
     } else {
         $s .= '<option></option>';
     }
-    $s .= DOKU_LF . '</select></label>';
+    $s .= WIKI_LF . '</select></label>';
     if (preg_match('/(^| )block($| )/', $attrs['_class']))
         $s .= '<br />';
     return $s;

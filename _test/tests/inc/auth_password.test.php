@@ -1,6 +1,6 @@
 <?php
 
-class auth_password_test extends DokuWikiTest {
+class auth_password_test extends EasyWikiTest {
 
     /**
      *  precomputed hashes

@@ -1,0 +1,75 @@
+/**
+ * This file provides styles for the recent changes (?do=recent) and
+ * old revisions (?do=revisions).
+ */
+
+/*____________ list of revisions / recent changes ____________*/
+
+/* select type of revisions (media/pages) */
+.easywiki .changeType {
+    margin-bottom: .5em;
+}
+
+.easywiki form.changes ul li {
+    list-style: none;
+    margin-left: 0;
+}
+[dir=rtl] .easywiki form.changes ul li {
+    margin-right: 0;
+}
+.easywiki form.changes ul li span,
+.easywiki form.changes ul li a {
+    vertical-align: middle;
+}
+.easywiki form.changes ul li span.user a {
+    vertical-align: bottom;
+}
+.easywiki form.changes ul li.minor {
+    opacity: .7;
+}
+
+.easywiki form.changes li span.date {
+}
+.easywiki form.changes li a.diff_link {
+    vertical-align: baseline;
+}
+.easywiki form.changes li a.revisions_link {
+    vertical-align: baseline;
+}
+.easywiki form.changes li a.wikilink1,
+.easywiki form.changes li a.wikilink2 {
+}
+.easywiki form.changes li span.sum {
+    font-weight: bold;
+}
+.easywiki form.changes li span.user {
+}
+
+/*____________ size differences ____________*/
+
+.easywiki form.changes li .sizechange {
+    font-size: 80%;
+    border-radius: .2em;
+    padding: .1em .2em;
+    /* cannot use non-guaranteed style.ini colour placeholders, dark templates need to overwrite */
+    background-color: #ddd;
+}
+
+.easywiki form.changes li .sizechange.positive {
+    background-color: #cfc;;
+}
+.easywiki form.changes li .sizechange.negative {
+    background-color: #fdd;
+}
+
+/*____________ page navigator ____________*/
+
+.easywiki div.pagenav {
+    text-align: center;
+    margin: 1.4em 0;
+}
+.easywiki div.pagenav-prev,
+.easywiki div.pagenav-next {
+    display: inline;
+    margin: 0 .5em;
+}

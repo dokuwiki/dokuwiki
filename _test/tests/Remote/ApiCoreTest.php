@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki\test\Remote;
+namespace easywiki\test\Remote;
 
-use dokuwiki\Remote\AccessDeniedException;
-use dokuwiki\Remote\Api;
-use dokuwiki\Remote\ApiCore;
-use dokuwiki\Remote\RemoteException;
-use dokuwiki\test\mock\AuthPlugin;
+use easywiki\Remote\AccessDeniedException;
+use easywiki\Remote\Api;
+use easywiki\Remote\ApiCore;
+use easywiki\Remote\RemoteException;
+use easywiki\test\mock\AuthPlugin;
 
 
 /**
  * Class remoteapicore_test
  */
-class ApiCoreTest extends \DokuWikiTest
+class ApiCoreTest extends \EasyWikiTest
 {
 
     protected $userinfo;
@@ -23,7 +23,7 @@ class ApiCoreTest extends \DokuWikiTest
     public function setUp(): void
     {
         // we need a clean setup before each single test:
-        \DokuWikiTest::setUpBeforeClass();
+        \EasyWikiTest::setUpBeforeClass();
 
         parent::setUp();
         global $conf;
@@ -163,10 +163,10 @@ class ApiCoreTest extends \DokuWikiTest
     {
         // all pages depends on index
         idx_addPage('wiki:syntax');
-        idx_addPage('wiki:dokuwiki');
+        idx_addPage('wiki:easywiki');
 
         $file1 = wikiFN('wiki:syntax');
-        $file2 = wikiFN('wiki:dokuwiki');
+        $file2 = wikiFN('wiki:easywiki');
 
         $expected = [
             [
@@ -179,8 +179,8 @@ class ApiCoreTest extends \DokuWikiTest
                 'author' => '',
             ],
             [
-                'id' => 'wiki:dokuwiki',
-                'title' => 'wiki:dokuwiki',
+                'id' => 'wiki:easywiki',
+                'title' => 'wiki:easywiki',
                 'permission' => 8,
                 'size' => filesize($file2),
                 'revision' => filemtime($file2),
@@ -205,7 +205,7 @@ class ApiCoreTest extends \DokuWikiTest
     public function testListPagesNamespace()
     {
         $file1 = wikiFN('wiki:syntax');
-        $file2 = wikiFN('wiki:dokuwiki');
+        $file2 = wikiFN('wiki:easywiki');
         // no indexing needed here
 
         global $conf;
@@ -222,8 +222,8 @@ class ApiCoreTest extends \DokuWikiTest
                 'author' => '',
             ],
             [
-                'id' => 'wiki:dokuwiki',
-                'title' => 'DokuWiki',
+                'id' => 'wiki:easywiki',
+                'title' => 'EasyWiki',
                 'permission' => 8,
                 'size' => filesize($file2),
                 'revision' => filemtime($file2),
@@ -560,13 +560,13 @@ You can use up to five different levels of',
     //core.getPageLinks
     public function testGetPageLinks()
     {
-        $localdoku = [
+        $localwiki = [
             'type' => 'local',
-            'page' => 'DokuWiki',
-            'href' => DOKU_BASE . DOKU_SCRIPT . '?id=DokuWiki'
+            'page' => 'EasyWiki',
+            'href' => WIKI_BASE . WIKI_SCRIPT . '?id=EasyWiki'
         ];
         $expected = [
-            $localdoku,
+            $localwiki,
             [
                 'type' => 'extern',
                 'page' => 'http://www.freelists.org',
@@ -582,8 +582,8 @@ You can use up to five different levels of',
                 'page' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
                 'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html'
             ],
-            $localdoku,
-            $localdoku
+            $localwiki,
+            $localwiki
         ];
 
         $this->assertEqualResult(
@@ -615,7 +615,7 @@ You can use up to five different levels of',
     {
         // lock a first set of pages
         $_SERVER['REMOTE_USER'] = 'testuser1';
-        $tolock = ['wiki:dokuwiki', 'nonexisting'];
+        $tolock = ['wiki:easywiki', 'nonexisting'];
         $this->assertEquals(
             $tolock,
             $this->remote->call('core.lockPages', ['pages' => $tolock]),
@@ -624,7 +624,7 @@ You can use up to five different levels of',
 
         // now we're someone else
         $_SERVER['REMOTE_USER'] = 'testuser2';
-        $tolock = ['wiki:dokuwiki', 'nonexisting', 'wiki:syntax', 'another'];
+        $tolock = ['wiki:easywiki', 'nonexisting', 'wiki:syntax', 'another'];
         $expected = ['wiki:syntax', 'another'];
         $this->assertEquals(
             $expected,
@@ -637,14 +637,14 @@ You can use up to five different levels of',
     public function testUnlockPages()
     {
         $_SERVER['REMOTE_USER'] = 'testuser1';
-        lock('wiki:dokuwiki');
+        lock('wiki:easywiki');
         lock('nonexisting');
 
         $_SERVER['REMOTE_USER'] = 'testuser2';
         lock('wiki:syntax');
         lock('another');
 
-        $tounlock = ['wiki:dokuwiki', 'nonexisting', 'wiki:syntax', 'another', 'notlocked'];
+        $tounlock = ['wiki:easywiki', 'nonexisting', 'wiki:syntax', 'another', 'notlocked'];
         $expected = ['wiki:syntax', 'another'];
 
         $this->assertEquals(
@@ -709,7 +709,7 @@ You can use up to five different levels of',
     // core.listMedia
     public function testListMedia()
     {
-        $id = 'wiki:dokuwiki-128.png';
+        $id = 'wiki:easywiki-128.png';
         $file = mediaFN($id);
         $content = file_get_contents($file);
 
@@ -744,7 +744,7 @@ You can use up to five different levels of',
 
         $_SERVER['REMOTE_USER'] = 'testuser';
 
-        $orig = mediaFN('wiki:dokuwiki-128.png');
+        $orig = mediaFN('wiki:easywiki-128.png');
         $tmp = $conf['tmpdir'] . 'test.png';
 
         $target1 = 'test:image1.png';
@@ -792,7 +792,7 @@ You can use up to five different levels of',
     //core.getMedia
     public function testGetMedia()
     {
-        $id = 'wiki:dokuwiki-128.png';
+        $id = 'wiki:easywiki-128.png';
         $file = mediaFN($id);
         $base64 = base64_encode(file_get_contents($file));
 
@@ -822,7 +822,7 @@ You can use up to five different levels of',
     //core.getMediaInfo
     public function testGetMediaInfo()
     {
-        $id = 'wiki:dokuwiki-128.png';
+        $id = 'wiki:easywiki-128.png';
         $file = mediaFN($id);
 
         $expected = [
@@ -864,7 +864,7 @@ You can use up to five different levels of',
         $_SERVER['REMOTE_USER'] = 'testuser';
 
         //image to be uploaded
-        $orig = mediaFN('wiki:dokuwiki-128.png');
+        $orig = mediaFN('wiki:easywiki-128.png');
         $tmp = $conf['tmpdir'] . 'test.png';
 
         //create image to be revised
@@ -906,7 +906,7 @@ You can use up to five different levels of',
     //core.saveMedia
     public function testSaveMedia()
     {
-        $orig = mediaFN('wiki:dokuwiki-128.png');
+        $orig = mediaFN('wiki:easywiki-128.png');
         $base64 = base64_encode(file_get_contents($orig));
 
         $target = 'test:putimage.png';
@@ -924,7 +924,7 @@ You can use up to five different levels of',
         global $AUTH_ACL;
         global $USERINFO;
 
-        $id = 'wiki:dokuwiki-128.png';
+        $id = 'wiki:easywiki-128.png';
         $file = mediaFN($id);
 
         // deletion should fail, we only have AUTH_UPLOAD

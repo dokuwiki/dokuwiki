@@ -1,6 +1,6 @@
 <?php
 
-class common_embedSVG_test extends DokuWikiTest {
+class common_embedSVG_test extends EasyWikiTest {
 
     /**
      * embed should succeed with a cleaned up result

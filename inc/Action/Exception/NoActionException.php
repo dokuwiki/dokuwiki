@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Action\Exception;
+namespace easywiki\Action\Exception;
 
 /**
  * Class NoActionException
@@ -8,7 +8,7 @@ namespace dokuwiki\Action\Exception;
  * Thrown in the ActionRouter when a wanted action can not be found. Triggers
  * the unknown action event
  *
- * @package dokuwiki\Action\Exception
+ * @package easywiki\Action\Exception
  */
 class NoActionException extends \Exception
 {

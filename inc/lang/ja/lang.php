@@ -138,7 +138,7 @@ $lang['regfail']               = 'ユーザーを作成できませんでした�
 $lang['regmailfail']           = 'パスワードのメールを送信する際にエラーが生じた模様です。お手数ですが管理者まで連絡をお願いします。';
 $lang['regbadmail']            = 'メールアドレスが有効でないと判断されました。不具合だと思われる場合は、管理者にご連絡下さい。';
 $lang['regbadpass']            = '確認用のパスワードが正しくありません。もう一度お試し下さい。';
-$lang['regpwmail']             = 'あなたの DokuWiki パスワード';
+$lang['regpwmail']             = 'あなたの EasyWiki パスワード';
 $lang['reghere']               = 'ご自分用のアカウントを取ってみてはいかがですか？';
 $lang['profna']                = 'このWikiではユーザー情報の変更は出来ません';
 $lang['profnochange']          = '変更点が無かったため、システム側では何も操作を行いませんでした。';
@@ -295,27 +295,27 @@ $lang['subscr_style_digest']   = 'それぞれのページへの変更の要約�
 $lang['subscr_style_list']     = '前回のメールから変更されたページをリスト（%.2f 日毎）';
 $lang['authtempfail']          = 'ユーザー認証が一時的に使用できなくなっています。問題が解決しない場合は、Wikiの管理者に連絡して下さい。';
 $lang['i_chooselang']          = '使用言語を選択';
-$lang['i_installer']           = 'DokuWiki インストーラー';
+$lang['i_installer']           = 'EasyWiki インストーラー';
 $lang['i_wikiname']            = 'Wiki名';
 $lang['i_enableacl']           = 'ACL（アクセス管理）を使用する（推奨）';
 $lang['i_superuser']           = 'スーパーユーザー';
 $lang['i_problems']            = '問題が発見されました。以下に示す問題を解決するまで、インストールを続行できません。';
-$lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない DokuWiki に対してのみ、このスクリプトは有効です。
+$lang['i_modified']            = 'セキュリティの理由から、新規もしくはカスタマイズしていない EasyWiki に対してのみ、このスクリプトは有効です。
                          ダウンロードしたパッケージを再解凍して使用するか、
-                         <a href="https://www.dokuwiki.org/install">Dokuwiki インストールガイド</a>を参考にしてインストールしてください。';
+                         <a href="https://www.EasyWiki.org/install">EasyWiki インストールガイド</a>を参考にしてインストールしてください。';
 $lang['i_funcna']              = 'PHPの関数 <code>%s</code> が使用できません。ホスティング会社が何らかの理由で無効にしている可能性があります。';
 $lang['i_disabled']            = 'ご利用のプロバイダにより制限されています。';
-$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="https://www.dokuwiki.org/plugin:smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
+$lang['i_funcnmail']           = '<b>注：</b>PHPの mail 関数が利用不能になっています。 %s この状況が続く場合は、<a href="https://www.EasyWiki.org/plugin:smtp">smtpプラグイン</a>をインストールして解決する事も出来ます。';
 $lang['i_phpver']              = 'PHPのバージョン <code>%s</code> が必要なバージョン <code>%s</code> より以前のものです。PHPのアップグレードが必要です。';
-$lang['i_mbfuncoverload']      = 'DokuWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
-$lang['i_urandom']             = 'DokuWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
+$lang['i_mbfuncoverload']      = 'EasyWiki を実行する php.ini ファイルの mbstring.func_overload は無効にして下さい。';
+$lang['i_urandom']             = 'EasyWikiは、Cookieに対して暗号的に安全な番号を作成できません。<code>/dev/urandom</code>に対する適切なアクセスについて、php.iniの設定 open_basedir を確認する事をお勧めします。';
 $lang['i_permfail']            = '<code>%s</code> に書き込みできません。このディレクトリの権限を確認して下さい。';
 $lang['i_confexists']          = '<code>%s</code> は既に存在します';
 $lang['i_writeerr']            = '<code>%s</code> を作成できません。ディレクトリとファイルの権限を確認し、それらを手動で作成する必要があります。';
-$lang['i_badhash']             = 'dokuwiki.php が認識できないか、編集されています（hash=<code>%s</code>）';
+$lang['i_badhash']             = 'easywiki.php が認識できないか、編集されています（hash=<code>%s</code>）';
 $lang['i_badval']              = '<code>%s</code> - 正しくない、もしくは値が空です';
-$lang['i_success']             = '設定ファイルは正しく作成されました。install.phpは、もう削除しても構いません。引き続き、<a href="doku.php?id=wiki:welcome">作成したDokuWiki</a>をご利用下さい。';
-$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="doku.php?id=wiki:welcome">作成した DokuWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
+$lang['i_success']             = '設定ファイルは正しく作成されました。install.phpは、もう削除しても構いません。引き続き、<a href="wiki.php?id=wiki:welcome">作成したEasyWiki</a>をご利用下さい。';
+$lang['i_failure']             = '設定ファイルの作成中にエラーが発生しました。<a href="wiki.php?id=wiki:welcome">作成した EasyWiki</a>を使用する前に、それらの問題を手動で修正する必要があります。';
 $lang['i_policy']              = 'ACL初期設定';
 $lang['i_pol0']                = 'オープン Wiki（全ての人に、閲覧・書き込み・アップロードを許可）';
 $lang['i_pol1']                = 'パブリック Wiki（閲覧は全ての人が可能、書き込み・アップロードは登録ユーザーのみ）';
@@ -324,8 +324,8 @@ $lang['i_allowreg']            = '訪問者自身でユーザー登録機能を�
 $lang['i_retry']               = '再試行';
 $lang['i_license']             = 'あなたが作成したコンテンツが属するライセンスを選択してください：';
 $lang['i_license_none']        = 'ライセンス情報を表示しません。';
-$lang['i_pop_field']           = 'Dokuwiki の内容の向上に協力して下さい：';
-$lang['i_pop_label']           = '月に一回、DokuWikiの開発者に匿名の使用データを送信する';
+$lang['i_pop_field']           = 'EasyWiki の内容の向上に協力して下さい：';
+$lang['i_pop_label']           = '月に一回、EasyWikiの開発者に匿名の使用データを送信する';
 $lang['recent_global']         = '現在、名前空間 <b>%s</b> 内の変更を閲覧中です。<a href="%s">Wiki全体の最近の変更の確認</a>もできます。';
 $lang['years']                 = '%d年前';
 $lang['months']                = '%dカ月前';
@@ -366,8 +366,8 @@ $lang['plainhtml']             = 'プレーンHTML';
 $lang['wikimarkup']            = 'Wikiマークアップ';
 $lang['page_nonexist_rev']     = '指定ページ %s はありません。このリンク <a href="%s">%s</a> から作成できます。';
 $lang['unable_to_parse_date']  = 'パラメータ "%s" を処理できません。';
-$lang['email_signature_text']  = 'このメールは次のDokuWikiより自動的に送信されています。
-@DOKUWIKIURL@';
+$lang['email_signature_text']  = 'このメールは次のEasyWikiより自動的に送信されています。
+@EASYWIKIURL@';
 $lang['log_file_too_large']    = 'ログファイルが大きすぎます．前の行をスキップしました！';
 $lang['log_file_failed_to_open'] = 'ログファイルを開けませんでした．';
 $lang['log_file_failed_to_read'] = 'ログの読み込み中にエラーが発生しました．';

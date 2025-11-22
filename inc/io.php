@@ -7,10 +7,10 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Logger;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Extension\Event;
+use easywiki\Logger;
+use easywiki\Utf8\PhpString;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Extension\Event;
 
 /**
  * Removes empty directories
@@ -54,7 +54,7 @@ function io_sweepNS($id, $basedir = 'datadir')
 }
 
 /**
- * Used to read in a DokuWiki page from file, and send IO_WIKIPAGE_READ events.
+ * Used to read in a EasyWiki page from file, and send IO_WIKIPAGE_READ events.
  *
  * Generates the action event which delegates to io_readFile().
  * Action plugins are allowed to modify the page content in transit.
@@ -119,13 +119,13 @@ function io_readFile($file, $clean = true)
     $ret = '';
     if (file_exists($file)) {
         if (str_ends_with($file, '.gz')) {
-            if (!DOKU_HAS_GZIP) return false;
+            if (!WIKI_HAS_GZIP) return false;
             $ret = gzfile($file);
             if (is_array($ret)) {
                 $ret = implode('', $ret);
             }
         } elseif (str_ends_with($file, '.bz2')) {
-            if (!DOKU_HAS_BZIP) return false;
+            if (!WIKI_HAS_BZIP) return false;
             $ret = bzfile($file);
         } else {
             $ret = file_get_contents($file);
@@ -185,7 +185,7 @@ function bzfile($file, $array = false)
 }
 
 /**
- * Used to write out a DokuWiki page to file, and send IO_WIKIPAGE_WRITE events.
+ * Used to write out a EasyWiki page to file, and send IO_WIKIPAGE_WRITE events.
  *
  * This generates an action event and delegates to io_saveFile().
  * Action plugins are allowed to modify the page content in transit.
@@ -257,13 +257,13 @@ function _io_saveFile($file, $content, $append)
     $fileexists = file_exists($file);
 
     if (str_ends_with($file, '.gz')) {
-        if (!DOKU_HAS_GZIP) return false;
+        if (!WIKI_HAS_GZIP) return false;
         $fh = @gzopen($file, $mode . '9');
         if (!$fh) return false;
         gzwrite($fh, $content);
         gzclose($fh);
     } elseif (str_ends_with($file, '.bz2')) {
-        if (!DOKU_HAS_BZIP) return false;
+        if (!WIKI_HAS_BZIP) return false;
         if ($append) {
             $bzcontent = bzfile($file);
             if ($bzcontent === false) return false;
@@ -354,10 +354,10 @@ function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines =
 
     // load into array
     if (str_ends_with($file, '.gz')) {
-        if (!DOKU_HAS_GZIP) return false;
+        if (!WIKI_HAS_GZIP) return false;
         $lines = gzfile($file);
     } elseif (str_ends_with($file, '.bz2')) {
-        if (!DOKU_HAS_BZIP) return false;
+        if (!WIKI_HAS_BZIP) return false;
         $lines = bzfile($file, true);
     } else {
         $lines = file($file);
@@ -815,7 +815,7 @@ function io_getSizeFile($file)
         $array = unpack("V", $buffer);
         $uncompressedsize = end($array);
     } elseif (str_ends_with($file, '.bz2')) {
-        if (!DOKU_HAS_BZIP) return 0;
+        if (!WIKI_HAS_BZIP) return 0;
         $bz = bzopen($file, "r");
         if ($bz === false) return 0;
         $uncompressedsize = 0;

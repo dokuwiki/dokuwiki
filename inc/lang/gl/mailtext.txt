@@ -1,4 +1,4 @@
-Engadiuse ou mudouse unha páxina no teu DokuWiki. Aquí van os pormenores:
+Engadiuse ou mudouse unha páxina no teu EasyWiki. Aquí van os pormenores:
 
 Data              : @DATE@
 Navegador         : @BROWSER@

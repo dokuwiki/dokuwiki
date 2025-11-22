@@ -1,6 +1,6 @@
 Olá @FULLNAME@!
 
-Alguém requisitou um nova senha para o seu usuário @TITLE@ em @DOKUWIKIURL@.
+Alguém requisitou um nova senha para o seu usuário @TITLE@ em @EASYWIKIURL@.
 
 Se não foi você quem fez essa requisição, simplesmente ignore essa mensagem.
 

@@ -1,6 +1,6 @@
 Tere @FULLNAME@!
 
-Keegi on Sinu parooli uuendust soovinud kasutajale @TITLE@ (@DOKUWIKIURL@).
+Keegi on Sinu parooli uuendust soovinud kasutajale @TITLE@ (@EASYWIKIURL@).
 
 Kui see ei olnud Sina, siis võid seda meili lihtsalt ignoreerida.
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
-use dokuwiki\Parsing\ParserMode\Plugin;
-use Doku_Handler;
-use Doku_Renderer;
+use easywiki\Parsing\ParserMode\Plugin;
+use Wiki_Handler;
+use Wiki_Renderer;
 
 /**
  * Syntax Plugin Prototype
  *
- * All DokuWiki plugins to extend the parser/rendering mechanism
+ * All EasyWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
@@ -31,7 +31,7 @@ abstract class SyntaxPlugin extends Plugin
     /**
      * Allowed Mode Types
      *
-     * Defines the mode types for other dokuwiki markup that maybe nested within the
+     * Defines the mode types for other easywiki markup that maybe nested within the
      * plugin's own markup. Needs to return an array of one or more of the mode types
      * defined in $PARSER_MODES in Parser.php
      *
@@ -52,7 +52,7 @@ abstract class SyntaxPlugin extends Plugin
      * 'block'  - Open paragraphs need to be closed before plugin output
      * 'stack'  - Special case. Plugin wraps other paragraphs.
      *
-     * @see Doku_Handler_Block
+     * @see Wiki_Handler_Block
      *
      * @return string
      */
@@ -72,10 +72,10 @@ abstract class SyntaxPlugin extends Plugin
      * @param   string $match The text matched by the patterns
      * @param   int $state The lexer state for the match
      * @param   int $pos The character position of the matched text
-     * @param   Doku_Handler $handler The Doku_Handler object
+     * @param   Wiki_Handler $handler The Wiki_Handler object
      * @return  bool|array Return an array with all data you want to use in render, false don't add an instruction
      */
-    abstract public function handle($match, $state, $pos, Doku_Handler $handler);
+    abstract public function handle($match, $state, $pos, Wiki_Handler $handler);
 
     /**
      * Handles the actual output creation.
@@ -96,11 +96,11 @@ abstract class SyntaxPlugin extends Plugin
      * created
      *
      * @param string $format output format being rendered
-     * @param Doku_Renderer $renderer the current renderer object
+     * @param Wiki_Renderer $renderer the current renderer object
      * @param array $data data created by handler()
      * @return  boolean                 rendered correctly? (however, returned value is not used at the moment)
      */
-    abstract public function render($format, Doku_Renderer $renderer, $data);
+    abstract public function render($format, Wiki_Renderer $renderer, $data);
 
     /**
      *  There should be no need to override this function

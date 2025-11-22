@@ -8,4 +8,4 @@ Skjemaet over tillater deg å se og modifisere tillatelser for en valgt bruker e
 
 I tabellen nedenfor vises alle nærværende satte adgangskontroll-regler. Du kan bruke den til raskt å slette eller endre mange regler i slengen.
 
-Å lese  [[doku>acl|den offisielle dokumentasjonen for ACL]]  kan hjelpe deg å fullt ut forstå hvordan adgangskontroll fungerer i DokuWiki.
+Å lese  [[doku>acl|den offisielle dokumentasjonen for ACL]]  kan hjelpe deg å fullt ut forstå hvordan adgangskontroll fungerer i EasyWiki.

@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\ChangeLog;
+namespace easywiki\ChangeLog;
 
-use dokuwiki\Utf8\PhpString;
+use easywiki\Utf8\PhpString;
 
 /**
  * Provides methods for handling of changelog

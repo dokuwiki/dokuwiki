@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
- * DokuWiki Base Plugin
+ * EasyWiki Base Plugin
  *
  * Most plugin types inherit from this class
  */

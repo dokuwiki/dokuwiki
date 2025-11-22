@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Menu;
+namespace easywiki\Menu;
 
-use dokuwiki\Menu\Item\AbstractItem;
+use easywiki\Menu\Item\AbstractItem;
 
 /**
  * Interface MenuInterface

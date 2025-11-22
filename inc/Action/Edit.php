@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\Editor;
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Ui;
+use easywiki\Ui\Editor;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Ui;
 
 /**
  * Class Edit
  *
  * Handle editing
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Edit extends AbstractAction
 {

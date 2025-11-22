@@ -15,7 +15,7 @@
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @todo   Is this currently used anywhere? Should it?
  */
-class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
+class Wiki_Renderer_xhtmlsummary extends Wiki_Renderer_xhtml
 {
     // Namespace these variables to
     // avoid clashes with parent classes
@@ -28,14 +28,14 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
     /** @inheritdoc */
     public function document_start()
     {
-        $this->doc .= DOKU_LF . '<div>' . DOKU_LF;
+        $this->doc .= WIKI_LF . '<div>' . WIKI_LF;
     }
 
     /** @inheritdoc */
     public function document_end()
     {
         $this->doc = $this->sum_summary;
-        $this->doc .= DOKU_LF . '</div>' . DOKU_LF;
+        $this->doc .= WIKI_LF . '</div>' . WIKI_LF;
     }
 
     /** @inheritdoc
@@ -50,9 +50,9 @@ class Doku_Renderer_xhtmlsummary extends Doku_Renderer_xhtml
             $this->info['sum_pagetitle'] = $text;
             $this->sum_pageTitle = true;
         }
-        $this->doc .= DOKU_LF . '<h' . $level . '>';
+        $this->doc .= WIKI_LF . '<h' . $level . '>';
         $this->doc .= $this->_xmlEntities($text);
-        $this->doc .= "</h$level>" . DOKU_LF;
+        $this->doc .= "</h$level>" . WIKI_LF;
     }
 
     /** @inheritdoc */

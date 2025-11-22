@@ -1,4 +1,4 @@
-Eitt skjal í tíni DokuWiki bleiv broytt ella skoytt uppí. Her er ein lýsing:
+Eitt skjal í tíni EasyWiki bleiv broytt ella skoytt uppí. Her er ein lýsing:
 
 Dato               : @DATE@
 Browser            : @BROWSER@

@@ -1,7 +1,7 @@
 Kedves @FULLNAME@!
 
 Te, vagy valaki más, egy új jelszót kért a(z)
-@DOKUWIKIURL@ webcímen elérhető
+@EASYWIKIURL@ webcímen elérhető
 @TITLE@ c. wikin található felhasználói fiókodhoz.
 
 Ha ez nem Te voltál, nyugodtan hagyd figyelmen kívül ezt a levelet.

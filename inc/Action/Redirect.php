@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Action\Exception\ActionAbort;
-use dokuwiki\Extension\Event;
+use easywiki\Action\Exception\ActionAbort;
+use easywiki\Extension\Event;
 
 /**
  * Class Redirect
  *
  * Used to redirect to the current page with the last edited section as a target if found
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Redirect extends AbstractAliasAction
 {

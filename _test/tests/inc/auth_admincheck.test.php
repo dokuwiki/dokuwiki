@@ -1,9 +1,9 @@
 <?php
 
-use dokuwiki\test\mock\AuthCaseInsensitivePlugin;
-use dokuwiki\test\mock\AuthPlugin;
+use easywiki\test\mock\AuthCaseInsensitivePlugin;
+use easywiki\test\mock\AuthPlugin;
 
-class auth_admin_test extends DokuWikiTest
+class auth_admin_test extends EasyWikiTest
 {
 
     private $oldauth;

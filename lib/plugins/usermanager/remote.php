@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\RemotePlugin;
-use dokuwiki\Remote\AccessDeniedException;
-use dokuwiki\Remote\RemoteException;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\RemotePlugin;
+use easywiki\Remote\AccessDeniedException;
+use easywiki\Remote\RemoteException;
 
 /**
- * DokuWiki Plugin usermanager (Action Component)
+ * EasyWiki Plugin usermanager (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author Chris Smith <chris@jalakai.co.uk>

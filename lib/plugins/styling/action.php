@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
- * DokuWiki Plugin styling (Action Component)
+ * EasyWiki Plugin styling (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>
@@ -15,7 +15,7 @@ class action_plugin_styling extends ActionPlugin
     /**
      * Registers a callback functions
      *
-     * @param EventHandler $controller DokuWiki's event controller object
+     * @param EventHandler $controller EasyWiki's event controller object
      * @return void
      */
     public function register(EventHandler $controller)

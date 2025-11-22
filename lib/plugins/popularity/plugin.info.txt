@@ -3,5 +3,5 @@ author Andreas Gohr
 email  andi@splitbrain.org
 date   2015-07-15
 name   Popularity Feedback Plugin
-desc   Send anonymous data about your wiki to the DokuWiki developers
-url    https://www.dokuwiki.org/plugin:popularity
+desc   Send anonymous data about your wiki to the EasyWiki developers
+url    https://www.EasyWiki.org/plugin:popularity

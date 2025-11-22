@@ -1,8 +1,8 @@
 <?php
 
-use dokuwiki\Extension\ActionPlugin;
-use dokuwiki\Extension\EventHandler;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\ActionPlugin;
+use easywiki\Extension\EventHandler;
+use easywiki\Extension\Event;
 
 /**
  * Plugin for testing the test system
@@ -16,10 +16,10 @@ class action_plugin_testing extends ActionPlugin
     /** @inheritdoc */
     public function register(EventHandler $controller)
     {
-        $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'dokuwikiStarted');
+        $controller->register_hook('EASYWIKI_STARTED', 'AFTER', $this, 'easywikiStarted');
     }
 
-    public function dokuwikiStarted()
+    public function easywikiStarted()
     {
         $param = [];
         Event::createAndTrigger('TESTING_PLUGIN_INSTALLED', $param);

@@ -10,16 +10,16 @@
  * @global Input $INPUT
  */
 
-use dokuwiki\Feed\FeedCreator;
-use dokuwiki\Feed\FeedCreatorOptions;
-use dokuwiki\Cache\Cache;
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
+use easywiki\Feed\FeedCreator;
+use easywiki\Feed\FeedCreatorOptions;
+use easywiki\Cache\Cache;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/');
+require_once(WIKI_INC . 'inc/init.php');
 
 //close session
 session_write_close();

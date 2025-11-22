@@ -4,7 +4,7 @@
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
- * @author     Matthias Schulte <dokuwiki@lupo49.de>
+ * @author     Matthias Schulte <easywiki@lupo49.de>
  * @author     Schplurtz le Déboulonné <Schplurtz@laposte.net>
  */
 
@@ -25,7 +25,7 @@ $lang['security']   = 'Security Warning: Changing this option could present a se
 
 /* --- Config Setting Headers --- */
 $lang['_configuration_manager'] = 'Configuration Manager'; //same as heading in intro.txt
-$lang['_header_dokuwiki'] = 'DokuWiki';
+$lang['_header_easywiki'] = 'EasyWiki';
 $lang['_header_plugin'] = 'Plugin';
 $lang['_header_template'] = 'Template';
 $lang['_header_undefined'] = 'Undefined Settings';
@@ -60,7 +60,7 @@ $lang['tagline']     = 'Tagline (if template supports it)';
 $lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';
 $lang['savedir']     = 'Directory for saving data';
-$lang['basedir']     = 'Server path (eg. <code>/dokuwiki/</code>). Leave blank for autodetection.';
+$lang['basedir']     = 'Server path (eg. <code>/easywiki/</code>). Leave blank for autodetection.';
 $lang['baseurl']     = 'Server URL (eg. <code>http://www.yourserver.com</code>). Leave blank for autodetection.';
 $lang['cookiedir']   = 'Cookie path. Leave blank for using baseurl.';
 $lang['dmode']       = 'Directory creation mode';
@@ -84,7 +84,7 @@ $lang['maxseclevel'] = 'Maximum section edit level';
 $lang['camelcase']   = 'Use CamelCase for links';
 $lang['deaccent']    = 'How to clean pagenames';
 $lang['useheading']  = 'Use first heading for pagenames';
-$lang['sneaky_index'] = 'By default, DokuWiki will show all namespaces in the sitemap. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces which may make the index unusable with certain ACL setups.';
+$lang['sneaky_index'] = 'By default, EasyWiki will show all namespaces in the sitemap. Enabling this option will hide those where the user doesn\'t have read permissions. This might result in hiding of accessable subnamespaces which may make the index unusable with certain ACL setups.';
 $lang['hidepages']   = 'Hide pages matching this regular expression from search, the sitemap and other automatic indexes';
 
 /* Authentication Settings */
@@ -97,7 +97,7 @@ $lang['superuser']   = 'Superuser - group, user or comma separated list user1,@g
 $lang['manager']     = 'Manager - group, user or comma separated list user1,@group1,user2 with access to certain management functions';
 $lang['profileconfirm'] = 'Confirm profile changes with password';
 $lang['rememberme'] = 'Allow permanent login cookies (remember me)';
-$lang['disableactions'] = 'Disable DokuWiki actions';
+$lang['disableactions'] = 'Disable EasyWiki actions';
 $lang['disableactions_check'] = 'Check';
 $lang['disableactions_subscription'] = 'Subscribe/Unsubscribe';
 $lang['disableactions_wikicode'] = 'View source/Export Raw';
@@ -165,7 +165,7 @@ $lang['rss_media_o_media'] = 'media';
 
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Check for updates and security warnings? DokuWiki needs to contact update.dokuwiki.org for this feature.';
+$lang['updatecheck'] = 'Check for updates and security warnings? EasyWiki needs to contact update.easywiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['sepchar']     = 'Page name word separator';
@@ -180,7 +180,7 @@ $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
 $lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
-$lang['renderer__core']   = '%s (dokuwiki core)';
+$lang['renderer__core']   = '%s (easywiki core)';
 $lang['renderer__plugin'] = '%s (plugin)';
 $lang['search_nslimit'] = 'Limit the search to the current X namespaces. When a search is executed from a page within a deeper namespace, the first X namespaces will be added as filter';
 $lang['search_fragment'] = 'Specify the default fragment search behavior';
@@ -194,7 +194,7 @@ $lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has b
 $lang['hidewarnings'] = 'Do not display any warnings issued by PHP. This may ease the transisition to PHP8+. Warnings will still be logged in the error log and should be reported.';
 
 /* Network Options */
-$lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
+$lang['dnslookups'] = 'EasyWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
 $lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
 $lang['trustedproxies'] = 'Comma-separated list of trusted proxy servers from which to read the X-Forwarded-For header. Each item in the array may be either an IPv4 or IPv6 address, or an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8). Leave empty to trust no proxy.';
 $lang['realip'] = 'Trust the X-Real-IP header. Only enable this if your server writes this header, otherwise it may be spoofed.';
@@ -223,7 +223,7 @@ $lang['typography_o_2'] = 'including single quotes (might not always work)';
 /* userewrite options */
 $lang['userewrite_o_0'] = 'none';
 $lang['userewrite_o_1'] = '.htaccess';
-$lang['userewrite_o_2'] = 'DokuWiki internal';
+$lang['userewrite_o_2'] = 'EasyWiki internal';
 
 /* deaccent options */
 $lang['deaccent_o_0'] = 'off';

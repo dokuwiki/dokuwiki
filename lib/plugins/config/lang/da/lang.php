@@ -10,7 +10,7 @@
  * @author Kalle Sommer Nielsen <kalle@php.net>
  * @author Esben Laursen <hyber@hyber.dk>
  * @author Harith <haj@berlingske.dk>
- * @author Daniel Ejsing-Duun <dokuwiki@zilvador.dk>
+ * @author Daniel Ejsing-Duun <easywiki@zilvador.dk>
  * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
  * @author rasmus <rasmus@kinnerup.com>
  * @author Mikael Lyngvig <mikael@lyngvig.org>
@@ -26,7 +26,7 @@ $lang['danger']                = 'Fare: Ændring af denne mulighed kan gøre din
 $lang['warning']               = 'Advarsel: Ændring af denne mulighed kan forårsage utilsigtet opførsel.';
 $lang['security']              = 'Sikkerhedsadvarsel: Ændring af denne mulighed kan forårsage en sikkerhedsrisiko.';
 $lang['_configuration_manager'] = 'Opsætningsstyring';
-$lang['_header_dokuwiki']      = 'DokuWiki indstillinger';
+$lang['_header_easywiki']      = 'EasyWiki indstillinger';
 $lang['_header_plugin']        = 'Udvidelsesindstillinger';
 $lang['_header_template']      = 'Tema';
 $lang['_header_undefined']     = 'Udefinerede indstillinger';
@@ -75,7 +75,7 @@ $lang['maxseclevel']           = 'Højeste niveau for redigering af sektioner';
 $lang['camelcase']             = 'Brug CamelCase til henvisninger';
 $lang['deaccent']              = 'Pæne sidenavne';
 $lang['useheading']            = 'Brug første overskrift til sidenavne';
-$lang['sneaky_index']          = 'DokuWiki vil som standard vise alle navnerum i indholdsfortegnelsen. Ved at slå denne valgmulighed til vil skjule de navnerum, hvor brugeren ikke har læsetilladelse. Dette kan føre til, at tilgængelige undernavnerum bliver skjult. Ligeledes kan det også gøre indholdsfortegnelsen ubrugelig med visse ACL-opsætninger.';
+$lang['sneaky_index']          = 'EasyWiki vil som standard vise alle navnerum i indholdsfortegnelsen. Ved at slå denne valgmulighed til vil skjule de navnerum, hvor brugeren ikke har læsetilladelse. Dette kan føre til, at tilgængelige undernavnerum bliver skjult. Ligeledes kan det også gøre indholdsfortegnelsen ubrugelig med visse ACL-opsætninger.';
 $lang['hidepages']             = 'Skjul lignende sider (almindelige udtryk)';
 $lang['useacl']                = 'Benyt adgangskontrollister (ACL)';
 $lang['autopasswd']            = 'Generer adgangskoder automatisk';
@@ -86,7 +86,7 @@ $lang['superuser']             = 'Superbruger';
 $lang['manager']               = 'Bestyrer - en gruppe eller bruger med adgang til bestemte styrende funktioner';
 $lang['profileconfirm']        = 'Bekræft profilændringer med adgangskode';
 $lang['rememberme']            = 'Tillad varige datafiler for brugernavne (husk mig)';
-$lang['disableactions']        = 'Slå DokuWiki-muligheder fra';
+$lang['disableactions']        = 'Slå EasyWiki-muligheder fra';
 $lang['disableactions_check']  = 'Tjek';
 $lang['disableactions_subscription'] = 'Tliføj/Fjern opskrivning';
 $lang['disableactions_wikicode'] = 'Vis kilde/Eksporter grundkode';
@@ -135,7 +135,7 @@ $lang['rss_media']             = 'Hvilke ændringer skal vises i XML feed?';
 $lang['rss_media_o_both']      = 'begge';
 $lang['rss_media_o_pages']     = 'sider';
 $lang['rss_media_o_media']     = 'media';
-$lang['updatecheck']           = 'Kig efter opdateringer og sikkerhedsadvarsler? DokuWiki er nødt til at kontakte update.dokuwiki.org for at tilgå denne funktion.';
+$lang['updatecheck']           = 'Kig efter opdateringer og sikkerhedsadvarsler? EasyWiki er nødt til at kontakte update.easywiki.org for at tilgå denne funktion.';
 $lang['userewrite']            = 'Brug pæne netadresser';
 $lang['useslash']              = 'Brug skråstreg som navnerumsdeler i netadresser';
 $lang['sepchar']               = 'Orddelingstegn til sidenavne';
@@ -150,7 +150,7 @@ $lang['send404']               = 'Send "HTTP 404/Page Not Found" for ikke-eksist
 $lang['broken_iua']            = 'Er funktionen "ignore_user_abort" uvirksom på dit system? Dette kunne forårsage en ikke virkende søgeoversigt. IIS+PHP/CGI er kendt for ikke at virke. Se <a href="http://bugs.splitbrain.org/?do=details&amp;task_id=852">Fejl 852</a> for flere oplysninger.';
 $lang['xsendfile']             = 'Brug hovedfilen til X-Sendfile for at få netserveren til at sende statiske filer? Din netserver skal understøtte dette for at bruge det.';
 $lang['renderer_xhtml']        = 'Udskriver der skal bruges til størstedelen af wiki-udskriften (XHTML)';
-$lang['renderer__core']        = '%s (dokuwiki-kerne)';
+$lang['renderer__core']        = '%s (easywiki-kerne)';
 $lang['renderer__plugin']      = '%s (udvidelse)';
 $lang['search_nslimit']        = 'Begræns søgningen til de aktuelle X navnerum. Når en søgning udføres fra en side i et underliggende navnerum, tilføjes de første X navnerum som filter';
 $lang['search_fragment']       = 'Angiv standardadfærd ved fragment søgning';
@@ -161,7 +161,7 @@ $lang['search_fragment_o_contains'] = 'indeholder';
 $lang['trustedproxy']          = 'Hav tillid til viderestillede proxyer som rapporterer en oprindelig IP der matcher denne regular expression. Som standard matcher lokale netværk. Efterlad blank for ikke at have tillid til nogen proxyer.';
 $lang['_feature_flags']        = 'Funktionsflag';
 $lang['defer_js']              = 'Afvent med JavaScript ekserkvering, til sidens HTML er behandlet. Dette kan få sideindlæsning til at føles hurtigere, men kan potentielt forhindre et fåtal af udvidelser i at fungere korrekt.';
-$lang['dnslookups']            = 'DokuWiki laver DNS-opslag for at finde hostnames på de IP-adresser hvorfra brugere redigerer sider. Hvis du har en langsom eller ikke-fungerende DNS-server, eller ikke ønsker denne funktion, kan du slå den fra.';
+$lang['dnslookups']            = 'EasyWiki laver DNS-opslag for at finde hostnames på de IP-adresser hvorfra brugere redigerer sider. Hvis du har en langsom eller ikke-fungerende DNS-server, eller ikke ønsker denne funktion, kan du slå den fra.';
 $lang['jquerycdn']             = 'Skal jQuery og jQuery UI kode hentes fra et CDN (content delivery network)? Dette resulterer i flere HTTP-forespørgsler, men filerne indlæses muligvis hurtigere, og brugere har dem muligvis allerede i cachen.';
 $lang['jquerycdn_o_0']         = 'Intet CDN, kode hentes fra denne server';
 $lang['jquerycdn_o_jquery']    = 'Benyt code.jquery.com';
@@ -178,7 +178,7 @@ $lang['typography_o_1']        = 'Kun gåseøjne';
 $lang['typography_o_2']        = 'Tillader enkelttegnscitering (vil måske ikke altid virke)';
 $lang['userewrite_o_0']        = 'ingen';
 $lang['userewrite_o_1']        = '.htaccess';
-$lang['userewrite_o_2']        = 'Dokuwiki internt';
+$lang['userewrite_o_2']        = 'EasyWiki internt';
 $lang['deaccent_o_0']          = 'fra';
 $lang['deaccent_o_1']          = 'fjern accenttegn';
 $lang['deaccent_o_2']          = 'romaniser';

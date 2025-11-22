@@ -7,7 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Prepares and prints an JavaScript array with all toolbar buttons

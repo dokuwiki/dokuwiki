@@ -44,7 +44,7 @@
 * much information on other users as you could as a domain admin.
 * 
 * Before asking questions, please read the Documentation at
-* http://adldap.sourceforge.net/wiki/doku.php?id=api
+* http://adldap.sourceforge.net/wiki/wiki.php?id=api
 */
 require_once(dirname(__FILE__) . '/collections/adLDAPCollection.php');
 require_once(dirname(__FILE__) . '/classes/adLDAPGroups.php');
@@ -132,7 +132,7 @@ class adLDAP {
         
     /**
     * Use SSL (LDAPS), your server needs to be setup, please see
-    * http://adldap.sourceforge.net/wiki/doku.php?id=ldap_over_ssl
+    * http://adldap.sourceforge.net/wiki/wiki.php?id=ldap_over_ssl
     * 
     * @var bool
     */

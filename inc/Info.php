@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
 /**
- * Basic Information about DokuWiki
+ * Basic Information about EasyWiki
  *
  * @todo much of infoutils should be moved here
  */

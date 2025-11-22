@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\Backlinks;
-use dokuwiki\Ui;
+use easywiki\Ui\Backlinks;
+use easywiki\Ui;
 
 /**
  * Class Backlink
  *
  * Shows which pages link to the current page
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Backlink extends AbstractAction
 {

@@ -8,6 +8,6 @@ Zoznam zmenených stránok:
 --------------------------------------------------------
 
 Ak si neprajete zasielať tieto správy, prihláste sa do wiki
-@DOKUWIKIURL@, potom prejdite na
+@EASYWIKIURL@, potom prejdite na
 @SUBSCRIBE@
 a odhláste sa z informovania o zmenách stránky alebo menného priestoru.

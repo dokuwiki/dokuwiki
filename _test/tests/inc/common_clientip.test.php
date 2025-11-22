@@ -1,6 +1,6 @@
 <?php
 
-class common_clientIP_test extends DokuWikiTest {
+class common_clientIP_test extends EasyWikiTest {
 
     /**
      * @var mixed[] $configs Possible values for $conf['trustedproxies'].

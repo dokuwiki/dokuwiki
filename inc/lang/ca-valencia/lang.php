@@ -66,7 +66,7 @@ $lang['regsuccess2']           = 'S\'ha creat l\'usuari.';
 $lang['regmailfail']           = 'Pareix que ha hagut un error enviant el correu en la contrasenya. ¡Per favor, contacte en l\'administrador!';
 $lang['regbadmail']            = 'La direcció de correu no pareix vàlida - contacte en l\'administrador si pensa que és deu a un erro nostre';
 $lang['regbadpass']            = 'Les dos contrasenyes que ha donat no són idèntiques, per favor, torne a intentar-ho.';
-$lang['regpwmail']             = 'La seua contrasenya de DokuWiki';
+$lang['regpwmail']             = 'La seua contrasenya de EasyWiki';
 $lang['reghere']               = '¿Encara no té un conte? Cree-se\'n un';
 $lang['profna']                = 'Este wiki no li permet modificar el perfil';
 $lang['profnochange']          = 'Sense canvis, no hi ha res que fer.';
@@ -185,26 +185,26 @@ $lang['img_camera']            = 'Càmara:';
 $lang['img_keywords']          = 'Paraules clau:';
 $lang['authtempfail']          = 'L\'autenticació d\'usuaris està desactivada temporalment. Si la situació persistix, per favor, informe a l\'administrador del Wiki.';
 $lang['i_chooselang']          = 'Trie l\'idioma';
-$lang['i_installer']           = 'Instal·lador de DokuWiki';
+$lang['i_installer']           = 'Instal·lador de EasyWiki';
 $lang['i_wikiname']            = 'Nom del Wiki';
 $lang['i_enableacl']           = 'Activar ACL (recomanat)';
 $lang['i_superuser']           = 'Super-usuari';
 $lang['i_problems']            = 'L\'instalador ha trobat els problemes mostrats més avall. No pot continuar fins que no els arregle.';
-$lang['i_modified']            = 'Per raons de seguritat, este procés només funcionarà en una instalació nova i verge de DokuWiki.
+$lang['i_modified']            = 'Per raons de seguritat, este procés només funcionarà en una instalació nova i verge de EasyWiki.
 Deuria tornar a extraure els archius del paquet que ha descarregat o consultar les
-<a href="https://www.dokuwiki.org/install">instruccions d\'instalació de Dokuwiki</a> completes';
+<a href="https://www.EasyWiki.org/install">instruccions d\'instalació de EasyWiki</a> completes';
 $lang['i_funcna']              = 'La funció de PHP <code>%s</code> no està disponible. ¿Pot ser que el seu proveïdor d\'hostage l\'haja desactivada per algun motiu?';
 $lang['i_phpver']              = 'La versió de PHP <code>%s</code> és menor que
 la <code>%s</code> que es necessita. Necessita actualitzar PHP.';
-$lang['i_permfail']            = 'DokuWiki no pot escriure en <code>%s</code>. ¡Necessita arreglar els permissos d\'este directori!';
+$lang['i_permfail']            = 'EasyWiki no pot escriure en <code>%s</code>. ¡Necessita arreglar els permissos d\'este directori!';
 $lang['i_confexists']          = '<code>%s</code> ya existix';
 $lang['i_writeerr']            = 'No es pot crear <code>%s</code>. Haurà de comprovar els permissos del directori/archiu i crear manualment l\'arxiu.';
-$lang['i_badhash']             = 'dokuwiki.php substituït o modificat (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php substituït o modificat (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - valor illegal o buit';
 $lang['i_success']             = 'La configuració ha finalisat correctament. Ya pot borrar l\'arxiu install.php. Passe al
-<a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
+<a href="wiki.php?id=wiki:welcome">nou EasyWiki</a>.';
 $lang['i_failure']             = 'Han aparegut alguns erros escrivint els archius de configuració. Deurà arreglar-los manualment abans de que
-puga utilisar el <a href="doku.php?id=wiki:welcome">nou DokuWiki</a>.';
+puga utilisar el <a href="wiki.php?id=wiki:welcome">nou EasyWiki</a>.';
 $lang['i_policy']              = 'Política inicial ACL';
 $lang['i_pol0']                = 'Wiki obert (llegir, escriure i enviar tots)';
 $lang['i_pol1']                = 'Wiki públic (llegir tots, escriure i enviar només usuaris registrats)';
@@ -218,6 +218,6 @@ $lang['days']                  = 'fa %d dies';
 $lang['hours']                 = 'fa %d hores';
 $lang['minutes']               = 'fa %d minuts';
 $lang['seconds']               = 'fa %d segons';
-$lang['email_signature_text'] = 'Este correu ha segut generat per DokuWiki en
-@DOKUWIKIURL@';
+$lang['email_signature_text'] = 'Este correu ha segut generat per EasyWiki en
+@EASYWIKIURL@';
 

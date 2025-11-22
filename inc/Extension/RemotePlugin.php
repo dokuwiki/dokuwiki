@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
-use dokuwiki\Remote\Api;
-use dokuwiki\Remote\ApiCall;
+use easywiki\Remote\Api;
+use easywiki\Remote\ApiCall;
 use ReflectionException;
 use ReflectionMethod;
 
@@ -41,7 +41,7 @@ abstract class RemotePlugin extends Plugin
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             // skip parent methods, only methods further down are exported
             $declaredin = $method->getDeclaringClass()->name;
-            if ($declaredin === 'dokuwiki\Extension\Plugin' || $declaredin === 'dokuwiki\Extension\RemotePlugin') {
+            if ($declaredin === 'easywiki\Extension\Plugin' || $declaredin === 'easywiki\Extension\RemotePlugin') {
                 continue;
             }
             $method_name = $method->name;

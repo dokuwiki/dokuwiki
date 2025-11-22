@@ -1,4 +1,4 @@
-Se ha cambiado o añadido una página en tu DokuWiki. Aquí están los detalles:
+Se ha cambiado o añadido una página en tu EasyWiki. Aquí están los detalles:
 
 Fecha : @DATE@
 Navegador : @BROWSER@

@@ -1,4 +1,4 @@
-En sida i din DokuWiki har lagts till eller ändrats. Här är detaljerna:
+En sida i din EasyWiki har lagts till eller ändrats. Här är detaljerna:
 
 Datum                : @DATE@
 Webbläsare           : @BROWSER@

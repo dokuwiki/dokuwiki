@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\Remote\Mock;
+namespace easywiki\test\Remote\Mock;
 
-use dokuwiki\Extension\RemotePlugin;
+use easywiki\Extension\RemotePlugin;
 
 class TestPlugin2 extends RemotePlugin
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\Remote\Mock;
+namespace easywiki\test\Remote\Mock;
 
-class JsonRpcServer extends \dokuwiki\Remote\JsonRpcServer
+class JsonRpcServer extends \easywiki\Remote\JsonRpcServer
 {
 
     /** @inheritdoc */

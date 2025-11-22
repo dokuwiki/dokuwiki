@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
 /**
  * Action Plugin Prototype

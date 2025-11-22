@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Forwarder/Router to doku.php
+ * Forwarder/Router to wiki.php
  *
- * In normal usage, this script simply redirects to doku.php. However it can also be used as a routing
+ * In normal usage, this script simply redirects to wiki.php. However it can also be used as a routing
  * script with PHP's builtin webserver. It takes care of .htaccess compatible rewriting, directory/file
  * access permission checking and passing on static files.
  *
@@ -16,8 +16,8 @@
  */
 
 if (PHP_SAPI != 'cli-server') {
-    if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
-    require_once(DOKU_INC . 'inc/init.php');
+    if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/');
+    require_once(WIKI_INC . 'inc/init.php');
 
     send_redirect(wl($conf['start']));
 }
@@ -40,7 +40,7 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
     // exports
     $_GET['do'] = 'export_' . $m[1];
     $_GET['id'] = $m[2];
-    require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/wiki.php';
 } elseif (
     $_SERVER['SCRIPT_NAME'] !== '/index.php' &&
     file_exists($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME'])
@@ -73,5 +73,5 @@ if (preg_match('/^\/_media\/(.*)/', $_SERVER['SCRIPT_NAME'], $m)) {
         $_GET['id'] = $_SERVER['SCRIPT_NAME'];
     }
 
-    require $_SERVER['DOCUMENT_ROOT'] . '/doku.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/wiki.php';
 }

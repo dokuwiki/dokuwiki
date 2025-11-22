@@ -15,7 +15,7 @@ $lang['userscope']   = 'Cyfyngu sgôp chwiliadau ar gyfer chwiliad defnyddwyr';
 $lang['groupscope']  = 'Cyfyngu sgôp chwiliadau ar gyfer chwiliad grwpiau';
 $lang['userkey']     = 'Priodoledd yn denodi\'r defnyddair; rhaid iddo fod yn gyson i \'r hidlydd defnyddwyr.';
 $lang['groupkey']    = 'Aelodaeth grŵp o unrhyw briodoledd defnyddiwr (yn hytrach na grwpiau AD safonol) e.e. grŵp o adran neu rif ffôn';
-$lang['modPass']     = 'Gall cyfrinair LDAP gael ei newid gan DokuWiki?';
+$lang['modPass']     = 'Gall cyfrinair LDAP gael ei newid gan EasyWiki?';
 $lang['debug']       = 'Dangos gwybodaeth dadfygio ychwanegol gyda gwallau';
 
 

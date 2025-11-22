@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Input;
+namespace easywiki\Input;
 
 /**
  * Encapsulates access to the $_REQUEST array, making sure used parameters are initialized and
@@ -28,7 +28,7 @@ class Input
     protected $filter;
 
     /**
-     * Intilizes the dokuwiki\Input\Input class and it subcomponents
+     * Intilizes the easywiki\Input\Input class and it subcomponents
      */
     public function __construct()
     {

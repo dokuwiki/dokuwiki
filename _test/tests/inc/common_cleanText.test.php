@@ -1,6 +1,6 @@
 <?php
 
-class common_cleanText_test extends DokuWikiTest {
+class common_cleanText_test extends EasyWikiTest {
 
     function test_unix(){
         $unix = "one\n                two\n\n                three";

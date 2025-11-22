@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/httpclient_mock.php');
 
-class httpclient_http_proxy_test extends DokuWikiTest
+class httpclient_http_proxy_test extends EasyWikiTest
 {
     protected $url = 'http://httpbingo.org/user-agent';
     protected $host;
@@ -12,7 +12,7 @@ class httpclient_http_proxy_test extends DokuWikiTest
     public function setUp(): void
     {
         parent::setUp();
-        $configuration = DOKU_UNITTEST . "proxy.conf.php";
+        $configuration = WIKI_UNITTEST . "proxy.conf.php";
         if (file_exists($configuration)) {
             /** @var $conf array */
             include $configuration;
@@ -37,6 +37,6 @@ class httpclient_http_proxy_test extends DokuWikiTest
 
         $data = $http->get($this->url);
         $this->assertFalse($data === false, $http->errorInfo($this->url));
-        $this->assertStringContainsString('DokuWiki', $data, 'response content');
+        $this->assertStringContainsString('EasyWiki', $data, 'response content');
     }
 }

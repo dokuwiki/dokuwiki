@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui;
+use easywiki\Ui;
 
 /**
  * Class Recent
  *
  * The recent changes view
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Recent extends AbstractAction
 {

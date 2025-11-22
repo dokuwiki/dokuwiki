@@ -1,14 +1,14 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\ChangeLog\ChangeLog;
+use easywiki\ChangeLog\ChangeLog;
 
 /**
- * DokuWiki Diff Interface
+ * EasyWiki Diff Interface
  * parent class of PageDiff and MediaDiff
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 abstract class Diff extends Ui
 {

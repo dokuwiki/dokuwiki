@@ -1,15 +1,15 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 /**
  * Class Plugin
  *
  * Used to run action plugins
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Plugin extends AbstractAction
 {

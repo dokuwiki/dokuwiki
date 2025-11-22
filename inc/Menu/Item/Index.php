@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Index
@@ -17,9 +17,9 @@ class Index extends AbstractItem
         parent::__construct();
 
         $this->accesskey = 'x';
-        $this->svg = DOKU_INC . 'lib/images/menu/file-tree.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/file-tree.svg';
 
-        // allow searchbots to get to the sitemap from the homepage (when dokuwiki isn't providing a sitemap.xml)
+        // allow searchbots to get to the sitemap from the homepage (when easywiki isn't providing a sitemap.xml)
         if ($conf['start'] == $ID && !$conf['sitemap']) {
             $this->nofollow = false;
         }

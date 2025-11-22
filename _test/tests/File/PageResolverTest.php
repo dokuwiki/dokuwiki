@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\test\File;
+namespace easywiki\test\File;
 
-use dokuwiki\File\PageResolver;
+use easywiki\File\PageResolver;
 
 /**
  * @todo tests that make use of revisions might be wanted
  */
-class PageResolverTest extends \DokuWikiTest
+class PageResolverTest extends \EasyWikiTest
 {
     /**
      * @return \Generator|array

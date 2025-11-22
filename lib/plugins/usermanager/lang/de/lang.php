@@ -17,7 +17,7 @@
  * @author Christian Wichmann <nospam@zone0.de>
  * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
  * @author Pierre Corell <info@joomla-praxis.de>
- * @author Matthias Schulte <dokuwiki@lupo49.de>
+ * @author Matthias Schulte <easywiki@lupo49.de>
  * @author Sven <Svenluecke48@gmx.d>
  * @author christian studer <cstuder@existenz.ch>
  * @author Ben Fey <benedikt.fey@beck-heun.de>

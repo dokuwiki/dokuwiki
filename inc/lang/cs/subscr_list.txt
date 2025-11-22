@@ -9,7 +9,7 @@ Zde jsou:
 
 Pro odhlášení z odebírání změn
 se prosím příhlašte do wiki na adrese
-@DOKUWIKIURL@, pak navštivte
+@EASYWIKIURL@, pak navštivte
 @SUBSCRIBE@
 a odhlaste se z odebírání změn na stránce či
 ve jmenném prostoru.

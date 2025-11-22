@@ -4,7 +4,7 @@
  *
  * @author Michael Hamann <michael@content-space.de>
  */
-class indexer_histogram_test extends DokuWikiTest {
+class indexer_histogram_test extends EasyWikiTest {
     function test_minlength() {
         $indexer = idx_get_indexer();
         $indexer->addMetaKeys('histo1', 'testkey', array('foo', 'bar', 'foobar'));

@@ -8,4 +8,4 @@ Am Formulär hei uewendriwwer kanns de d'Rechter vun dem ausgewielte Benotzer od
 
 An der Tabell hei ënnendrënner kanns de all d'Reegele gesinn déi de Moment gesat sinn. Du kanns se huelen fir Reegelen ze änneren oder ze läschen.
 
-Déi [[doku>acl|offiziell Dokumentatioun iwwert ACL]] hëlleft der besser ze verstoen wéi déi Reegelen am Dokuwiki funktionéieren.
+Déi [[doku>acl|offiziell Dokumentatioun iwwert ACL]] hëlleft der besser ze verstoen wéi déi Reegelen am EasyWiki funktionéieren.

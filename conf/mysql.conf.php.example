@@ -33,7 +33,7 @@ $conf['plugin']['authmysql']['database'] = '';
  */
 $conf['plugin']['authmysql']['debug'] = 0;
 
-/* Normally password encryption is done by DokuWiki (recommended) but for
+/* Normally password encryption is done by EasyWiki (recommended) but for
  * some reasons it might be useful to let the database do the encryption.
  * Set 'forwardClearPass' to '1' and the cleartext password is forwarded to
  * the database, otherwise the encrypted one.
@@ -76,7 +76,7 @@ $conf['plugin']['authmysql']['checkPass']   = "SELECT pass
  * 'name'  the user's full name
  * 'mail'  the user's email address
  *
- * Keep in mind that Dokuwiki will access this information through the
+ * Keep in mind that EasyWiki will access this information through the
  * names listed above so aliases might be necessary.
  *
  * Following patters will be replaced:

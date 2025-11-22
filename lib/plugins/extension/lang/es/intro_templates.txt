@@ -1,1 +1,1 @@
-Estas son las plantillas actualmente instaladas en tu DokuWiki. Puede seleccionar la plantilla que se utilizará en el [[?do=admin&page=config|Administrador de configuración]]
+Estas son las plantillas actualmente instaladas en tu EasyWiki. Puede seleccionar la plantilla que se utilizará en el [[?do=admin&page=config|Administrador de configuración]]

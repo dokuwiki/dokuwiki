@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Subscriptions;
+namespace easywiki\Subscriptions;
 
 use Mailer;
 
@@ -28,8 +28,8 @@ abstract class SubscriptionSender
     {
         static $listid = null;
         if (is_null($listid)) {
-            $server = parse_url(DOKU_URL, PHP_URL_HOST);
-            $listid = implode('.', array_reverse(explode('/', DOKU_BASE))) . $server;
+            $server = parse_url(WIKI_URL, PHP_URL_HOST);
+            $listid = implode('.', array_reverse(explode('/', WIKI_BASE))) . $server;
             $listid = urlencode($listid);
             $listid = strtolower(trim($listid, '.'));
         }

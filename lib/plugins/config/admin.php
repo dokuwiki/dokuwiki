@@ -8,19 +8,19 @@
  * @author     Ben Coburn <btcoburn@silicodon.net>
  */
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\plugin\config\core\Configuration;
-use dokuwiki\plugin\config\core\Setting\Setting;
-use dokuwiki\plugin\config\core\Setting\SettingFieldset;
-use dokuwiki\plugin\config\core\Setting\SettingHidden;
+use easywiki\Extension\AdminPlugin;
+use easywiki\plugin\config\core\Configuration;
+use easywiki\plugin\config\core\Setting\Setting;
+use easywiki\plugin\config\core\Setting\SettingFieldset;
+use easywiki\plugin\config\core\Setting\SettingHidden;
 
 /**
- * All DokuWiki plugins to extend the admin function
+ * All EasyWiki plugins to extend the admin function
  * need to inherit from this class
  */
 class admin_plugin_config extends AdminPlugin
 {
-    protected const IMGDIR = DOKU_BASE . 'lib/plugins/config/images/';
+    protected const IMGDIR = WIKI_BASE . 'lib/plugins/config/images/';
 
     /** @var Configuration */
     protected $configuration;
@@ -94,7 +94,7 @@ class admin_plugin_config extends AdminPlugin
         echo '<form id="dw__configform" action="' . script() . '" method="post" autocomplete="off">';
         echo '<div class="no"><input type="hidden" name="id" value="' . $ID . '" /></div>';
         formSecurityToken();
-        $this->printH1('dokuwiki_settings', $this->getLang('_header_dokuwiki'));
+        $this->printH1('easywiki_settings', $this->getLang('_header_easywiki'));
 
         $in_fieldset = false;
         $first_plugin_fieldset = true;
@@ -229,7 +229,7 @@ class admin_plugin_config extends AdminPlugin
         $check = false;
 
         // gather settings data into three sub arrays
-        $labels = ['dokuwiki' => [], 'plugin' => [], 'template' => []];
+        $labels = ['easywiki' => [], 'plugin' => [], 'template' => []];
         foreach ($this->configuration->getSettings() as $setting) {
             if ($setting instanceof SettingFieldset) {
                 $labels[$setting->getType()][] = $setting;
@@ -241,7 +241,7 @@ class admin_plugin_config extends AdminPlugin
         $toc[] = html_mktocitem(sectionID($title, $check), $title, 1);
 
         // main entries
-        foreach (['dokuwiki', 'plugin', 'template'] as $section) {
+        foreach (['easywiki', 'plugin', 'template'] as $section) {
             if (empty($labels[$section])) continue; // no entries, skip
 
             // create main header

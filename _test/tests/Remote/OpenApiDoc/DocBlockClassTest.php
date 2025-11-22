@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki\test\Remote\OpenApiDoc;
+namespace easywiki\test\Remote\OpenApiDoc;
 
-use dokuwiki\Remote\OpenApiDoc\DocBlockClass;
-use dokuwiki\Remote\OpenApiDoc\DocBlockMethod;
-use dokuwiki\Remote\OpenApiDoc\DocBlockProperty;
-use dokuwiki\Remote\OpenApiDoc\Type;
+use easywiki\Remote\OpenApiDoc\DocBlockClass;
+use easywiki\Remote\OpenApiDoc\DocBlockMethod;
+use easywiki\Remote\OpenApiDoc\DocBlockProperty;
+use easywiki\Remote\OpenApiDoc\Type;
 
 /**
  * Test cases for DocBlockClass
  *
  * This test class is also used in the tests itself
  */
-class DocBlockClassTest extends \DokuWikiTest
+class DocBlockClassTest extends \EasyWikiTest
 {
     /** @var string This is a dummy */
     public $dummyProperty1 = 'dummy';

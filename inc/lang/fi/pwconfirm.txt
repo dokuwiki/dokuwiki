@@ -1,6 +1,6 @@
 Hei @FULLNAME@!
 
-Joku pyysi uutta salasanaa login nimellesi @TITLE@ sivustolla @DOKUWIKIURL@
+Joku pyysi uutta salasanaa login nimellesi @TITLE@ sivustolla @EASYWIKIURL@
 
 Jos sinä ei pyytänyt uutta salasanaa, niin voit unohtaa tämän postin.
 

@@ -1,16 +1,16 @@
-authpdo Plugin for DokuWiki
+authpdo Plugin for EasyWiki
 
 Authenticate against a database via PDO
 
 All documentation for this plugin can be found at
-https://www.dokuwiki.org/plugin:authpdo
+https://www.EasyWiki.org/plugin:authpdo
 
 If you install this plugin manually, make sure it is installed in
 lib/plugins/authpdo/ - if the folder is called different it
 will not work!
 
-Please refer to http://www.dokuwiki.org/plugins for additional info
-on how to install plugins in DokuWiki.
+Please refer to http://www.EasyWiki.org/plugins for additional info
+on how to install plugins in EasyWiki.
 
 ----
 Copyright (C) Andreas Gohr <andi@splitbrain.org>
@@ -24,4 +24,4 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-See the COPYING file in your DokuWiki folder for details
+See the COPYING file in your EasyWiki folder for details

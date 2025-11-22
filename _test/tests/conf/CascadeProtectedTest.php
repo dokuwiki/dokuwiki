@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\conf;
+namespace easywiki\test\conf;
 
-class CascadeProtectedTest extends \DokuWikiTest
+class CascadeProtectedTest extends \EasyWikiTest
 {
 
     public function setUp(): void

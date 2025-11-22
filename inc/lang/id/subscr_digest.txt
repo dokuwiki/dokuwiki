@@ -11,4 +11,4 @@ Revisi lama: @OLDPAGE@
 
 Revisi baru: @NEWPAGE@
 
-Untuk menonaktifkan pemberitahuan ini, masuk ke wiki di @DOKUWIKIURL@ kemudian kunjungi @SUBSCRIBE@ dan halaman batal berlangganan dan/atau namespace yang diubah.
+Untuk menonaktifkan pemberitahuan ini, masuk ke wiki di @EASYWIKIURL@ kemudian kunjungi @SUBSCRIBE@ dan halaman batal berlangganan dan/atau namespace yang diubah.

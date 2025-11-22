@@ -5,7 +5,7 @@
  * @author     Chris Smith <chris@jalakai.co.uk>
  */
 
-class auth_loadacl_test extends DokuWikiTest {
+class auth_loadacl_test extends EasyWikiTest {
 
     function setUp() : void {
         global $USERINFO;

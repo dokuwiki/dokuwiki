@@ -1,4 +1,4 @@
-Létrejött vagy megváltozott egy oldal a DokuWikiden. Részletek:
+Létrejött vagy megváltozott egy oldal a EasyWikiden. Részletek:
 
 Dátum: @DATE@
 Böngésző: @BROWSER@

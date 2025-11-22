@@ -1,6 +1,6 @@
 <?php
 
-class template_pagetitle_test extends DokuWikiTest {
+class template_pagetitle_test extends EasyWikiTest {
 
     function test_localID() {
         global $ID,$ACT;

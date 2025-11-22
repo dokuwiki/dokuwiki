@@ -4,7 +4,7 @@
 /**
  * Test cases search only in a namespace or exclude a namespace
  */
-class FulltextPageLookupTest extends DokuWikiTest {
+class FulltextPageLookupTest extends EasyWikiTest {
 
     public function test_inoutns() {
         saveWikiText('test:page1', 'Some text', 'Test initialization');

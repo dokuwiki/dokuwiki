@@ -1,6 +1,6 @@
 Sveiki, @FULLNAME@!
 
-Kāds pieprasījis jaunu paroli tavam @TITLE@ kontam @DOKUWIKIURL@ sistēmā.
+Kāds pieprasījis jaunu paroli tavam @TITLE@ kontam @EASYWIKIURL@ sistēmā.
 
 Ja paroli neesi prasījis, ignorē šo vēstuli.
 

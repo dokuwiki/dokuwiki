@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Exception\FatalException;
+use easywiki\Exception\FatalException;
 
 /**
  * Manage the global handling of errors and exceptions
@@ -38,7 +38,7 @@ class ErrorHandler
      */
     public static function register()
     {
-        if (!defined('DOKU_UNITTEST')) {
+        if (!defined('WIKI_UNITTEST')) {
             set_exception_handler([ErrorHandler::class, 'fatalException']);
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
             set_error_handler(
@@ -62,7 +62,7 @@ class ErrorHandler
         $msg = 'An unforeseen error has occured. This is most likely a bug somewhere.';
         if ($plugin) $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
         $logged = self::logException($e)
-            ? 'More info has been written to the DokuWiki error log.'
+            ? 'More info has been written to the EasyWiki error log.'
             : $e->getFile() . ':' . $e->getLine();
 
         echo <<<EOT

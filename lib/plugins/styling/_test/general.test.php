@@ -5,7 +5,7 @@
  * @group plugin_styling
  * @group plugins
  */
-class general_plugin_styling_test extends DokuWikiTest {
+class general_plugin_styling_test extends EasyWikiTest {
 
     /**
      * Simple test to make sure the plugin.info.txt is in correct format

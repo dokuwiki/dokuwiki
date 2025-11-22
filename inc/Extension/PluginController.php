@@ -1,18 +1,18 @@
 <?php
 
-namespace dokuwiki\Extension;
+namespace easywiki\Extension;
 
-use dokuwiki\ErrorHandler;
+use easywiki\ErrorHandler;
 
 /**
- * Class to encapsulate access to dokuwiki plugins
+ * Class to encapsulate access to easywiki plugins
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Christopher Smith <chris@jalakai.co.uk>
  */
 class PluginController
 {
-    /** @var array the types of plugins DokuWiki supports */
+    /** @var array the types of plugins EasyWiki supports */
     public const PLUGIN_TYPES = ['auth', 'admin', 'syntax', 'action', 'renderer', 'helper', 'remote', 'cli'];
 
     protected $listByType = [];
@@ -82,7 +82,7 @@ class PluginController
     {
 
         //we keep all loaded plugins available in global scope for reuse
-        global $DOKU_PLUGINS;
+        global $WIKI_PLUGINS;
 
         [$plugin, /* component */ ] = $this->splitName($name);
 
@@ -95,18 +95,18 @@ class PluginController
 
         try {
             //plugin already loaded?
-            if (!empty($DOKU_PLUGINS[$type][$name])) {
-                if ($new || !$DOKU_PLUGINS[$type][$name]->isSingleton()) {
+            if (!empty($WIKI_PLUGINS[$type][$name])) {
+                if ($new || !$WIKI_PLUGINS[$type][$name]->isSingleton()) {
                     return class_exists($class, true) ? new $class() : null;
                 }
 
-                return $DOKU_PLUGINS[$type][$name];
+                return $WIKI_PLUGINS[$type][$name];
             }
 
             //construct class and instantiate
             if (!class_exists($class, true)) {
                 # the plugin might be in the wrong directory
-                $inf = confToHash(DOKU_PLUGIN . "$plugin/plugin.info.txt");
+                $inf = confToHash(WIKI_PLUGIN . "$plugin/plugin.info.txt");
                 if (isset($inf['base']) && $inf['base'] != $plugin) {
                     msg(
                         sprintf(
@@ -118,7 +118,7 @@ class PluginController
                         ),
                         -1
                     );
-                } elseif (preg_match('/^' . DOKU_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
+                } elseif (preg_match('/^' . WIKI_PLUGIN_NAME_REGEX . '$/', $plugin) !== 1) {
                     msg(sprintf(
                         'Plugin name \'%s\' is not a valid plugin name, only the characters a-z and 0-9 are allowed. ' .
                         'Maybe the plugin has been installed in the wrong directory?',
@@ -127,13 +127,13 @@ class PluginController
                 }
                 return null;
             }
-            $DOKU_PLUGINS[$type][$name] = new $class();
+            $WIKI_PLUGINS[$type][$name] = new $class();
         } catch (\Throwable $e) {
             ErrorHandler::showExceptionMsg($e, sprintf('Failed to load plugin %s', $plugin));
             return null;
         }
 
-        return $DOKU_PLUGINS[$type][$name];
+        return $WIKI_PLUGINS[$type][$name];
     }
 
     /**
@@ -201,11 +201,11 @@ class PluginController
      */
     protected function populateMasterList()
     {
-        if ($dh = @opendir(DOKU_PLUGIN)) {
+        if ($dh = @opendir(WIKI_PLUGIN)) {
             $all_plugins = [];
             while (false !== ($plugin = readdir($dh))) {
                 if ($plugin[0] === '.') continue;               // skip hidden entries
-                if (is_file(DOKU_PLUGIN . $plugin)) continue;    // skip files, we're only interested in directories
+                if (is_file(WIKI_PLUGIN . $plugin)) continue;    // skip files, we're only interested in directories
 
                 if (array_key_exists($plugin, $this->masterList) && $this->masterList[$plugin] == 0) {
                     $all_plugins[$plugin] = 0;
@@ -343,11 +343,11 @@ class PluginController
         $plugins = [];
 
         foreach ($master_list as $plugin) {
-            if (file_exists(DOKU_PLUGIN . "$plugin/$type.php")) {
+            if (file_exists(WIKI_PLUGIN . "$plugin/$type.php")) {
                 $plugins[] = $plugin;
             }
 
-            $typedir = DOKU_PLUGIN . "$plugin/$type/";
+            $typedir = WIKI_PLUGIN . "$plugin/$type/";
             if (is_dir($typedir)) {
                 if ($dp = opendir($typedir)) {
                     while (false !== ($component = readdir($dp))) {
@@ -402,9 +402,9 @@ class PluginController
     {
         $plugins = $this->getList();
         foreach ($plugins as $plugin) {
-            if (file_exists(DOKU_PLUGIN . $plugin . '/vendor/autoload.php')) {
+            if (file_exists(WIKI_PLUGIN . $plugin . '/vendor/autoload.php')) {
                 try {
-                    require_once(DOKU_PLUGIN . $plugin . '/vendor/autoload.php');
+                    require_once(WIKI_PLUGIN . $plugin . '/vendor/autoload.php');
                 } catch (\Throwable $e) {
                     ErrorHandler::showExceptionMsg($e, sprintf('Failed to init plugin %s autoloader', $plugin));
                 }

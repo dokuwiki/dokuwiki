@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Cache\Cache;
+use easywiki\Cache\Cache;
 
-if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/../../');
+if (!defined('WIKI_INC')) define('WIKI_INC', __DIR__ . '/../../');
 if (!defined('NOSESSION')) define('NOSESSION', true); // we do not use a session or authentication here (better caching)
 if (!defined('NL')) define('NL', "\n");
-if (!defined('DOKU_DISABLE_GZIP_OUTPUT')) define('DOKU_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
-require_once(DOKU_INC . 'inc/init.php');
+if (!defined('WIKI_DISABLE_GZIP_OUTPUT')) define('WIKI_DISABLE_GZIP_OUTPUT', 1); // we gzip ourself here
+require_once(WIKI_INC . 'inc/init.php');
 
 // MAIN
 header('Content-Type: application/javascript; charset=utf-8');
@@ -24,8 +24,8 @@ function jquery_out()
 {
     $cache = new Cache('jquery', '.js');
     $files = [
-        DOKU_INC . 'lib/scripts/jquery/jquery.min.js',
-        DOKU_INC . 'lib/scripts/jquery/jquery-ui.min.js'
+        WIKI_INC . 'lib/scripts/jquery/jquery.min.js',
+        WIKI_INC . 'lib/scripts/jquery/jquery-ui.min.js'
     ];
     $cache_files = $files;
     $cache_files[] = __FILE__;

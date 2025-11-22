@@ -1,13 +1,13 @@
 <?php
 
-namespace dokuwiki\Form;
+namespace easywiki\Form;
 
 /**
  * Class Element
  *
  * The basic building block of a form
  *
- * @package dokuwiki\Form
+ * @package easywiki\Form
  */
 abstract class Element
 {
@@ -132,7 +132,7 @@ abstract class Element
     public function id($id = null)
     {
         if (strpos($id, '__') === false) {
-            throw new \InvalidArgumentException('IDs in DokuWiki have to contain two subsequent underscores');
+            throw new \InvalidArgumentException('IDs in EasyWiki have to contain two subsequent underscores');
         }
 
         return $this->attr('id', $id);

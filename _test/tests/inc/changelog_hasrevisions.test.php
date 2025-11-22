@@ -1,6 +1,6 @@
 <?php
 
-use \dokuwiki\ChangeLog\PageChangeLog;
+use \easywiki\ChangeLog\PageChangeLog;
 
 /**
  * Tests for if a page has revisions with hasRevisions()
@@ -8,7 +8,7 @@ use \dokuwiki\ChangeLog\PageChangeLog;
  * This class uses the files:
  * - data/meta/mailinglist.changes
  */
-class changelog_hasrevisions_test extends DokuWikiTest {
+class changelog_hasrevisions_test extends EasyWikiTest {
 
     /**
      * test page has revisions

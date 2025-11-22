@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\test\Setting;
+namespace easywiki\plugin\config\test\Setting;
 
-use dokuwiki\plugin\config\core\Setting\Setting;
+use easywiki\plugin\config\core\Setting\Setting;
 
 /**
  * @group plugin_config

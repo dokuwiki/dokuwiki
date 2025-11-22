@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Quote;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Quote;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Quote extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Quote extends TestOfWiki_Parser {
 
     function testQuote() {
         $this->P->addMode('quote',new Quote());

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Subscriptions;
+namespace easywiki\Subscriptions;
 
 class RegistrationSubscriptionSender extends SubscriptionSender
 {

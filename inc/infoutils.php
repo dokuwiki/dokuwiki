@@ -7,18 +7,18 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Debug\DebugHelper;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Logger;
-use dokuwiki\Utf8\PhpString;
+use easywiki\Debug\DebugHelper;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Logger;
+use easywiki\Utf8\PhpString;
 
 if (!defined('DOKU_MESSAGEURL')) {
     if (in_array('ssl', stream_get_transports())) {
-        define('DOKU_MESSAGEURL', 'https://update.dokuwiki.org/check/');
+        define('DOKU_MESSAGEURL', 'https://update.easywiki.org/check/');
     } else {
-        define('DOKU_MESSAGEURL', 'http://update.dokuwiki.org/check/');
+        define('DOKU_MESSAGEURL', 'http://update.easywiki.org/check/');
     }
 }
 
@@ -40,7 +40,7 @@ function checkUpdateMessages()
     $is_http = !str_starts_with(DOKU_MESSAGEURL, 'https');
 
     // check if new messages needs to be fetched
-    if ($lm < time() - (60 * 60 * 24) || $lm < @filemtime(DOKU_INC . DOKU_SCRIPT)) {
+    if ($lm < time() - (60 * 60 * 24) || $lm < @filemtime(WIKI_INC . WIKI_SCRIPT)) {
         @touch($cf);
         Logger::debug(
             sprintf(
@@ -73,7 +73,7 @@ function checkUpdateMessages()
 
 
 /**
- * Return DokuWiki's version (split up in date and type)
+ * Return EasyWiki's version (split up in date and type)
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
@@ -81,11 +81,11 @@ function getVersionData()
 {
     $version = [];
     //import version string
-    if (file_exists(DOKU_INC . 'VERSION')) {
+    if (file_exists(WIKI_INC . 'VERSION')) {
         //official release
-        $version['date'] = trim(io_readFile(DOKU_INC . 'VERSION'));
+        $version['date'] = trim(io_readFile(WIKI_INC . 'VERSION'));
         $version['type'] = 'Release';
-    } elseif (is_dir(DOKU_INC . '.git')) {
+    } elseif (is_dir(WIKI_INC . '.git')) {
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
@@ -100,16 +100,16 @@ function getVersionData()
         }
 
         // we cannot use git on the shell -- let's do it manually!
-        if (file_exists(DOKU_INC . '.git/HEAD')) {
-            $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
+        if (file_exists(WIKI_INC . '.git/HEAD')) {
+            $headCommit = trim(file_get_contents(WIKI_INC . '.git/HEAD'));
             if (strpos($headCommit, 'ref: ') === 0) {
                 // it is something like `ref: refs/heads/master`
                 $headCommit = substr($headCommit, 5);
-                $pathToHead = DOKU_INC . '.git/' . $headCommit;
+                $pathToHead = WIKI_INC . '.git/' . $headCommit;
                 if (file_exists($pathToHead)) {
                     $headCommit = trim(file_get_contents($pathToHead));
                 } else {
-                    $packedRefs = file_get_contents(DOKU_INC . '.git/packed-refs');
+                    $packedRefs = file_get_contents(WIKI_INC . '.git/packed-refs');
                     if (!preg_match("~([[:xdigit:]]+) $headCommit~", $packedRefs, $matches)) {
                         # ref not found in pack file
                         return $version;
@@ -123,7 +123,7 @@ function getVersionData()
             // Get commit date from Git object
             $subDir = substr($headCommit, 0, 2);
             $fileName = substr($headCommit, 2);
-            $gitCommitObject = DOKU_INC . ".git/objects/$subDir/$fileName";
+            $gitCommitObject = WIKI_INC . ".git/objects/$subDir/$fileName";
             if (file_exists($gitCommitObject) && function_exists('zlib_decode')) {
                 $commit = zlib_decode(file_get_contents($gitCommitObject));
                 $committerLine = explode("\n", $commit)[3];
@@ -144,7 +144,7 @@ function getVersionData()
 }
 
 /**
- * Return DokuWiki's version
+ * Return EasyWiki's version
  *
  * This returns the version in the form "Type Date (SHA)". Where type is either
  * "Release" or "Git" and date is the date of the release or the date of the
@@ -152,7 +152,7 @@ function getVersionData()
  * git checkouts.
  *
  * If no version can be determined "snapshot? update version XX" is returned.
- * Where XX represents the update version number set in doku.php.
+ * Where XX represents the update version number set in wiki.php.
  *
  * @return string The version string e.g. "Release 2023-04-04a"
  * @author Anika Henke <anika@selfthinker.org>
@@ -234,7 +234,7 @@ function check()
     global $INPUT;
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
-        msg('DokuWiki version: ' . getVersion(), 1);
+        msg('EasyWiki version: ' . getVersion(), 1);
         if (version_compare(phpversion(), '7.4.0', '<')) {
             msg('Your PHP version is too old (' . phpversion() . ' vs. 7.4+ needed)', -1);
         } else {
@@ -283,7 +283,7 @@ function check()
         }
     }
 
-    if (is_writable(DOKU_CONF)) {
+    if (is_writable(WIKI_CONF)) {
         msg('conf directory is writable', 1);
     } else {
         msg('conf directory is not writable', -1);
@@ -382,7 +382,7 @@ function check()
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
-                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.EasyWiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
         );
@@ -391,7 +391,7 @@ function check()
     } else {
         msg(
             'The search index is empty. See
-                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.EasyWiki.org/faq:searchindex">faq:searchindex</a>
                 for help on how to fix the search index. If the default indexer
                 isn\'t used or the wiki is actually empty this is normal.'
         );
@@ -401,7 +401,7 @@ function check()
     $http = new DokuHTTPClient();
     $http->max_redirect = 0;
     $http->timeout = 3;
-    $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
+    $http->sendRequest('https://www.EasyWiki.org', '', 'HEAD');
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
@@ -477,7 +477,7 @@ function msg($message, $lvl = 0, $line = '', $file = '', $allow = MSG_PUBLIC)
  * Determine whether the current user is allowed to view the message
  * in the $msg data structure
  *
- * @param array $msg dokuwiki msg structure:
+ * @param array $msg easywiki msg structure:
  *              msg   => string, the message;
  *              lvl   => int, level of the message (see msg() function);
  *              allow => int, flag used to determine who is allowed to see the message, see MSG_* constants
@@ -546,7 +546,7 @@ function dbg($msg, $hidden = false)
  */
 function dbglog($msg, $header = '')
 {
-    dbg_deprecated('\\dokuwiki\\Logger');
+    dbg_deprecated('\\easywiki\\Logger');
 
     // was the msg as single line string? use it as header
     if ($header === '' && is_string($msg) && strpos($msg, "\n") === false) {

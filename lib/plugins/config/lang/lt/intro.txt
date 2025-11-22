@@ -1,6 +1,6 @@
 ====== Konfiguracijos Administravimas ======
 
-Naudokite šį puslapį Dokuwiki instaliacijos tvarkymui. Pagalba individualiems nustatymams [[doku>config]]. Daugiau informacijos apie šį priedą [[doku>plugin:config]].
+Naudokite šį puslapį EasyWiki instaliacijos tvarkymui. Pagalba individualiems nustatymams [[doku>config]]. Daugiau informacijos apie šį priedą [[doku>plugin:config]].
 
 Nustatymai raudoname fone yra apsaugoti nuo pakeitimų ir negali būti pakeisti šio įrankio pagalba. Nustatymai mėlyname fone nustatyti pagal nutylėjimą, o baltame fone nustatyti lokaliai būtent šiai instaliacijai. Nustatymai mėlyname ir baltame fone gali būti keičiami.
 

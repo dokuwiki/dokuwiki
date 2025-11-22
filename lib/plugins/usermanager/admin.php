@@ -1,14 +1,14 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\Conversion;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\Conversion;
 
 /*
  *  User Manager
  *
- *  Dokuwiki Admin Plugin
+ *  EasyWiki Admin Plugin
  *
  *  This version of the user manager has been modified to only work with
  *  objectified version of auth system
@@ -18,12 +18,12 @@ use dokuwiki\Utf8\Conversion;
  */
 
 /**
- * All DokuWiki plugins to extend the admin function
+ * All EasyWiki plugins to extend the admin function
  * need to inherit from this class
  */
 class admin_plugin_usermanager extends AdminPlugin
 {
-    protected const IMAGE_DIR = DOKU_BASE . 'lib/plugins/usermanager/images/';
+    protected const IMAGE_DIR = WIKI_BASE . 'lib/plugins/usermanager/images/';
 
     protected $auth;        // auth object
     protected $users_total = 0;     // number of registered users
@@ -1042,7 +1042,7 @@ class admin_plugin_usermanager extends AdminPlugin
             fputcsv($fd, $line, ',', '"', "\\");
         }
         fclose($fd);
-        if (defined('DOKU_UNITTEST')) {
+        if (defined('WIKI_UNITTEST')) {
             return;
         }
 

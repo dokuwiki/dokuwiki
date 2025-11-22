@@ -68,7 +68,7 @@ class adLDAPFolders {
     
     /**
     * Returns a folder listing for a specific OU
-    * See http://adldap.sourceforge.net/wiki/doku.php?id=api_folder_functions
+    * See http://adldap.sourceforge.net/wiki/wiki.php?id=api_folder_functions
     * 
     * @param array $folderName An array to the OU you wish to list. 
     *                           If set to NULL will list the root, strongly recommended to set 

@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsGlobalsTest extends DokuWikiTest {
+class InttestsGlobalsTest extends EasyWikiTest {
 
     /**
      * every request should be with its own variables

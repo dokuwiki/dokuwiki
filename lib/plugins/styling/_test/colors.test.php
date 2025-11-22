@@ -6,7 +6,7 @@
  * @group plugin_styling
  * @group plugins
  */
-class colors_plugin_styling_test extends DokuWikiTest
+class colors_plugin_styling_test extends EasyWikiTest
 {
 
     /**

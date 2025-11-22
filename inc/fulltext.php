@@ -1,18 +1,18 @@
 <?php
 
 /**
- * DokuWiki fulltextsearch functions using the index
+ * EasyWiki fulltextsearch functions using the index
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Utf8\Asian;
-use dokuwiki\Search\Indexer;
-use dokuwiki\Extension\Event;
-use dokuwiki\Utf8\Clean;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\Asian;
+use easywiki\Search\Indexer;
+use easywiki\Extension\Event;
+use easywiki\Utf8\Clean;
+use easywiki\Utf8\PhpString;
+use easywiki\Utf8\Sort;
 
 /**
  * create snippets for the first few results only
@@ -73,7 +73,7 @@ function _ft_pageSearch(&$data)
     // lookup all words found in the query
     $lookup = $Indexer->lookup($q['words']);
 
-    // get all pages in this dokuwiki site (!: includes nonexistent pages)
+    // get all pages in this easywiki site (!: includes nonexistent pages)
     $pages_all = [];
     foreach ($Indexer->getPages() as $id) {
         $pages_all[$id] = 0; // base: 0 hit

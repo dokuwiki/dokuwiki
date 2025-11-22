@@ -5,7 +5,7 @@
  * correct escaping of colon field delimiters and backslashes in user content.
  *
  * (Note that these tests set some Real Names, etc. that are may not be
- * valid in the broader dokuwiki context, but the tests ensure that
+ * valid in the broader easywiki context, but the tests ensure that
  * authplain won't get unexpectedly surprised.)
  *
  * @group plugin_authplain
@@ -13,7 +13,7 @@
  * @group plugins
  * @group bundled_plugins
  */
-class helper_plugin_authplain_escaping_test extends DokuWikiTest {
+class helper_plugin_authplain_escaping_test extends EasyWikiTest {
 
     protected $pluginsEnabled = array('authplain');
     /** @var  auth_plugin_authplain */

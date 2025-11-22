@@ -116,7 +116,7 @@ $lang['js']['media_done_btn']  = 'تم';
 $lang['js']['media_drop']      = 'اسقط الملف هنا لرفعه';
 $lang['js']['media_cancel']    = 'أزل';
 $lang['js']['media_overwrt']   = 'أكتب فوق الملفات الموجودة';
-$lang['js']['data_insecure']   = 'تحذير: يبدو أن دليل البيانات الخاص بك غير مؤمن بشكل صحيح. يرجى القراءة عن <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security في DokuWiki</a>.	';
+$lang['js']['data_insecure']   = 'تحذير: يبدو أن دليل البيانات الخاص بك غير مؤمن بشكل صحيح. يرجى القراءة عن <a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security في EasyWiki</a>.	';
 $lang['search_exact_match']    = 'تطابق تام';
 $lang['search_starts_with']    = 'يبدأ بالتالي';
 $lang['search_ends_with']      = 'ينتهي بالتالي';
@@ -302,28 +302,28 @@ $lang['i_enableacl']           = 'تفعيل ACL - مفضل';
 $lang['i_superuser']           = 'مشرف';
 $lang['i_problems']            = 'وجد برنامج التنصيب المشاكل التالية، لا يمكنك المتابعة قبل حلها.';
 $lang['i_modified']            = 'لأسباب أمنية هذا البرنامج سيعمل فقط مع تنصيب دوكو ويكي جديد و غير معدّل.
-يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="https://www.dokuwiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
+يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="https://www.EasyWiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
 $lang['i_funcna']              = 'دالة PHP التالية غير متوفرة.
 <code>%s</code>
 قد يكون مزود خدمة الاستفادة قد حجبها لسبب ما.';
 $lang['i_disabled']            = 'تم تعطيله من قبل مزود الخدمة الخاص بك.';
-$lang['i_funcnmail']           = '<b>ملاحظة:</b> وظيفة بريد PHP غير متوفرة. %s إذا ظل غير متوفر ، فيمكنك تثبيت المكون الإضافي <a href="https://www.dokuwiki.org/plugin:smtp">smtp</a>.	';
+$lang['i_funcnmail']           = '<b>ملاحظة:</b> وظيفة بريد PHP غير متوفرة. %s إذا ظل غير متوفر ، فيمكنك تثبيت المكون الإضافي <a href="https://www.EasyWiki.org/plugin:smtp">smtp</a>.	';
 $lang['i_phpver']              = 'نسخة PHP التي لديك هي
 <code>%s</code>
 وهي أقل من النسخة المطلوبة
 <code>%s</code>
 عليك تحديث نسخة PHP';
 $lang['i_mbfuncoverload']      = 'يجب ايقاف تشغيل mbstring.func_overload في ملف php.ini لتشغيل دوكوويكي.';
-$lang['i_urandom']             = 'لا يمكن ل DokuWiki إنشاء أرقام آمنة مشفرة لملفات تعريف الارتباط. قد ترغب في التحقق من إعدادات open_basedir الخاصة بك في php.ini للوصول المناسب إلى <code>/dev/urandom</code>.';
+$lang['i_urandom']             = 'لا يمكن ل EasyWiki إنشاء أرقام آمنة مشفرة لملفات تعريف الارتباط. قد ترغب في التحقق من إعدادات open_basedir الخاصة بك في php.ini للوصول المناسب إلى <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'إن <code>%s</code> غير قابل للكتابة بواسطة دوكو ويكي، عليك تعديل إعدادات الصلاحيات لهذا المجلد!';
 $lang['i_confexists']          = 'إن <code>%s</code> موجود أصلاً';
 $lang['i_writeerr']            = 'لا يمكن إنشاء <code>%s</code>، عليك التأكد من صلاحيات الملف أو المجلد وإنشاء الملف يدوياً.';
-$lang['i_badhash']             = 'الملف dokuwiki.php غير مصنف أو قد تم تعديله
+$lang['i_badhash']             = 'الملف easywiki.php غير مصنف أو قد تم تعديله
 (hash=<code>%s</code>)';
 $lang['i_badval']              = 'القيمة <code>%s</code> غير شرعية أو فارغة';
 $lang['i_success']             = 'الإعدادات تمت بنجاح، يرجى حذف الملف install.php الآن.
-ثم تابع إلى <a href="doku.php?id=wiki:welcome"> دوكو ويكي الجديدة</a>';
-$lang['i_failure']             = 'بعض الأخطاء حدثت أثنا كتابة ملفات الإعدادات، عليك تعديلها يدوياً قبل أن تستطيع استخدام <a href="doku.php?id=wiki:welcome"> دوكو ويكي الجديدة</a>';
+ثم تابع إلى <a href="wiki.php?id=wiki:welcome"> دوكو ويكي الجديدة</a>';
+$lang['i_failure']             = 'بعض الأخطاء حدثت أثنا كتابة ملفات الإعدادات، عليك تعديلها يدوياً قبل أن تستطيع استخدام <a href="wiki.php?id=wiki:welcome"> دوكو ويكي الجديدة</a>';
 $lang['i_policy']              = 'تصريح ACL مبدئي';
 $lang['i_pol0']                = 'ويكي مفتوحة؛ أي القراءة والكتابة والتحميل مسموحة للجميع';
 $lang['i_pol1']                = 'ويكي عامة؛ أي القراءة للجميع ولكن الكتابة والتحميل للمشتركين المسجلين فقط';
@@ -375,7 +375,7 @@ $lang['wikimarkup']            = 'علامات الوكي';
 $lang['page_nonexist_rev']     = 'الصفحة غير موجودة في %s. تم إنشاؤه لاحقا في  <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'غير قادر على التحليل عند المعلمة "%s".';
 $lang['email_signature_text']  = 'أنشئت هذه الرسالة من دوكو ويكي في
-@DOKUWIKIURL@';
+@EASYWIKIURL@';
 $lang['log_file_too_large']    = 'ملف السجل كبير جدا. تم تخطي الأسطر السابقة!';
 $lang['log_file_failed_to_open'] = 'فشل فتح ملف السجل.';
 $lang['log_file_failed_to_read'] = 'حدث خطأ أثناء قراءة السجل.';

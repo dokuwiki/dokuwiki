@@ -2,8 +2,8 @@
 /**
  * Test cases for the Doku_Indexer::renamePage and Doku_Indexer::renameMetaValue methods
  */
-class indexer_rename_test extends DokuWikiTest {
-    /** @var \dokuwiki\Search\Indexer $indexer */
+class indexer_rename_test extends EasyWikiTest {
+    /** @var \easywiki\Search\Indexer $indexer */
     private $indexer;
 
     private $old_id = 'old_testid';

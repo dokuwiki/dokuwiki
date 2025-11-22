@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\ChangeLog\RevisionInfo;
-use dokuwiki\Form\Form;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\RevisionInfo;
+use easywiki\Form\Form;
 
 /**
- * DokuWiki Recent Interface
+ * EasyWiki Recent Interface
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class Recent extends Ui
 {
@@ -79,7 +79,7 @@ class Recent extends Ui
 
             $RevInfo = new RevisionInfo($recent);
             $RevInfo->isCurrent(true);
-            $class = ($RevInfo->val('type') === DOKU_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
+            $class = ($RevInfo->val('type') === WIKI_CHANGE_TYPE_MINOR_EDIT) ? 'minor' : '';
             $form->addTagOpen('li')->addClass($class);
             $form->addTagOpen('div')->addClass('li');
             $html = implode(' ', [
@@ -113,7 +113,7 @@ class Recent extends Ui
      * @param bool $hasNext
      * @return array  recent items to be shown in a paginated list
      *
-     * @see also dokuwiki\Changelog::getRevisionInfo()
+     * @see also easywiki\Changelog::getRevisionInfo()
      */
     protected function getRecents(&$first, &$hasNext)
     {
@@ -162,7 +162,7 @@ class Recent extends Ui
         }
         if (!$changelog->isCurrentRevision($info['date'])) {
             $currentRevInfo = $changelog->getCurrentRevisionInfo();
-            if ($currentRevInfo && $currentRevInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            if ($currentRevInfo && $currentRevInfo['type'] == WIKI_CHANGE_TYPE_DELETE) {
                 // the page or media file was externally deleted, updated info because the link is already red
                 // externally created and edited not updated because sorting by date is not worth so much changes
                 $info = array_merge($info, $currentRevInfo);

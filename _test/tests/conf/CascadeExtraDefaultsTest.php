@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\test\conf;
+namespace easywiki\test\conf;
 
-class CascadeExtraDefaultsTest extends \DokuWikiTest
+class CascadeExtraDefaultsTest extends \EasyWikiTest
 {
 
     protected $oldSetting = [];
@@ -22,12 +22,12 @@ class CascadeExtraDefaultsTest extends \DokuWikiTest
         $out .= "\$conf['plugin']['testing']['schnibble'] = 1;\n";
         $out .= "\$conf['plugin']['testing']['second'] = 'New default setting';\n";
 
-        $file = DOKU_CONF . 'otherdefaults.php';
+        $file = WIKI_CONF . 'otherdefaults.php';
         file_put_contents($file, $out);
 
         //store original settings
         $this->oldSetting = $config_cascade['main']['default'];
-        //add second file with defaults, which override the defaults of DokuWiki
+        //add second file with defaults, which override the defaults of EasyWiki
         $config_cascade['main']['default'][] = $file;
 
         parent::setUp();
@@ -51,7 +51,7 @@ class CascadeExtraDefaultsTest extends \DokuWikiTest
         global $config_cascade;
 
         $config_cascade['main']['default'] = $this->oldSetting;
-        unlink(DOKU_CONF . 'otherdefaults.php');
+        unlink(WIKI_CONF . 'otherdefaults.php');
 
         parent::tearDown();
     }

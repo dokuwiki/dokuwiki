@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Action;
+namespace easywiki\Action;
 
-use dokuwiki\Ui\Editor;
-use dokuwiki\Ui;
+use easywiki\Ui\Editor;
+use easywiki\Ui;
 
 /**
  * Class Source
  *
  * Show the source of a page
  *
- * @package dokuwiki\Action
+ * @package easywiki\Action
  */
 class Source extends AbstractAction
 {

@@ -1,6 +1,6 @@
 <?php
 
-class common_dokupref_test extends DokuWikiTest {
+class common_dokupref_test extends EasyWikiTest {
 
     function test_get_default() {
         $this->assertEquals('nil', get_doku_pref('foo', 'nil'));
@@ -26,13 +26,13 @@ class common_dokupref_test extends DokuWikiTest {
 
     // mitigate bug in #2721
     function test_duplicate_entries() {
-        $_COOKIE['DOKU_PREFS'] = 'foo1#bar1#foo2#bar1#foo2#bar2';
+        $_COOKIE['WIKI_PREFS'] = 'foo1#bar1#foo2#bar1#foo2#bar2';
         $this->assertEquals('bar2', get_doku_pref('foo2', 'nil'));
 
         set_doku_pref('foo2', 'new2');
         $this->assertEquals('bar1', get_doku_pref('foo1', 'nil'));
         $this->assertEquals('new2', get_doku_pref('foo2', 'nil'));
-        $this->assertEquals('foo1#bar1#foo2#new2', $_COOKIE['DOKU_PREFS'],
+        $this->assertEquals('foo1#bar1#foo2#new2', $_COOKIE['WIKI_PREFS'],
                             'cookie should not have duplicate entries');
     }
 
@@ -63,7 +63,7 @@ class common_dokupref_test extends DokuWikiTest {
         set_doku_pref('foo2', 'bar2');
         $this->assertEquals('bar1', get_doku_pref('foo1', 'nil'));
         $this->assertEquals('bar2', get_doku_pref('foo2', 'nil'));
-        $this->assertEquals('foo1#bar1#foo2#bar2', $_COOKIE['DOKU_PREFS'],
+        $this->assertEquals('foo1#bar1#foo2#bar2', $_COOKIE['WIKI_PREFS'],
                             'cookie should not have duplicate entries');
     }
 

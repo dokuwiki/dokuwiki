@@ -1,6 +1,6 @@
 <?php
 
-class utf8_stripspecials extends DokuWikiTest
+class utf8_stripspecials extends EasyWikiTest
 {
 
     /**
@@ -32,7 +32,7 @@ class utf8_stripspecials extends DokuWikiTest
      */
     function testGivens($string, $replacement, $additional, $expected)
     {
-        $this->assertEquals($expected, \dokuwiki\Utf8\Clean::stripspecials($string, $replacement, $additional));
+        $this->assertEquals($expected, \easywiki\Utf8\Clean::stripspecials($string, $replacement, $additional));
     }
 
 }

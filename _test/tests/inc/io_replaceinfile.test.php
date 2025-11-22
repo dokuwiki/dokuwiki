@@ -1,6 +1,6 @@
 <?php
 
-class io_replaceinfile_test extends DokuWikiTest {
+class io_replaceinfile_test extends EasyWikiTest {
 
     protected $contents = "The\012Delete\012Delete\012Delete01\012Delete02\012Delete\012DeleteX\012Test\012";
 
@@ -8,7 +8,7 @@ class io_replaceinfile_test extends DokuWikiTest {
      * dependency for tests needing zlib extension to pass
      */
     public function test_ext_zlib() {
-        if (!DOKU_HAS_GZIP) {
+        if (!WIKI_HAS_GZIP) {
             $this->markTestSkipped('skipping all zlib tests.  Need zlib extension');
             return;
         }
@@ -19,7 +19,7 @@ class io_replaceinfile_test extends DokuWikiTest {
      * dependency for tests needing zlib extension to pass
      */
     public function test_ext_bz2() {
-        if (!DOKU_HAS_BZIP) {
+        if (!WIKI_HAS_BZIP) {
             $this->markTestSkipped('skipping all bzip2 tests.  Need bz2 extension');
             return;
         }

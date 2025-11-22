@@ -294,22 +294,22 @@ $lang['i_superuser']           = 'سوپەربەکارهێنەر';
 $lang['i_problems']            = 'دامەزرێنەرەکە هەندێک کێشەی دۆزیەوە، کە لە خوارەوە ئاماژەی بۆ کراوە. ناتوانیت بەردەوام بیت هەتا چاکیان نەکەیت.';
 $lang['i_modified']            = 'لەبەر هۆکاری ئەمنی ئەم سکریپتە تەنها بە دامەزراندنی دۆکوویکی نوێ و نەگۆڕ کار دەکات.
                                   پێویستە یان فایلەکان لە پاکێجی داگیراوەوە دەربهینەوه یان ڕاوێژ بە تەواوبوون بکەیت
-                                  <a href="https://www.dokuwiki.org/install">Dokuwiki install instructions</a>';
+                                  <a href="https://www.EasyWiki.org/install">EasyWiki install instructions</a>';
 $lang['i_funcna']              = 'پێڕەوی PHP <code>%s</code> بەردەست نییە. لەوانەیە دابینکاری میوانداریکردنەکەت لەبەر چەند هۆکارێک ناچالاک ی بکات؟';
 $lang['i_disabled']            = 'لە کارخراوە لەلایەن دابینکارەکەتەوە.';
-$lang['i_funcnmail']           = '<b>تێبینی:</b> ئەرکی پۆستی PHP بەردەست نییە. %s ئەگەر بەردەست نەمایەوە، دەتوانیت <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>تێبینی:</b> ئەرکی پۆستی PHP بەردەست نییە. %s ئەگەر بەردەست نەمایەوە، دەتوانیت <a href="https://www.EasyWiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'وەشانی PHPی تۆ <code>%s</code> کەمترە لە <code>%s</code>. پێویستە دامەزراندنی PHP ەکەت بەرز بکەیتەوە.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload لە php.ini بۆ کارپێکردنی DokuWiki لە کارخراوە.';
-$lang['i_urandom']             = 'DokuWiki  ناتوانێت ژمارە پارێزراوە نهێنیەکان بۆ کۆکیەکان دروست بکات. لەوانەیە بتەوێت سەیری ڕێکخستنەکانت بکەیت open_basedir php.ini بۆ گونجاو <code>/dev/urandom</code> .';
-$lang['i_permfail']            = '<code>%s</code> لە لایەن DokuWiki ەوە دەستکاری ناکرێت. پێویستە ڕێکبەندەکانی ڕێپێدان لەم دایەرێکتەرییە چاک بکەیت!';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload لە php.ini بۆ کارپێکردنی EasyWiki لە کارخراوە.';
+$lang['i_urandom']             = 'EasyWiki  ناتوانێت ژمارە پارێزراوە نهێنیەکان بۆ کۆکیەکان دروست بکات. لەوانەیە بتەوێت سەیری ڕێکخستنەکانت بکەیت open_basedir php.ini بۆ گونجاو <code>/dev/urandom</code> .';
+$lang['i_permfail']            = '<code>%s</code> لە لایەن EasyWiki ەوە دەستکاری ناکرێت. پێویستە ڕێکبەندەکانی ڕێپێدان لەم دایەرێکتەرییە چاک بکەیت!';
 $lang['i_confexists']          = '<code>%s</code> پێشتر هەیە';
 $lang['i_writeerr']            = 'ناتوانێت %s <code> دروست </code>. پێویستە ڕێپێدانەکانی دایەرێکتۆری/فایل بپشکنی و فایلەکە بە دەستی دروست بکەیت.';
-$lang['i_badhash']             = 'dokuwiki.phpی نەناسراو یان هەموارکراو (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.phpی نەناسراو یان هەموارکراو (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - بەهای نایاسایی یان بەتاڵ';
 $lang['i_success']             = 'شێوەپێدانەکە بە سەرکەوتوویی تەواو بوو. دەتوانیت ئێستا فایلی install.php بسڕیتەوە. بەردەوام بە لە
-<a href="doku.php?id=wiki:welcome">DokuWikiی نوێ</a>.';
+<a href="wiki.php?id=wiki:welcome">EasyWikiی نوێ</a>.';
 $lang['i_failure']             = 'هەندێک هەڵە ڕوویدا لەکاتی نوسینی فایلەکانی شێوەپێدان. لەوانەیە پێویست ت بە چاککردنەوەیان بێت بە دەستی پێش
-                                  دەتوانیت <a href="doku.php?id=wiki:welcome">DokuWikiی نوێت </a>.';
+                                  دەتوانیت <a href="wiki.php?id=wiki:welcome">EasyWikiی نوێت </a>.';
 $lang['i_policy']              = 'سیاسەتی سەرەتایی ACL';
 $lang['i_pol0']                = '(کردنەوەی ویکی (خوێندنەوە، نووسین، بارکردن بۆ هەموو کەسێک';
 $lang['i_pol1']                = '(ویکی گشتی (بۆ هەموو کەسێک بخوێنەوە، بنوسێو و باربکە بۆ بەکارهێنەرە تۆمارکراوەکان';
@@ -361,4 +361,4 @@ $lang['wikimarkup']            = 'نیشانەی ویکی';
 $lang['page_nonexist_rev']     = 'پەڕە لە %s بوونی نییە. دواتر دروست کرا لە <a href="%s">%s</a>.';
 $lang['unable_to_parse_date']  = 'ناتوانێت شیبکاتەوە لە پارامیتەر "%s".';
 $lang['email_signature_text']  = 'ئەم پۆستە لەلایەن دۆکوویکی دروست کراوە لە
-@DOKUWIKIURL @';
+@EASYWIKIURL @';

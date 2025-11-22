@@ -1,9 +1,9 @@
 <?php
 
-use dokuwiki\Extension\Plugin;
+use easywiki\Extension\Plugin;
 
 /**
- * DokuWiki Plugin extension (Helper Component)
+ * EasyWiki Plugin extension (Helper Component)
  *
  * This component currently does nothing, except giving access to common plugin functionality
  * like getLang() to be used in the plugin classes.

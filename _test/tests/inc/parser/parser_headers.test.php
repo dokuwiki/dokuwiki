@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Parsing\ParserMode\Eol;
-use dokuwiki\Parsing\ParserMode\Header;
+use easywiki\Parsing\ParserMode\Eol;
+use easywiki\Parsing\ParserMode\Header;
 
 require_once 'parser.inc.php';
 
-class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
+class TestOfWiki_Parser_Headers extends TestOfWiki_Parser {
 
     function testHeader1() {
         $this->P->addMode('header',new Header());

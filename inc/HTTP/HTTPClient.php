@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\HTTP;
+namespace easywiki\HTTP;
 
 define('HTTP_NL', "\r\n");
 
@@ -59,7 +59,7 @@ class HTTPClient
     protected static $connections = [];
 
     // what we use as boundary on multipart/form-data posts
-    protected $boundary = '---DokuWikiHTTPClient--4523452351';
+    protected $boundary = '---EasyWikiHTTPClient--4523452351';
 
     /**
      * Constructor.
@@ -68,7 +68,7 @@ class HTTPClient
      */
     public function __construct()
     {
-        $this->agent = 'Mozilla/4.0 (compatible; DokuWiki HTTP Client; ' . PHP_OS . ')';
+        $this->agent = 'Mozilla/4.0 (compatible; EasyWiki HTTP Client; ' . PHP_OS . ')';
         if (extension_loaded('zlib')) $this->headers['Accept-encoding'] = 'gzip';
         $this->headers['Accept'] = 'text/xml,application/xml,application/xhtml+xml,' .
             'text/html,text/plain,image/png,image/jpeg,image/gif,*/*';

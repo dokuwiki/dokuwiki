@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Subscriptions;
+namespace easywiki\Subscriptions;
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Input\Input;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Input\Input;
 use Exception;
 
 class SubscriberManager

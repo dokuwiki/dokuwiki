@@ -6,9 +6,9 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-namespace dokuwiki;
+namespace easywiki;
 
-use dokuwiki\Extension\PluginController;
+use easywiki\Extension\PluginController;
 
 return new class {
     /** @var string[] Common libraries that are always loaded */
@@ -53,12 +53,12 @@ return new class {
         'FeedParser' => 'FeedParser.php',
         'SafeFN' => 'SafeFN.class.php',
         'Mailer' => 'Mailer.class.php',
-        'Doku_Handler' => 'parser/handler.php',
-        'Doku_Renderer' => 'parser/renderer.php',
-        'Doku_Renderer_xhtml' => 'parser/xhtml.php',
-        'Doku_Renderer_code' => 'parser/code.php',
-        'Doku_Renderer_xhtmlsummary' => 'parser/xhtmlsummary.php',
-        'Doku_Renderer_metadata' => 'parser/metadata.php'
+        'Wiki_Handler' => 'parser/handler.php',
+        'Wiki_Renderer' => 'parser/renderer.php',
+        'Wiki_Renderer_xhtml' => 'parser/xhtml.php',
+        'Wiki_Renderer_code' => 'parser/code.php',
+        'Wiki_Renderer_xhtmlsummary' => 'parser/xhtmlsummary.php',
+        'Wiki_Renderer_metadata' => 'parser/metadata.php'
     ];
 
     /**
@@ -66,7 +66,7 @@ return new class {
      */
     public function __construct()
     {
-        require_once(DOKU_INC . 'vendor/autoload.php');
+        require_once(WIKI_INC . 'vendor/autoload.php');
         spl_autoload_register([$this, 'autoload']);
         $this->loadCommonLibs();
     }
@@ -79,7 +79,7 @@ return new class {
     public function loadCommonLibs()
     {
         foreach ($this->commonLibs as $lib) {
-            require_once(DOKU_INC . 'inc/' . $lib);
+            require_once(WIKI_INC . 'inc/' . $lib);
         }
         return true;
     }
@@ -127,8 +127,8 @@ return new class {
      */
     protected function autoloadTestMockClass($classPath)
     {
-        if ($this->prefixStrip($classPath, 'dokuwiki/test/mock/')) {
-            $file = DOKU_INC . '_test/mock/' . $classPath . '.php';
+        if ($this->prefixStrip($classPath, 'easywiki/test/mock/')) {
+            $file = WIKI_INC . '_test/mock/' . $classPath . '.php';
             if (file_exists($file)) {
                 require $file;
                 return true;
@@ -145,8 +145,8 @@ return new class {
      */
     protected function autoloadTestClass($classPath)
     {
-        if ($this->prefixStrip($classPath, 'dokuwiki/test/')) {
-            $file = DOKU_INC . '_test/tests/' . $classPath . '.php';
+        if ($this->prefixStrip($classPath, 'easywiki/test/')) {
+            $file = WIKI_INC . '_test/tests/' . $classPath . '.php';
             if (file_exists($file)) {
                 require $file;
                 return true;
@@ -165,13 +165,13 @@ return new class {
     {
         global $plugin_controller;
 
-        if ($this->prefixStrip($classPath, 'dokuwiki/plugin/')) {
+        if ($this->prefixStrip($classPath, 'easywiki/plugin/')) {
             $classPath = str_replace('/test/', '/_test/', $classPath); // no underscore in test namespace
-            $file = DOKU_PLUGIN . $classPath . '.php';
+            $file = WIKI_PLUGIN . $classPath . '.php';
             if (file_exists($file)) {
                 $plugin = substr($classPath, 0, strpos($classPath, '/'));
                 // don't load disabled plugin classes (only if plugin controller is available)
-                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($plugin)) return false;
+                if (!defined('WIKI_UNITTEST') && $plugin_controller && plugin_isdisabled($plugin)) return false;
 
                 try {
                     require $file;
@@ -193,9 +193,9 @@ return new class {
     protected function autoloadTemplateClass($classPath)
     {
         // template namespace
-        if ($this->prefixStrip($classPath, 'dokuwiki/template/')) {
+        if ($this->prefixStrip($classPath, 'easywiki/template/')) {
             $classPath = str_replace('/test/', '/_test/', $classPath); // no underscore in test namespace
-            $file = DOKU_INC . 'lib/tpl/' . $classPath . '.php';
+            $file = WIKI_INC . 'lib/tpl/' . $classPath . '.php';
             if (file_exists($file)) {
                 $template = substr($classPath, 0, strpos($classPath, '/'));
 
@@ -211,15 +211,15 @@ return new class {
     }
 
     /**
-     * Check if the class is a namespaced DokuWiki core class
+     * Check if the class is a namespaced EasyWiki core class
      *
      * @param string $classPath The class name using forward slashes as namespace separators
      * @return bool true if the class was loaded, false otherwise
      */
     protected function autoloadCoreClass($classPath)
     {
-        if ($this->prefixStrip($classPath, 'dokuwiki/')) {
-            $file = DOKU_INC . 'inc/' . $classPath . '.php';
+        if ($this->prefixStrip($classPath, 'easywiki/')) {
+            $file = WIKI_INC . 'inc/' . $classPath . '.php';
             if (file_exists($file)) {
                 require $file;
                 return true;
@@ -241,17 +241,17 @@ return new class {
         if (
             preg_match(
                 '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
-                DOKU_PLUGIN_NAME_REGEX .
+                WIKI_PLUGIN_NAME_REGEX .
                 ')(?:_([^_]+))?$/',
                 $className,
                 $m
             )
         ) {
             $c = ((count($m) === 4) ? "/{$m[3]}" : '');
-            $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+            $plg = WIKI_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
             if (file_exists($plg)) {
                 // don't load disabled plugin classes (only if plugin controller is available)
-                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($m[2])) return false;
+                if (!defined('WIKI_UNITTEST') && $plugin_controller && plugin_isdisabled($m[2])) return false;
                 try {
                     require $plg;
                 } catch (\Throwable $e) {

@@ -1,6 +1,6 @@
 <?php
 
-use dokuwiki\HTTP\HTTPClient;
+use easywiki\HTTP\HTTPClient;
 
 /**
  * Class HTTPMockClient

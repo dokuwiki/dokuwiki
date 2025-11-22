@@ -1,12 +1,12 @@
 <?php
 
-use dokuwiki\Utf8\Sort;
+use easywiki\Utf8\Sort;
 
 /**
  * @author Moisés Braga Ribeiro <moisesbr@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-class sort_with_collator_test extends DokuWikiTest
+class sort_with_collator_test extends EasyWikiTest
 {
     /*
      * Dependency for tests that need "intl" extension.

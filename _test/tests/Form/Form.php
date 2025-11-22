@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test\Form;
+namespace easywiki\test\Form;
 
 /**
  * makes form internals accessible for testing
  */
-class Form extends \dokuwiki\Form\Form
+class Form extends \easywiki\Form\Form
 {
     /**
      * @return array list of element types

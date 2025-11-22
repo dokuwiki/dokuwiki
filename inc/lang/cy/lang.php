@@ -79,7 +79,7 @@ $lang['regfail']               = 'Doedd dim modd creu\'r defnyddiwr.';
 $lang['regmailfail']           = 'Mae\'n debyg roedd gwall wrth anfon y post cyfrinair. Cysylltwch â\'r gweinyddwr!';
 $lang['regbadmail']            = 'Mae\'r cyfeiriad ebost a gyflwynoch chi\'n edrych yn annilys - os ydych chi\'n credu ei fod yn gywir, cysylltwch â\'r gweinyddwr';
 $lang['regbadpass']            = '\'Dyw\'r ddau gyfrinair ddim yn unfath, ceisiwch eto.';
-$lang['regpwmail']             = 'Eich cyfrinair DokuWiki';
+$lang['regpwmail']             = 'Eich cyfrinair EasyWiki';
 $lang['reghere']               = '\'Sdim cyfrif \'da chi eto? Cewch afael yn un nawr';
 
 $lang['profna']                = '\'Dyw\'r wici hwn ddim yn caniatáu newid eich proffil';
@@ -295,26 +295,26 @@ $lang['authtempfail']          = '\'Dyw dilysiad defnyddiwr ddim ar gael yn bres
 
 /* installer strings */
 $lang['i_chooselang']          = 'Dewiswch eich iaith';
-$lang['i_installer']           = 'Arsefydlwr DokuWiki';
+$lang['i_installer']           = 'Arsefydlwr EasyWiki';
 $lang['i_wikiname']            = 'Enw Wici';
 $lang['i_enableacl']           = 'Galluogi ACL (awgrymwyd)';
 $lang['i_superuser']           = 'Uwchddefnyddiwr';
 $lang['i_problems']            = 'Gwnaeth yr arsefydlwr ddod o hyd i broblemau, isod. \'Sdim modd parhau nes i chi eu datrys nhw.';
-$lang['i_modified']            = 'Oherwydd rhesymau diogelwch, bydd y sgript hwn dim ond yn gweithio gydag arsefydliad DokuWiki newydd sydd heb ei newid.
+$lang['i_modified']            = 'Oherwydd rhesymau diogelwch, bydd y sgript hwn dim ond yn gweithio gydag arsefydliad EasyWiki newydd sydd heb ei newid.
                                   Dylech chi naill ai ail-echdynnu\'r ffeiliau o\'r pecyn a lawrlwythwyd neu porwch dros y
-                                  <a href="https://www.dokuwiki.org/install">canllawiau arsefydylu Dokuwiki</a> cyfan';
+                                  <a href="https://www.EasyWiki.org/install">canllawiau arsefydylu EasyWiki</a> cyfan';
 $lang['i_funcna']              = 'Swyddogaeth PHP <code>%s</code> ddim ar gael. Posib bod eich gwesteiwr wedi\'i hanalluogi am ryw reswm?';
 $lang['i_phpver']              = 'Mae\'ch fersiwn PHP <code>%s</code> yn is na\'r hyn sydd ei angen <code>%s</code>. Mae angen i chi ddiweddaru eich arsefydliad PHP.';
-$lang['i_mbfuncoverload']      = 'Mae\'n rhaid analluogi mbstring.func_overload mewn php.ini er mwyn rhedeg DokuWiki.';
-$lang['i_permfail']            = '\'Dyw DokuWiki ddim yn gallu ysgrifennu i <code>%s</code>. Mae angen newid gosodiadau hawliau ar gyfer y ffolder hwn!';
+$lang['i_mbfuncoverload']      = 'Mae\'n rhaid analluogi mbstring.func_overload mewn php.ini er mwyn rhedeg EasyWiki.';
+$lang['i_permfail']            = '\'Dyw EasyWiki ddim yn gallu ysgrifennu i <code>%s</code>. Mae angen newid gosodiadau hawliau ar gyfer y ffolder hwn!';
 $lang['i_confexists']          = 'Mae <code>%s</code> eisoes yn bodoli';
 $lang['i_writeerr']            = 'Methu creu <code>%s</code>. Bydd angen i chi wirio hawliau ffolder/ffeil a chreu\'r ffeil gan law.';
-$lang['i_badhash']             = 'dokuwiki.php heb ei adnabod neu wedi\'i newid (hash=<code>%s</code>)';
+$lang['i_badhash']             = 'easywiki.php heb ei adnabod neu wedi\'i newid (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - gwerth anghyfreithlon neu wag';
 $lang['i_success']             = 'Gorffennodd y ffurfwedd yn llwyddiannus. Gallwch chi ddileu\'r ffeil install.php nawr. Ewch
-                                 <a href="doku.php?id=wiki:welcome">i\'ch DokuWiki newydd</a>.';
+                                 <a href="wiki.php?id=wiki:welcome">i\'ch EasyWiki newydd</a>.';
 $lang['i_failure']             = 'Ymddangosodd gwallau wrth ysgrifennu\'r ffeiliau ffurfwedd. Bydd angen i chi eu cywiro
-                                  nhw gan law cyn gallwch chi ddefnyddio\'ch <a href="doku.php?id=wiki:welcome">DokuWiki newydd</a>.';
+                                  nhw gan law cyn gallwch chi ddefnyddio\'ch <a href="wiki.php?id=wiki:welcome">EasyWiki newydd</a>.';
 $lang['i_policy']              = 'Polisi ACL cychwynnol';
 $lang['i_pol0']                = 'Wici Agored (darllen, ysgrifennu, lanlwytho i bawb)';
 $lang['i_pol1']                = 'Wici Cyhoeddus (darllen i bawb, ysgrifennu a lanlwytho i ddefnyddwyr cofrestredig)';
@@ -323,8 +323,8 @@ $lang['i_allowreg']            = 'Caniatáu defnyddwyr i gofrestru eu hunain';
 $lang['i_retry']               = 'Ailgeisio';
 $lang['i_license']             = 'Dewiswch y drwydded rydych chi am osod ar eich cynnwys:';
 $lang['i_license_none']        = 'Peidio â dangos unrhyw wybodaeth drwyddedu';
-$lang['i_pop_field']           = 'Plis, helpwch ni i wella\'r profiad o ddefnyddio DokuWiki:';
-$lang['i_pop_label']           = 'Anfon data defnydd anhysbys i ddatblygwyr DokuWiki unwaith y mis';
+$lang['i_pop_field']           = 'Plis, helpwch ni i wella\'r profiad o ddefnyddio EasyWiki:';
+$lang['i_pop_label']           = 'Anfon data defnydd anhysbys i ddatblygwyr EasyWiki unwaith y mis';
 
 $lang['recent_global']         = 'Yn bresennol, rydych chi\'n gwylio newidiadau tu fewn namespace <b>%s</b>. Gallwch chi hefyd <a href="%s">weld y newidiadau diweddar ar gyfer y wici cyfan</a>.'; //namespace
 

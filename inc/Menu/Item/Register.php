@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Menu\Item;
+namespace easywiki\Menu\Item;
 
 /**
  * Class Register
@@ -19,6 +19,6 @@ class Register extends AbstractItem
             throw new \RuntimeException("no register when already logged in");
         }
 
-        $this->svg = DOKU_INC . 'lib/images/menu/account-plus.svg';
+        $this->svg = WIKI_INC . 'lib/images/menu/account-plus.svg';
     }
 }

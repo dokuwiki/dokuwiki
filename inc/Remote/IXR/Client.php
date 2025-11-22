@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Remote\IXR;
+namespace easywiki\Remote\IXR;
 
-use dokuwiki\HTTP\HTTPClient;
+use easywiki\HTTP\HTTPClient;
 use IXR\Message\Message;
 use IXR\Request\Request;
 

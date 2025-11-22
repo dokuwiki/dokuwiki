@@ -1,9 +1,9 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
 use Diff;
-use dokuwiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\PageChangeLog;
 use TableDiffFormatter;
 use UnifiedDiffFormatter;
 

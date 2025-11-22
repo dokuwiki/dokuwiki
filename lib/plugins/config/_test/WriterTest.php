@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\plugin\config\test;
-use dokuwiki\plugin\config\core\Setting\SettingString;
-use dokuwiki\plugin\config\core\Writer;
+namespace easywiki\plugin\config\test;
+use easywiki\plugin\config\core\Setting\SettingString;
+use easywiki\plugin\config\core\Writer;
 
 /**
  * @group plugin_config
@@ -10,7 +10,7 @@ use dokuwiki\plugin\config\core\Writer;
  * @group plugins
  * @group bundled_plugins
  */
-class WriterTest extends \DokuWikiTest {
+class WriterTest extends \EasyWikiTest {
 
     public function testSave() {
         global $config_cascade;

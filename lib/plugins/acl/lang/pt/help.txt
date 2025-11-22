@@ -5,4 +5,4 @@ Nesta página pode adicionar e remover permissões para namespace e páginas no 
   * O formulário acima permite a ver e modificar as permissões de um usuário ou grupo selecionado.
   * Na tabela abaixo são exibidas todas as regras de controle de acesso atuais. Podes utilizá-la para excluir ou mudar rapidamente várias regras ao mesmo tempo.
 
-A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no DokuWiki.
+A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no EasyWiki.

@@ -1,17 +1,17 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Extension\PluginInterface;
-use dokuwiki\Utf8\Sort;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Extension\PluginInterface;
+use easywiki\Utf8\Sort;
 
 /**
  * Class Admin
  *
  * Displays the Admin screen
  *
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Håkan Sandell <hakan.sandell@home.se>
  */
@@ -65,7 +65,7 @@ class Admin extends Ui
     }
 
     /**
-     * Display the DokuWiki version
+     * Display the EasyWiki version
      */
     protected function showVersion()
     {
@@ -79,7 +79,7 @@ class Admin extends Ui
     /**
      * data security check
      *
-     * simple check if the 'savedir' is relative and accessible when appended to DOKU_URL
+     * simple check if the 'savedir' is relative and accessible when appended to WIKI_URL
      *
      * it verifies either:
      *   'savedir' has been moved elsewhere, or
@@ -91,7 +91,7 @@ class Admin extends Ui
     {
         global $conf;
         if (!str_starts_with($conf['savedir'], './')) return;
-        $img = DOKU_URL . $conf['savedir'] .
+        $img = WIKI_URL . $conf['savedir'] .
             '/dont-panic-if-you-see-this-in-your-logs-it-means-your-directory-permissions-are-correct.png';
         echo '<div id="security__check" data-src="' . $img . '"></div>';
     }

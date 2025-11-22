@@ -1,19 +1,19 @@
 <?php
 
-namespace dokuwiki\Ui;
+namespace easywiki\Ui;
 
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\ChangeLog\RevisionInfo;
-use dokuwiki\Form\Form;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\ChangeLog\RevisionInfo;
+use easywiki\Form\Form;
 use InlineDiffFormatter;
 use TableDiffFormatter;
 
 /**
- * DokuWiki PageDiff Interface
+ * EasyWiki PageDiff Interface
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Satoshi Sahara <sahara.satoshi@gmail.com>
- * @package dokuwiki\Ui
+ * @package easywiki\Ui
  */
 class PageDiff extends Diff
 {
@@ -78,7 +78,7 @@ class PageDiff extends Diff
             $this->RevInfo2->append([
                 'date' => false,
                 //'ip'   => '127.0.0.1',
-                //'type' => DOKU_CHANGE_TYPE_CREATE,
+                //'type' => WIKI_CHANGE_TYPE_CREATE,
                 'id' => $this->id,
                 //'user' => '',
                 //'sum'  => '',
@@ -110,7 +110,7 @@ class PageDiff extends Diff
         if ($INPUT->has('difftype')) {
             $mode = $INPUT->str('difftype');
         } else {
-            // read preference from DokuWiki cookie. PageDiff only
+            // read preference from EasyWiki cookie. PageDiff only
             $mode = get_doku_pref('difftype', null);
         }
         if (in_array($mode, ['inline', 'sidebyside'])) {
@@ -148,7 +148,7 @@ class PageDiff extends Diff
             $isCurrent = $changelog->isCurrentRevision($RevInfo->val('date'));
             $RevInfo->isCurrent($isCurrent);
 
-            if ($RevInfo->val('type') == DOKU_CHANGE_TYPE_DELETE || empty($RevInfo->val('type'))) {
+            if ($RevInfo->val('type') == WIKI_CHANGE_TYPE_DELETE || empty($RevInfo->val('type'))) {
                 $text = '';
             } else {
                 $rev = $isCurrent ? '' : $RevInfo->val('date');
@@ -222,7 +222,7 @@ class PageDiff extends Diff
         $this->showDiffViewSelector();
 
         // assign minor edit checker to the variable
-        $classEditType = static fn($changeType) => ($changeType === DOKU_CHANGE_TYPE_MINOR_EDIT)
+        $classEditType = static fn($changeType) => ($changeType === WIKI_CHANGE_TYPE_MINOR_EDIT)
             ? ' class="minor"'
             : '';
 

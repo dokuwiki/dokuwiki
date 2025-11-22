@@ -84,8 +84,8 @@
 $meta['_basic'] = ['fieldset'];
 $meta['title'] = ['string'];
 $meta['start'] = ['string', '_caution' => 'warning', '_pattern' => '!^[^:;/]+$!']; // don't accept namespaces
-$meta['lang'] = ['dirchoice', '_dir' => DOKU_INC . 'inc/lang/'];
-$meta['template'] = ['dirchoice', '_dir' => DOKU_INC . 'lib/tpl/', '_pattern' => '/^[\w-]+$/'];
+$meta['lang'] = ['dirchoice', '_dir' => WIKI_INC . 'inc/lang/'];
+$meta['template'] = ['dirchoice', '_dir' => WIKI_INC . 'lib/tpl/', '_pattern' => '/^[\w-]+$/'];
 $meta['tagline'] = ['string'];
 $meta['sidebar'] = ['string'];
 $meta['license'] = ['license'];

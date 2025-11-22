@@ -79,7 +79,7 @@ function http_sendfile($file)
         exit;
     } elseif ($conf['xsendfile'] == 3) {
         // FS#2388 nginx just needs the relative path.
-        $file = DOKU_REL . substr($file, strlen(fullpath(DOKU_INC)) + 1);
+        $file = WIKI_REL . substr($file, strlen(fullpath(WIKI_INC)) + 1);
         header("X-Accel-Redirect: $file");
         ob_end_clean();
         exit;
@@ -197,7 +197,7 @@ function http_rangeRequest($fh, $size, $mime)
  */
 function http_gzip_valid($uncompressed_file)
 {
-    if (!DOKU_HAS_GZIP) return false;
+    if (!WIKI_HAS_GZIP) return false;
 
     $gzip = $uncompressed_file . '.gz';
     if (filemtime($gzip) < filemtime($uncompressed_file)) {    // filemtime returns false (0) if file doesn't exist
@@ -256,10 +256,10 @@ function http_cached_finish($file, $content)
 
     // save cache file
     io_saveFile($file, $content);
-    if (DOKU_HAS_GZIP) io_saveFile("$file.gz", $content);
+    if (WIKI_HAS_GZIP) io_saveFile("$file.gz", $content);
 
     // finally send output
-    if ($conf['gzip_output'] && DOKU_HAS_GZIP) {
+    if ($conf['gzip_output'] && WIKI_HAS_GZIP) {
         header('Vary: Accept-Encoding');
         header('Content-Encoding: gzip');
         echo gzencode($content, 9, FORCE_GZIP);

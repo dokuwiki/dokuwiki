@@ -1,11 +1,11 @@
 <?php
 
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Form\Form;
-use dokuwiki\Logger;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Form\Form;
+use easywiki\Logger;
 
 /**
- * DokuWiki Plugin logviewer (Admin Component)
+ * EasyWiki Plugin logviewer (Admin Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Andreas Gohr <andi@splitbrain.org>

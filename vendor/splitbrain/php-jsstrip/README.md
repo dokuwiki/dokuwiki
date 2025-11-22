@@ -2,7 +2,7 @@
 
 This is a PHP port of Nick Galbreath's python tool [jsstrip.py](https://code.google.com/p/jsstrip/).
 
-It was originally ported to PHP in 2006 as part of the [DokuWiki](http://www.dokuwiki.org) wiki engine. It has received several improvements over the years and is now available as a standalone library.
+It was originally ported to PHP in 2006 as part of the [EasyWiki](http://www.dokuwiki.org) wiki engine. It has received several improvements over the years and is now available as a standalone library.
 
 Quoting the original description:
 

@@ -1,6 +1,6 @@
 ====== Gestió de la configuració ======
 
-Utilitzeu aquesta pàgina per controlar els paràmetres de la vostra instal·lació de DokuWiki. Ajuda sobre paràmetres individuals en [[doku>config]]. Més detalls sobre aquest connector en [[doku>plugin:config]].
+Utilitzeu aquesta pàgina per controlar els paràmetres de la vostra instal·lació de EasyWiki. Ajuda sobre paràmetres individuals en [[doku>config]]. Més detalls sobre aquest connector en [[doku>plugin:config]].
 
 Els paràmetres que es visualitzen sobre fons vermell clar estan protegits i no es poden modificar amb aquest connector. Els paràmetres que es visualitzen sobre fons blau tenen valors per defecte. Els de fons blanc s'han configurat localment per a aquesta instal·lació. Tant els blaus com els blanc es poden modificar.
 

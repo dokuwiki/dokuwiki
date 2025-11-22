@@ -4,7 +4,7 @@
  *
  * This file was initially built by fetching translations from other
  * Wiki projects. See the @url lines below. Additional translations
- * and fixes where done for DokuWiki by the people mentioned in the
+ * and fixes where done for EasyWiki by the people mentioned in the
  * lines starting with @author
  *
  * @url http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/languages/messages/MessagesAf.php?view=co
@@ -39,7 +39,7 @@ $lang['minoredit']             = 'Klein wysiging';
 $lang['reguexists']            = 'Die gebruikersnaam wat jy gebruik het, is alreeds gebruik. Kies asseblief \'n ander gebruikersnaam.';
 $lang['regsuccess2']           = 'Rekening geskep';
 $lang['regbadpass']            = 'Die ingetikte wagwoorde is nie dieselfde nie.';
-$lang['regpwmail']             = 'Jo DokuWiki wagwoord';
+$lang['regpwmail']             = 'Jo EasyWiki wagwoord';
 $lang['profnoempty']           = 'Jy moet \'n name en a e-posadres in sit';
 $lang['resendpwdmissing']      = 'Jammer, jy moet ales in fil';
 $lang['resendpwdconfirm']      = '\'n Bevestigingpos is gestuur na die gekose e-posadres.';

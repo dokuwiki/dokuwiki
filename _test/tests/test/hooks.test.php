@@ -3,7 +3,7 @@
 /**
  * @group integration
  */
-class InttestsHooksTest extends DokuWikiTest {
+class InttestsHooksTest extends EasyWikiTest {
 
     function testHookTriggering() {
         global $EVENT_HANDLER;

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\plugin\extension;
+namespace easywiki\plugin\extension;
 
 /**
  * Manages info about installation of extensions
@@ -48,7 +48,7 @@ class Manager
 
         $data = '';
         foreach ($this->data as $k => $v) {
-            $data .= $k . '=' . $v . DOKU_LF;
+            $data .= $k . '=' . $v . WIKI_LF;
         }
         io_saveFile($this->path, $data);
     }

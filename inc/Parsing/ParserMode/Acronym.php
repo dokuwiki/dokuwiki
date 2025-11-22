@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Parsing\ParserMode;
+namespace easywiki\Parsing\ParserMode;
 
 class Acronym extends AbstractMode
 {
@@ -25,7 +25,7 @@ class Acronym extends AbstractMode
         if (!count($this->acronyms)) return;
 
         $bound = '[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]';
-        $acronyms = array_map(['\\dokuwiki\\Parsing\\Lexer\\Lexer', 'escape'], $this->acronyms);
+        $acronyms = array_map(['\\easywiki\\Parsing\\Lexer\\Lexer', 'escape'], $this->acronyms);
         $this->pattern = '(?<=^|' . $bound . ')(?:' . implode('|', $acronyms) . ')(?=' . $bound . ')';
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Remote\Response;
+namespace easywiki\Remote\Response;
 
 class Link extends ApiResponse
 {

@@ -13,10 +13,10 @@
  * !gopher
  */
 
-use dokuwiki\Extension\AuthPlugin;
-use dokuwiki\Extension\Event;
+use easywiki\Extension\AuthPlugin;
+use easywiki\Extension\Event;
 
-const DOKU_CONF_NEGATION = '!';
+const WIKI_CONF_NEGATION = '!';
 
 /**
  * Returns the (known) extension and mimetype of a given filename
@@ -125,7 +125,7 @@ function getInterwiki()
         $wikis = array_filter($wikis, 'strlen');
 
         //add sepecial case 'this'
-        $wikis['this'] = DOKU_URL . '{NAME}';
+        $wikis['this'] = WIKI_URL . '{NAME}';
     }
     return $wikis;
 }
@@ -142,7 +142,7 @@ function getCdnUrls()
 
     // load version info
     $versions = [];
-    $lines = file(DOKU_INC . 'lib/scripts/jquery/versions');
+    $lines = file(WIKI_INC . 'lib/scripts/jquery/versions');
     foreach ($lines as $line) {
         $line = trim(preg_replace('/#.*$/', '', $line));
         if ($line === '') continue;
@@ -158,7 +158,7 @@ function getCdnUrls()
     if ($event->advise_before()) {
         if (!$conf['jquerycdn']) {
             $jqmod = md5(implode('-', $versions));
-            $src[] = DOKU_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
+            $src[] = WIKI_BASE . 'lib/exe/jquery.php' . '?tseed=' . $jqmod;
         } elseif ($conf['jquerycdn'] == 'jquery') {
             $src[] = sprintf('https://code.jquery.com/jquery-%s.min.js', $versions['JQ_VERSION']);
             $src[] = sprintf('https://code.jquery.com/ui/%s/jquery-ui.min.js', $versions['JQUI_VERSION']);
@@ -413,7 +413,7 @@ function actionOK($action)
 function useHeading($linktype)
 {
     static $useHeading = null;
-    if (defined('DOKU_UNITTEST')) $useHeading = null; // don't cache during unit tests
+    if (defined('WIKI_UNITTEST')) $useHeading = null; // don't cache during unit tests
 
     if (is_null($useHeading)) {
         global $conf;
@@ -487,7 +487,7 @@ function conf_decodeString($str)
 function array_merge_with_removal($current, $new)
 {
     foreach ($new as $val) {
-        if (str_starts_with($val, DOKU_CONF_NEGATION)) {
+        if (str_starts_with($val, WIKI_CONF_NEGATION)) {
             $idx = array_search(trim(substr($val, 1)), $current);
             if ($idx !== false) {
                 unset($current[$idx]);

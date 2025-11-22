@@ -3,7 +3,7 @@
 /**
  * @group ajax
  */
-class ajax_requests_test extends DokuWikiTest {
+class ajax_requests_test extends EasyWikiTest {
 
     /**
      * DataProvider for the builtin Ajax calls

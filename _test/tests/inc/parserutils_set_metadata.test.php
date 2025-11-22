@@ -3,7 +3,7 @@
 /**
  * Class parserutils_set_metadata_test
  */
-class parserutils_set_metadata_test extends DokuWikiTest {
+class parserutils_set_metadata_test extends EasyWikiTest {
     // the id used for this test case
     private $id;
 

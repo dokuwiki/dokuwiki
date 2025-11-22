@@ -1,6 +1,6 @@
 <?php
 
-class conf_title_test extends DokuWikiTest {
+class conf_title_test extends EasyWikiTest {
 
     function testTitle() {
         global $conf;

@@ -8,19 +8,19 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginInterface;
-use dokuwiki\Cache\CacheInstructions;
-use dokuwiki\Cache\CacheRenderer;
-use dokuwiki\ChangeLog\PageChangeLog;
-use dokuwiki\Extension\PluginController;
-use dokuwiki\Extension\Event;
-use dokuwiki\Extension\SyntaxPlugin;
-use dokuwiki\Parsing\Parser;
-use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Camelcaselink;
-use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Smiley;
+use easywiki\Extension\PluginInterface;
+use easywiki\Cache\CacheInstructions;
+use easywiki\Cache\CacheRenderer;
+use easywiki\ChangeLog\PageChangeLog;
+use easywiki\Extension\PluginController;
+use easywiki\Extension\Event;
+use easywiki\Extension\SyntaxPlugin;
+use easywiki\Parsing\Parser;
+use easywiki\Parsing\ParserMode\Acronym;
+use easywiki\Parsing\ParserMode\Camelcaselink;
+use easywiki\Parsing\ParserMode\Entity;
+use easywiki\Parsing\ParserMode\Formatting;
+use easywiki\Parsing\ParserMode\Smiley;
 
 /**
  * How many pages shall be rendered for getting metadata during one request
@@ -191,7 +191,7 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 
     $cache = new CacheInstructions($id, $file);
 
-    if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
+    if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('WIKI_UNITTEST'))) {
         return $cache->retrieveCache();
     } elseif (file_exists($file)) {
         // no cache - do some work
@@ -222,7 +222,7 @@ function p_get_instructions($text)
     $modes = p_get_parsermodes();
 
     // Create the parser and handler
-    $Parser = new Parser(new Doku_Handler());
+    $Parser = new Parser(new Wiki_Handler());
 
     //add modes to parser
     foreach ($modes as $mode) {
@@ -291,7 +291,7 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
             }
         }
         if ($do_render) {
-            if (!defined('DOKU_UNITTEST')) {
+            if (!defined('WIKI_UNITTEST')) {
                 ++$render_count;
                 $rendered_pages[$id] = true;
             }
@@ -325,7 +325,7 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
 /**
  * sets metadata elements of a page
  *
- * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
+ * @see http://www.EasyWiki.org/devel:metadata#functions_to_get_and_set_metadata
  *
  * @param string $id is the ID of a wiki page
  * @param array $data is an array with key ⇒ value pairs to be set in the metadata
@@ -525,7 +525,7 @@ function p_render_metadata($id, $orig)
         }
 
         // set up the renderer
-        $renderer = new Doku_Renderer_metadata();
+        $renderer = new Wiki_Renderer_metadata();
         $renderer->meta =& $orig['current'];
         $renderer->persistent =& $orig['persistent'];
 
@@ -558,12 +558,12 @@ function p_get_parsermodes()
 
     //reuse old data
     static $modes = null;
-    if ($modes != null && !defined('DOKU_UNITTEST')) {
+    if ($modes != null && !defined('WIKI_UNITTEST')) {
         return $modes;
     }
 
     //import parser classes and mode definitions
-    require_once DOKU_INC . 'inc/parser/parser.php';
+    require_once WIKI_INC . 'inc/parser/parser.php';
 
     // we now collect all syntax modes and their objects, then they will
     // be sorted and added to the parser in correct order
@@ -599,7 +599,7 @@ function p_get_parsermodes()
         $std_modes[] = 'multiplyentity';
     }
     foreach ($std_modes as $m) {
-        $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($m);
+        $class = 'easywiki\\Parsing\\ParserMode\\' . ucfirst($m);
         $obj = new $class();
         $modes[] = ['sort' => $obj->getSort(), 'mode' => $m, 'obj' => $obj];
     }
@@ -706,7 +706,7 @@ function p_render($mode, $instructions, &$info, $date_at = '')
  * instantiate and return it
  *
  * @param string $mode Mode of the renderer to get
- * @return null|Doku_Renderer The renderer
+ * @return null|Wiki_Renderer The renderer
  *
  * @author Christopher Smith <chris@jalakai.co.uk>
  */
@@ -716,7 +716,7 @@ function p_get_renderer($mode)
     global $conf, $plugin_controller;
 
     $rname = empty($conf['renderer_' . $mode]) ? $mode : $conf['renderer_' . $mode];
-    $rclass = "Doku_Renderer_$rname";
+    $rclass = "Wiki_Renderer_$rname";
 
     // if requested earlier or a bundled renderer
     if (class_exists($rclass)) {
@@ -724,15 +724,15 @@ function p_get_renderer($mode)
     }
 
     // not bundled, see if its an enabled renderer plugin & when $mode is 'xhtml', the renderer can supply that format.
-    /** @var Doku_Renderer $Renderer */
+    /** @var Wiki_Renderer $Renderer */
     $Renderer = $plugin_controller->load('renderer', $rname);
-    if ($Renderer && is_a($Renderer, 'Doku_Renderer') && ($mode != 'xhtml' || $mode == $Renderer->getFormat())) {
+    if ($Renderer && is_a($Renderer, 'Wiki_Renderer') && ($mode != 'xhtml' || $mode == $Renderer->getFormat())) {
         return $Renderer;
     }
 
     // there is a configuration error!
     // not bundled, not a valid enabled plugin, use $mode to try to fallback to a bundled renderer
-    $rclass = "Doku_Renderer_$mode";
+    $rclass = "Wiki_Renderer_$mode";
     if (class_exists($rclass)) {
         // viewers should see renderered output, so restrict the warning to admins only
         $msg = "No renderer '$rname' found for mode '$mode', check your plugins";
@@ -755,7 +755,7 @@ function p_get_renderer($mode)
 /**
  * Gets the first heading from a file
  *
- * @param string $id dokuwiki page id
+ * @param string $id easywiki page id
  * @param int $render rerender if first heading not known
  *                             default: METADATA_RENDER_USING_SIMPLE_CACHE
  *                             Possible values: METADATA_DONT_RENDER,
@@ -796,9 +796,9 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', ?array $option
     $ctime = @filemtime($cache);
     if (
         $ctime && !$INPUT->bool('purge') &&
-        $ctime > filemtime(DOKU_INC . 'vendor/composer/installed.json') &&  // libraries changed
+        $ctime > filemtime(WIKI_INC . 'vendor/composer/installed.json') &&  // libraries changed
         $ctime > filemtime(reset($config_cascade['main']['default']))
-    ) { // dokuwiki changed
+    ) { // easywiki changed
         $highlighted_code = io_readFile($cache, false);
     } else {
         $geshi = new GeSHi($code, $language);

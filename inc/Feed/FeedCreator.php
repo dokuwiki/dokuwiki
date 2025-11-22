@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Feed;
+namespace easywiki\Feed;
 
-use dokuwiki\Extension\Event;
+use easywiki\Extension\Event;
 
 class FeedCreator
 {
@@ -22,9 +22,9 @@ class FeedCreator
         $this->feed = new \UniversalFeedCreator();
         $this->feed->title = $this->options->get('title');
         $this->feed->description = $this->options->get('subtitle');
-        $this->feed->link = DOKU_URL;
-        $this->feed->syndicationURL = DOKU_URL . 'feed.php';
-        $this->feed->cssStyleSheet = DOKU_URL . 'lib/exe/css.php?s=feed';
+        $this->feed->link = WIKI_URL;
+        $this->feed->syndicationURL = WIKI_URL . 'feed.php';
+        $this->feed->cssStyleSheet = WIKI_URL . 'lib/exe/css.php?s=feed';
 
         $this->initLogo();
     }
@@ -214,7 +214,7 @@ class FeedCreator
 
         $this->feed->image = new \FeedImage();
         $this->feed->image->title = $conf['title'];
-        $this->feed->image->link = DOKU_URL;
+        $this->feed->image->link = WIKI_URL;
         $this->feed->image->url = tpl_getMediaFile([
             ':wiki:logo.svg',
             ':logo.svg',
@@ -224,8 +224,8 @@ class FeedCreator
             ':logo.jpg',
             ':wiki:favicon.ico',
             ':favicon.ico',
-            ':wiki:dokuwiki.svg',
-            ':wiki:dokuwiki-128.png',
+            ':wiki:easywiki.svg',
+            ':wiki:easywiki-128.png',
             'images/favicon.ico'
         ], true);
     }

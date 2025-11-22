@@ -1,8 +1,8 @@
 <?php
 
-namespace dokuwiki\Ui\Media;
+namespace easywiki\Ui\Media;
 
-use dokuwiki\Utf8\PhpString;
+use easywiki\Utf8\PhpString;
 
 /**
  * Display a MediaFile in the Media Popup
@@ -28,20 +28,20 @@ class DisplayRow extends DisplayTile
 
         // view button
         $link = ml($id, '', true);
-        echo ' <a href="' . $link . '" target="_blank"><img src="' . DOKU_BASE . 'lib/images/magnifier.png" ' .
+        echo ' <a href="' . $link . '" target="_blank"><img src="' . WIKI_BASE . 'lib/images/magnifier.png" ' .
             'alt="' . $lang['mediaview'] . '" title="' . $lang['mediaview'] . '" class="btn" /></a>';
 
         // mediamanager button
         $link = wl('', ['do' => 'media', 'image' => $id, 'ns' => getNS($id)]);
-        echo ' <a href="' . $link . '" target="_blank"><img src="' . DOKU_BASE . 'lib/images/mediamanager.png" ' .
+        echo ' <a href="' . $link . '" target="_blank"><img src="' . WIKI_BASE . 'lib/images/mediamanager.png" ' .
             'alt="' . $lang['btn_media'] . '" title="' . $lang['btn_media'] . '" class="btn" /></a>';
 
         // delete button
         if ($this->mediaFile->isWritable() && $this->mediaFile->userPermission() >= AUTH_DELETE) {
-            $link = DOKU_BASE . 'lib/exe/mediamanager.php?delete=' . rawurlencode($id) .
+            $link = WIKI_BASE . 'lib/exe/mediamanager.php?delete=' . rawurlencode($id) .
                 '&amp;sectok=' . getSecurityToken();
             echo ' <a href="' . $link . '" class="btn_media_delete" title="' . $id . '">' .
-                '<img src="' . DOKU_BASE . 'lib/images/trash.png" alt="' . $lang['btn_delete'] . '" ' .
+                '<img src="' . WIKI_BASE . 'lib/images/trash.png" alt="' . $lang['btn_delete'] . '" ' .
                 'title="' . $lang['btn_delete'] . '" class="btn" /></a>';
         }
 

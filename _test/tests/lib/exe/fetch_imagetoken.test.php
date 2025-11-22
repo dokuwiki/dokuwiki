@@ -1,8 +1,8 @@
 <?php
 
-class fetch_imagetoken_test extends DokuWikiTest {
+class fetch_imagetoken_test extends EasyWikiTest {
 
-    private $media = 'wiki:dokuwiki-128.png';
+    private $media = 'wiki:easywiki-128.png';
     private $width = 200;
     private $height = 0;
 

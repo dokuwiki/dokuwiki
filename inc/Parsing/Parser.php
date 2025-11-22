@@ -1,12 +1,12 @@
 <?php
 
-namespace dokuwiki\Parsing;
+namespace easywiki\Parsing;
 
-use dokuwiki\Debug\DebugHelper;
-use Doku_Handler;
-use dokuwiki\Parsing\Lexer\Lexer;
-use dokuwiki\Parsing\ParserMode\Base;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use easywiki\Debug\DebugHelper;
+use Wiki_Handler;
+use easywiki\Parsing\Lexer\Lexer;
+use easywiki\Parsing\ParserMode\Base;
+use easywiki\Parsing\ParserMode\ModeInterface;
 
 /**
  * Sets up the Lexer with modes and points it to the Handler
@@ -14,7 +14,7 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
  */
 class Parser
 {
-    /** @var Doku_Handler */
+    /** @var Wiki_Handler */
     protected $handler;
 
     /** @var Lexer $lexer */
@@ -27,11 +27,11 @@ class Parser
     protected $connected = false;
 
     /**
-     * dokuwiki\Parsing\Doku_Parser constructor.
+     * easywiki\Parsing\Wiki_Parser constructor.
      *
-     * @param Doku_Handler $handler
+     * @param Wiki_Handler $handler
      */
-    public function __construct(Doku_Handler $handler)
+    public function __construct(Wiki_Handler $handler)
     {
         $this->handler = $handler;
     }

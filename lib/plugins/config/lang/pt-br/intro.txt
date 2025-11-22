@@ -1,6 +1,6 @@
 ====== Gerenciador de Configurações ======
 
-Use essa página para controlar as configurações da instalação do seu DokuWiki. Para ajuda acerca dos itens, consulte [[doku>config]]. Para mais detalhes sobre esse plug-in, veja [[doku>plugin:config]].
+Use essa página para controlar as configurações da instalação do seu EasyWiki. Para ajuda acerca dos itens, consulte [[doku>config]]. Para mais detalhes sobre esse plug-in, veja [[doku>plugin:config]].
 
 Definições que apresentem um fundo vermelho claro são protegidas e não podem ser alteradas com esse plug-in. As definições com um fundo azul são o padrão e as com um fundo branco foram configuradas localmente para essa instalação em particular. Tanto as definições em azul quanto as em branco podem ser alteradas.
 

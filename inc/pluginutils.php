@@ -8,14 +8,14 @@
  */
 
 // plugin related constants
-use dokuwiki\Extension\AdminPlugin;
-use dokuwiki\Extension\PluginController;
-use dokuwiki\Extension\PluginInterface;
+use easywiki\Extension\AdminPlugin;
+use easywiki\Extension\PluginController;
+use easywiki\Extension\PluginInterface;
 
-if (!defined('DOKU_PLUGIN'))  define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+if (!defined('WIKI_PLUGIN'))  define('WIKI_PLUGIN', WIKI_INC . 'lib/plugins/');
 // note that only [a-z0-9]+ is officially supported,
 // this is only to support plugins that don't follow these conventions, too
-if (!defined('DOKU_PLUGIN_NAME_REGEX')) define('DOKU_PLUGIN_NAME_REGEX', '[a-zA-Z0-9\x7f-\xff]+');
+if (!defined('WIKI_PLUGIN_NAME_REGEX')) define('WIKI_PLUGIN_NAME_REGEX', '[a-zA-Z0-9\x7f-\xff]+');
 
 /**
  * Original plugin functions, remain for backwards compatibility

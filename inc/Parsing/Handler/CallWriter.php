@@ -1,16 +1,16 @@
 <?php
 
-namespace dokuwiki\Parsing\Handler;
+namespace easywiki\Parsing\Handler;
 
 class CallWriter implements CallWriterInterface
 {
-    /** @var \Doku_Handler $Handler */
+    /** @var \Wiki_Handler $Handler */
     protected $Handler;
 
     /**
-     * @param \Doku_Handler $Handler
+     * @param \Wiki_Handler $Handler
      */
-    public function __construct(\Doku_Handler $Handler)
+    public function __construct(\Wiki_Handler $Handler)
     {
         $this->Handler = $Handler;
     }

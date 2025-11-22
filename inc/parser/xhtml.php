@@ -1,22 +1,22 @@
 <?php
 
-use dokuwiki\ChangeLog\MediaChangeLog;
-use dokuwiki\Feed\FeedParser;
-use dokuwiki\File\MediaResolver;
-use dokuwiki\File\PageResolver;
-use dokuwiki\Utf8\PhpString;
+use easywiki\ChangeLog\MediaChangeLog;
+use easywiki\Feed\FeedParser;
+use easywiki\File\MediaResolver;
+use easywiki\File\PageResolver;
+use easywiki\Utf8\PhpString;
 use SimplePie\Author;
 
 /**
  * Renderer for XHTML output
  *
- * This is DokuWiki's main renderer used to display page content in the wiki
+ * This is EasyWiki's main renderer used to display page content in the wiki
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  */
-class Doku_Renderer_xhtml extends Doku_Renderer
+class Wiki_Renderer_xhtml extends Wiki_Renderer
 {
     /** @var array store the table of contents */
     public $toc = [];
@@ -150,7 +150,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         if ($this->footnotes !== []) {
-            $this->doc .= '<div class="footnotes">' . DOKU_LF;
+            $this->doc .= '<div class="footnotes">' . WIKI_LF;
 
             foreach ($this->footnotes as $id => $footnote) {
                 // check its not a placeholder that indicates actual footnote text is elsewhere
@@ -158,7 +158,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                     // open the footnote and set the anchor and backlink
                     $this->doc .= '<div class="fn">';
                     $this->doc .= '<sup><a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
-                    $this->doc .= $id . ')</a></sup> ' . DOKU_LF;
+                    $this->doc .= $id . ')</a></sup> ' . WIKI_LF;
 
                     // get any other footnotes that use the same markup
                     $alt = array_keys($this->footnotes, "@@FNT$id");
@@ -166,15 +166,15 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                     foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
                         $this->doc .= ', <sup><a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot">';
-                        $this->doc .= ($ref) . ')</a></sup> ' . DOKU_LF;
+                        $this->doc .= ($ref) . ')</a></sup> ' . WIKI_LF;
                     }
 
                     // add footnote markup and close this footnote
                     $this->doc .= '<div class="content">' . $footnote . '</div>';
-                    $this->doc .= '</div>' . DOKU_LF;
+                    $this->doc .= '</div>' . WIKI_LF;
                 }
             }
-            $this->doc .= '</div>' . DOKU_LF;
+            $this->doc .= '</div>' . WIKI_LF;
         }
 
         // Prepare the TOC
@@ -247,7 +247,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         // build the header
-        $header = DOKU_LF . '<h' . $level;
+        $header = WIKI_LF . '<h' . $level;
         if ($level <= $conf['maxseclevel']) {
             $data = [];
             $data['target'] = 'section';
@@ -258,7 +258,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
         $header .= ' id="' . $hid . '">';
         $header .= $this->_xmlEntities($text);
-        $header .= "</h$level>" . DOKU_LF;
+        $header .= "</h$level>" . WIKI_LF;
 
         if ($returnonly) {
             return $header;
@@ -274,7 +274,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function section_open($level)
     {
-        $this->doc .= '<div class="level' . $level . '">' . DOKU_LF;
+        $this->doc .= '<div class="level' . $level . '">' . WIKI_LF;
     }
 
     /**
@@ -282,7 +282,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function section_close()
     {
-        $this->doc .= DOKU_LF . '</div>' . DOKU_LF;
+        $this->doc .= WIKI_LF . '</div>' . WIKI_LF;
     }
 
     /**
@@ -300,7 +300,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function p_open()
     {
-        $this->doc .= DOKU_LF . '<p>' . DOKU_LF;
+        $this->doc .= WIKI_LF . '<p>' . WIKI_LF;
     }
 
     /**
@@ -308,7 +308,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function p_close()
     {
-        $this->doc .= DOKU_LF . '</p>' . DOKU_LF;
+        $this->doc .= WIKI_LF . '</p>' . WIKI_LF;
     }
 
     /**
@@ -316,7 +316,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function linebreak()
     {
-        $this->doc .= '<br/>' . DOKU_LF;
+        $this->doc .= '<br/>' . WIKI_LF;
     }
 
     /**
@@ -324,7 +324,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function hr()
     {
-        $this->doc .= '<hr />' . DOKU_LF;
+        $this->doc .= '<hr />' . WIKI_LF;
     }
 
     /**
@@ -508,7 +508,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             if (is_array($classes)) $classes = implode(' ', $classes);
             $class = " class=\"$classes\"";
         }
-        $this->doc .= "<ul$class>" . DOKU_LF;
+        $this->doc .= "<ul$class>" . WIKI_LF;
     }
 
     /**
@@ -516,7 +516,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function listu_close()
     {
-        $this->doc .= '</ul>' . DOKU_LF;
+        $this->doc .= '</ul>' . WIKI_LF;
     }
 
     /**
@@ -531,7 +531,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             if (is_array($classes)) $classes = implode(' ', $classes);
             $class = " class=\"$classes\"";
         }
-        $this->doc .= "<ol$class>" . DOKU_LF;
+        $this->doc .= "<ol$class>" . WIKI_LF;
     }
 
     /**
@@ -539,7 +539,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function listo_close()
     {
-        $this->doc .= '</ol>' . DOKU_LF;
+        $this->doc .= '</ol>' . WIKI_LF;
     }
 
     /**
@@ -559,7 +559,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function listitem_close()
     {
-        $this->doc .= '</li>' . DOKU_LF;
+        $this->doc .= '</li>' . WIKI_LF;
     }
 
     /**
@@ -575,7 +575,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function listcontent_close()
     {
-        $this->doc .= '</div>' . DOKU_LF;
+        $this->doc .= '</div>' . WIKI_LF;
     }
 
     /**
@@ -595,7 +595,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function quote_open()
     {
-        $this->doc .= '<blockquote><div class="no">' . DOKU_LF;
+        $this->doc .= '<blockquote><div class="no">' . WIKI_LF;
     }
 
     /**
@@ -603,7 +603,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function quote_close()
     {
-        $this->doc .= '</div></blockquote>' . DOKU_LF;
+        $this->doc .= '</div></blockquote>' . WIKI_LF;
     }
 
     /**
@@ -613,7 +613,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function preformatted($text)
     {
-        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text), "\n\r") . '</pre>' . DOKU_LF;
+        $this->doc .= '<pre class="code">' . trim($this->_xmlEntities($text), "\n\r") . '</pre>' . WIKI_LF;
     }
 
     /**
@@ -670,7 +670,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             if ($INPUT->has('codeblockOffset')) {
                 $offset = $INPUT->str('codeblockOffset');
             }
-            $this->doc .= '<dl class="' . $type . '">' . DOKU_LF;
+            $this->doc .= '<dl class="' . $type . '">' . WIKI_LF;
             $this->doc .= '<dt><a href="' .
                 exportlink(
                     $ID,
@@ -678,7 +678,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                     ['codeblock' => $offset + $this->_codeblock]
                 ) . '" title="' . $lang['download'] . '" class="' . $class . '">';
             $this->doc .= hsc($filename);
-            $this->doc .= '</a></dt>' . DOKU_LF . '<dd>';
+            $this->doc .= '</a></dt>' . WIKI_LF . '<dd>';
         }
 
         if (str_starts_with($text, "\n")) {
@@ -689,18 +689,18 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         if (empty($language)) { // empty is faster than is_null and can prevent '' string
-            $this->doc .= '<pre class="' . $type . '">' . $this->_xmlEntities($text) . '</pre>' . DOKU_LF;
+            $this->doc .= '<pre class="' . $type . '">' . $this->_xmlEntities($text) . '</pre>' . WIKI_LF;
         } else {
             $class = 'code'; //we always need the code class to make the syntax highlighting apply
             if ($type != 'code') $class .= ' ' . $type;
 
             $this->doc .= "<pre class=\"$class $language\">" .
                 p_xhtml_cached_geshi($text, $language, '', $options) .
-                '</pre>' . DOKU_LF;
+                '</pre>' . WIKI_LF;
         }
 
         if ($filename) {
-            $this->doc .= '</dd></dl>' . DOKU_LF;
+            $this->doc .= '</dd></dl>' . WIKI_LF;
         }
 
         $this->_codeblock++;
@@ -736,7 +736,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     public function smiley($smiley)
     {
         if (isset($this->smileys[$smiley])) {
-            $this->doc .= '<img src="' . DOKU_BASE . 'lib/images/smileys/' . $this->smileys[$smiley] .
+            $this->doc .= '<img src="' . WIKI_BASE . 'lib/images/smileys/' . $this->smileys[$smiley] .
                 '" class="icon smiley" alt="' . $this->_xmlEntities($smiley) . '" />';
         } else {
             $this->doc .= $this->_xmlEntities($smiley);
@@ -1054,7 +1054,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         //do we stay at the same server? Use local target
-        if (strpos($url, DOKU_URL) === 0 || strpos($url, DOKU_BASE) === 0) {
+        if (strpos($url, WIKI_URL) === 0 || strpos($url, WIKI_BASE) === 0) {
             $link['target'] = $conf['target']['wiki'];
         }
         if ($exists !== null && !$isImage) {
@@ -1338,7 +1338,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $feed->set_feed_url($url);
 
         //disable warning while fetching
-        if (!defined('DOKU_E_LEVEL')) {
+        if (!defined('WIKI_E_LEVEL')) {
             $elvl = error_reporting(E_ERROR);
         }
         $rc = $feed->init();
@@ -1436,7 +1436,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class .= ' ' . $this->startSectionEdit($pos, $data);
         }
         $this->doc .= '<div class="' . $class . '"><table class="inline">' .
-            DOKU_LF;
+            WIKI_LF;
     }
 
     /**
@@ -1446,7 +1446,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function table_close($pos = null)
     {
-        $this->doc .= '</table></div>' . DOKU_LF;
+        $this->doc .= '</table></div>' . WIKI_LF;
         if ($pos !== null) {
             $this->finishSectionEdit($pos);
         }
@@ -1457,7 +1457,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tablethead_open()
     {
-        $this->doc .= DOKU_TAB . '<thead>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '<thead>' . WIKI_LF;
     }
 
     /**
@@ -1465,7 +1465,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tablethead_close()
     {
-        $this->doc .= DOKU_TAB . '</thead>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '</thead>' . WIKI_LF;
     }
 
     /**
@@ -1473,7 +1473,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tabletbody_open()
     {
-        $this->doc .= DOKU_TAB . '<tbody>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '<tbody>' . WIKI_LF;
     }
 
     /**
@@ -1481,7 +1481,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tabletbody_close()
     {
-        $this->doc .= DOKU_TAB . '</tbody>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '</tbody>' . WIKI_LF;
     }
 
     /**
@@ -1489,7 +1489,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tabletfoot_open()
     {
-        $this->doc .= DOKU_TAB . '<tfoot>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '<tfoot>' . WIKI_LF;
     }
 
     /**
@@ -1497,7 +1497,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tabletfoot_close()
     {
-        $this->doc .= DOKU_TAB . '</tfoot>' . DOKU_LF;
+        $this->doc .= WIKI_TAB . '</tfoot>' . WIKI_LF;
     }
 
     /**
@@ -1514,7 +1514,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             if (is_array($classes)) $classes = implode(' ', $classes);
             $class .= ' ' . $classes;
         }
-        $this->doc .= DOKU_TAB . '<tr class="' . $class . '">' . DOKU_LF . DOKU_TAB . DOKU_TAB;
+        $this->doc .= WIKI_TAB . '<tr class="' . $class . '">' . WIKI_LF . WIKI_TAB . WIKI_TAB;
     }
 
     /**
@@ -1522,7 +1522,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function tablerow_close()
     {
-        $this->doc .= DOKU_LF . DOKU_TAB . '</tr>' . DOKU_LF;
+        $this->doc .= WIKI_LF . WIKI_TAB . '</tr>' . WIKI_LF;
     }
 
     /**
@@ -1687,7 +1687,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 $title = $this->_xmlEntities($title);
             } elseif ($ext == 'jpg' || $ext == 'jpeg') {
                 //try to use the caption from IPTC/EXIF
-                require_once(DOKU_INC . 'inc/JpegMeta.php');
+                require_once(WIKI_INC . 'inc/JpegMeta.php');
                 $jpeg = new JpegMeta(mediaFN($src));
                 $cap = $jpeg->getTitle();
                 if (!empty($cap)) {

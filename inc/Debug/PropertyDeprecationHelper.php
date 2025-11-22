@@ -7,7 +7,7 @@
  *
  */
 
-namespace dokuwiki\Debug;
+namespace easywiki\Debug;
 
 /**
  * Use this trait in classes which have properties for which public access
@@ -36,7 +36,7 @@ trait PropertyDeprecationHelper
      * List of deprecated properties, in <property name> => <class> format
      * where <class> is the the name of the class defining the property
      *
-     * E.g. [ '_event' => '\dokuwiki\Cache\Cache' ]
+     * E.g. [ '_event' => '\easywiki\Cache\Cache' ]
      * @var string[]
      */
     protected $deprecatedPublicProperties = [];

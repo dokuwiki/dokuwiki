@@ -1,6 +1,6 @@
 <?php
 
-class parserutils_get_renderer_test extends DokuWikiTest {
+class parserutils_get_renderer_test extends EasyWikiTest {
 
     private $plugin_controller;
 
@@ -11,7 +11,7 @@ class parserutils_get_renderer_test extends DokuWikiTest {
         $old_conf = $conf;
         $conf['renderer_xhtml'] = 'xhtml';
 
-        $this->assertInstanceOf('Doku_Renderer_xhtml', p_get_renderer('xhtml'));
+        $this->assertInstanceOf('Wiki_Renderer_xhtml', p_get_renderer('xhtml'));
 
         $conf = $old_conf;
     }
@@ -39,7 +39,7 @@ class parserutils_get_renderer_test extends DokuWikiTest {
         $old_conf = $conf;
         $conf['renderer_xhtml'] = 'badvalue';
 
-        $this->assertInstanceOf('Doku_Renderer_xhtml', p_get_renderer('xhtml'));
+        $this->assertInstanceOf('Wiki_Renderer_xhtml', p_get_renderer('xhtml'));
 
         $conf = $old_conf;
     }
@@ -66,9 +66,9 @@ class parserutils_get_renderer_test extends DokuWikiTest {
     }
  }
 
-require_once DOKU_INC . 'inc/parser/xhtml.php';
+require_once WIKI_INC . 'inc/parser/xhtml.php';
 
-class renderer_plugin_test extends Doku_Renderer_xhtml {
+class renderer_plugin_test extends Wiki_Renderer_xhtml {
 
     function canRender($format) {
       return ($format=='xhtml');

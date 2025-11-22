@@ -7,11 +7,11 @@
  * @author     Michael Hamann <michael@content-space.de>
  */
 
-namespace dokuwiki\Sitemap;
+namespace easywiki\Sitemap;
 
-use dokuwiki\Extension\Event;
-use dokuwiki\HTTP\DokuHTTPClient;
-use dokuwiki\Logger;
+use easywiki\Extension\Event;
+use easywiki\HTTP\DokuHTTPClient;
+use easywiki\Logger;
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.

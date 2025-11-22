@@ -1,11 +1,11 @@
 <?php
 
-namespace dokuwiki\test;
+namespace easywiki\test;
 
-use dokuwiki\Input\Input;
-use dokuwiki\Ip;
+use easywiki\Input\Input;
+use easywiki\Ip;
 
-class IpTest extends \DokuWikiTest {
+class IpTest extends \EasyWikiTest {
 
     /**
      * The data provider for ipToNumber() tests.
