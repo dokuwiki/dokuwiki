@@ -4,4 +4,4 @@ email  chris@jalakai.co.uk
 date   2015-07-18
 name   Configuration Manager
 desc   Manage EasyWiki's Configuration Settings
-url    https://easywiki.org/plugin:config
+url    https://dokuwiki.org/plugin:config

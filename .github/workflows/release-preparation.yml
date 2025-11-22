@@ -92,13 +92,13 @@ jobs:
 
             - [ ] All tests pass on the `master` branch (tests are not executed on PRs created in workflows)
             - [ ] If this is a new stable release, make sure you merged `stable` into `old-stable` first
-            - [ ] Check that a meaningful [changelog](https://www.easywiki.org/changes) exists
+            - [ ] Check that a meaningful [changelog](https://www.dokuwiki.org/changes) exists
 
             After merging, the release workflow will be triggered automatically.
 
             After this is done, you need to do the following things manually:
 
-            - [ ] Update the [version symlinks](https://download.easywiki.org/admin/)
+            - [ ] Update the [version symlinks](https://download.dokuwiki.org/admin/)
             - [ ] Update the update message system
             - [ ] Announce the release on the mailing list, forum, IRC, social media, etc.
 

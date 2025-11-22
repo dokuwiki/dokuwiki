@@ -137,7 +137,7 @@ $lang['rss_media']             = 'Welk type verandering moet in de XML feed word
 $lang['rss_media_o_both']      = 'beide';
 $lang['rss_media_o_pages']     = 'pagina\'s';
 $lang['rss_media_o_media']     = 'media';
-$lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswaarschuwingen? EasyWiki moet hiervoor contact opnemen met update.easywiki.org.';
+$lang['updatecheck']           = 'Controleer op nieuwe versies en beveiligingswaarschuwingen? EasyWiki moet hiervoor contact opnemen met update.dokuwiki.org.';
 $lang['userewrite']            = 'Gebruik nette URL\'s';
 $lang['useslash']              = 'Gebruik slash (/) als scheiding tussen namepaces in URL\'s';
 $lang['sepchar']               = 'Woordscheider in paginanamen';
@@ -149,7 +149,7 @@ $lang['gzip_output']           = 'Gebruik gzip Content-Encoding voor xhtml';
 $lang['compress']              = 'Compacte CSS en javascript output';
 $lang['cssdatauri']            = 'Maximale omvang in bytes van in CSS gelinkte afbeeldingen die bij de stylesheet moeten worden ingesloten ter reductie van de HTTP request header overhead. <code>400</code> tot <code>600</code> is een geschikte omvang. Stel de omvang in op <code>0</code> om deze functionaliteit uit te schakelen.';
 $lang['send404']               = 'Stuur "HTTP 404/Page Not Found" voor niet-bestaande pagina\'s';
-$lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoekindex tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
+$lang['broken_iua']            = 'Is de ignore_user_abort functie onbruikbaar op uw systeem? Dit kan een onbruikbare zoekindex tot gevolg hebben. IIS+PHP/CGI staat hier bekend om. Zie <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> voor meer informatie.';
 $lang['xsendfile']             = 'Gebruik de X-Sendfile header om de webserver statische content te laten versturen? De webserver moet dit wel ondersteunen.';
 $lang['renderer_xhtml']        = 'Weergavesysteem voor de standaard (xhtml) wiki-uitvoer';
 $lang['renderer__core']        = '%s (easywiki core)';

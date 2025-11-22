@@ -3,7 +3,7 @@
 /**
  * This overwrites WIKI_CONF. Each animal gets its own configuration and data directory.
  * This can be used together with preload.php. See preload.php.dist for an example setup.
- * For more information see http://www.EasyWiki.org/farms.
+ * For more information see http://www.dokuwiki.org/farms.
  *
  * The farm directory (constant DOKU_FARMDIR) can be any directory and needs to be set.
  * Animals are direct subdirectories of the farm directory.

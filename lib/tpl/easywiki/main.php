@@ -3,7 +3,7 @@
 /**
  * EasyWiki Default Template 2012
  *
- * @link     http://easywiki.org/template
+ * @link     http://dokuwiki.org/template
  * @author   Anika Henke <anika@selfthinker.org>
  * @author   Clarence Lee <clarencedglee@gmail.com>
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)

@@ -102,7 +102,7 @@
  $lang['install_upload']               = 'Įkelti plėtinį:';
 
  $lang['repo_badresponse']             = 'Įskiepių saugykla grąžino neteisingą atsakymą.';
- $lang['repo_error']                   = 'Nepavyksta susisiekti su įskiepių saugykla. Įsitikinkite, kad jūsų serveris turi teisę susisiekti su www.EasyWiki.org ir patikrinkite savo įgaliotojo serverio nustatymus.';
+ $lang['repo_error']                   = 'Nepavyksta susisiekti su įskiepių saugykla. Įsitikinkite, kad jūsų serveris turi teisę susisiekti su www.dokuwiki.org ir patikrinkite savo įgaliotojo serverio nustatymus.';
  $lang['nossl']                        = 'Jūsų PHP atrodo neturi SSL palaikymo. Dauguma EasyWiki plėtinių atveju atsisiuntimas neveiks.';
 
  $lang['js']['display_viewoptions']    = 'Peržiūros parinktys:';

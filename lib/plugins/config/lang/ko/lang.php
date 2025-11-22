@@ -135,7 +135,7 @@ $lang['rss_media']             = '어떤 규격으로 XML 피드에 바뀜을 �
 $lang['rss_media_o_both']      = '양방향';
 $lang['rss_media_o_pages']     = '쪽';
 $lang['rss_media_o_media']     = '미디어';
-$lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.easywiki.org에 연결이 필요합니다.';
+$lang['updatecheck']           = '업데이트와 보안 경고를 검사할까요? 도쿠위키는 이 기능을 위해 update.dokuwiki.org에 연결이 필요합니다.';
 $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
 $lang['sepchar']               = '문서 이름 낱말 구분자';
@@ -147,7 +147,7 @@ $lang['gzip_output']           = 'xhtml에 대해 gzip 내용 인코딩 사용';
 $lang['compress']              = 'CSS 및 자바스크립트를 압축하여 출력';
 $lang['cssdatauri']            = 'CSS 파일에서 그림이 참조되는 최대 바이트 크기를 스타일시트에 규정해야 HTTP 요청 헤더 오버헤드 크기를 줄일 수 있습니다. <code>400</code>에서 <code>600</code> 바이트 정도면 좋은 효율을 가져옵니다. 비활성화하려면 <code>0</code>으로 설정하세요.';
 $lang['send404']               = '존재하지 않는 문서에 "HTTP 404/페이지를 찾을 수 없습니다" 보내기';
-$lang['broken_iua']            = '시스템에서 ignore_user_abort 함수에 문제가 있습니까? 문제가 있다면 검색 색인이 동작하지 않는 원인이 됩니다. 이 함수가 IIS+PHP/CGI에서 문제가 있는 것으로 알려져 있습니다. 자세한 정보는 <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">버그 852</a>를 참조하시기 바랍니다.';
+$lang['broken_iua']            = '시스템에서 ignore_user_abort 함수에 문제가 있습니까? 문제가 있다면 검색 색인이 동작하지 않는 원인이 됩니다. 이 함수가 IIS+PHP/CGI에서 문제가 있는 것으로 알려져 있습니다. 자세한 정보는 <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">버그 852</a>를 참조하시기 바랍니다.';
 $lang['xsendfile']             = '웹 서버가 정적 파일을 제공할 수 있도록 X-Sendfile 헤더를 사용하겠습니까? 웹 서버가 이 기능을 지원해야 합니다.';
 $lang['renderer_xhtml']        = '주요 (xhtml) 위키 출력에 사용할 렌더러';
 $lang['renderer__core']        = '%s (도쿠위키 코어)';

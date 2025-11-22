@@ -321,7 +321,7 @@ class OpenAPIGenerator
     }
 
     /**
-     * Generates a markdown link from a easywiki.org URL
+     * Generates a markdown link from a dokuwiki.org URL
      *
      * @param $url
      * @return mixed|string

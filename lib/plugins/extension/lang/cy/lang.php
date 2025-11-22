@@ -101,7 +101,7 @@ $lang['auth']                         = '\'Dyw\'r ategyn dilysu hwn heb ei alluo
 $lang['install_url']                  = 'Arsefydlu o URL:';
 $lang['install_upload']               = 'Lanlwytho Estyniad:';
 
-$lang['repo_error']                   = 'Doedd dim modd cysylltu â\'r ystorfa ategion. Sicrhewch fod hawl gan eich gweinydd i gysylltu â www.EasyWiki.org a gwiriwch eich gosodiadau procsi.';
+$lang['repo_error']                   = 'Doedd dim modd cysylltu â\'r ystorfa ategion. Sicrhewch fod hawl gan eich gweinydd i gysylltu â www.dokuwiki.org a gwiriwch eich gosodiadau procsi.';
 $lang['nossl']                        = 'Mae\'n debyg \'dyw eich PHP ddim yn cynnal SSL. Na fydd lawrlwytho yn gweithio ar gyfer nifer o estyniadau EasyWiki.';
 
 $lang['js']['display_viewoptions']    = 'Opsiynau Golwg:';

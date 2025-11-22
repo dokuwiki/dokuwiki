@@ -130,7 +130,7 @@ $lang['rss_media']             = 'Loại thay đổi nào sẽ được liệt k
 $lang['rss_media_o_both']      = 'cả hai';
 $lang['rss_media_o_pages']     = 'trang';
 $lang['rss_media_o_media']     = 'phương tiện';
-$lang['updatecheck']           = 'Kiểm tra cập nhật và cảnh báo bảo mật? EasyWiki cần kết nối với update.easywiki.org  để sử dụng tính năng này.';
+$lang['updatecheck']           = 'Kiểm tra cập nhật và cảnh báo bảo mật? EasyWiki cần kết nối với update.dokuwiki.org  để sử dụng tính năng này.';
 $lang['userewrite']            = 'Sử dụng URL đẹp';
 $lang['useslash']              = 'Sử dụng dấu gạch chéo làm dấu phân cách không gian tên trong URL';
 $lang['sepchar']               = 'Phân cách từ trong tên trang';
@@ -142,7 +142,7 @@ $lang['gzip_output']           = 'Sử dụng mã hóa nội dung gzip cho xhtml
 $lang['compress']              = 'Đầu ra CSS và javascript nhỏ gọn';
 $lang['cssdatauri']            = 'Kích thước tính theo byte mà hình ảnh được tham chiếu trong tập tin CSS nên được nhúng ngay vào bảng định kiểu để giảm yêu cầu đầu đề HTTP phía trước. <code>400</code> đến <code>600</code> bytes là các giá trị tốt. Đặt thành <code>0</code> để vô hiệu hóa.';
 $lang['send404']               = 'Gửi "HTTP 404/Không tìm thấy trang" cho những trang không tồn tại';
-$lang['broken_iua']            = 'Chức năng ign_user_abort có bị hỏng trên hệ thống của bạn không? Điều này có thể khiến chỉ mục tìm kiếm không hoạt động. IIS + PHP/CGI được biết sẽ bị hỏng. Xem <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">Bug 852</a> để biết thêm thông tin.';
+$lang['broken_iua']            = 'Chức năng ign_user_abort có bị hỏng trên hệ thống của bạn không? Điều này có thể khiến chỉ mục tìm kiếm không hoạt động. IIS + PHP/CGI được biết sẽ bị hỏng. Xem <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> để biết thêm thông tin.';
 $lang['xsendfile']             = 'Sử dụng đầu đề X-Sendfile cho phép máy chủ web cung cấp các tập tin tĩnh? Máy chủ web của bạn cần hỗ trợ cái này.';
 $lang['renderer_xhtml']        = 'Trình kết xuất để sử dụng cho đầu ra wiki chính (xhtml)';
 $lang['renderer__core']        = '%s (lõi easywiki)';

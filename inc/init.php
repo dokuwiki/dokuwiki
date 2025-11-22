@@ -177,7 +177,7 @@ if (
         !defined('WIKI_DISABLE_GZIP_OUTPUT') &&
         function_exists('ob_gzhandler') &&
         // Disable compression when a (compressed) sitemap might be delivered
-        // See https://bugs.EasyWiki.org/index.php?do=details&task_id=2576
+        // See https://bugs.dokuwiki.org/index.php?do=details&task_id=2576
         $ACT != 'sitemap'
 ) {
     ob_start('ob_gzhandler');

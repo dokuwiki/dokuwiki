@@ -165,7 +165,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 
     <div style="clear: both">
-        <a href="https://easywiki.org/"><img src="lib/tpl/easywiki/images/button-dw.png" alt="driven by EasyWiki"/></a>
+        <a href="https://dokuwiki.org/"><img src="lib/tpl/easywiki/images/button-dw.png" alt="driven by EasyWiki"/></a>
         <a href="https://php.net"><img src="lib/tpl/easywiki/images/button-php.gif" alt="powered by PHP"/></a>
     </div>
     </body>

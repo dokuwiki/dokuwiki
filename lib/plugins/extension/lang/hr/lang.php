@@ -90,5 +90,5 @@ $lang['git']                   = 'Proširenje je ugrađeno preko Git-a, možda g
 $lang['auth']                  = 'Autorizacijski dodatak nije podešen, razmotrite njegovo onemogućavanje kao dodatka.';
 $lang['install_url']           = 'Ugradi s URL-a:';
 $lang['install_upload']        = 'Učitaj proširenje:';
-$lang['repo_error']            = 'Repozitorij dodataka nije dostupan. Budite sigurni da server može pristupiti www.EasyWiki.org i provjerite proxy postavke.';
+$lang['repo_error']            = 'Repozitorij dodataka nije dostupan. Budite sigurni da server može pristupiti www.dokuwiki.org i provjerite proxy postavke.';
 $lang['nossl']                 = 'Izgleda da korišteni PHP ne podržava SSL. Učitavanje neće raditi na mnogim EasyWiki dodatcima.';

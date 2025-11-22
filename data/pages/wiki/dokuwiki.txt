@@ -6,12 +6,12 @@ Read the [[doku>manual|EasyWiki Manual]] to unleash the full power of EasyWiki.
 
 ===== Download =====
 
-EasyWiki is available at https://download.easywiki.org/
+EasyWiki is available at https://download.dokuwiki.org/
 
 
 ===== Read More =====
 
-All documentation and additional information besides the [[syntax|syntax description]] is maintained in the EasyWiki at [[doku>|www.easywiki.org]].
+All documentation and additional information besides the [[syntax|syntax description]] is maintained in the EasyWiki at [[doku>|www.dokuwiki.org]].
 
 **About EasyWiki**
 
@@ -24,7 +24,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 **Installing EasyWiki**
 
   * [[doku>requirements|System Requirements]]
-  * [[https://download.easywiki.org/|Download EasyWiki]] :!:
+  * [[https://download.dokuwiki.org/|Download EasyWiki]] :!:
   * [[doku>changes|Change Log]]
   * [[doku>Install|How to install or upgrade]] :!:
   * [[doku>config|Configuration]]
@@ -47,7 +47,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 
   * [[doku>newsletter|Subscribe to the newsletter]] :!:
   * [[doku>mailinglist|Join the mailing list]]
-  * [[https://forum.easywiki.org|Check out the user forum]]
+  * [[https://forum.dokuwiki.org|Check out the user forum]]
   * [[doku>irc|Talk to other users in the IRC channel]]
   * [[https://github.com/splitbrain/EasyWiki/issues|Submit bugs and feature wishes]]
   * [[doku>thanks|Some humble thanks]]
@@ -55,7 +55,7 @@ All documentation and additional information besides the [[syntax|syntax descrip
 
 ===== Copyright =====
 
-2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.easywiki.org|forum]] instead)) and the EasyWiki Community
+2004-2020 (c) Andreas Gohr <andi@splitbrain.org>((Please do not contact me for help and support -- use the [[doku>mailinglist]] or [[https://forum.dokuwiki.org|forum]] instead)) and the EasyWiki Community
 
 The EasyWiki engine is licensed under [[https://www.gnu.org/licenses/gpl.html|GNU General Public License]] Version 2. If you use EasyWiki in your company, consider [[doku>donate|donating]] a few bucks ;-).
 

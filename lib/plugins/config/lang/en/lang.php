@@ -165,7 +165,7 @@ $lang['rss_media_o_media'] = 'media';
 
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Check for updates and security warnings? EasyWiki needs to contact update.easywiki.org for this feature.';
+$lang['updatecheck'] = 'Check for updates and security warnings? EasyWiki needs to contact update.dokuwiki.org for this feature.';
 $lang['userewrite']  = 'Use nice URLs';
 $lang['useslash']    = 'Use slash as namespace separator in URLs';
 $lang['sepchar']     = 'Page name word separator';

@@ -154,7 +154,7 @@ $lang['rss_show_summary'] = 'Dangos crynodeb mewn teitl y ffrwd XML';
 $lang['rss_media']   = 'Pa fath newidiadau a ddylai cael eu rhestru yn y ffrwd XML??';
 
 /* Advanced Options */
-$lang['updatecheck'] = 'Gwirio am ddiweddariadau a rhybuddion diogelwch? Mae\'n rhaid i EasyWiki gysylltu ag update.easywiki.org ar gyfer y nodwedd hon.';
+$lang['updatecheck'] = 'Gwirio am ddiweddariadau a rhybuddion diogelwch? Mae\'n rhaid i EasyWiki gysylltu ag update.dokuwiki.org ar gyfer y nodwedd hon.';
 $lang['userewrite']  = 'Defnyddio URLs pert';
 $lang['useslash']    = 'Defnyddio slaes fel gwahanydd namespace mewn URL';
 $lang['sepchar']     = 'Gwanahydd geiriau mewn enw tudalennau';
@@ -166,7 +166,7 @@ $lang['gzip_output'] = 'Defnyddio gzip Content-Encoding ar gyfer xhtml'; //pwy a
 $lang['compress']    = 'Cywasgu allbwn CSS a javascript';
 $lang['cssdatauri']  = 'Uchafswm maint mewn beitiau ar gyfer delweddau i\'w cyfeirio atynt mewn ffeiliau CSS a ddylai cael eu mewnosod i\'r ddalen arddull i leihau gorbenion pennyn cais HTTP. Mae <code>400</code> i <code>600</code> beit yn werth da. Gosodwch i <code>0</code> i\'w analluogi.';
 $lang['send404']     = 'Anfon "HTTP 404/Page Not Found" ar gyfer tudalennau sy ddim yn bodoli';
-$lang['broken_iua']  = 'Ydy\'r swyddogaeth ignore_user_abort wedi torri ar eich system? Gall hwn achosi\'r indecs chwilio i beidio â gweithio. Rydym yn gwybod bod IIS+PHP/CGI wedi torri. Gweler <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">Bug 852</a> am wybodaeth bellach.';
+$lang['broken_iua']  = 'Ydy\'r swyddogaeth ignore_user_abort wedi torri ar eich system? Gall hwn achosi\'r indecs chwilio i beidio â gweithio. Rydym yn gwybod bod IIS+PHP/CGI wedi torri. Gweler <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> am wybodaeth bellach.';
 $lang['xsendfile']   = 'Defnyddio\'r pennyn X-Sendfile i ganiatáu\'r gweinydd gwe i ddanfon ffeiliau statig? Mae\'n rhaid bod eich gweinydd gwe yn caniatáu hyn.';
 $lang['renderer_xhtml']   = 'Cyflwynydd i ddefnyddio ar gyfer prif allbwn (xhtml) y wici';
 $lang['renderer__core']   = '%s (craidd easywiki)';

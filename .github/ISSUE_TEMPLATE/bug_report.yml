@@ -7,7 +7,7 @@ body:
       value: >
         ### ✋ **This is bug tracker, not a support forum**
 
-        If you have questions or need help, [**get in touch at the forum**](https://forum.easywiki.org/).
+        If you have questions or need help, [**get in touch at the forum**](https://forum.dokuwiki.org/).
 
 
         ---
@@ -16,7 +16,7 @@ body:
 
 
         If this is the first time you are doing this, please take a few moments to read
-        through our wiki page on [Reporting EasyWiki Bugs](https://www.easywiki.org/bugs).
+        through our wiki page on [Reporting EasyWiki Bugs](https://www.dokuwiki.org/bugs).
 
 
         You are about to report a bug in **EasyWiki**. Bugs in plugins should be reported
@@ -94,7 +94,7 @@ body:
           * If possible, screenshots or videos showing the problem, especially if you
             are reporting a problem with the user interface!
 
-        Again, refer to [Reporting EasyWiki Bugs](https://www.easywiki.org/bugs) on how to obtain these infos.
+        Again, refer to [Reporting EasyWiki Bugs](https://www.dokuwiki.org/bugs) on how to obtain these infos.
   - type: textarea
     attributes:
       label: Relevant logs and/or error messages

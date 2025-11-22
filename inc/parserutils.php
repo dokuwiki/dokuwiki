@@ -325,7 +325,7 @@ function p_get_metadata($id, $key = '', $render = METADATA_RENDER_USING_CACHE)
 /**
  * sets metadata elements of a page
  *
- * @see http://www.EasyWiki.org/devel:metadata#functions_to_get_and_set_metadata
+ * @see http://www.dokuwiki.org/devel:metadata#functions_to_get_and_set_metadata
  *
  * @param string $id is the ID of a wiki page
  * @param array $data is an array with key ⇒ value pairs to be set in the metadata

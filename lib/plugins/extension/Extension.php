@@ -281,7 +281,7 @@ class Extension
     }
 
     /**
-     * Get the URL of the extension, usually a page on easywiki.org
+     * Get the URL of the extension, usually a page on dokuwiki.org
      *
      * @return string
      */
@@ -540,7 +540,7 @@ class Extension
     }
 
     /**
-     * Get a list of tags this extension is tagged with at easywiki.org
+     * Get a list of tags this extension is tagged with at dokuwiki.org
      *
      * @return string[]
      */

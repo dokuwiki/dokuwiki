@@ -25,7 +25,7 @@ if (!defined('WIKI_INC')) die();
             src="<?php echo tpl_basedir(); ?>images/button-html5.png" width="80" height="15" alt="Valid HTML5" /></a>
         <a href="//jigsaw.w3.org/css-validator/check/referer?profile=css3" title="Valid CSS" <?php echo $target?>><img
             src="<?php echo tpl_basedir(); ?>images/button-css.png" width="80" height="15" alt="Valid CSS" /></a>
-        <a href="https://easywiki.org/" title="Driven by EasyWiki" <?php echo $target?>><img
+        <a href="https://dokuwiki.org/" title="Driven by EasyWiki" <?php echo $target?>><img
             src="<?php echo tpl_basedir(); ?>images/button-dw.png" width="80" height="15"
             alt="Driven by EasyWiki" /></a>
     </div>

@@ -94,5 +94,5 @@ $lang['git']                   = 'Toto rozšírenie bolo nainštalované cez git
 $lang['auth']                  = 'Toto rozšírenie nie je povolené v nastaveniach. Zvážte jeho zakázanie.';
 $lang['install_url']           = 'Inštalácia z URL:';
 $lang['install_upload']        = 'Nahrať rozšírenie:';
-$lang['repo_error']            = 'Nepodarilo sa kontaktovať repozitár rozšírenia. Uistite sa, že váš server má povolené kontaktovať www.EasyWiki.org a skontrolujte nastavenia proxy.';
+$lang['repo_error']            = 'Nepodarilo sa kontaktovať repozitár rozšírenia. Uistite sa, že váš server má povolené kontaktovať www.dokuwiki.org a skontrolujte nastavenia proxy.';
 $lang['nossl']                 = 'Vaše PHP zrejme nepodporuje SSL. Sťahovanie nebude funkčné pre mnohé rozšírenia.';

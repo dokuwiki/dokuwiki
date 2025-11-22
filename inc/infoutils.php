@@ -16,9 +16,9 @@ use easywiki\Utf8\PhpString;
 
 if (!defined('DOKU_MESSAGEURL')) {
     if (in_array('ssl', stream_get_transports())) {
-        define('DOKU_MESSAGEURL', 'https://update.easywiki.org/check/');
+        define('DOKU_MESSAGEURL', 'https://update.dokuwiki.org/check/');
     } else {
-        define('DOKU_MESSAGEURL', 'http://update.easywiki.org/check/');
+        define('DOKU_MESSAGEURL', 'http://update.dokuwiki.org/check/');
     }
 }
 

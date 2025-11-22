@@ -186,7 +186,7 @@ class mailer_test extends EasyWikiTest {
     }
 
     /**
-     * @see https://forum.EasyWiki.org/post/35822
+     * @see https://forum.dokuwiki.org/post/35822
      */
     function test_emptyBCCorCC() {
         $mail = new TestMailer();

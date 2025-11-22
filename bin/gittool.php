@@ -38,7 +38,7 @@ class GitToolCLI extends CLI
 
         $options->registerCommand(
             'clone',
-            'Tries to install a known plugin or template (prefix with template:) via git. Uses the EasyWiki.org ' .
+            'Tries to install a known plugin or template (prefix with template:) via git. Uses the dokuwiki.org ' .
             'plugin repository to find the proper git repository. Multiple extensions can be given as parameters'
         );
         $options->registerArgument(

@@ -403,7 +403,7 @@ class GuiExtension extends Gui
     /**
      * Create an attributes array for a link
      *
-     * Handles interwiki links to easywiki.org
+     * Handles interwiki links to dokuwiki.org
      *
      * @param string $url The URL to link to
      * @param string $class Additional classes to add

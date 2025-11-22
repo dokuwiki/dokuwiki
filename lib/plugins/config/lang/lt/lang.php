@@ -161,7 +161,7 @@ $lang['rss_media_o_pages']             = 'puslapiai';
 $lang['rss_media_o_media']             = 'media';
 
 /* Advanced Options */
-$lang['updatecheck']                   = 'Tikrinti naujinimus ir saugumo pranešimus? EasyWiki turi susisiekti su update.easywiki.org šiai funkcijai.';
+$lang['updatecheck']                   = 'Tikrinti naujinimus ir saugumo pranešimus? EasyWiki turi susisiekti su update.dokuwiki.org šiai funkcijai.';
 $lang['userewrite']                    = 'Naudoti gražius URL';
 $lang['useslash']                      = 'Naudoti pasvirą brūkšnį kaip tarpiklio skirtuką URL';
 $lang['sepchar']                       = 'Puslapio pavadinimo žodžių skirtukas';

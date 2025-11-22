@@ -123,7 +123,7 @@ $lang['rss_media']             = 'Koje vrste promjena trebaju biti prikazane u X
 $lang['rss_media_o_both']      = 'oboje';
 $lang['rss_media_o_pages']     = 'stranice';
 $lang['rss_media_o_media']     = 'medij';
-$lang['updatecheck']           = 'Provjera za nadogradnje i sigurnosna upozorenja? EasyWiki treba imati pristup do easywiki.org za ovo.';
+$lang['updatecheck']           = 'Provjera za nadogradnje i sigurnosna upozorenja? EasyWiki treba imati pristup do dokuwiki.org za ovo.';
 $lang['userewrite']            = 'Koristi jednostavne URL-ove';
 $lang['useslash']              = 'Koristi kosu crtu kao separator imenskih prostora u URL-ovima';
 $lang['sepchar']               = 'Separator riječi u nazivu stranice';
@@ -135,7 +135,7 @@ $lang['gzip_output']           = 'Koristi gzip Content-Encoding za xhtml';
 $lang['compress']              = 'Sažmi CSS i javascript izlaz';
 $lang['cssdatauri']            = 'Veličina u bajtovima do koje slike navedene u CSS datotekama će biti ugrađene u stylesheet kako bi se smanjilo prekoračenje zaglavlja HTTP zathjeva . <code>400</code> do <code>600</code> bajtova je dobra vrijednost. Postavi <code>0</code> za onemogućavanje.';
 $lang['send404']               = 'Pošalji "HTTP 404/Page Not Found" za nepostojeće stranice';
-$lang['broken_iua']            = 'Da li je ignore_user_abort funkcija neispravna na vašem sustavu? Ovo može izazvati neispravan indeks pretrage. IIS+PHP/CGI je poznat po neispravnosti. Pogledaj <a href="http://bugs.EasyWiki.org/?do=details&amp;task_id=852">Bug 852</a> za više informacija.';
+$lang['broken_iua']            = 'Da li je ignore_user_abort funkcija neispravna na vašem sustavu? Ovo može izazvati neispravan indeks pretrage. IIS+PHP/CGI je poznat po neispravnosti. Pogledaj <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> za više informacija.';
 $lang['xsendfile']             = 'Koristi X-Sendfile zaglavlje da se dopusti web poslužitelj dostavu statičkih datoteka? Vaš web poslužitelj ovo mora podržavati.';
 $lang['renderer_xhtml']        = 'Mehanizam koji se koristi za slaganje osnovnog (xhtml) wiki izlaza';
 $lang['renderer__core']        = '%s (easywiki jezgra)';

@@ -14,7 +14,7 @@ class helper_plugin_popularity extends EasyWiki_Plugin
     /**
      * The url where the data should be sent
      */
-    public $submitUrl = 'https://update.easywiki.org/popularity.php';
+    public $submitUrl = 'https://update.dokuwiki.org/popularity.php';
 
     /**
      * Name of the file which determine if the the autosubmit is enabled,

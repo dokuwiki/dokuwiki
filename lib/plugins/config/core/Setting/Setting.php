@@ -136,7 +136,7 @@ class Setting
     /**
      * Get the key of this setting marked up human readable
      *
-     * @param bool $url link to easywiki.org manual?
+     * @param bool $url link to dokuwiki.org manual?
      * @return string
      */
     public function getPrettyKey($url = true)

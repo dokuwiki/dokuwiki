@@ -8,7 +8,7 @@ use easywiki\plugin\config\core\Setting\SettingFieldset;
 use easywiki\plugin\config\core\Setting\SettingHidden;
 
 /**
- * Ensure config options have documentation at easywiki.org
+ * Ensure config options have documentation at dokuwiki.org
  *
  * @group plugin_config
  * @group admin_plugins
