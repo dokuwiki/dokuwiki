@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  dokuwiki:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dokuwiki
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./data:/var/www/html/data
+      - ./conf:/var/www/html/conf
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+    restart: unless-stopped
+    command: >
+      sh -c "
+        chown -R www-data:www-data /var/www/html/data /var/www/html/conf 2>/dev/null || true &&
+        chmod -R 755 /var/www/html/data /var/www/html/conf 2>/dev/null || true &&
+        apache2-foreground
+      "
+
+
