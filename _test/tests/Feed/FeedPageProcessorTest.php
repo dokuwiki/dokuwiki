@@ -67,7 +67,7 @@ class FeedPageProcessorTest extends \EasyWikiTest
         $conf['useheading'] = 1;
 
         // if no expected mtime is given, we expect the filemtime of the page
-        // see https://github.com/easywiki/easywiki/pull/4156#issuecomment-1911842452 why we can't
+        // see https://github.com/egalan/easywiki/pull/4156#issuecomment-1911842452 why we can't
         // create this in the data provider
         if ($expectedMtime === null) {
             $expectedMtime = filemtime(wikiFN($data['id']));
@@ -113,7 +113,7 @@ class FeedPageProcessorTest extends \EasyWikiTest
 
         $doc = new Document();
         $doc->html($proc->getBody('html'));
-        $home = $doc->find('a[href^="https://www.EasyWiki.org/manual"]');
+        $home = $doc->find('a[href^="https://www.dokuwiki.org/manual"]');
         $this->assertGreaterThanOrEqual(1, $home->count());
 
         $this->assertStringContainsString('standards compliant', $proc->getBody('abstract'));

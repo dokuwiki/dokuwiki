@@ -2,7 +2,7 @@
 
 /**
  * Language file tests inspired by the script by schplurtz
- * @link https://www.EasyWiki.org/teams:i18n:translation-check
+ * @link https://www.dokuwiki.org/teams:i18n:translation-check
  */
 class lang_test extends EasyWikiTest
 {

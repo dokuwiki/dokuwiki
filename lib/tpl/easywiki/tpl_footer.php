@@ -17,7 +17,7 @@ if (!defined('WIKI_INC')) die();
             tpl_license('button', true, false, false); // license button, no wrapper
             $target = ($conf['target']['extern']) ? 'target="' . $conf['target']['extern'] . '"' : '';
         ?>
-        <a href="https://www.EasyWiki.org/donate" title="Donate" <?php echo $target?>><img
+        <a href="https://www.dokuwiki.org/donate" title="Donate" <?php echo $target?>><img
             src="<?php echo tpl_basedir(); ?>images/button-donate.gif" width="80" height="15" alt="Donate" /></a>
         <a href="https://php.net" title="Powered by PHP" <?php echo $target?>><img
             src="<?php echo tpl_basedir(); ?>images/button-php.gif" width="80" height="15" alt="Powered by PHP" /></a>

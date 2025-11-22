@@ -145,9 +145,9 @@ class Setting
         if ($url && !strstr($out, '»')) {//provide no urls for plugins, etc.
             if ($out == 'start') {
                 // exception, because this config name is clashing with our actual start page
-                return '<a href="https://www.EasyWiki.org/config:startpage">' . $out . '</a>';
+                return '<a href="https://www.dokuwiki.org/config:startpage">' . $out . '</a>';
             } else {
-                return '<a href="https://www.EasyWiki.org/config:' . $out . '">' . $out . '</a>';
+                return '<a href="https://www.dokuwiki.org/config:' . $out . '">' . $out . '</a>';
             }
         }
         return $out;

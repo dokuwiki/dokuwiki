@@ -21,7 +21,7 @@ class Test_resolveInterwiki extends EasyWikiTest {
             // shortcut, reference and expected
             array('wp', 'foo [\\]^`{|}~@+#%?/#txt', 'https://en.wikipedia.org/wiki/foo %5B%5C%5D%5E%60%7B%7C%7D~@+%23%25?/#txt'),
             array('amazon', 'foo [\\]^`{|}~@+#%?/#txt', 'https://www.amazon.com/dp/foo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F?tag=splitbrain-20#txt'),
-            array('wiki', 'foo [\\]^`{|}~@+#%?/#txt', 'https://www.EasyWiki.org/foo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F#txt'),
+            array('wiki', 'foo [\\]^`{|}~@+#%?/#txt', 'https://www.dokuwiki.org/foo%20%5B%5C%5D%5E%60%7B%7C%7D~%40%2B%23%25%3F%2F#txt'),
             array('coral', 'http://example.com:83/path/naar/?query=foo%20%40%2B%25%3F%2F', 'http://example.com.83.nyud.net:8090/path/naar/?query=foo%20%40%2B%25%3F%2F'),
             array('scheme', 'ftp://foo @+%/#txt', 'ftp://example.com#txt'),
             //relative url

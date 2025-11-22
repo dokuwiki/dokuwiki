@@ -446,8 +446,8 @@ function breadcrumbs()
  * currently used to replace the colon with something else
  * on Windows (non-IIS) systems and to have proper URL encoding
  *
- * See discussions at https://github.com/easywiki/easywiki/pull/84 and
- * https://github.com/easywiki/easywiki/pull/173 why we use a whitelist of
+ * See discussions at https://github.com/egalan/easywiki/pull/84 and
+ * https://github.com/egalan/easywiki/pull/173 why we use a whitelist of
  * unaffected servers instead of blacklisting affected servers here.
  *
  * Urlencoding is ommitted when the second parameter is false

@@ -131,7 +131,7 @@ EOD;
                     </member>
                     <member>
                         <name>href</name>
-                        <value><string>https://www.EasyWiki.org/wiki:easywiki</string></value>
+                        <value><string>https://www.dokuwiki.org/wiki:easywiki</string></value>
                     </member>
                 </struct>
             </value>

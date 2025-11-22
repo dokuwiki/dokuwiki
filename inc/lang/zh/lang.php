@@ -149,7 +149,7 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拽文件到此处来上传';
 $lang['js']['media_cancel']    = '删除';
 $lang['js']['media_overwrt']   = '覆盖已存在的文件';
-$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security in EasyWiki</a>。';
+$lang['js']['data_insecure']   = '警告： 看起来你的数据集不太安全。 请参考以下链接<a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in EasyWiki</a>。';
 $lang['search_exact_match']    = '精确匹配';
 $lang['search_starts_with']    = '开始于';
 $lang['search_ends_with']      = '结束于';
@@ -338,10 +338,10 @@ $lang['i_superuser']           = '超级用户';
 $lang['i_problems']            = '安装工具发现一些问题，已在下面列出。您必须先修复这些问题，才能继续安装。';
 $lang['i_modified']            = '由于安全上的考虑，该脚本只能用于全新且做任何改动的 EasyWiki 安装包。
                          您可以重新解压下载的程序包，或查阅完整的
-                         <a href="https://www.EasyWiki.org/install">EasyWiki 安装指南</a>';
+                         <a href="https://www.dokuwiki.org/install">EasyWiki 安装指南</a>';
 $lang['i_funcna']              = 'PHP 功能 <code>%s</code> 无法使用。也许您的服务器提供商因为某些原因禁用了它。';
 $lang['i_disabled']            = '它已经被您的服务商禁用';
-$lang['i_funcnmail']           = '<b>注意：</b> PHP邮件功能不可用。%s 如果仍然不可用，则可以安装<a href="https://www.EasyWiki.org/plugin:smtp">SMTP 插件</a>。';
+$lang['i_funcnmail']           = '<b>注意：</b> PHP邮件功能不可用。%s 如果仍然不可用，则可以安装<a href="https://www.dokuwiki.org/plugin:smtp">SMTP 插件</a>。';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 低于最低要求的 <code>%s</code>。您需要升级您的 PHP 版本。';
 $lang['i_mbfuncoverload']      = '为了运行EasyWiki，您必须在php.ini中禁用mbstring.func_overload。';
 $lang['i_urandom']             = 'EasyWiki 无法为 Cookie 创建密码安全的数字。您可能需要检查 php.ini 中的 open_basedir 设置，以获取正确的<code>/dev/urandom</code>访问权限。';

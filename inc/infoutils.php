@@ -382,7 +382,7 @@ function check()
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
-                <a href="https://www.EasyWiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
         );
@@ -391,7 +391,7 @@ function check()
     } else {
         msg(
             'The search index is empty. See
-                <a href="https://www.EasyWiki.org/faq:searchindex">faq:searchindex</a>
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for help on how to fix the search index. If the default indexer
                 isn\'t used or the wiki is actually empty this is normal.'
         );
@@ -401,7 +401,7 @@ function check()
     $http = new DokuHTTPClient();
     $http->max_redirect = 0;
     $http->timeout = 3;
-    $http->sendRequest('https://www.EasyWiki.org', '', 'HEAD');
+    $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);

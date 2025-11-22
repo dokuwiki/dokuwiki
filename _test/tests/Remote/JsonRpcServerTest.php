@@ -68,7 +68,7 @@ class JsonRpcServerTest extends \EasyWikiTest
         $expect = json_encode([
             'type' => 'internal',
             'page' => 'wiki:easywiki',
-            'href' => 'https://www.EasyWiki.org/wiki:easywiki'
+            'href' => 'https://www.dokuwiki.org/wiki:easywiki'
         ]);
 
         $response = json_encode($this->server->serve('[]')['result']);

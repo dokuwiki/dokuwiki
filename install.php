@@ -132,7 +132,7 @@ header('Content-Type: text/html; charset=utf-8');
                 left top no-repeat;
                 display: block; width:380px; height:73px; border:none; clear:both;"
            target="_blank"
-           href="https://www.EasyWiki.org/security#web_access_security"></a>
+           href="https://www.dokuwiki.org/security#web_access_security"></a>
     </div>
 
     <div style="float: left; width: 58%;">
@@ -262,7 +262,7 @@ function print_form($d)
                     <input type="checkbox" name="d[pop]" id="pop" <?php
                     echo(($d['pop'] ? ' checked="checked"' : '')); ?> />
                     <?php echo $lang['i_pop_label'] ?>
-                    <a href="https://www.EasyWiki.org/popularity" target="_blank"><sup>[?]</sup></a>
+                    <a href="https://www.dokuwiki.org/popularity" target="_blank"><sup>[?]</sup></a>
                 </label>
             </fieldset>
 

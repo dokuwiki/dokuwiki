@@ -1,7 +1,7 @@
 {
-    "name": "EasyWiki/easywiki",
+    "name": "egalan/easywiki",
     "description": "EasyWiki is a simple to use and highly versatile Open Source wiki software that doesn't require a database",
-    "homepage": "https://www.EasyWiki.org",
+    "homepage": "https://www.dokuwiki.org",
     "type": "project",
     "license": "GPL v2",
     "require": {

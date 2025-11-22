@@ -289,7 +289,7 @@ class Extension
     {
         return $this->getTag(
             'url',
-            'https://www.EasyWiki.org/' .
+            'https://www.dokuwiki.org/' .
             ($this->isTemplate() ? 'template' : 'plugin') . ':' . $this->getBase()
         );
     }

@@ -10,6 +10,5 @@ We try to fix vulnerabilites as fast as possible, but please keep in mind that t
 
 You have multiple options on reporting vulnerabilities
 
-* Send an e-mail to [Andi](mailto:andi@splitbrain.org)
-* Open a [Github Issue](https://github.com/EasyWiki/easywiki/issues)
-* Send a mail to the [Mailing List](https://www.EasyWiki.org/mailinglist)
+* Send an e-mail to [Eneko](mailto:enekogalanelorza@gmail.com)
+* Open a [Github Issue](https://github.com/egalan/easywiki/issues)

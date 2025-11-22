@@ -182,7 +182,7 @@ $lang['js']['media_done_btn']      = 'Baigta';
 $lang['js']['media_drop']          = 'Padėkite failus čia, norėdami įkelti';
 $lang['js']['media_cancel']        = 'pašalinti';
 $lang['js']['media_overwrt']       = 'Perrašyti esamus failus';
-$lang['js']['data_insecure']       = 'ĮSPĖJIMAS: Atrodo, kad jūsų duomenų aplankas nėra tinkamai apsaugotas. Prašome perskaityti apie <a href="https://www.EasyWiki.org/security#web_access_security">EasyWiki saugumą</a>.';
+$lang['js']['data_insecure']       = 'ĮSPĖJIMAS: Atrodo, kad jūsų duomenų aplankas nėra tinkamai apsaugotas. Prašome perskaityti apie <a href="https://www.dokuwiki.org/security#web_access_security">EasyWiki saugumą</a>.';
 
 $lang['rssfailed']    = 'Siunčiant šį feed\'ą įvyko klaida: ';
 $lang['nothingfound'] = 'Paieškos rezultatų nėra.';
@@ -351,11 +351,11 @@ $lang['i_problems']   = 'Instaliavimo metu buvo klaidų, kurios pateiktos žemia
 
 $lang['i_modified'] = 'Dėl saugumo priežasčių šis scenarijus veiks tik diegiant naują ir nepakeistą EasyWiki.
                       Turėtumėte iš naujo išskleisti failus iš parsisiųsto archyvo arba pasižiūrėti
-                      <a href="https://www.EasyWiki.org/install">EasyWiki diegimo instrukcijas</a>';
+                      <a href="https://www.dokuwiki.org/install">EasyWiki diegimo instrukcijas</a>';
 $lang['i_funcna']    = 'PHP funkcija <code>%s</code> nepasiekiama. Galbūt Jūsų hostingo tiekėjas ją išjungė?';
 $lang['i_disabled']  = 'Ją išjungė jūsų tiekėjas.';
 $lang['i_funcnmail'] = '<b>Pastaba:</b> PHP elektroninio pašto funkcija nepasiekiama. %s' .
-    ' Jei jos įjungti neišeis, galite įdiegti <a href="https://www.EasyWiki.org/plugin:smtp">smtp įskiepį</a>.';
+    ' Jei jos įjungti neišeis, galite įdiegti <a href="https://www.dokuwiki.org/plugin:smtp">smtp įskiepį</a>.';
 $lang['i_phpver']         = 'Jūsų PHP versija <code>%s</code> yra žemesnė nei reikalinga <code>%s</code>. Jums reikia atnaujinti PHP.';
 $lang['i_mbfuncoverload'] = 'mbstring.func_overload turi būti išjungta php.ini, kad EasyWiki galėtų veikti.';
 $lang['i_urandom']        = 'EasyWiki negali sukurti šifravimo tikrų atsitiktinių skaičių slapukams. Patikrinkite savo php.ini failo open_basedir nustatymus, kad būtų tinkama <code>/dev/urandom</code> prieiga.';

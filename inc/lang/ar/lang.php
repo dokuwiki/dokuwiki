@@ -116,7 +116,7 @@ $lang['js']['media_done_btn']  = 'تم';
 $lang['js']['media_drop']      = 'اسقط الملف هنا لرفعه';
 $lang['js']['media_cancel']    = 'أزل';
 $lang['js']['media_overwrt']   = 'أكتب فوق الملفات الموجودة';
-$lang['js']['data_insecure']   = 'تحذير: يبدو أن دليل البيانات الخاص بك غير مؤمن بشكل صحيح. يرجى القراءة عن <a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security في EasyWiki</a>.	';
+$lang['js']['data_insecure']   = 'تحذير: يبدو أن دليل البيانات الخاص بك غير مؤمن بشكل صحيح. يرجى القراءة عن <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security في EasyWiki</a>.	';
 $lang['search_exact_match']    = 'تطابق تام';
 $lang['search_starts_with']    = 'يبدأ بالتالي';
 $lang['search_ends_with']      = 'ينتهي بالتالي';
@@ -302,12 +302,12 @@ $lang['i_enableacl']           = 'تفعيل ACL - مفضل';
 $lang['i_superuser']           = 'مشرف';
 $lang['i_problems']            = 'وجد برنامج التنصيب المشاكل التالية، لا يمكنك المتابعة قبل حلها.';
 $lang['i_modified']            = 'لأسباب أمنية هذا البرنامج سيعمل فقط مع تنصيب دوكو ويكي جديد و غير معدّل.
-يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="https://www.EasyWiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
+يجب أن تعيد فك ضغط الملفات مرة أخرى من المكتبة المضغوطة، أو راجع <a href="https://www.dokuwiki.org/install"> تعليمات تنصيب دوكو ويكي </a> ';
 $lang['i_funcna']              = 'دالة PHP التالية غير متوفرة.
 <code>%s</code>
 قد يكون مزود خدمة الاستفادة قد حجبها لسبب ما.';
 $lang['i_disabled']            = 'تم تعطيله من قبل مزود الخدمة الخاص بك.';
-$lang['i_funcnmail']           = '<b>ملاحظة:</b> وظيفة بريد PHP غير متوفرة. %s إذا ظل غير متوفر ، فيمكنك تثبيت المكون الإضافي <a href="https://www.EasyWiki.org/plugin:smtp">smtp</a>.	';
+$lang['i_funcnmail']           = '<b>ملاحظة:</b> وظيفة بريد PHP غير متوفرة. %s إذا ظل غير متوفر ، فيمكنك تثبيت المكون الإضافي <a href="https://www.dokuwiki.org/plugin:smtp">smtp</a>.	';
 $lang['i_phpver']              = 'نسخة PHP التي لديك هي
 <code>%s</code>
 وهي أقل من النسخة المطلوبة

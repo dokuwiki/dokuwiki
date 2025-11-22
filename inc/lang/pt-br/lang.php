@@ -139,7 +139,7 @@ $lang['js']['media_done_btn']  = 'Concluído';
 $lang['js']['media_drop']      = 'Arraste os arquivos até aqui para enviar';
 $lang['js']['media_cancel']    = 'remover';
 $lang['js']['media_overwrt']   = 'Sobrescrever arquivos existentes';
-$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório data não está corretamente seguro. Por favor, leia sobre <a href="https://www.EasyWiki.org/security#web_access_security">Web Access Security in EasyWiki</a>.';
+$lang['js']['data_insecure']   = 'AVISO: Parece que seu diretório data não está corretamente seguro. Por favor, leia sobre <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in EasyWiki</a>.';
 $lang['search_exact_match']    = 'Correspondência exata';
 $lang['search_starts_with']    = 'Começa com';
 $lang['search_ends_with']      = 'Termina com';
@@ -327,10 +327,10 @@ $lang['i_enableacl']           = 'Habilitar Lista de Controle de Acessos (recome
 $lang['i_superuser']           = 'Superusuário';
 $lang['i_problems']            = 'O instalador encontrou alguns problemas, indicados abaixo. Você não pode continuar até corrigi-los.';
 $lang['i_modified']            = 'Por questões de segurança, esse script funcionará apenas em uma instalação nova e não modificada do EasyWiki.
-Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="https://www.EasyWiki.org/install">instruções de instalação do EasyWiki</a>.';
+Você pode extrair novamente os arquivos do pacote original ou consultar as <a href="https://www.dokuwiki.org/install">instruções de instalação do EasyWiki</a>.';
 $lang['i_funcna']              = 'A função PHP <code>%s</code> não está disponível. O seu host a mantém desabilitada por algum motivo?';
 $lang['i_disabled']            = 'Foi desativado pelo seu provedor.';
-$lang['i_funcnmail']           = '<b>Nota:</b> A função de correio PHP não está disponível. %s Se permanecer indisponível, você pode instalar o <a href="https://www.EasyWiki.org/plugin:smtp">plugin SMTP</a>.';
+$lang['i_funcnmail']           = '<b>Nota:</b> A função de correio PHP não está disponível. %s Se permanecer indisponível, você pode instalar o <a href="https://www.dokuwiki.org/plugin:smtp">plugin SMTP</a>.';
 $lang['i_phpver']              = 'A sua versão do PHP (<code>%s</code>) é inferior à necessária (<code>%s</code>). Você precisa atualizar a sua instalação do PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload precisa ser desabilitado no php.ini para executar o EasyWiki';
 $lang['i_urandom']             = 'O EasyWiki não pode criar números criptograficamente seguros para cookies. Você pode verificar as configurações do open_basedir no php.ini para obter o acesso <code> / dev / urandom </code> adequado.';

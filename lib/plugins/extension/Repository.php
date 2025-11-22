@@ -8,7 +8,7 @@ use JsonException;
 
 class Repository
 {
-    public const EXTENSION_REPOSITORY_API = 'https://www.EasyWiki.org/lib/plugins/pluginrepo/api.php';
+    public const EXTENSION_REPOSITORY_API = 'https://www.dokuwiki.org/lib/plugins/pluginrepo/api.php';
 
     protected const CACHE_PREFIX = '##extension_manager##';
     protected const CACHE_SUFFIX = '.repo';

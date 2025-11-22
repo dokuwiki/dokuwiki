@@ -124,7 +124,7 @@ $lang['js']['media_done_btn']  = '完成';
 $lang['js']['media_drop']      = '拖拉檔案到此上傳';
 $lang['js']['media_cancel']    = '刪除';
 $lang['js']['media_overwrt']   = '覆蓋已存在的檔案';
-$lang['js']['data_insecure']   = '警告：似乎你的資料目錄沒有適當的防護。請閲讀關於<a href="https://www.EasyWiki.org/security#web_access_security">EasyWiki中的網頁存取安全性</a>。';
+$lang['js']['data_insecure']   = '警告：似乎你的資料目錄沒有適當的防護。請閲讀關於<a href="https://www.dokuwiki.org/security#web_access_security">EasyWiki中的網頁存取安全性</a>。';
 $lang['search_exact_match']    = '精準的比對';
 $lang['search_starts_with']    = '起始於';
 $lang['search_ends_with']      = '結尾於';
@@ -310,7 +310,7 @@ $lang['i_enableacl']           = '啟用 ACL (建議)';
 $lang['i_superuser']           = '超級使用者';
 $lang['i_problems']            = '安裝程式發現如下的問題。您必須修正它們才能繼續。';
 $lang['i_modified']            = '出於安全考量，本腳本只能用於安裝全新且未修改的 EasyWiki。
-您可以重新解壓下載的封包或查閱完整的<a href=\"https://www.EasyWiki.org/install\">EasyWiki 安裝指南</a>';
+您可以重新解壓下載的封包或查閱完整的<a href=\"https://www.dokuwiki.org/install\">EasyWiki 安裝指南</a>';
 $lang['i_funcna']              = 'PHP 函數 <code>%s</code> 無法使用。也許您的主機供應者基於某些理由停用了它？';
 $lang['i_phpver']              = '您的 PHP 版本 <code>%s</code> 比需要的版本 <code>%s</code> 還低。您必須更新您的PHP。';
 $lang['i_permfail']            = '<code>%s</code> 無法經由 EasyWiki 寫入。您必須修正該目錄的權限！';

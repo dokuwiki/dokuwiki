@@ -78,6 +78,6 @@ class ApiCore
 
     function getStructuredData()
     {
-        return new Link('internal', 'wiki:easywiki', 'https://www.EasyWiki.org/wiki:easywiki');
+        return new Link('internal', 'wiki:easywiki', 'https://www.dokuwiki.org/wiki:easywiki');
     }
 }

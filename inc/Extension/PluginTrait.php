@@ -37,7 +37,7 @@ trait PluginTrait
             'date' => '0000-00-00',
             'name' => $ext . ' plugin',
             'desc' => 'Unknown purpose - bad plugin.info.txt',
-            'url' => 'https://www.EasyWiki.org/plugins/' . $ext,
+            'url' => 'https://www.dokuwiki.org/plugins/' . $ext,
         ];
 
         $file = WIKI_PLUGIN . '/' . $ext . '/plugin.info.txt';

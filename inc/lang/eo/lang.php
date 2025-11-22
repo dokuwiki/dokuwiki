@@ -115,7 +115,7 @@ $lang['js']['media_done_btn']  = 'Finita';
 $lang['js']['media_drop']      = 'Demetu ĉi-tien por alŝuti';
 $lang['js']['media_cancel']    = 'forigi';
 $lang['js']['media_overwrt']   = 'Anstataûi ekzistantajn dosierojn';
-$lang['js']['data_insecure']   = 'AVERTO: Ŝajnas, ke via datuma dosierujo ne estas ĝuste sekurigita. Legu pri <a href="https://www.EasyWiki.org/security#web_access_security">Sekureco de Reta Aliro en EasyWiki</a>.';
+$lang['js']['data_insecure']   = 'AVERTO: Ŝajnas, ke via datuma dosierujo ne estas ĝuste sekurigita. Legu pri <a href="https://www.dokuwiki.org/security#web_access_security">Sekureco de Reta Aliro en EasyWiki</a>.';
 $lang['search_exact_match']    = 'Ekzakta kongruo';
 $lang['search_starts_with']    = 'Komenciĝas per';
 $lang['search_ends_with']      = 'Finiĝas per';
@@ -303,7 +303,7 @@ $lang['i_modified']            = 'Pro sekureco tiu ĉi instalilo nur funkcias po
 Vi devas aŭ redemeti la dosierojn el la elŝutita pakaĵo aŭ plibone informiĝi pri la instalada procezo.';
 $lang['i_funcna']              = 'La PHP-a funkcio <code>%s</code> ne estas uzebla. Eble via retprovizanto ial malpermesis tion?';
 $lang['i_disabled']            = 'Ĝi estis malŝaltita de via provizanto.';
-$lang['i_funcnmail']           = '<b>Noto:</b> La PHP-poŝta funkcio ne disponeblas. %s Se ĝi restas neatingebla, vi povas instali la <a href="https://www.EasyWiki.org/plugin:smtp">SMTP-kromaĵon</a>.';
+$lang['i_funcnmail']           = '<b>Noto:</b> La PHP-poŝta funkcio ne disponeblas. %s Se ĝi restas neatingebla, vi povas instali la <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-kromaĵon</a>.';
 $lang['i_phpver']              = 'La versio de la PHP <code>%s</code> estas pli malnova ol la bezonata <code>%s</code>. Vi bezonas ĝisdatigi la PHP-an instalon.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload devas esti malŝaltita en php.ini por ruli EasyWiki.';
 $lang['i_urandom']             = 'EasyWiki ne povas krei kriptografie sekurajn nombrojn por kuketoj. Vi eble volas kontroli viajn open_basedir-agordojn en php.ini por taŭga aliro <code>/dev/urandom</code>.';

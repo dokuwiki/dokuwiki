@@ -120,7 +120,7 @@ $lang['js']['media_done_btn']  = 'Kész';
 $lang['js']['media_drop']      = 'Húzza ide a fájlokat a feltöltéshez';
 $lang['js']['media_cancel']    = 'eltávolítás';
 $lang['js']['media_overwrt']   = 'Meglévő fájlok felülírása';
-$lang['js']['data_insecure']   = 'FIGYELEM: Úgy tűnik, hogy az adatokat tartalmazó mappa nincs biztonságosan beállítva. Tekintse át <a href="https://www.EasyWiki.org/security#web_access_security">biztonságos hozzáférés beállítását a EasyWikiben</a>.';
+$lang['js']['data_insecure']   = 'FIGYELEM: Úgy tűnik, hogy az adatokat tartalmazó mappa nincs biztonságosan beállítva. Tekintse át <a href="https://www.dokuwiki.org/security#web_access_security">biztonságos hozzáférés beállítását a EasyWikiben</a>.';
 $lang['search_exact_match']    = 'Pontos egyezés';
 $lang['search_starts_with']    = 'A kulcsszavakkal kezdődik';
 $lang['search_ends_with']      = 'A kulcsszavakkal végződik';
@@ -308,10 +308,10 @@ $lang['i_enableacl']           = 'Hozzáférés-vezérlési listák engedélyez�
 $lang['i_superuser']           = 'Adminisztrátor';
 $lang['i_problems']            = 'A varázsló az alábbi problémák miatt megakadt. Nem tudjuk folytatni, amíg ezek nincsenek elhárítva!';
 $lang['i_modified']            = 'Biztonsági okokból ez a varázsló csak új és módosítatlan EasyWiki-változaton működik.
-Csomagolja ki újra a fájlokat vagy tekintse meg a teljes <a href="https://www.EasyWiki.org/install">EasyWiki telepítési útmutatót</a>.';
+Csomagolja ki újra a fájlokat vagy tekintse meg a teljes <a href="https://www.dokuwiki.org/install">EasyWiki telepítési útmutatót</a>.';
 $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető. Lehetséges, hogy a tárhelyszolgáltató letiltotta biztonsági okok miatt.';
 $lang['i_disabled']            = 'A szolgáltató által letiltva.';
-$lang['i_funcnmail']           = '<b>Megjegyzés:</b> A PHP mail függvény nem érhető el. %s Amennyiben a későbbiekben sem lesz elérhető, érdemes lehet telepíteni az <a href="https://www.EasyWiki.org/plugin:smtp">smtp bővítményt</a>.	';
+$lang['i_funcnmail']           = '<b>Megjegyzés:</b> A PHP mail függvény nem érhető el. %s Amennyiben a későbbiekben sem lesz elérhető, érdemes lehet telepíteni az <a href="https://www.dokuwiki.org/plugin:smtp">smtp bővítményt</a>.	';
 $lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítse a PHP-t újabb verzióra.';
 $lang['i_mbfuncoverload']      = 'A EasyWiki futtatásához az mbstring.func_overload opciót ki kell kapcsolni a php.ini-ben.';
 $lang['i_urandom']             = 'A EasyWiki nem tud kriptográfiailag biztonságos számokat létrehozni a sütikhez. Érdemes ellenőrizni az open_basedir beállításokat a php.ini-ben a <code>/dev/urandom</code> megfelelő hozzáféréséhez.	';

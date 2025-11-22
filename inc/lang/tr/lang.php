@@ -306,7 +306,7 @@ $lang['i_wikiname']            = 'Wiki Adı';
 $lang['i_enableacl']           = 'ACL\'yi etkinleştir (tavsiye edilir)';
 $lang['i_superuser']           = 'Ana Kullanıcı';
 $lang['i_problems']            = 'Kurulum sihirbazı aşağıda gösterilen sorunları buldu. Bunları düzeltmeden devam etmeniz mümkün değil.';
-$lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve değiştirilmemiş bir EasyWiki kurulumunda çalışır. Ya indirdiğiniz paketi yeniden açmalı ya da <a href="https://www.EasyWiki.org/install"> adresindeki EasyWiki kurulum kılavuzu</a>na bakmalısınız.';
+$lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve değiştirilmemiş bir EasyWiki kurulumunda çalışır. Ya indirdiğiniz paketi yeniden açmalı ya da <a href="https://www.dokuwiki.org/install"> adresindeki EasyWiki kurulum kılavuzu</a>na bakmalısınız.';
 $lang['i_funcna']              = '<code>%s</code> PHP fonksiyonu bulunmamaktadır. Barındırma(Hosting) hizmetinde bu özellik kapatılmış olabilir.';
 $lang['i_disabled']            = 'Sağlayıcınız tarafından devre dışı bırakılmış.';
 $lang['i_phpver']              = '<code>%s</code> PHP sürümü, gereken <code>%s</code>  sürümünden daha düşük. PHP kurulumunu yükseltmeniz gerekmektedir.';

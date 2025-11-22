@@ -92,7 +92,7 @@ class ApiCore
     /**
      * Returns the wiki title
      *
-     * @link https://www.EasyWiki.org/config:title
+     * @link https://www.dokuwiki.org/config:title
      * @return string
      */
     public function getWikiTitle()
@@ -199,7 +199,7 @@ class ApiCore
      *
      * Read the link below to learn more about the permission levels.
      *
-     * @link https://www.EasyWiki.org/acl#background_info
+     * @link https://www.dokuwiki.org/acl#background_info
      * @param string $page A page or media ID
      * @param string $user username
      * @param string[] $groups array of groups
@@ -318,7 +318,7 @@ class ApiCore
      * Snippets are provided for the first 15 results only. The title is either the first heading
      * or the page id depending on the wiki's configuration.
      *
-     * @link https://www.EasyWiki.org/search#syntax
+     * @link https://www.dokuwiki.org/search#syntax
      * @param string $query The search query as supported by the EasyWiki search
      * @return PageHit[] A list of matching pages
      */
@@ -357,7 +357,7 @@ class ApiCore
      * Only changes within the configured `$conf['recent']` range are returned. This is the default
      * when no timestamp is given.
      *
-     * @link https://www.EasyWiki.org/config:recent
+     * @link https://www.dokuwiki.org/config:recent
      * @param int $timestamp Only show changes newer than this unix timestamp
      * @return PageChange[]
      * @author Michael Klier <chi@chimeric.de>
@@ -421,7 +421,7 @@ class ApiCore
      *
      * If the page does not exist, an error is returned.
      *
-     * @link https://www.EasyWiki.org/config:canonical
+     * @link https://www.dokuwiki.org/config:canonical
      * @param string $page page id
      * @param int $rev revision timestamp
      * @return string Rendered HTML for the page
@@ -467,7 +467,7 @@ class ApiCore
      * The number of returned pages is set by `$conf['recent']`, but non accessible revisions
      * are skipped, so less than that may be returned.
      *
-     * @link https://www.EasyWiki.org/config:recent
+     * @link https://www.dokuwiki.org/config:recent
      * @param string $page page id
      * @param int $first skip the first n changelog lines, 0 starts at the current revision
      * @return PageChange[]
@@ -787,7 +787,7 @@ class ApiCore
      * Only changes within the configured `$conf['recent']` range are returned. This is the default
      * when no timestamp is given.
      *
-     * @link https://www.EasyWiki.org/config:recent
+     * @link https://www.dokuwiki.org/config:recent
      * @param int $timestamp Only show changes newer than this unix timestamp
      * @return MediaChange[]
      * @author Michael Klier <chi@chimeric.de>
@@ -923,7 +923,7 @@ class ApiCore
      *
      * Since API Version 14
      *
-     * @link https://www.EasyWiki.org/config:recent
+     * @link https://www.dokuwiki.org/config:recent
      * @param string $media file id
      * @param int $first skip the first n changelog lines, 0 starts at the current revision
      * @return MediaChange[]

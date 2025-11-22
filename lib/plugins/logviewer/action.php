@@ -22,7 +22,7 @@ class action_plugin_logviewer extends ActionPlugin
     /**
      * Event handler for INDEXER_TASKS_RUN
      *
-     * @see https://www.EasyWiki.org/devel:events:INDEXER_TASKS_RUN
+     * @see https://www.dokuwiki.org/devel:events:INDEXER_TASKS_RUN
      * @param Event $event Event object
      * @param mixed $param optional parameter passed when event was registered
      * @return void

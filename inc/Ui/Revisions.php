@@ -43,7 +43,7 @@ abstract class Revisions extends Ui
      * @param int $first
      * @param bool $hasNext
      * @return array  revisions to be shown in a paginated list
-     * @see also https://www.EasyWiki.org/devel:changelog
+     * @see also https://www.dokuwiki.org/devel:changelog
      */
     protected function getRevisions(&$first, &$hasNext)
     {

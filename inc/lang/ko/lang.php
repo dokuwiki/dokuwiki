@@ -128,7 +128,7 @@ $lang['js']['media_done_btn']  = '완료';
 $lang['js']['media_drop']      = '올릴 파일을 여기에 끌어넣으세요';
 $lang['js']['media_cancel']    = '제거';
 $lang['js']['media_overwrt']   = '기존 파일에 덮어쓰기';
-$lang['js']['data_insecure']   = '경고: 데이터 디렉터리가 제대로 보호되지 않은 것 같습니다. <a href="https://www.EasyWiki.org/security#web_access_security">도쿠위키의 웹 엑세스 보안</a>에 대해 읽어보세요.';
+$lang['js']['data_insecure']   = '경고: 데이터 디렉터리가 제대로 보호되지 않은 것 같습니다. <a href="https://www.dokuwiki.org/security#web_access_security">도쿠위키의 웹 엑세스 보안</a>에 대해 읽어보세요.';
 $lang['search_exact_match']    = '정확히 일치';
 $lang['search_starts_with']    = '시작';
 $lang['search_ends_with']      = '끝';

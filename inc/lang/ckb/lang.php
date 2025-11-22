@@ -294,10 +294,10 @@ $lang['i_superuser']           = 'سوپەربەکارهێنەر';
 $lang['i_problems']            = 'دامەزرێنەرەکە هەندێک کێشەی دۆزیەوە، کە لە خوارەوە ئاماژەی بۆ کراوە. ناتوانیت بەردەوام بیت هەتا چاکیان نەکەیت.';
 $lang['i_modified']            = 'لەبەر هۆکاری ئەمنی ئەم سکریپتە تەنها بە دامەزراندنی دۆکوویکی نوێ و نەگۆڕ کار دەکات.
                                   پێویستە یان فایلەکان لە پاکێجی داگیراوەوە دەربهینەوه یان ڕاوێژ بە تەواوبوون بکەیت
-                                  <a href="https://www.EasyWiki.org/install">EasyWiki install instructions</a>';
+                                  <a href="https://www.dokuwiki.org/install">EasyWiki install instructions</a>';
 $lang['i_funcna']              = 'پێڕەوی PHP <code>%s</code> بەردەست نییە. لەوانەیە دابینکاری میوانداریکردنەکەت لەبەر چەند هۆکارێک ناچالاک ی بکات؟';
 $lang['i_disabled']            = 'لە کارخراوە لەلایەن دابینکارەکەتەوە.';
-$lang['i_funcnmail']           = '<b>تێبینی:</b> ئەرکی پۆستی PHP بەردەست نییە. %s ئەگەر بەردەست نەمایەوە، دەتوانیت <a href="https://www.EasyWiki.org/plugin:smtp">smtp plugin</a>.';
+$lang['i_funcnmail']           = '<b>تێبینی:</b> ئەرکی پۆستی PHP بەردەست نییە. %s ئەگەر بەردەست نەمایەوە، دەتوانیت <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'وەشانی PHPی تۆ <code>%s</code> کەمترە لە <code>%s</code>. پێویستە دامەزراندنی PHP ەکەت بەرز بکەیتەوە.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload لە php.ini بۆ کارپێکردنی EasyWiki لە کارخراوە.';
 $lang['i_urandom']             = 'EasyWiki  ناتوانێت ژمارە پارێزراوە نهێنیەکان بۆ کۆکیەکان دروست بکات. لەوانەیە بتەوێت سەیری ڕێکخستنەکانت بکەیت open_basedir php.ini بۆ گونجاو <code>/dev/urandom</code> .';

@@ -36,7 +36,7 @@ All the tools can be called directly from the ''vendor/bin'' directory.
 
 The --stderr flag is needed to avoid a headers already sent error on some systems.
 
-To learn more about running tests and writing your own, visit https://www.EasyWiki.org/devel:unittesting
+To learn more about running tests and writing your own, visit https://www.dokuwiki.org/devel:unittesting
 
 ==== PHP CodeSniffer ====
 
@@ -48,7 +48,7 @@ To automatically fix code violations:
 
   ./vendor/bin/phpcbf
 
-To learn more about PHP CodeSniffer visit https://www.EasyWiki.org/devel:phpcodesniffer
+To learn more about PHP CodeSniffer visit https://www.dokuwiki.org/devel:phpcodesniffer
 
 ==== Rector ====
 
@@ -56,5 +56,5 @@ To automatically fix code smells
 
   ./vendor/bin/rector process
 
-To learn more about PHP CodeSniffer visit https://www.EasyWiki.org/devel:rector
+To learn more about PHP CodeSniffer visit https://www.dokuwiki.org/devel:rector
 

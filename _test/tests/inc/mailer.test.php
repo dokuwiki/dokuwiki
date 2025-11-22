@@ -332,7 +332,7 @@ A test mail in <strong>html</strong>
 
     function test_htmlmailsignaturecustom() {
         global $lang;
-        $lang['email_signature_html'] = 'Official message from your EasyWiki @EASYWIKIURL@<br />Created by wonderful mail class <a href="https://www.EasyWiki.org/devel:mail">https://www.EasyWiki.org/devel:mail</a>';
+        $lang['email_signature_html'] = 'Official message from your EasyWiki @EASYWIKIURL@<br />Created by wonderful mail class <a href="https://www.dokuwiki.org/devel:mail">https://www.dokuwiki.org/devel:mail</a>';
 
         $mailbody_text = 'A test mail in ASCII :)';
         $mailbody_html = 'A test mail in <strong>html</strong>';
@@ -346,7 +346,7 @@ A test mail in <strong>html</strong>
 A test mail in <strong>html</strong>
 
 <br /><hr />
-<small>Official message from your EasyWiki <a href="' . WIKI_URL . '">' . WIKI_URL . '</a><br />Created by wonderful mail class <a href="https://www.EasyWiki.org/devel:mail">https://www.EasyWiki.org/devel:mail</a></small>
+<small>Official message from your EasyWiki <a href="' . WIKI_URL . '">' . WIKI_URL . '</a><br />Created by wonderful mail class <a href="https://www.dokuwiki.org/devel:mail">https://www.dokuwiki.org/devel:mail</a></small>
 </body>
 </html>
 ';

@@ -8,7 +8,7 @@ use easywiki\Extension\Event;
  * Adds EasyWiki specific configs to the HTTP client
  *
  * @author Andreas Goetz <cpuidle@gmx.de>
- * @link https://www.EasyWiki.org/devel:httpclient
+ * @link https://www.dokuwiki.org/devel:httpclient
  */
 class DokuHTTPClient extends HTTPClient
 {

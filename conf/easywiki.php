@@ -8,7 +8,7 @@
  * This is a piece of PHP code so PHP syntax applies!
  *
  * For help with the configuration and a more detailed explanation of the various options
- * see https://www.EasyWiki.org/config
+ * see https://www.dokuwiki.org/config
  */
 
 

@@ -34,7 +34,7 @@ class ExtensionTest extends EasyWikiTest
         $this->assertEquals('andi@splitbrain.org', $extension->getEmail());
         $this->assertEquals(md5('andi@splitbrain.org'), $extension->getEmailID());
         $this->assertStringContainsString('plugins', $extension->getDescription());
-        $this->assertEquals('https://www.EasyWiki.org/plugin:extension', $extension->getURL());
+        $this->assertEquals('https://www.dokuwiki.org/plugin:extension', $extension->getURL());
         $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Admin', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());
@@ -70,7 +70,7 @@ class ExtensionTest extends EasyWikiTest
         $this->assertEquals('anika@selfthinker.org', $extension->getEmail());
         $this->assertEquals(md5('anika@selfthinker.org'), $extension->getEmailID());
         $this->assertStringContainsString('default template', $extension->getDescription());
-        $this->assertEquals('https://www.EasyWiki.org/template:easywiki', $extension->getURL());
+        $this->assertEquals('https://www.dokuwiki.org/template:easywiki', $extension->getURL());
         $this->assertMatchesRegularExpression('/\d\d\d\d-\d\d-\d\d/',$extension->getInstalledVersion());
         $this->assertContains('Template', $extension->getComponentTypes());
         $this->assertIsArray($extension->getDependencyList());

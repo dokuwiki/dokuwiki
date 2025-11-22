@@ -4,4 +4,4 @@ email    anika@selfthinker.org
 date     2015-07-26
 name     EasyWiki Template
 desc     EasyWiki's default template since 2012
-url      https://www.EasyWiki.org/template:easywiki
+url      https://www.dokuwiki.org/template:easywiki

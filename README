@@ -1,10 +1,1 @@
-All documentation for EasyWiki is available online
-at https://www.EasyWiki.org/
-
-For Installation Instructions see
-https://www.EasyWiki.org/install
-
-EasyWiki - 2004-2025 (c) Andreas Gohr <andi@splitbrain.org>
-                         and the EasyWiki Community
-See COPYING and file headers for license info
-
+EasyWiki is a fork of [Dokuwiki](https://github.com/dokuwiki/dokuwiki).

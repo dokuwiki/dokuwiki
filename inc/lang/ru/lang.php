@@ -147,7 +147,7 @@ $lang['js']['media_done_btn']  = 'Готово';
 $lang['js']['media_drop']      = 'Переместите файлы сюда для загрузки';
 $lang['js']['media_cancel']    = 'убрать';
 $lang['js']['media_overwrt']   = 'Перезаписать существующие файлы';
-$lang['js']['data_insecure']   = 'ВНИМАНИЕ: Похоже, ваш каталог данных не защищен должным образом.  Пожалуйста, прочитайте о <a href="https://www.EasyWiki.org/security#web_access_security">безопасности веб-доступа в EasyWiki</a>. ';
+$lang['js']['data_insecure']   = 'ВНИМАНИЕ: Похоже, ваш каталог данных не защищен должным образом.  Пожалуйста, прочитайте о <a href="https://www.dokuwiki.org/security#web_access_security">безопасности веб-доступа в EasyWiki</a>. ';
 $lang['search_exact_match']    = 'Точное совпадение';
 $lang['search_starts_with']    = 'Начинается на';
 $lang['search_ends_with']      = 'Заканчивается';
@@ -336,10 +336,10 @@ $lang['i_superuser']           = 'Суперпользователь';
 $lang['i_problems']            = 'Программа установки столкнулась с проблемами, перечисленными ниже. Чтобы продолжить, вам необходимо их устранить. ';
 $lang['i_modified']            = 'Из соображений безопасности эта программа запускается только на новой, неизменённой установке «Докувики».
                                   Вам нужно либо заново распаковать скачанный пакет установки, либо обратиться к полной
-                                  <a href="https://www.EasyWiki.org/install">инструкции по установке «Докувики»</a>';
+                                  <a href="https://www.dokuwiki.org/install">инструкции по установке «Докувики»</a>';
 $lang['i_funcna']              = 'Функция PHP <code>%s</code> недоступна. Может быть, она по какой-то причине заблокирована вашим хостером?';
 $lang['i_disabled']            = 'Отключено вашим провайдером.';
-$lang['i_funcnmail']           = '<b>Примечание:</ b> PHP-функция mail недоступна. %s Если она по прежнему недоступна, вы можете установить <a href="https://www.EasyWiki.org/plugin:smtp">плагин SMTP</a>.';
+$lang['i_funcnmail']           = '<b>Примечание:</ b> PHP-функция mail недоступна. %s Если она по прежнему недоступна, вы можете установить <a href="https://www.dokuwiki.org/plugin:smtp">плагин SMTP</a>.';
 $lang['i_phpver']              = 'Ваша версия PHP (<code>%s</code>) ниже требуемой (<code>%s</code>). Вам необходимо обновить установленную версию PHP.';
 $lang['i_mbfuncoverload']      = 'Для запуска «Докувики» необходимо отключить параметр mbstring.func_overload в php.ini';
 $lang['i_urandom']             = '«Докувики» не может создавать криптографически безопасные номера для файлов cookie. Возможно, вы захотите проверить настройки open_basedir в php.ini для правильного доступа <code>/dev/urandom</ code>.';

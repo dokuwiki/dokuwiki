@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'easywiki/easywiki',
+        'name' => 'egalan/easywiki',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',
+        'reference' => 'b0c0b302364ffc383fdc30d36fc5fd8a5f4fd3c6',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,10 +19,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'easywiki/easywiki' => array(
+        'egalan/easywiki' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '396ae2b1e4ac18cd8a3de8ba055f983a807687dc',
+            'reference' => 'b0c0b302364ffc383fdc30d36fc5fd8a5f4fd3c6',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

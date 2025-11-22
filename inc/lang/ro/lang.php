@@ -301,10 +301,10 @@ $lang['i_enableacl']           = 'Activează ACL (liste de control a accesului) 
 $lang['i_superuser']           = 'Utilizator privilegiat';
 $lang['i_problems']            = 'Programul de instalare a găsit câteva probleme, indicate mai jos. Nu poți continua până nu le rezolvi.';
 $lang['i_modified']            = 'Din motive de securitate, acest script va funcționa doar cu o instalare nouă și nemodificată a EasyWiki.
-Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare EasyWiki la <a href="https://www.EasyWiki.org/install">';
+Poți fie să extragi din nou fișierele din arhiva descărcată fie să consulți instrucțiunile de instalare EasyWiki la <a href="https://www.dokuwiki.org/install">';
 $lang['i_funcna']              = 'Funcția PHP <code>%s</code> nu este disponibilă. Probabil provider-ul tău a dezactivat-o pentru un motiv anume.';
 $lang['i_disabled']            = 'a fost dezactivat de furnizorul tău';
-$lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.EasyWiki.org/plugin:smtp">modulul stmp</a>.	';
+$lang['i_funcnmail']           = '<b>Notă:</b> Funcția PHP de email nu este disponibilă %s Daca tot rămâne nedisponibilă, trebuie sa instalezi <a href="https://www.dokuwiki.org/plugin:smtp">modulul stmp</a>.	';
 $lang['i_phpver']              = 'Versiunea ta de PHP <code>%s</code> este mai veche decât cea necesară (<code>%s</code>). Trebuie să îți actualizezi instalarea PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload trebuie să fie dezactivată în php.ini pentru a rula EasyWiki.';
 $lang['i_urandom']             = 'EasyWiki nu poate sa creeze numere sigure criptografice pentru cookie-uri. Poate doriți să verificați setările open_basedir din php.ini pentru acces <code>/dev/urandom</code> adecvat.';

@@ -35,7 +35,7 @@ if ($INPUT->has('spec')) {
     <div slot="overview-api-description">
         <p>
             This is an auto generated description and OpenAPI specification for the
-            <a href="https://www.EasyWiki.org/devel/jsonrpc">EasyWiki JSON-RPC API</a>.
+            <a href="https://www.dokuwiki.org/devel/jsonrpc">EasyWiki JSON-RPC API</a>.
             It is generated from the source code and the inline documentation.
         </p>
 
