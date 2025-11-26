@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Claudio Tam <claudio.tamburrino1@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
@@ -101,6 +102,7 @@ $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
 $lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Tempo di sicurezza per l\'autenticazione (secondi)';
 $lang['securecookie']          = 'Devono i cookies impostati tramite HTTPS essere inviati al browser solo tramite HTTPS? Disattiva questa opzione solo quando l\'accesso al tuo wiki viene effettuato con il protocollo SSL ma la navigazione del wiki non risulta sicura.';
+$lang['samesitecookie']        = 'Attributo SameSite da usare nei cookie. Se lo lasci vuoto, sarà il browser a scegliere automaticamente la policy SameSite.';
 $lang['remote']                = 'Abilita il sistema di API remoto. Questo permette ad altre applicazioni di accedere al wiki tramite XML-RPC o altri meccanismi.';
 $lang['remoteuser']            = 'Restringi l\'accesso dell\'aPI remota ai gruppi o utenti qui specificati separati da virgola. Lascia vuoto per dare accesso a chiunque.';
 $lang['remotecors']            = 'Abilitare la condivisione delle risorse tra origini (CORS) per le interfacce remote. Asterisco (*) per consentire tutte le origini. Lasciare vuoto per negare CORS.';
