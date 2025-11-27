@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use \dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Installer;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
@@ -148,9 +150,15 @@ class GitToolCLI extends CLI
 
             if (!$repo) {
                 $this->info("could not find a repository for $ext");
-                if ($this->downloadExtension($ext)) {
+
+                try {
+                    $installer = new Installer();
+                    $this->info("installing $ext via download");
+                    $installer->installFromId($ext);
+                    $this->success("installed $ext via download");
                     $succeeded[] = $ext;
-                } else {
+                } catch (\Exception $e) {
+                    $this->error("failed to install $ext via download");
                     $errors[] = $ext;
                 }
             } elseif ($this->cloneExtension($ext, $repo)) {
@@ -209,43 +217,6 @@ class GitToolCLI extends CLI
     }
 
     /**
-     * Install extension from the given download URL
-     *
-     * @param string $ext
-     * @return bool|null
-     */
-    private function downloadExtension($ext)
-    {
-        /** @var helper_plugin_extension_extension $plugin */
-        $plugin = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
-
-        $plugin->setExtension($ext);
-
-        $url = $plugin->getDownloadURL();
-        if (!$url) {
-            $this->error("no download URL for $ext");
-            return false;
-        }
-
-        $ok = false;
-        try {
-            $this->info("installing $ext via download from $url");
-            $ok = $plugin->installFromURL($url);
-        } catch (Exception $e) {
-            $this->error($e->getMessage());
-        }
-
-        if ($ok) {
-            $this->success("installed $ext via download");
-            return true;
-        } else {
-            $this->success("failed to install $ext via download");
-            return false;
-        }
-    }
-
-    /**
      * Clones the extension from the given repository
      *
      * @param string $ext
@@ -300,18 +271,14 @@ class GitToolCLI extends CLI
     /**
      * Returns the repository for the given extension
      *
-     * @param $extension
+     * @param string $extensionId
      * @return false|string
      */
-    private function getSourceRepo($extension)
+    private function getSourceRepo($extensionId)
     {
-        /** @var helper_plugin_extension_extension $ext */
-        $ext = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
+        $extension = Extension::createFromId($extensionId);
 
-        $ext->setExtension($extension);
-
-        $repourl = $ext->getSourcerepoURL();
+        $repourl = $extension->getSourcerepoURL();
         if (!$repourl) return false;
 
         // match github repos
