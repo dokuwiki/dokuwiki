@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use \dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Installer;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
