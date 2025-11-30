@@ -149,6 +149,13 @@ class Lexer
             if ($currentLength === $length) {
                 return false;
             }
+            // If we are closing a block and the last character consumed by our matched
+            //  string is a newline, put it back.  See the following for details:
+            //  https://github.com/dokuwiki/dokuwiki/issues/4054
+            if ($this->isModeEnd($mode) && str_ends_with($matched, "\n")) {
+                $raw = "\n" . $raw;
+                $currentLength++;
+            }
             $length = $currentLength;
             $pos = $initialLength - $currentLength;
         }
