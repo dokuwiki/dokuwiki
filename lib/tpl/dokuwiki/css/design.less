@@ -170,11 +170,62 @@ form.search {
 /*____________ breadcrumbs ____________*/
 
 .dokuwiki div.breadcrumbs {
-    border-top: 1px solid @ini_border;
-    border-bottom: 1px solid @ini_background;
-    margin-bottom: .5em;
-    font-size: 0.875em;
-    clear: both;
+
+    & {
+        font-size: 0.875em;
+        clear: both;
+    }
+
+    .youarehere, .trace {
+        & {
+            display: grid;
+            grid-template-columns: min-content auto;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        h2 {
+            display: inline;
+            font-size: 1em;
+            font-weight: normal;
+            margin: 0; padding: 0;
+            line-height: 1.5rem;
+            white-space: nowrap;
+        }
+
+        ol {
+            display: inline-flex;
+            list-style: none inside;
+            max-width: 100%;
+            overflow: hidden;
+            margin: 0; padding: 0 .5em;
+            line-height: 1.5rem;
+        }
+        ol li {
+            display: inline-block;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            width: auto;
+            text-overflow: ellipsis;
+        }
+        ol li:first-child,
+        ol li:last-child {
+            min-width: fit-content;
+        }
+        ol li::before {
+            content: '\00B7';
+            display: inline-block;
+            width: 1em;
+            text-align: center;
+        }
+        ol li:first-child::before {
+            content: none;
+        }
+    }
+    .youarehere ol li::before {
+        content: '\203A';
+    }
 
     div {
         padding: .1em .35em;
