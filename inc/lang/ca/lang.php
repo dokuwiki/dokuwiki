@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Juanma <juxmix@gmail.com>
  * @author pau <pau@estuditic.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author Joan <aseques@gmail.com>
@@ -153,6 +154,9 @@ $lang['profdeleted']           = 'El vostre compte ha sigut esborrat d\'aquest c
 $lang['profconfdelete']        = 'Vull esmorrar el meu compte d\'aquesta wiki. </br> Aquesta acció no pot desfer-se.';
 $lang['profconfdeletemissing'] = 'Confirmació no acceptada';
 $lang['proffail']              = 'Perfil d\'usuari no actialitzat';
+$lang['proftokenlegend']       = 'Token d\'autenticació';
+$lang['proftokengenerate']     = 'Token de reseteig';
+$lang['proftokeninfo']         = 'El token d\'autenticació pot ser usat per aplicacions de 3ers per a identificar-se i actual en el teu nom. Reinicialitzant el token invalidarà l\'antic i desautenticarà totes les aplicacions que usaven el token antic';
 $lang['pwdforget']             = 'Heu oblidat la contrasenya? Podeu obtenir-ne una de nova.';
 $lang['resendna']              = 'Aquest wiki no permet tornar a enviar la contrasenya.';
 $lang['resendpwd']             = 'Estableix una nova contrasenya per';
@@ -371,3 +375,5 @@ $lang['unable_to_parse_date']  = 'Impossible de esbrinar el paràmetre "%s".';
 $lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
 @DOKUWIKIURL@';
 $lang['log_file_too_large']    = 'Fitxer de log massa gran. Linies anteriors ignorades!';
+$lang['log_file_failed_to_open'] = 'No s\'ha pogut obir el fitxer de log.';
+$lang['log_file_failed_to_read'] = 'Ha ocorregut un error llegint el log.';
