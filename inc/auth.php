@@ -630,18 +630,44 @@ function auth_isadmin($user = null, $groups = null, $recache = false)
 }
 
 /**
- * Match a user and his groups against a comma separated list of
+ * Match a user and their groups against a comma separated list of
  * users and groups to determine membership status
  *
  * Note: all input should NOT be nameencoded.
  *
- * @param string $memberlist commaseparated list of allowed users and groups
- * @param string $user       user to match against
- * @param array  $groups     groups the user is member of
- * @return bool       true for membership acknowledged
+ * @triggers AUTH_ISMEMBER
+ * @param  string $memberlist comma-separated list of allowed users and groups
+ * @param  string $user       user to match against
+ * @param  array  $groups     groups the user is member of
+ * @return bool               true for membership acknowledged
  */
 function auth_isMember($memberlist, $user, array $groups)
 {
+    $data = [
+        'memberlist' => $memberlist,
+        'user'       => $user,
+        'groups'     => $groups
+    ];
+
+    return Event::createAndTrigger('AUTH_ISMEMBER', $data, 'auth_ismember_cb');
+}
+
+/**
+ * Default auth_isMember method
+ *
+ * DO NOT CALL DIRECTLY, use auth_isMember() instead
+ *
+ * @author  Andreas Gohr <andi@splitbrain.org>
+ *
+ * @param  array $data event data
+ * @return bool        true for membership acknowledged
+ */
+function auth_ismember_cb(array $data)
+{
+    $memberlist =& $data['memberlist'];
+    $user       =& $data['user'];
+    $groups     =& $data['groups'];
+
     /* @var AuthPlugin $auth */
     global $auth;
     if (!$auth instanceof AuthPlugin) return false;
