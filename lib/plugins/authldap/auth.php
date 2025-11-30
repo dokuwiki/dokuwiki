@@ -241,7 +241,7 @@ class auth_plugin_authldap extends AuthPlugin
         // general user info
         $info['dn'] = $user_result['dn'];
         $info['gid'] = $user_result['gidnumber'][0] ?? null;
-        $info['mail'] = $user_result['mail'][0];
+        $info['mail'] = $user_result['mail'][0] ?? null;
         $info['name'] = $user_result['cn'][0];
         $info['grps'] = [];
 
