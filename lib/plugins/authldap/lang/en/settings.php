@@ -19,7 +19,7 @@ $lang['groupkey']    = 'Group membership from any user attribute (instead of sta
 $lang['modPass']     = 'Can the LDAP password be changed via dokuwiki?';
 $lang['modPassPlain']= 'Send password updates in plain text to the LDAP server (rather than salt and hash them with the configured algorithm before transmission)?';
 $lang['debug']       = 'Display additional debug information on errors';
-
+$lang['userCacheTTL']= 'How long to cache user info entries for (in seconds).';
 
 $lang['deref_o_0']   = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']   = 'LDAP_DEREF_SEARCHING';
