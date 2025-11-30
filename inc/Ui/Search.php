@@ -458,7 +458,7 @@ class Search extends Ui
         $createQueryPageLink = html_wikilink($queryPagename . '?do=edit', $queryPagename);
 
         $pagecreateinfo = '';
-        if (auth_quickaclcheck($queryPagename) >= AUTH_CREATE) {
+        if (auth_quickaclcheck(ltrim($queryPagename, ':')) >= AUTH_CREATE) {
             $pagecreateinfo = sprintf($lang['searchcreatepage'], $createQueryPageLink);
         }
         return str_replace(
