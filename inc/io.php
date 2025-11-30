@@ -584,8 +584,6 @@ function io_rmdir($path, $removefiles = false)
                 $dirs[] = "$path/$f";
             } elseif ($removefiles) {
                 $files[] = "$path/$f";
-            } else {
-                return false; // abort when non empty
             }
         }
         closedir($dh);
