@@ -1,4 +1,4 @@
-Fájlt töltöttek fel a DokuWikijére. Részletek:
+Fájlt töltöttek fel a DokuWikidre. Részletek:
 
 Állomány: @MEDIA@
 Dátum: @DATE@
