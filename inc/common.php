@@ -9,6 +9,7 @@
 
 use dokuwiki\PassHash;
 use dokuwiki\Draft;
+use dokuwiki\PrefCookie;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Conversion;
@@ -1883,84 +1884,36 @@ function valid_input_set($param, $valid_values, $array, $exc = '')
 
 /**
  * Read a preference from the DokuWiki cookie
- * (remembering both keys & values are urlencoded)
+ *
+ * Consider using PrefCookie directly
  *
  * @param string $pref preference key
  * @param mixed $default value returned when preference not found
- * @return string preference value
+ * @return mixed preference value
  */
 function get_doku_pref($pref, $default)
 {
-    $enc_pref = urlencode($pref);
-    if (isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt = count($parts);
-
-        // due to #2721 there might be duplicate entries,
-        // so we read from the end
-        for ($i = $cnt - 2; $i >= 0; $i -= 2) {
-            if ($parts[$i] === $enc_pref) {
-                return urldecode($parts[$i + 1]);
-            }
-        }
-    }
-    return $default;
+    return (new PrefCookie())->get($pref, $default);
 }
 
 /**
  * Add a preference to the DokuWiki cookie
- * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
- * Remove it by setting $val to false
+ *
+ * Remove it by setting $val to false.
+ * Consider using PrefCookie directly
  *
  * @param string $pref preference key
- * @param string $val preference value
+ * @param string|false $val preference value
  */
 function set_doku_pref($pref, $val)
 {
-    global $conf;
-    $orig = get_doku_pref($pref, false);
-    $cookieVal = '';
-
-    if ($orig !== false && ($orig !== $val)) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt = count($parts);
-        // urlencode $pref for the comparison
-        $enc_pref = rawurlencode($pref);
-        $seen = false;
-        for ($i = 0; $i < $cnt; $i += 2) {
-            if ($parts[$i] === $enc_pref) {
-                if (!$seen) {
-                    if ($val !== false) {
-                        $parts[$i + 1] = rawurlencode($val ?? '');
-                    } else {
-                        unset($parts[$i]);
-                        unset($parts[$i + 1]);
-                    }
-                    $seen = true;
-                } else {
-                    // no break because we want to remove duplicate entries
-                    unset($parts[$i]);
-                    unset($parts[$i + 1]);
-                }
-            }
-        }
-        $cookieVal = implode('#', $parts);
-    } elseif ($orig === false && $val !== false) {
-        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
-            rawurlencode($pref) . '#' . rawurlencode($val);
-    }
-
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if (defined('DOKU_UNITTEST')) {
-        $_COOKIE['DOKU_PREFS'] = $cookieVal;
+    if ($val === false) {
+        $val = null;
     } else {
-        setcookie('DOKU_PREFS', $cookieVal, [
-            'expires' => time() + 365 * 24 * 3600,
-            'path' => $cookieDir,
-            'secure' => ($conf['securecookie'] && Ip::isSsl()),
-            'samesite' => 'Lax'
-        ]);
+        $val = (string) $val;
     }
+
+    (new PrefCookie())->set($pref, $val);
 }
 
 /**
