@@ -11,9 +11,6 @@ $lang['tab_templates']         = 'Plantilles instal·lades';
 $lang['tab_search']            = 'Cerca i instal·la';
 $lang['tab_install']           = 'Instal·lació manual';
 $lang['notimplemented']        = 'Encara no s’ha implementat aquesta prestació';
-$lang['notinstalled']          = 'No s’ha instal·lat aquesta extensió';
-$lang['alreadyenabled']        = 'Ja s’ha activat aquesta extensió';
-$lang['alreadydisabled']       = 'Ja s’ha desactivat aquesta extensió';
 $lang['pluginlistsaveerror']   = 'S’ha produït un error en desar la llista de connectors';
 $lang['unknownauthor']         = 'Autor desconegut';
 $lang['unknownversion']        = 'Versió desconeguda';
@@ -67,7 +64,9 @@ $lang['msg_upload_failed']     = 'Ha fallat l’actualització del fitxer';
 $lang['security_issue']        = 'Problema de seguretat: %s';
 $lang['security_warning']      = 'Avís de seguretat: %s';
 $lang['wrong_folder']          = 'El connector s’ha instal·lat incorrectament: canvieu el nom del directori del connector «%s» a «%s».';
-$lang['url_change']            = "L’URL ha canviat: l’URL de baixada ha canviat des de la darrera baixada. Reviseu que l’URL nou sigui vàlid abans d’actualitzar l’extensió.\nNou: %s\nAnterior: %s";
+$lang['url_change']            = 'L’URL ha canviat: l’URL de baixada ha canviat des de la darrera baixada. Reviseu que l’URL nou sigui vàlid abans d’actualitzar l’extensió.
+Nou: %s
+Anterior: %s';
 $lang['error_badurl']          = 'Els URL han de començar per http o https';
 $lang['error_download']        = 'No es pot baixar el fitxer: %s';
 $lang['install_url']           = 'Instal·la a partir d’un URL:';
