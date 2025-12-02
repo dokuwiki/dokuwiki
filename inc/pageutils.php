@@ -757,15 +757,28 @@ function page_findnearest($page, $useacl = true)
 {
     if ((string) $page === '') return false;
     global $ID;
-
+    global $conf;
+    $prevNs = $ID;
     $ns = $ID;
+
     do {
-        $ns = getNS($ns);
         $pageid = cleanID("$ns:$page");
-        if (page_exists($pageid) && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)) {
+
+        $nsStart1 = cleanID("$prevNs:" . end(explode(":", $ns)));
+        $nsStart2 = cleanID("$prevNs:" . $conf['start']);
+
+        $skipNs = false;
+        if ((page_exists($nsStart1) || page_exists($nsStart2)) && !empty($ns)) {
+            $skipNs = true;
+        }
+
+        if (page_exists($pageid) && !$skipNs && (!$useacl || auth_quickaclcheck($pageid) >= AUTH_READ)) {
             return $pageid;
         }
-    } while ($ns !== false);
+
+        $prevNs = $ns;
+        $ns = getNS($ns);
+    } while ($ns !== $prevNs);
 
     return false;
 }
