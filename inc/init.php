@@ -4,6 +4,7 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Ip;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\ErrorHandler;
 use dokuwiki\Input\Input;
@@ -106,7 +107,7 @@ foreach (['default', 'local'] as $config_group) {
     }
 }
 
-if (empty($conf)) {
+if ($conf === []) {
     nice_die("No configuration found in " . DOKU_CONF . ".");
 }
 
@@ -267,7 +268,7 @@ function init_session()
         'lifetime' => DOKU_SESSION_LIFETIME,
         'path' => DOKU_SESSION_PATH,
         'domain' => DOKU_SESSION_DOMAIN,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && Ip::isSsl()),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -501,12 +502,12 @@ function getBaseURL($abs = null)
     if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
-    $hostname = \dokuwiki\Ip::hostName();
+    $hostname = Ip::hostName();
     $parsed_host = parse_url('http://' . $hostname);
     $host = $parsed_host['host'] ?? '';
     $port = $parsed_host['port'] ?? '';
 
-    if (!\dokuwiki\Ip::isSsl()) {
+    if (!Ip::isSsl()) {
         $proto = 'http://';
         if ($port == '80') {
             $port = '';
@@ -529,7 +530,7 @@ function getBaseURL($abs = null)
 function is_ssl()
 {
     dbg_deprecated('Ip::isSsl()');
-    return \dokuwiki\Ip::isSsl();
+    return Ip::isSsl();
 }
 
 /**
