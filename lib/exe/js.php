@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Ip;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
@@ -103,7 +104,7 @@ function js_out()
     echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
     echo "var DOKU_COOKIE_PARAM = " . json_encode([
             'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-            'secure' => $conf['securecookie'] && \dokuwiki\Ip::isSsl(),
+            'secure' => $conf['securecookie'] && Ip::isSsl(),
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
     echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .

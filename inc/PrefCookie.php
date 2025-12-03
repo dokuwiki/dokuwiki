@@ -97,7 +97,7 @@ class PrefCookie
     protected function decodeData(string $rawdata): array
     {
         $data = [];
-        if($rawdata === '') return $data;
+        if ($rawdata === '') return $data;
         $parts = explode('#', $rawdata);
         $count = count($parts);
 
@@ -126,9 +126,9 @@ class PrefCookie
 
         foreach ($data as $key => $val) {
             $val = (string)$val; // we only store strings
-            $parts[] = join('#', [rawurlencode($key), rawurlencode($val)]);
+            $parts[] = implode('#', [rawurlencode($key), rawurlencode($val)]);
         }
 
-        return join('#', $parts);
+        return implode('#', $parts);
     }
 }
