@@ -106,17 +106,22 @@ class Ip
 
         if (strlen($binary) === 4) {
             // IPv4.
+            $ipNum = unpack('Nip', $binary)['ip'];
+            if (PHP_INT_SIZE == 4) {
+                // integer overlfow on 32bit: negative even though 'N'=unsigned
+                $ipNum = ($ipNum < 0)? bcadd($ipNum, Ip32::$b32) : (string)$ipNum;
+            }
             return [
                 'version' => 4,
                 'upper' => 0,
-                'lower' => unpack('Nip', $binary)['ip'],
+                'lower' => $ipNum,
             ];
         } else {
             // IPv6. strlen==16
-            if(PHP_INT_SIZE == 8) { // 64-bit arch
-               $result = unpack('Jupper/Jlower', $binary);
-            } else { // 32-bit
+            if(PHP_INT_SIZE == 4) { // 32-bit
                $result = Ip32::ipv6UpperLowerOn32($binary);
+            } else { // 64-bit arch
+               $result = unpack('Jupper/Jlower', $binary);
             }
             $result['version'] = 6;
             return $result;

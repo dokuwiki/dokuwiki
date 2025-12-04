@@ -19,11 +19,26 @@ class IpTest extends \DokuWikiTest {
             ['::127.0.0.1', 6, 0x00000000, 0x7f000001],
             ['::1', 6, 0x00000000, 0x00000001],
             ['38AF:3033:AA39:CDE3:1A46:094C:44ED:5300', 6, 0x38AF3033AA39CDE3, 0x1A46094C44ED5300],
-            ['7FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFE', 6, 9223372036854775807,0xFFFFFFFFFFFFFFFE],
             ['0000:0000:0000:0000:0000:0000:0000:0000', 6, 0, 0],
             ['193.53.125.7', 4, 0x00000000, 0xC1357D07],
+            // NOTE: wrap around! 0xFFFFFFFFFFFFFFFE seen as -2
+            ['7FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFE', 6, 0x7FFFFFFFFFFFFFFF, -2],
         ];
 
+        // float loses percision and give confusing test results!
+        // sprintf("%.0f",0x7FFFFFFFFFFFFFFF) == sprintf("%.0f",0x7FFFFFFFFFFFFF00)
+        // using string of decimal values instead
+        if(PHP_INT_SIZE == 4) {
+            $tests = [
+                ['127.0.0.1', 4, '0', '2130706433'],
+                ['::127.0.0.1', 6, '0','2130706433'],
+                ['::1', 6, '0', '1'],
+                ['0000:0000:0000:0000:0000:0000:0000:0000', 6, '0', '0'],
+                ['193.53.125.7', 4, '0', '3241508103'],
+                ['7FFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFE', 6, '9223372036854775807', '18446744073709551614'],
+                ['38AF:3033:AA39:CDE3:1A46:094C:44ED:5300', 6, '4084536385505709539', '1893210916534440704']
+            ];
+        }
         return $tests;
     }
 
@@ -38,16 +53,18 @@ class IpTest extends \DokuWikiTest {
      * @param int    $lower   The lower 64 bits of the IP.
      *
      * @return void
+     *
+     * Note: $upper and $lower are likley 'float' instead of 'int' for large values.
+     * The more accurate hint 'int|float' is not supported in php7.4.
      */
-    public function test_ip_to_number(string $ip, int $version, int|float $upper, int|float $lower): void
+    public function test_ip_to_number(string $ip, int $version, $upper, $lower): void
     {
         $result = Ip::ipToNumber($ip);
 
-        // ugly hack. 32bit uses strings for large numbers
-        // also why we take type int (on x64) or float (on i386)
-        if(PHP_INT_SIZE == 4 && $version != 4) { // 32-bit arch
-          $upper = sprintf("%.0f",$upper);
-          $lower = sprintf("%.0f",$lower);
+        // force output of ipv4 to string for easy compare
+        if(PHP_INT_SIZE == 4 and !is_string($result['upper']) ) {
+            $result['upper'] = sprintf("%.0f", $result['upper']);
+            $result['lower'] = sprintf("%.0f", $result['lower']);
         }
 
         $this->assertSame($version, $result['version']);

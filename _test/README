@@ -71,7 +71,7 @@ After local ''composer install''
     \--platform linux/386 --workdir /dokuwiki/_test  \
     docker://wpstaging/php:8.3-32bit \
     ./vendor/bin/phpunit --verbose --stderr \
-    # --filter ip_test
+    # --filter test_ip
 
 <!-- emacs file-local settings
 Local Variables:
