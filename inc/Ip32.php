@@ -13,17 +13,17 @@ class Ip32
     /**
      * slow and ugly bitwise_and for 32bit arch
      * @param $u64 unsigned 64bit integer as string
-     *            likely from ipv6_upper_lower_32
+     *            likely from ipv6UpperLowerOn32
      * @param $pow 0-64 power of 2 for bitmask
      */
-    public static function bitmask64_32(string $u64, int $pow) : string {
+    public static function bitmask64On32(string $u64, int $pow) : string {
         //$u64 = sprintf("%.0f", $u65);
         $b32 = '4294967296';
         $bin = sprintf("%032b%032b",
                 bcdiv($u64, $b32, 0),
                 bcmod($u64, $b32));
 
-        $mask = Ip32::make_bitmask_32(64-$pow);
+        $mask = Ip32::makeBitmaskOn32(64-$pow);
 
         // most right is lowest bit
         $res='0';
@@ -47,7 +47,7 @@ class Ip32
      * pow=64
      * 0000000000000000000000000000000000000000000000000000000000000000
      */
-    private static function make_bitmask_32(int $pow) : string {
+    private static function makeBitmaskOn32(int $pow) : string {
         $pow = $pow < 0 ? 64 - $pow : $pow;
         $mask = sprintf("%064d",0);
         for ($i=0; $i<64; $i++) {
@@ -69,7 +69,7 @@ class Ip32
      *
      * @return int[] upper 64 and lower 64 for ipToNumber
      */
-    public static function ipv6_upper_lower_32(string $binary) {
+    public static function ipv6UpperLowerOn32(string $binary) {
        // unpack into four 32-bit unsigned ints to recombine as 2 64-bit
        $b32 = 4294967296; // bcpow(2, 32)
        $parts = unpack('N4', $binary);

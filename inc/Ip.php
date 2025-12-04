@@ -59,10 +59,10 @@ class Ip
         $maskLengthLower = max(0, $maskLength - 64);
 
         if (PHP_INT_SIZE == 4) {
-            $needle_up = Ip32::bitmask64_32($needle['upper'],    $maskLengthUpper);
-            $net_up    = Ip32::bitmask64_32($networkIp['upper'], $maskLengthUpper);
-            $needle_lo = Ip32::bitmask64_32($needle['lower'],    $maskLengthLower);
-            $net_lo    = Ip32::bitmask64_32($networkIp['lower'], $maskLengthLower);
+            $needle_up = Ip32::bitmask64On32($needle['upper'],    $maskLengthUpper);
+            $net_up    = Ip32::bitmask64On32($networkIp['upper'], $maskLengthUpper);
+            $needle_lo = Ip32::bitmask64On32($needle['lower'],    $maskLengthLower);
+            $net_lo    = Ip32::bitmask64On32($networkIp['lower'], $maskLengthLower);
         } else {
             $maskUpper = ~0 << intval(64 - $maskLengthUpper);
             $maskLower = ~0 << intval(64 - $maskLengthLower);
@@ -116,7 +116,7 @@ class Ip
             if(PHP_INT_SIZE == 8) { // 64-bit arch
                $result = unpack('Jupper/Jlower', $binary);
             } else { // 32-bit
-               $result = Ip32::ipv6_upper_lower_32($binary);
+               $result = Ip32::ipv6UpperLowerOn32($binary);
             }
             $result['version'] = 6;
             return $result;
