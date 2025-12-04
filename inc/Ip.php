@@ -10,6 +10,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Input\Input;
+use dokuwiki\Ip32;
 use Exception;
 
 class Ip
@@ -51,16 +52,28 @@ class Ip
             throw new Exception('Invalid IP range mask: ' . $haystack);
         }
 
-        $maskLengthUpper = min($maskLength, 64);
-        $maskLengthLower = max(0, $maskLength - 64);
-
-        $maskUpper = ~0 << intval(64 - $maskLengthUpper);
-        $maskLower = ~0 << intval(64 - $maskLengthLower);
 
         $needle = Ip::ipToNumber($needle);
 
-        return ($needle['upper'] & $maskUpper) === ($networkIp['upper'] & $maskUpper) &&
-            ($needle['lower'] & $maskLower) === ($networkIp['lower'] & $maskLower);
+        $maskLengthUpper = min($maskLength, 64);
+        $maskLengthLower = max(0, $maskLength - 64);
+
+        if (PHP_INT_SIZE == 4) {
+            $needle_up = Ip32::bitmask64On32($needle['upper'],    $maskLengthUpper);
+            $net_up    = Ip32::bitmask64On32($networkIp['upper'], $maskLengthUpper);
+            $needle_lo = Ip32::bitmask64On32($needle['lower'],    $maskLengthLower);
+            $net_lo    = Ip32::bitmask64On32($networkIp['lower'], $maskLengthLower);
+        } else {
+            $maskUpper = ~0 << intval(64 - $maskLengthUpper);
+            $maskLower = ~0 << intval(64 - $maskLengthLower);
+
+            $needle_up = $needle['upper'] & $maskUpper;
+            $net_up    = $networkIp['upper'] & $maskUpper;
+            $needle_lo = $needle['lower'] & $maskLower;
+            $net_lo    = $networkIp['lower'] & $maskLower;
+        }
+
+        return $needle_up === $net_up && $needle_lo === $net_lo;
     }
 
     /**
@@ -93,14 +106,23 @@ class Ip
 
         if (strlen($binary) === 4) {
             // IPv4.
+            $ipNum = unpack('Nip', $binary)['ip'];
+            if (PHP_INT_SIZE == 4) {
+                // integer overlfow on 32bit: negative even though 'N'=unsigned
+                $ipNum = ($ipNum < 0)? bcadd($ipNum, Ip32::$b32) : (string)$ipNum;
+            }
             return [
                 'version' => 4,
                 'upper' => 0,
-                'lower' => unpack('Nip', $binary)['ip'],
+                'lower' => $ipNum,
             ];
         } else {
-            // IPv6.
-            $result = unpack('Jupper/Jlower', $binary);
+            // IPv6. strlen==16
+            if(PHP_INT_SIZE == 4) { // 32-bit
+               $result = Ip32::ipv6UpperLowerOn32($binary);
+            } else { // 64-bit arch
+               $result = unpack('Jupper/Jlower', $binary);
+            }
             $result['version'] = 6;
             return $result;
         }
