@@ -188,7 +188,7 @@ class auth_plugin_authldap extends AuthPlugin
                 return [];
             }
             $this->bound = 2;
-        } elseif ($this->bound == 0 && !$inbind) {
+        } elseif ($this->bound == 0 && !$inbind && $this->getConf('alwaysrebind')) {
             // in some cases getUserData is called outside the authentication workflow
             // eg. for sending email notification on subscribed pages. This data might not
             // be accessible anonymously, so we try to rebind the current user here
