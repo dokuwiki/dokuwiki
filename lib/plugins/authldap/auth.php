@@ -153,6 +153,20 @@ class auth_plugin_authldap extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        global $INPUT;
+        global $USERINFO;
+        $userid = $INPUT->server->str('REMOTE_USER');
+        if ( $user === $userid && $this->useSessionCache($userid) ) {
+            $this->debug("Returning the cached user...",0,__LINE__,__FILE__);
+            return $USERINFO;
+        } else {
+            // ignore ip addresses -- we get an IP when editor info is not set for a page, or it was edited externally.
+            if ( filter_var($user, FILTER_VALIDATE_IP) ) {
+                $this->debug("Ignoring request for IP address...",0,__LINE__,__FILE__);
+                return [];
+            }
+        }
+
         return $this->fetchUserData($user);
     }
 
