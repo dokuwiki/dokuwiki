@@ -141,7 +141,7 @@ class auth_plugin_authldap extends AuthPlugin
      * inbind bool    for internal use - avoid loop in binding
      *
      * @param string $user
-     * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
+     * @param bool $requireGroups (optional) - whether to fetch user groups.
      * @return  array containing user data or false
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
@@ -170,16 +170,17 @@ class auth_plugin_authldap extends AuthPlugin
             $this->debug("Ignoring request for IP address...",0,__LINE__,__FILE__);
             return [];
         } else {
-            return $this->fetchUserData($user);
+            return $this->fetchUserData($user, false, $requireGroups);
         }
     }
 
     /**
      * @param string $user
      * @param bool $inbind authldap specific, true if in bind phase
+     * @param bool $requireGroups (optional) - whether to fetch user groups.
      * @return  array containing user data or false
      */
-    protected function fetchUserData($user, $inbind = false)
+    protected function fetchUserData($user, $inbind = false, $requireGroups = true)
     {
         global $conf;
         if (!$this->openLDAP()) return [];
@@ -290,45 +291,47 @@ class auth_plugin_authldap extends AuthPlugin
         $user_result = array_merge($info, $user_result);
 
         //get groups for given user if grouptree is given
-        if ($this->getConf('grouptree') || $this->getConf('groupfilter')) {
-            $base = $this->makeFilter($this->getConf('grouptree'), $user_result);
-            $filter = $this->makeFilter($this->getConf('groupfilter'), $user_result);
-            $sr = $this->ldapSearch(
-                $this->con,
-                $base,
-                $filter,
-                $this->getConf('groupscope'),
-                [$this->getConf('groupkey')]
-            );
-            $this->debug('LDAP group search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
-            $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
+        if ($requireGroups) {
+            if ($this->getConf('grouptree') || $this->getConf('groupfilter')) {
+                $base = $this->makeFilter($this->getConf('grouptree'), $user_result);
+                $filter = $this->makeFilter($this->getConf('groupfilter'), $user_result);
+                $sr = $this->ldapSearch(
+                    $this->con,
+                    $base,
+                    $filter,
+                    $this->getConf('groupscope'),
+                    [$this->getConf('groupkey')]
+                );
+                $this->debug('LDAP group search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
+                $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
 
-            if (!$sr) {
-                msg("LDAP: Reading group memberships failed", -1);
-                return [];
-            }
-            $result = ldap_get_entries($this->con, $sr);
-            ldap_free_result($sr);
+                if (!$sr) {
+                    msg("LDAP: Reading group memberships failed", -1);
+                    return [];
+                }
+                $result = ldap_get_entries($this->con, $sr);
+                ldap_free_result($sr);
 
-            if (is_array($result)) foreach ($result as $grp) {
-                if (!empty($grp[$this->getConf('groupkey')])) {
-                    $group = $grp[$this->getConf('groupkey')];
-                    if (is_array($group)) {
-                        $group = $group[0];
-                    } else {
-                        $this->debug('groupkey did not return a detailled result', 0, __LINE__, __FILE__);
+                if (is_array($result)) foreach ($result as $grp) {
+                    if (!empty($grp[$this->getConf('groupkey')])) {
+                        $group = $grp[$this->getConf('groupkey')];
+                        if (is_array($group)) {
+                            $group = $group[0];
+                        } else {
+                            $this->debug('groupkey did not return a detailled result', 0, __LINE__, __FILE__);
+                        }
+                        if ($group === '') continue;
+
+                        $this->debug('LDAP usergroup: ' . hsc($group), 0, __LINE__, __FILE__);
+                        $info['grps'][] = $group;
                     }
-                    if ($group === '') continue;
-
-                    $this->debug('LDAP usergroup: ' . hsc($group), 0, __LINE__, __FILE__);
-                    $info['grps'][] = $group;
                 }
             }
-        }
 
-        // always add the default group to the list of groups
-        if (!$info['grps'] || !in_array($conf['defaultgroup'], $info['grps'])) {
-            $info['grps'][] = $conf['defaultgroup'];
+            // always add the default group to the list of groups
+            if (!$info['grps'] || !in_array($conf['defaultgroup'], $info['grps'])) {
+                $info['grps'][] = $conf['defaultgroup'];
+            }
         }
         return $info;
     }
