@@ -155,25 +155,23 @@ class auth_plugin_authldap extends AuthPlugin
     {
         global $INPUT;
         global $USERINFO;
-        $userid = $INPUT->server->str('REMOTE_USER');
+        $remoteuser = $INPUT->server->str('REMOTE_USER');
 
-        if ( $user === $userid && $this->useSessionCache($userid) ) {
+        if ( $user === $remoteuser && $this->useSessionCache($remoteuser) ) {
             // If the user data requested is for the current logged in user, and the session cache is valid, then
             // return the $USERINFO object instead of retrieving it from LDAP all over again.
             $this->debug("Returning the cached user...",0,__LINE__,__FILE__);
             return $USERINFO;
-        } else {
+        } elseif ( filter_var($user, FILTER_VALIDATE_IP) ) {
             // On page load, user data is requested for the most recent page editor. If that is not set, or if
             // the file was edited externally, the $user value will be an IP address rather than a valid user name.
             //
             // We can safely ignore these requests to prevent useless searches against LDAP.
-            if ( filter_var($user, FILTER_VALIDATE_IP) ) {
-                $this->debug("Ignoring request for IP address...",0,__LINE__,__FILE__);
-                return [];
-            }
+            $this->debug("Ignoring request for IP address...",0,__LINE__,__FILE__);
+            return [];
+        } else {
+            return $this->fetchUserData($user);
         }
-
-        return $this->fetchUserData($user);
     }
 
     /**
