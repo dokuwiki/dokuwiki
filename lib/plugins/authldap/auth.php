@@ -154,14 +154,15 @@ class auth_plugin_authldap extends AuthPlugin
     public function getUserData($user, $requireGroups = true)
     {
         global $INPUT;
-        global $USERINFO;
         $remoteuser = $INPUT->server->str('REMOTE_USER');
 
         if ( $user === $remoteuser && $this->useSessionCache($remoteuser) ) {
-            // If the user data requested is for the current logged in user, and the session cache is valid, then
-            // return the $USERINFO object instead of retrieving it from LDAP all over again.
-            $this->debug("Returning the cached user...",0,__LINE__,__FILE__);
-            return $USERINFO;
+            // Check if we have cached credentials for the current user in the session.
+            $cachedautoinfo = $_SESSION[DOKU_COOKIE]['auth']['info'];
+            if ( isset($cachedauthinfo) ) {
+                $this->debug("Returning the cached auth info for user " . $user,0,__LINE__,__FILE__);
+                return $cachedauthinfo;
+            }
         } elseif ( filter_var($user, FILTER_VALIDATE_IP) ) {
             // On page load, user data is requested for the most recent page editor. If that is not set, or if
             // the file was edited externally, the $user value will be an IP address rather than a valid user name.
@@ -169,9 +170,10 @@ class auth_plugin_authldap extends AuthPlugin
             // We can safely ignore these requests to prevent useless searches against LDAP.
             $this->debug("Ignoring request for IP address...",0,__LINE__,__FILE__);
             return [];
-        } else {
-            return $this->fetchUserData($user, false, $requireGroups);
         }
+
+        // If we made it here, we have to actually get the data from LDAP.
+        return $this->fetchUserData($user, false, $requireGroups);
     }
 
     /**
