@@ -158,7 +158,7 @@ class auth_plugin_authldap extends AuthPlugin
 
         if ( $user === $remoteuser && $this->useSessionCache($remoteuser) ) {
             // Check if we have cached credentials for the current user in the session.
-            $cachedautoinfo = $_SESSION[DOKU_COOKIE]['auth']['info'];
+            $cachedauthinfo = $_SESSION[DOKU_COOKIE]['auth']['info'];
             if ( isset($cachedauthinfo) ) {
                 $this->debug("Returning the cached auth info for user " . $user,0,__LINE__,__FILE__);
                 return $cachedauthinfo;
