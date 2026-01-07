@@ -157,10 +157,11 @@ class auth_plugin_authldap extends AuthPlugin
         $remoteuser = $INPUT->server->str('REMOTE_USER');
 
         if ( $user === $remoteuser && $this->useSessionCache($remoteuser) ) {
-            // Check if we have cached credentials for the current user in the session.
+            // The requested user is the currently logged in user, and the session cache is still valid
+            // If we have auth info in the session cache, return it instead of querying the LDAP Backend.
             $cachedauthinfo = $_SESSION[DOKU_COOKIE]['auth']['info'];
             if ( isset($cachedauthinfo) ) {
-                $this->debug("Returning the cached auth info for user " . $user,0,__LINE__,__FILE__);
+                $this->debug("Returning auth info from session cache for user " . $user,0,__LINE__,__FILE__);
                 return $cachedauthinfo;
             }
         } elseif ( filter_var($user, FILTER_VALIDATE_IP) ) {
@@ -292,8 +293,9 @@ class auth_plugin_authldap extends AuthPlugin
         }
         $user_result = array_merge($info, $user_result);
 
-        //get groups for given user if grouptree is given
+        // If groups are required, retrieve the groups for the user.
         if ($requireGroups) {
+            //get groups for given user if grouptree is given
             if ($this->getConf('grouptree') || $this->getConf('groupfilter')) {
                 $base = $this->makeFilter($this->getConf('grouptree'), $user_result);
                 $filter = $this->makeFilter($this->getConf('groupfilter'), $user_result);
