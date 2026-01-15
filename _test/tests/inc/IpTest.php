@@ -434,4 +434,66 @@ class IpTest extends \DokuWikiTest {
 
         $this->assertSame($expected, $result);
     }
+
+    /**
+     * Test x-real-ip and custom header vars.
+     *
+     */
+    public function test_x_real_ip_disabled(): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['realip'] = false;
+        $INPUT->server->set('HTTP_X_REAL_IP', "5.6.7.8");
+        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+
+        $result = Ip::ClientIp();
+
+        $this->assertSame("1.2.3.4", $result);
+    }
+
+    public function test_x_real_ip_enabled(): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['realip'] = true;
+        $INPUT->server->set('HTTP_X_REAL_IP', "5.6.7.8");
+        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+
+        $result = Ip::ClientIp();
+
+        $this->assertSame("5.6.7.8", $result);
+    }
+
+    public function test_ip_header_var(): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['realip'] = false;
+        $conf['client_ip_header'] = "CF_CONNECTING_IP";
+        $INPUT->server->set('HTTP_CF_CONNECTING_IP', "5.6.7.8");
+        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+
+        $result = Ip::ClientIp();
+
+        $this->assertSame("5.6.7.8", $result);
+    }
+
+    public function test_ip_header_wrong_var(): void
+    {
+        /* @var Input $INPUT */
+        global $INPUT, $conf;
+
+        $conf['realip'] = false;
+        $conf['client_ip_header'] = "X_REAL_IP";
+        $INPUT->server->set('HTTP_CF_CONNECTING_IP', "5.6.7.8");
+        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+
+        $result = Ip::ClientIp();
+
+        $this->assertSame("1.2.3.4", $result);
+    }
 }

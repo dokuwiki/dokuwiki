@@ -261,6 +261,11 @@ class Ip
             $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
         }
 
+        // Use a custom IP header (e.g. CDN) if it is set by the configuration.
+        if (!empty($conf['client_ip_header']) && $INPUT->server->str('HTTP_' . $conf['client_ip_header'])) {
+            $ips[] = $INPUT->server->str('HTTP_' . $conf['client_ip_header']);
+        }
+
         // Add the X-Forwarded-For addresses if all proxies are trusted.
         $ips = array_merge($ips, Ip::forwardedFor());
 
