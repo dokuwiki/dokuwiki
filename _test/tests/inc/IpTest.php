@@ -438,6 +438,8 @@ class IpTest extends \DokuWikiTest {
     /**
      * Test x-real-ip and custom header vars.
      *
+     * Note that the first config option could be replaced by the second with keeping it only for backward compatibility
+     *
      */
     public function test_x_real_ip_disabled(): void
     {
