@@ -441,61 +441,45 @@ class IpTest extends \DokuWikiTest {
      * Note that the first config option could be replaced by the second with keeping it only for backward compatibility
      *
      */
-    public function test_x_real_ip_disabled(): void
+    public function client_ip_provider(): array
     {
-        /* @var Input $INPUT */
-        global $INPUT, $conf;
+        return [
+            // realip disabled, X-Real-IP present -> use REMOTE_ADDR
+            [false, null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
 
-        $conf['realip'] = false;
-        $INPUT->server->set('HTTP_X_REAL_IP', "5.6.7.8");
-        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+            // realip enabled, X-Real-IP present -> use X-Real-IP
+            [true, null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
 
-        $result = Ip::ClientIp();
+            // custom client_ip_header set to CF_CONNECTING_IP -> use CF header
+            [false, 'CF_CONNECTING_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
 
-        $this->assertSame("1.2.3.4", $result);
+            // client_ip_header set to X_REAL_IP but only CF header present -> fallback to REMOTE_ADDR
+            [false, 'X_REAL_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
+        ];
     }
 
-    public function test_x_real_ip_enabled(): void
+    /**
+     * @dataProvider client_ip_provider
+     */
+    public function test_client_ip($realip, $client_ip_header, array $server, string $expected): void
     {
         /* @var Input $INPUT */
         global $INPUT, $conf;
 
-        $conf['realip'] = true;
-        $INPUT->server->set('HTTP_X_REAL_IP', "5.6.7.8");
-        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
+        $conf['realip'] = $realip;
+        if ($client_ip_header !== null) {
+            $conf['client_ip_header'] = $client_ip_header;
+        } else {
+            unset($conf['client_ip_header']);
+        }
+
+        // Set provided header variables
+        foreach ($server as $key => $value) {
+            $INPUT->server->set($key, $value);
+        }
 
         $result = Ip::ClientIp();
 
-        $this->assertSame("5.6.7.8", $result);
-    }
-
-    public function test_ip_header_var(): void
-    {
-        /* @var Input $INPUT */
-        global $INPUT, $conf;
-
-        $conf['realip'] = false;
-        $conf['client_ip_header'] = "CF_CONNECTING_IP";
-        $INPUT->server->set('HTTP_CF_CONNECTING_IP', "5.6.7.8");
-        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
-
-        $result = Ip::ClientIp();
-
-        $this->assertSame("5.6.7.8", $result);
-    }
-
-    public function test_ip_header_wrong_var(): void
-    {
-        /* @var Input $INPUT */
-        global $INPUT, $conf;
-
-        $conf['realip'] = false;
-        $conf['client_ip_header'] = "X_REAL_IP";
-        $INPUT->server->set('HTTP_CF_CONNECTING_IP', "5.6.7.8");
-        $INPUT->server->set('REMOTE_ADDR', "1.2.3.4");
-
-        $result = Ip::ClientIp();
-
-        $this->assertSame("1.2.3.4", $result);
+        $this->assertSame($expected, $result);
     }
 }
