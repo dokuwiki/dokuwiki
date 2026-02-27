@@ -74,7 +74,10 @@ div.picker button.toolbutton {
 [dir=rtl] #size__ctl {
     float: left;
 }
-#size__ctl img {
+#size__ctl button {
+    border: 0;
+    background: none;
+    padding: 0;
     cursor: pointer;
 }
 
