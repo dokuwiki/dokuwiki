@@ -177,6 +177,9 @@ $lang['js']['media_drop']          = 'Drop files here to upload';
 $lang['js']['media_cancel']        = 'remove';
 $lang['js']['media_overwrt']       = 'Overwrite existing files';
 $lang['js']['data_insecure'] = 'WARNING: It seems your data directory is not properly secured. Please read about <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['js']['size_larger']     = 'Increase input field size';
+$lang['js']['size_smaller']    = 'Reduce input field size';
+$lang['js']['size_wrap']       = 'Toggle line wrapping';
 
 $lang['rssfailed']             = 'An error occurred while fetching this feed: ';
 $lang['nothingfound']          = 'Nothing was found.';
