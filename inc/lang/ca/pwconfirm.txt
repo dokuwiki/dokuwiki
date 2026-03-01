@@ -1,11 +1,9 @@
-@FULLNAME@,
+¡Hola @FULLNAME@!
 
-Algú ha sol·licitat una nova contrasenya per al vostre compte d'usuari en @TITLE@
-@DOKUWIKIURL@
+Algú ha sol·licitat una nova contrasenya per al vostre compte d'usuari en @TITLE@ @DOKUWIKIURL@
 
 Si no heu fet aquesta sol·licitud, simplement no feu cas de la resta del missatge.
 
-Per confirmar que realment heu sol·licitat una nova contrasenya, utilitzeu
-l'enllaç següent:
+Per confirmar que realment heu sol·licitat una nova contrasenya, utilitzeu l'enllaç següent:
 
 @CONFIRM@

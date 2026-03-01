@@ -3,12 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paulo Schopf <pschopf@gmail.com>
  * @author Enrico Nicoletto <liverig@gmail.com>
  * @author Fil <fil@meteopt.com>
  * @author André Neves <drakferion@gmail.com>
- * @author José Campos zecarlosdecampos@gmail.com
+ * @author José Campos <zecarlosdecampos@gmail.com>
  */
-$lang['name']                  = 'Retorno (feedback) de Popularidade (pode levar algum tempo a carregar)';
+$lang['name']                  = 'Retorno de Popularidade (pode levar algum tempo a carregar)';
 $lang['submit']                = 'Enviar Dados';
 $lang['autosubmit']            = 'Enviar dados automáticamente uma vez por mês';
 $lang['submissionFailed']      = 'Os dados não foram enviados devido ao seguinte erro:';

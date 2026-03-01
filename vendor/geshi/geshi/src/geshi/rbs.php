@@ -4,7 +4,7 @@
  * ------
  * Author: Deng Wen Gang (deng@priity.com)
  * Copyright: (c) 2013 Deng Wen Gang
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2013/01/15
  *
  * RBScript language file for GeSHi.

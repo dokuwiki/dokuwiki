@@ -1,4 +1,3 @@
 ====== Søk ======
 
 Du ser resultatet av dette søket nedenfor. @CREATEPAGEINFO@
-

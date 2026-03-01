@@ -4,7 +4,7 @@
  * -------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2009 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/10/16
  *
  * MMIX Assembler language file for GeSHi.

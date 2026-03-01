@@ -1,4 +1,3 @@
-====== Adgang forbudt ======
+====== Ingen tilgang ======
 
-Beklager, men du har ikke rettigheter til dette.
-
+Beklager, du har ikke tilgang til denne siden.

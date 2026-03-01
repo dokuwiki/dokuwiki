@@ -2,6 +2,9 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
+use dokuwiki\Ui;
+
 /**
  * Class Source
  *
@@ -9,28 +12,30 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Source extends AbstractAction {
-
+class Source extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $TEXT;
         global $INFO;
         global $ID;
         global $REV;
 
-        if($INFO['exists']) {
+        if ($INFO['exists']) {
             $TEXT = rawWiki($ID, $REV);
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_edit();
+    public function tplContent()
+    {
+        (new Editor())->show();
     }
-
 }

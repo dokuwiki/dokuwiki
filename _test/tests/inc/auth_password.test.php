@@ -24,7 +24,6 @@ class auth_password_test extends DokuWikiTest {
             array('kmd5', 'a579299436d7969791189acadd86fcb716'),
             array('djangomd5', 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158'),
             array('djangosha1', 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678'),
-
         );
 
         if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1) {
@@ -74,6 +73,16 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue(auth_verifyPassword('foo' . $method, $hash));
     }
 
+    /**
+     * @dataProvider hashes
+     * @param $method
+     * @param $hash
+     */
+    function test_verifyUnusable($method, $hash) {
+        $hash = auth_cryptPassword(null, $method);
+        $this->assertFalse(auth_verifyPassword(null, $hash));
+    }
+
     function test_bcrypt_self() {
         $hash = auth_cryptPassword('foobcrypt', 'bcrypt');
         $this->assertTrue(auth_verifyPassword('foobcrypt', $hash));
@@ -81,6 +90,7 @@ class auth_password_test extends DokuWikiTest {
 
     function test_verifyPassword_fixedbcrypt() {
         $this->assertTrue(auth_verifyPassword('foobcrypt', '$2a$12$uTWercxbq4sjp2xAzv3we.ZOxk51m5V/Bv5bp2H27oVFJl5neFQoC'));
+        $this->assertTrue(auth_verifyPassword('lemmybcrypt12hash', '$2b$12$zMBuY6QAGXuT6elIbadavO1JTI6DfaGe1MpfBthG/nt6mkodwmKAi'));
     }
 
     function test_verifyPassword_nohash() {
@@ -90,6 +100,20 @@ class auth_password_test extends DokuWikiTest {
     function test_verifyPassword_fixedpmd5() {
         $this->assertTrue(auth_verifyPassword('test12345', '$P$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
         $this->assertTrue(auth_verifyPassword('test12345', '$H$9IQRaTwmfeRo7ud9Fh4E2PdI0S3r.L0'));
+    }
+
+    function test_verifypassword_drupal_sha512() {
+        $this->assertTrue(auth_verifypassword('drupal_sha512', '$S$D7JxIm0f7QKO3zjwVS1RH4AW8sYvmLjO0.Rn4swH0JVt6OrZ4yzZ'));
+    }
+
+    function test_verifypassword_drupal_migrated_6to7() {
+        $this->assertTrue(auth_verifypassword('pouette1234', 'U$S$9c47LGZuhR6TvhRQXzymkJIQ3mXthUCc6KDEGTt4B7eOL/H9Ykuy'));
+    }
+
+    function test_verifyPassword_seafilepbkdf2() {
+        $hash='PBKDF2SHA256$10000$99227b6df52aa1394b5ca0aceee2733dd6c2670c85bbe26c751a2c65e79d4db7$d61dd1c4df6873c73813fe97f96d0e917792602a33966f3fab0eef154637cc84';
+        $pw='@STR0NGpassW0RD';
+        $this->assertTrue(auth_verifyPassword($pw, $hash));
     }
 
     function test_veryPassword_mediawiki() {
@@ -110,4 +134,27 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue($except);
     }
 
+    function test_verifyPassword_sha256_crypt() {
+        if(defined('CRYPT_SHA256') && CRYPT_SHA256 == 1) {
+            $this->assertTrue(auth_verifyPassword('password', '$5$KvtIFskJlsLHR95A$CABu0dPozYsRq/dGNj4KITBQ21ZK.gC9KVXAkYFNE85'));
+            $this->assertTrue(auth_verifyPassword('password', '$5$rounds=1000$FQM/YjSke3Iqsdma$RYwG1MP21u68qUBQKqHoz7GLpWlnA6tunNKMNH3nRh5'));
+        } else {
+            $this->markTestSkipped('SHA256 not available in this PHP environment');
+        }
+    }
+    /**
+     * issue #2629, support PHP's crypt() format (with rounds=0 parameter)
+     */
+    function test_verifyPassword_sha512_crypt() {
+        if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1) {
+            $this->assertTrue(auth_verifyPassword('Qwerty123', '$6$rounds=3000$9in6UciYPFG6ydsJ$YBjypQ7XoRqvJoX1a2.spSysSVHcdreVXi1Xh5SyOxo2yNSxDjlUCun2YXrwk9.YP6vmRvCWrhp0fbPgSOT7..'));
+        } else {
+            $this->markTestSkipped('SHA512 not available in this PHP environment');
+        }
+    }
+
+    function test_verifyPassword_Woltlab()
+    {
+        $this->assertTrue(auth_verifyPassword('zQ9ZwsTvgufN', 'Bcrypt:$2y$12$ygz.4TeGn/NXEcXIE0pyge4lJyuSMqRdDPT5dW469lODb.HswSzjW'));
+    }
 }

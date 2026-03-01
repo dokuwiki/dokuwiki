@@ -4,7 +4,7 @@
  * ------------
  * Author: Craig Storey (storey.craig@gmail.com)
  * Copyright: (c) 2004 Craig Storey (craig.xcottawa.ca)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2006/05/19
  *
  * WinBatch language file for GeSHi.

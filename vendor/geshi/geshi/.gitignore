@@ -1,3 +1,5 @@
-dist
-build.properties
+/build.properties
+/composer.lock
+/dist/
+/vendor/
 

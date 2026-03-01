@@ -3,6 +3,13 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Claudio Tam <claudio.tamburrino1@gmail.com>
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
+ * @author Simone Perin <simoneperin.92@libero.it>
+ * @author Dario <darioriso@virgilio.it>
+ * @author Filippo <abrickslife@gmail.com>
+ * @author Eddy <eddy@mail.it>
+ * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
  * @author damiano <damiano@spagnuolo.eu>
  * @author Torpedo <dgtorpedo@gmail.com>
@@ -13,7 +20,6 @@
  * @author robocap <robocap1@gmail.com>
  * @author Jacopo Corbetta <jacopo.corbetta@gmail.com>
  * @author Matteo Pasotti <matteo@xquiet.eu>
- * @author Riccardo <riccardofila@gmail.com>
  * @author Paolo <paolopoz12@gmail.com>
  */
 $lang['menu']                  = 'Configurazione Wiki';
@@ -44,6 +50,7 @@ $lang['_advanced']             = 'Impostazioni Avanzate';
 $lang['_network']              = 'Impostazioni Rete';
 $lang['_msg_setting_undefined'] = 'Nessun metadato definito.';
 $lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
+$lang['_msg_setting_no_known_class'] = 'Classe di impostazioni non disponibile.';
 $lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
@@ -95,16 +102,16 @@ $lang['disableactions_other']  = 'Altre azioni (separate da virgola)';
 $lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Tempo di sicurezza per l\'autenticazione (secondi)';
 $lang['securecookie']          = 'Devono i cookies impostati tramite HTTPS essere inviati al browser solo tramite HTTPS? Disattiva questa opzione solo quando l\'accesso al tuo wiki viene effettuato con il protocollo SSL ma la navigazione del wiki non risulta sicura.';
+$lang['samesitecookie']        = 'Attributo SameSite da usare nei cookie. Se lo lasci vuoto, sarà il browser a scegliere automaticamente la policy SameSite.';
 $lang['remote']                = 'Abilita il sistema di API remoto. Questo permette ad altre applicazioni di accedere al wiki tramite XML-RPC o altri meccanismi.';
 $lang['remoteuser']            = 'Restringi l\'accesso dell\'aPI remota ai gruppi o utenti qui specificati separati da virgola. Lascia vuoto per dare accesso a chiunque.';
+$lang['remotecors']            = 'Abilitare la condivisione delle risorse tra origini (CORS) per le interfacce remote. Asterisco (*) per consentire tutte le origini. Lasciare vuoto per negare CORS.';
 $lang['usewordblock']          = 'Blocca lo spam in base alla blacklist';
 $lang['relnofollow']           = 'Usa rel="nofollow" nei collegamenti esterni';
 $lang['indexdelay']            = 'Intervallo di tempo prima dell\'indicizzazione';
 $lang['mailguard']             = 'Oscuramento indirizzi email';
 $lang['iexssprotect']          = 'Controlla i file caricati in cerca di possibile codice JavaScript o HTML maligno.';
 $lang['usedraft']              = 'Salva una bozza in automatico in fase di modifica';
-$lang['htmlok']                = 'Consenti HTML incorporato';
-$lang['phpok']                 = 'Consenti PHP incorporato';
 $lang['locktime']              = 'Durata dei file di lock (sec)';
 $lang['cachetime']             = 'Durata della cache (sec)';
 $lang['target____wiki']        = 'Finestra di destinazione per i collegamenti interni';
@@ -126,12 +133,15 @@ $lang['mailfrom']              = 'Mittente per le mail automatiche';
 $lang['mailreturnpath']        = 'Indirizzo email destinatario per notifica di mancati recapiti';
 $lang['mailprefix']            = 'Prefisso da inserire nell\'oggetto delle mail automatiche';
 $lang['htmlmail']              = 'Invia email HTML multipart più gradevoli ma più ingombranti in dimensione. Disabilita per mail in puro testo.';
+$lang['dontlog']               = 'Disabilita la registrazione per questi tipi di log.';
+$lang['logretain']             = 'Quanti giorni di log conservare.';
 $lang['sitemap']               = 'Genera una sitemap Google (giorni)';
 $lang['rss_type']              = 'Tipo di feed XML';
 $lang['rss_linkto']            = 'Collega i feed XML a';
 $lang['rss_content']           = 'Cosa mostrare negli elementi dei feed XML?';
 $lang['rss_update']            = 'Intervallo di aggiornamento dei feed XML (sec)';
 $lang['rss_show_summary']      = 'I feed XML riportano un sommario nel titolo';
+$lang['rss_show_deleted']      = 'Feed XML mostra feed cancellati';
 $lang['rss_media']             = 'Quale tipo di cambiamento dovrebbe essere elencato nel feed XML?';
 $lang['rss_media_o_both']      = 'entrambi';
 $lang['rss_media_o_pages']     = 'pagine';
@@ -154,14 +164,18 @@ $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del w
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
-$lang['search_fragment']       = '
-Specificare il comportamento di ricerca del frammento predefinito';
+$lang['search_fragment']       = 'Specificare il comportamento di ricerca del frammento predefinito';
 $lang['search_fragment_o_exact'] = 'esatto';
 $lang['search_fragment_o_starts_with'] = 'inizia con';
 $lang['search_fragment_o_ends_with'] = 'finisce con';
 $lang['search_fragment_o_contains'] = 'contiene';
+$lang['_feature_flags']        = 'Segnalazione di feature';
+$lang['defer_js']              = 'Rimanda l\'esecuzione di JavaScript dopo che l\'HTML della pagina è stato analizzato. Migliora la velocità della pagina percepita ma potrebbe interrompere un piccolo numero di plugin.';
+$lang['hidewarnings']          = 'Non visualizzare alcun avviso emesso da PHP. Questo potrebbe facilitare la transizione a PHP8+. Gli avvisi verranno comunque registrati nel registro degli errori e dovranno essere segnalati.';
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
+$lang['trustedproxies']        = 'Elenco separato da virgole di server proxy attendibili da cui leggere l\'intestazione X-Forwarded-For. Ogni elemento nell\'array può essere un indirizzo IPv4 o IPv6, oppure un intervallo CIDR IPv4 o IPv6 (ad esempio 10.0.0.0/8). Lasciare vuoto per non considerare attendibile alcun proxy.';
+$lang['realip']                = 'Considera attendibile l\'intestazione X-Real-IP. Abilita questa opzione solo se il tuo server scrive questa intestazione, altrimenti potrebbe essere falsificata.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
 $lang['jquerycdn_o_jquery']    = 'CDN presso code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN presso cdnjs.com';
@@ -171,12 +185,6 @@ $lang['proxy____user']         = 'Nome utente proxy';
 $lang['proxy____pass']         = 'Password proxy';
 $lang['proxy____ssl']          = 'Usa SSL per connetterti al proxy';
 $lang['proxy____except']       = 'Espressioni regolari per far corrispondere le URLs per i quali i proxy dovrebbero essere ommessi.';
-$lang['safemodehack']          = 'Abilita safemode hack';
-$lang['ftp____host']           = 'Server FTP per safemode hack';
-$lang['ftp____port']           = 'Porta FTP per safemode hack';
-$lang['ftp____user']           = 'Nome utente FTP per safemode hack';
-$lang['ftp____pass']           = 'Password FTP per safemode hack';
-$lang['ftp____root']           = 'Directory principale FTP per safemode hack';
 $lang['license_o_']            = 'Nessuna scelta';
 $lang['typography_o_0']        = 'nessuno';
 $lang['typography_o_1']        = 'Solo virgolette';

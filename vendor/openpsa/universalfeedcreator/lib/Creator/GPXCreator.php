@@ -5,7 +5,6 @@
  *
  * @since   1.7.6
  * @author  Barry Hunter <geo@barryhunter.co.uk>
- * @package de.bitfolge.feedcreator
  */
 class GPXCreator extends FeedCreator
 {

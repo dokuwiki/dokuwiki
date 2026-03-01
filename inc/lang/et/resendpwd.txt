@@ -1,4 +1,3 @@
 ====== Saada uus parool ======
 
 Palun sisesta oma kasutaja nimi, et saada uut parooli. Soovi kinnitamiseks saadame Sinu meilile lingi.
-

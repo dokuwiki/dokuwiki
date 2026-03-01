@@ -15,7 +15,7 @@ class utf8_correctidx_test extends DokuWikiTest {
         $tests[] = array('aaживπά우리をあöä',1,true,1);
 
         foreach($tests as $test){
-            $this->assertEquals(utf8_correctIdx($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\dokuwiki\Utf8\Clean::correctIdx($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 
@@ -33,7 +33,7 @@ class utf8_correctidx_test extends DokuWikiTest {
         $tests[] = array('aaживπά우리をあöä',4,true,4);
 
         foreach($tests as $test){
-            $this->assertEquals(utf8_correctIdx($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\dokuwiki\Utf8\Clean::correctIdx($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 
@@ -53,7 +53,7 @@ class utf8_correctidx_test extends DokuWikiTest {
         $tests[] = array('aaживπά우리をあöä',13,true,13);
 
         foreach($tests as $test){
-            $this->assertEquals(utf8_correctIdx($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\dokuwiki\Utf8\Clean::correctIdx($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 
@@ -69,7 +69,7 @@ class utf8_correctidx_test extends DokuWikiTest {
         $tests[] = array('aaживπά우리をあöä',128,true,29);
 
         foreach($tests as $test){
-            $this->assertEquals(utf8_correctIdx($test[0],$test[1],$test[2]),$test[3]);
+            $this->assertEquals(\dokuwiki\Utf8\Clean::correctIdx($test[0],$test[1],$test[2]),$test[3]);
         }
     }
 

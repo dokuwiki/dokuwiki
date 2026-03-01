@@ -1,0 +1,2 @@
+Essa ferramenta permite que você altere determinadas configurações de estilo do modelo atualmente selecionado.
+Todas as alterações são armazenadas em um arquivo de configuração local e são atualizadas com segurança.

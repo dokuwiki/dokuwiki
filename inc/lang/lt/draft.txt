@@ -1,0 +1,5 @@
+====== Rastas juodraščio failas ======
+
+Jūsų paskutinė redagavimo sesija šiame puslapyje nebuvo tinkamai baigta.  DokuWiki automatiškai išsaugojo juodraštį, kurį galite naudoti norėdami tęsti redagavimą.  Žemiau galite pamatyti duomenis, kurie buvo išsaugoti iš jūsų paskutinės sesijos.
+
+ Nuspręskite, ar norite //atkurti// prarastą redagavimo sesiją, //ištrinti// automatiškai išsaugotą juodraštį ar //atšaukti// redagavimo procesą.

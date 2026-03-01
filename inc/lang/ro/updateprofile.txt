@@ -1,4 +1,3 @@
 ====== Actualizare profil utilizator ======
 
-Trebuie să completezi doar câmpurile pe care dorești să le modifici. Nu poți
-modifica numele de utilizator.
+Trebuie să completezi doar câmpurile pe care dorești să le modifici. Nu poți modifica numele de utilizator.

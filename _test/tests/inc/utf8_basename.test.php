@@ -84,7 +84,7 @@ class utf8_basename_test extends DokuWikiTest {
         );
 
         foreach($data as $test){
-            $this->assertEquals($test[2], utf8_basename($test[0], $test[1]), "input: ('".$test[0]."', '".$test[1]."')");
+            $this->assertEquals($test[2], \dokuwiki\Utf8\PhpString::basename($test[0], $test[1]), "input: ('".$test[0]."', '".$test[1]."')");
         }
      }
 

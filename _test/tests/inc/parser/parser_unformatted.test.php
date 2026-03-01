@@ -1,10 +1,13 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Unformatted;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
 
     function testNowiki() {
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse("Foo <nowiki>testing</nowiki> Bar");
         $calls = array (
             array('document_start',array()),
@@ -21,7 +24,7 @@ class TestOfDoku_Parser_Unformatted extends TestOfDoku_Parser {
     }
 
     function testDoublePercent() {
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse("Foo %%testing%% Bar");
         $calls = array (
             array('document_start',array()),

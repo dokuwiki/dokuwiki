@@ -4,6 +4,6 @@ Dette værktøj samler anonyme oplysninge rom din wiki og giver dig mulighed for
 
 Vi anbefaler dig til at gentage dette trin fra tid til anden for at holde udviklerne underrettede eftersom din wiki vokser. Dine anonyme datasamlinger vil blive tilkendegivet ved et anonymt navn.
 
-Opsamlede data indeholder oplysninger som eksempelvis din udgave af DokuWiki, antallet og størrelsen af dens sider, tilføjede udvidelse og oplysninger om din PHP-opsætning.
+Opsamlede data indeholder oplysninger som eksempelvis din udgave af DokuWiki, antallet og størrelsen af dens sider, tilføjede udvidelser og oplysninger om din PHP-opsætning.
 
 De egentlige data, som vil blive sendt, er vist herunder. Brug venligst knappen 'Send Data' for at videresende oplysningerne.

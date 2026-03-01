@@ -4,6 +4,8 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Martin Michalek <michalek.dev@gmail.com>
+ * @author Peter Mydliar <peto.mydliar@gmail.com>
+ * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik <exusik@gmail.com>
  */
@@ -80,7 +82,9 @@ $lang['disableactions']        = 'Zakázať DokuWiki akcie';
 $lang['disableactions_check']  = 'Skontrolovať';
 $lang['disableactions_subscription'] = 'Povoliť/Zrušiť informovanie o zmenách stránky';
 $lang['disableactions_wikicode'] = 'Pozrieť zdroj/Exportovať zdroj';
+$lang['disableactions_profile_delete'] = 'Zrušenie vlastného účtu';
 $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
+$lang['disableactions_rss']    = 'RSS';
 $lang['auth_security_timeout'] = 'Časový limit pri prihlasovaní (v sekundách)';
 $lang['securecookie']          = 'Mal by prehliadač posielať cookies nastavené cez HTTPS posielať iba cez HTTPS (bezpečné) pripojenie? Vypnite túto voľbu iba v prípade, ak je prihlasovanie do Vašej wiki zabezpečené SSL, ale prezeranie wiki je nezabezpečené.';
 $lang['remote']                = 'Povolenie vzdialeného API. Umožnuje iným aplikáciám pristupovať k wiki cez XML-RPC alebo iným spôsobom.';
@@ -91,8 +95,6 @@ $lang['indexdelay']            = 'Časové oneskorenie pred indexovaním (sek)';
 $lang['mailguard']             = 'Zamaskovať e-mailovú adresu';
 $lang['iexssprotect']          = 'Kontrolovať nahraté súbory na prítomnosť nebezpečného JavaScript alebo HTML kódu';
 $lang['usedraft']              = 'Automaticky ukladať koncept počas úpravy stránky';
-$lang['htmlok']                = 'Umožniť vkladanie HTML';
-$lang['phpok']                 = 'Umožniť vkladanie PHP';
 $lang['locktime']              = 'Maximálne trvanie blokovacích súborov (sek)';
 $lang['cachetime']             = 'Maximálne trvanie cache (sek)';
 $lang['target____wiki']        = 'Cieľové okno (target) pre interné odkazy';
@@ -120,6 +122,9 @@ $lang['rss_content']           = 'Čo zobrazovať v XML feede?';
 $lang['rss_update']            = 'Časový interval obnovy XML feedu (sek.)';
 $lang['rss_show_summary']      = 'XML zdroj ukáže prehľad v názve';
 $lang['rss_media']             = 'Aký typ zmien by mal byť zobrazený v XML feede?';
+$lang['rss_media_o_both']      = 'oboje';
+$lang['rss_media_o_pages']     = 'strany';
+$lang['rss_media_o_media']     = 'média';
 $lang['updatecheck']           = 'Kontrolovať aktualizácie a bezpečnostné upozornenia? DokuWiki potrebuje pre túto funkciu prístup k update.dokuwiki.org.';
 $lang['userewrite']            = 'Používať nice URLs';
 $lang['useslash']              = 'Používať lomku (/) ako oddeľovač v URL';
@@ -137,6 +142,12 @@ $lang['xsendfile']             = 'Používať X-Sendfile hlavičku pre doručeni
 $lang['renderer_xhtml']        = 'Používané vykresľovacie jadro pre hlavný (xhtml) wiki výstup';
 $lang['renderer__core']        = '%s (dokuwiki jadro)';
 $lang['renderer__plugin']      = '%s (plugin)';
+$lang['search_nslimit']        = 'Obmedzte vyhľadávanie na aktuálnych X menných priestorov. Ak je vyhľadávanie vyvolané zo stránky v hlbšom mennom priestore, prvých X menných priestorov bude pridaných ako filter';
+$lang['search_fragment_o_exact'] = 'presne';
+$lang['search_fragment_o_starts_with'] = 'začína s';
+$lang['search_fragment_o_ends_with'] = 'končí na';
+$lang['search_fragment_o_contains'] = 'obsahuje';
+$lang['defer_js']              = 'Odložiť vykonanie javascriptu po spracovaní HTML stránky. Zlepší sa vnímanie rýchlosti stránky, ale môže znefunkčniť niektoré pluginy.';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['jquerycdn']             = 'Mali by byť jQuery a jQuery UI skripty načítané z CDN? Voľba zvýši počet dodatočných HTTP požiadaviek, ale súbory sa môžu načítať rýchlejšie a používatelia ich už môžu mať vo vyrovnávacej pamäti.';
 $lang['jquerycdn_o_0']         = 'Nepoužívať CDN, iba lokálne súbory';
@@ -148,12 +159,6 @@ $lang['proxy____user']         = 'Proxy server - používateľské meno';
 $lang['proxy____pass']         = 'Proxy server - heslo';
 $lang['proxy____ssl']          = 'Proxy server - použiť SSL';
 $lang['proxy____except']       = 'Regulárny výraz popisujúci URL odkazy, pre ktoré by proxy nemala byť použitá.';
-$lang['safemodehack']          = 'Povoliť "safemode hack"';
-$lang['ftp____host']           = 'FTP server pre "safemode hack"';
-$lang['ftp____port']           = 'FTP port pre "safemode hack"';
-$lang['ftp____user']           = 'FTP používateľ pre "safemode hack"';
-$lang['ftp____pass']           = 'FTP heslo pre "safemode hack"';
-$lang['ftp____root']           = 'FTP hlavný adresár pre "safemode hack"';
 $lang['license_o_']            = 'žiadna';
 $lang['typography_o_0']        = 'žiadne';
 $lang['typography_o_1']        = 'okrem jednoduchých úvodzoviek';
@@ -189,6 +194,7 @@ $lang['xsendfile_o_2']         = 'Štandardná X-Sendfile hlavička';
 $lang['xsendfile_o_3']         = 'Proprietárna Nginx X-Accel-Redirect hlavička';
 $lang['showuseras_o_loginname'] = 'Prihlasovacie meno';
 $lang['showuseras_o_username'] = 'Celé meno používateľa';
+$lang['showuseras_o_username_link'] = 'Celé meno používateľa ako interwiki odkaz';
 $lang['showuseras_o_email']    = 'E-mailová adresa používateľa (zamaskovaná podľa nastavenia)';
 $lang['showuseras_o_email_link'] = 'E-mailová adresa používateľa vo forme odkazu mailto:';
 $lang['useheading_o_0']        = 'Nikdy';

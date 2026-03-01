@@ -4,7 +4,7 @@
  * ----------
  * Author: J�rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2004 J�rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/07/26
  *
  * Delphi (Object Pascal) language file for GeSHi.

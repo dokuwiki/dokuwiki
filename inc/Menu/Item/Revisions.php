@@ -7,15 +7,15 @@ namespace dokuwiki\Menu\Item;
  *
  * Access the old revisions of the current page
  */
-class Revisions extends AbstractItem {
-
+class Revisions extends AbstractItem
+{
     /** @inheritdoc */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->accesskey = 'o';
         $this->type = 'revs';
         $this->svg = DOKU_INC . 'lib/images/menu/07-revisions_history.svg';
     }
-
 }

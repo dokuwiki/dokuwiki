@@ -1,0 +1,21 @@
+====== this is the Control ======
+
+It has all kinds of [[:content]]. But also Links.
+
+  * This is not a link
+    * [[this]] is
+    * [[foo:bar]] is also a link
+  * [[Another Link]]
+  * [[https://www.google.com|External links]] are not lessons
+
+We have two lists here
+
+  * [[foo:bar|duplicates]] will be ignored in the order
+  * [[..:relativeup]]
+  * [[foo2:this]]
+    * [[foo2:deeper:item|Deeper Item]]
+      * [[foo2:deeper:evendeeper:item|Even Deeper Item]]
+  * [[.:blarg:down]]
+  * [[:toplevel]]
+
+Here is more and another [[link]].

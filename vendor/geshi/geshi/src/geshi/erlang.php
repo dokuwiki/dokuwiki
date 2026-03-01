@@ -7,7 +7,7 @@
  * - Uwe Dauernheim (uwe@dauernheim.net)
  * - Dan Forest-Barbier (dan@twisted.in)
  * Copyright: (c) 2008 Uwe Dauernheim (http://www.kreisquadratur.de/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008-09-27
  *
  * Erlang language file for GeSHi.

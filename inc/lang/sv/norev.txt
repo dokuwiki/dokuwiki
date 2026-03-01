@@ -1,4 +1,3 @@
 ====== Det finns ingen sådan version ======
 
 Den angivna versionen finns inte. Använd ''Historik'' för en förteckning över de versioner som finns av detta dokument.
-

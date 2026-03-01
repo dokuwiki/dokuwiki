@@ -6,6 +6,7 @@ Quelqu'un a demandé un nouveau mot de passe pour votre identifiant
 Si vous n'êtes pas à l'origine de cette requête d'un nouveau mot de
 passe, ignorez simplement ce message.
 
-Pour confirmer que cette requête émane bien de vous, merci de cliquer sur le lien ci-dessous.
+Pour confirmer que cette requête émane bien de vous, veuillez suivre
+le lien ci-dessous.
 
 @CONFIRM@

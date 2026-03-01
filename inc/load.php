@@ -1,159 +1,281 @@
 <?php
+
 /**
  * Load all internal libraries and setup class autoloader
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
-// setup class autoloader
-spl_autoload_register('load_autoload');
+namespace dokuwiki;
 
-// require all the common libraries
-// for a few of these order does matter
-require_once(DOKU_INC.'inc/actions.php');
-require_once(DOKU_INC.'inc/changelog.php');
-require_once(DOKU_INC.'inc/common.php');
-require_once(DOKU_INC.'inc/confutils.php');
-require_once(DOKU_INC.'inc/pluginutils.php');
-require_once(DOKU_INC.'inc/events.php');
-require_once(DOKU_INC.'inc/form.php');
-require_once(DOKU_INC.'inc/fulltext.php');
-require_once(DOKU_INC.'inc/html.php');
-require_once(DOKU_INC.'inc/httputils.php');
-require_once(DOKU_INC.'inc/indexer.php');
-require_once(DOKU_INC.'inc/infoutils.php');
-require_once(DOKU_INC.'inc/io.php');
-require_once(DOKU_INC.'inc/mail.php');
-require_once(DOKU_INC.'inc/media.php');
-require_once(DOKU_INC.'inc/pageutils.php');
-require_once(DOKU_INC.'inc/parserutils.php');
-require_once(DOKU_INC.'inc/search.php');
-require_once(DOKU_INC.'inc/subscription.php');
-require_once(DOKU_INC.'inc/template.php');
-require_once(DOKU_INC.'inc/toolbar.php');
-require_once(DOKU_INC.'inc/utf8.php');
-require_once(DOKU_INC.'inc/auth.php');
-require_once(DOKU_INC.'inc/compatibility.php');
+use dokuwiki\Extension\PluginController;
 
-/**
- * spl_autoload_register callback
- *
- * Contains a static list of DokuWiki's core classes and automatically
- * require()s their associated php files when an object is instantiated.
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   add generic loading of renderers and auth backends
- *
- * @param string $name
- *
- * @return bool
- */
-function load_autoload($name){
-    static $classes = null;
-    if(is_null($classes)) $classes = array(
-        'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
-        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
-        'JSON'                  => DOKU_INC.'inc/JSON.php',
-        'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
-        'UnifiedDiffFormatter'  => DOKU_INC.'inc/DifferenceEngine.php',
-        'TableDiffFormatter'    => DOKU_INC.'inc/DifferenceEngine.php',
-        'cache'                 => DOKU_INC.'inc/cache.php',
-        'cache_parser'          => DOKU_INC.'inc/cache.php',
-        'cache_instructions'    => DOKU_INC.'inc/cache.php',
-        'cache_renderer'        => DOKU_INC.'inc/cache.php',
-        'Doku_Event'            => DOKU_INC.'inc/events.php',
-        'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
-        'Input'                 => DOKU_INC.'inc/Input.class.php',
-        'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
-        'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
-        'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
-        'IXR_Server'            => DOKU_INC.'inc/IXR_Library.php',
-        'IXR_Client'            => DOKU_INC.'inc/IXR_Library.php',
-        'IXR_Error'             => DOKU_INC.'inc/IXR_Library.php',
-        'IXR_IntrospectionServer' => DOKU_INC.'inc/IXR_Library.php',
-        'Doku_Plugin_Controller'=> DOKU_INC.'inc/plugincontroller.class.php',
-        'Doku_Parser_Mode'      => DOKU_INC.'inc/parser/parser.php',
-        'Doku_Parser_Mode_Plugin' => DOKU_INC.'inc/parser/parser.php',
-        'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
-        'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
-        'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
-        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
-        'RemoteAPI'             => DOKU_INC.'inc/remote.php',
-        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
-        'Subscription'          => DOKU_INC.'inc/subscription.php',
+return new class {
+    /** @var string[] Common libraries that are always loaded */
+    protected array $commonLibs = [
+        'defines.php',
+        'actions.php',
+        'changelog.php',
+        'common.php',
+        'confutils.php',
+        'pluginutils.php',
+        'form.php',
+        'fulltext.php',
+        'html.php',
+        'httputils.php',
+        'indexer.php',
+        'infoutils.php',
+        'io.php',
+        'mail.php',
+        'media.php',
+        'pageutils.php',
+        'parserutils.php',
+        'search.php',
+        'template.php',
+        'toolbar.php',
+        'utf8.php',
+        'auth.php',
+        'compatibility.php',
+        'deprecated.php',
+        'legacy.php',
+    ];
 
-        'DokuWiki_PluginInterface' => DOKU_INC.'inc/PluginInterface.php',
-        'DokuWiki_PluginTrait'     => DOKU_INC.'inc/PluginTrait.php',
-        'DokuWiki_Plugin'          => DOKU_INC.'inc/Plugin.php',
+    /** @var string[] Classname to file mappings */
+    protected array $fixedClassNames = [
+        'Diff' => 'DifferenceEngine.php',
+        'UnifiedDiffFormatter' => 'DifferenceEngine.php',
+        'TableDiffFormatter' => 'DifferenceEngine.php',
+        'cache' => 'cache.php',
+        'cache_parser' => 'cache.php',
+        'cache_instructions' => 'cache.php',
+        'cache_renderer' => 'cache.php',
+        'JpegMeta' => 'JpegMeta.php',
+        'FeedParser' => 'FeedParser.php',
+        'SafeFN' => 'SafeFN.class.php',
+        'Mailer' => 'Mailer.class.php',
+        'Doku_Handler' => 'parser/handler.php',
+        'Doku_Renderer' => 'parser/renderer.php',
+        'Doku_Renderer_xhtml' => 'parser/xhtml.php',
+        'Doku_Renderer_code' => 'parser/code.php',
+        'Doku_Renderer_xhtmlsummary' => 'parser/xhtmlsummary.php',
+        'Doku_Renderer_metadata' => 'parser/metadata.php'
+    ];
 
-
-        'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
-        'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
-        'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
-        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
-        'DokuWiki_Auth_Plugin'   => DOKU_PLUGIN.'auth.php',
-        'DokuWiki_CLI_Plugin'    => DOKU_PLUGIN.'cli.php',
-
-        'Doku_Renderer'          => DOKU_INC.'inc/parser/renderer.php',
-        'Doku_Renderer_xhtml'    => DOKU_INC.'inc/parser/xhtml.php',
-        'Doku_Renderer_code'     => DOKU_INC.'inc/parser/code.php',
-        'Doku_Renderer_xhtmlsummary' => DOKU_INC.'inc/parser/xhtmlsummary.php',
-        'Doku_Renderer_metadata' => DOKU_INC.'inc/parser/metadata.php',
-
-        'DokuCLI'                => DOKU_INC.'inc/cli.php',
-        'DokuCLI_Options'        => DOKU_INC.'inc/cli.php',
-        'DokuCLI_Colors'         => DOKU_INC.'inc/cli.php',
-
-    );
-
-    if(isset($classes[$name])){
-        require ($classes[$name]);
-        return true;
+    /**
+     * Load common libs and register autoloader
+     */
+    public function __construct()
+    {
+        require_once(DOKU_INC . 'vendor/autoload.php');
+        spl_autoload_register([$this, 'autoload']);
+        $this->loadCommonLibs();
     }
 
-    // namespace to directory conversion
-    $name = str_replace('\\', '/', $name);
-
-    // plugin namespace
-    if(substr($name, 0, 16) == 'dokuwiki/plugin/') {
-        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
-        $file = DOKU_PLUGIN . substr($name, 16) . '.php';
-        if(file_exists($file)) {
-            require $file;
-            return true;
-        }
-    }
-
-    // template namespace
-    if(substr($name, 0, 18) == 'dokuwiki/template/') {
-        $name = str_replace('/test/', '/_test/', $name); // no underscore in test namespace
-        $file = DOKU_INC.'lib/tpl/' . substr($name, 18) . '.php';
-        if(file_exists($file)) {
-            require $file;
-            return true;
-        }
-    }
-
-    // our own namespace
-    if(substr($name, 0, 9) == 'dokuwiki/') {
-        $file = DOKU_INC . 'inc/' . substr($name, 9) . '.php';
-        if(file_exists($file)) {
-            require $file;
-            return true;
-        }
-    }
-
-    // Plugin loading
-    if(preg_match('/^(auth|helper|syntax|action|admin|renderer|remote|cli)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
-                  $name, $m)) {
-        // try to load the wanted plugin file
-        $c = ((count($m) === 4) ? "/{$m[3]}" : '');
-        $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
-        if(file_exists($plg)){
-            require $plg;
+    /**
+     * require all the common libraries
+     *
+     * @return true
+     */
+    public function loadCommonLibs()
+    {
+        foreach ($this->commonLibs as $lib) {
+            require_once(DOKU_INC . 'inc/' . $lib);
         }
         return true;
     }
-    return false;
-}
 
+    /**
+     * spl_autoload_register callback
+     *
+     * @param string $className
+     * @return bool
+     */
+    public function autoload($className)
+    {
+        // namespace to directory conversion
+        $classPath = str_replace('\\', '/', $className);
+
+        return $this->autoloadFixedClass($className)
+            || $this->autoloadTestMockClass($classPath)
+            || $this->autoloadTestClass($classPath)
+            || $this->autoloadPluginClass($classPath)
+            || $this->autoloadTemplateClass($classPath)
+            || $this->autoloadCoreClass($classPath)
+            || $this->autoloadNamedPluginClass($className);
+    }
+
+    /**
+     * Check if the class is one of the fixed names
+     *
+     * @param string $className
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadFixedClass($className)
+    {
+        if (isset($this->fixedClassNames[$className])) {
+            require($this->fixedClassNames[$className]);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a test mock class
+     *
+     * @param string $classPath The class name using forward slashes as namespace separators
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadTestMockClass($classPath)
+    {
+        if ($this->prefixStrip($classPath, 'dokuwiki/test/mock/')) {
+            $file = DOKU_INC . '_test/mock/' . $classPath . '.php';
+            if (file_exists($file)) {
+                require $file;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a test mock class
+     *
+     * @param string $classPath The class name using forward slashes as namespace separators
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadTestClass($classPath)
+    {
+        if ($this->prefixStrip($classPath, 'dokuwiki/test/')) {
+            $file = DOKU_INC . '_test/tests/' . $classPath . '.php';
+            if (file_exists($file)) {
+                require $file;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a namespaced plugin class
+     *
+     * @param string $classPath The class name using forward slashes as namespace separators
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadPluginClass($classPath)
+    {
+        global $plugin_controller;
+
+        if ($this->prefixStrip($classPath, 'dokuwiki/plugin/')) {
+            $classPath = str_replace('/test/', '/_test/', $classPath); // no underscore in test namespace
+            $file = DOKU_PLUGIN . $classPath . '.php';
+            if (file_exists($file)) {
+                $plugin = substr($classPath, 0, strpos($classPath, '/'));
+                // don't load disabled plugin classes (only if plugin controller is available)
+                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($plugin)) return false;
+
+                try {
+                    require $file;
+                } catch (\Throwable $e) {
+                    ErrorHandler::showExceptionMsg($e, "Error loading plugin $plugin");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a namespaced template class
+     *
+     * @param string $classPath The class name using forward slashes as namespace separators
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadTemplateClass($classPath)
+    {
+        // template namespace
+        if ($this->prefixStrip($classPath, 'dokuwiki/template/')) {
+            $classPath = str_replace('/test/', '/_test/', $classPath); // no underscore in test namespace
+            $file = DOKU_INC . 'lib/tpl/' . $classPath . '.php';
+            if (file_exists($file)) {
+                $template = substr($classPath, 0, strpos($classPath, '/'));
+
+                try {
+                    require $file;
+                } catch (\Throwable $e) {
+                    ErrorHandler::showExceptionMsg($e, "Error loading template $template");
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a namespaced DokuWiki core class
+     *
+     * @param string $classPath The class name using forward slashes as namespace separators
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadCoreClass($classPath)
+    {
+        if ($this->prefixStrip($classPath, 'dokuwiki/')) {
+            $file = DOKU_INC . 'inc/' . $classPath . '.php';
+            if (file_exists($file)) {
+                require $file;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the class is a un-namespaced plugin class following our naming scheme
+     *
+     * @param string $className
+     * @return bool true if the class was loaded, false otherwise
+     */
+    protected function autoloadNamedPluginClass($className)
+    {
+        global $plugin_controller;
+
+        if (
+            preg_match(
+                '/^(' . implode('|', PluginController::PLUGIN_TYPES) . ')_plugin_(' .
+                DOKU_PLUGIN_NAME_REGEX .
+                ')(?:_([^_]+))?$/',
+                $className,
+                $m
+            )
+        ) {
+            $c = ((count($m) === 4) ? "/{$m[3]}" : '');
+            $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+            if (file_exists($plg)) {
+                // don't load disabled plugin classes (only if plugin controller is available)
+                if (!defined('DOKU_UNITTEST') && $plugin_controller && plugin_isdisabled($m[2])) return false;
+                try {
+                    require $plg;
+                } catch (\Throwable $e) {
+                    ErrorHandler::showExceptionMsg($e, "Error loading plugin {$m[2]}");
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the given string starts with the given prefix and strip it
+     *
+     * @param string $string
+     * @param string $prefix
+     * @return bool true if the prefix was found and stripped, false otherwise
+     */
+    protected function prefixStrip(&$string, $prefix)
+    {
+        if (str_starts_with($string, $prefix)) {
+            $string = substr($string, strlen($prefix));
+            return true;
+        }
+        return false;
+    }
+};

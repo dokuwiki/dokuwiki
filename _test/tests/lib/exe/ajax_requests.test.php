@@ -41,7 +41,7 @@ class ajax_requests_test extends DokuWikiTest {
         $this->assertNotEquals("AJAX call '$call' unknown!\n", $response->getContent());
 
         if (!empty($regexp)) {
-            $this->assertRegExp($regexp, $response->getContent());
+            $this->assertMatchesRegularExpression($regexp, $response->getContent());
         }
     }
 

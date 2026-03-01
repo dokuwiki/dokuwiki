@@ -1,3 +1,3 @@
 ====== Indeks ======
 
-Dette er en oversigt over alle tilgængelige dokumenter, sorteret efter [[doku>namespaces|navnerum]].
+Dette er en oversigt over alle tilgængelige dokumenter, sorteret efter [[doku>da:namespaces|navnerum]].

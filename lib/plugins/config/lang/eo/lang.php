@@ -5,6 +5,9 @@
  *
  * Esperantolanguage file
  *
+ * @author Yves Nevelsteen <yves.nevelsteen@gmail.com>
+ * @author Erik Bjørn Pedersen <erik.pedersen@shaw.ca>
+ * @author Florian <florianmail55@gmail.com>
  * @author Kristjan SCHMIDT <kristjan.schmidt@googlemail.com>
  * @author Felipe Castro <fefcas@uol.com.br>
  * @author Felipo Kastro <fefcas@gmail.com>
@@ -96,8 +99,6 @@ $lang['indexdelay']            = 'Prokrasto antaŭ ol indeksi (en sekundoj)';
 $lang['mailguard']             = 'Nebuligi retadresojn';
 $lang['iexssprotect']          = 'Ekzameni elŝutaĵojn kontraŭ eblaj malicaj ĴavaSkripto aŭ HTML-a kodumaĵo';
 $lang['usedraft']              = 'Aŭtomate konservi skizon dum redaktado';
-$lang['htmlok']                = 'Ebligi enmeton de HTML-aĵoj';
-$lang['phpok']                 = 'Ebligi enmeton de PHP-aĵoj';
 $lang['locktime']              = 'Maksimuma aĝo por serurdosieroj (sek.)';
 $lang['cachetime']             = 'Maksimuma aĝo por provizmemoro (sek.)';
 $lang['target____wiki']        = 'Parametro "target" (celo) por internaj ligiloj';
@@ -152,12 +153,6 @@ $lang['proxy____user']         = 'Uzantonomo ĉe la "Proxy"';
 $lang['proxy____pass']         = 'Pasvorto ĉe la "Proxy"';
 $lang['proxy____ssl']          = 'Uzi SSL por konekti al la "Proxy"';
 $lang['proxy____except']       = 'Regula esprimo por URL-oj, kiujn la servilo preterrigardu.';
-$lang['safemodehack']          = 'Ebligi sekuran modon';
-$lang['ftp____host']           = 'FTP-a servilo por sekura modo';
-$lang['ftp____port']           = 'FTP-a pordo por sekura modo';
-$lang['ftp____user']           = 'FTP-a uzantonomo por sekura modo';
-$lang['ftp____pass']           = 'FTP-a pasvorto por sekura modo';
-$lang['ftp____root']           = 'FTP-a superuzanta (root) subdosierujo por sekura modo';
 $lang['license_o_']            = 'Nenio elektita';
 $lang['typography_o_0']        = 'nenio';
 $lang['typography_o_1']        = 'Nur duoblaj citiloj';

@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Yves Nevelsteen <yves.nevelsteen@gmail.com>
+ * @author Florian <florianmail55@gmail.com>
  * @author Robert Bogenschneider <bogi@uea.org>
  */
 $lang['account_suffix']        = 'Via konto-aldonaĵo, ekz. <code>@mia.domajno.lando</code>';
@@ -18,3 +20,7 @@ $lang['use_tls']               = 'Ĉu uzi TLS-konekton? Se jes, ne aktivigu SSL 
 $lang['debug']                 = 'Ĉu montri aldonajn informojn dum eraroj?';
 $lang['expirywarn']            = 'Tagoj da antaŭaverto pri malvalidiĝonta pasvorto. 0 por malebligi.';
 $lang['additional']            = 'Komodisigita listo de aldonaj AD-atributoj por preni el uzantaj datumoj. Uzita de iuj kromaĵoj.';
+$lang['update_name']           = 'Ĉu permesi uzantojn aktualigi sian AD-montran nomon?';
+$lang['update_mail']           = 'Ĉu permesi uzantoj ĝisdatigi siajn retardesojn?';
+$lang['update_pass']           = 'Ĉu permesi uzantojn aktualigi sian pasvorton? Postulas SSL aŭ TLS supre.';
+$lang['recursive_groups']      = 'Solvu nestitajn grupojn al iliaj respektivaj membroj (pli malrapide).';

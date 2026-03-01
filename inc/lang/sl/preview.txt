@@ -1,3 +1,3 @@
 ====== Predogled ======
 
-Prikazan je predogled strani. Stran še ni shranjena!
+Prikazan je predogled strani. **Stran še ni shranjena**!

@@ -1,5 +1,8 @@
 <?php
+
 namespace dokuwiki\Form;
+
+use dokuwiki\Extension\Event;
 
 /**
  * Class Form
@@ -8,17 +11,17 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class Form extends Element {
-
+class Form extends Element
+{
     /**
      * @var array name value pairs for hidden values
      */
-    protected $hidden = array();
+    protected $hidden = [];
 
     /**
      * @var Element[] the elements of the form
      */
-    protected $elements = array();
+    protected $elements = [];
 
     /**
      * Creates a new, empty form with some default attributes
@@ -26,26 +29,27 @@ class Form extends Element {
      * @param array $attributes
      * @param bool  $unsafe     if true, then the security token is ommited
      */
-    public function __construct($attributes = array(), $unsafe = false) {
+    public function __construct($attributes = [], $unsafe = false)
+    {
         global $ID;
 
         parent::__construct('form', $attributes);
 
         // use the current URL as default action
-        if(!$this->attr('action')) {
+        if (!$this->attr('action')) {
             $get = $_GET;
-            if(isset($get['id'])) unset($get['id']);
+            if (isset($get['id'])) unset($get['id']);
             $self = wl($ID, $get, false, '&'); //attributes are escaped later
             $this->attr('action', $self);
         }
 
         // post is default
-        if(!$this->attr('method')) {
+        if (!$this->attr('method')) {
             $this->attr('method', 'post');
         }
 
         // we like UTF-8
-        if(!$this->attr('accept-charset')) {
+        if (!$this->attr('accept-charset')) {
             $this->attr('accept-charset', 'utf-8');
         }
 
@@ -65,7 +69,8 @@ class Form extends Element {
      * @param string $value
      * @return $this
      */
-    public function setHiddenField($name, $value) {
+    public function setHiddenField($name, $value)
+    {
         $this->hidden[$name] = $value;
         return $this;
     }
@@ -77,14 +82,17 @@ class Form extends Element {
      *
      * @return int
      */
-    public function elementCount() {
+    public function elementCount()
+    {
         return count($this->elements);
     }
 
     /**
      * Get the position of the element in the form or false if it is not in the form
      *
-     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the return value of this function.
+     * Warning: This function may return Boolean FALSE, but may also return a non-Boolean value which evaluates
+     * to FALSE. Please read the section on Booleans for more information. Use the === operator for testing the
+     * return value of this function.
      *
      * @param Element $element
      *
@@ -103,10 +111,11 @@ class Form extends Element {
      * @param int $pos
      * @return Element
      */
-    public function getElementAt($pos) {
-        if($pos < 0) $pos = count($this->elements) + $pos;
-        if($pos < 0) $pos = 0;
-        if($pos >= count($this->elements)) $pos = count($this->elements) - 1;
+    public function getElementAt($pos)
+    {
+        if ($pos < 0) $pos = count($this->elements) + $pos;
+        if ($pos < 0) $pos = 0;
+        if ($pos >= count($this->elements)) $pos = count($this->elements) - 1;
         return $this->elements[$pos];
     }
 
@@ -117,10 +126,11 @@ class Form extends Element {
      * @param int $offset search from this position onward
      * @return false|int position of element if found, otherwise false
      */
-    public function findPositionByType($type, $offset = 0) {
+    public function findPositionByType($type, $offset = 0)
+    {
         $len = $this->elementCount();
-        for($pos = $offset; $pos < $len; $pos++) {
-            if($this->elements[$pos]->getType() == $type) {
+        for ($pos = $offset; $pos < $len; $pos++) {
+            if ($this->elements[$pos]->getType() == $type) {
                 return $pos;
             }
         }
@@ -135,10 +145,11 @@ class Form extends Element {
      * @param int $offset search from this position onward
      * @return false|int position of element if found, otherwise false
      */
-    public function findPositionByAttribute($name, $value, $offset = 0) {
+    public function findPositionByAttribute($name, $value, $offset = 0)
+    {
         $len = $this->elementCount();
-        for($pos = $offset; $pos < $len; $pos++) {
-            if($this->elements[$pos]->attr($name) == $value) {
+        for ($pos = $offset; $pos < $len; $pos++) {
+            if ($this->elements[$pos]->attr($name) == $value) {
                 return $pos;
             }
         }
@@ -156,12 +167,15 @@ class Form extends Element {
      * @param int $pos 0-based position in the form, -1 for at the end
      * @return Element
      */
-    public function addElement(Element $element, $pos = -1) {
-        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
-        if($pos < 0) {
+    public function addElement(Element $element, $pos = -1)
+    {
+        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+            'You can\'t add a form to a form'
+        );
+        if ($pos < 0) {
             $this->elements[] = $element;
         } else {
-            array_splice($this->elements, $pos, 0, array($element));
+            array_splice($this->elements, $pos, 0, [$element]);
         }
         return $element;
     }
@@ -172,9 +186,12 @@ class Form extends Element {
      * @param Element $element the new element
      * @param int $pos 0-based position of the element to replace
      */
-    public function replaceElement(Element $element, $pos) {
-        if(is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException('You can\'t add a form to a form');
-        array_splice($this->elements, $pos, 1, array($element));
+    public function replaceElement(Element $element, $pos)
+    {
+        if (is_a($element, '\dokuwiki\Form\Form')) throw new \InvalidArgumentException(
+            'You can\'t add a form to a form'
+        );
+        array_splice($this->elements, $pos, 1, [$element]);
     }
 
     /**
@@ -182,7 +199,8 @@ class Form extends Element {
      *
      * @param int $pos 0-based position of the element to remove
      */
-    public function removeElement($pos) {
+    public function removeElement($pos)
+    {
         array_splice($this->elements, $pos, 1);
     }
 
@@ -198,7 +216,8 @@ class Form extends Element {
      * @param int $pos
      * @return InputElement
      */
-    public function addTextInput($name, $label = '', $pos = -1) {
+    public function addTextInput($name, $label = '', $pos = -1)
+    {
         return $this->addElement(new InputElement('text', $name, $label), $pos);
     }
 
@@ -210,7 +229,8 @@ class Form extends Element {
      * @param int $pos
      * @return InputElement
      */
-    public function addPasswordInput($name, $label = '', $pos = -1) {
+    public function addPasswordInput($name, $label = '', $pos = -1)
+    {
         return $this->addElement(new InputElement('password', $name, $label), $pos);
     }
 
@@ -222,7 +242,8 @@ class Form extends Element {
      * @param int $pos
      * @return CheckableElement
      */
-    public function addRadioButton($name, $label = '', $pos = -1) {
+    public function addRadioButton($name, $label = '', $pos = -1)
+    {
         return $this->addElement(new CheckableElement('radio', $name, $label), $pos);
     }
 
@@ -234,7 +255,8 @@ class Form extends Element {
      * @param int $pos
      * @return CheckableElement
      */
-    public function addCheckbox($name, $label = '', $pos = -1) {
+    public function addCheckbox($name, $label = '', $pos = -1)
+    {
         return $this->addElement(new CheckableElement('checkbox', $name, $label), $pos);
     }
 
@@ -247,7 +269,8 @@ class Form extends Element {
      * @param int $pos
      * @return DropdownElement
      */
-    public function addDropdown($name, $options, $label = '', $pos = -1) {
+    public function addDropdown($name, $options, $label = '', $pos = -1)
+    {
         return $this->addElement(new DropdownElement($name, $options, $label), $pos);
     }
 
@@ -259,7 +282,8 @@ class Form extends Element {
      * @param int $pos
      * @return TextareaElement
      */
-    public function addTextarea($name, $label = '', $pos = -1) {
+    public function addTextarea($name, $label = '', $pos = -1)
+    {
         return $this->addElement(new TextareaElement($name, $label), $pos);
     }
 
@@ -271,7 +295,8 @@ class Form extends Element {
      * @param int $pos
      * @return Element
      */
-    public function addButton($name, $content, $pos = -1) {
+    public function addButton($name, $content, $pos = -1)
+    {
         return $this->addElement(new ButtonElement($name, hsc($content)), $pos);
     }
 
@@ -283,7 +308,8 @@ class Form extends Element {
      * @param int $pos
      * @return Element
      */
-    public function addButtonHTML($name, $html, $pos = -1) {
+    public function addButtonHTML($name, $html, $pos = -1)
+    {
         return $this->addElement(new ButtonElement($name, $html), $pos);
     }
 
@@ -295,7 +321,8 @@ class Form extends Element {
      * @param int $pos
      * @return Element
      */
-    public function addLabel($label, $for='', $pos = -1) {
+    public function addLabel($label, $for = '', $pos = -1)
+    {
         return $this->addLabelHTML(hsc($label), $for, $pos);
     }
 
@@ -307,15 +334,16 @@ class Form extends Element {
      * @param int $pos
      * @return Element
      */
-    public function addLabelHTML($content, $for='', $pos = -1) {
-        $element = new LabelElement(hsc($content));
+    public function addLabelHTML($content, $for = '', $pos = -1)
+    {
+        $element = new LabelElement($content);
 
-        if(is_a($for, '\dokuwiki\Form\Element')) {
+        if (is_a($for, '\dokuwiki\Form\Element')) {
             /** @var Element $for */
             $for = $for->id();
         }
         $for = (string) $for;
-        if($for !== '') {
+        if ($for !== '') {
             $element->attr('for', $for);
         }
 
@@ -329,7 +357,8 @@ class Form extends Element {
      * @param int $pos
      * @return HTMLElement
      */
-    public function addHTML($html, $pos = -1) {
+    public function addHTML($html, $pos = -1)
+    {
         return $this->addElement(new HTMLElement($html), $pos);
     }
 
@@ -340,7 +369,8 @@ class Form extends Element {
      * @param int $pos
      * @return TagElement
      */
-    public function addTag($tag, $pos = -1) {
+    public function addTag($tag, $pos = -1)
+    {
         return $this->addElement(new TagElement($tag), $pos);
     }
 
@@ -353,7 +383,8 @@ class Form extends Element {
      * @param int $pos
      * @return TagOpenElement
      */
-    public function addTagOpen($tag, $pos = -1) {
+    public function addTagOpen($tag, $pos = -1)
+    {
         return $this->addElement(new TagOpenElement($tag), $pos);
     }
 
@@ -366,7 +397,8 @@ class Form extends Element {
      * @param int $pos
      * @return TagCloseElement
      */
-    public function addTagClose($tag, $pos = -1) {
+    public function addTagClose($tag, $pos = -1)
+    {
         return $this->addElement(new TagCloseElement($tag), $pos);
     }
 
@@ -377,7 +409,8 @@ class Form extends Element {
      * @param int $pos
      * @return FieldsetOpenElement
      */
-    public function addFieldsetOpen($legend = '', $pos = -1) {
+    public function addFieldsetOpen($legend = '', $pos = -1)
+    {
         return $this->addElement(new FieldsetOpenElement($legend), $pos);
     }
 
@@ -387,7 +420,8 @@ class Form extends Element {
      * @param int $pos
      * @return TagCloseElement
      */
-    public function addFieldsetClose($pos = -1) {
+    public function addFieldsetClose($pos = -1)
+    {
         return $this->addElement(new FieldsetCloseElement(), $pos);
     }
 
@@ -396,15 +430,16 @@ class Form extends Element {
     /**
      * Adjust the elements so that fieldset open and closes are matching
      */
-    protected function balanceFieldsets() {
+    protected function balanceFieldsets()
+    {
         $lastclose = 0;
         $isopen = false;
         $len = count($this->elements);
 
-        for($pos = 0; $pos < $len; $pos++) {
+        for ($pos = 0; $pos < $len; $pos++) {
             $type = $this->elements[$pos]->getType();
-            if($type == 'fieldsetopen') {
-                if($isopen) {
+            if ($type == 'fieldsetopen') {
+                if ($isopen) {
                     //close previous fieldset
                     $this->addFieldsetClose($pos);
                     $lastclose = $pos + 1;
@@ -412,8 +447,8 @@ class Form extends Element {
                     $len++;
                 }
                 $isopen = true;
-            } else if($type == 'fieldsetclose') {
-                if(!$isopen) {
+            } elseif ($type == 'fieldsetclose') {
+                if (!$isopen) {
                     // make sure there was a fieldsetopen
                     // either right after the last close or at the begining
                     $this->addFieldsetOpen('', $lastclose);
@@ -426,7 +461,7 @@ class Form extends Element {
         }
 
         // close open fieldset at the end
-        if($isopen) {
+        if ($isopen) {
             $this->addFieldsetClose();
         }
     }
@@ -434,18 +469,26 @@ class Form extends Element {
     /**
      * The HTML representation of the whole form
      *
+     * @param string $eventName  (optional) name of the event: FORM_{$name}_OUTPUT
      * @return string
      */
-    public function toHTML() {
+    public function toHTML($eventName = null)
+    {
         $this->balanceFieldsets();
+
+        // trigger event to provide an opportunity to modify this form
+        if (isset($eventName)) {
+            $eventName = 'FORM_' . strtoupper($eventName) . '_OUTPUT';
+            Event::createAndTrigger($eventName, $this, null, false);
+        }
 
         $html = '<form ' . buildAttributes($this->attrs()) . '>';
 
-        foreach($this->hidden as $name => $value) {
+        foreach ($this->hidden as $name => $value) {
             $html .= '<input type="hidden" name="' . $name . '" value="' . formText($value) . '" />';
         }
 
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             $html .= $element->toHTML();
         }
 

@@ -4,7 +4,7 @@
  * --------
  * Author: Albéric de Pertat <alberic@depertat.net>
  * Copyright: (c) 2012 Albéric de Pertat (https://github.com/adepertat/geshi-nagios)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/01/19
  *
  * Nagios language file for GeSHi.

@@ -71,7 +71,7 @@ class css_css_compress_test extends DokuWikiTest {
     function test_hack(){
         $text = '/* Mac IE will not see this and continue with inline-block */
                  /* \\*/
-                 display: inline; 
+                 display: inline;
                  /* */';
         $this->assertEquals('/* \\*/display:inline;/* */', css_compress($text));
     }
@@ -138,6 +138,19 @@ class css_css_compress_test extends DokuWikiTest {
         $this->assertEquals($expect, css_compress($input));
     }
 
+    function test_quotes() {
+        $input  = '/* "blockcomment" */ content: "/* STR2 : STR1 */ thisis : inquote"; STR1: 10px; STR2:"STR1"; STR3:\'STR1\';';
+        $expect = 'content:"/* STR2 : STR1 */ thisis : inquote";STR1:10px;STR2:"STR1";STR3:\'STR1\';';
+
+        $this->assertEquals($expect, css_compress($input));
+    }
+
+    function test_escapedQuotes() {
+        $inputEscapedQuote = 'content:"one quote visible: \\" "; foo: bar;//"';
+        $expectedOutput = 'content:"one quote visible: \\" ";foo:bar;';
+
+        $this->assertEquals($expectedOutput, css_compress($inputEscapedQuote));
+    }
 }
 
 //Setup VIM: ex: et ts=4 :

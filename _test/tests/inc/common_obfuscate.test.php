@@ -5,20 +5,27 @@ class common_obfuscate_test extends DokuWikiTest {
     function test_none(){
         global $conf;
         $conf['mailguard'] = 'none';
-        $this->assertEquals(obfuscate('jon-doe@example.com'), 'jon-doe@example.com');
+        $this->assertEquals('jon-doe@example.com', obfuscate('jon-doe@example.com'));
     }
 
     function test_hex(){
         global $conf;
         $conf['mailguard'] = 'hex';
-        $this->assertEquals(obfuscate('jon-doe@example.com'),
-        '&#x6a;&#x6f;&#x6e;&#x2d;&#x64;&#x6f;&#x65;&#x40;&#x65;&#x78;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;');
+        $this->assertEquals('&#106;&#111;&#110;&#45;&#100;&#111;&#101;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;',
+                            obfuscate('jon-doe@example.com'));
+    }
+
+    function test_hex_utf32(){
+        global $conf;
+        $conf['mailguard'] = 'hex';
+        $this->assertEquals('&#117;&#115;&#101;&#114;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;&#63;&#115;&#117;&#98;&#106;&#101;&#99;&#116;&#61;&#x41f;&#x440;&#x438;&#x432;&#x435;&#x442;',
+                            obfuscate('user@example.com?subject=Привет'));
     }
 
     function test_visible(){
         global $conf;
         $conf['mailguard'] = 'visible';
-        $this->assertEquals(obfuscate('jon-doe@example.com'), 'jon [dash] doe [at] example [dot] com');
+        $this->assertEquals('jon [dash] doe [at] example [dot] com', obfuscate('jon-doe@example.com'));
     }
 
 

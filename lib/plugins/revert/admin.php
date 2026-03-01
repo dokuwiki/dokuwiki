@@ -1,143 +1,154 @@
 <?php
-// must be run within Dokuwiki
-if(!defined('DOKU_INC')) die();
+
+use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\ChangeLog\PageChangeLog;
 
 /**
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_revert extends DokuWiki_Admin_Plugin {
-    var $cmd;
+class admin_plugin_revert extends AdminPlugin
+{
+    protected $cmd;
     // some vars which might need tuning later
-    var $max_lines = 800; // lines to read from changelog
-    var $max_revs  = 20;  // numer of old revisions to check
+    protected $max_lines = 800; // lines to read from changelog
+    protected $max_revs  = 20;  // numer of old revisions to check
 
 
     /**
      * Constructor
      */
-    function __construct(){
+    public function __construct()
+    {
         $this->setupLocale();
     }
 
     /**
      * access for managers
      */
-    function forAdminOnly(){
+    public function forAdminOnly()
+    {
         return false;
     }
 
     /**
      * return sort order for position in admin menu
      */
-    function getMenuSort() {
+    public function getMenuSort()
+    {
         return 40;
     }
 
     /**
      * handle user request
      */
-    function handle() {
+    public function handle()
+    {
     }
 
     /**
      * output appropriate html
      */
-    function html() {
+    public function html()
+    {
         global $INPUT;
 
         echo $this->locale_xhtml('intro');
 
-        $this->_searchform();
+        $this->printSearchForm();
 
-        if(is_array($INPUT->param('revert')) && checkSecurityToken()){
-            $this->_revert($INPUT->arr('revert'),$INPUT->str('filter'));
-        }elseif($INPUT->has('filter')){
-            $this->_list($INPUT->str('filter'));
+        if (is_array($INPUT->param('revert')) && checkSecurityToken()) {
+            $this->revertEdits($INPUT->arr('revert'), $INPUT->str('filter'));
+        } elseif ($INPUT->has('filter')) {
+            $this->listEdits($INPUT->str('filter'));
         }
     }
 
     /**
      * Display the form for searching spam pages
      */
-    function _searchform(){
+    protected function printSearchForm()
+    {
         global $lang, $INPUT;
         echo '<form action="" method="post"><div class="no">';
-        echo '<label>'.$this->getLang('filter').': </label>';
-        echo '<input type="text" name="filter" class="edit" value="'.hsc($INPUT->str('filter')).'" /> ';
-        echo '<button type="submit">'.$lang['btn_search'].'</button> ';
-        echo '<span>'.$this->getLang('note1').'</span>';
+        echo '<label>' . $this->getLang('filter') . ': </label>';
+        echo '<input type="text" name="filter" class="edit" value="' . hsc($INPUT->str('filter')) . '" /> ';
+        echo '<button type="submit">' . $lang['btn_search'] . '</button> ';
+        echo '<span>' . $this->getLang('note1') . '</span>';
         echo '</div></form><br /><br />';
     }
 
     /**
      * Start the reversion process
      */
-    function _revert($revert,$filter){
+    protected function revertEdits($revert, $filter)
+    {
         echo '<hr /><br />';
-        echo '<p>'.$this->getLang('revstart').'</p>';
+        echo '<p>' . $this->getLang('revstart') . '</p>';
 
         echo '<ul>';
-        foreach($revert as $id){
+        foreach ($revert as $id) {
             global $REV;
 
             // find the last non-spammy revision
             $data = '';
             $pagelog = new PageChangeLog($id);
             $old  = $pagelog->getRevisions(0, $this->max_revs);
-            if(count($old)){
-                foreach($old as $REV){
-                    $data = rawWiki($id,$REV);
-                    if(strpos($data,$filter) === false) break;
+            if ($old !== []) {
+                foreach ($old as $REV) {
+                    $data = rawWiki($id, $REV);
+                    if (strpos($data, (string) $filter) === false) break;
                 }
             }
 
-            if($data){
-                saveWikiText($id,$data,'old revision restored',false);
-                printf('<li><div class="li">'.$this->getLang('reverted').'</div></li>',$id,$REV);
-            }else{
-                saveWikiText($id,'','',false);
-                printf('<li><div class="li">'.$this->getLang('removed').'</div></li>',$id);
+            if ($data) {
+                saveWikiText($id, $data, 'old revision restored', false);
+                printf('<li><div class="li">' . $this->getLang('reverted') . '</div></li>', $id, $REV);
+            } else {
+                saveWikiText($id, '', '', false);
+                printf('<li><div class="li">' . $this->getLang('removed') . '</div></li>', $id);
             }
             @set_time_limit(10);
             flush();
         }
         echo '</ul>';
 
-        echo '<p>'.$this->getLang('revstop').'</p>';
+        echo '<p>' . $this->getLang('revstop') . '</p>';
     }
 
     /**
      * List recent edits matching the given filter
      */
-    function _list($filter){
+    protected function listEdits($filter)
+    {
         global $conf;
         global $lang;
         echo '<hr /><br />';
         echo '<form action="" method="post"><div class="no">';
-        echo '<input type="hidden" name="filter" value="'.hsc($filter).'" />';
+        echo '<input type="hidden" name="filter" value="' . hsc($filter) . '" />';
         formSecurityToken();
 
-        $recents = getRecents(0,$this->max_lines);
+        $recents = getRecents(0, $this->max_lines);
         echo '<ul>';
 
         $cnt = 0;
-        foreach($recents as $recent){
-            if($filter){
-                if(strpos(rawWiki($recent['id']),$filter) === false) continue;
+        foreach ($recents as $recent) {
+            if ($filter) {
+                if (strpos(rawWiki($recent['id']), (string) $filter) === false) continue;
             }
 
             $cnt++;
             $date = dformat($recent['date']);
 
-            echo ($recent['type']===DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
+            echo ($recent['type'] === DOKU_CHANGE_TYPE_MINOR_EDIT) ? '<li class="minor">' : '<li>';
             echo '<div class="li">';
-            echo '<input type="checkbox" name="revert[]" value="'.hsc($recent['id']).'" checked="checked" id="revert__'.$cnt.'" />';
-            echo ' <label for="revert__'.$cnt.'">'.$date.'</label> ';
+            echo '<input type="checkbox" name="revert[]" value="' . hsc($recent['id']) .
+                '" checked="checked" id="revert__' . $cnt . '" />';
+            echo ' <label for="revert__' . $cnt . '">' . $date . '</label> ';
 
-            echo '<a href="'.wl($recent['id'],"do=diff").'">';
-            $p = array();
-            $p['src']    = DOKU_BASE.'lib/images/diff.png';
+            echo '<a href="' . wl($recent['id'], "do=diff") . '">';
+            $p = [];
+            $p['src']    = DOKU_BASE . 'lib/images/diff.png';
             $p['width']  = 15;
             $p['height'] = 11;
             $p['title']  = $lang['diff'];
@@ -146,9 +157,9 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             echo "<img $att />";
             echo '</a> ';
 
-            echo '<a href="'.wl($recent['id'],"do=revisions").'">';
-            $p = array();
-            $p['src']    = DOKU_BASE.'lib/images/history.png';
+            echo '<a href="' . wl($recent['id'], "do=revisions") . '">';
+            $p = [];
+            $p['src']    = DOKU_BASE . 'lib/images/history.png';
             $p['width']  = 12;
             $p['height'] = 14;
             $p['title']  = $lang['btn_revs'];
@@ -157,11 +168,11 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
             echo "<img $att />";
             echo '</a> ';
 
-            echo html_wikilink(':'.$recent['id'],(useHeading('navigation'))?null:$recent['id']);
-            echo ' – '.htmlspecialchars($recent['sum']);
+            echo html_wikilink(':' . $recent['id'], (useHeading('navigation')) ? null : $recent['id']);
+            echo ' – ' . htmlspecialchars($recent['sum']);
 
             echo ' <span class="user">';
-                echo $recent['user'].' '.$recent['ip'];
+                echo $recent['user'] . ' ' . $recent['ip'];
             echo '</span>';
 
             echo '</div>';
@@ -173,12 +184,11 @@ class admin_plugin_revert extends DokuWiki_Admin_Plugin {
         echo '</ul>';
 
         echo '<p>';
-        echo '<button type="submit">'.$this->getLang('revert').'</button> ';
-        printf($this->getLang('note2'),hsc($filter));
+        echo '<button type="submit">' . $this->getLang('revert') . '</button> ';
+        printf($this->getLang('note2'), hsc($filter));
         echo '</p>';
 
         echo '</div></form>';
     }
-
 }
 //Setup VIM: ex: et ts=4 :

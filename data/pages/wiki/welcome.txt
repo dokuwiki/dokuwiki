@@ -25,6 +25,6 @@ You may also want to see what [[doku>plugins|plugins]] and [[doku>templates|temp
 
 DokuWiki is an Open Source project that thrives through user contributions. A good way to stay informed on what's going on and to get useful tips in using DokuWiki is subscribing to the [[doku>newsletter]].
 
-The [[http://forum.dokuwiki.org|DokuWiki User Forum]] is an excellent way to get in contact with other DokuWiki users and is just one of the many ways to get [[doku>faq:support|support]].
+The [[https://forum.dokuwiki.org|DokuWiki User Forum]] is an excellent way to get in contact with other DokuWiki users and is just one of the many ways to get [[doku>faq:support|support]].
 
 Of course we'd be more than happy to have you [[doku>teams:getting_involved|getting involved]] with DokuWiki.

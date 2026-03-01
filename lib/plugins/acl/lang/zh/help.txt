@@ -8,4 +8,4 @@
 
 下方的表格中显示的是当前设置的全部访问控制规则。 您可以通过它快速删除或更改多条规则。
 
-参阅 [[doku>acl|official documentation on ACL]] 能帮助您完整地理解 DokuWiki 中的访问控制是如何工作的。
+参阅 [[doku>acl|ACL 官方文档]] 能帮助您完整地理解 DokuWiki 中的访问控制是如何工作的。

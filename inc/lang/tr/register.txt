@@ -1,4 +1,3 @@
 ====== Yeni kullanıcı olarak kaydolun ======
 
 Bu wikide yeni bir hesap açmak için aşağıdaki tüm bilgileri doldurunuz. **Doğru e-posta adresi verdiğinizden** emin olun, yeni parolanız e-postanıza gönderilecek. Giriş adınız geçerli bir [[doku>pagename|sayfa adı]] olmalıdır.
-

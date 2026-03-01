@@ -29,15 +29,7 @@ class TableFormatter
     public function __construct(Colors $colors = null)
     {
         // try to get terminal width
-        $width = 0;
-        if (isset($_SERVER['COLUMNS'])) {
-            // from environment
-            $width = (int)$_SERVER['COLUMNS'];
-        }
-        if (!$width) {
-            // via tput command
-            $width = @exec('tput cols');
-        }
+        $width = $this->getTerminalWidth();
         if ($width) {
             $this->max = $width - 1;
         }
@@ -90,6 +82,27 @@ class TableFormatter
     public function setMaxWidth($max)
     {
         $this->max = $max;
+    }
+
+    /**
+     * Tries to figure out the width of the terminal
+     *
+     * @return int terminal width, 0 if unknown
+     */
+    protected function getTerminalWidth()
+    {
+        // from environment
+        if (isset($_SERVER['COLUMNS'])) return (int)$_SERVER['COLUMNS'];
+
+        // via tput
+        $process = proc_open('tput cols', array(
+            1 => array('pipe', 'w'),
+            2 => array('pipe', 'w'),
+        ), $pipes);
+        $width = (int)stream_get_contents($pipes[1]);
+        proc_close($process);
+
+        return $width;
     }
 
     /**
@@ -260,7 +273,12 @@ class TableFormatter
         if (function_exists('mb_substr')) {
             return mb_substr($string, $start, $length);
         } else {
-            return substr($string, $start, $length);
+            // mb_substr() treats $length differently than substr()
+            if ($length) {
+                return substr($string, $start, $length);
+            } else {
+                return substr($string, $start);
+            }
         }
     }
 
@@ -275,6 +293,7 @@ class TableFormatter
     protected function wordwrap($str, $width = 75, $break = "\n", $cut = false)
     {
         $lines = explode($break, $str);
+        $color_reset = $this->colors->getColorCode(Colors::C_RESET);
         foreach ($lines as &$line) {
             $line = rtrim($line);
             if ($this->strlen($line) <= $width) {
@@ -283,18 +302,30 @@ class TableFormatter
             $words = explode(' ', $line);
             $line = '';
             $actual = '';
+            $color = '';
             foreach ($words as $word) {
+                if (preg_match_all(Colors::C_CODE_REGEX, $word, $color_codes) ) {
+                    # Word contains color codes
+                    foreach ($color_codes[0] as $code) {
+                        if ($code == $color_reset) {
+                            $color = '';
+                        } else {
+                            # Remember color so we can reapply it after a line break
+                            $color = $code;
+                        }
+                    }
+                }
                 if ($this->strlen($actual . $word) <= $width) {
                     $actual .= $word . ' ';
                 } else {
                     if ($actual != '') {
                         $line .= rtrim($actual) . $break;
                     }
-                    $actual = $word;
+                    $actual = $color . $word;
                     if ($cut) {
                         while ($this->strlen($actual) > $width) {
                             $line .= $this->substr($actual, 0, $width) . $break;
-                            $actual = $this->substr($actual, $width);
+                            $actual = $color . $this->substr($actual, $width);
                         }
                     }
                     $actual .= ' ';

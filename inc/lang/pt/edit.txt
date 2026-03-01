@@ -1,4 +1,1 @@
-Edite o documento e clique no botão <Gravar>. Reveja a [[wiki:syntax|sintaxe]] das regras de formatação do texto.
-
-Por favor, altere o conteúdo deste documento apenas quando puder **melhorá-lo**.\\ Se pretende testar os seus conhecimentos no uso deste motor Wiki, realize os seus testes no [[playground:playground | Recreio]].
-
+Edite o documento e clique no botão "Salvar". Veja a [[wiki:syntax|sintaxe]] das regras de formatação do texto. Por favor, altere o conteúdo deste documento apenas quando puder **melhorá-lo**. Se pretende testar seus conhecimentos no uso deste motor Wiki, realize os seus testes no [[playground:playground|Recreio]].

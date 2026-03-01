@@ -4,7 +4,7 @@
  * -------
  * Author: Simon Butcher (simon@butcher.name)
  * Copyright: (c) 2007 Simon Butcher (http://simon.butcher.name/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2007/02/27
  *
  * Axapta/Dynamics Ax X++ language file for GeSHi.

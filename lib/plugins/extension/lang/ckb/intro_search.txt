@@ -1,0 +1,1 @@
+ئەم خشتەبەندە دەستگەیشتنت دەداتێ بە هەموو پارتی 3یەمی بەردەست !!doku>plugins|plugins!! و <doku>template|templates!! بۆ دۆکویکی. تکایە ئاگاداری ئەوە بە کە دامەزراندنی کۆدی 3ەم پارت لەوانەیە مەترسی **security**, لەوانەیە بتەوێت دەربارەی .doku>security#plugin_security|plugin security!! سەرەتا بخوێنیتەوە.

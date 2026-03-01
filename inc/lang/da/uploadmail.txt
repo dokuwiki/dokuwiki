@@ -1,6 +1,7 @@
-En fil blev overføret til din DokuWiki. Her er detaljerne:
+En fil blev overført til din DokuWiki. Her er detaljerne:
 
 Fil         : @MEDIA@
+Gammel revision: @OLD@
 Dato        : @DATE@
 Browser     : @BROWSER@
 IP-adresse  : @IPADDRESS@

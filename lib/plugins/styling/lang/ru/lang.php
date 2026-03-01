@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author RainbowSpike <1@2.ru>
  */
 $lang['menu']                  = 'Настройки стилей шаблона';
@@ -20,4 +21,4 @@ $lang['__background_alt__']    = 'Второй цвет фона';
 $lang['__text_neu__']          = 'Нейтральный цвет текста';
 $lang['__background_neu__']    = 'Нейтральный цвет фона';
 $lang['__border__']            = 'Цвет границ';
-$lang['__highlight__']         = 'Цвет подсветки (в основном для результатов поиска)';
+$lang['__highlight__']         = 'Цвет подсветки (в основном, для результатов поиска)';

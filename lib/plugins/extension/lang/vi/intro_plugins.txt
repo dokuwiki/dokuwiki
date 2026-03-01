@@ -1,0 +1,1 @@
+Đây là những plugin hiện đã được cài đặt trong DokuWiki của bạn. Bạn có thể bật hoặc tắt hoặc thậm chí gỡ cài đặt hoàn toàn chúng ở đây. Cập nhật plugin cũng được hiển thị ở đây, nhớ đọc tài liệu của plugin trước khi cập nhật.

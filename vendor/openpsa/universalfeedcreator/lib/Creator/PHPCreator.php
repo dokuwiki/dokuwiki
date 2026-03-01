@@ -5,7 +5,6 @@
  *
  * @since   1.7.3
  * @author  Barry Hunter <geo@barryhunter.co.uk>
- * @package de.bitfolge.feedcreator
  */
 class PHPCreator extends FeedCreator
 {
@@ -25,7 +24,6 @@ class PHPCreator extends FeedCreator
         $feed = "<?php\n";
         $feed .= "class FeedItem {}\n";
         $feed .= "  \$feedTitle='".addslashes(FeedCreator::iTrunc(htmlspecialchars($this->title), 100))."';\n";
-        $this->truncSize = 500;
         $feed .= "  \$feedDescription='".addslashes($this->getDescription())."';\n";
         $feed .= "  \$feedLink='".$this->link."';\n";
         $feed .= "  \$feedItem = array();\n";

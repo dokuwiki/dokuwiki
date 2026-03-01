@@ -1,0 +1,8 @@
+===== Nhập số lượng lớn thành viên =====
+
+Yêu cầu tập tin CSV của thành viên có ít nhất bốn cột.
+Các cột phải chứa, theo thứ tự: id thành viên, tên đầy đủ, địa chỉ thư điện tử và các nhóm.
+Các trường CSV nên được phân tách bằng dấu phẩy (,) và chuỗi được phân cách bằng dấu ngoặc kép (%%""%%). Dấu gạch chéo ngược (\) có thể được sử dụng để thoát.
+Để biết ví dụ về một tập tin phù hợp, hãy thử chức năng "Xuất thành viên" ở trên.
+Id thành viên trùng lặp sẽ bị bỏ qua.
+Một mật khẩu sẽ được tạo và gửi qua email cho mỗi thành viên được nhập thành công.

@@ -3,6 +3,21 @@
 class init_getID_test extends DokuWikiTest {
 
     /**
+     * id=0 case
+     */
+    function test_zero_id(){
+        global $conf;
+        $conf['basedir'] = '/';
+        $conf['userewrite'] = 0;
+
+        $_SERVER['SCRIPT_FILENAME'] = '/doku.php';
+        $_SERVER['REQUEST_URI'] = '/doku.php?id=0&do=edit';
+        $_REQUEST['id'] = '0';
+
+        $this->assertSame('0', getID('id'));
+    }
+
+    /**
      * fetch media files with basedir and urlrewrite=2
      *
      * data provided by Jan Decaluwe <jan@jandecaluwe.com>

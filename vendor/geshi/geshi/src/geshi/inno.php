@@ -4,7 +4,7 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from J�rja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 J�rja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2005/07/29
  *
  * Inno Script language inkl. Delphi (Object Pascal) language file for GeSHi.

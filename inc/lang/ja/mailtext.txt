@@ -1,12 +1,14 @@
 DokuWiki 内の文書が追加もしくは変更されました。詳細は以下の通りです。
 
-日付        : @DATE@
-ブラウザ    : @BROWSER@
-IPアドレス  : @IPADDRESS@
-ホスト名    : @HOSTNAME@
-前リビジョン: @OLDPAGE@
-新リビジョン: @NEWPAGE@
-編集のサマリ: @SUMMARY@
-ユーザー名  : @USER@
+ブラウザ　　　　　: @BROWSER@
+IPアドレス　　　　: @IPADDRESS@
+ホスト名　　　　　: @HOSTNAME@
+前リビジョン　　　: @OLDPAGE@
+新リビジョン　　　: @NEWPAGE@
+新リビジョンの日付: @DATE@
+編集の概要　　　　: @SUMMARY@
+ユーザー名　　　　: @USER@
+
+この通知の後、新たなリビジョンが追加されている可能性があります。その場合、本リビジョンのページ上部にメッセージが表示されます。
 
 @DIFF@

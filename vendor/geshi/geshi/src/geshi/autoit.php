@@ -4,7 +4,7 @@
  * --------
  * Author: big_daddy, guinness & Tlem
  * Copyright: (c) 2006-2015
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2006/01/26
  *
  * AutoIt: v3.3.14.2

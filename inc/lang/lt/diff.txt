@@ -1,4 +1,3 @@
 ====== Skirtumai ======
 
 Čia matote skirtumus tarp pasirinktos versijos ir esamo dokumento.
-

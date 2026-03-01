@@ -4,7 +4,7 @@
  * --------
  * Author: Neville Dempsey (NevilleD.sourceforge@sgr-a.net)
  * Copyright: (c) 2010 Neville Dempsey (https://sourceforge.net/projects/algol68/files/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/04/24
  *
  * ALGOL 68 language file for GeSHi.

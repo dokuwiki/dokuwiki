@@ -1,4 +1,11 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Acronym;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Internallink;
+use dokuwiki\Parsing\ParserMode\Table;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
@@ -9,7 +16,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
             'subscript', 'superscript', 'deleted',
         );
         foreach ( $formats as $format ) {
-            $this->P->addMode($format,new Doku_Parser_Mode_Formatting($format));
+            $this->P->addMode($format,new Formatting($format));
         }
         $this->P->parse("I**ñ**t__ë__r//n//â<sup>t</sup>i<sub>ô</sub>n''à''liz<del>æ</del>tiøn");
         $calls = array (
@@ -51,7 +58,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
     }
 
     function testHeader() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("Foo\n ==== Iñtërnâtiônàlizætiøn ==== \n Bar");
         $calls = array (
             array('document_start',array()),
@@ -70,7 +77,7 @@ class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
     }
 
     function testTable() {
-        $this->P->addMode('table',new Doku_Parser_Mode_Table());
+        $this->P->addMode('table',new Table());
         $this->P->parse('
 abc
 | Row 0 Col 1    | Iñtërnâtiônàlizætiøn     | Row 0 Col 3        |
@@ -115,7 +122,7 @@ def');
 
     function testAcronym() {
         $t = array('Iñtërnâtiônàlizætiøn');
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym($t));
+        $this->P->addMode('acronym',new Acronym($t));
         $this->P->parse("Foo Iñtërnâtiônàlizætiøn Bar");
         $calls = array (
             array('document_start',array()),
@@ -130,7 +137,7 @@ def');
     }
 
     function testInterwiki() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new InternalLink());
         $this->P->parse("Foo [[wp>Iñtërnâtiônàlizætiøn|Iñtërnâtiônàlizætiøn]] Bar");
         $calls = array (
             array('document_start',array()),
@@ -145,7 +152,7 @@ def');
     }
 
     function testInternalLink() {
-        $this->P->addMode('internallink',new Doku_Parser_Mode_InternalLink());
+        $this->P->addMode('internallink',new InternalLink());
         $this->P->parse("Foo [[x:Iñtërnâtiônàlizætiøn:y:foo_bar:z|Iñtërnâtiônàlizætiøn]] Bar");
         $calls = array (
             array('document_start',array()),

@@ -1,4 +1,9 @@
 <?php
+
+use dokuwiki\Extension\ActionPlugin;
+use dokuwiki\Extension\EventHandler;
+use dokuwiki\Extension\Event;
+
 /**
  * Plugin for testing the test system
  *
@@ -6,15 +11,18 @@
  *
  * @author Tobias Sarnowski <tobias@trustedco.de>
  */
-class action_plugin_testing extends DokuWiki_Action_Plugin {
-
-    function register(Doku_Event_Handler $controller) {
+class action_plugin_testing extends ActionPlugin
+{
+    /** @inheritdoc */
+    public function register(EventHandler $controller)
+    {
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'dokuwikiStarted');
     }
 
-    function dokuwikiStarted() {
-        $param = array();
-        trigger_event('TESTING_PLUGIN_INSTALLED', $param);
-        msg('The testing plugin is enabled and should be disabled.',-1);
+    public function dokuwikiStarted()
+    {
+        $param = [];
+        Event::createAndTrigger('TESTING_PLUGIN_INSTALLED', $param);
+        msg('The testing plugin is enabled and should be disabled.', -1);
     }
 }

@@ -6,7 +6,7 @@
  *         Juan Pablo Carbajal (carbajal@ifi.uzh.ch)
  * Copyright: (c) 2012 Carnë Draug
  *            (c) 2012 Juan Pablo Carbajal
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/05/22
  *
  * GNU/Octave M-file language file for GeSHi.

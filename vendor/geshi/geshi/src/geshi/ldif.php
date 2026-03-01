@@ -4,7 +4,7 @@
  * --------
  * Author: Bruno Harbulot (Bruno.Harbulot@manchester.ac.uk)
  * Copyright: (c) 2005 deguix, (c) 2010 Bruno Harbulot
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/03/01
  *
  * LDIF language file for GeSHi.

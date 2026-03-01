@@ -6,7 +6,6 @@
  *
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class MBOXCreator extends FeedCreator
 {
@@ -104,7 +103,7 @@ class MBOXCreator extends FeedCreator
      */
     protected function _generateFilename()
     {
-        $fileInfo = pathinfo($_SERVER["PHP_SELF"]);
+        $fileInfo = pathinfo($_SERVER["SCRIPT_NAME"]);
 
         return substr($fileInfo["basename"], 0, -(strlen($fileInfo["extension"]) + 1)).".mbox";
     }

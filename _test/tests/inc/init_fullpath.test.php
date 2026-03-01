@@ -15,6 +15,7 @@ class init_fullpath_test extends DokuWikiTest {
                         '/foo/./bar/baz' => '/foo/bar/baz',
                         '/foo/bar/..' => '/foo',
                         '/foo/bar/../../../baz' => '/baz',
+                        '/foo/bar//baz' => '/foo/bar/baz',
 
                         'foo/bar/baz' => '/absolute/path/foo/bar/baz',
                         'foo//bar/baz' => '/absolute/path/foo/bar/baz',
@@ -48,6 +49,7 @@ class init_fullpath_test extends DokuWikiTest {
                         'c:foo/./bar/baz' => 'c:/foo/bar/baz',
                         'c:foo/bar/..' => 'c:/foo',
                         'c:foo/bar/../../../baz' => 'c:/baz',
+                        'c:foo/bar//baz' => 'c:/foo/bar/baz',
 
                         'c:/foo/bar/baz' => 'c:/foo/bar/baz',
                         'c:/foo//bar/baz' => 'c:/foo/bar/baz',
@@ -62,6 +64,7 @@ class init_fullpath_test extends DokuWikiTest {
                         'c:\\foo\\.\\bar\\baz' => 'c:/foo/bar/baz',
                         'c:\\foo\\bar\\..' => 'c:/foo',
                         'c:\\foo\\bar\\..\\..\\..\\baz' => 'c:/baz',
+                        'c:\\foo\\bar\\\\baz' => 'c:/foo/bar/baz',
 
                         '\\\\server\\share/foo/bar/baz' => '\\\\server\\share/foo/bar/baz',
                         '\\\\server\\share/foo//bar/baz' => '\\\\server\\share/foo/bar/baz',

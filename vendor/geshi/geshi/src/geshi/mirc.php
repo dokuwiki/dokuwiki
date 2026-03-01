@@ -4,7 +4,7 @@
  * -----
  * Author: Alberto 'Birckin' de Areba (Birckin@hotmail.com)
  * Copyright: (c) 2006 Alberto de Areba
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2006/05/29
  *
  * mIRC Scripting language file for GeSHi.

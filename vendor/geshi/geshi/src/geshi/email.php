@@ -4,7 +4,7 @@
  * ---------------
  * Author: Benny Baumann (BenBE@geshi.org)
  * Copyright: (c) 2008 Benny Baumann (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/10/19
  *
  * Email (mbox \ eml \ RFC format) language file for GeSHi.
@@ -51,14 +51,55 @@ $language_data = array (
             'HTTP', 'SMTP', 'ASMTP', 'ESMTP'
             ),
         2 => array(
-            'Authentication-Results','Comment','Content-Description','Content-Type',
-            'Content-Disposition','Content-Transfer-Encoding','Delivered-To',
-            'Dkim-Signature','Domainkey-Signature','In-Reply-To','Message-Id',
-            'MIME-Version','OpenPGP','Received','Received-SPF','References',
-            'Reply-To', 'Resend-From','Resend-To','Return-Path','User-Agent'
+            'Original-Recipient','Accept-Language','Alternate-Recipient',
+            'Archived-At','Authentication-Results','Auto-Submitted',
+            'Autoforwarded','Autosubmitted','Base','Comments',
+            'Content-Alternative','Content-Base','Content-Description',
+            'Content-Disposition','Content-Duration','Content-features',
+            'Content-ID','Content-Identifier','Content-Language',
+            'Content-Location','Content-MD5','Content-Return',
+            'Content-Transfer-Encoding','Content-Type','Conversion',
+            'Conversion-With-Loss','Deferred-Delivery','Delivery-Date',
+            'Discarded-X400-IPMS-Extensions','Discarded-X400-MTS-Extensions',
+            'Disclose-Recipients','Disposition-Notification-Options',
+            'Disposition-Notification-To','DKIM-Signature',
+            'DL-Expansion-History','Downgraded-Bcc','Downgraded-Cc',
+            'Downgraded-Disposition-Notification-To',
+            'Downgraded-Final-Recipient','Downgraded-From',
+            'Downgraded-In-Reply-To','Downgraded-Mail-From',
+            'Downgraded-Message-Id','Downgraded-Original-Recipient',
+            'Downgraded-Rcpt-To','Downgraded-References',
+            'Downgraded-Reply-To','Downgraded-Resent-Bcc',
+            'Downgraded-Resent-Cc','Downgraded-Resent-From',
+            'Downgraded-Resent-Reply-To','Downgraded-Resent-Sender',
+            'Downgraded-Resent-To','Downgraded-Return-Path',
+            'Downgraded-Sender','Downgraded-To','Encoding','Encrypted','Expires',
+            'Expiry-Date','Generate-Delivery-Report','Importance','In-Reply-To',
+            'Incomplete-Copy','Keywords','Language','Latest-Delivery-Time',
+            'List-Archive','List-Help','List-ID','List-Owner','List-Post',
+            'List-Subscribe','List-Unsubscribe','List-Unsubscribe-Post',
+            'Message-Context','Message-ID','Message-Type','MIME-Version',
+            'MMHS-Acp127-Message-Identifier','MMHS-Codress-Message-Indicator',
+            'MMHS-Copy-Precedence','MMHS-Exempted-Address',
+            'MMHS-Extended-Authorisation-Info','MMHS-Handling-Instructions',
+            'MMHS-Message-Instructions','MMHS-Message-Type',
+            'MMHS-Originator-PLAD','MMHS-Originator-Reference',
+            'MMHS-Other-Recipients-Indicator-CC',
+            'MMHS-Other-Recipients-Indicator-To','MMHS-Primary-Precedence',
+            'MMHS-Subject-Indicator-Codes','MT-Priority','Obsoletes',
+            'Organization','Original-Encoded-Information-Types','Original-From',
+            'Original-Message-ID','Original-Subject','Originator-Return-Address',
+            'PICS-Label','Prevent-NonDelivery-Report','Priority','Received',
+            'Received-SPF','References','Reply-By','Reply-To',
+            'Require-Recipient-Valid-Since','Resent-Bcc','Resent-Cc',
+            'Resent-Date','Resent-From','Resent-Message-ID','Resent-Reply-To',
+            'Resent-Sender','Resent-To','Return-Path','Sensitivity',
+            'Solicitation','Supersedes','VBR-Info','X400-Content-Identifier',
+            'X400-Content-Return','X400-Content-Type','X400-MTS-Identifier',
+            'X400-Originator','X400-Received','X400-Recipients','X400-Trace'
             ),
         3 => array(
-            'Date','From','Sender','Subject','To','CC'
+            'Bcc','CC','Date','From','Sender','Subject','To'
             ),
         4 => array(
             'by', 'for', 'from', 'id', 'with'
@@ -102,6 +143,7 @@ $language_data = array (
             ),
         'SCRIPT' => array(
             0 => 'color: #000040;',
+            1 => 'color: #002040;',
             ),
         'REGEXPS' => array(
             1 => 'color: #000000; font-weight: bold;',
@@ -190,10 +232,12 @@ $language_data = array (
         ),
     'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
-        0 => "/(?P<start>^)[A-Za-z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*(?P<end>$)/m"
+        0 => "/(?P<start>^)[A-Za-z][a-zA-Z0-9\-]*\s*:\s*(?:.|(?=\n\s)\n)*(?P<end>$)/m",
+        1 => "/(?P<start>^)--[a-zA-Z0-9_=\-]+[a-zA-Z0-9_](?:--)?(?P<end>$)/m"
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,
+        1 => false
         ),
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(

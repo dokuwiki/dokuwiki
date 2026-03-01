@@ -4,6 +4,8 @@
  * runtime inspection.
  */
 
+use dokuwiki\Input\Input;
+
 /**
  * Helper class to execute a fake request
  */
@@ -195,7 +197,7 @@ class TestRequest {
         }
 
         $params = array();
-        list($uri, $query) = explode('?', $uri, 2);
+        list($uri, $query) = sexplode('?', $uri, 2);
         if($query) parse_str($query, $params);
 
         $this->script = substr($uri, 1);

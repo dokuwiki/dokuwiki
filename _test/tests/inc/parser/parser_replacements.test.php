@@ -1,10 +1,18 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Acronym;
+use dokuwiki\Parsing\ParserMode\Entity;
+use dokuwiki\Parsing\ParserMode\Hr;
+use dokuwiki\Parsing\ParserMode\Multiplyentity;
+use dokuwiki\Parsing\ParserMode\Smiley;
+use dokuwiki\Parsing\ParserMode\Wordblock;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testSingleAcronym() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOOBAR')));
+        $this->P->addMode('acronym',new Acronym(array('FOOBAR')));
         $this->P->parse('abc FOOBAR xyz');
 
         $calls = array (
@@ -21,7 +29,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testAlmostAnAcronym() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOOBAR')));
+        $this->P->addMode('acronym',new Acronym(array('FOOBAR')));
         $this->P->parse('abcFOOBARxyz');
 
         $calls = array (
@@ -36,7 +44,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testPickAcronymCorrectly() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO')));
+        $this->P->addMode('acronym',new Acronym(array('FOO')));
         $this->P->parse('FOOBAR FOO');
 
         $calls = array (
@@ -53,7 +61,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleAcronyms() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO','BAR')));
+        $this->P->addMode('acronym',new Acronym(array('FOO','BAR')));
         $this->P->parse('abc FOO def BAR xyz');
 
         $calls = array (
@@ -73,7 +81,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleAcronymsWithSubset1() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('FOO','A.FOO','FOO.1','A.FOO.1')));
+        $this->P->addMode('acronym',new Acronym(array('FOO','A.FOO','FOO.1','A.FOO.1')));
         $this->P->parse('FOO A.FOO FOO.1 A.FOO.1');
 
         $calls = array (
@@ -96,7 +104,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleAcronymsWithSubset2() {
-        $this->P->addMode('acronym',new Doku_Parser_Mode_Acronym(array('A.FOO.1','FOO.1','A.FOO','FOO')));
+        $this->P->addMode('acronym',new Acronym(array('A.FOO.1','FOO.1','A.FOO','FOO')));
         $this->P->parse('FOO A.FOO FOO.1 A.FOO.1');
 
         $calls = array (
@@ -119,7 +127,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testSingleSmileyFail() {
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)')));
+        $this->P->addMode('smiley',new Smiley(array(':-)')));
         $this->P->parse('abc:-)xyz');
 
         $calls = array (
@@ -134,7 +142,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testSingleSmiley() {
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)')));
+        $this->P->addMode('smiley',new Smiley(array(':-)')));
         $this->P->parse('abc :-) xyz');
 
         $calls = array (
@@ -151,7 +159,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleSmileysFail() {
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)','^_^')));
+        $this->P->addMode('smiley',new Smiley(array(':-)','^_^')));
         $this->P->parse('abc:-)x^_^yz');
 
         $calls = array (
@@ -166,7 +174,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleSmileys() {
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-)','^_^')));
+        $this->P->addMode('smiley',new Smiley(array(':-)','^_^')));
         $this->P->parse('abc :-) x ^_^ yz');
 
         $calls = array (
@@ -186,7 +194,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testBackslashSmileyFail() {
         // This smiley is really :-\\ but escaping makes like interesting
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-\\\\')));
+        $this->P->addMode('smiley',new Smiley(array(':-\\\\')));
         $this->P->parse('abc:-\\\xyz');
 
         $calls = array (
@@ -202,7 +210,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testBackslashSmiley() {
         // This smiley is really :-\\ but escaping makes like interesting
-        $this->P->addMode('smiley',new Doku_Parser_Mode_Smiley(array(':-\\\\')));
+        $this->P->addMode('smiley',new Smiley(array(':-\\\\')));
         $this->P->parse('abc :-\\\ xyz');
 
         $calls = array (
@@ -219,7 +227,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testSingleWordblock() {
-        $this->P->addMode('wordblock',new Doku_Parser_Mode_Wordblock(array('CAT')));
+        $this->P->addMode('wordblock',new Wordblock(array('CAT')));
         $this->P->parse('abc CAT xyz');
 
         $calls = array (
@@ -236,7 +244,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testWordblockCase() {
-        $this->P->addMode('wordblock',new Doku_Parser_Mode_Wordblock(array('CAT')));
+        $this->P->addMode('wordblock',new Wordblock(array('CAT')));
         $this->P->parse('abc cat xyz');
 
         $calls = array (
@@ -253,7 +261,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleWordblock() {
-        $this->P->addMode('wordblock',new Doku_Parser_Mode_Wordblock(array('CAT','dog')));
+        $this->P->addMode('wordblock',new Wordblock(array('CAT','dog')));
         $this->P->parse('abc cat x DOG yz');
 
         $calls = array (
@@ -272,7 +280,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testSingleEntity() {
-        $this->P->addMode('entity',new Doku_Parser_Mode_Entity(array('->')));
+        $this->P->addMode('entity',new Entity(array('->')));
         $this->P->parse('x -> y');
 
         $calls = array (
@@ -289,7 +297,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultipleEntities() {
-        $this->P->addMode('entity',new Doku_Parser_Mode_Entity(array('->','<-')));
+        $this->P->addMode('entity',new Entity(array('->','<-')));
         $this->P->parse('x -> y <- z');
 
         $calls = array (
@@ -308,7 +316,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testMultiplyEntity() {
-        $this->P->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
+        $this->P->addMode('multiplyentity',new Multiplyentity());
         $this->P->parse('Foo 10x20 Bar');
 
         $calls = array (
@@ -326,7 +334,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
 
     function testMultiplyEntityHex() {
     	// the multiply entity pattern should not match hex numbers, eg. 0x123
-        $this->P->addMode('multiplyentity',new Doku_Parser_Mode_MultiplyEntity());
+        $this->P->addMode('multiplyentity',new Multiplyentity());
         $this->P->parse('Foo 0x123 Bar');
 
         $calls = array (
@@ -341,7 +349,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testHR() {
-        $this->P->addMode('hr',new Doku_Parser_Mode_HR());
+        $this->P->addMode('hr',new Hr());
         $this->P->parse("Foo \n ---- \n Bar");
 
         $calls = array (
@@ -359,7 +367,7 @@ class TestOfDoku_Parser_Replacements extends TestOfDoku_Parser {
     }
 
     function testHREol() {
-        $this->P->addMode('hr',new Doku_Parser_Mode_HR());
+        $this->P->addMode('hr',new Hr());
         $this->P->parse("Foo \n----\n Bar");
 
         $calls = array (

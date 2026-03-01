@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
+ * @author Filippo <abrickslife@gmail.com>
  * @author Edmondo Di Tucci <snarchio@gmail.com>
  * @author Claudio Lanconelli <lancos@libero.it>
  * @author Francesco <francesco.cavalli@hotmail.com>
@@ -20,11 +22,13 @@ $lang['referrals']             = 'Possono i reindirizzamenti essere seguiti?';
 $lang['deref']                 = 'Come differenziare un alias?';
 $lang['binddn']                = 'DN di un utente bind opzionale se un bind anonimo non è sufficiente. E.g. <code>cn=admin, dc=casa, dc=mia</code>';
 $lang['bindpw']                = 'Password del utente di cui sopra';
+$lang['attributes']            = 'Attributi da mostrare con la ricerca LDAP.';
 $lang['userscope']             = 'Limita il contesto di ricerca per la ricerca degli utenti';
 $lang['groupscope']            = 'Limita il contesto di ricerca per la ricerca dei gruppi';
 $lang['userkey']               = 'Attributo indicante il nome utente; deve essere consistente con il filtro utente.';
 $lang['groupkey']              = 'Gruppo di appartenenza sulla base di qualunque attributo utente (invece di gruppo AD standard) e.g. gruppo in base al dipartimento o al numero di telefono';
 $lang['modPass']               = 'Può la password LDAP essere cambiata attraverso DokuWiki?';
+$lang['modPassPlain']          = 'Inviare gli aggiornamenti delle password in testo normale al server LDAP (anziché sottoporli a salt e hash con l\'algoritmo configurato prima della trasmissione)?';
 $lang['debug']                 = 'In caso di errori mostra ulteriori informazioni di debug';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Pete Lomax
  * Copyright: (c) 2010 Nicholas Koceja
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 16/08/2015
  *
  * Phix language file for GeSHi.

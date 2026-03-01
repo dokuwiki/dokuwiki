@@ -7,6 +7,10 @@
  * @author Clarence Lee <clarencedglee@gmail.com>
  */
 
+.dokuwiki.export {
+    background-color: @ini_background;
+}
+
 /* header
 ********************************************************************/
 
@@ -22,14 +26,17 @@
         margin-top: .2em;
     }
 
-    h1 {
+    .logo {
         margin: 0;
         font-size: 1.5em;
         font-weight: normal;
+        line-height: 1.2;
 
         img {
             float: left;
             margin-right: .5em;
+            height: 64px;
+            width: auto;
         }
 
         span {
@@ -56,7 +63,7 @@
     }
 }
 
-[dir=rtl] #dokuwiki__header h1 img {
+[dir=rtl] #dokuwiki__header .logo img {
     float: right;
     margin-left: .5em;
     margin-right: 0;
@@ -66,16 +73,16 @@
 ********************************************************************/
 
 /* highlight selected tool */
-.mode_admin a.action.admin,
-.mode_login a.action.login,
-.mode_register a.action.register,
-.mode_profile a.action.profile,
-.mode_recent a.action.recent,
-.mode_index a.action.index,
-.mode_media a.action.media,
-.mode_revisions a.action.revs,
-.mode_backlink a.action.backlink,
-.mode_subscribe a.action.subscribe {
+.mode_admin .action.admin a,
+.mode_login .action.login a,
+.mode_register .action.register a,
+.mode_profile .action.profile a,
+.mode_recent .action.recent a,
+.mode_index .action.index a,
+.mode_media .action.media a,
+.mode_revisions .action.revs a,
+.mode_backlink .action.backlink a,
+.mode_subscribe .action.subscribe a {
     font-weight: bold;
 }
 
@@ -90,6 +97,7 @@
         margin-left: 1em;
         list-style: none;
         display: inline;
+        vertical-align: top;
     }
 
     form.search div.ajax_qsearch li {
@@ -291,13 +299,15 @@ form.search {
     border-radius: 2px;
     padding: 1.556em 2em 2em;
     margin-bottom: .5em;
-    overflow: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
     word-wrap: break-word;
 }
 
 .dokuwiki .docInfo {
     font-size: 0.875em;
     text-align: right;
+    overflow-wrap: break-word;
 }
 
 /* license note under edit window */

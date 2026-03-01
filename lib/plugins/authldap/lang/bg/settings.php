@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Kiril <neohidra@gmail.com>
  */
 $lang['server']                = 'Вашият LDAP сървър. Име на хоста (<code>localhost</code>) или целият URL адрес (<code>ldap://сървър.tld:389</code>)';

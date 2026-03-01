@@ -11,18 +11,32 @@ compatibility and standards compliance][what_is].
 
 Requirements
 ------------
-* PHP 5.3.0+ (5.3.6+ recommended since SimplePie 1.4.2)
-	* Support for PHP 5.2 stopped in branch `one-dot-three`
-	* Support for PHP 4 stopped in branch `one-dot-two`
+* PHP 7.2+ (Required since SimplePie 1.8.0)
 * libxml2 (certain 2.7.x releases are too buggy for words, and will crash)
 * One of iconv, mbstring or intl extensions
 * cURL or fsockopen()
 * PCRE support
 
 
+PSR-16: Caching support
+--------------
+
+Since SimplePie 1.8.0 you can use the [PSR-16](https://www.php-fig.org/psr/psr-16/) cache from
+[Symfony](https://symfony.com/doc/current/components/cache.html)
+or [every other implementation](https://packagist.org/providers/psr/simple-cache-implementation).
+
+```php
+$simplepie = new \SimplePie\SimplePie();
+$simplepie->set_cache(
+    new \Symfony\Component\Cache\Psr16Cache(
+        new \Symfony\Component\Cache\Adapter\FilesystemAdapter()
+    ),
+);
+```
+
 What comes in the package?
 --------------------------
-1. `library/` - SimplePie classes for use with the autoloader
+1. `src/` - SimplePie classes for use with the autoloader
 2. `autoloader.php` - The SimplePie Autoloader if you want to use the separate
    file version.
 3. `README.markdown` - This document.
@@ -40,8 +54,9 @@ What comes in the package?
 Since SimplePie 1.3, we've split the classes into separate files to make it easier
 to maintain and use.
 
-If you'd like a single monolithic file, you can run `php build/compile.php` to
-generate `SimplePie.compiled.php`.
+If you'd like a single monolithic file, see the assets in the
+[releases](https://github.com/simplepie/simplepie/releases), or you can
+run `php build/compile.php` to generate `SimplePie.compiled.php` yourself.
 
 To start the demo
 -----------------
@@ -76,9 +91,20 @@ to be prioritized.
 
 If you'd like to contribute to SimplePie, the best way to get started is to fork
 the project on GitHub and send pull requests for patches. When doing so, please
-be aware of our [coding standards][].
+be aware of our [coding standards](http://simplepie.org/wiki/misc/coding_standards).
 
-[coding standards]: http://simplepie.org/wiki/misc/coding_standards
+The main development for the next minor release happens in `master` branch.
+Please create your pull requests primarily against this branch.
+
+We do not actively provide bug fixes or security fixes for older versions. Nevertheless,
+you are welcome to create backport PRs if you still need support for older PHP versions.
+Please open your PR against the appropriate branch.
+
+| branch                                                                     | requires    |
+|----------------------------------------------------------------------------|-------------|
+| [master](https://github.com/simplepie/simplepie/tree/master)               | PHP 7.2.0+  |
+| [one-dot-seven](https://github.com/simplepie/simplepie/tree/one-dot-seven) | PHP 5.6.0+  |
+| [one-dot-three](https://github.com/simplepie/simplepie/tree/one-dot-three) | PHP 5.2.0+  |
 
 
 Authors and contributors
@@ -89,14 +115,14 @@ Authors and contributors
 ### Alumni
 * [Ryan McCue][] (developer, support)
 * [Ryan Parman][] (Creator, developer, evangelism, support)
-* [Geoffrey Sneddon][] (Lead developer)
+* [Sam Sneddon][] (Lead developer)
 * [Michael Shipley][] (Submitter of patches, support)
 * [Steve Minutillo][] (Submitter of patches)
 
-[Malcolm Blaney]: https://unicyclic.com/mal
+[Malcolm Blaney]: https://mblaney.xyz
 [Ryan McCue]: http://ryanmccue.info
 [Ryan Parman]: http://ryanparman.com
-[Geoffrey Sneddon]: http://gsnedders.com
+[Sam Sneddon]: https://gsnedders.com
 [Michael Shipley]: http://michaelpshipley.com
 [Steve Minutillo]: http://minutillo.com/steve/
 

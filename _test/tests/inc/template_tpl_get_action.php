@@ -2,7 +2,7 @@
 
 class template_tpl_get_action_test extends DokuWikiTest {
 
-    public function setUp() {
+    public function setUp() : void {
         parent::setUp();
         global $ID;
         $ID = 'start'; // run all tests on the start page

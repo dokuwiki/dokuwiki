@@ -2,8 +2,11 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\UserProfile;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
+use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\Ui;
 
 /**
  * Class Profile
@@ -12,34 +15,37 @@ use dokuwiki\Action\Exception\ActionDisabledException;
  *
  * @package dokuwiki\Action
  */
-class Profile extends AbstractUserAction {
-
+class Profile extends AbstractUserAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_NONE;
     }
 
     /** @inheritdoc */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
 
-        /** @var \DokuWiki_Auth_Plugin $auth */
+        /** @var AuthPlugin $auth */
         global $auth;
-        if(!$auth->canDo('Profile')) throw new ActionDisabledException();
+        if (!$auth->canDo('Profile')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $lang;
-        if(updateprofile()) {
+        if (updateprofile()) {
             msg($lang['profchanged'], 1);
             throw new ActionAbort('show');
         }
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_updateprofile();
+    public function tplContent()
+    {
+        (new UserProfile())->show();
     }
-
 }

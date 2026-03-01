@@ -4,7 +4,7 @@
  * ------------
  * Author: FraidZZ ( fraidzz [@] bk.ru )
  * Copyright: (c) 2015 FraidZZ ( http://vk.com/fraidzz , http://www.cyberforum.ru/members/340557.html )
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2015/03/28
  *
  * Windows batch file language file for GeSHi.

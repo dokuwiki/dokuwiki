@@ -1,4 +1,3 @@
 ====== Munir ======
 
 Hetta vísur munir millum tí valdu og núverandu útgávu av skjalinum. Gular eru linjur sum er at finna í gomlu útgávuni, og grønar eru linjur sum eru at finna í núvarandi útgávuni.
-

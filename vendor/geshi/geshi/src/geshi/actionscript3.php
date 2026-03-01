@@ -4,7 +4,7 @@
  * ----------------
  * Author: Jordi Boggiano (j.boggiano@seld.be)
  * Copyright: (c) 2007 Jordi Boggiano (http://www.seld.be/), Benny Baumann (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2007/11/26
  *
  * ActionScript3 language file for GeSHi.

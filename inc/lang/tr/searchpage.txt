@@ -1,4 +1,3 @@
 ====== Arama ======
 
 Aşağıda aramanın sonuçları listelenmiştir. @CREATEPAGEINFO@
-

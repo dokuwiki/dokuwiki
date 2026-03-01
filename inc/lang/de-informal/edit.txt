@@ -1,4 +1,1 @@
-Bitte bearbeite dieses Dokument nur, wenn du es **verbessern** kannst.
-
-Nach dem Bearbeiten den **''[Speichern]''**-Knopf drücken. Siehe [[wiki:syntax]] zur Wiki-Syntax. Zum Testen bitte erst im [[playground:playground|Spielplatz]] üben.
-
+Bitte bearbeite dieses Dokument nur, wenn du es **verbessern** kannst. Nach dem Bearbeiten den **''[Speichern]''**-Knopf drücken. Siehe [[wiki:syntax]] zur Wiki-Syntax. Zum Testen bitte erst im [[playground:playground|Spielplatz]] üben.

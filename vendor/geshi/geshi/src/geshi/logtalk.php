@@ -5,7 +5,7 @@
  *
  * Author: Paulo Moura (pmoura@logtalk.org)
  * Copyright: (c) 2009-2011 Paulo Moura (http://logtalk.org/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/10/24
  *
  * Logtalk language file for GeSHi.

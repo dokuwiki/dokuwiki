@@ -1,1 +1,1 @@
-===== Gerir Utilizadores =====
+===== Gerenciar Usuários =====

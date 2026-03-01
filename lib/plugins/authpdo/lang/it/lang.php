@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Torpedo <dgtorpedo@gmail.com>
  */
 $lang['connectfail']           = 'Connessione fallita al database.';

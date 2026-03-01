@@ -1,4 +1,4 @@
-En ny bruger har registreret. Her er detaljerne:
+En ny bruger er bæevet oprettet. Her er detaljerne:
 
 Brugernavn : @NEWUSER@
 Navn       : @NEWNAME@

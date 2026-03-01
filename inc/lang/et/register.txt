@@ -1,4 +1,3 @@
 ====== Registreeri uus kasutaja ======
 
 Täida alljärgnevad lüngad et me saaks Sulle Wikis kasutajakonto tekitada. Ole nii kena ja kindlasti pane kirja oma **kehtiv e-posti aadress** - Sinu uus parool saadetakse sellele aadressile. Sisselogimise nimi peaks olema kehtiv [[doku>pagename|lehenimi]].
-

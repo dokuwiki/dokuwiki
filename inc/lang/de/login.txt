@@ -1,4 +1,3 @@
 ====== Anmelden ======
 
 Geben Sie Ihren Benutzernamen und Ihr Passwort in das Formular unten ein, um sich anzumelden. Bitte beachten Sie, dass dafür "Cookies" in den Sicherheitseinstellungen Ihres Browsers erlaubt sein müssen.
-

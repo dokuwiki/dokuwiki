@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author analogroboter <ropely@gmx.net>
+ * @author C!own77 <clown77@posteo.de>
  * @author Matthias Schulte <dokuwiki@lupo49.de>
  * @author christian studer <cstuder@existenz.ch>
  * @author Philip Knack <p.knack@stollfuss.de>
@@ -21,11 +23,13 @@ $lang['referrals']             = 'Weiterverfolgen von LDAP-Referrals (Verweise)?
 $lang['deref']                 = 'Wie sollen Aliase aufgelöst werden?';
 $lang['binddn']                = 'DN eines optionalen Benutzers, wenn der anonyme Zugriff nicht ausreichend ist. Zum Beispiel: <code>cn=admin, dc=my, dc=home</code>.';
 $lang['bindpw']                = 'Passwort des angegebenen Benutzers.';
+$lang['attributes']            = 'Attribute, die mit der LDAP-Suche abgerufen werden sollen.';
 $lang['userscope']             = 'Die Suchweite nach Benutzeraccounts.';
 $lang['groupscope']            = 'Die Suchweite nach Benutzergruppen.';
 $lang['userkey']               = 'Attribut, das den Benutzernamen enthält; muss konsistent zum userfilter sein.';
 $lang['groupkey']              = 'Gruppieren der Benutzeraccounts anhand eines beliebigen Benutzerattributes z. B. Telefonnummer oder Abteilung, anstelle der Standard-Gruppen).';
 $lang['modPass']               = 'Darf über Dokuwiki das LDAP-Passwort geändert werden?';
+$lang['modPassPlain']          = 'Kennwortaktualisierungen im Klartext an den LDAP-Server senden (anstatt sie vor der Übertragung mit dem konfigurierten Algorithmus mit dem Salting-Verfahren zu ändern und anschließend einen Hash-Wert zu berechnen)?';
 $lang['debug']                 = 'Debug-Informationen beim Auftreten von Fehlern anzeigen?';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

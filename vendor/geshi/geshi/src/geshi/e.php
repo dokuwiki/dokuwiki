@@ -4,7 +4,7 @@
  * --------
  * Author: Kevin Reid (kpreid@switchb.org)
  * Copyright: (c) 2010 Kevin Reid (http://switchb.org/kpreid/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/04/16
  *
  * E language file for GeSHi.

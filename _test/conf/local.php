@@ -8,3 +8,6 @@ $conf['useacl']      = 1;                 //Use Access Control Lists to restrict
 $conf['superuser']   = 'testuser';        //password: testpass
 
 $conf['dnslookups']  = 0;                 //speedup tests
+$conf['updatecheck']  = 0;                //speedup tests
+
+$conf['plugin']['testing']['second'] = 'Local setting';

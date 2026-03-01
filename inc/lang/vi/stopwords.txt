@@ -1,0 +1,39 @@
+# Đây là danh sách các từ mà người lập chỉ mục bỏ qua, mỗi từ một dòng
+# Khi bạn sửa đổi tập tin này, hãy chắc chắn sử dụng các kết thúc dòng UNIX (dòng đơn mới)
+# Không cần bao gồm các từ ngắn hơn 3 ký tự - dù sao chúng cũng bị bỏ qua
+# Danh sách này dựa trên những cái được tìm thấy tại http://www.ranks.nl/stopwords/
+about
+are
+as
+an
+and
+you
+your
+them
+their
+com
+for
+from
+into
+if
+in
+is
+it
+how
+of
+on
+or
+that
+the
+this
+to
+was
+what
+when
+where
+who
+will
+with
+und
+the
+www

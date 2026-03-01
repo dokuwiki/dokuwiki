@@ -12,14 +12,14 @@ class utf8_utf16be_test extends DokuWikiTest {
      * Convert from UTF-8 to UTF-16BE
      */
     function test_to16be(){
-        $this->assertEquals(utf8_to_utf16be($this->utf8), $this->utf16);
+        $this->assertEquals(\dokuwiki\Utf8\Conversion::toUtf16Be($this->utf8), $this->utf16);
     }
 
     /**
      * Convert from UTF-16BE to UTF-8
      */
     function test_from16be(){
-        $this->assertEquals(utf16be_to_utf8($this->utf16),$this->utf8);
+        $this->assertEquals(\dokuwiki\Utf8\Conversion::fromUtf16Be($this->utf16),$this->utf8);
     }
 }
 

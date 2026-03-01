@@ -1,4 +1,3 @@
 ====== Accesso ======
 
 Non sei ancora collegato! Inserisci il tuo nome utente e la tua password per autenticarti. E' necessario che il tuo browser abbia i cookie abilitati.
-

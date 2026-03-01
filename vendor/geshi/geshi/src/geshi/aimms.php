@@ -4,7 +4,7 @@
  * --------
  * Author: Guido Diepen (guido.diepen@aimms.com)
  * Copyright: (c) 2011 Guido Diepen (http://www.aimms.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/05/05
  *
  * AIMMS language file for GeSHi.

@@ -1,18 +1,19 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
+use dokuwiki\Logger;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
-if(!defined('DOKU_INC')) define('DOKU_INC', realpath(dirname(__FILE__) . '/../') . '/');
+if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
 require_once(DOKU_INC . 'inc/init.php');
 
 /**
  * Update the Search Index from command line
  */
-class IndexerCLI extends CLI {
-
+class IndexerCLI extends CLI
+{
     private $quiet = false;
     private $clear = false;
 
@@ -22,7 +23,8 @@ class IndexerCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function setup(Options $options) {
+    protected function setup(Options $options)
+    {
         $options->setHelp(
             'Updates the searchindex by indexing all new or changed pages. When the -c option is ' .
             'given the index is cleared first.'
@@ -35,7 +37,7 @@ class IndexerCLI extends CLI {
         );
         $options->registerOption(
             'quiet',
-            'don\'t produce any output',
+            'DEPRECATED',
             'q'
         );
     }
@@ -48,11 +50,17 @@ class IndexerCLI extends CLI {
      * @param Options $options
      * @return void
      */
-    protected function main(Options $options) {
+    protected function main(Options $options)
+    {
         $this->clear = $options->getOpt('clear');
         $this->quiet = $options->getOpt('quiet');
 
-        if($this->clear) $this->clearindex();
+        if ($this->quiet) {
+            Logger::deprecated('Calling bin/indexer.php with -q/--quiet is deprecated. Use --loglevel instead.');
+            $this->setLogLevel('emergency');
+        }
+
+        if ($this->clear) $this->clearindex();
 
         $this->update();
     }
@@ -60,14 +68,15 @@ class IndexerCLI extends CLI {
     /**
      * Update the index
      */
-    function update() {
+    protected function update()
+    {
         global $conf;
-        $data = array();
-        $this->quietecho("Searching pages... ");
-        search($data, $conf['datadir'], 'search_allpages', array('skipacl' => true));
-        $this->quietecho(count($data) . " pages found.\n");
+        $data = [];
+        $this->notice('Searching pages...');
+        search($data, $conf['datadir'], 'search_allpages', ['skipacl' => true]);
+        $this->info(count($data) . ' pages found.');
 
-        foreach($data as $val) {
+        foreach ($data as $val) {
             $this->index($val['id']);
         }
     }
@@ -77,28 +86,30 @@ class IndexerCLI extends CLI {
      *
      * @param string $id
      */
-    function index($id) {
-        $this->quietecho("$id... ");
-        idx_addPage($id, !$this->quiet, $this->clear);
-        $this->quietecho("done.\n");
+    protected function index($id)
+    {
+        $this->notice("$id indexing...");
+        try {
+            if (idx_addPage($id, isset($this->loglevel['info']), $this->clear)) {
+                $this->success("$id indexed.");
+            } else {
+                $this->info("$id index not updated.");
+            }
+        } catch (Throwable $e) {
+            $this->error("$id indexing error: " . $e->getMessage());
+            $this->debug($e->getTraceAsString());
+            return;
+        }
     }
 
     /**
      * Clear all index files
      */
-    function clearindex() {
-        $this->quietecho("Clearing index... ");
+    protected function clearindex()
+    {
+        $this->notice('Clearing index...');
         idx_get_indexer()->clear();
-        $this->quietecho("done.\n");
-    }
-
-    /**
-     * Print message if not supressed
-     *
-     * @param string $msg
-     */
-    function quietecho($msg) {
-        if(!$this->quiet) echo $msg;
+        $this->success('Index cleared.');
     }
 }
 

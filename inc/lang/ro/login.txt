@@ -1,4 +1,3 @@
 ====== Autentificare ======
 
-Nu ești autentificat! Introdu datele de autentificare. Pentru ca
-autentificarea să funcționeze trebuie să fie permise cookie-urile în browser.
+Nu ești autentificat! Introdu datele de autentificare. Pentru ca autentificarea să funcționeze trebuie să fie permise cookie-urile în browser.

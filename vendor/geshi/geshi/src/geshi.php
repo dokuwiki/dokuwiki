@@ -40,7 +40,7 @@
 //
 
 /** The version of this GeSHi file */
-define('GESHI_VERSION', '1.0.9.0');
+define('GESHI_VERSION', '1.0.9.1');
 
 // Define the root directory for the GeSHi code tree
 if (!defined('GESHI_ROOT')) {
@@ -628,6 +628,19 @@ class GeSHi {
     }
 
     /**
+     * Clean up the language name to prevent malicious code injection
+     *
+     * @param string $language The name of the language to strip
+     * @since 1.0.9.1
+     */
+    public function strip_language_name($language) {
+        $language = preg_replace('#[^a-zA-Z0-9\-_]#', '', $language);
+        $language = strtolower($language);
+
+        return $language;
+    }
+
+    /**
      * Sets the language for this object
      *
      * @note since 1.0.8 this function won't reset language-settings by default anymore!
@@ -646,9 +659,7 @@ class GeSHi {
         }
 
         //Clean up the language name to prevent malicious code injection
-        $language = preg_replace('#[^a-zA-Z0-9\-_]#', '', $language);
-
-        $language = strtolower($language);
+        $language = $this->strip_language_name($language);
 
         //Retreive the full filename
         $file_name = $this->language_path . $language . '.php';
@@ -1472,7 +1483,7 @@ class GeSHi {
                 'haskell' => array('hs'),
                 'haxe' => array('hx'),
                 'html4strict' => array('html', 'htm'),
-                'ini' => array('ini', 'desktop'),
+                'ini' => array('ini', 'desktop', 'vbp'),
                 'java' => array('java'),
                 'javascript' => array('js'),
                 'klonec' => array('kl1'),
@@ -1506,11 +1517,11 @@ class GeSHi {
                 'smarty' => array(),
                 'tcl' => array('tcl'),
                 'text' => array('txt'),
-                'vb' => array('bas'),
-                'vbnet' => array(),
+                'vb' => array('bas', 'ctl', 'frm'),
+                'vbnet' => array('vb', 'sln'),
                 'visualfoxpro' => array(),
                 'whitespace' => array('ws'),
-                'xml' => array('xml', 'svg', 'xrc'),
+                'xml' => array('xml', 'svg', 'xrc', 'vbproj', 'csproj', 'userprefs', 'resx', 'stetic', 'settings', 'manifest', 'myapp'),
                 'z80' => array('z80', 'asm', 'inc')
             );
         }
@@ -1959,6 +1970,11 @@ class GeSHi {
      * @since 1.0.8
      */
     protected function build_parse_cache() {
+        // check whether language_data is available
+        if (empty($this->language_data)) {
+            return false;
+        }
+
         // cache symbol regexp
         //As this is a costy operation, we avoid doing it for multiple groups ...
         //Instead we perform it for all symbols at once.
@@ -2140,13 +2156,18 @@ class GeSHi {
      *
      * @since 1.0.0
      */
-    public function parse_code () {
+    public function parse_code() {
         // Start the timer
         $start_time = microtime();
 
         // Replace all newlines to a common form.
         $code = str_replace("\r\n", "\n", $this->source);
         $code = str_replace("\r", "\n", $code);
+
+        // check whether language_data is available
+        if (empty($this->language_data)) {
+            $this->error = GESHI_ERROR_NO_SUCH_LANG;
+        }
 
         // Firstly, if there is an error, we won't highlight
         if ($this->error) {
@@ -4695,7 +4716,9 @@ class GeSHi {
             // TODO: a|bb|c => [ac]|bb
             static $callback_2;
             if (!isset($callback_2)) {
-                $callback_2 = create_function('$matches', 'return "[" . str_replace("|", "", $matches[1]) . "]";');
+                $callback_2 = function($matches) {
+                    return "[" . str_replace("|", "", $matches[1]) . "]";
+                };
             }
             $list = preg_replace_callback('#\(\?\:((?:.\|)+.)\)#', $callback_2, $list);
         }

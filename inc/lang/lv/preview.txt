@@ -1,5 +1,3 @@
 ====== Priekšskats ======
 
-Tavs teksts izskatīsies šādi. Ievēro, tas vēl **nav saglabāts** !
-
-
+Tavs teksts izskatīsies šādi. **Ievēro, tas vēl nav saglabāts**!

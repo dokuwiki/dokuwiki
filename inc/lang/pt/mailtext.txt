@@ -1,6 +1,4 @@
-Um documento no site Wiki @DOKUWIKIURL@ foi criado ou modificado.
-
-Aqui estão os detalhes:
+Um documento no site Wiki @DOKUWIKIURL@ foi criado ou modificado. Aqui estão os detalhes:
 
 Data          : @DATE@
 Browser       : @BROWSER@
@@ -8,7 +6,11 @@ Endereço IP   : @IPADDRESS@
 Hostname      : @HOSTNAME@
 Documento Ant.: @OLDPAGE@
 Documento Novo: @NEWPAGE@
-Edit Summary  : @SUMMARY@
-User          : @USER@
+Data da Revisão: @DATE@
+Resumo da Edição  : @SUMMARY@
+Usuário      : @USER@
+
+Pode haver alterações mais recentes após esta revisão. Se isto
+acontecer, uma mensagem será mostrada na parte superior da página de revisão.
 
 @DIFF@

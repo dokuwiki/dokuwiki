@@ -1,0 +1,9 @@
+====== Phản hồi độ phổ biến ======
+
+[[doku>popularity|Công cụ này]] thu thập dữ liệu ẩn danh về wiki của bạn và cho phép bạn gửi lại dữ liệu này cho nhà phát triển DokuWiki. Điều này giúp họ hiểu cách người dùng sử dụng DokuWiki và đảm bảo các quyết định phát triển trong tương lai được hỗ trợ bởi các thống kê sử dụng trong thế giới thực.
+
+Thỉnh thoảng bạn nên lặp lại bước này để thông báo cho các nhà phát triển khi wiki của bạn phát triển. Bộ dữ liệu lặp lại của bạn sẽ được xác định bởi một ID ẩn danh.
+
+Dữ liệu được thu thập chứa thông tin như phiên bản DokuWiki của bạn, số lượng, kích thước các trang và tập tin của bạn, các plugin đã cài đặt và thông tin về cài đặt PHP của bạn.
+
+Dữ liệu thô sẽ gửi được hiển thị dưới đây. Vui lòng sử dụng nút "Gửi dữ liệu" để chuyển thông tin.

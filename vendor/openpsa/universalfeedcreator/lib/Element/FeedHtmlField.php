@@ -7,7 +7,6 @@
  *
  * @author  Pascal Van Hecke <feedcreator.class.php@vanhecke.info>
  * @version 1.6
- * @package de.bitfolge.feedcreator
  */
 class FeedHtmlField
 {

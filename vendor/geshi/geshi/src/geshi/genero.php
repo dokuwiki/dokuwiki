@@ -4,7 +4,7 @@
  * ----------
  * Author: Lars Gersmann (lars.gersmann@gmail.com)
  * Copyright: (c) 2007 Lars Gersmann, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2007/07/01
  *
  * Genero (FOURJ's Genero 4GL) language file for GeSHi.

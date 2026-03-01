@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Michael Jahn <michael.jahn1990@gmail.com>
  * @author Matthias Grimm <matthiasgrimm@users.sourceforge.net>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
@@ -56,6 +57,7 @@ $lang['summary']               = 'Zeige Benutzer %1$d-%2$d von %3$d gefundenen. 
 $lang['nonefound']             = 'Keine Benutzer gefunden. %d Benutzer insgesamt.';
 $lang['delete_ok']             = '%d Benutzer gelöscht';
 $lang['delete_fail']           = '%d konnten nicht gelöscht werden.';
+$lang['delete_fail_self']      = 'Sie können sich nicht selbst löschen.';
 $lang['update_ok']             = 'Benutzerdaten erfolgreich geändert.';
 $lang['update_fail']           = 'Änderung der Benutzerdaten fehlgeschlagen.';
 $lang['update_exists']         = 'Benutzername konnte nicht geändert werden, weil der angegebene Benutzer (%s) bereits existiert (alle anderen Änderungen wurden durchgeführt).';

@@ -46,6 +46,7 @@ $lang['_network'] = 'Network';
 /* --- Undefined Setting Messages --- */
 $lang['_msg_setting_undefined'] = 'No setting metadata.';
 $lang['_msg_setting_no_class'] = 'No setting class.';
+$lang['_msg_setting_no_known_class'] = 'Setting class not available.';
 $lang['_msg_setting_no_default'] = 'No default value.';
 
 /* -------------------- Config Options --------------------------- */
@@ -105,20 +106,20 @@ $lang['disableactions_other'] = 'Other actions (comma separated)';
 $lang['disableactions_rss'] = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Authentication Security Timeout (seconds)';
 $lang['securecookie'] = 'Should cookies set via HTTPS only be sent via HTTPS by the browser? Disable this option when only the login of your wiki is secured with SSL but browsing the wiki is done unsecured.';
+$lang['samesitecookie'] = 'The samesite cookie attribute to use. Leaving it empty will let the browser decide on the samesite policy.';
 $lang['remote']      = 'Enable the remote API system. This allows other applications to access the wiki via XML-RPC or other mechanisms.';
 $lang['remoteuser']  = 'Restrict remote API access to the comma separated groups or users given here. Leave empty to give access to everyone.';
+$lang['remotecors']  = 'Enable Cross-Origin Resource Sharing (CORS) for the remote interfaces. Asterisk (*) to allow all origins. Leave empty to deny CORS.';
 
 /* Anti-Spam Settings */
 $lang['usewordblock']= 'Block spam based on wordlist';
-$lang['relnofollow'] = 'Use rel="nofollow" on external links';
+$lang['relnofollow'] = 'Use rel="ugc nofollow" on external links';
 $lang['indexdelay']  = 'Time delay before indexing (sec)';
 $lang['mailguard']   = 'Obfuscate email addresses';
 $lang['iexssprotect']= 'Check uploaded files for possibly malicious JavaScript or HTML code';
 
 /* Editing Settings */
 $lang['usedraft']    = 'Automatically save a draft while editing';
-$lang['htmlok']      = 'Allow embedded HTML';
-$lang['phpok']       = 'Allow embedded PHP';
 $lang['locktime']    = 'Maximum age for lock files (sec)';
 $lang['cachetime']   = 'Maximum age for cache (sec)';
 
@@ -146,6 +147,8 @@ $lang['mailfrom']    = 'Sender email address to use for automatic mails';
 $lang['mailreturnpath']    = 'Recipient email address for non delivery notifications';
 $lang['mailprefix']  = 'Email subject prefix to use for automatic mails. Leave blank to use the wiki title';
 $lang['htmlmail']    = 'Send better looking, but larger in size HTML multipart emails. Disable for plain text only mails.';
+$lang['dontlog'] = 'Disable logging for these types of logs.';
+$lang['logretain'] = 'How many days of logs to keep.';
 
 /* Syndication Settings */
 $lang['sitemap']           = 'Generate Google sitemap this often (in days). 0 to disable';
@@ -154,6 +157,7 @@ $lang['rss_linkto']        = 'XML feed links to';
 $lang['rss_content']       = 'What to display in the XML feed items?';
 $lang['rss_update']        = 'XML feed update interval (sec)';
 $lang['rss_show_summary']  = 'XML feed show summary in title';
+$lang['rss_show_deleted']  = 'XML feed Show deleted feeds';
 $lang['rss_media']         = 'What kind of changes should be listed in the XML feed?';
 $lang['rss_media_o_both']  = 'both';
 $lang['rss_media_o_pages'] = 'pages';
@@ -173,7 +177,7 @@ $lang['gzip_output'] = 'Use gzip Content-Encoding for xhtml';
 $lang['compress']    = 'Compact CSS and javascript output';
 $lang['cssdatauri']  = 'Size in bytes up to which images referenced in CSS files should be embedded right into the stylesheet to reduce HTTP request header overhead. <code>400</code> to <code>600</code> bytes is a good value. Set <code>0</code> to disable.';
 $lang['send404']     = 'Send "HTTP 404/Page Not Found" for non existing pages';
-$lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken. See <a href="http://bugs.dokuwiki.org/?do=details&amp;task_id=852">Bug 852</a> for more info.';
+$lang['broken_iua']  = 'Is the ignore_user_abort function broken on your system? This could cause a non working search index. IIS+PHP/CGI is known to be broken.';
 $lang['xsendfile']   = 'Use the X-Sendfile header to let the webserver deliver static files? Your webserver needs to support this.';
 $lang['renderer_xhtml']   = 'Renderer to use for main (xhtml) wiki output';
 $lang['renderer__core']   = '%s (dokuwiki core)';
@@ -185,9 +189,15 @@ $lang['search_fragment_o_starts_with'] = 'starts with';
 $lang['search_fragment_o_ends_with'] = 'ends with';
 $lang['search_fragment_o_contains'] = 'contains';
 
+$lang['_feature_flags'] = 'Feature Flags';
+$lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has been parsed. Improves perceived page speed but could break a small number of plugins.';
+$lang['hidewarnings'] = 'Do not display any warnings issued by PHP. This may ease the transisition to PHP8+. Warnings will still be logged in the error log and should be reported.';
+
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
 $lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
+$lang['trustedproxies'] = 'Comma-separated list of trusted proxy servers from which to read the X-Forwarded-For header. Each item in the array may be either an IPv4 or IPv6 address, or an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8). Leave empty to trust no proxy.';
+$lang['realip'] = 'Trust the X-Real-IP header. Only enable this if your server writes this header, otherwise it may be spoofed.';
 
 /* jQuery CDN options */
 $lang['jquerycdn_o_0'] = 'No CDN, local delivery only';
@@ -201,14 +211,6 @@ $lang['proxy____user']    = 'Proxy user name';
 $lang['proxy____pass']    = 'Proxy password';
 $lang['proxy____ssl']     = 'Use SSL to connect to proxy';
 $lang['proxy____except']  = 'Regular expression to match URLs for which the proxy should be skipped.';
-
-/* Safemode Hack */
-$lang['safemodehack'] = 'Enable safemode hack';
-$lang['ftp____host'] = 'FTP server for safemode hack';
-$lang['ftp____port'] = 'FTP port for safemode hack';
-$lang['ftp____user'] = 'FTP user name for safemode hack';
-$lang['ftp____pass'] = 'FTP password for safemode hack';
-$lang['ftp____root'] = 'FTP root directory for safemode hack';
 
 /* License Options */
 $lang['license_o_'] = 'None chosen';

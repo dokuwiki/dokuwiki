@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Draft;
 use dokuwiki\Action\Exception\ActionAbort;
 
 /**
@@ -11,26 +12,29 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Draftdel extends AbstractAction {
-
+class Draftdel extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_EDIT;
     }
 
     /**
-     * Delete an existing draft if any
+     * Delete an existing draft for the current page and user if any
      *
-     * Reads draft information from $INFO. Redirects to show, afterwards.
+     * Redirects to show, afterwards.
      *
      * @throws ActionAbort
      */
-    public function preProcess() {
-        global $INFO;
-        @unlink($INFO['draft']);
-        $INFO['draft'] = null;
+    public function preProcess()
+    {
+        global $INFO, $ID;
+        $draft = new Draft($ID, $INFO['client']);
+        if ($draft->isDraftAvailable() && checkSecurityToken()) {
+            $draft->deleteDraft();
+        }
 
         throw new ActionAbort('redirect');
     }
-
 }

@@ -4,7 +4,7 @@
  * --------
  * Author: Edward Hart (edward.dan.hart@gmail.com)
  * Copyright: (c) 2013 Edward Hart
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2013/10/25
  *
  * Dart language file for GeSHi.

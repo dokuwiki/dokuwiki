@@ -1,4 +1,4 @@
-===== Importation d'utilisateurs par lot =====
+===== Importation d'utilisateurs par lots =====
 
 Requière un fichier [[wpfr>CSV]] d'utilisateurs avec un minimum de quatre colonnes.
 Les colonnes doivent comporter, dans l'ordre : identifiant, nom complet, adresse de courriel et groupes.

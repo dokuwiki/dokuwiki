@@ -1,3 +1,3 @@
 ====== Autenticação ======
 
-Você não está autenticado. Digite as seus dados de usuário abaixo para entrar no sistema. É necessário habilitar os //cookies// no seu navegador para que isso funcione.
+Você não está autenticado. Digite os seus dados de usuário abaixo para entrar no sistema. É necessário habilitar os //cookies// no seu navegador para que isso funcione.

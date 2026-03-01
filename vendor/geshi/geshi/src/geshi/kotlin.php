@@ -4,7 +4,7 @@
  * --------
  * Author: Ole Sandum (oksandum@gmail.com)
  * Copyright: (c) 2017 Ole Sandum
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/07/10
  *
  * Kotlin language file for GeSHi.

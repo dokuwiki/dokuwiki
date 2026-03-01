@@ -1,0 +1,4 @@
+Nếu bạn muốn điều chỉnh logo, chỉ cần sử dụng Quản lý phương tiện để tải lên ''logo.png'' vào ''wiki'' hoặc không gian tên gốc và nó
+sẽ được tự động sử dụng. Bạn cũng có thể tải lên ''favicon.ico'' ở đó. Nếu bạn sử dụng một wiki đóng
+thì khuyến nghị nên để không gian tên ''wiki'' (hoặc gốc) có thể đọc được trong cài đặt Danh sách kiểm soát truy cập (ACL) hoặc
+logo của bạn không được hiển thị đối với thành viên không đăng nhập

@@ -1,11 +1,12 @@
 <?php
+
 /**
  * SimplePie
  *
  * A PHP-Based RSS and Atom Feed Framework.
  * Takes the hard work out of managing a complete RSS/Atom solution.
  *
- * Copyright (c) 2004-2016, Ryan Parman, Geoffrey Sneddon, Ryan McCue, and contributors
+ * Copyright (c) 2004-2022, Ryan Parman, Sam Sneddon, Ryan McCue, and contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
@@ -33,19 +34,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package SimplePie
- * @copyright 2004-2016 Ryan Parman, Geoffrey Sneddon, Ryan McCue
+ * @copyright 2004-2016 Ryan Parman, Sam Sneddon, Ryan McCue
  * @author Ryan Parman
- * @author Geoffrey Sneddon
+ * @author Sam Sneddon
  * @author Ryan McCue
  * @link http://simplepie.org/ SimplePie
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-/**
- * General SimplePie exception class
- *
- * @package SimplePie
- */
-class SimplePie_Exception extends Exception
-{
+use SimplePie\Exception as SimplePieException;
+
+class_exists('SimplePie\Exception');
+
+// @trigger_error(sprintf('Using the "SimplePie_Exception" class is deprecated since SimplePie 1.7.0, use "SimplePie\Exception" instead.'), \E_USER_DEPRECATED);
+
+if (\false) {
+    /** @deprecated since SimplePie 1.7.0, use "SimplePie\Exception" instead */
+    class SimplePie_Exception extends SimplePieException
+    {
+    }
 }

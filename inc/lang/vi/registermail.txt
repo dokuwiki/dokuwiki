@@ -1,0 +1,10 @@
+Một người dùng mới đã đăng ký. Đây là những thông tin chi tiết:
+
+Tên thành viên   : @NEWUSER@
+Tên đầy đủ   : @NEWNAME@
+Thư điện tử      : @NEWEMAIL@
+
+Ngày        : @DATE@
+Trình duyệt     : @BROWSER@
+Địa chỉ IP  : @IPADDRESS@
+Tên máy chủ    : @HOSTNAME@

@@ -1,3 +1,3 @@
-====== Mục lục ======
+====== Sơ đồ trang web ======
 
-Đây là mục lục của tất cả các trang, xếp theo thứ tự [[doku>namespaces|namespaces]].
+Đây là sơ đồ trang web chứa tất cả các trang có sẵn được sắp xếp theo [[doku>namespaces|không gian tên]].

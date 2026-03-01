@@ -1,5 +1,8 @@
 <?php
 
+use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for requesting revisioninfo of a revision of a page with getRevisionInfo()
  *
@@ -12,16 +15,12 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';
 
-    function setup() {
+    function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
     }
 
     /**
@@ -115,7 +114,8 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
         $rev = 1362525359;
         $dir = 1;
         $revexpected = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $revfound = $pagelog->getRelativeRevision($rev, $dir);

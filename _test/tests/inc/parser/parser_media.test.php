@@ -31,7 +31,7 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $source = '<source src="http://some.where.far/away.ogv" type="video/ogg" />';
         $this->assertEquals(substr($url,67,64),$source);
         // work around random token
-        $a_first_part = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?cache=&amp;tok=';
+        $a_first_part = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?tok=';
         $a_second_part = '&amp;media=http%3A%2F%2Fsome.where.far%2Faway.ogv" class="media mediafile mf_ogv" title="http://some.where.far/away.ogv">';
 
         $substr_start = 132;
@@ -119,18 +119,29 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
+        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
         $substr_start = strpos($url, $a_webm, $substr_start + strlen($source_ogv));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?id=&amp;cache=&amp;media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
+        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
         $substr_start = strpos($url, $a_ogv, $substr_start + strlen($a_webm));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         $rest = '</video>'."\n";
         $substr_start = strlen($url) - strlen($rest);
         $this->assertEquals($rest, substr($url, $substr_start));
+    }
+
+    function testVideoInternalTitle() {
+        $file = 'wiki:kind_zu_katze.ogv';
+        $title = 'Single quote: \' Ampersand: &';
+
+        $Renderer = new Doku_Renderer_xhtml();
+        $url = $Renderer->externalmedia($file, $title, null, null, null, 'cache', 'details', true);
+
+        // make sure the title is escaped just once
+        $this->assertEquals(hsc($title), substr($url, 28, 37));
     }
 
     function testSimpleLinkText() {

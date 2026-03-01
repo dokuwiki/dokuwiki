@@ -4,7 +4,7 @@
  * --------
  * Author: Rowan Rodrik van der Molen (rowan@bigsmoke.us)
  * Copyright: (c) 2006 Rowan Rodrik van der Molen (http://www.bigsmoke.us/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2006/09/28
  *
  * BNF (Backus-Naur form) language file for GeSHi.

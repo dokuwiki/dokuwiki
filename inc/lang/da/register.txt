@@ -1,4 +1,3 @@
 ====== Opret en wiki-konto ======
 
-Udfyld nedenstånde skema for at oprette en konto i denne wiki. Sørg for at bruge en **gyldig e-mail-adresse** - dit adgangskode bliver sendt til dig. Dit brugernavn skal være et gyldigt [[doku>pagename|dokumentnavn]].
-
+Udfyld nedenstånde skema for at oprette en brugerkonto i denne wiki. Sørg for at bruge en **gyldig e-mail adresse** - din adgangskode bliver sendt til dig. Dit brugernavn skal være et gyldigt [[doku>da:pagename|sidenavn]].

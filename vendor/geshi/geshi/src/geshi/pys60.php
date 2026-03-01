@@ -4,7 +4,7 @@
  * ----------
  * Author: Sohan Basak (ronnie.basak96 @gmail.com)
  * Copyright: (c) 2012 Sohan Basak (http://tothepower.tk),  Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/05/03
  *
  * Python for S60 language file for GeSHi.

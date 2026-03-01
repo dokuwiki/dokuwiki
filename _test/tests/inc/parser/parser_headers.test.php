@@ -1,10 +1,14 @@
 <?php
+
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Header;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
 
     function testHeader1() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n ====== Header ====== \n def");
         $calls = array (
             array('document_start',array()),
@@ -23,7 +27,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader2() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n  ===== Header ===== \n def");
         $calls = array (
             array('document_start',array()),
@@ -42,7 +46,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader3() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n ==== Header ==== \n def");
         $calls = array (
             array('document_start',array()),
@@ -61,7 +65,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader4() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n === Header === \n def");
         $calls = array (
             array('document_start',array()),
@@ -80,7 +84,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader5() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n  == Header ==  \n def");
         $calls = array (
             array('document_start',array()),
@@ -99,7 +103,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader2UnevenSmaller() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n  ===== Header ==  \n def");
         $calls = array (
             array('document_start',array()),
@@ -118,7 +122,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader2UnevenBigger() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n  ===== Header ===========  \n def");
         $calls = array (
             array('document_start',array()),
@@ -137,7 +141,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeaderLarge() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n ======= Header ======= \n def");
         $calls = array (
             array('document_start',array()),
@@ -156,7 +160,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeaderSmall() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n= Header =\n def");
         $calls = array (
             array('document_start',array()),
@@ -170,7 +174,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
 
 
     function testHeader1Mixed() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n====== == Header == ======\n def");
         $calls = array (
             array('document_start',array()),
@@ -189,7 +193,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeader5Mixed() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n== ====== Header ====== ==\n def");
         $calls = array (
             array('document_start',array()),
@@ -208,7 +212,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeaderMultiline() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n== ====== Header\n ====== ==\n def");
         $calls = array (
             array('document_start',array()),
@@ -227,14 +231,14 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
 #    function testNoToc() {
-#        $this->P->addMode('notoc',new Doku_Parser_Mode_NoToc());
+#        $this->P->addMode('notoc',new NoToc());
 #        $this->P->parse('abc ~~NOTOC~~ def');
 #        $this->assertFalse($this->H->meta['toc']);
 #    }
 
     function testHeader1Eol() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('header',new Header());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse("abc \n ====== Header ====== \n def");
         $calls = array (
             array('document_start',array()),
@@ -254,7 +258,7 @@ class TestOfDoku_Parser_Headers extends TestOfDoku_Parser {
     }
 
     function testHeaderMulti2() {
-        $this->P->addMode('header',new Doku_Parser_Mode_Header());
+        $this->P->addMode('header',new Header());
         $this->P->parse("abc \n ====== Header ====== \n def abc \n ===== Header2 ===== \n def");
         $calls = array (
             array('document_start',array()),

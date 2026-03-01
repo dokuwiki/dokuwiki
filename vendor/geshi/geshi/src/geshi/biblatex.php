@@ -5,7 +5,7 @@
  * Author: Maïeul Rouquette from
  * Quinn Taylor (quinntaylor@mac.com)
  * Copyright: (c) 2009 Quinn Taylor (quinntaylor@mac.com), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/04/29
  *
  * BibLaTeX language file for GeSHi.

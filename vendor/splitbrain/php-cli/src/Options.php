@@ -31,6 +31,9 @@ class Options
     /** @var  Colors for colored help output */
     protected $colors;
 
+    /** @var string newline used for spacing help texts */
+    protected $newline = "\n";
+
     /**
      * Constructor
      *
@@ -49,7 +52,8 @@ class Options
             '' => array(
                 'opts' => array(),
                 'args' => array(),
-                'help' => ''
+                'help' => '',
+                'commandhelp' => 'This tool accepts a command as first parameter as outlined below:'
             )
         ); // default command
 
@@ -57,6 +61,14 @@ class Options
         $this->bin = basename(array_shift($this->args));
 
         $this->options = array();
+    }
+    
+    /**
+     * Gets the bin value
+     */
+    public function getBin()
+    {
+        return $this->bin;
     }
 
     /**
@@ -67,6 +79,26 @@ class Options
     public function setHelp($help)
     {
         $this->setup['']['help'] = $help;
+    }
+
+    /**
+     * Sets the help text for the tools commands itself
+     *
+     * @param string $help
+     */
+    public function setCommandHelp($help)
+    {
+        $this->setup['']['commandhelp'] = $help;
+    }
+
+    /**
+     * Use a more compact help screen with less new lines
+     *
+     * @param bool $set
+     */
+    public function useCompactHelp($set = true)
+    {
+        $this->newline = $set ? '' : "\n";
     }
 
     /**
@@ -208,13 +240,13 @@ class Options
             }
 
             // first non-option
-            if ($arg{0} != '-') {
+            if ($arg[0] != '-') {
                 $non_opts = array_merge($non_opts, array_slice($this->args, $i));
                 break;
             }
 
             // long option
-            if (strlen($arg) > 1 && $arg{1} == '-') {
+            if (strlen($arg) > 1 && $arg[1] === '-') {
                 $arg = explode('=', substr($arg, 2), 2);
                 $opt = array_shift($arg);
                 $val = array_shift($arg);
@@ -334,6 +366,8 @@ class Options
         $text = '';
 
         $hascommands = (count($this->setup) > 1);
+        $commandhelp = $this->setup['']["commandhelp"];
+
         foreach ($this->setup as $command => $config) {
             $hasopts = (bool)$this->setup[$command]['opts'];
             $hasargs = (bool)$this->setup[$command]['args'];
@@ -345,7 +379,7 @@ class Options
                 $text .= '   ' . $this->bin;
                 $mv = 2;
             } else {
-                $text .= "\n";
+                $text .= $this->newline;
                 $text .= $this->colors->wrap('   ' . $command, Colors::C_PURPLE);
                 $mv = 4;
             }
@@ -366,14 +400,14 @@ class Options
                 }
                 $text .= ' ' . $out;
             }
-            $text .= "\n";
+            $text .= $this->newline;
 
             // usage or command intro
             if ($this->setup[$command]['help']) {
                 $text .= "\n";
                 $text .= $tf->format(
                     array($mv, '*'),
-                    array('', $this->setup[$command]['help'] . "\n")
+                    array('', $this->setup[$command]['help'] . $this->newline)
                 );
             }
 
@@ -404,7 +438,7 @@ class Options
                         array('', $name, $opt['help']),
                         array('', 'green', '')
                     );
-                    $text .= "\n";
+                    $text .= $this->newline;
                 }
             }
 
@@ -414,7 +448,7 @@ class Options
                     $text .= "\n";
                     $text .= $this->colors->wrap('ARGUMENTS:', Colors::C_BROWN);
                 }
-                $text .= "\n";
+                $text .= $this->newline;
                 foreach ($this->setup[$command]['args'] as $arg) {
                     $name = '<' . $arg['name'] . '>';
 
@@ -433,9 +467,9 @@ class Options
                 $text .= "\n";
                 $text .= $tf->format(
                     array($mv, '*'),
-                    array('', 'This tool accepts a command as first parameter as outlined below:')
+                    array('', $commandhelp)
                 );
-                $text .= "\n";
+                $text .= $this->newline;
             }
         }
 

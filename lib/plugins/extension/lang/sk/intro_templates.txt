@@ -1,0 +1,1 @@
+Toto sú aktuálne nainštalované témy vo Vašom systéme DokuWiki. Tému, ktorú chcete použiť, môžete vybrať v [[?do=admin&page=config|Nastavení konfigurácie]].

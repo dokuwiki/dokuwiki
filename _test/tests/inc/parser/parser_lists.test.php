@@ -1,10 +1,19 @@
 <?php
+
+use dokuwiki\Parsing\Handler\Lists;
+use dokuwiki\Parsing\ParserMode\Eol;
+use dokuwiki\Parsing\ParserMode\Footnote;
+use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Linebreak;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Unformatted;
+
 require_once 'parser.inc.php';
 
 class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
 
     function testUnorderedList() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse('
   *A
     * B
@@ -13,7 +22,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -37,7 +46,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
     }
 
     function testOrderedList() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse('
   -A
     - B
@@ -46,7 +55,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -71,7 +80,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
 
 
     function testMixedList() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse('
   -A
     * B
@@ -80,7 +89,7 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -102,14 +111,14 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testUnorderedListWinEOL() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse("\r\n  *A\r\n    * B\r\n  * C\r\n");
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -131,14 +140,14 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testOrderedListWinEOL() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse("\r\n  -A\r\n    - B\r\n  - C\r\n");
         $calls = array (
             array('document_start',array()),
             array('listo_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -160,9 +169,9 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testNotAList() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
+        $this->P->addMode('listblock',new Listblock());
         $this->P->parse("Foo  -bar  *foo Bar");
         $calls = array (
             array('document_start',array()),
@@ -173,10 +182,10 @@ class TestOfDoku_Parser_Lists extends TestOfDoku_Parser {
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testUnorderedListParagraph() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('eol',new Doku_Parser_Mode_Eol());
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('eol',new Eol());
         $this->P->parse('Foo
   *A
     * B
@@ -188,7 +197,7 @@ Bar');
             array('cdata',array("Foo")),
             array('p_close',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('listcontent_close',array()),
@@ -213,12 +222,12 @@ Bar');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     // This is really a failing test - formatting able to spread across list items
     // Problem is fixing it would mean a major rewrite of lists
     function testUnorderedListStrong() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('strong',new Doku_Parser_Mode_Formatting('strong'));
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('strong',new Formatting('strong'));
         $this->P->parse('
   ***A**
     *** B
@@ -227,7 +236,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('strong_open',array()),
             array('cdata',array("A")),
@@ -248,12 +257,12 @@ Bar');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     // This is really a failing test - unformatted able to spread across list items
     // Problem is fixing it would mean a major rewrite of lists
     function testUnorderedListUnformatted() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('unformatted',new Doku_Parser_Mode_Unformatted());
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('unformatted',new Unformatted());
         $this->P->parse('
   *%%A%%
     *%% B
@@ -262,7 +271,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('unformatted',array("A")),
             array('listcontent_close',array()),
@@ -279,10 +288,10 @@ Bar');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testUnorderedListLinebreak() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('linebreak',new Linebreak());
         $this->P->parse('
   *A\\\\ D
     * B
@@ -291,7 +300,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('cdata',array("A")),
             array('linebreak',array()),
@@ -315,10 +324,10 @@ Bar');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testUnorderedListLinebreak2() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('linebreak',new Doku_Parser_Mode_Linebreak());
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('linebreak',new Linebreak());
         $this->P->parse('
   *A\\\\
   * B
@@ -342,10 +351,10 @@ Bar');
         );
         $this->assertEquals(array_map('stripbyteindex',$this->H->calls),$calls);
     }
-    
+
     function testUnorderedListFootnote() {
-        $this->P->addMode('listblock',new Doku_Parser_Mode_ListBlock());
-        $this->P->addMode('footnote',new Doku_Parser_Mode_Footnote());
+        $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('footnote',new Footnote());
         $this->P->parse('
   *((A))
     *(( B
@@ -355,7 +364,7 @@ Bar');
         $calls = array (
             array('document_start',array()),
             array('listu_open',array()),
-            array('listitem_open',array(1,Doku_Handler_List::NODE)),
+            array('listitem_open',array(1,Lists::NODE)),
             array('listcontent_open',array()),
             array('nest', array( array(
                 array('footnote_open',array()),

@@ -4,7 +4,7 @@
  * --------
  * Author: Carl Fürstenberg (azatoth@gmail.com)
  * Copyright: © 2007 Carl Fürstenberg
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/07/11
  *
  * Povray language file for GeSHi.

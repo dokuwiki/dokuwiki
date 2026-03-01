@@ -1,2 +1,1 @@
 Rediger siden og klikk på ''**Lagre**''. Se [[wiki:syntax]] for Wikisyntaks. Rediger siden bare hvis du kan **forbedre** sidens innhold. Hvis du vil teste ut hvordan saker og ting fungerer, kan du gjøre det på [[playground:playground|lekeplassen]].
-

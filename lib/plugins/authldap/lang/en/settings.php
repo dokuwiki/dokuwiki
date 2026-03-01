@@ -11,11 +11,13 @@ $lang['referrals']   = 'Shall referrals be followed?';
 $lang['deref']       = 'How to dereference aliases?';
 $lang['binddn']      = 'DN of an optional bind user if anonymous bind is not sufficient. Eg. <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']      = 'Password of above user';
+$lang['attributes']  = 'Attributes to retrieve with the LDAP search.';
 $lang['userscope']   = 'Limit search scope for user search';
 $lang['groupscope']  = 'Limit search scope for group search';
 $lang['userkey']     = 'Attribute denoting the username; must be consistent to userfilter.';
 $lang['groupkey']    = 'Group membership from any user attribute (instead of standard AD groups) e.g. group from department or telephone number';
 $lang['modPass']     = 'Can the LDAP password be changed via dokuwiki?';
+$lang['modPassPlain']= 'Send password updates in plain text to the LDAP server (rather than salt and hash them with the configured algorithm before transmission)?';
 $lang['debug']       = 'Display additional debug information on errors';
 
 

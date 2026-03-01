@@ -1,4 +1,3 @@
 ====== Jauna lietotāja reģistrācija ======
 
 Lai izveidotu jaunu kontu, aizpildi visas prasītās ailes. Pārliecinies, ka uzdod **derīgu pasta adresi**, jo jauno paroli tev nosūtīs pa pastu. Lietotājvārdam jāatbilst [[doku>pagename|wiki vārdu nosacījumiem]].
-

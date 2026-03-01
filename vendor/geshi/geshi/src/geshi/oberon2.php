@@ -4,7 +4,7 @@
  * ----------
  * Author: mbishop (mbishop@esoteriq.org)
  * Copyright: (c) 2009 mbishop (mbishop@esoteriq.org)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/02/10
  *
  * Oberon-2 language file for GeSHi.

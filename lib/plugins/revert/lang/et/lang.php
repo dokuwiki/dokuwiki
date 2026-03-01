@@ -2,7 +2,7 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Janar Leas <janar.leas@eesti.ee>
  */
 $lang['note1']                 = 'Teadmiseks: See otsing arvestab suurtähti';

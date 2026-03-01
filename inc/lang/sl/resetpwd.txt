@@ -1,1 +1,3 @@
-====== Nastavitev novega gesla ======<br><br>Vnesite novo geslo za račun Wiki. 
+====== Nastavitev novega gesla ======
+
+Vnesite novo geslo za račun Wiki.

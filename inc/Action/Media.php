@@ -9,16 +9,17 @@ namespace dokuwiki\Action;
  *
  * @package dokuwiki\Action
  */
-class Media extends AbstractAction {
-
+class Media extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         return AUTH_READ;
     }
 
     /** @inheritdoc */
-    public function tplContent() {
+    public function tplContent()
+    {
         tpl_media();
     }
-
 }

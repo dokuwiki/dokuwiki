@@ -7,7 +7,7 @@
  *  - Sandra Rossi (sandra.rossi@gmail.com)
  *  - Jacob Laursen (jlu@kmd.dk)
  * Copyright: (c) 2007 Andres Picazo
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/06/04
  *
  * ABAP language file for GeSHi.

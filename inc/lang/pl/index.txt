@@ -1,4 +1,3 @@
 ====== Indeks ======
 
-Indeks wszystkich dostępnych stron pogrupowany według [[doku>namespaces|katalogów]].
-
+Indeks wszystkich dostępnych stron pogrupowany według [[doku>pl:namespaces|katalogów]].

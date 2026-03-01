@@ -1,6 +1,6 @@
-Um ficheiro foi carregado. Aqui estão os detalhes:
+Um arquivo foi enviado. Aqui estão os detalhes:
 
-Ficheiro       : @MEDIA@
+Arquivo       : @MEDIA@
 Revisão antiga : @OLD@
 Data           : @DATE@
 Navegador      : @BROWSER@

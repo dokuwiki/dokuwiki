@@ -5,7 +5,7 @@
  * @author Michael Hamann <michael@content-space.de>
  */
 class indexer_indexing_test extends DokuWikiTest {
-    public function setUp() {
+    public function setUp() : void {
         parent::setUp();
         saveWikiText('testpage', 'Foo bar baz.', 'Test initialization');
         saveWikiText('notfound', 'Foon barn bazn.', 'Test initialization');
@@ -58,5 +58,22 @@ class indexer_indexing_test extends DokuWikiTest {
         $indexer->addMetaKeys('notfound', 'onezero', array('1010'));
         $query = '1010';
         $this->assertEquals(array('notfound', 'testpage'), $indexer->lookupKey('onezero', $query));
+    }
+
+    public function test_numeric_zerostring_meta() {
+        $indexer = idx_get_indexer();
+        $indexer->addMetaKeys('zero1', 'zerostring', array('0'));
+        $indexer->addMetaKeys('zero2', 'zerostring', array('0'));
+        $indexer->addMetaKeys('0', 'zerostring', array('zero'));
+
+        $query = '0';
+        $result = $indexer->lookupKey('zerostring', $query);
+        sort($result);
+        $this->assertEquals(array('zero1', 'zero2'), $result);
+
+        $query = 'zero';
+        $result = $indexer->lookupKey('zerostring', $query);
+        sort($result);
+        $this->assertEquals(array('0'), $result);
     }
 }

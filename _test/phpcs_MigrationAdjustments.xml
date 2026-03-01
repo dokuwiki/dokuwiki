@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="Migration Adjustments for the DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
+    <description>These are exceptions to the Coding Standard used for DokuWiki that are intended to be removed over time.</description>
+
+    <!-- extend the standard configuration -->
+    <rule ref="./phpcs.xml">
+    </rule>
+
+    <!-- for now we mix declarations and execution here (mostly for defines) -->
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/index.php</exclude-pattern>
+        <exclude-pattern>*/inc/parserutils.php</exclude-pattern>
+        <exclude-pattern>*/inc/mail.php</exclude-pattern>
+        <exclude-pattern>*/inc/init.php</exclude-pattern>
+        <exclude-pattern>*/inc/farm.php</exclude-pattern>
+        <exclude-pattern>*/inc/fulltext.php</exclude-pattern>
+        <exclude-pattern>*/inc/pluginutils.php</exclude-pattern>
+        <exclude-pattern>*/inc/indexer.php</exclude-pattern>
+        <exclude-pattern>*/inc/Mailer.class.php</exclude-pattern>
+        <exclude-pattern>*/doku.php</exclude-pattern>
+        <exclude-pattern>*/install.php</exclude-pattern>
+        <exclude-pattern>*/inc/utf8.php</exclude-pattern>
+        <exclude-pattern>*/feed.php</exclude-pattern>
+        <exclude-pattern>*/inc/load.php</exclude-pattern>
+        <exclude-pattern>*/bin/*.php</exclude-pattern>
+        <exclude-pattern>*/lib/exe/*.php</exclude-pattern>
+    </rule>
+
+</ruleset>

@@ -4,7 +4,8 @@
  */
 
 if(!defined('DOKU_UNITTEST')) define('DOKU_UNITTEST',dirname(__FILE__).'/');
-require_once DOKU_UNITTEST.'core/phpQuery-onefile.php';
+require_once DOKU_UNITTEST.'vendor/autoload.php';
+require_once DOKU_UNITTEST.'core/phpQuery-onefile.php'; // deprecated
 require_once DOKU_UNITTEST.'core/DokuWikiTest.php';
 require_once DOKU_UNITTEST.'core/TestResponse.php';
 require_once DOKU_UNITTEST.'core/TestRequest.php';
@@ -20,9 +21,9 @@ error_reporting(DOKU_E_LEVEL);
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
-// prepare temporary directories
-define('DOKU_INC', dirname(dirname(__FILE__)).'/');
-define('TMP_DIR', sys_get_temp_dir().'/dwtests-'.microtime(true));
+// prepare temporary directories; str_replace is for WIN
+define('DOKU_INC', str_replace('\\', '/', dirname(dirname(__FILE__))) . '/');
+define('TMP_DIR', str_replace('\\', '/', sys_get_temp_dir()) . '/dwtests-'.microtime(true));
 define('DOKU_CONF', TMP_DIR.'/conf/');
 define('DOKU_TMP_DATA', TMP_DIR.'/data/');
 
@@ -51,10 +52,10 @@ $default_server_vars = array(
     'DOCUMENT_ROOT' => DOKU_INC,
     'SERVER_PROTOCOL' => 'HTTP/1.1',
     'SERVER_SOFTWARE' => 'nginx/0.7.67',
-    'REMOTE_ADDR' => '87.142.120.6',
+    'REMOTE_ADDR' => '172.17.18.19',
     'REMOTE_PORT' => '21418',
-    'SERVER_ADDR' => '46.38.241.24',
-    'SERVER_PORT' => '443',
+    'SERVER_ADDR' => '10.11.12.13',
+    'SERVER_PORT' => '80',
     'SERVER_NAME' => 'wiki.example.com',
     'REDIRECT_STATUS' => '200',
     'SCRIPT_FILENAME' => DOKU_INC.'doku.php',
@@ -88,15 +89,9 @@ if (getenv('PRESERVE_TMP') != 'true') {
     echo ">>>> Preserving temporary directory: ".TMP_DIR."\n";
 }
 
-// populate default dirs
-TestUtils::rcopy(TMP_DIR, DOKU_INC.'/conf');
-TestUtils::rcopy(TMP_DIR, dirname(__FILE__).'/conf');
-mkdir(DOKU_TMP_DATA);
-foreach(array(
-    'attic', 'cache', 'index', 'locks', 'media',
-    'media_attic', 'media_meta', 'meta', 'pages', 'tmp') as $dir){
-    mkdir(DOKU_TMP_DATA.'/'.$dir);
-}
+// populate default dirs for initial setup
+DokuWikiTest::setupDataDir();
+DokuWikiTest::setupConfDir();
 
 // disable all non-default plugins by default
 $dh = dir(DOKU_INC.'lib/plugins/');
@@ -115,6 +110,9 @@ while (false !== ($entry = $dh->read())) {
     }
 }
 $dh->close();
+
+// use no mbstring help during tests
+if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
 
 // load dw
 require_once(DOKU_INC.'inc/init.php');

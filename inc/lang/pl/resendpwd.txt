@@ -1,4 +1,3 @@
 ====== Przesyłanie nowego hasła ======
 
 Aby otrzymać nowe hasło, podaj nazwę Twojego konta w tym wiki. Prośba o potwierdzenie w postaci odnośnika zostanie Ci przesłana pocztą elektroniczną.
-

@@ -2,7 +2,9 @@
 
 namespace dokuwiki\Action;
 
+use dokuwiki\Ui\Editor;
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Ui;
 
 /**
  * Class Edit
@@ -11,12 +13,13 @@ use dokuwiki\Action\Exception\ActionAbort;
  *
  * @package dokuwiki\Action
  */
-class Edit extends AbstractAction {
-
+class Edit extends AbstractAction
+{
     /** @inheritdoc */
-    public function minimumPermission() {
+    public function minimumPermission()
+    {
         global $INFO;
-        if($INFO['exists']) {
+        if ($INFO['exists']) {
             return AUTH_READ; // we check again below
         } else {
             return AUTH_CREATE;
@@ -26,18 +29,20 @@ class Edit extends AbstractAction {
     /**
      * @inheritdoc falls back to 'source' if page not writable
      */
-    public function checkPreconditions() {
+    public function checkPreconditions()
+    {
         parent::checkPreconditions();
         global $INFO;
 
         // no edit permission? view source
-        if($INFO['exists'] && !$INFO['writable']) {
+        if ($INFO['exists'] && !$INFO['writable']) {
             throw new ActionAbort('source');
         }
     }
 
     /** @inheritdoc */
-    public function preProcess() {
+    public function preProcess()
+    {
         global $ID;
         global $INFO;
 
@@ -50,10 +55,10 @@ class Edit extends AbstractAction {
         global $lang;
         global $DATE;
 
-        if(!isset($TEXT)) {
-            if($INFO['exists']) {
-                if($RANGE) {
-                    list($PRE, $TEXT, $SUF) = rawWikiSlices($RANGE, $ID, $REV);
+        if (!isset($TEXT)) {
+            if ($INFO['exists']) {
+                if ($RANGE) {
+                    [$PRE, $TEXT, $SUF] = rawWikiSlices($RANGE, $ID, $REV);
                 } else {
                     $TEXT = rawWiki($ID, $REV);
                 }
@@ -63,29 +68,29 @@ class Edit extends AbstractAction {
         }
 
         //set summary default
-        if(!$SUM) {
-            if($REV) {
+        if (!$SUM) {
+            if ($REV) {
                 $SUM = sprintf($lang['restored'], dformat($REV));
-            } elseif(!$INFO['exists']) {
+            } elseif (!$INFO['exists']) {
                 $SUM = $lang['created'];
             }
         }
 
         // Use the date of the newest revision, not of the revision we edit
         // This is used for conflict detection
-        if(!$DATE) $DATE = @filemtime(wikiFN($ID));
+        if (!$DATE) $DATE = @filemtime(wikiFN($ID));
 
         //check if locked by anyone - if not lock for my self
         $lockedby = checklock($ID);
-        if($lockedby) {
+        if ($lockedby) {
             throw new ActionAbort('locked');
-        };
+        }
         lock($ID);
     }
 
     /** @inheritdoc */
-    public function tplContent() {
-        html_edit();
+    public function tplContent()
+    {
+        (new Editor())->show();
     }
-
 }

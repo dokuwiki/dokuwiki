@@ -1,4 +1,3 @@
 ====== Logg inn ======
 
-Du er ikke innlogget! Angi ditt brukernavn og passord nedenfor for å logge inn. Støtte for informasjonskapsler (cockies) må være aktivert i din nettleser for at du skal kunne logge inn.
-
+Du er ikke innlogget! Angi ditt brukernavn og passord nedenfor for å logge inn. Støtte for informasjonskapsler (cookies) må være aktivert i din nettleser for at du skal kunne logge inn.

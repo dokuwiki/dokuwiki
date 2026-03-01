@@ -7,23 +7,55 @@ namespace Composer\Autoload;
 class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
 {
     public static $files = array (
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'fdc0e9724ddc47859c8bf0c1ea0a623a' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/constants.php',
+        '9e71c1459ef1226520e4b26dac3a180d' => __DIR__ . '/..' . '/php81_bc/strftime/src/php-8.1-strftime.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         's' => 
         array (
+            'splitbrain\\slika\\tests\\' => 23,
+            'splitbrain\\slika\\' => 17,
             'splitbrain\\phpcli\\' => 18,
             'splitbrain\\PHPArchive\\' => 22,
+            'splitbrain\\JSStrip\\tests\\' => 25,
+            'splitbrain\\JSStrip\\' => 19,
         ),
         'p' => 
         array (
-            'phpseclib\\' => 10,
+            'phpseclib3\\' => 11,
+        ),
+        'S' => 
+        array (
+            'SimplePie\\' => 10,
+        ),
+        'P' => 
+        array (
+            'ParagonIE\\ConstantTime\\' => 23,
+            'PHP81_BC\\strftime\\' => 18,
+        ),
+        'L' => 
+        array (
+            'LesserPHP\\tests\\' => 16,
+            'LesserPHP\\' => 10,
+        ),
+        'I' => 
+        array (
+            'IXR\\tests\\' => 10,
+            'IXR\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'splitbrain\\slika\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/tests',
+        ),
+        'splitbrain\\slika\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/slika/src',
+        ),
         'splitbrain\\phpcli\\' => 
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-cli/src',
@@ -32,9 +64,45 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-archive/src',
         ),
-        'phpseclib\\' => 
+        'splitbrain\\JSStrip\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/tests',
+        ),
+        'splitbrain\\JSStrip\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/src',
+        ),
+        'phpseclib3\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'SimplePie\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
+        ),
+        'PHP81_BC\\strftime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php81_bc/strftime/src',
+        ),
+        'LesserPHP\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/lesserphp/tests',
+        ),
+        'LesserPHP\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/splitbrain/lesserphp/src',
+        ),
+        'IXR\\tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kissifrot/php-ixr/tests',
+        ),
+        'IXR\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kissifrot/php-ixr/src',
         ),
     );
 
@@ -58,6 +126,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     public static $classMap = array (
         'AtomCreator03' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/AtomCreator03.php',
         'AtomCreator10' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/AtomCreator10.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'FeedCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/FeedCreator.php',
         'FeedDate' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Element/FeedDate.php',
         'FeedHtmlField' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Element/FeedHtmlField.php',
@@ -68,6 +137,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'HTMLCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/HTMLCreator.php',
         'HtmlDescribable' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Element/HtmlDescribable.php',
         'JSCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/JSCreator.php',
+        'JSONCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/JSONCreator.php',
         'KMLCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/KMLCreator.php',
         'MBOXCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/MBOXCreator.php',
         'OPMLCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/OPMLCreator.php',
@@ -77,11 +147,6 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
         'RSSCreator10' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator10.php',
         'RSSCreator20' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/Creator/RSSCreator20.php',
         'UniversalFeedCreator' => __DIR__ . '/..' . '/openpsa/universalfeedcreator/lib/UniversalFeedCreator.php',
-        'lessc' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_classic' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_compressed' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_formatter_lessjs' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
-        'lessc_parser' => __DIR__ . '/..' . '/marcusschwarz/lesserphp/lessc.inc.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -1,10 +1,14 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Arabic language file
  *
+ * @author talal <ksa76@hotmail.com>
+ * @author Khalid <khalid.aljahil@gmail.com>
  * @author Yaman Hokan <always.smile.yh@hotmail.com>
  * @author Usama Akkad <uahello@gmail.com>
- * @author uahello@gmail.com
  */
 $lang['menu']                  = 'الإعدادات';
 $lang['error']                 = 'لم تحدث الاعدادات بسبب قيمة غير صالحة، رجاء راجع تغييراتك ثم ارسلها.
@@ -91,8 +95,6 @@ $lang['indexdelay']            = 'التأخير قبل الفهرسة (ثوان
 $lang['mailguard']             = 'عناوين بريدية مبهمة';
 $lang['iexssprotect']          = 'تحقق الملفات المرفوعة من احتمال وجود أكواد جافاسكربت أو HTML ضارة';
 $lang['usedraft']              = 'احفظ المسودة تلقائيا أثناء التحرير';
-$lang['htmlok']                = 'مكّن تضمين HTML';
-$lang['phpok']                 = 'مكّن تضمين PHP';
 $lang['locktime']              = 'الحد الأعظمي لقفل الملف (ثوان)';
 $lang['cachetime']             = 'الحد الأعظم لعمر المخُبأ (ثوان)';
 $lang['target____wiki']        = 'النافذة الهدف للروابط الداخلية';
@@ -142,12 +144,6 @@ $lang['proxy____user']         = 'اسم مستخدم الوكيل';
 $lang['proxy____pass']         = 'كلمة سر الوكيل';
 $lang['proxy____ssl']          = 'استخدم ssl للاتصال بالوكيل';
 $lang['proxy____except']       = 'تعبير شرطي لمقابلة العناوين التي ستتجاوز البروكسي.';
-$lang['safemodehack']          = 'مكّن hack الوضع الآمن';
-$lang['ftp____host']           = 'خادوم FTP ل hack الوضع الآمن';
-$lang['ftp____port']           = 'منفذ FTP ل hack الوضع الآمن';
-$lang['ftp____user']           = 'اسم مستخدم FTP ل hack الوضع الآمن';
-$lang['ftp____pass']           = 'كلمة سر FTP ل hack الوضع الآمن';
-$lang['ftp____root']           = 'دليل الجذر ل FTP لأجل hack الوضع الآمن';
 $lang['license_o_']            = 'غير مختار';
 $lang['typography_o_0']        = 'لاشيء';
 $lang['typography_o_1']        = 'استبعاد الاقتباس المفرد';

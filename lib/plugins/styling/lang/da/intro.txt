@@ -1,0 +1,2 @@
+Dette værktøj giver dig mulighed for at ændre udvalgte formateringer i dit valgte tema.
+Alle ændringer gemmes i en lokal indstillingsfil, og bevares ved opgraderinger.

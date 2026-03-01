@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilities for handling HTTP related tasks
  *
@@ -6,41 +7,35 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-define('HTTP_MULTIPART_BOUNDARY','D0KuW1K1B0uNDARY');
-define('HTTP_HEADER_LF',"\r\n");
-define('HTTP_CHUNK_SIZE',16*1024);
+define('HTTP_MULTIPART_BOUNDARY', 'D0KuW1K1B0uNDARY');
+define('HTTP_HEADER_LF', "\r\n");
+define('HTTP_CHUNK_SIZE', 16 * 1024);
 
 /**
  * Checks and sets HTTP headers for conditional HTTP requests
  *
- * @author   Simon Willison <swillison@gmail.com>
+ * @param int $timestamp lastmodified time of the cache file
+ * @returns  void or exits with previously header() commands executed
  * @link     http://simonwillison.net/2003/Apr/23/conditionalGet/
  *
- * @param    int $timestamp lastmodified time of the cache file
- * @returns  void or exits with previously header() commands executed
+ * @author   Simon Willison <swillison@gmail.com>
  */
-function http_conditionalRequest($timestamp){
+function http_conditionalRequest($timestamp)
+{
+    global $INPUT;
+
     // A PHP implementation of conditional get, see
     //   http://fishbowl.pastiche.org/2002/10/21/http_conditional_get_for_rss_hackers/
-    $last_modified = substr(gmdate('r', $timestamp), 0, -5).'GMT';
-    $etag = '"'.md5($last_modified).'"';
+    $last_modified = substr(gmdate('r', $timestamp), 0, -5) . 'GMT';
+    $etag = '"' . md5($last_modified) . '"';
     // Send the headers
     header("Last-Modified: $last_modified");
     header("ETag: $etag");
     // See if the client has provided the required headers
-    if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])){
-        $if_modified_since = stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-    }else{
-        $if_modified_since = false;
-    }
+    $if_modified_since = $INPUT->server->filter('stripslashes')->str('HTTP_IF_MODIFIED_SINCE', false);
+    $if_none_match = $INPUT->server->filter('stripslashes')->str('HTTP_IF_NONE_MATCH', false);
 
-    if (isset($_SERVER['HTTP_IF_NONE_MATCH'])){
-        $if_none_match = stripslashes($_SERVER['HTTP_IF_NONE_MATCH']);
-    }else{
-        $if_none_match = false;
-    }
-
-    if (!$if_modified_since && !$if_none_match){
+    if (!$if_modified_since && !$if_none_match) {
         return;
     }
 
@@ -64,26 +59,27 @@ function http_conditionalRequest($timestamp){
 /**
  * Let the webserver send the given file via x-sendfile method
  *
- * @author Chris Smith <chris@jalakai.co.uk>
- *
  * @param string $file absolute path of file to send
  * @returns  void or exits with previous header() commands executed
+ * @author Chris Smith <chris@jalakai.co.uk>
+ *
  */
-function http_sendfile($file) {
+function http_sendfile($file)
+{
     global $conf;
 
     //use x-sendfile header to pass the delivery to compatible web servers
-    if($conf['xsendfile'] == 1){
+    if ($conf['xsendfile'] == 1) {
         header("X-LIGHTTPD-send-file: $file");
         ob_end_clean();
         exit;
-    }elseif($conf['xsendfile'] == 2){
+    } elseif ($conf['xsendfile'] == 2) {
         header("X-Sendfile: $file");
         ob_end_clean();
         exit;
-    }elseif($conf['xsendfile'] == 3){
+    } elseif ($conf['xsendfile'] == 3) {
         // FS#2388 nginx just needs the relative path.
-        $file = DOKU_REL.substr($file, strlen(fullpath(DOKU_INC)) + 1);
+        $file = DOKU_REL . substr($file, strlen(fullpath(DOKU_INC)) + 1);
         header("X-Accel-Redirect: $file");
         ob_end_clean();
         exit;
@@ -96,88 +92,91 @@ function http_sendfile($file) {
  * This function exits the running script
  *
  * @param resource $fh - file handle for an already open file
- * @param int $size     - size of the whole file
- * @param int $mime     - MIME type of the file
+ * @param int $size - size of the whole file
+ * @param int $mime - MIME type of the file
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  */
-function http_rangeRequest($fh,$size,$mime){
-    $ranges  = array();
+function http_rangeRequest($fh, $size, $mime)
+{
+    global $INPUT;
+
+    $ranges = [];
     $isrange = false;
 
     header('Accept-Ranges: bytes');
 
-    if(!isset($_SERVER['HTTP_RANGE'])){
+    if (!$INPUT->server->has('HTTP_RANGE')) {
         // no range requested - send the whole file
-        $ranges[] = array(0,$size,$size);
-    }else{
-        $t = explode('=', $_SERVER['HTTP_RANGE']);
-        if (!$t[0]=='bytes') {
+        $ranges[] = [0, $size, $size];
+    } else {
+        $t = explode('=', $INPUT->server->str('HTTP_RANGE'));
+        if (!$t[0] == 'bytes') {
             // we only understand byte ranges - send the whole file
-            $ranges[] = array(0,$size,$size);
-        }else{
+            $ranges[] = [0, $size, $size];
+        } else {
             $isrange = true;
             // handle multiple ranges
-            $r = explode(',',$t[1]);
-            foreach($r as $x){
+            $r = explode(',', $t[1]);
+            foreach ($r as $x) {
                 $p = explode('-', $x);
                 $start = (int)$p[0];
-                $end   = (int)$p[1];
+                $end = (int)$p[1];
                 if (!$end) $end = $size - 1;
-                if ($start > $end || $start > $size || $end > $size){
+                if ($start > $end || $start > $size || $end > $size) {
                     header('HTTP/1.1 416 Requested Range Not Satisfiable');
-                    print 'Bad Range Request!';
+                    echo 'Bad Range Request!';
                     exit;
                 }
                 $len = $end - $start + 1;
-                $ranges[] = array($start,$end,$len);
+                $ranges[] = [$start, $end, $len];
             }
         }
     }
     $parts = count($ranges);
 
     // now send the type and length headers
-    if(!$isrange){
-        header("Content-Type: $mime",true);
-    }else{
+    if (!$isrange) {
+        header("Content-Type: $mime", true);
+    } else {
         header('HTTP/1.1 206 Partial Content');
-        if($parts == 1){
-            header("Content-Type: $mime",true);
-        }else{
-            header('Content-Type: multipart/byteranges; boundary='.HTTP_MULTIPART_BOUNDARY,true);
+        if ($parts == 1) {
+            header("Content-Type: $mime", true);
+        } else {
+            header('Content-Type: multipart/byteranges; boundary=' . HTTP_MULTIPART_BOUNDARY, true);
         }
     }
 
     // send all ranges
-    for($i=0; $i<$parts; $i++){
-        list($start,$end,$len) = $ranges[$i];
+    for ($i = 0; $i < $parts; $i++) {
+        [$start, $end, $len] = $ranges[$i];
 
         // multipart or normal headers
-        if($parts > 1){
-            echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.HTTP_HEADER_LF;
-            echo "Content-Type: $mime".HTTP_HEADER_LF;
-            echo "Content-Range: bytes $start-$end/$size".HTTP_HEADER_LF;
+        if ($parts > 1) {
+            echo HTTP_HEADER_LF . '--' . HTTP_MULTIPART_BOUNDARY . HTTP_HEADER_LF;
+            echo "Content-Type: $mime" . HTTP_HEADER_LF;
+            echo "Content-Range: bytes $start-$end/$size" . HTTP_HEADER_LF;
             echo HTTP_HEADER_LF;
-        }else{
+        } else {
             header("Content-Length: $len");
-            if($isrange){
+            if ($isrange) {
                 header("Content-Range: bytes $start-$end/$size");
             }
         }
 
         // send file content
-        fseek($fh,$start); //seek to start of range
+        fseek($fh, $start); //seek to start of range
         $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
         while (!feof($fh) && $chunk > 0) {
             @set_time_limit(30); // large files can take a lot of time
-            print fread($fh, $chunk);
+            echo fread($fh, $chunk);
             flush();
             $len -= $chunk;
             $chunk = ($len > HTTP_CHUNK_SIZE) ? HTTP_CHUNK_SIZE : $len;
         }
     }
-    if($parts > 1){
-        echo HTTP_HEADER_LF.'--'.HTTP_MULTIPART_BOUNDARY.'--'.HTTP_HEADER_LF;
+    if ($parts > 1) {
+        echo HTTP_HEADER_LF . '--' . HTTP_MULTIPART_BOUNDARY . '--' . HTTP_HEADER_LF;
     }
 
     // everything should be done here, exit (or return if testing)
@@ -191,17 +190,18 @@ function http_rangeRequest($fh,$size,$mime){
  * return true if there exists a gzip version of the uncompressed file
  * (samepath/samefilename.sameext.gz) created after the uncompressed file
  *
- * @author Chris Smith <chris.eureka@jalakai.co.uk>
- *
  * @param string $uncompressed_file
  * @return bool
+ * @author Chris Smith <chris.eureka@jalakai.co.uk>
+ *
  */
-function http_gzip_valid($uncompressed_file) {
-    if(!DOKU_HAS_GZIP) return false;
+function http_gzip_valid($uncompressed_file)
+{
+    if (!DOKU_HAS_GZIP) return false;
 
-    $gzip = $uncompressed_file.'.gz';
+    $gzip = $uncompressed_file . '.gz';
     if (filemtime($gzip) < filemtime($uncompressed_file)) {    // filemtime returns false (0) if file doesn't exist
-        return copy($uncompressed_file, 'compress.zlib://'.$gzip);
+        return copy($uncompressed_file, 'compress.zlib://' . $gzip);
     }
 
     return true;
@@ -215,24 +215,25 @@ function http_gzip_valid($uncompressed_file) {
  * and the script is terminated.
  *
  * @param string $cache cache file name
- * @param bool   $cache_ok    if cache can be used
+ * @param bool $cache_ok if cache can be used
  */
-function http_cached($cache, $cache_ok) {
+function http_cached($cache, $cache_ok)
+{
     global $conf;
 
     // check cache age & handle conditional request
     // since the resource files are timestamped, we can use a long max age: 1 year
     header('Cache-Control: public, max-age=31536000');
     header('Pragma: public');
-    if($cache_ok){
+    if ($cache_ok) {
         http_conditionalRequest(filemtime($cache));
-        if($conf['allowdebug']) header("X-CacheUsed: $cache");
+        if ($conf['allowdebug']) header("X-CacheUsed: $cache");
 
         // finally send output
         if ($conf['gzip_output'] && http_gzip_valid($cache)) {
             header('Vary: Accept-Encoding');
             header('Content-Encoding: gzip');
-            readfile($cache.".gz");
+            readfile($cache . ".gz");
         } else {
             http_sendfile($cache);
             readfile($cache);
@@ -249,20 +250,21 @@ function http_cached($cache, $cache_ok) {
  * @param string $file file name
  * @param string $content
  */
-function http_cached_finish($file, $content) {
+function http_cached_finish($file, $content)
+{
     global $conf;
 
     // save cache file
     io_saveFile($file, $content);
-    if(DOKU_HAS_GZIP) io_saveFile("$file.gz",$content);
+    if (DOKU_HAS_GZIP) io_saveFile("$file.gz", $content);
 
     // finally send output
     if ($conf['gzip_output'] && DOKU_HAS_GZIP) {
         header('Vary: Accept-Encoding');
         header('Content-Encoding: gzip');
-        print gzencode($content,9,FORCE_GZIP);
+        echo gzencode($content, 9, FORCE_GZIP);
     } else {
-        print $content;
+        echo $content;
     }
 }
 
@@ -271,7 +273,8 @@ function http_cached_finish($file, $content) {
  *
  * @return string
  */
-function http_get_raw_post_data() {
+function http_get_raw_post_data()
+{
     static $postData = null;
     if ($postData === null) {
         $postData = file_get_contents('php://input');
@@ -284,11 +287,14 @@ function http_get_raw_post_data() {
  *
  * Inspired by CodeIgniter's set_status_header function
  *
- * @param int    $code
+ * @param int $code
  * @param string $text
  */
-function http_status($code = 200, $text = '') {
-    static $stati = array(
+function http_status($code = 200, $text = '')
+{
+    global $INPUT;
+
+    static $stati = [
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
@@ -296,14 +302,12 @@ function http_status($code = 200, $text = '') {
         204 => 'No Content',
         205 => 'Reset Content',
         206 => 'Partial Content',
-
         300 => 'Multiple Choices',
         301 => 'Moved Permanently',
         302 => 'Found',
         304 => 'Not Modified',
         305 => 'Use Proxy',
         307 => 'Temporary Redirect',
-
         400 => 'Bad Request',
         401 => 'Unauthorized',
         403 => 'Forbidden',
@@ -321,25 +325,24 @@ function http_status($code = 200, $text = '') {
         415 => 'Unsupported Media Type',
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
-
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
         503 => 'Service Unavailable',
         504 => 'Gateway Timeout',
         505 => 'HTTP Version Not Supported'
-    );
+    ];
 
-    if($text == '' && isset($stati[$code])) {
+    if ($text == '' && isset($stati[$code])) {
         $text = $stati[$code];
     }
 
-    $server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : false;
+    $server_protocol = $INPUT->server->str('SERVER_PROTOCOL', false);
 
-    if(substr(php_sapi_name(), 0, 3) == 'cgi' || defined('SIMPLE_TEST')) {
+    if (str_starts_with(PHP_SAPI, 'cgi') || defined('SIMPLE_TEST')) {
         header("Status: {$code} {$text}", true);
-    } elseif($server_protocol == 'HTTP/1.1' OR $server_protocol == 'HTTP/1.0') {
-        header($server_protocol." {$code} {$text}", true, $code);
+    } elseif ($server_protocol == 'HTTP/1.1' || $server_protocol == 'HTTP/1.0') {
+        header($server_protocol . " {$code} {$text}", true, $code);
     } else {
         header("HTTP/1.1 {$code} {$text}", true, $code);
     }

@@ -1,7 +1,7 @@
 <?php
 
+$lang['home'] = 'Home';
 // style.ini values
-
 $lang['__background_site__'] = 'Color for the very background (behind the content box)';
 $lang['__link__']     = 'The general link color';
 $lang['__existing__'] = 'The color for links to existing pages';

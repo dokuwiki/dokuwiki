@@ -1,4 +1,3 @@
 ======Dësen Thema gëtt et nach net======
 
-Du hues op e Link vun enger Säit geklickt, déi et nach net gëtt. Wanns de déi néideg Rechter hues, da kanns de dës Säit uleeën andeems de op ''Dës Säit uleeën'' klicks.
-
+Du hues op e Link vun enger Säit geklickt, déi et nach net gëtt. Wanns de déi néideg Rechter hues, da kanns de dës Säit uleeën andeems de op **Dës Säit uleeën** klicks.

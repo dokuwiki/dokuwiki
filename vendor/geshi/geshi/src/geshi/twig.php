@@ -4,7 +4,7 @@
  * ----------
  * Author: Keyvan Akbary (keyvan@kiwwito.com)
  * Copyright: (c) 2011 Keyvan Akbary (http://www.kiwwito.com/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/12/05
  *
  * Twig template language file for GeSHi.

@@ -1,4 +1,3 @@
 ====== Registre-se como um novo usuário ======
 
-Preencha todas as informações abaixo para criar uma nova conta nesse Wiki. Certifique-se de que você forneceu um **endereço de e-mail válido** - se não for pedido que você entre com uma senha aqui, ela será enviada para esse endereço. O nome de usuário deve ser um [[doku>pagename|nome de página]] válido.
-
+Preencha todas as informações abaixo para criar uma nova conta nesse Wiki. Certifique-se de que você forneceu um **endereço de e-mail válido** - se não for pedido que você entre com uma senha aqui, ela será enviada para esse endereço. O nome de usuário deve ser um [[doku>pt-br:pagename|nome de página]] válido.

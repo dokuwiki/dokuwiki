@@ -1,14 +1,4 @@
 <?php
-// your local timezone, set to "" to disable or for GMT
-if (!defined('TIME_ZONE')) {
-    define("TIME_ZONE", date("O", time()));
-}
-
-/**
- * Version string.
- */
-define("FEEDCREATOR_VERSION", "FeedCreator 1.8");
-
 /**
  * UniversalFeedCreator lets you choose during runtime which
  * format to build.
@@ -17,7 +7,6 @@ define("FEEDCREATOR_VERSION", "FeedCreator 1.8");
  *
  * @since   1.3
  * @author  Kai Blankenhorn <kaib@bitfolge.de>
- * @package de.bitfolge.feedcreator
  */
 class UniversalFeedCreator extends FeedCreator
 {
@@ -29,7 +18,7 @@ class UniversalFeedCreator extends FeedCreator
      */
     protected function _setFormat($format)
     {
-        switch (strtoupper($format)) {
+        switch (strtoupper((string) $format)) {
 
             case "BASE":
                 $this->format = $format;
@@ -99,6 +88,10 @@ class UniversalFeedCreator extends FeedCreator
                 $this->_feed = new JSCreator();
                 break;
 
+            case "JSON":
+                $this->_feed = new JSONCreator();
+                break;
+
             default:
                 $this->_feed = new RSSCreator091();
                 break;
@@ -137,7 +130,7 @@ class UniversalFeedCreator extends FeedCreator
      *                                 "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM",
      *                                 "ATOM0.3", "HTML", "JS"
      * @param string $filename         optional    the filename where a recent version of the feed is saved. If not
-     *                                 specified, the filename is $_SERVER["PHP_SELF"] with the extension changed to
+     *                                 specified, the filename is $_SERVER["SCRIPT_NAME"] with the extension changed to
      *                                 .xml (see _generateFilename()).
      * @param boolean $displayContents optional    send the content of the file or not. If true, the file will be sent
      *                                 in the body of the response.
@@ -158,7 +151,7 @@ class UniversalFeedCreator extends FeedCreator
      * @param string $format   format the feed should comply to. Valid values are:
      *                         "PIE0.1" (deprecated), "mbox", "RSS0.91", "RSS1.0", "RSS2.0", "OPML", "ATOM0.3".
      * @param string $filename optional the filename where a recent version of the feed is saved. If not specified, the
-     *                         filename is $_SERVER["PHP_SELF"] with the extension changed to .xml (see
+     *                         filename is $_SERVER["SCRIPT_NAME"] with the extension changed to .xml (see
      *                         _generateFilename()).
      * @param int $timeout     optional the timeout in seconds before a cached version is refreshed (defaults to 3600 =
      *                         1 hour)

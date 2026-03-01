@@ -4,7 +4,7 @@
  * -------
  * Author: T. Taft (taft@adacore.com)
  * Copyright: (c) 2012 AdaCore (http://adacore.com/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/08/02
  *
  * ParaSail language file for GeSHi.

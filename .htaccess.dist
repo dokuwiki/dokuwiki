@@ -4,10 +4,10 @@
 
 ## make sure nobody gets the htaccess, README, COPYING or VERSION files
 <Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
-    <IfModule mod_authz_host>
+    <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>
-    <IfModule !mod_authz_host>
+    <IfModule !mod_authz_core.c>
         Order allow,deny
         Deny from all
     </IfModule>
@@ -22,13 +22,13 @@
 ## $conf['userewrite'] = 1 - not needed for rewrite mode 2
 #RewriteEngine on
 #
-#RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L]
-#RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L]
-#RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L]
+#RewriteRule ^_media/(.*)              lib/exe/fetch.php?media=$1  [QSA,L,B]
+#RewriteRule ^_detail/(.*)             lib/exe/detail.php?media=$1  [QSA,L,B]
+#RewriteRule ^_export/([^/]+)/(.*)     doku.php?do=export_$1&id=$2  [QSA,L,B]
 #RewriteRule ^$                        doku.php  [L]
 #RewriteCond %{REQUEST_FILENAME}       !-f
 #RewriteCond %{REQUEST_FILENAME}       !-d
-#RewriteRule (.*)                      doku.php?id=$1  [QSA,L]
+#RewriteRule (.*)                      doku.php?id=$1  [QSA,L,B]
 #RewriteRule ^index.php$               doku.php
 #
 ## Not all installations will require the following line.  If you do,

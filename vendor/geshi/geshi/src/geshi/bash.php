@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -88,10 +88,12 @@ $language_data = array (
         5 => "/`[^`]*`/"
         ),
     'KEYWORDS' => array(
+        // Control flow keywords and super-important builtins
         1 => array(
             'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
-            'if', 'in', 'select', 'set', 'then', 'until', 'while', 'time'
+            'if', 'in', 'select', 'set', 'then', 'time', 'until', 'while'
             ),
+        // Common Unix commands
         2 => array(
             'aclocal', 'aconnect', 'apachectl', 'apache2ctl', 'aplay', 'apm',
             'apmsleep', 'apropos', 'apt-cache', 'apt-cdrom', 'apt-config',
@@ -265,7 +267,7 @@ $language_data = array (
 
             'jar', 'java', 'javac', 'join',
 
-            'kbd_mode','kbdrate', 'kdialog', 'kfile', 'kill', 'killall',
+            'kbd_mode','kbdrate', 'kdialog', 'kfile', 'killall',
 
             'lame', 'last', 'lastb', 'ld', 'ld86', 'ldd', 'less', 'lex', 'link',
             'ln', 'loadkeys', 'loadunimap', 'locate', 'lockfile', 'login',
@@ -286,7 +288,7 @@ $language_data = array (
             'ps2pdf', 'ps2ps', 'psbook', 'psmerge', 'psnup', 'psresize',
             'psselect', 'pstops',
 
-            'rbash', 'rcs', 'rcs2log', 'read', 'readlink', 'red', 'resizecons',
+            'rbash', 'rcs', 'rcs2log', 'readlink', 'red', 'resizecons',
             'rev', 'rm', 'rmdir', 'rsh', 'run-parts',
 
             'sash', 'scp', 'screen', 'sed', 'seq', 'sendmail', 'setfont',
@@ -365,15 +367,16 @@ $language_data = array (
             'zgrep', 'zip', 'zipgrep', 'zipinfo', 'zless', 'zmore', 'znew',
             'zsh', 'zsoelim'
             ),
+        // Builtin commands
         3 => array(
-            'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
-            'compgen', 'complete', 'continue', 'declare', 'dirs', 'disown',
+            'alias', 'bg', 'bind', 'break', 'builtin', 'caller', 'cd', 'command',
+            'compgen', 'complete', 'compopt', 'continue', 'coproc', 'declare', 'dirs', 'disown',
             'echo', 'enable', 'eval', 'exec', 'exit', 'export', 'fc',
-            'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'let',
-            'local', 'logout', 'popd', 'printf', 'pushd', 'pwd', 'readonly',
-            'return', 'shift', 'shopt', 'source', 'suspend', 'test', 'times',
-            'trap', 'type', 'typeset', 'ulimit', 'umask', 'unalias', 'unset',
-            'wait'
+            'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'kill', 'let',
+            'local', 'logout', 'mapfile', 'popd', 'printf', 'pushd', 'pwd', 'read',
+            'readarray', 'readonly', 'return', 'shift', 'shopt', 'source',
+            'suspend', 'test', 'times', 'trap', 'type', 'typeset', 'ulimit',
+            'umask', 'unalias', 'unset', 'wait'
             )
         ),
     'SYMBOLS' => array(

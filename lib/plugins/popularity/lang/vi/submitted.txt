@@ -1,0 +1,3 @@
+====== Phản hồi độ phổ biến ======
+
+Dữ liệu đã được gửi thành công.

@@ -3,12 +3,12 @@
  * Test cases for the Doku_Indexer::renamePage and Doku_Indexer::renameMetaValue methods
  */
 class indexer_rename_test extends DokuWikiTest {
-    /** @var Doku_Indexer $indexer */
+    /** @var \dokuwiki\Search\Indexer $indexer */
     private $indexer;
 
     private $old_id = 'old_testid';
 
-    function setUp() {
+    function setUp() : void {
         parent::setUp();
         $this->indexer = idx_get_indexer();
         $this->indexer->clear();

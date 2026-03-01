@@ -4,7 +4,7 @@
  * -------
  * Author: Karima Rafes (karima.rafes@bordercloud.com)
  * Copyright: (c) 2011 Bourdercloud.com
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/11/05
  *
  * SPARQL language file for GeSHi.

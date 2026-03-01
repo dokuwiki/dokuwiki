@@ -1,2 +1,1 @@
 Edite la pàgina i pulse 'Guardar". Consulte la [[wiki:syntax|Sintaxis]] del Wiki. Per favor, edite la pàgina només **si pot millorar-la**. Si vol fer proves, deprenga a utilisar el Wiki en el [[playground:playground|espai de proves]].
-

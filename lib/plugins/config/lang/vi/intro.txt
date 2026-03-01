@@ -1,0 +1,7 @@
+====== Quản lý cấu hình ======
+
+Sử dụng trang này để kiểm soát cài đặt cho trình cài đặt DokuWiki của bạn. Để được trợ giúp về cài đặt cá nhân, hãy tham khảo [[doku>config]]. Để biết thêm chi tiết về plugin này, xem [[doku>plugin:config]].
+
+Những cài đặt hiển thị với nền đỏ nhạt được bảo vệ và không thể thay đổi bằng plugin này. Những cài đặt hiển thị với nền màu xanh là các giá trị mặc định và cài đặt được hiển thị với nền trắng đã được đặt cục bộ cho cài đặt cụ thể này. Cả hai cài đặt màu xanh và trắng có thể được thay đổi.
+
+Hãy nhớ nhấn nút **Lưu** trước khi rời trang này nếu không các thay đổi của bạn sẽ bị mất.

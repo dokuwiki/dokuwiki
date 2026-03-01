@@ -1,0 +1,3 @@
+====== Gửi mật khẩu mới ======
+
+Vui lòng nhập tên thành viên của bạn vào mẫu dưới đây để yêu cầu một mật khẩu mới cho tài khoản của bạn trong wiki này. Một liên kết xác nhận sẽ được gửi đến địa chỉ thư điện tử đã đăng ký của bạn.

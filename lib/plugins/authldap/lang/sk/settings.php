@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tibor Repček <tiborepcek@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['server']                = 'LDAP server. Adresa (<code>localhost</code>) alebo úplné URL (<code>ldap://server.tld:389</code>)';
@@ -27,3 +28,6 @@ $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
+$lang['referrals_o_-1']        = 'použiť prednastavené';
+$lang['referrals_o_0']         = 'nesleduj odkazovače';
+$lang['referrals_o_1']         = 'sleduj odkazovače';

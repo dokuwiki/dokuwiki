@@ -4,7 +4,7 @@
  * -----------
  * Author: Maxime Chupin (notezik@gmail.com)
  * Copyright: (c) 2011 Maxime Chupin
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2011/08/02
  *
  * Metapost language file for GeSHi.

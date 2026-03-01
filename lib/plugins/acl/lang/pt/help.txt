@@ -1,9 +1,8 @@
 === Auxílio Rápido ===
 
-Nesta página podes adicionar e remover permissões para espaço de nomes e páginas no seu wiki.
+Nesta página pode adicionar e remover permissões para namespace e páginas no seu wiki.
+  * O painel esquerdo exibe todos os namespaces e páginas.´
+  * O formulário acima permite a ver e modificar as permissões de um usuário ou grupo selecionado.
+  * Na tabela abaixo são exibidas todas as regras de controle de acesso atuais. Podes utilizá-la para excluir ou mudar rapidamente várias regras ao mesmo tempo.
 
-O painel esquerdo exibe todos os espaço de nomes e páginas. O formulario acima permite a visualização e modificar as permissões de um selecionado utilizador ou grupo.
-
-Na tabela inferior são exibidas todas as actuais regras de controle de acesso. Podes utilisá-la para excluir ou mudar rapidamente várias regras ao mesmo tempo.
-
-A leitura da [[doku>acl|documentação oficial acerca ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no DokuWiki.
+A leitura da [[doku>acl|documentação oficial sobre ACL]] pode ajudar a compreender melhor como o controle de acessos funciona no DokuWiki.

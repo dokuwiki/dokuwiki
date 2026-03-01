@@ -34,7 +34,7 @@ class SearchState
      * Get a search state for the current search limited to a new namespace
      *
      * @param string $ns the namespace to which to limit the search, falsy to remove the limitation
-     * @param array  $notns
+     * @param array $notns
      *
      * @return SearchState
      */

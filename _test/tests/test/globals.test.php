@@ -18,7 +18,7 @@ class InttestsGlobalsTest extends DokuWikiTest {
         $EVENT_HANDLER->register_hook('TPL_CONTENT_DISPLAY', 'AFTER', null,
             function() use ($self) {
                 $self->assertTrue($_SERVER['testvar'], 'Server variable not set correctly: testvar');
-                $self->assertEquals('87.142.120.6', $_SERVER['REMOTE_ADDR'], 'Server variable not set correctly: REMOTE_ADDR');
+                $self->assertEquals('172.17.18.19', $_SERVER['REMOTE_ADDR'], 'Server variable not set correctly: REMOTE_ADDR');
                 $_SERVER['tmpvar'] = true;
             }
         );
@@ -39,7 +39,7 @@ class InttestsGlobalsTest extends DokuWikiTest {
         $EVENT_HANDLER->register_hook('TPL_CONTENT_DISPLAY', 'AFTER', null,
             function() use ($self) {
                 $self->assertFalse($_SERVER['testvar'], 'Server variable not set correctly: testvar');
-                $self->assertEquals('87.142.120.6', $_SERVER['REMOTE_ADDR'], 'Server variable not set correctly: REMOTE_ADDR');
+                $self->assertEquals('172.17.18.19', $_SERVER['REMOTE_ADDR'], 'Server variable not set correctly: REMOTE_ADDR');
                 $self->assertFalse(isset($_SERVER['tmpvar']));
             }
         );

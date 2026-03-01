@@ -2,11 +2,10 @@
 
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * 
+ *
  * @author Komgrit Niyomrath <n.komgrit@gmail.com>
- * @author Kittithat Arnontavilas mrtomyum@gmail.com
- * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Kittithat Arnontavilas <mrtomyum@gmail.com>
+ * @author Arthit Suriyawongkul <arthit@gmail.com>
  * @author Thanasak Sompaisansin <jombthep@gmail.com>
  */
 $lang['menu']                  = 'ตั้งค่าการปรับแต่ง';
@@ -42,8 +41,6 @@ $lang['disableactions_check']  = 'ตรวจสอบ';
 $lang['auth_security_timeout'] = 'ระยะเวลาที่จะตัดการเชื่อมต่อแบบการใช้งานด้วยสิทธิ์ผู้ใช้ (วินาที)';
 $lang['usewordblock']          = 'คำที่จะถือว่าเป็นสแปม';
 $lang['relnofollow']           = 'ใช้ rel="nofollow" สำหรับลิงก์ภายนอก';
-$lang['htmlok']                = 'อนุญาตให้ใช้ HTML';
-$lang['phpok']                 = 'อนุญาตให้ใช้ PHP';
 $lang['locktime']              = 'ระยะเวลานานสุด ที่จะล็อคไม่ให้แก้ไขไฟล์ (วินาที)';
 $lang['cachetime']             = 'ระยะเวลาสำหรับการเก็บแคช (วินาที)';
 $lang['target____wiki']        = 'เปิดแสดงลิงก์ภายใน ในหน้าเว็บแบบใด';

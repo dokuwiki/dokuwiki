@@ -1,4 +1,3 @@
 ====== Administracja ======
 
 Czynności administracyjne DokuWiki.
-

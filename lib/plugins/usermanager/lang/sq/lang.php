@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * Albanian language file
  *
- * @author Leonard Elezi leonard.elezi@depinfo.info
+ * @author Valdrin Jonuzi <valdrinj00@gmail.com>
+ * @author Endrit Callaki <endrit@callaki.de>
+ * @author Leonard Elezi <leonard.elezi@depinfo.info>
  */
 $lang['menu']                  = 'Menaxhuesi Përdoruesve';
 $lang['noauth']                = '(autentikimi i përdoruesve nuk është i disponueshëm)';

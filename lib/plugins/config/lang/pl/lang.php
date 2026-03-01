@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
+ * @author pavulondit <pavloo@vp.pl>
+ * @author Bartek S <sadupl@gmail.com>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
@@ -44,6 +47,7 @@ $lang['_advanced']             = 'Zaawansowane';
 $lang['_network']              = 'Sieć';
 $lang['_msg_setting_undefined'] = 'Brak danych o ustawieniu.';
 $lang['_msg_setting_no_class'] = 'Brak kategorii ustawień.';
+$lang['_msg_setting_no_known_class'] = 'Klasa ustawień niedostępna.';
 $lang['_msg_setting_no_default'] = 'Brak wartości domyślnej.';
 $lang['title']                 = 'Tytuł wiki';
 $lang['start']                 = 'Tytuł strony początkowej';
@@ -95,16 +99,16 @@ $lang['disableactions_other']  = 'Inne akcje (oddzielone przecinkiem)';
 $lang['disableactions_rss']    = 'XML Syndication (RSS)';
 $lang['auth_security_timeout'] = 'Czas wygaśnięcia uwierzytelnienia (w sekundach)';
 $lang['securecookie']          = 'Czy ciasteczka wysłane do przeglądarki przez HTTPS powinny być przez nią odsyłane też tylko przez HTTPS? Odznacz tę opcję tylko wtedy, gdy logowanie użytkowników jest zabezpieczone SSL, ale przeglądanie stron odbywa się bez zabezpieczenia.';
+$lang['samesitecookie']        = 'Atrybut pliku cookie tej samej witryny do użycia. Pozostawienie go pustym pozwoli przeglądarce zdecydować o zasadach tej samej witryny.';
 $lang['remote']                = 'Włącz API zdalnego dostępu. Pozwoli to innym aplikacjom na dostęp do wiki poprzez XML-RPC lub inne mechanizmy.';
 $lang['remoteuser']            = 'Ogranicz dostęp poprzez API zdalnego dostępu do podanych grup lub użytkowników, oddzielonych przecinkami. Pozostaw to pole puste by pozwolić na dostęp be ograniczeń.';
+$lang['remotecors']            = 'Włącz udostępnianie zasobów między źródłami (CORS) dla interfejsów zdalnych. Gwiazdka (*), aby zezwolić na wszystkie źródła. Pozostaw puste, aby odrzucić CORS.';
 $lang['usewordblock']          = 'Blokowanie spamu na podstawie słów';
 $lang['relnofollow']           = 'Nagłówek rel="nofollow" dla odnośników zewnętrznych';
 $lang['indexdelay']            = 'Okres indeksowania w sekundach';
 $lang['mailguard']             = 'Utrudnianie odczytu adresów e-mail';
 $lang['iexssprotect']          = 'Wykrywanie złośliwego kodu JavaScript i HTML w plikach';
 $lang['usedraft']              = 'Automatyczne zapisywanie szkicu podczas edycji';
-$lang['htmlok']                = 'Wstawki HTML';
-$lang['phpok']                 = 'Wstawki PHP';
 $lang['locktime']              = 'Maksymalny wiek blokad w sekundach';
 $lang['cachetime']             = 'Maksymalny wiek cache w sekundach';
 $lang['target____wiki']        = 'Okno docelowe odnośników wewnętrznych';
@@ -126,12 +130,15 @@ $lang['mailfrom']              = 'Adres e-mail tego wiki';
 $lang['mailreturnpath']        = 'Adres e-mail odbiorcy dla powiadomień o niedostarczeniu';
 $lang['mailprefix']            = 'Prefiks tematu e-mail do automatycznych wiadomości';
 $lang['htmlmail']              = 'Wysyłaj wiadomości e-mail w formacie HTML, które wyglądają lepiej, lecz ich rozmiar jest większy. Wyłącz wysyłanie wiadomości zawierających tekst niesformatowany.';
+$lang['dontlog']               = 'Wyłącz logowanie dla tego typu logów.';
+$lang['logretain']             = 'Liczba dni przechowywania logów.';
 $lang['sitemap']               = 'Okres generowania Google Sitemap (w dniach)';
 $lang['rss_type']              = 'Typ RSS';
 $lang['rss_linkto']            = 'Odnośniki w RSS';
 $lang['rss_content']           = 'Rodzaj informacji wyświetlanych w RSS ';
 $lang['rss_update']            = 'Okres aktualizacji RSS (w sekundach)';
 $lang['rss_show_summary']      = 'Podsumowanie w tytule';
+$lang['rss_show_deleted']      = 'Pokaż usunięte kanały';
 $lang['rss_media']             = 'Rodzaj zmian wyświetlanych w RSS';
 $lang['rss_media_o_both']      = 'oba';
 $lang['rss_media_o_pages']     = 'strony';
@@ -153,8 +160,19 @@ $lang['xsendfile']             = 'Użyj nagłówka HTTP X-Sendfile w celu przesy
 $lang['renderer_xhtml']        = 'Mechanizm renderowania głównej treści strony (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (wtyczka)';
+$lang['search_nslimit']        = 'Ogranicz wyszukiwanie do bieżących przestrzeni nazw X. Gdy wyszukiwanie jest wykonywane ze strony w głębszej przestrzeni nazw, pierwsze przestrzenie nazw X zostaną dodane jako filtr';
+$lang['search_fragment']       = 'Określ domyślne zachowanie wyszukiwania fragmentów';
+$lang['search_fragment_o_exact'] = 'dokładny';
+$lang['search_fragment_o_starts_with'] = 'zaczyna się z';
+$lang['search_fragment_o_ends_with'] = 'kończy się z';
+$lang['search_fragment_o_contains'] = 'zawiera';
+$lang['_feature_flags']        = 'Flagi funkcji';
+$lang['defer_js']              = 'Odrocz wykonanie skryptu JavaScript po przeanalizowaniu kodu HTML strony. Poprawia postrzeganą szybkość strony, ale może zepsuć niewielką liczbę wtyczek.';
+$lang['hidewarnings']          = 'Nie wyświetlaj żadnych ostrzeżeń wydawanych przez PHP. Może to ułatwić przejście na PHP8+. Ostrzeżenia będą nadal rejestrowane w dzienniku błędów i powinny być zgłaszane.';
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
+$lang['trustedproxies']        = 'Rozdzielana przecinkami lista zaufanych serwerów proxy, z których można odczytać nagłówek X-Forwarded-For. Każdy element tablicy może być adresem IPv4 lub IPv6 albo zakresem CIDR IPv4 lub IPv6 (np. 10.0.0.0/8). Pozostaw puste, aby nie ufać żadnemu serwerowi proxy.';
+$lang['realip']                = 'Ufaj nagłówkowi X-Real-IP. Włącz to tylko wtedy, gdy Twój serwer zapisuje ten nagłówek, w przeciwnym razie może zostać sfałszowany.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';
 $lang['jquerycdn_o_jquery']    = 'CDN z code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN z cdnjs.com';
@@ -164,12 +182,6 @@ $lang['proxy____user']         = 'Proxy - nazwa użytkownika';
 $lang['proxy____pass']         = 'Proxy - hasło';
 $lang['proxy____ssl']          = 'Proxy - SSL';
 $lang['proxy____except']       = 'Wyrażenie regularne określające adresy URL, do których nie należy używać proxy.';
-$lang['safemodehack']          = 'Bezpieczny tryb (przez FTP)';
-$lang['ftp____host']           = 'FTP - serwer';
-$lang['ftp____port']           = 'FTP - port';
-$lang['ftp____user']           = 'FTP - nazwa użytkownika';
-$lang['ftp____pass']           = 'FTP - hasło';
-$lang['ftp____root']           = 'FTP - katalog główny';
 $lang['license_o_']            = 'Nie wybrano żadnej';
 $lang['typography_o_0']        = 'brak';
 $lang['typography_o_1']        = 'tylko podwójne cudzysłowy';

@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Marek Adamski <fevbew@wp.pl>
  * @author Wojciech Lichota <wojciech@lichota.pl>
  * @author Max <maxrb146@gmail.com>
  * @author Grzegorz Żur <grzegorz.zur@gmail.com>
@@ -47,6 +48,7 @@ $lang['summary']               = 'Użytkownicy %1$d-%2$d z %3$d znalezionych. Ca
 $lang['nonefound']             = 'Nie znaleziono użytkowników. Całkowita ilość użytkowników %d.';
 $lang['delete_ok']             = 'Usunięto %d użytkowników.';
 $lang['delete_fail']           = 'Błąd przy usuwaniu %d użytkowników.';
+$lang['delete_fail_self']      = 'Nie możesz usunąć siebie';
 $lang['update_ok']             = 'Dane użytkownika zostały zmienione!';
 $lang['update_fail']           = 'Błąd przy zmianie danych użytkownika!';
 $lang['update_exists']         = 'Błąd przy zmianie nazwy użytkownika, użytkownik o tej nazwie (%s) już istnieje (inne zmiany zostały wprowadzone).';

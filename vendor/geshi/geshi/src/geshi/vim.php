@@ -6,7 +6,7 @@
  * Contributors:
  *  - Laurent Peuch (psycojoker@gmail.com)
  * Copyright: (c) 2008 Swaroop C H (http://www.swaroopch.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/10/19
  *
  * Vim scripting language file for GeSHi.

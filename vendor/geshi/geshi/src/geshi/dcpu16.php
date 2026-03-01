@@ -4,7 +4,7 @@
  * -------
  * Author: Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2007-2014 Benny Baumann (http://geshi.org/)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/04/12
  *
  * DCPU/16 Assembly language file for GeSHi.

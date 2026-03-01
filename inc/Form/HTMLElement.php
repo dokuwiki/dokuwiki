@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -8,13 +9,13 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class HTMLElement extends ValueElement {
-
-
+class HTMLElement extends ValueElement
+{
     /**
      * @param string $html
      */
-    public function __construct($html) {
+    public function __construct($html)
+    {
         parent::__construct('html', $html);
     }
 
@@ -23,7 +24,8 @@ class HTMLElement extends ValueElement {
      *
      * @return string
      */
-    public function toHTML() {
+    public function toHTML()
+    {
         return $this->val();
     }
 }

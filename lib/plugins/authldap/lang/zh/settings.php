@@ -3,6 +3,9 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Shirase <fwits@foxmail.com>
+ * @author Phy <dokuwiki@phy25.com>
+ * @author FENG.JIE <ahx@qq.com>
  * @author lainme <lainme993@gmail.com>
  * @author oott123 <ip.192.168.1.1@qq.com>
  * @author Errol <errol@hotmail.com>
@@ -20,11 +23,13 @@ $lang['referrals']             = '是否允许引用 (referrals)？';
 $lang['deref']                 = '如何间接引用别名？';
 $lang['binddn']                = '一个可选的绑定用户的 DN (如果匿名绑定不满足要求)。例如 <code>cn=admin, dc=my, dc=home</code>';
 $lang['bindpw']                = '上述用户的密码';
+$lang['attributes']            = '使用LDAP搜索属性。';
 $lang['userscope']             = '限制用户搜索的范围';
 $lang['groupscope']            = '限制组搜索的范围';
 $lang['userkey']               = '表示用户名的属性；必须和用户过滤器保持一致。';
 $lang['groupkey']              = '根据任何用户属性得来的组成员(而不是标准的 AD 组)，例如根据部门或者电话号码得到的组。';
-$lang['modPass']               = ' LDAP密码可以通过 DokuWiki 修改吗？';
+$lang['modPass']               = ' LDAP 密码可以通过 DokuWiki 修改吗？';
+$lang['modPassPlain']          = '确定要通过明文将密码更新发送至LDAP服务器（而不是按照配置在发送前进行加盐和哈希加密）？';
 $lang['debug']                 = '有错误时显示额外的调试信息';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

@@ -1,4 +1,3 @@
 ====== Henvisninger bagud ======
 
 Dette er en liste over alle de dokumenter der henviser tilbage til det nuværende dokument.
-

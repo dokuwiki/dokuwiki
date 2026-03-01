@@ -3,10 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author smocap <smocap@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  */
 $lang['menu']                  = 'Ajustes de plantilla';
-$lang['js']['loader']          = 'La vista previa se está cargando ... <br /> si esto no se ve, sus valores pueden ser defectuosos';
+$lang['js']['loader']          = 'La vista previa se está cargando...<br />si esto no desaparece, es posible que tus valores sean incorrectos';
 $lang['js']['popup']           = 'Abrir como una ventana emergente';
 $lang['error']                 = 'Lo sentimos, esta plantilla no admite esta funcionalidad.';
 $lang['btn_preview']           = 'Vista previa de los cambios';

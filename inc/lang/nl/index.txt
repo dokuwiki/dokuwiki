@@ -1,4 +1,3 @@
 ====== Index ======
 
-Dit is een index van alle beschikbare pagina's gesorteerd op [[doku>namespaces|namespaces]].
-
+Dit is een index van alle beschikbare pagina's gesorteerd op [[doku>nl:namespaces|namespaces]].

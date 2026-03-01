@@ -4,7 +4,7 @@
  * -------
  * Author: José Jorge Enríquez <jenriquez@users.sourceforge.net>, Timon Knigge <timonknigge@live.nl>
  * Copyright: (c) 2005 José Jorge Enríquez Rodríguez (http://www.zonamakers.com), (c) 2013 Timon Knigge (http://www.bluemoonproductions.nl)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2005/06/21
  *
  * GML language file for GeSHi.

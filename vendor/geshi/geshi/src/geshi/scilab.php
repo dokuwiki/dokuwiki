@@ -4,7 +4,7 @@
  * --------
  * Author: Christophe David (geshi@christophedavid.org)
  * Copyright: (c) 2008 Christophe David (geshi@christophedavid.org)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2008/08/04
  *
  * SciLab language file for GeSHi.
@@ -182,7 +182,7 @@ $language_data = array (
             'rubberbox', 'salesman', 'sample', 'samplef', 'samwr', 'save', 'save_format', 'save_graph', 'savehistory',
             'savematfile', 'savewave', 'sca', 'scaling', 'scanf', 'scanf_conversion', 'scf', 'schur', 'sci_files',
             'sci2exp', 'sci2for', 'sci2map', 'sciargs', 'SciComplex', 'SciComplexArray', 'SciDouble', 'SciDoubleArray',
-            'scilab', 'Scilab', 'ScilabEval', 'scilink', 'scipad', 'SciString', 'SciStringArray', 'sd2sci', 'sda', 'sdf',
+            'ScilabEval', 'scilink', 'scipad', 'SciString', 'SciStringArray', 'sd2sci', 'sda', 'sdf',
             'secto3d', 'segs_properties', 'semi', 'semicolon', 'semidef', 'sensi', 'set', 'set_posfig_dim',
             'setbpt', 'setdiff', 'setenv', 'seteventhandler', 'setfield', 'sethomedirectory', 'setlanguage', 'setmenu',
             'sfact', 'Sfgrayplot', 'Sgrayplot', 'sgrid', 'shortest_path', 'show_arcs', 'show_graph', 'show_nodes',

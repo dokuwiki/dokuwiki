@@ -1,4 +1,3 @@
 ====== Als neuer Benutzer registrieren ======
 
-Bitte füllen Sie alle Felder aus, um einen neuen Benutzer-Account in diesem Wiki anzulegen. Stellen Sie sicher, dass eine **gültige E-Mail-Adresse** angegeben wird - das Passwort wird an diese Adresse gesendet. Der Benutzername sollte aus einem Wort ohne Umlaute, Leer- oder Sonderzeichen bestehen.
-
+Bitte füllen Sie alle Felder aus, um einen neuen Benutzer-Account in diesem Wiki anzulegen. Stellen Sie sicher, dass eine **gültige E-Mail-Adresse** angegeben wird - das Passwort wird an diese Adresse gesendet. Der Benutzername sollte aus einem Wort ohne Umlaute, Leer- oder Sonderzeichen bestehen. [[doku>de:pagename]]

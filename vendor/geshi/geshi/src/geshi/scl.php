@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Leonhard Hösch (leonhard.hoesch@siemens.com)
  * Copyright: (c) 2008 by Leonhard Hösch (siemens.de)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2012/09/25
  *
  * SCL language file for GeSHi.

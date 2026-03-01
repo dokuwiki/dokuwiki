@@ -2,23 +2,26 @@
 
 namespace dokuwiki\Ui;
 
-use \dokuwiki\Form\Form;
+use dokuwiki\Extension\Event;
+use dokuwiki\Form\Form;
+use dokuwiki\Utf8\PhpString;
+use dokuwiki\Utf8\Sort;
 
 class Search extends Ui
 {
     protected $query;
     protected $parsedQuery;
     protected $searchState;
-    protected $pageLookupResults = array();
-    protected $fullTextResults = array();
-    protected $highlight = array();
+    protected $pageLookupResults = [];
+    protected $fullTextResults = [];
+    protected $highlight = [];
 
     /**
      * Search constructor.
      *
      * @param array $pageLookupResults pagename lookup results in the form [pagename => pagetitle]
      * @param array $fullTextResults fulltext search results in the form [pagename => #hits]
-     * @param array $highlight  array of strings to be highlighted
+     * @param array $highlight array of strings to be highlighted
      */
     public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
     {
@@ -41,9 +44,7 @@ class Search extends Ui
      */
     public function show()
     {
-        $searchHTML = '';
-
-        $searchHTML .= $this->getSearchIntroHTML($this->query);
+        $searchHTML = $this->getSearchIntroHTML($this->query);
 
         $searchHTML .= $this->getSearchFormHTML($this->query);
 
@@ -86,9 +87,7 @@ class Search extends Ui
 
         $searchForm->addFieldsetClose();
 
-        trigger_event('FORM_SEARCH_OUTPUT', $searchForm);
-
-        return $searchForm->toHTML();
+        return $searchForm->toHTML('Search');
     }
 
     /**
@@ -143,7 +142,6 @@ class Search extends Ui
         $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
-
     }
 
     /**
@@ -153,7 +151,8 @@ class Search extends Ui
      *
      * @return bool
      */
-    protected function isNamespaceAssistanceAvailable(array $parsedQuery) {
+    protected function isNamespaceAssistanceAvailable(array $parsedQuery)
+    {
         if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
         }
@@ -168,7 +167,8 @@ class Search extends Ui
      *
      * @return bool
      */
-    protected function isFragmentAssistanceAvailable(array $parsedQuery) {
+    protected function isFragmentAssistanceAvailable(array $parsedQuery)
+    {
         if (preg_match('/[\(\)\|]/', $parsedQuery['query']) === 1) {
             return false;
         }
@@ -215,39 +215,23 @@ class Search extends Ui
         $options = [
             'exact' => [
                 'label' => $lang['search_exact_match'],
-                'and' => array_map(function ($term) {
-                    return trim($term, '*');
-                }, $this->parsedQuery['and']),
-                'not' => array_map(function ($term) {
-                    return trim($term, '*');
-                }, $this->parsedQuery['not']),
+                'and' => array_map(static fn($term) => trim($term, '*'), $this->parsedQuery['and']),
+                'not' => array_map(static fn($term) => trim($term, '*'), $this->parsedQuery['not']),
             ],
             'starts' => [
                 'label' => $lang['search_starts_with'],
-                'and' => array_map(function ($term) {
-                    return trim($term, '*') . '*';
-                }, $this->parsedQuery['and']),
-                'not' => array_map(function ($term) {
-                    return trim($term, '*') . '*';
-                }, $this->parsedQuery['not']),
+                'and' => array_map(static fn($term) => trim($term, '*') . '*', $this->parsedQuery['and']),
+                'not' => array_map(static fn($term) => trim($term, '*') . '*', $this->parsedQuery['not']),
             ],
             'ends' => [
                 'label' => $lang['search_ends_with'],
-                'and' => array_map(function ($term) {
-                    return '*' . trim($term, '*');
-                }, $this->parsedQuery['and']),
-                'not' => array_map(function ($term) {
-                    return '*' . trim($term, '*');
-                }, $this->parsedQuery['not']),
+                'and' => array_map(static fn($term) => '*' . trim($term, '*'), $this->parsedQuery['and']),
+                'not' => array_map(static fn($term) => '*' . trim($term, '*'), $this->parsedQuery['not']),
             ],
             'contains' => [
                 'label' => $lang['search_contains'],
-                'and' => array_map(function ($term) {
-                    return '*' . trim($term, '*') . '*';
-                }, $this->parsedQuery['and']),
-                'not' => array_map(function ($term) {
-                    return '*' . trim($term, '*') . '*';
-                }, $this->parsedQuery['not']),
+                'and' => array_map(static fn($term) => '*' . trim($term, '*') . '*', $this->parsedQuery['and']),
+                'not' => array_map(static fn($term) => '*' . trim($term, '*') . '*', $this->parsedQuery['not']),
             ]
         ];
 
@@ -285,8 +269,7 @@ class Search extends Ui
             } else {
                 $link = $this->searchState
                     ->withFragments($option['and'], $option['not'])
-                    ->getSearchLink($option['label'])
-                ;
+                    ->getSearchLink($option['label']);
                 $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
@@ -319,7 +302,7 @@ class Search extends Ui
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($baseNS) {
             $currentWrapper->addClass('changed');
-            $searchForm->addHTML('@' . $baseNS);
+            $searchForm->addHTML('@' . hsc($baseNS));
         } else {
             $searchForm->addHTML($lang['search_any_ns']);
         }
@@ -340,7 +323,7 @@ class Search extends Ui
 
         foreach ($extraNS as $ns => $count) {
             $listItem = $searchForm->addTagOpen('li');
-            $label = $ns . ($count ? " <bdi>($count)</bdi>" : '');
+            $label = hsc($ns) . ($count ? " <bdi>($count)</bdi>" : '');
 
             if ($ns === $baseNS) {
                 $listItem->addClass('active');
@@ -354,7 +337,6 @@ class Search extends Ui
         $searchForm->addTagClose('ul');
 
         $searchForm->addTagClose('div');
-
     }
 
     /**
@@ -381,9 +363,9 @@ class Search extends Ui
             if (empty($namespaces[$subtopNS])) {
                 $namespaces[$subtopNS] = 0;
             }
-            $namespaces[$subtopNS] += 1;
+            ++$namespaces[$subtopNS];
         }
-        ksort($namespaces);
+        Sort::ksort($namespaces);
         arsort($namespaces);
         return $namespaces;
     }
@@ -448,8 +430,7 @@ class Search extends Ui
             } else {
                 $link = $this->searchState
                     ->withTimeLimitations($option['after'], $option['before'])
-                    ->getSearchLink($option['label'])
-                ;
+                    ->getSearchLink($option['label']);
                 $searchForm->addHTML($link);
             }
             $searchForm->addTagClose('li');
@@ -480,13 +461,11 @@ class Search extends Ui
         if (auth_quickaclcheck($queryPagename) >= AUTH_CREATE) {
             $pagecreateinfo = sprintf($lang['searchcreatepage'], $createQueryPageLink);
         }
-        $intro = str_replace(
-            array('@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'),
-            array(hsc(rawurlencode($query)), hsc($query), $pagecreateinfo),
+        return str_replace(
+            ['@QUERY@', '@SEARCH@', '@CREATEPAGEINFO@'],
+            [hsc(rawurlencode($query)), hsc($query), $pagecreateinfo],
             $intro
         );
-
-        return $intro;
     }
 
     /**
@@ -498,15 +477,15 @@ class Search extends Ui
      */
     public function createPagenameFromQuery($parsedQuery)
     {
-        $cleanedQuery = cleanID($parsedQuery['query']);
-        if ($cleanedQuery === $parsedQuery['query']) {
+        $cleanedQuery = cleanID($parsedQuery['query']); // already strtolowered
+        if ($cleanedQuery === PhpString::strtolower($parsedQuery['query'])) {
             return ':' . $cleanedQuery;
         }
         $pagename = '';
         if (!empty($parsedQuery['ns'])) {
             $pagename .= ':' . cleanID($parsedQuery['ns'][0]);
         }
-        $pagename .= ':' . cleanID(implode(' ' , $parsedQuery['highlight']));
+        $pagename .= ':' . cleanID(implode(' ', $parsedQuery['highlight']));
         return $pagename;
     }
 
@@ -528,7 +507,7 @@ class Search extends Ui
         $html = '<div class="search_quickresult">';
         $html .= '<h2>' . $lang['quickhits'] . ':</h2>';
         $html .= '<ul class="search_quickhits">';
-        foreach ($data as $id => $title) {
+        foreach (array_keys($data) as $id) {
             $name = null;
             if (!useHeading('navigation') && $ns = getNS($id)) {
                 $name = shorten(noNS($id), ' (' . $ns . ')', 30);
@@ -538,7 +517,7 @@ class Search extends Ui
                 'listItemContent' => [$link],
                 'page' => $id,
             ];
-            trigger_event('SEARCH_RESULT_PAGELOOKUP', $eventData);
+            Event::createAndTrigger('SEARCH_RESULT_PAGELOOKUP', $eventData);
             $html .= '<li>' . implode('', $eventData['listItemContent']) . '</li>';
         }
         $html .= '</ul> ';
@@ -552,7 +531,7 @@ class Search extends Ui
     /**
      * Build HTML for fulltext search results or "no results" message
      *
-     * @param array $data      the results of the fulltext search
+     * @param array $data the results of the fulltext search
      * @param array $highlight the terms to be highlighted in the results
      *
      * @return string
@@ -573,7 +552,7 @@ class Search extends Ui
         $position = 0;
 
         foreach ($data as $id => $cnt) {
-            $position += 1;
+            ++$position;
             $resultLink = html_wikilink(':' . $id, null, $highlight);
 
             $resultHeader = [$resultLink];
@@ -587,7 +566,9 @@ class Search extends Ui
             $resultBody = [];
             $mtime = filemtime(wikiFN($id));
             $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
-            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="'.dformat($mtime).'">' . dformat($mtime, '%f') . '</time>';
+            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="' . dformat($mtime) . '">' .
+                dformat($mtime, '%f') .
+                '</time>';
             $resultBody['meta'] = $lastMod;
             if ($cnt !== 0) {
                 $num++;
@@ -604,7 +585,7 @@ class Search extends Ui
                 'page' => $id,
                 'position' => $position,
             ];
-            trigger_event('SEARCH_RESULT_FULLPAGE', $eventData);
+            Event::createAndTrigger('SEARCH_RESULT_FULLPAGE', $eventData);
             $html .= '<div class="search_fullpage_result">';
             $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
             foreach ($eventData['resultBody'] as $class => $htmlContent) {

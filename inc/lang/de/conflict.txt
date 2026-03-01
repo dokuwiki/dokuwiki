@@ -1,6 +1,5 @@
 ====== Es gibt eine neuere Version ======
 
-Es existiert eine neuere Version des aktuell in Bearbeitung befindlichen Dokumentes. Das heißt, jemand hat parallel an der selben Seite gearbeitet und zuerst gespeichert.
+Es existiert eine neuere Version des aktuell in Bearbeitung befindlichen Dokumentes. Das heißt, jemand hat parallel an derselben Seite gearbeitet und zuerst gespeichert.
 
 Die unten aufgeführten Unterschiede können bei der Entscheidung helfen, welchem Dokument Vorrang gewährt wird. Wählen Sie  **''[Speichern]''** zum Sichern Ihrer Version oder **''[Abbrechen]''**,  um Ihre Version zu verwerfen und die zuerst gespeicherte Seite zu behalten.
-

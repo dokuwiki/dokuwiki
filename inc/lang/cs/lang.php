@@ -3,6 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Martin Růžička <martinr@post.cz>
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
+ * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
  * @author Jonáš Dyba <jonas.dyba@gmail.com>
  * @author Bohumir Zamecnik <bohumir@zamecnik.org>
@@ -20,7 +24,6 @@
  * @author Jaroslav Lichtblau <jlichtblau@seznam.cz>
  * @author Turkislav <turkislav@blabla.com>
  * @author Daniel Slováček <danslo@danslo.cz>
- * @author Martin Růžička <martinr@post.cz>
  * @author Pavel Krupička <pajdacz@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
@@ -82,7 +85,7 @@ $lang['badpassconfirm']        = 'Bohužel špatné heslo';
 $lang['minoredit']             = 'Drobné změny';
 $lang['draftdate']             = 'Koncept automaticky uložen v';
 $lang['nosecedit']             = 'Stránka byla v mezičase změněna. Informace o sekci již nebylo platné, byla načtena celá stránka.';
-$lang['searchcreatepage']      = 'Pokud jste nenašli to, co jste hledali, můžete vytvořit nebo upravit stránku% s, pojmenovanou podle vašeho dotazu.';
+$lang['searchcreatepage']      = 'Pokud jste nenašli to, co jste hledali, můžete vytvořit nebo upravit stránku %s, pojmenovanou podle vašeho dotazu.';
 $lang['search_fullresults']    = 'Fulltextové výsledky';
 $lang['js']['search_toggle_tools'] = 'Zobrazit/skrýt vyhledávací nástroje';
 $lang['js']['willexpire']      = 'Váš zámek pro editaci za chvíli vyprší.\nAbyste předešli konfliktům, stiskněte tlačítko Náhled a zámek se prodlouží.';
@@ -128,6 +131,7 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Sem přetáhněte soubory pro nahrátí';
 $lang['js']['media_cancel']    = 'odstranit';
 $lang['js']['media_overwrt']   = 'Přepsat existující soubory';
+$lang['js']['data_insecure']   = 'UPOZORNĚNÍ: Zdá se, že váš datový adresář není správně zabezpečen. Prosím, přečtěte si o <a href="https://www.dokuwiki.org/security#web_access_security">zabezpečení přístupu v DokuWiki</a>.';
 $lang['search_exact_match']    = 'Přesná shoda';
 $lang['search_starts_with']    = 'Začíná s';
 $lang['search_ends_with']      = 'Končí s';
@@ -145,7 +149,7 @@ $lang['reguexists']            = 'Uživatel se stejným jménem už je zaregistr
 $lang['regsuccess']            = 'Uživatelský účet byl vytvořen a heslo zasláno e-mailem.';
 $lang['regsuccess2']           = 'Uživatelský účet byl vytvořen.';
 $lang['regfail']               = 'Uživatelský profil nemohl být vytvořen.';
-$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání mailu s heslem. Zkuste kontaktovat správce.';
+$lang['regmailfail']           = 'Zdá se, že nastala chyba při posílání e-mailu s heslem. Zkuste kontaktovat správce.';
 $lang['regbadmail']            = 'Zadaná e-mailová adresa není platná. Pokud si myslíte, že to je špatně, zkuste kontaktovat správce.';
 $lang['regbadpass']            = 'Heslo nebylo zadáno dvakrát stejně, zkuste to prosím znovu.';
 $lang['regpwmail']             = 'Vaše heslo do systému DokuWiki';
@@ -160,6 +164,9 @@ $lang['profdeleted']           = 'Váš uživatelský účet byl z této wiki sm
 $lang['profconfdelete']        = 'Chci smazat můj účet z této wiki. <br/> Tato akce je nevratná.';
 $lang['profconfdeletemissing'] = 'Potvrzovací tlačítko nezaškrtnuto';
 $lang['proffail']              = 'Uživatelský profil nebyl aktualizován.';
+$lang['proftokenlegend']       = 'Ověřovací token';
+$lang['proftokengenerate']     = 'Resetovat token';
+$lang['proftokeninfo']         = 'Ověřovací token lze použít k tomu, aby se aplikace třetích stran mohly přihlásit a jednat vaším jménem. Resetováním tokenu dojde ke zneplatnění starého tokenu a odhlášení všech aplikací, které používaly předchozí token.';
 $lang['pwdforget']             = 'Zapomněli jste heslo? Nechte si zaslat nové';
 $lang['resendna']              = 'Tato wiki neumožňuje zasílání nových hesel.';
 $lang['resendpwd']             = 'Nastavit nové heslo pro';
@@ -176,6 +183,7 @@ $lang['txt_upload']            = 'Vyberte soubor jako přílohu:';
 $lang['txt_filename']          = 'Wiki jméno (volitelné):';
 $lang['txt_overwrt']           = 'Přepsat existující soubor';
 $lang['maxuploadsize']         = 'Max. velikost souboru %s';
+$lang['allowedmime']           = 'Seznam povolených přípon souboru';
 $lang['lockedby']              = 'Právě zamknuto:';
 $lang['lockexpire']            = 'Zámek vyprší:';
 $lang['rssfailed']             = 'Nastala chyba při vytváření tohoto RSS: ';
@@ -229,7 +237,8 @@ $lang['created']               = 'vytvořeno';
 $lang['restored']              = 'stará verze byla obnovena (%s)';
 $lang['external_edit']         = 'upraveno mimo DokuWiki';
 $lang['summary']               = 'Komentář k úpravám';
-$lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a>.';
+$lang['unknowndate']           = 'Neznámé datum';
+$lang['noflash']               = 'Pro přehrání obsahu potřebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stáhnout snippet';
 $lang['tools']                 = 'Nástroje';
 $lang['user_tools']            = 'Uživatelské nástroje';
@@ -270,7 +279,7 @@ $lang['qb_media']              = 'Vložit obrázky nebo jiné soubory';
 $lang['qb_sig']                = 'Vložit podpis';
 $lang['qb_smileys']            = 'Emotikony';
 $lang['qb_chars']              = 'Speciální znaky';
-$lang['upperns']               = 'skočit do nadřazeného jmenného prostoru';
+$lang['upperns']               = 'přejít do nadřazeného jmenného prostoru';
 $lang['metaedit']              = 'Upravit Metadata';
 $lang['metasaveerr']           = 'Chyba při zápisu metadat';
 $lang['metasaveok']            = 'Metadata uložena';
@@ -309,10 +318,13 @@ $lang['i_wikiname']            = 'Název wiki';
 $lang['i_enableacl']           = 'Zapnout ACL (doporučeno)';
 $lang['i_superuser']           = 'Správce';
 $lang['i_problems']            = 'Instalátor narazil na níže popsané problémy. Nelze pokračovat v instalaci, dokud je neopravíte.';
-$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte soubory z instalačního balíčku, nebo zkuste prostudovat <a href="http://dokuwiki.org/install">instrukce pro instalaci DokuWiki</a>.';
+$lang['i_modified']            = 'Instalátor bude z bezpečnostních důvodů pracovat pouze s čistou a ještě neupravenou instalací DokuWiki. Buď znovu rozbalte soubory z instalačního balíčku, nebo zkuste prostudovat <a href="https://www.dokuwiki.org/install">instrukce pro instalaci DokuWiki</a>.';
 $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. Váš webhosting ji možná z nějakého důvodu vypnul.';
+$lang['i_disabled']            = 'Bylo zakázáno vaším poskytovatelem.';
+$lang['i_funcnmail']           = '<b>Poznámka:</b> Funkce mail() není v PHP dostupná. %s Pokud tento problém přetrvává, zkuste nainstalovat <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Verze vaší instalace PHP <code>%s</code> je nižší než požadovaná <code>%s</code>. Budete muset aktualizovat svou instalaci PHP.';
 $lang['i_mbfuncoverload']      = 'mbstring.func_overload musí být vypnut v php.ini pro běh DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nemůže vytvořit kryptograficky bezpečná čísla pro cookies. Zkuste zkontrolovat nastavení open_basedir v php.ini, zda máte přistup k  <code>/dev/urandom </code>.';
 $lang['i_permfail']            = 'DokuWiki nemůže zapisovat do <code>%s</code>. Budete muset opravit práva k tomuto adresáři.';
 $lang['i_confexists']          = '<code>%s</code> již existuje';
 $lang['i_writeerr']            = 'Nelze vytvořit <code>%s</code>. Budete muset zkontrolovat práva k souborům či adresářům a vytvořit tento soubor ručně.';
@@ -345,7 +357,7 @@ $lang['media_file']            = 'Soubor';
 $lang['media_viewtab']         = 'Zobrazit';
 $lang['media_edittab']         = 'Upravit';
 $lang['media_historytab']      = 'Historie';
-$lang['media_list_thumbs']     = 'Zmenšeniny';
+$lang['media_list_thumbs']     = 'Miniatury';
 $lang['media_list_rows']       = 'Řádky';
 $lang['media_sort_name']       = 'Jméno';
 $lang['media_sort_date']       = 'Datum';
@@ -363,6 +375,7 @@ $lang['media_perm_upload']     = 'Bohužel, nemáte práva nahrávat soubory.';
 $lang['media_update']          = 'Nahrát novou verzi';
 $lang['media_restore']         = 'Obnovit tuto verzi';
 $lang['media_acl_warning']     = 'Tento seznam nemusí být úplný z důvodu omezení práv ACL a skrytým stránkám.';
+$lang['email_fail']            = 'Funkce mail() v PHP chybí nebo je zakázána. Tato e-mailová zpráva nebyla odeslána:';
 $lang['currentns']             = 'Aktuální jmenný prostor';
 $lang['searchresult']          = 'Výsledek hledání';
 $lang['plainhtml']             = 'Čisté HTML';
@@ -371,3 +384,6 @@ $lang['page_nonexist_rev']     = 'Stránka neexistovala na %s. Byla vytvořena d
 $lang['unable_to_parse_date']  = 'Nelze rozebrat parametr "%s".';
 $lang['email_signature_text']  = 'Tento e-mail byl automaticky vygenerován systémem DokuWiki
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Soubor protokolu je příliš velký. Předchozí řádky byly přeskočeny!';
+$lang['log_file_failed_to_open'] = 'Soubor protokolu se nepodařilo otevřít.';
+$lang['log_file_failed_to_read'] = 'Během čtení protokolu došlo k chybě.';

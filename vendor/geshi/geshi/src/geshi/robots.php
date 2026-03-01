@@ -4,7 +4,7 @@
  * --------
  * Author: Christian Lescuyer (cl@goelette.net)
  * Copyright: (c) 2006 Christian Lescuyer http://xtian.goelette.info
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2006/02/17
  *
  * robots.txt language file for GeSHi.

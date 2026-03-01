@@ -1,4 +1,3 @@
 ====== Sayfa kilitli ======
 
 Bu sayfa şu anda başka bir kullanıcının değiştirmesi için kilitli. Kilitin süresi geçene veya bu kullanıcı değiştirmeyi bitirene kadar beklemelisiniz.
-

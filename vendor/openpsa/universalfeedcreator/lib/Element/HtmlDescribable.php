@@ -3,8 +3,6 @@
 /**
  * An HtmlDescribable is an item within a feed that can have a description that may
  * include HTML markup.
- *
- * @package de.bitfolge.feedcreator
  */
 class HtmlDescribable
 {

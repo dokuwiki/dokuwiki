@@ -1,5 +1,8 @@
 <?php
 
+use dokuwiki\ChangeLog\ChangeLog;
+use dokuwiki\ChangeLog\PageChangeLog;
+
 /**
  * Tests for requesting revisioninfo of a revision of a page with getRevisionInfo()
  *
@@ -13,16 +16,12 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
     private $firstlogline = "1374261194	127.0.0.1	E	mailinglist	pubcie		\n";
     private $pageid = 'mailinglist';
 
-    function setup() {
+    function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
-        if(isset($cache['nonexist'])) {
-            unset($cache['nonexist']);
-        }
-        if(isset($cache['mailinglist'])) {
-            unset($cache['mailinglist']);
-        }
+        unset($cache['nonexist']);
+        unset($cache['mailinglist']);
     }
 
     /**
@@ -43,7 +42,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
@@ -58,7 +58,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev_chuncked() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $info = $pagelog->getRevisionInfo($rev);
@@ -70,7 +71,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrev_chunckedsmallerthanlinelength() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 20);
         $info = $pagelog->getRevisionInfo($rev);
@@ -82,7 +84,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrecentestlogline() {
         $rev = 1374261194;
-        $infoexpected = parseChangelogLine($this->firstlogline);
+        $infoexpected = ChangeLog::parseLogLine($this->firstlogline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
@@ -97,7 +100,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_requestrecentestlogline_chuncked() {
         $rev = 1374261194;
-        $infoexpected = parseChangelogLine($this->firstlogline);
+        $infoexpected = ChangeLog::parseLogLine($this->firstlogline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 512);
         $info = $pagelog->getRevisionInfo($rev);
@@ -112,7 +116,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
-        $this->assertEquals(false, $info);
+        $this->assertFalse($info);
     }
 
     /**
@@ -123,7 +127,7 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
 
         $pagelog = new PageChangeLog($this->pageid, $chunk_size = 8192);
         $info = $pagelog->getRevisionInfo($rev);
-        $this->assertEquals(false, $info);
+        $this->assertFalse($info);
     }
 
     /**
@@ -131,7 +135,8 @@ class changelog_getrevisionsinfo_test extends DokuWikiTest {
      */
     function test_chuncksizetrue() {
         $rev = 1362525899;
-        $infoexpected = parseChangelogLine($this->logline);
+        $infoexpected = ChangeLog::parseLogLine($this->logline);
+        $infoexpected['mode'] = 'page';
 
         $pagelog = new PageChangeLog($this->pageid, true);
         $info = $pagelog->getRevisionInfo($rev);

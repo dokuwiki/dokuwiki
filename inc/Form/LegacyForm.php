@@ -1,4 +1,5 @@
 <?php
+
 namespace dokuwiki\Form;
 
 /**
@@ -11,23 +12,24 @@ namespace dokuwiki\Form;
  *
  * @package dokuwiki\Form
  */
-class LegacyForm extends Form {
-
+class LegacyForm extends Form
+{
     /**
      * Creates a new modern form from an old legacy Doku_Form
      *
      * @param \Doku_Form $oldform
      */
-    public function __construct(\Doku_Form $oldform) {
+    public function __construct(\Doku_Form $oldform)
+    {
         parent::__construct($oldform->params);
 
         $this->hidden = $oldform->_hidden;
 
-        foreach($oldform->_content as $element) {
-            list($ctl, $attr) = $this->parseLegacyAttr($element);
+        foreach ($oldform->_content as $element) {
+            [$ctl, $attr] = $this->parseLegacyAttr($element);
 
-            if(is_array($element)) {
-                switch($ctl['elem']) {
+            if (is_array($element)) {
+                switch ($ctl['elem']) {
                     case 'wikitext':
                         $this->addTextarea('wikitext')
                              ->attrs($attr)
@@ -93,16 +95,13 @@ class LegacyForm extends Form {
                     case 'menufield':
                     case 'listboxfield':
                         throw new \UnexpectedValueException('Unsupported legacy field ' . $ctl['elem']);
-                        break;
                     default:
                         throw new \UnexpectedValueException('Unknown legacy field ' . $ctl['elem']);
-
                 }
             } else {
                 $this->addHTML($element);
             }
         }
-
     }
 
     /**
@@ -111,23 +110,24 @@ class LegacyForm extends Form {
      * @param array $legacy
      * @return array
      */
-    protected function parseLegacyAttr($legacy) {
-        $attributes = array();
-        $control = array();
+    protected function parseLegacyAttr($legacy)
+    {
+        $attributes = [];
+        $control = [];
 
-        foreach($legacy as $key => $val) {
-            if($key{0} == '_') {
+        foreach ($legacy as $key => $val) {
+            if ($key[0] == '_') {
                 $control[substr($key, 1)] = $val;
-            } elseif($key == 'name') {
+            } elseif ($key == 'name') {
                 $control[$key] = $val;
-            } elseif($key == 'id') {
+            } elseif ($key == 'id') {
                 $control[$key] = $val;
             } else {
                 $attributes[$key] = $val;
             }
         }
 
-        return array($control, $attributes);
+        return [$control, $attributes];
     }
 
     /**
@@ -136,8 +136,9 @@ class LegacyForm extends Form {
      * @param string $type
      * @return string
      */
-    protected function legacyType($type) {
-        static $types = array(
+    protected function legacyType($type)
+    {
+        static $types = [
             'text' => 'textfield',
             'password' => 'passwordfield',
             'checkbox' => 'checkboxfield',
@@ -145,10 +146,9 @@ class LegacyForm extends Form {
             'tagopen' => 'opentag',
             'tagclose' => 'closetag',
             'fieldsetopen' => 'openfieldset',
-            'fieldsetclose' => 'closefieldset',
-        );
-        if(isset($types[$type])) return $types[$type];
-        return $type;
+            'fieldsetclose' => 'closefieldset'
+        ];
+        return $types[$type] ?? $type;
     }
 
     /**
@@ -156,20 +156,21 @@ class LegacyForm extends Form {
      *
      * @return \Doku_Form
      */
-    public function toLegacy() {
+    public function toLegacy()
+    {
         $this->balanceFieldsets();
 
         $legacy = new \Doku_Form($this->attrs());
         $legacy->_hidden = $this->hidden;
-        foreach($this->elements as $element) {
-            if(is_a($element, 'dokuwiki\Form\HTMLElement')) {
+        foreach ($this->elements as $element) {
+            if (is_a($element, 'dokuwiki\Form\HTMLElement')) {
                 $legacy->_content[] = $element->toHTML();
-            } elseif(is_a($element, 'dokuwiki\Form\InputElement')) {
+            } elseif (is_a($element, 'dokuwiki\Form\InputElement')) {
                 /** @var InputElement $element */
                 $data = $element->attrs();
                 $data['_elem'] = $this->legacyType($element->getType());
                 $label = $element->getLabel();
-                if($label) {
+                if ($label instanceof LabelElement) {
                     $data['_class'] = $label->attr('class');
                 }
                 $legacy->_content[] = $data;

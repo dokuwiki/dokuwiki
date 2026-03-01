@@ -1,5 +1,5 @@
 # Esta é uma lista de plavaras que o indexador ignora, uma palavra por linha
-# Quando você edita esta lista certifique-se que usa fim de linha usado em sistemas UNIX
+# Quando você edita esta lista certifique-se que usa fim de linha usado em sistemas UNIX (fim de linha simples)
 # Não é necessário incluir palavras menores que 3 letras - estas são sempre ignoradas
 # Esta lista é baseada nas encontradas em http://www.ranks.nl/stopwords/
 último
@@ -139,3 +139,4 @@ ver
 verdade
 verdadeiro
 você
+www

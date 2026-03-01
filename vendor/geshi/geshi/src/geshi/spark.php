@@ -4,7 +4,7 @@
  * -------
  * Author: Phil Thornley (tux@inmail.cz)
  * Copyright: (c) 2004 Phil Thornley (http://www.sparksure.com)
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2010/08/22
  *
  * SPARK language file for GeSHi.

@@ -4,7 +4,7 @@
  * --------
  * Author: Milian Wolff (mail@milianw.de)
  * Copyright: (c) 2009 Milian Wolff
- * Release Version: 1.0.9.0
+ * Release Version: 1.0.9.1
  * Date Started: 2009/06/24
  *
  * GDB language file for GeSHi.
