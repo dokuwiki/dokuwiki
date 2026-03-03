@@ -74,7 +74,7 @@ $lang['msg_upload_failed']            = 'Uploading the file failed: %s';
 $lang['msg_nooverwrite']              = 'Extension %s already exists so it is not being overwritten; to overwrite, tick the overwrite option';
 
 $lang['missing_dependency']           = 'Missing or disabled dependency: %s';
-$lang['found_conflict']               = 'This extension is marked as conflictig with the following installed extensions: %s';
+$lang['found_conflict']               = 'This extension is marked as conflicting with the following installed extensions: %s';
 $lang['security_issue']               = 'Security Issue: %s';
 $lang['security_warning']             = 'Security Warning: %s';
 $lang['update_message']               = 'Update Message: %s';
