@@ -121,10 +121,12 @@ function _ft_pageSearch(&$data)
                 break;
             case 'N+:':
             case 'N-:': // namespace
-                $ns = cleanID(substr($token, 3)) . ':';
+                $ns_root = cleanID(substr($token, 3));
+                $ns = $ns_root . ':';
                 $pages_matched = [];
                 foreach (array_keys($pages_all) as $id) {
-                    if (strpos($id, $ns) === 0) {
+                    // include the page if it's the root OR a sub-page
+                    if ($id === $ns_root || strpos($id, $ns) === 0) {
                         $pages_matched[$id] = 0; // namespace: always 0 hit
                     }
                 }
