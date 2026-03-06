@@ -8,21 +8,21 @@
 
 #dokuwiki__site > .site {
     /* give space to the right so the tools won't disappear on smaller screens */
-    /* it's 40px because the 30px wide icons will have 5px more spacing to the left and right */
-    padding-right: 40px;
+    /* it's 2.75rem because the 1.75rem wide icons will have 0.5rem more spacing to the left and right */
+    padding-right: 2.75rem;
     /* give the same space to the left to balance it out */
-    padding-left: 40px;
+    padding-left: 2.75rem;
 }
 
 .dokuwiki div.page {
-    height: 190px;
-    min-height: 190px; /* 30 (= height of icons) x 6 (= maximum number of possible tools) + 2x5 */
+    height: 14.5rem;
+    min-height: 14.5rem; /* 2.25 (= height of items) x 6 (= maximum number of possible tools) + 2x5 */
     height: auto;
 }
 
 #dokuwiki__pagetools {
-    @ico-width: 28px;
-    @ico-margin: 8px;
+    @ico-width: 1.75rem;
+    @ico-margin: 0.5rem;
     @item-width: (@ico-width + @ico-margin + @ico-margin);
     @item-height: (@ico-width + @ico-margin);
 
