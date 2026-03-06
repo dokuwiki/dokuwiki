@@ -288,11 +288,13 @@ function _ft_pageLookup(&$data)
     $Indexer = idx_get_indexer();
     $parsedQuery = ft_queryParser($Indexer, $id);
     if (count($parsedQuery['ns']) > 0) {
-        $ns = cleanID($parsedQuery['ns'][0]) . ':';
+        $ns_root = cleanID($parsedQuery['ns'][0]);
+        $ns = $ns_root . ':';
         $id = implode(' ', $parsedQuery['highlight']);
     }
     if (count($parsedQuery['notns']) > 0) {
-        $notns = cleanID($parsedQuery['notns'][0]) . ':';
+        $notns_root = cleanID($parsedQuery['notns'][0]);
+        $notns = $notns_root . ':';
         $id = implode(' ', $parsedQuery['highlight']);
     }
 
@@ -321,14 +323,14 @@ function _ft_pageLookup(&$data)
 
     if (isset($ns)) {
         foreach (array_keys($pages) as $p_id) {
-            if (strpos($p_id, $ns) !== 0) {
+            if ($p_id !== $ns_root && strpos($p_id, $ns) !== 0) {
                 unset($pages[$p_id]);
             }
         }
     }
     if (isset($notns)) {
         foreach (array_keys($pages) as $p_id) {
-            if (strpos($p_id, $notns) === 0) {
+            if ($p_id === $notns_root || strpos($p_id, $notns) === 0) {
                 unset($pages[$p_id]);
             }
         }
