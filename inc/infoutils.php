@@ -235,12 +235,12 @@ function check()
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
         msg('DokuWiki version: ' . getVersion(), 1);
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            msg('Your PHP version is too old (' . phpversion() . ' vs. 7.4+ needed)', -1);
+        if (version_compare(phpversion(), '8.2.0', '<')) {
+            msg('Your PHP version is too old (' . phpversion() . ' vs. 8.2+ needed)', -1);
         } else {
             msg('PHP version ' . phpversion(), 1);
         }
-    } elseif (version_compare(phpversion(), '7.4.0', '<')) {
+    } elseif (version_compare(phpversion(), '8.2.0', '<')) {
         msg('Your PHP version is too old', -1);
     }
 
