@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\Conversion;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 use dokuwiki\Logger;
@@ -108,7 +109,7 @@ class auth_plugin_authad extends AuthPlugin
                     iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER'))
                 );
             } elseif (!Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
-                $INPUT->server->set('REMOTE_USER', utf8_encode($INPUT->server->str('REMOTE_USER')));
+                $INPUT->server->set('REMOTE_USER', Conversion::fromLatin1($INPUT->server->str('REMOTE_USER')));
             }
 
             // trust the incoming user
