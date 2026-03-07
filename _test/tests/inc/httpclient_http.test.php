@@ -143,7 +143,7 @@ class httpclient_http_test extends DokuWikiTest
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertEquals(['foo' => 'bar'], $resp);
+        $this->assertEquals(['cookies' => ['foo' => 'bar']], $resp);
     }
 
     /**
@@ -222,7 +222,11 @@ class httpclient_http_test extends DokuWikiTest
         $this->assertFalse($data === false, $http->errorInfo());
         $resp = json_decode($data, true);
         $this->assertTrue(is_array($resp), 'JSON response');
-        $this->assertEquals(['authorized' => true, 'user' => 'user'], $resp);
+        $this->assertEquals([
+            'authorized' => true,
+            'user' => 'user',
+            'authenticated' => true
+        ], $resp);
     }
 
     /**
