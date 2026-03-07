@@ -4,36 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d27ec443277c8544c6f6d3db88c48fab",
+    "content-hash": "420dac7e6393beb45996e585e85a14c7",
     "packages": [
         {
             "name": "scotteh/php-dom-wrapper",
-            "version": "2.0.5",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scotteh/php-dom-wrapper.git",
-                "reference": "351e9c635c9aa65c8cedaeefcac3a49581ad2529"
+                "reference": "0cb1e9498b6736f4370a2bc71f43399a9b3ffb66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scotteh/php-dom-wrapper/zipball/351e9c635c9aa65c8cedaeefcac3a49581ad2529",
-                "reference": "351e9c635c9aa65c8cedaeefcac3a49581ad2529",
+                "url": "https://api.github.com/repos/scotteh/php-dom-wrapper/zipball/0cb1e9498b6736f4370a2bc71f43399a9b3ffb66",
+                "reference": "0cb1e9498b6736f4370a2bc71f43399a9b3ffb66",
                 "shasum": ""
             },
             "require": {
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "lib-libxml": ">=2.7.7",
-                "php": ">=7.1.0",
-                "symfony/css-selector": "^4.0 || ^5.0 || ^6.0"
+                "php": ">=8.0.0",
+                "symfony/css-selector": "^5.0 || ^6.0 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^9.0 || ^10.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -62,26 +62,26 @@
             ],
             "support": {
                 "issues": "https://github.com/scotteh/php-dom-wrapper/issues",
-                "source": "https://github.com/scotteh/php-dom-wrapper/tree/2.0.5"
+                "source": "https://github.com/scotteh/php-dom-wrapper/tree/3.0.2"
             },
-            "time": "2023-09-10T13:50:09+00:00"
+            "time": "2026-03-02T09:41:29+00:00"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v6.4.34",
+            "version": "v7.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "b0314c186f1464de048cce58979ff1625ca88bbb"
+                "reference": "2e7c52c647b406e2107dd867db424a4dbac91864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/b0314c186f1464de048cce58979ff1625ca88bbb",
-                "reference": "b0314c186f1464de048cce58979ff1625ca88bbb",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/2e7c52c647b406e2107dd867db424a4dbac91864",
+                "reference": "2e7c52c647b406e2107dd867db424a4dbac91864",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1"
+                "php": ">=8.2"
             },
             "type": "library",
             "autoload": {
@@ -113,7 +113,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v6.4.34"
+                "source": "https://github.com/symfony/css-selector/tree/v7.4.6"
             },
             "funding": [
                 {
@@ -133,7 +133,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-16T08:37:21+00:00"
+            "time": "2026-02-17T07:53:42+00:00"
         }
     ],
     "packages-dev": [

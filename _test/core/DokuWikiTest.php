@@ -228,7 +228,6 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
     protected static function callInaccessibleMethod($obj, $func, array $args) {
         $class = new \ReflectionClass($obj);
         $method = $class->getMethod($func);
-        $method->setAccessible(true);
         return $method->invokeArgs($obj, $args);
     }
 
@@ -246,7 +245,6 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
     protected static function getInaccessibleProperty($obj, $prop) {
         $class = new \ReflectionClass($obj);
         $property = $class->getProperty($prop);
-        $property->setAccessible(true);
         return $property->getValue($obj);
     }
 
@@ -265,7 +263,6 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
     protected static function setInaccessibleProperty($obj, $prop, $value) {
         $class = new \ReflectionClass($obj);
         $property = $class->getProperty($prop);
-        $property->setAccessible(true);
         $property->setValue($obj, $value);
     }
 

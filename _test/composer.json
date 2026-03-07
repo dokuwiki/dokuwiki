@@ -1,7 +1,7 @@
 {
     "require": {
         "php": ">=8.2",
-        "scotteh/php-dom-wrapper": "^2.0"
+        "scotteh/php-dom-wrapper": "^3.0"
     },
     "config": {
         "platform": {

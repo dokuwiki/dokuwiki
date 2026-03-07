@@ -9,7 +9,7 @@ use dokuwiki\HTTP\DokuHTTPClient;
 /**
  * @group internet
  */
-class FeedCreatorTest extends \DokuWikiTest
+class FeedCreatorValidationTest extends \DokuWikiTest
 {
 
     /**
