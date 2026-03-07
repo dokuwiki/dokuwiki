@@ -22,3 +22,5 @@ jobs:
         uses: phntmxyz/pr_todo_checker@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          exclude: |
+            vendor/**
