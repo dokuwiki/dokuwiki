@@ -313,7 +313,7 @@ $lang['i_phpver']              = 'نسخة PHP التي لديك هي
 وهي أقل من النسخة المطلوبة
 <code>%s</code>
 عليك تحديث نسخة PHP';
-$lang['i_mbfuncoverload']      = 'يجب ايقاف تشغيل mbstring.func_overload في ملف php.ini لتشغيل دوكوويكي.';
+
 $lang['i_urandom']             = 'لا يمكن ل DokuWiki إنشاء أرقام آمنة مشفرة لملفات تعريف الارتباط. قد ترغب في التحقق من إعدادات open_basedir الخاصة بك في php.ini للوصول المناسب إلى <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'إن <code>%s</code> غير قابل للكتابة بواسطة دوكو ويكي، عليك تعديل إعدادات الصلاحيات لهذا المجلد!';
 $lang['i_confexists']          = 'إن <code>%s</code> موجود أصلاً';

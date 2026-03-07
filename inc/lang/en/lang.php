@@ -334,7 +334,6 @@ $lang['i_disabled']            =  'It has been disabled by your provider.';
 $lang['i_funcnmail']           = '<b>Note:</b> The PHP mail function is not available. %s' .
                                  ' If it remains unavailable, you may install the <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Your PHP version <code>%s</code> is lower than the needed <code>%s</code>. You need to upgrade your PHP install.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload must be disabled in php.ini to run DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki cannot create cryptographically secure numbers for cookies. You may want to check your open_basedir settings in php.ini for proper <code>/dev/urandom</code> access.';
 $lang['i_permfail']            = '<code>%s</code> is not writable by DokuWiki. You need to fix the permission settings of this directory!';
 $lang['i_confexists']          = '<code>%s</code> already exists';

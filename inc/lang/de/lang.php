@@ -348,7 +348,6 @@ $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht ver
 $lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
 $lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
-$lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
 $lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchten Sie Ihre "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';

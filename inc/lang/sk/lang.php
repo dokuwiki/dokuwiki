@@ -307,7 +307,6 @@ $lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript 
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
 $lang['i_funcnmail']           = '<b>Note:</b> PHP mail funkcia nie je dostupná. %s Ak zostáva stále nedostupná, možno by ste mohli nainštalovať <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload musí byt zakázaná v php.ini pre bezproblémový chod DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
 $lang['i_confexists']          = '<code>%s</code> už existuje';
 $lang['i_writeerr']            = 'Nie je možné vytvoriť <code>%s</code>. Potrebujete skontrolovať prístupové práva pre adresár/súbor a vytvoriť ho manuálne.';

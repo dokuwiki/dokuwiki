@@ -305,7 +305,6 @@ $lang['i_modified']            = 'Oherwydd rhesymau diogelwch, bydd y sgript hwn
                                   <a href="https://www.dokuwiki.org/install">canllawiau arsefydylu Dokuwiki</a> cyfan';
 $lang['i_funcna']              = 'Swyddogaeth PHP <code>%s</code> ddim ar gael. Posib bod eich gwesteiwr wedi\'i hanalluogi am ryw reswm?';
 $lang['i_phpver']              = 'Mae\'ch fersiwn PHP <code>%s</code> yn is na\'r hyn sydd ei angen <code>%s</code>. Mae angen i chi ddiweddaru eich arsefydliad PHP.';
-$lang['i_mbfuncoverload']      = 'Mae\'n rhaid analluogi mbstring.func_overload mewn php.ini er mwyn rhedeg DokuWiki.';
 $lang['i_permfail']            = '\'Dyw DokuWiki ddim yn gallu ysgrifennu i <code>%s</code>. Mae angen newid gosodiadau hawliau ar gyfer y ffolder hwn!';
 $lang['i_confexists']          = 'Mae <code>%s</code> eisoes yn bodoli';
 $lang['i_writeerr']            = 'Methu creu <code>%s</code>. Bydd angen i chi wirio hawliau ffolder/ffeil a chreu\'r ffeil gan law.';

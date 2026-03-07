@@ -607,21 +607,11 @@ function check_functions()
         $ok = false;
     }
 
-    if (ini_get('mbstring.func_overload') != 0) {
-        $error[] = $lang['i_mbfuncoverload'];
-        $ok = false;
-    }
-
     try {
         random_bytes(1);
     } catch (Exception $th) {
         // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
         $error[] = $lang['i_urandom'];
-        $ok = false;
-    }
-
-    if (ini_get('mbstring.func_overload') != 0) {
-        $error[] = $lang['i_mbfuncoverload'];
         $ok = false;
     }
 
