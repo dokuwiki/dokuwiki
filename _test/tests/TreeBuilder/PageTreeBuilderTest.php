@@ -197,4 +197,80 @@ class PageTreeBuilderTest extends DokuWikiTest
         $this->assertEquals(count($tree->getAll()), count($leaves) + count($branches),
             'Leaves + branches should equal total pages');
     }
+
+    public function invalidIdFilteringProvider()
+    {
+        return [
+            'invalid IDs filtered by default' => [
+                'flags' => 0,
+                'expectFiltered' => true,
+            ],
+            'invalid IDs kept with FLAG_KEEP_INVALID' => [
+                'flags' => PageTreeBuilder::FLAG_KEEP_INVALID,
+                'expectFiltered' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidIdFilteringProvider
+     */
+    public function testInvalidIdFiltering(int $flags, bool $expectFiltered)
+    {
+        global $conf;
+
+        $nsDir = $conf['datadir'] . '/namespace';
+
+        // Create files with invalid IDs directly in the filesystem
+        $invalidFiles = [
+            '__template.txt',  // namespace template
+            '_template.txt',   // leading underscore
+        ];
+        foreach ($invalidFiles as $file) {
+            io_saveFile($nsDir . '/' . $file, 'This should not appear in the tree');
+        }
+
+        // Create directories with invalid names
+        $invalidDirs = [
+            '_private',   // leading underscore
+        ];
+        foreach ($invalidDirs as $dir) {
+            $dirPath = $nsDir . '/' . $dir;
+            io_mkdir_p($dirPath);
+            io_saveFile($dirPath . '/start.txt', 'This should not appear in the tree');
+        }
+
+        $tree = new PageTreeBuilder('namespace');
+        if ($flags) {
+            $tree->addFlag($flags);
+        }
+        $tree->generate();
+
+        $allIds = array_map(fn($node) => $node->getId(), $tree->getAll());
+
+        // Check invalid pages
+        foreach ($invalidFiles as $file) {
+            $invalidId = pathID('namespace/' . $file);
+            if ($expectFiltered) {
+                $this->assertNotContains($invalidId, $allIds, "Invalid page '$file' should be filtered");
+            } else {
+                $this->assertContains($invalidId, $allIds, "Invalid page '$file' should be kept");
+            }
+        }
+
+        // Check invalid namespaces
+        foreach ($invalidDirs as $dir) {
+            $invalidId = pathID('namespace/' . $dir);
+            if ($expectFiltered) {
+                $this->assertNotContains($invalidId, $allIds, "Invalid namespace '$dir' should be filtered");
+            } else {
+                $this->assertContains($invalidId, $allIds, "Invalid namespace '$dir' should be kept");
+            }
+        }
+
+        // Valid pages and namespaces should always be present
+        $this->assertContains('namespace:page1', $allIds);
+        $this->assertContains('namespace:page2', $allIds);
+        $this->assertContains('namespace:subns', $allIds);
+    }
 }
