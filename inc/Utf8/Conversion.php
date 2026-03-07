@@ -83,7 +83,7 @@ class Conversion
             $table = get_html_translation_table(HTML_ENTITIES);
             $table = array_flip($table);
             $table = array_map(
-                static fn($c) => Unicode::toUtf8([ord($c)]),
+                static fn($c) => Unicode::toUtf8([ord($c[0])]),
                 $table
             );
         }
