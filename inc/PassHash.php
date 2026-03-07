@@ -679,7 +679,7 @@ class PassHash
             throw new \Exception('This PHP installation has no bcrypt support');
         }
 
-        if($compute < 4 || $compute > 31) {
+        if ($compute < 4 || $compute > 31) {
             $compute = PASSWORD_BCRYPT_DEFAULT_COST;
         }
 
