@@ -337,6 +337,7 @@ function wikiFN($raw_id, $rev = '', $clean = true)
     $cache = & $cache_wikifn;
 
     $id = $raw_id;
+    $rev = (int) $rev; // any falsy rev will be rev 0 in the cache
 
     if ($clean) $id = cleanID($id);
     $id = str_replace(':', '/', $id);
