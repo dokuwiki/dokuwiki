@@ -104,8 +104,8 @@ class Ajax
 
         // limit results to 15 hits
         $data = array_slice($data, 0, 15);
-        $data = array_map('trim', $data);
-        $data = array_map('noNS', $data);
+        $data = array_map(trim(...), $data);
+        $data = array_map(noNS(...), $data);
         $data = array_unique($data);
         Sort::sort($data);
 
@@ -337,7 +337,7 @@ class Ajax
             $data[$item]['level'] = $lvl + 1;
         }
         $idx = new Index();
-        echo html_buildlist($data, 'idx', [$idx,'formatListItem'], [$idx,'tagListItem']);
+        echo html_buildlist($data, 'idx', $idx->formatListItem(...), $idx->tagListItem(...));
     }
 
     /**
@@ -379,7 +379,7 @@ class Ajax
             $dirs = [];
 
             foreach ($pages as $pid => $title) {
-                if (strpos(getNS($pid), $id) !== false) {
+                if (str_contains(getNS($pid), $id)) {
                     // match was in the namespace
                     $dirs[getNS($pid)] = 1; // assoc array avoids dupes
                 } else {
@@ -415,7 +415,7 @@ class Ajax
 
         // fixme sort results in a useful way ?
 
-        if (!count($data)) {
+        if ($data === []) {
             echo $lang['nothingfound'];
             exit;
         }

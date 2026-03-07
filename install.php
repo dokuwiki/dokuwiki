@@ -185,7 +185,7 @@ function print_form($d)
     include(DOKU_CONF . 'license.php');
 
     if (!is_array($d)) $d = [];
-    $d = array_map('hsc', $d);
+    $d = array_map(hsc(...), $d);
 
     if (!isset($d['acl'])) $d['acl'] = 1;
     if (!isset($d['pop'])) $d['pop'] = 1;
@@ -609,7 +609,7 @@ function check_functions()
 
     try {
         random_bytes(1);
-    } catch (Exception $th) {
+    } catch (Exception) {
         // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
         $error[] = $lang['i_urandom'];
         $ok = false;
@@ -624,7 +624,7 @@ function check_functions()
         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
     if (!function_exists('mail')) {
-        if (strpos(ini_get('disable_functions'), 'mail') !== false) {
+        if (str_contains(ini_get('disable_functions'), 'mail')) {
             $disabled = $lang['i_disabled'];
         } else {
             $disabled = "";

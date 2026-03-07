@@ -11,38 +11,30 @@ class FeedMediaProcessor extends FeedItemProcessor
     /** @inheritdoc */
     public function getURL($linkto)
     {
-        switch ($linkto) {
-            case 'page':
-                $opt = [
-                    'image' => $this->getId(),
-                    'ns' => getNS($this->getId()),
-                    'rev' => $this->getRev()
-                ];
-                break;
-            case 'rev':
-                $opt = [
-                    'image' => $this->getId(),
-                    'ns' => getNS($this->getId()),
-                    'rev' => $this->getRev(),
-                    'tab_details' => 'history'
-                ];
-                break;
-            case 'current':
-                $opt = [
-                    'image' => $this->getId(),
-                    'ns' => getNS($this->getId())
-                ];
-                break;
-            case 'diff':
-            default:
-                $opt = [
-                    'image' => $this->getId(),
-                    'ns' => getNS($this->getId()),
-                    'rev' => $this->getRev(),
-                    'tab_details' => 'history',
-                    'media_do' => 'diff'
-                ];
-        }
+        $opt = match ($linkto) {
+            'page' => [
+                'image' => $this->getId(),
+                'ns' => getNS($this->getId()),
+                'rev' => $this->getRev()
+            ],
+            'rev' => [
+                'image' => $this->getId(),
+                'ns' => getNS($this->getId()),
+                'rev' => $this->getRev(),
+                'tab_details' => 'history'
+            ],
+            'current' => [
+                'image' => $this->getId(),
+                'ns' => getNS($this->getId())
+            ],
+            default => [
+                'image' => $this->getId(),
+                'ns' => getNS($this->getId()),
+                'rev' => $this->getRev(),
+                'tab_details' => 'history',
+                'media_do' => 'diff'
+            ],
+        };
 
         return media_managerURL($opt, '&', true);
     }

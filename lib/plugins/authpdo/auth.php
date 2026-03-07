@@ -666,7 +666,7 @@ class auth_plugin_authpdo extends AuthPlugin
                 if (is_array($value)) continue;
                 if (is_object($value)) continue;
                 if ($key[0] != ':') $key = ":$key"; // prefix with colon if needed
-                if (strpos($sql, (string) $key) === false) continue; // skip if parameter is missing
+                if (!str_contains($sql, (string) $key)) continue; // skip if parameter is missing
 
                 if (is_int($value)) {
                     $sth->bindValue($key, $value, PDO::PARAM_INT);
@@ -692,7 +692,7 @@ class auth_plugin_authpdo extends AuthPlugin
                 }
                 try {
                     $hasnextrowset = $sth->nextRowset(); // run next rowset
-                } catch (PDOException $rowset_e) {
+                } catch (PDOException) {
                     $hasnextrowset = false; // driver does not support multi-rowset, should be executed in one time
                 }
             }
@@ -753,7 +753,7 @@ class auth_plugin_authpdo extends AuthPlugin
             if (!$sql) return false;
             // check if needed params are there
             foreach ($params as $param) {
-                if (strpos($sql, ":$param") === false) return false;
+                if (!str_contains($sql, ":$param")) return false;
             }
         }
 

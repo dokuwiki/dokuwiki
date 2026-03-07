@@ -102,7 +102,7 @@ function getVersionData()
         // we cannot use git on the shell -- let's do it manually!
         if (file_exists(DOKU_INC . '.git/HEAD')) {
             $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
-            if (strpos($headCommit, 'ref: ') === 0) {
+            if (str_starts_with($headCommit, 'ref: ')) {
                 // it is something like `ref: refs/heads/master`
                 $headCommit = substr($headCommit, 5);
                 $pathToHead = DOKU_INC . '.git/' . $headCommit;
@@ -399,6 +399,7 @@ function check()
     $http->max_redirect = 0;
     $http->timeout = 3;
     $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
+
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
@@ -546,7 +547,7 @@ function dbglog($msg, $header = '')
     dbg_deprecated('\\dokuwiki\\Logger');
 
     // was the msg as single line string? use it as header
-    if ($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
+    if ($header === '' && is_string($msg) && !str_contains($msg, "\n")) {
         $header = $msg;
         $msg = '';
     }
@@ -600,7 +601,7 @@ function dbg_backtrace()
         if (isset($call['args'])) {
             foreach ($call['args'] as $arg) {
                 if (is_object($arg)) {
-                    $params[] = '[Object ' . get_class($arg) . ']';
+                    $params[] = '[Object ' . $arg::class . ']';
                 } elseif (is_array($arg)) {
                     $params[] = '[Array]';
                 } elseif (is_null($arg)) {

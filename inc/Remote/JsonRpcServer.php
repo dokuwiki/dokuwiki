@@ -60,7 +60,7 @@ class JsonRpcServer
             } else {
                 $data = [];
             }
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             http_status(400);
             throw new RemoteException("JSON-RPC server only accepts valid JSON.", -32700);
         }
@@ -174,7 +174,7 @@ class JsonRpcServer
     {
         try {
             return $this->remote->call($methodname, $args);
-        } catch (AccessDeniedException $e) {
+        } catch (AccessDeniedException) {
             if (!isset($_SERVER['REMOTE_USER'])) {
                 http_status(401);
                 throw new RemoteException("server error. not authorized to call method $methodname", -32603);

@@ -74,7 +74,7 @@ class DocBlockMethod extends DocBlock
 
         // refine from doc tags
         foreach ($this->tags['param'] ?? [] as $param) {
-            [$type, $name, $description] = array_map('trim', sexplode(' ', $param, 3, ''));
+            [$type, $name, $description] = array_map(trim(...), sexplode(' ', $param, 3, ''));
             if ($name === '' || $name[0] !== '$') continue;
             $name = substr($name, 1);
             if (!isset($result[$name])) continue; // reflection says this param does not exist
@@ -103,7 +103,7 @@ class DocBlockMethod extends DocBlock
 
         // refine from doc tag
         foreach ($this->tags['return'] ?? [] as $return) {
-            [$type, $description] = array_map('trim', sexplode(' ', $return, 2, ''));
+            [$type, $description] = array_map(trim(...), sexplode(' ', $return, 2, ''));
             $result['type'] = new Type($type, $this->getContext());
             $result['description'] = $description;
         }

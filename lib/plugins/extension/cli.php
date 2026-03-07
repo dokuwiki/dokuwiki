@@ -308,7 +308,7 @@ class cli_plugin_extension extends CLIPlugin
                 $vcolor = null;
             }
 
-            if ($filter && strpos($status, $filter) === false) {
+            if ($filter && !str_contains($status, $filter)) {
                 continue;
             }
 

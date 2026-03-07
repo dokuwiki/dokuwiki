@@ -57,14 +57,14 @@ class Conversion
         if (!$entities) {
             return preg_replace_callback(
                 '/(&#([Xx])?([0-9A-Za-z]+);)/m',
-                [self::class, 'decodeNumericEntity'],
+                self::decodeNumericEntity(...),
                 $str
             );
         }
 
         return preg_replace_callback(
             '/&(#)?([Xx])?([0-9A-Za-z]+);/m',
-            [self::class, 'decodeAnyEntity'],
+            self::decodeAnyEntity(...),
             $str
         );
     }
@@ -107,15 +107,10 @@ class Conversion
      */
     protected static function decodeNumericEntity($ent)
     {
-        switch ($ent[2]) {
-            case 'X':
-            case 'x':
-                $cp = hexdec($ent[3]);
-                break;
-            default:
-                $cp = (int) $ent[3];
-                break;
-        }
+        $cp = match ($ent[2]) {
+            'X', 'x' => hexdec($ent[3]),
+            default => (int) $ent[3],
+        };
         return Unicode::toUtf8([$cp]);
     }
 

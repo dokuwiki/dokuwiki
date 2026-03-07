@@ -72,7 +72,7 @@ class Admin extends Ui
         echo '<div id="admin__version">';
         echo getVersion();
         echo '<br>';
-        echo implode('<br>', array_map('hsc', array_values(getRuntimeVersions())));
+        echo implode('<br>', array_map(hsc(...), array_values(getRuntimeVersions())));
         echo '</div>';
     }
 
@@ -156,9 +156,9 @@ class Admin extends Ui
         }
 
         // sort by name, then sort
-        uasort($menu['admin'], [$this, 'menuSort']);
-        uasort($menu['manager'], [$this, 'menuSort']);
-        uasort($menu['other'], [$this, 'menuSort']);
+        uasort($menu['admin'], $this->menuSort(...));
+        uasort($menu['manager'], $this->menuSort(...));
+        uasort($menu['other'], $this->menuSort(...));
 
         return $menu;
     }

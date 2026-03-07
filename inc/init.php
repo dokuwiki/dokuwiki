@@ -175,7 +175,7 @@ if (!defined('DOKU_TPLINC')) {
 
 // enable gzip compression if supported
 $httpAcceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
-$conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
+$conf['gzip_output'] &= (str_contains($httpAcceptEncoding, 'gzip'));
 global $ACT;
 if (
     $conf['gzip_output'] &&
@@ -471,9 +471,9 @@ function getBaseURL($abs = null)
 
     if (!empty($conf['basedir'])) {
         $dir = $conf['basedir'];
-    } elseif (substr($_SERVER['SCRIPT_NAME'], -4) == '.php') {
+    } elseif (str_ends_with($_SERVER['SCRIPT_NAME'], '.php')) {
         $dir = dirname($_SERVER['SCRIPT_NAME']);
-    } elseif (substr($_SERVER['PHP_SELF'], -4) == '.php') {
+    } elseif (str_ends_with($_SERVER['PHP_SELF'], '.php')) {
         $dir = dirname($_SERVER['PHP_SELF']);
     } elseif ($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']) {
         $dir = preg_replace(

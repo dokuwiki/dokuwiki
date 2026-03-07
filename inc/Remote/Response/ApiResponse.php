@@ -8,7 +8,7 @@ namespace dokuwiki\Remote\Response;
  * They are transmitted as associative arrays automatically created by
  * converting the object to an array using all public properties.
  */
-abstract class ApiResponse
+abstract class ApiResponse implements \Stringable
 {
     /**
      * A string representation of this object
@@ -17,5 +17,5 @@ abstract class ApiResponse
      *
      * @return string
      */
-    abstract public function __toString();
+    abstract public function __toString(): string;
 }

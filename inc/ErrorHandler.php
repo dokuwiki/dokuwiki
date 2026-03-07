@@ -39,10 +39,10 @@ class ErrorHandler
     public static function register()
     {
         if (!defined('DOKU_UNITTEST')) {
-            set_exception_handler([ErrorHandler::class, 'fatalException']);
+            set_exception_handler(ErrorHandler::fatalException(...));
             register_shutdown_function([ErrorHandler::class, 'fatalShutdown']);
             set_error_handler(
-                [ErrorHandler::class, 'errorHandler'],
+                ErrorHandler::errorHandler(...),
                 E_WARNING | E_USER_ERROR | E_USER_WARNING | E_RECOVERABLE_ERROR
             );
         }
@@ -58,7 +58,7 @@ class ErrorHandler
     public static function fatalException($e)
     {
         $plugin = self::guessPlugin($e);
-        $title = hsc(get_class($e) . ': ' . $e->getMessage());
+        $title = hsc($e::class . ': ' . $e->getMessage());
         $msg = 'An unforeseen error has occured. This is most likely a bug somewhere.';
         if ($plugin) $msg .= ' It might be a problem in the ' . $plugin . ' plugin.';
         $logged = self::logException($e)
@@ -89,7 +89,7 @@ EOT;
      */
     public static function showExceptionMsg($e, $intro = 'Error!')
     {
-        $msg = hsc($intro) . '<br />' . hsc(get_class($e) . ': ' . $e->getMessage());
+        $msg = hsc($intro) . '<br />' . hsc($e::class . ': ' . $e->getMessage());
         if (self::logException($e)) $msg .= '<br />More info is available in the error log.';
         msg($msg, -1);
     }
@@ -129,7 +129,7 @@ EOT;
         if ($e instanceof \ErrorException) {
             $prefix = self::ERRORCODES[$e->getSeverity()];
         } else {
-            $prefix = get_class($e);
+            $prefix = $e::class;
         }
 
         return Logger::getInstance()->log(

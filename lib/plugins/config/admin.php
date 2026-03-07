@@ -59,7 +59,7 @@ class admin_plugin_config extends AdminPlugin
                     $this->configuration->touch();
                 }
                 msg($this->getLang('updated'), 1);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 msg($this->getLang('error'), -1);
             }
             send_redirect(wl($ID, ['do' => 'admin', 'page' => 'config'], true, '&'));
@@ -168,7 +168,7 @@ class admin_plugin_config extends AdminPlugin
                 return strnatcmp($a->getKey(), $b->getKey());
             }
 
-            usort($undefined_settings, 'settingNaturalComparison');
+            usort($undefined_settings, settingNaturalComparison(...));
             $this->printH1('undefined_settings', $this->getLang('_header_undefined'));
             echo '<fieldset>';
             echo '<div class="table">';

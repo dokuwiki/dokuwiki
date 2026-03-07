@@ -915,9 +915,9 @@ class admin_plugin_usermanager extends AdminPlugin
         $user[4] = explode(',', $INPUT->str('usergroups'));
         $user[5] = $INPUT->str('userpass2'); // repeated password for confirmation
 
-        $user[4] = array_map('trim', $user[4]);
+        $user[4] = array_map(trim(...), $user[4]);
         if ($clean) {
-            $user[4] = array_map([$auth, 'cleanGroup'], $user[4]);
+            $user[4] = array_map($auth->cleanGroup(...), $user[4]);
         }
         $user[4] = array_filter($user[4]);
         $user[4] = array_unique($user[4]);

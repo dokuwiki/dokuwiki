@@ -27,20 +27,12 @@ class Lists extends AbstractRewriter
     {
 
         foreach ($this->calls as $call) {
-            switch ($call[0]) {
-                case 'list_item':
-                    $this->listOpen($call);
-                    break;
-                case 'list_open':
-                    $this->listStart($call);
-                    break;
-                case 'list_close':
-                    $this->listEnd($call);
-                    break;
-                default:
-                    $this->listContent($call);
-                    break;
-            }
+            match ($call[0]) {
+                'list_item' => $this->listOpen($call),
+                'list_open' => $this->listStart($call),
+                'list_close' => $this->listEnd($call),
+                default => $this->listContent($call),
+            };
         }
 
         $this->callWriter->writeCalls($this->listCalls);

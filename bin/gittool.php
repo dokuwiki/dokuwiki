@@ -157,7 +157,7 @@ class GitToolCLI extends CLI
                     $installer->installFromId($ext);
                     $this->success("installed $ext via download");
                     $succeeded[] = $ext;
-                } catch (\Exception $e) {
+                } catch (\Exception) {
                     $this->error("failed to install $ext via download");
                     $errors[] = $ext;
                 }
@@ -184,7 +184,7 @@ class GitToolCLI extends CLI
         $repos = $this->findRepos();
 
         $shell = array_merge(['git', $cmd], $arg);
-        $shell = array_map('escapeshellarg', $shell);
+        $shell = array_map(escapeshellarg(...), $shell);
         $shell = implode(' ', $shell);
 
         foreach ($repos as $repo) {
@@ -264,7 +264,7 @@ class GitToolCLI extends CLI
         } else {
             $this->success('Found ' . count($data) . ' .git directories');
         }
-        $data = array_map('fullpath', array_map('dirname', $data));
+        $data = array_map(fullpath(...), array_map(dirname(...), $data));
         return $data;
     }
 

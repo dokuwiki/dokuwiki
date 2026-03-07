@@ -169,7 +169,7 @@ class auth_plugin_authad extends AuthPlugin
 
         try {
             return $adldap->authenticate($this->getUserName($user), $pass);
-        } catch (adLDAPException $e) {
+        } catch (adLDAPException) {
             // shouldn't really happen
             return false;
         }
@@ -286,7 +286,7 @@ class auth_plugin_authad extends AuthPlugin
                         $this->msgshown = true;
                     }
                 }
-            } catch (adLDAPException $e) {
+            } catch (adLDAPException) {
                 // ignore. should usually not happen
             }
         }
@@ -703,7 +703,7 @@ class auth_plugin_authad extends AuthPlugin
 
         // handle multiple AD servers
         $opts['domain_controllers'] = explode(',', $opts['domain_controllers']);
-        $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
+        $opts['domain_controllers'] = array_map(trim(...), $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
         // compatibility with old option name

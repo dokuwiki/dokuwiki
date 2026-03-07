@@ -9,7 +9,7 @@ use dokuwiki\Logger;
 /**
  * The Action plugin event
  */
-class Event
+class Event implements \Stringable
 {
     /** @var string READONLY  event name, objects must register against this name to see the event */
     public $name = '';
@@ -45,7 +45,7 @@ class Event
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

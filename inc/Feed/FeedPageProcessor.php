@@ -21,20 +21,12 @@ class FeedPageProcessor extends FeedItemProcessor
     /** @inheritdoc */
     public function getURL($linkto)
     {
-        switch ($linkto) {
-            case 'page':
-                $opt = ['rev' => $this->getRev()];
-                break;
-            case 'rev':
-                $opt = ['rev' => $this->getRev(), 'do' => 'revisions'];
-                break;
-            case 'current':
-                $opt = [];
-                break;
-            case 'diff':
-            default:
-                $opt = ['rev' => $this->getRev(), 'do' => 'diff'];
-        }
+        $opt = match ($linkto) {
+            'page' => ['rev' => $this->getRev()],
+            'rev' => ['rev' => $this->getRev(), 'do' => 'revisions'],
+            'current' => [],
+            default => ['rev' => $this->getRev(), 'do' => 'diff'],
+        };
 
         return wl($this->getId(), $opt, true, '&');
     }
