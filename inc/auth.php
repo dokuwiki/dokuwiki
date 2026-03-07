@@ -241,6 +241,7 @@ function auth_tokenlogin()
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
     $_SESSION[DOKU_COOKIE]['auth']['pass'] = 'nope';
     $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+    $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
 
     return true;
 }
