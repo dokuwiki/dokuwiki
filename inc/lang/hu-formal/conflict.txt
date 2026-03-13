@@ -1,5 +1,0 @@
-====== Létezik újabb változat ======
-
-A jelenleg szerkesztett dokumentumnak újabb változata jött létre. Lehetséges, hogy egy másik felhasználó időközben megváltoztatta a dokumentumot.
-
-Nézze át gondosan a lenti eltéréseket, majd döntsön arról, hogy melyik változatot tartaná meg. Ha a ''Mentés'' gombra kattint, akkor az Ön változata kerül mentésre. A ''Mégse'' gombot kiválasztva megmarad az eredeti változat.
