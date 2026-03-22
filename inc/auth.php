@@ -337,9 +337,9 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
                     isset($session['pass']) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                    ($session['user'] == $user) &&
-                    ($session['pass'] == sha1($pass)) && //still crypted
-                    ($session['buid'] == auth_browseruid())
+                    ($session['user'] === $user) &&
+                    ($session['pass'] === sha1($pass)) && //still crypted
+                    ($session['buid'] === auth_browseruid())
                 ) {
                     // he has session, cookie and browser right - let him in
                     $INPUT->server->set('REMOTE_USER', $user);
