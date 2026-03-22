@@ -372,7 +372,7 @@ class OpenAPIGenerator
                         $this->typeToSchema($propertyDoc->getType())
                     );
                 }
-            } catch (ReflectionException $e) {
+            } catch (ReflectionException) {
                 // The class is not available, so we cannot generate a schema
             }
         }

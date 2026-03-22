@@ -16,7 +16,7 @@ class SettingArray extends Setting
     protected function fromString($string)
     {
         $array = explode(',', $string);
-        $array = array_map('trim', $array);
+        $array = array_map(trim(...), $array);
         $array = array_filter($array);
         $array = array_unique($array);
         return $array;

@@ -209,27 +209,29 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.7.0",
-            "version_normalized": "2.7.0.0",
+            "version": "v3.1.3",
+            "version_normalized": "3.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105"
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/52a0d99e69f56b9ec27ace92ba56897fe6993105",
-                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
+                "reference": "d5b01a39b3415c2cd581d3bd3a3575c1ebbd8e77",
                 "shasum": ""
             },
             "require": {
-                "php": "^7|^8"
+                "php": "^8"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6|^7|^8|^9",
-                "vimeo/psalm": "^1|^2|^3|^4"
+                "infection/infection": "^0",
+                "nikic/php-fuzzer": "^0",
+                "phpunit/phpunit": "^9|^10|^11",
+                "vimeo/psalm": "^4|^5|^6"
             },
-            "time": "2024-05-08T12:18:48+00:00",
+            "time": "2025-09-24T15:06:41+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -384,17 +386,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.43",
-            "version_normalized": "3.0.43.0",
+            "version": "3.0.49",
+            "version_normalized": "3.0.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02"
+                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/709ec107af3cb2f385b9617be72af8cf62441d02",
-                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/6233a1e12584754e6b5daa69fe1289b47775c1b9",
+                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9",
                 "shasum": ""
             },
             "require": {
@@ -412,7 +414,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2024-12-14T21:12:59+00:00",
+            "time": "2026-01-27T09:17:28+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -477,7 +479,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.43"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.49"
             },
             "funding": [
                 {
@@ -497,17 +499,17 @@
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.8.1",
-            "version_normalized": "1.8.1.0",
+            "version": "1.9.0",
+            "version_normalized": "1.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1"
+                "reference": "76cccb1b2c5dcaf44f304c925ab30c0f48643992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
-                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/76cccb1b2c5dcaf44f304c925ab30c0f48643992",
+                "reference": "76cccb1b2c5dcaf44f304c925ab30c0f48643992",
                 "shasum": ""
             },
             "require": {
@@ -517,9 +519,14 @@
                 "php": ">=7.2.0"
             },
             "require-dev": {
+                "donatj/mock-webserver": "^2.7",
                 "friendsofphp/php-cs-fixer": "^2.19 || ^3.8",
-                "psr/simple-cache": "^1 || ^2 || ^3",
-                "yoast/phpunit-polyfills": "^1.0.1"
+                "mf2/mf2": "^0.5.0",
+                "phpstan/phpstan": "~1.12.2",
+                "phpunit/phpunit": "^8 || ^9 || ^10",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/simple-cache": "^1 || ^2 || ^3"
             },
             "suggest": {
                 "ext-curl": "",
@@ -528,7 +535,7 @@
                 "ext-mbstring": "",
                 "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
             },
-            "time": "2024-11-22T16:33:20+00:00",
+            "time": "2025-09-12T06:34:27+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -570,7 +577,7 @@
             ],
             "support": {
                 "issues": "https://github.com/simplepie/simplepie/issues",
-                "source": "https://github.com/simplepie/simplepie/tree/1.8.1"
+                "source": "https://github.com/simplepie/simplepie/tree/1.9.0"
             },
             "install-path": "../simplepie/simplepie"
         },
@@ -640,17 +647,17 @@
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.4.0",
-            "version_normalized": "1.4.0.0",
+            "version": "1.4.1",
+            "version_normalized": "1.4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02"
+                "reference": "e45d0d9247742490ea87afc6c026f211424999c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d9d4eaac12a6587727b8e539946dd06cac8b3f02",
-                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/e45d0d9247742490ea87afc6c026f211424999c8",
+                "reference": "e45d0d9247742490ea87afc6c026f211424999c8",
                 "shasum": ""
             },
             "require": {
@@ -668,7 +675,7 @@
                 "ext-mbstring": "Can be used alternatively for handling filename encoding",
                 "ext-zlib": "For zlib compression"
             },
-            "time": "2024-12-09T14:08:44+00:00",
+            "time": "2025-08-01T08:09:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -697,7 +704,7 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-archive/issues",
-                "source": "https://github.com/splitbrain/php-archive/tree/1.4.0"
+                "source": "https://github.com/splitbrain/php-archive/tree/1.4.1"
             },
             "funding": [
                 {
@@ -709,17 +716,17 @@
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.3.4",
-            "version_normalized": "1.3.4.0",
+            "version": "1.3.5",
+            "version_normalized": "1.3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "4e669f38f660b0e9f76ed14dda7f12bff390f94f"
+                "reference": "813410b23f9790a62620a79a4e87aed4c5c43e37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/4e669f38f660b0e9f76ed14dda7f12bff390f94f",
-                "reference": "4e669f38f660b0e9f76ed14dda7f12bff390f94f",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/813410b23f9790a62620a79a4e87aed4c5c43e37",
+                "reference": "813410b23f9790a62620a79a4e87aed4c5c43e37",
                 "shasum": ""
             },
             "require": {
@@ -731,7 +738,7 @@
             "suggest": {
                 "psr/log": "Allows you to make the CLI available as PSR-3 logger"
             },
-            "time": "2025-03-15T09:02:01+00:00",
+            "time": "2025-10-28T16:00:30+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -761,7 +768,7 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-cli/issues",
-                "source": "https://github.com/splitbrain/php-cli/tree/1.3.4"
+                "source": "https://github.com/splitbrain/php-cli/tree/1.3.5"
             },
             "install-path": "../splitbrain/php-cli"
         },
@@ -820,29 +827,29 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.7",
-            "version_normalized": "1.0.7.0",
+            "version": "1.0.8",
+            "version_normalized": "1.0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d"
+                "reference": "487ead381d7863be652048258f8c0b0d812b29ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/93cd2034628136b4fa322f7f1ac3d57293a6c08d",
-                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/487ead381d7863be652048258f8c0b0d812b29ac",
+                "reference": "487ead381d7863be652048258f8c0b0d812b29ac",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.5"
             },
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2024-01-28T09:41:46+00:00",
+            "time": "2026-03-07T17:16:48+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -864,7 +871,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.0.7"
+                "source": "https://github.com/splitbrain/slika/tree/1.0.8"
             },
             "install-path": "../splitbrain/slika"
         }

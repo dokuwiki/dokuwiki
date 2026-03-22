@@ -500,7 +500,7 @@ class Installer
         $magic = fread($fh, 5);
         fclose($fh);
 
-        if (strpos($magic, "\x50\x4b\x03\x04") === 0) {
+        if (str_starts_with($magic, "\x50\x4b\x03\x04")) {
             $archiver = new Zip();
         } else {
             $archiver = new Tar();

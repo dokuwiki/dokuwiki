@@ -317,7 +317,6 @@ $lang['i_funcna']              = 'PHP-funktionen <code>%s</code> är inte tillg�
 $lang['i_disabled']            = 'Det är avstängt av din leverantör.';
 $lang['i_funcnmail']           = '<b>Note:</b> PHP mail funktionen är inte tillgänglig. %s Om det är fortsatt otillgängligt kan du installera <a href="https://www.dokuwiki.org/plugin:smtp">smtp pluginet</a>';
 $lang['i_phpver']              = 'Din PHP-version <code>%s</code> är lägre än vad som krävs <code>%s</code>. Du behöver uppgradera din PHP-installation.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload måste inaktiveras i php.ini för att använda DokuWiki.';
 $lang['i_urandom']             = 'Innehåller';
 $lang['i_permfail']            = '<code>%s</code> är inte skrivbar av DokuWiki. Du behöver ändra filskyddet på den här katalogen!';
 $lang['i_confexists']          = '<code>%s</code> finns redan';

@@ -45,7 +45,7 @@ class PageChange extends ApiResponse
     }
 
     /** @inheritdoc */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->id . '@' . $this->revision;
     }

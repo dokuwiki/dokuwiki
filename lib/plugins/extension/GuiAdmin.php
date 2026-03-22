@@ -12,20 +12,12 @@ class GuiAdmin extends Gui
 
         $html .= $this->tabNavigation();
 
-        switch ($this->currentTab()) {
-            case 'search':
-                $html .= $this->tabSearch();
-                break;
-            case 'templates':
-                $html .= $this->tabTemplates();
-                break;
-            case 'install':
-                $html .= $this->tabInstall();
-                break;
-            case 'plugins':
-            default:
-                $html .= $this->tabPlugins();
-        }
+        match ($this->currentTab()) {
+            'search' => $html .= $this->tabSearch(),
+            'templates' => $html .= $this->tabTemplates(),
+            'install' => $html .= $this->tabInstall(),
+            default => $html .= $this->tabPlugins(),
+        };
 
         $html .= '</div>';
         return $html;

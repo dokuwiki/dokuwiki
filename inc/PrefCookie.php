@@ -11,7 +11,7 @@ namespace dokuwiki;
  */
 class PrefCookie
 {
-    const COOKIENAME = 'DOKU_PREFS';
+    public const COOKIENAME = 'DOKU_PREFS';
 
     /** @var string[] */
     protected array $data = [];

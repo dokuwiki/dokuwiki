@@ -298,7 +298,6 @@ $lang['i_modified']            = 'Zbog sigurnosnih razlog, ova skripta raditi ć
       Molimo ponovno prekopirajte datoteke iz preuzetoga paketa ili pogledajte detaljno <a href="https://www.dokuwiki.org/install">Uputstvo za postavljanje DokuWiki-a</a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nije dostupna. Možda ju je vaš pružatelj hostinga onemogućio iz nekog razloga?';
 $lang['i_phpver']              = 'Vaša PHP inačica <code>%s</code> je niža od potrebne <code>%s</code>. Trebate nadograditi vašu PHP instalaciju.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload mora biti onemogućena u php.ini da bi ste pokrenuli DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> nema dozvolu pisanja od strane DokuWiki. Trebate podesiti dozvole pristupa tom direktoriju.';
 $lang['i_confexists']          = '<code>%s</code> već postoji';
 $lang['i_writeerr']            = 'Ne može se kreirati <code>%s</code>. Trebate provjeriti dozvole direktorija/datoteke i kreirati dokument ručno.';

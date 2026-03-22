@@ -83,7 +83,7 @@ class Editor extends Ui
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
             // edit target is not section.
-            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, [$this, 'addTextarea'], true);
+            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, $this->addTextarea(...), true);
         } else {
             $this->addTextarea($data);
         }

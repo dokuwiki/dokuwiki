@@ -117,7 +117,7 @@ class Parser
 
             DebugHelper::dbgCustomDeprecationEvent(
                 'finalize()',
-                get_class($this->handler) . '::_finalize()',
+                $this->handler::class . '::_finalize()',
                 __METHOD__,
                 __FILE__,
                 __LINE__

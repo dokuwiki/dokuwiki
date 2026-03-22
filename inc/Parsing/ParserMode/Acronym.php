@@ -15,7 +15,7 @@ class Acronym extends AbstractMode
      */
     public function __construct($acronyms)
     {
-        usort($acronyms, [$this, 'compare']);
+        usort($acronyms, $this->compare(...));
         $this->acronyms = $acronyms;
     }
 
@@ -34,7 +34,7 @@ class Acronym extends AbstractMode
     {
         if (!count($this->acronyms)) return;
 
-        if (strlen($this->pattern) > 0) {
+        if ((string) $this->pattern !== '') {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'acronym');
         }
     }

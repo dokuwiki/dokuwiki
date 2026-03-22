@@ -108,7 +108,7 @@ function _ft_pageSearch(&$data)
                     $evt = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
                     if ($evt->advise_before() && $evt->result !== true) {
                         $text = PhpString::strtolower($evdata['text']);
-                        if (strpos($text, $phrase) !== false) {
+                        if (str_contains($text, $phrase)) {
                             $evt->result = true;
                         }
                     }
@@ -124,7 +124,7 @@ function _ft_pageSearch(&$data)
                 $ns = cleanID(substr($token, 3)) . ':';
                 $pages_matched = [];
                 foreach (array_keys($pages_all) as $id) {
-                    if (strpos($id, $ns) === 0) {
+                    if (str_starts_with($id, $ns)) {
                         $pages_matched[$id] = 0; // namespace: always 0 hit
                     }
                 }
@@ -164,10 +164,10 @@ function _ft_pageSearch(&$data)
     $docs = _ft_filterResultsByTime($docs, $data['after'], $data['before']);
 
     if ($data['sort'] === 'mtime') {
-        uksort($docs, 'ft_pagemtimesorter');
+        uksort($docs, ft_pagemtimesorter(...));
     } else {
         // sort docs by count
-        uksort($docs, 'ft_pagesorter');
+        uksort($docs, ft_pagesorter(...));
         arsort($docs);
     }
 
@@ -304,7 +304,7 @@ function _ft_pageLookup(&$data)
     $pages = [];
     if ($id !== '' && $cleaned !== '') {
         foreach ($page_idx as $p_id) {
-            if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
+            if ((str_contains($in_ns ? $p_id : noNSorNS($p_id), $cleaned))) {
                 if (!isset($pages[$p_id]))
                     $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
             }
@@ -319,14 +319,14 @@ function _ft_pageLookup(&$data)
 
     if (isset($ns)) {
         foreach (array_keys($pages) as $p_id) {
-            if (strpos($p_id, $ns) !== 0) {
+            if (!str_starts_with($p_id, $ns)) {
                 unset($pages[$p_id]);
             }
         }
     }
     if (isset($notns)) {
         foreach (array_keys($pages) as $p_id) {
-            if (strpos($p_id, $notns) === 0) {
+            if (str_starts_with($p_id, $notns)) {
                 unset($pages[$p_id]);
             }
         }
@@ -346,7 +346,7 @@ function _ft_pageLookup(&$data)
 
     $pages = _ft_filterResultsByTime($pages, $data['after'], $data['before']);
 
-    uksort($pages, 'ft_pagesorter');
+    uksort($pages, ft_pagesorter(...));
     return $pages;
 }
 
@@ -474,9 +474,9 @@ function ft_snippet($id, $highlight)
             implode(
                 '|',
                 array_map(
-                    'ft_snippet_re_preprocess',
+                    ft_snippet_re_preprocess(...),
                     array_map(
-                        'preg_quote_cb',
+                        preg_quote_cb(...),
                         array_filter((array) $highlight)
                     )
                 )
@@ -593,7 +593,7 @@ function ft_snippet_re_preprocess($term)
         $term .= $BR;
     }
 
-    if ($term == $BL || $term == $BR || $term == $BL . $BR) $term = '';
+    if (in_array($term, [$BL, $BR, $BL . $BR])) $term = '';
     return $term;
 }
 

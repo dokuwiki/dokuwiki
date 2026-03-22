@@ -72,46 +72,21 @@ class syntax_plugin_info extends SyntaxPlugin
         if ($format == 'xhtml') {
             /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
-            switch ($data[0]) {
-                case 'syntaxmodes':
-                    $renderer->doc .= $this->renderSyntaxModes();
-                    break;
-                case 'syntaxtypes':
-                    $renderer->doc .= $this->renderSyntaxTypes();
-                    break;
-                case 'syntaxplugins':
-                    $this->renderPlugins('syntax', $renderer);
-                    break;
-                case 'adminplugins':
-                    $this->renderPlugins('admin', $renderer);
-                    break;
-                case 'actionplugins':
-                    $this->renderPlugins('action', $renderer);
-                    break;
-                case 'rendererplugins':
-                    $this->renderPlugins('renderer', $renderer);
-                    break;
-                case 'helperplugins':
-                    $this->renderPlugins('helper', $renderer);
-                    break;
-                case 'authplugins':
-                    $this->renderPlugins('auth', $renderer);
-                    break;
-                case 'remoteplugins':
-                    $this->renderPlugins('remote', $renderer);
-                    break;
-                case 'helpermethods':
-                    $this->renderHelperMethods($renderer);
-                    break;
-                case 'hooks':
-                    $this->renderHooks($renderer);
-                    break;
-                case 'datetime':
-                    $renderer->doc .= date('r');
-                    break;
-                default:
-                    $renderer->doc .= "no info about " . htmlspecialchars($data[0]);
-            }
+            match ($data[0]) {
+                'syntaxmodes' => $renderer->doc .= $this->renderSyntaxModes(),
+                'syntaxtypes' => $renderer->doc .= $this->renderSyntaxTypes(),
+                'syntaxplugins' => $this->renderPlugins('syntax', $renderer),
+                'adminplugins' => $this->renderPlugins('admin', $renderer),
+                'actionplugins' => $this->renderPlugins('action', $renderer),
+                'rendererplugins' => $this->renderPlugins('renderer', $renderer),
+                'helperplugins' => $this->renderPlugins('helper', $renderer),
+                'authplugins' => $this->renderPlugins('auth', $renderer),
+                'remoteplugins' => $this->renderPlugins('remote', $renderer),
+                'helpermethods' => $this->renderHelperMethods($renderer),
+                'hooks' => $this->renderHooks($renderer),
+                'datetime' => $renderer->doc .= date('r'),
+                default => $renderer->doc .= "no info about " . htmlspecialchars($data[0]),
+            };
             return true;
         }
         return false;
@@ -303,7 +278,7 @@ class syntax_plugin_info extends SyntaxPlugin
                 foreach ($sequence as $handler) {
                     $renderer->listitem_open(2);
                     $renderer->listcontent_open();
-                    $renderer->cdata(get_class($handler[0]) . '::' . $handler[1] . '()');
+                    $renderer->cdata($handler[0]::class . '::' . $handler[1] . '()');
                     $renderer->listcontent_close();
                     $renderer->listitem_close();
                 }

@@ -228,7 +228,7 @@ function noNSorNS($id)
     global $conf;
 
     $p = noNS($id);
-    if ($p === $conf['start'] || $p === false || $p === '') {
+    if (in_array($p, [$conf['start'], false, ''], true)) {
         $p = curNS($id);
         if ($p === false || $p === '') {
             return $conf['start'];
@@ -337,6 +337,7 @@ function wikiFN($raw_id, $rev = '', $clean = true)
     $cache = & $cache_wikifn;
 
     $id = $raw_id;
+    $rev = (int) $rev; // any falsy rev will be rev 0 in the cache
 
     if ($clean) $id = cleanID($id);
     $id = str_replace(':', '/', $id);
@@ -540,7 +541,7 @@ function resolve_id($ns, $id, $clean = true)
         }
         if (!end($pathA)) $result[] = '';
         $id = implode(':', $result);
-    } elseif ($ns !== false && strpos($id, ':') === false) {
+    } elseif ($ns !== false && !str_contains($id, ':')) {
         //if link contains no namespace. add current namespace (if any)
         $id = $ns . ':' . $id;
     }

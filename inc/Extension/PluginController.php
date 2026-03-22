@@ -252,7 +252,7 @@ class PluginController
     {
         global $conf;
 
-        if (empty($this->masterList)) return false;
+        if ($this->masterList === []) return false;
 
         // Rebuild list of local settings
         $local_plugins = $this->rebuildLocal();
@@ -294,7 +294,7 @@ class PluginController
         //gives us the ones we need to check and save
         $diffed_ones = array_diff_key($local_default, $this->pluginCascade['default']);
         //The ones which we are sure of (list of 0s not in default)
-        $sure_plugins = array_filter($diffed_ones, [$this, 'negate']);
+        $sure_plugins = array_filter($diffed_ones, $this->negate(...));
         //the ones in need of diff
         $conflicts = array_diff_key($local_default, $diffed_ones);
         //The final list
@@ -339,7 +339,7 @@ class PluginController
     {
         $master_list = $enabled
             ? array_keys(array_filter($this->masterList))
-            : array_keys(array_filter($this->masterList, [$this, 'negate']));
+            : array_keys(array_filter($this->masterList, $this->negate(...)));
         $plugins = [];
 
         foreach ($master_list as $plugin) {

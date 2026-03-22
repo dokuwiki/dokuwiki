@@ -153,7 +153,7 @@ class cli_plugin_usermanager extends CLIPlugin
         }
 
         [$login, $mail, $name, $grps, $pass] = $args;
-        $grps = array_filter(array_map('trim', explode(',', $grps)));
+        $grps = array_filter(array_map(trim(...), explode(',', $grps)));
 
         if ($auth->canDo('modPass')) {
             if (empty($pass)) {
@@ -224,7 +224,7 @@ class cli_plugin_usermanager extends CLIPlugin
         global $auth;
 
         [$name, $newgrps] = $args;
-        $newgrps = array_filter(array_map('trim', explode(',', $newgrps)));
+        $newgrps = array_filter(array_map(trim(...), explode(',', $newgrps)));
         $oldinfo = $auth->getUserData($name);
         $changes = [];
 
@@ -262,14 +262,14 @@ class cli_plugin_usermanager extends CLIPlugin
         global $auth;
 
         [$name, $grps] = $args;
-        $grps = array_filter(array_map('trim', explode(',', $grps)));
+        $grps = array_filter(array_map(trim(...), explode(',', $grps)));
         $oldinfo = $auth->getUserData($name);
         $changes = [];
 
         if ($grps !== [] && $auth->canDo('modGroups')) {
             $changes['grps'] = $oldinfo['grps'];
             foreach ($grps as $group) {
-                if (($pos = array_search($group, $changes['grps'])) == !false) {
+                if (($pos = array_search($group, $changes['grps'])) == true) {
                     unset($changes['grps'][$pos]);
                 }
             }
