@@ -153,6 +153,7 @@ $meta['rememberme'] = ['onoff'];
 $meta['disableactions'] = ['disableactions',
     '_choices' => [
         'backlink',
+        'diff',
         'index',
         'recent',
         'revisions',

@@ -105,7 +105,9 @@ class MediaRevisions extends Revisions
         $form->addTagClose('ul');  // end of revision list
 
         // show button for diff view
-        $form->addButton('do[diff]', $lang['diff2'])->attr('type', 'submit');
+        if (actionOK('diff')) {
+            $form->addButton('do[diff]', $lang['diff2'])->attr('type', 'submit');
+        }
 
         $form->addTagClose('div'); // close div class=no
 
