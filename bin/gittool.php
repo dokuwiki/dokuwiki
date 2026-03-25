@@ -49,6 +49,13 @@ class GitToolCLI extends CLI
             true,
             'clone'
         );
+        $options->registerOption(
+            'prefer-https',
+            'Prefer HTTPS over SSH for cloning (default: try SSH first, fallback to HTTPS)',
+            false,
+            false,
+            'clone'
+        );
 
         $options->registerCommand(
             'install',
@@ -59,6 +66,13 @@ class GitToolCLI extends CLI
             'extension',
             'name of the extension to install, prefix with \'template:\' for templates',
             true,
+            'install'
+        );
+        $options->registerOption(
+            'prefer-https',
+            'Prefer HTTPS over SSH for cloning (default: try SSH first, fallback to HTTPS)',
+            false,
+            false,
             'install'
         );
 
@@ -93,10 +107,10 @@ class GitToolCLI extends CLI
                 echo $options->help();
                 break;
             case 'clone':
-                $this->cmdClone($args);
+                $this->cmdClone($args, $options->getOpt('prefer-https'));
                 break;
             case 'install':
-                $this->cmdInstall($args);
+                $this->cmdInstall($args, $options->getOpt('prefer-https'));
                 break;
             case 'repo':
             case 'repos':
@@ -111,8 +125,9 @@ class GitToolCLI extends CLI
      * Tries to install the given extensions using git clone
      *
      * @param array $extensions
+     * @param bool $preferHttps
      */
-    public function cmdClone($extensions)
+    public function cmdClone($extensions, $preferHttps = false)
     {
         $errors = [];
         $succeeded = [];
@@ -123,7 +138,7 @@ class GitToolCLI extends CLI
             if (!$repo) {
                 $this->error("could not find a repository for $ext");
                 $errors[] = $ext;
-            } elseif ($this->cloneExtension($ext, $repo)) {
+            } elseif ($this->cloneExtension($ext, $repo, $preferHttps)) {
                 $succeeded[] = $ext;
             } else {
                 $errors[] = $ext;
@@ -139,8 +154,9 @@ class GitToolCLI extends CLI
      * Tries to install the given extensions using git clone with fallback to install
      *
      * @param array $extensions
+     * @param bool $preferHttps
      */
-    public function cmdInstall($extensions)
+    public function cmdInstall($extensions, $preferHttps = false)
     {
         $errors = [];
         $succeeded = [];
@@ -161,7 +177,7 @@ class GitToolCLI extends CLI
                     $this->error("failed to install $ext via download");
                     $errors[] = $ext;
                 }
-            } elseif ($this->cloneExtension($ext, $repo)) {
+            } elseif ($this->cloneExtension($ext, $repo, $preferHttps)) {
                 $succeeded[] = $ext;
             } else {
                 $errors[] = $ext;
@@ -221,9 +237,10 @@ class GitToolCLI extends CLI
      *
      * @param string $ext
      * @param string $repo
+     * @param bool $preferHttps
      * @return bool
      */
-    private function cloneExtension($ext, $repo)
+    private function cloneExtension($ext, $repo, $preferHttps = false)
     {
         if (str_starts_with($ext, 'template:')) {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
@@ -231,9 +248,22 @@ class GitToolCLI extends CLI
             $target = DOKU_PLUGIN . $ext;
         }
 
-        $this->info("cloning $ext from $repo to $target");
-        $ret = 0;
-        system("git clone $repo $target", $ret);
+        $ret = -1;
+
+        // try SSH clone first, unless the user prefers HTTPS
+        if (!$preferHttps) {
+            $sshUrl = $this->httpsToSshUrl($repo);
+            $this->info("cloning $ext from $sshUrl");
+            system("git clone $sshUrl $target", $ret);
+            if ($ret !== 0) $this->info("SSH clone failed, trying HTTPS: $repo");
+        }
+
+        // try HTTPS clone
+        if ($ret !== 0) {
+            $this->info("cloning $ext from $repo");
+            system("git clone $repo $target", $ret);
+        }
+
         if ($ret === 0) {
             $this->success("cloning of $ext succeeded");
             return true;
@@ -241,6 +271,22 @@ class GitToolCLI extends CLI
             $this->error("cloning of $ext failed");
             return false;
         }
+    }
+
+    /**
+     * Convert a HTTPS repo URL to an SSH URL if possible
+     *
+     * @return string
+     */
+    private function httpsToSshUrl($url)
+    {
+        if (preg_match('/(github\.com|bitbucket\.org|gitorious\.org)\/([^\/]+)\/([^\/]+)/i', $url, $m)) {
+            $host = $m[1];
+            $user = $m[2];
+            $repo = $m[3];
+            return "git@$host:$user/$repo";
+        }
+        return $url;
     }
 
     /**
