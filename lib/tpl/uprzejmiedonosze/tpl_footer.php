@@ -12,8 +12,16 @@ if (!defined('DOKU_INC')) die();
 <footer id="dokuwiki__footer"><div class="pad">
     <div class="grid3">
         <div>
-            <div class="header">Warto wiedzieć</div>
-            <a href="https://www.dokuwiki.org/donate" title="Donate" target="_blank" rel="external">Donate Dokuwiki</a>
+            <div class="header">Wiki</div>
+            <a href="?do=index">Indeks</a>
+            <a href="?do=recent">Ostatnie zmiany</a>
+            <?php
+            try {
+                $loginItem = new \dokuwiki\Menu\Item\Login();
+                echo $loginItem->asHtmlLink(false, false);
+            } catch (\RuntimeException $ignored) {
+            }
+            ?>
         </div>
         <div>
             <div class="header">Warto wspierać</div>
