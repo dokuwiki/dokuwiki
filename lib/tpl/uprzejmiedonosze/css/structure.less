@@ -46,41 +46,40 @@ body {
 }
 
 #dokuwiki__aside {
-    width: @ini_sidebar_width;
-    float: left;
+    width: 100%;
+    float: none;
     position: relative;
     display: block;
 
     > .pad {
-        margin: 0 1.5em 0 0;
+        margin: 0 0 1em;
     }
 }
 
 [dir=rtl] #dokuwiki__aside {
-    float: right;
     > .pad {
-        margin: 0 0 0 1.5em;
+        margin: 0 0 1em;
     }
 }
 
 .showSidebar #dokuwiki__content {
-    float: right;
-    margin-left: (-1 * @ini_sidebar_width);
+    float: none;
+    margin-left: 0;
     width: 100%;
 
     > .pad {
-        margin-left: @ini_sidebar_width;
+        margin-left: 0;
     }
 }
 
 [dir=rtl] .showSidebar #dokuwiki__content {
-    float: left;
+    float: none;
     margin-left: 0;
-    margin-right: (-1 * @ini_sidebar_width);
+    margin-right: 0;
 
     > .pad {
         margin-left: 0;
-        margin-right: @ini_sidebar_width;
+        margin-right: 0;
     }
 }
 
