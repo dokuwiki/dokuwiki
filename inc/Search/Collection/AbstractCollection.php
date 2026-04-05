@@ -6,10 +6,10 @@ use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Search\Index\FileIndex;
-use dokuwiki\Search\Index\TupleOps;
-use dokuwiki\Search\Tokenizer;
 use dokuwiki\Search\Index\Lock;
 use dokuwiki\Search\Index\MemoryIndex;
+use dokuwiki\Search\Index\TupleOps;
+use dokuwiki\Search\Tokenizer;
 
 /**
  * Abstract base class for index collections
@@ -28,6 +28,9 @@ use dokuwiki\Search\Index\MemoryIndex;
  */
 abstract class AbstractCollection
 {
+    /** @var string[] Index names that have been successfully locked */
+    protected array $lockedIndexes = [];
+
     /** @var bool Has a lock been acquired for all used indexes? */
     protected bool $isWritable = false;
 
@@ -46,7 +49,8 @@ abstract class AbstractCollection
         protected string $idxFrequency = '',
         protected string $idxReverse = '',
         protected bool   $splitByLength = false
-    ) {
+    )
+    {
     }
 
     /**
@@ -56,9 +60,7 @@ abstract class AbstractCollection
      */
     public function __destruct()
     {
-        if ($this->isWritable) {
-            $this->unlock();
-        }
+        $this->unlock();
     }
 
     /**
@@ -69,27 +71,33 @@ abstract class AbstractCollection
      */
     public function lock(): static
     {
-        foreach (array_filter([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse]) as $idxName) {
+        foreach (array_filter([
+            $this->idxEntity,
+            $this->idxToken,
+            $this->idxFrequency,
+            $this->idxReverse
+        ]) as $idxName) {
             if (!(new Lock($idxName))->acquire()) {
-                $this->unlock(); // release any already acquired locks
+                $this->unlock();
                 throw new IndexLockException('Could not lock ' . $idxName . ' for writing');
             }
+            $this->lockedIndexes[] = $idxName;
         }
-        // locking succeeded
         $this->isWritable = true;
         return $this;
     }
 
     /**
-     * Unlock all indexes
+     * Unlock all indexes that were successfully locked
      *
      * @return void
      */
     public function unlock(): void
     {
-        foreach (array_filter([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse]) as $idxName) {
+        foreach ($this->lockedIndexes as $idxName) {
             (new Lock($idxName))->release();
         }
+        $this->lockedIndexes = [];
         $this->isWritable = false;
     }
 
