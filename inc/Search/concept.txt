@@ -12,20 +12,30 @@ A collection describes how data is aggregated into multiple indexes to make it a
 
 Please note: because index has a specific meaning in our context (see below) you should avoid using that word, when you're actually talking about a collection. There is no "fulltext index" - that functionality is only achieved by using multiple indexes in a collection.
 
-There are basically two different complexities of collections
+Collections have two independent properties:
+
+=== Collection Types ===
+
+The collection type determines how tokens relate to entities:
 
   * frequency collections - The same token can appear multiple times in the same entity and searches are usually interested in the number of times it appears. This is the words on pages use case.
-  * lookup collections - Basically the same as frequency collection, but each token appears only once per entity thus all frequencies are 1. Searches do not care for the frequency but are only interested if a token appears for the entity or not
+  * lookup collections - Basically the same as frequency collections, but each token appears only once per entity thus all frequencies are 1. Searches do not care for the frequency but are only interested if a token appears for the entity or not. Internally the same mechanisms are used; only the way tokens are processed on input differs (deduplication instead of counting).
   * direct collections - Here a 1:1 relation between the entity and a token exists. For example a page has exactly one title.
+
+=== Index File Splitting ===
+
+Independently of the collection type, a collection can use split or non-split token indexes. When split, the token and frequency indexes are distributed across multiple files based on token length. This also affects the reverse index format (see below). Any collection type can use either mode.
+
+=== Indexes ===
 
 A collection works on four indexes:
 
   * entity - This is the main entity that will be the result of a search. Eg. a page
   * token - This is the actual information strewn across the entities. Eg. words
-    * can be split into several files (usally based on token length)
+    * can be split into several files based on token length (see Index File Splitting below)
   * frequency - This maps tokens to entities and records their frequency. Eg. freq(words)->page
     * if tokens are split into several files, this is too
-  * reverse - This records which tokens are on a specific entities. This is mostly used for internal index cleanup. Eg. page-words
+  * reverse - This records which tokens are assigned to a specific entity. This is used for updating: when an entity is re-indexed, the old reverse record provides the list of tokens to clean up. The format depends on whether the collection uses split indexes or not.
 
 The latter two index files do not exist for direct collections
 
@@ -33,10 +43,10 @@ Collections can be searched for one or more ''terms'' via a CollectionSearch cla
 
 ==== List of Collections =====
 
-^ Name                   ^ Entity ^ Token                 ^ Frequency             ^ Reverse               ^ Uses split Tokens? ^
-| FullText               | page   | w*                    | i*                    | pageword              | yes                |
-| MetaRelationMedia      | page   | relation_media_w      | relation_media_i      | relation_media_p      | no                 |
-| MetaRelationReferences | page   | relation_references_w | relation_references_i | relation_references_p | no                 |
+^ Name                   ^ Type      ^ Split? ^ Entity ^ Token                 ^ Frequency             ^ Reverse               ^
+| FullText               | frequency | yes    | page   | w*                    | i*                    | pageword              |
+| MetaRelationMedia      | lookup    | no     | page   | relation_media_w      | relation_media_i      | relation_media_p      |
+| MetaRelationReferences | lookup    | no     | page   | relation_references_w | relation_references_i | relation_references_p |
 
 
 
@@ -124,27 +134,34 @@ The **token** index contains the tokens used to search (eg. words). token.RID ->
 
 The **frequency** index contains tuples of entity.RIDs and usage frequencies. token.RID -> entity.RID*frequency:...
 
-The **reverse** index contains tuples of token.RIDs and usage frequencies. entity.RID -> token.RID*frequency:...
+The **reverse** index records which tokens are assigned to each entity. Its format depends on whether the collection uses split indexes:
+
+  * **Split collections**: Each entry is a ''tokenLength*tokenId'' pair because the token length is needed to locate the correct split index file. Format: ''tokenLength*tokenId:tokenLength*tokenId:...''
+  * **Non-split collections**: Only the token ID is needed since all tokens live in a single file. Format: ''tokenId:tokenId:...''
+
+The reverse index does not store frequencies. It is used internally when updating an entity: the old reverse record provides the set of previously assigned tokens so they can be cleaned up (see the addEntity description in the Collection Types section above).
 
 Direct collections only use entity and token index files with entity.RID === token.RID
 
 
 ==== Index File Splitting ====
 
-To improve memory efficiency and access speed, a single token index can be split into multiple physical files using suffixes. This is particularly useful for indexes that would otherwise grow too large to handle efficiently.
+To improve memory efficiency and access speed, a collection can split its token and frequency indexes into multiple physical files using suffixes based on token length. This is configured per collection and is independent of the collection type (frequency or lookup).
 
-When creating an index, you can specify a suffix parameter that gets appended to the base index name to create the actual filename. For example:
+When splitting is enabled, both the token index and the frequency index are distributed across files. A suffix parameter is appended to the base index name to create the actual filename. For example:
 
   * Base name: ''w'' (for word tokens)
-  * Suffix: ''3'' (for 3-letter words)
+  * Suffix: ''3'' (for 3-letter tokens)
   * Resulting file: ''w3.idx''
 
-A common use case is splitting token indexes by word length. In a fulltext collection:
+In a fulltext collection with splitting enabled:
 
-  * ''w3.idx'' - stores all 3-letter words
-  * ''w4.idx'' - stores all 4-letter words
-  * ''w5.idx'' - stores all 5-letter words
+  * ''w3.idx'' / ''i3.idx'' - stores all 3-letter tokens and their frequencies
+  * ''w4.idx'' / ''i4.idx'' - stores all 4-letter tokens and their frequencies
+  * ''w5.idx'' / ''i5.idx'' - stores all 5-letter tokens and their frequencies
   * and so on...
+
+When splitting is disabled, a single file is used for each index (eg. ''relation_media_w.idx'').
 
 When an index uses suffixes, the ''max()'' method can be used to find the highest numeric suffix currently in use. This is useful for operations that need to iterate over all splits of an index (eg. when a Term is using a wildcard).
 

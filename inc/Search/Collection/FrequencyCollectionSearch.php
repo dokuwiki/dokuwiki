@@ -11,10 +11,8 @@ use dokuwiki\Search\Index\TupleOps;
  * Note that this does not implement the Search syntax. Instead it provides an efficient way to search a collection
  * for all the terms the query parser has identified. The results can then be used assemble an actual search result
  * matching the intends of the query syntax.
- *
- * @todo decide which parts to move into an abstract base class
  */
-class FulltextCollectionSearch
+class FrequencyCollectionSearch
 {
 
     /** @var Term[] all terms indexed by original term name */
@@ -26,21 +24,18 @@ class FulltextCollectionSearch
     /** @var array a list of entities that match [entityID => entityName] */
     protected $entities = [];
 
-    /** @var FulltextCollection The collection this search works on */
+    /** @var FrequencyCollection The collection this search works on */
     protected $collection;
 
     /** @var int the maximum token length as currently indexed */
     protected $max = null;
 
-    /** @var array [entityName => frequency] */
-    protected $entityFrequencySums = [];
-
     /**
      * Initialize a search on the given collection
      *
-     * @param FulltextCollection $collection
+     * @param FrequencyCollection $collection
      */
-    public function __construct(FulltextCollection $collection)
+    public function __construct(FrequencyCollection $collection)
     {
         $this->collection = $collection;
     }
@@ -128,6 +123,13 @@ class FulltextCollectionSearch
         }
     }
 
+    /**
+     * Look up the entity frequencies for all tokens found by findTokens
+     *
+     * Updates the entity frequency field of each term and collects all entity IDs.
+     *
+     * @return void
+     */
     protected function findFrequencies()
     {
         // look up the frequencies for all found terms

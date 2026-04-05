@@ -2,26 +2,24 @@
 
 namespace tests\Search\Collection;
 
-use dokuwiki\Search\Collection\FulltextCollection;
-use dokuwiki\Search\Collection\FulltextCollectionSearch;
+use dokuwiki\Search\Collection\FrequencyCollectionSearch;
 use dokuwiki\Search\Index\MemoryIndex;
-use dokuwiki\Search\QueryParser;
 use dokuwiki\Search\Tokenizer;
 
-class FullTextCollectionSearchTest extends \DokuWikiTest
+class FrequencyCollectionSearchTest extends \DokuWikiTest
 {
 
     public function testExactTerm()
     {
         // add some content to the indexes
-        $collection = new FulltextCollection('page', 'w', 'i', 'pageword');
+        $collection = new TestFrequencyCollection('page', 'w', 'i', 'pageword');
         $collection->lock();
         $collection->addEntity('page1', ['dokuwiki', 'dokuwiki', 'dokuwikis', 'doku', 'wiki']);
         $collection->addEntity('page2', ['dokuwiki', 'other', 'words']);
         $collection->unlock();
 
         // add search term
-        $search = new FulltextCollectionSearch($collection);
+        $search = new FrequencyCollectionSearch($collection);
         $term = $search->addTerm('dokuwiki');
 
         // execute search
@@ -46,10 +44,10 @@ class FullTextCollectionSearchTest extends \DokuWikiTest
     public function xxxRealWord()
     {
         $tokens = Tokenizer::getWords(rawWiki('wiki:syntax'));
-        $collection = new FulltextCollection('page', 'word', 'w', 'pageword');
+        $collection = new TestFrequencyCollection('page', 'word', 'w', 'pageword');
         $collection->addEntity('wiki:syntax', $tokens);
 
-        $search = new FulltextCollectionSearch($collection);
+        $search = new FrequencyCollectionSearch($collection);
 
         $search->addTerm('dokuwiki');
         $search->addTerm('*wiki');
