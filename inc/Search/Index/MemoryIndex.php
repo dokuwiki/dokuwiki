@@ -35,17 +35,19 @@ class MemoryIndex extends AbstractIndex
             return;
         }
         $this->data = file($this->filename, FILE_IGNORE_NEW_LINES);
-
     }
 
     /**
-     * Warn developer when they forgot to save their changes
+     * Warn about dirty unlocks
+     *
+     * @inheritdoc
      */
-    public function __destruct()
+    public function unlock()
     {
         if ($this->isDirty()) {
-            throw new IndexUsageException('MemoryIndex destroyed in dirty state - forgot to call save()?');
+            throw new IndexUsageException('MemoryIndex unlocked in dirty state - forgot to call save()?');
         }
+        parent::unlock();
     }
 
     /**

@@ -77,11 +77,13 @@ abstract class AbstractCollection
             $this->idxFrequency,
             $this->idxReverse
         ]) as $idxName) {
-            if (!(new Lock($idxName))->acquire()) {
+            try {
+                Lock::acquire($idxName);
+                $this->lockedIndexes[] = $idxName;
+            } catch (IndexLockException $e) {
                 $this->unlock();
-                throw new IndexLockException('Could not lock ' . $idxName . ' for writing');
+                throw $e;
             }
-            $this->lockedIndexes[] = $idxName;
         }
         $this->isWritable = true;
         return $this;
@@ -95,7 +97,7 @@ abstract class AbstractCollection
     public function unlock(): void
     {
         foreach ($this->lockedIndexes as $idxName) {
-            (new Lock($idxName))->release();
+            Lock::release($idxName);
         }
         $this->lockedIndexes = [];
         $this->isWritable = false;
@@ -103,6 +105,7 @@ abstract class AbstractCollection
 
     /**
      * @return FileIndex
+     * @throws IndexLockException
      */
     public function getEntityIndex(): FileIndex
     {
@@ -112,6 +115,7 @@ abstract class AbstractCollection
     /**
      * @param int|string $suffix
      * @return MemoryIndex
+     * @throws IndexLockException
      */
     public function getTokenIndex(int|string $suffix): MemoryIndex
     {
@@ -121,6 +125,7 @@ abstract class AbstractCollection
     /**
      * @param int|string $suffix
      * @return MemoryIndex
+     * @throws IndexLockException
      */
     public function getFrequencyIndex(int|string $suffix): MemoryIndex
     {
@@ -129,6 +134,7 @@ abstract class AbstractCollection
 
     /**
      * @return FileIndex
+     * @throws IndexLockException
      */
     public function getReverseIndex(): FileIndex
     {
@@ -139,6 +145,7 @@ abstract class AbstractCollection
      * Maximum suffix for the token indexes (eg. max word length currently stored)
      *
      * @return int
+     * @throws IndexLockException
      */
     public function getTokenIndexMaximum(): int
     {
@@ -238,6 +245,7 @@ abstract class AbstractCollection
      * @return array
      * @throws IndexAccessException
      * @throws IndexWriteException
+     * @throws IndexLockException
      */
     public function getReverseAssignments(string $entity): array
     {

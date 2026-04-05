@@ -2,21 +2,25 @@
 
 namespace dokuwiki\Search\Index;
 
+use dokuwiki\Search\Exception\IndexLockException;
+
 /**
- * Basic Building block to access individual index files
+ * Basic building block to access individual index files
+ *
+ * To be able to write to an index, a lock must be acquired.
  */
 abstract class AbstractIndex
 {
     /** @var string name of the index */
     protected $idx;
 
-    /** @var string $suffix of the index */
+    /** @var string suffix of the index */
     protected $suffix;
 
     /** @var string full filename to the index */
     protected $filename;
 
-    /** @var bool is this index opened for writing? */
+    /** @var bool has this instance acquired a lock? */
     protected $isWritable = false;
 
     /**
@@ -25,9 +29,12 @@ abstract class AbstractIndex
      * The $suffix argument is for an index that is split into multiple parts.
      * Different index files should use different base names.
      *
+     * When $isWritable is true, a lock is acquired immediately
+     *
      * @param string $idx name of the index
      * @param string $suffix subpart identifier
-     * @param bool $isWritable has a sufficient lock been acquired to write to this index?
+     * @param bool $isWritable acquire a lock immediately?
+     * @throws IndexLockException
      */
     public function __construct($idx, $suffix = '', $isWritable = false)
     {
@@ -35,7 +42,50 @@ abstract class AbstractIndex
         $this->filename = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
         $this->idx = $idx;
         $this->suffix = $suffix;
-        $this->isWritable = $isWritable;
+        if ($isWritable) $this->lock();
+    }
+
+    /**
+     * Make this index writable by acquiring the lock
+     *
+     * @throws IndexLockException
+     */
+    public function lock()
+    {
+        if ($this->isWritable) return;
+        Lock::acquire($this->idx);
+        $this->isWritable = true;
+    }
+
+    /**
+     * Make this index read-only by releasing the lock
+     *
+     * Decrements the reference count in the Lock registry. The filesystem
+     * lock is only removed when the count reaches zero.
+     */
+    public function unlock()
+    {
+        if (!$this->isWritable) return;
+        Lock::release($this->idx);
+        $this->isWritable = false;
+    }
+
+    /**
+     * Whether this index instance is writable
+     *
+     * @return bool
+     */
+    public function isWritable()
+    {
+        return $this->isWritable;
+    }
+
+    /**
+     * Ensure lock is released when the index is destroyed
+     */
+    public function __destruct()
+    {
+        $this->unlock();
     }
 
     /**
@@ -114,12 +164,10 @@ abstract class AbstractIndex
      *
      * If the index is writable and the value is not found it will be added. Otherwise null is returned.
      *
-     * Entries previously marked as deleted will be restored.  FIXME is that true?
-     *
      * Note the existence of an entry in the index does not say anything about the existence
      * of the real world object (eg. a page)
      *
-     * You should preferable use accessCachedValue() instead.
+     * You should preferably use accessCachedValue() instead.
      *
      * @param string $value
      *
@@ -153,6 +201,7 @@ abstract class AbstractIndex
 
     /**
      * Clears the index by deleting its file
+     *
      * @return void
      */
     public function clear()
@@ -165,6 +214,7 @@ abstract class AbstractIndex
      *
      * The default implementation does nothing and is only for streamlining the API of
      * the different index classes
+     *
      * @return void
      */
     public function save()

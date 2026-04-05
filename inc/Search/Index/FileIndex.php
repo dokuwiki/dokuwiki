@@ -87,7 +87,7 @@ class FileIndex extends AbstractIndex
         }
         fclose($fh);
 
-        if(!$this->isWritable) return '';
+        if (!$this->isWritable) return '';
 
         // still here? pad the index for the given ID
         // we do not simply call changeRow() here because appending is faster than line-by-line copying
@@ -154,7 +154,7 @@ class FileIndex extends AbstractIndex
             fclose($fh);
         }
 
-        if(!$this->isWritable) return $result;
+        if (!$this->isWritable) return $result;
 
         // if there are still values, they have not been found and will be appended
         foreach (array_keys($values) as $value) {

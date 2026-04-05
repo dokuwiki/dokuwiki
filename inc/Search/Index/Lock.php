@@ -2,51 +2,94 @@
 
 namespace dokuwiki\Search\Index;
 
+use dokuwiki\Search\Exception\IndexLockException;
+
 /**
- * Manage locking for index writing
+ * Static lock registry for index writing
  *
- * Locks are directories in the dta/lock directory named after the index name
+ * Manages filesystem locks (directories in the lock dir) with in-process
+ * reference counting. Multiple callers can acquire the same lock name —
+ * the filesystem lock is only created on the first acquire and removed
+ * on the last release.
  */
 class Lock
 {
-    protected $lockDir = '';
-    protected $indexName = '';
+    /** @var array<string, int> Lock names held by this process with reference counts */
+    protected static array $held = [];
 
     /**
-     * @param string $name Name of the index
+     * Acquire a filesystem lock and register it
+     *
+     * Idempotent within a process — if already held, increments
+     * reference count without touching the filesystem.
+     *
+     * @param string $name The index base name to lock
+     * @throws IndexLockException
      */
-    public function __construct($name)
+    public static function acquire(string $name): void
+    {
+        if (isset(self::$held[$name])) {
+            self::$held[$name]++;
+            return;
+        }
+
+        $dir = self::lockDir($name);
+        if (!@mkdir($dir)) {
+            // check for stale lock
+            if (time() - @filemtime($dir) > 60 * 5) {
+                @rmdir($dir);
+                if (!@mkdir($dir)) {
+                    throw new IndexLockException('Could not lock ' . $name);
+                }
+            } else {
+                throw new IndexLockException('Could not lock ' . $name);
+            }
+        }
+
+        self::$held[$name] = 1;
+    }
+
+    /**
+     * Release a filesystem lock
+     *
+     * Decrements reference count. Only removes the filesystem lock
+     * when the count reaches zero.
+     *
+     * @param string $name The index base name to unlock
+     */
+    public static function release(string $name): void
+    {
+        if (!isset(self::$held[$name])) return;
+
+        self::$held[$name]--;
+        if (self::$held[$name] <= 0) {
+            unset(self::$held[$name]);
+            @rmdir(self::lockDir($name));
+        }
+    }
+
+    /**
+     * Release all held locks
+     *
+     * Intended for test teardown to ensure a clean state.
+     */
+    public static function releaseAll(): void
+    {
+        foreach (array_keys(self::$held) as $name) {
+            @rmdir(self::lockDir($name));
+        }
+        self::$held = [];
+    }
+
+    /**
+     * Get the lock directory path for a given index name
+     *
+     * @param string $name The index base name
+     * @return string
+     */
+    protected static function lockDir(string $name): string
     {
         global $conf;
-        $this->indexName = $name;
-        $this->lockDir = $conf['lockdir'] . $name . '.index';
+        return $conf['lockdir'] . $name . '.index';
     }
-
-    /**
-     * Try to acquire a lock for an index
-     *
-     * @return bool true if a lock was acquired, otherwise false
-     */
-    public function acquire()
-    {
-        if(@mkdir($this->lockDir)) return true;
-        // creation of the lockdir failed, check if it's stale
-        if(time() - filemtime($this->lockDir) > 60*5) {
-            // try to release, then lock again
-            $this->release();
-            return @mkdir($this->lockDir);
-        }
-        return false;
-    }
-
-    /**
-     * Release the lock for this index
-     * 
-     * @return void
-     */
-    public function release()
-    {
-        @rmdir($this->lockDir);
-    }
-
 }

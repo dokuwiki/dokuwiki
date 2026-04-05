@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Search\Index;
 
 use dokuwiki\Search\Index\FileIndex;
+use dokuwiki\Search\Index\Lock;
 
 class FileIndexTest extends AbstractIndexTest
 {
@@ -10,6 +11,12 @@ class FileIndexTest extends AbstractIndexTest
     {
         static $count = 0;
         return new FileIndex('index', $count++, true);
+    }
+
+    public function tearDown(): void
+    {
+        Lock::releaseAll();
+        parent::tearDown();
     }
 
     public function testChangeRow()

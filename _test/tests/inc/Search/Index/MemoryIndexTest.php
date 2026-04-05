@@ -2,6 +2,7 @@
 
 namespace dokuwiki\test\Search\Index;
 
+use dokuwiki\Search\Index\Lock;
 use dokuwiki\Search\Index\MemoryIndex;
 
 class MemoryIndexTest extends AbstractIndexTest
@@ -10,6 +11,12 @@ class MemoryIndexTest extends AbstractIndexTest
     {
         static $count = 0;
         return new MemoryIndex('index', $count++, true);
+    }
+
+    public function tearDown(): void
+    {
+        Lock::releaseAll();
+        parent::tearDown();
     }
 
     public function testChangeRow()
