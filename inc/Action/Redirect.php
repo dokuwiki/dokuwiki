@@ -40,7 +40,7 @@ class Redirect extends AbstractAliasAction
         }
 
         // execute the redirect
-        Event::createAndTrigger('ACTION_SHOW_REDIRECT', $opts, [$this, 'redirect']);
+        Event::createAndTrigger('ACTION_SHOW_REDIRECT', $opts, $this->redirect(...));
 
         // should never be reached
         throw new ActionAbort('show');

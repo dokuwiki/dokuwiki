@@ -89,7 +89,7 @@ class ExtensionApiResponse extends ApiResponse
     }
 
     /** @inheritdoc */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->extension->getId();
     }

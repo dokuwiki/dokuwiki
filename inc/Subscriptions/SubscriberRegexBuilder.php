@@ -26,18 +26,18 @@ class SubscriberRegexBuilder
         $data = (array)$data;
 
         // clean
-        $user = array_filter(array_map('trim', $user));
-        $style = array_filter(array_map('trim', $style));
-        $data = array_filter(array_map('trim', $data));
+        $user = array_filter(array_map(trim(...), $user));
+        $style = array_filter(array_map(trim(...), $style));
+        $data = array_filter(array_map(trim(...), $data));
 
         // user names are encoded
-        $user = array_map('auth_nameencode', $user);
+        $user = array_map(auth_nameencode(...), $user);
 
         // quote
-        $user = array_map('preg_quote_cb', $user);
+        $user = array_map(preg_quote_cb(...), $user);
 
-        $style = array_map('preg_quote_cb', $style);
-        $data = array_map('preg_quote_cb', $data);
+        $style = array_map(preg_quote_cb(...), $style);
+        $data = array_map(preg_quote_cb(...), $data);
 
         // join
         $user = implode('|', $user);

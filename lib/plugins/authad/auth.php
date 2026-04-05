@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\Conversion;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 use dokuwiki\Logger;
@@ -108,7 +109,7 @@ class auth_plugin_authad extends AuthPlugin
                     iconv($this->getConf('sso_charset'), 'UTF-8', $INPUT->server->str('REMOTE_USER'))
                 );
             } elseif (!Clean::isUtf8($INPUT->server->str('REMOTE_USER'))) {
-                $INPUT->server->set('REMOTE_USER', utf8_encode($INPUT->server->str('REMOTE_USER')));
+                $INPUT->server->set('REMOTE_USER', Conversion::fromLatin1($INPUT->server->str('REMOTE_USER')));
             }
 
             // trust the incoming user
@@ -169,7 +170,7 @@ class auth_plugin_authad extends AuthPlugin
 
         try {
             return $adldap->authenticate($this->getUserName($user), $pass);
-        } catch (adLDAPException $e) {
+        } catch (adLDAPException) {
             // shouldn't really happen
             return false;
         }
@@ -286,7 +287,7 @@ class auth_plugin_authad extends AuthPlugin
                         $this->msgshown = true;
                     }
                 }
-            } catch (adLDAPException $e) {
+            } catch (adLDAPException) {
                 // ignore. should usually not happen
             }
         }
@@ -703,7 +704,7 @@ class auth_plugin_authad extends AuthPlugin
 
         // handle multiple AD servers
         $opts['domain_controllers'] = explode(',', $opts['domain_controllers']);
-        $opts['domain_controllers'] = array_map('trim', $opts['domain_controllers']);
+        $opts['domain_controllers'] = array_map(trim(...), $opts['domain_controllers']);
         $opts['domain_controllers'] = array_filter($opts['domain_controllers']);
 
         // compatibility with old option name

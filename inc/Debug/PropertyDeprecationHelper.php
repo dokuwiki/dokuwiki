@@ -53,7 +53,7 @@ trait PropertyDeprecationHelper
         $property,
         $class = null
     ) {
-        $this->deprecatedPublicProperties[$property] = $class ?: get_class($this);
+        $this->deprecatedPublicProperties[$property] = $class ?: $this::class;
     }
 
     public function __get($name)
@@ -64,7 +64,7 @@ trait PropertyDeprecationHelper
             return $this->$name;
         }
 
-        $qualifiedName = get_class() . '::$' . $name;
+        $qualifiedName = self::class . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
             throw new \RuntimeException("Cannot access non-public property $qualifiedName");
@@ -84,7 +84,7 @@ trait PropertyDeprecationHelper
             return;
         }
 
-        $qualifiedName = get_class() . '::$' . $name;
+        $qualifiedName = self::class . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
             throw new \RuntimeException("Cannot access non-public property $qualifiedName");
@@ -119,7 +119,7 @@ trait PropertyDeprecationHelper
         $obfuscatedPropTail = "\0$property";
         foreach ($obfuscatedProps as $obfuscatedProp) {
             // private props are in the form \0<classname>\0<propname>
-            if (strpos($obfuscatedProp, $obfuscatedPropTail, 1) !== false) {
+            if (str_contains(substr($obfuscatedProp, 1), $obfuscatedPropTail)) {
                 $classname = substr($obfuscatedProp, 1, -strlen($obfuscatedPropTail));
                 if ($classname === '*') {
                     // sanity; this shouldn't be possible as protected properties were handled earlier

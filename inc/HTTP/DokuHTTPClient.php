@@ -38,7 +38,7 @@ class DokuHTTPClient extends HTTPClient
                 isset($_REQUEST['httpdebug']) ||
                 (
                     isset($_SERVER['HTTP_REFERER']) &&
-                    strpos($_SERVER['HTTP_REFERER'], 'httpdebug') !== false
+                    str_contains($_SERVER['HTTP_REFERER'], 'httpdebug')
                 )
             ) {
                 $this->debug = true;

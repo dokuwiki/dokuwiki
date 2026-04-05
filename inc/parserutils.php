@@ -632,7 +632,7 @@ function p_get_parsermodes()
     }
 
     //sort modes
-    usort($modes, 'p_sort_modes');
+    usort($modes, p_sort_modes(...));
 
     return $modes;
 }

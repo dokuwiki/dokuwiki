@@ -255,7 +255,7 @@ class Setting
         if ($fmt != 'php') return '';
 
         if (is_array($this->local)) {
-            $value = 'array(' . implode(', ', array_map([$this, 'escape'], $this->local)) . ')';
+            $value = 'array(' . implode(', ', array_map($this->escape(...), $this->local)) . ')';
         } else {
             $value = $this->escape($this->local);
         }

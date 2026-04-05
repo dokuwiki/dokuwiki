@@ -739,7 +739,7 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
             $sort
         );
 
-        if (!count($data)) {
+        if ($data === []) {
             echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
         } else {
             if ($fullscreenview) {

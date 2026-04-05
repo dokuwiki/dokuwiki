@@ -4,6 +4,7 @@
  * Initialize some defaults needed for DokuWiki
  */
 
+use dokuwiki\Ip;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\ErrorHandler;
 use dokuwiki\Input\Input;
@@ -106,6 +107,10 @@ foreach (['default', 'local'] as $config_group) {
     }
 }
 
+if ($conf === []) {
+    nice_die("No configuration found in " . DOKU_CONF . ".");
+}
+
 // set timezone (as in pre 5.3.0 days)
 date_default_timezone_set(@date_default_timezone_get());
 
@@ -170,7 +175,7 @@ if (!defined('DOKU_TPLINC')) {
 
 // enable gzip compression if supported
 $httpAcceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
-$conf['gzip_output'] &= (strpos($httpAcceptEncoding, 'gzip') !== false);
+$conf['gzip_output'] &= (str_contains($httpAcceptEncoding, 'gzip'));
 global $ACT;
 if (
     $conf['gzip_output'] &&
@@ -263,7 +268,7 @@ function init_session()
         'lifetime' => DOKU_SESSION_LIFETIME,
         'path' => DOKU_SESSION_PATH,
         'domain' => DOKU_SESSION_DOMAIN,
-        'secure' => ($conf['securecookie'] && \dokuwiki\Ip::isSsl()),
+        'secure' => ($conf['securecookie'] && Ip::isSsl()),
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
@@ -466,9 +471,9 @@ function getBaseURL($abs = null)
 
     if (!empty($conf['basedir'])) {
         $dir = $conf['basedir'];
-    } elseif (substr($_SERVER['SCRIPT_NAME'], -4) == '.php') {
+    } elseif (str_ends_with($_SERVER['SCRIPT_NAME'], '.php')) {
         $dir = dirname($_SERVER['SCRIPT_NAME']);
-    } elseif (substr($_SERVER['PHP_SELF'], -4) == '.php') {
+    } elseif (str_ends_with($_SERVER['PHP_SELF'], '.php')) {
         $dir = dirname($_SERVER['PHP_SELF']);
     } elseif ($_SERVER['DOCUMENT_ROOT'] && $_SERVER['SCRIPT_FILENAME']) {
         $dir = preg_replace(
@@ -497,12 +502,12 @@ function getBaseURL($abs = null)
     if (!empty($conf['baseurl'])) return rtrim($conf['baseurl'], '/') . $dir;
 
     //split hostheader into host and port
-    $hostname = \dokuwiki\Ip::hostName();
+    $hostname = Ip::hostName();
     $parsed_host = parse_url('http://' . $hostname);
     $host = $parsed_host['host'] ?? '';
     $port = $parsed_host['port'] ?? '';
 
-    if (!\dokuwiki\Ip::isSsl()) {
+    if (!Ip::isSsl()) {
         $proto = 'http://';
         if ($port == '80') {
             $port = '';
@@ -525,7 +530,7 @@ function getBaseURL($abs = null)
 function is_ssl()
 {
     dbg_deprecated('Ip::isSsl()');
-    return \dokuwiki\Ip::isSsl();
+    return Ip::isSsl();
 }
 
 /**

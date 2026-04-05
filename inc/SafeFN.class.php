@@ -106,7 +106,7 @@ class SafeFN
         $converted = false;
 
         foreach ($unicode as $codepoint) {
-            if ($codepoint < 127 && (strpos(self::$plain . self::$post_indicator, chr($codepoint)) !== false)) {
+            if ($codepoint < 127 && (str_contains(self::$plain . self::$post_indicator, chr($codepoint)))) {
                 if ($converted) {
                     $safe .= self::$post_indicator;
                     $converted = false;

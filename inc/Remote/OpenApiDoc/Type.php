@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Remote\OpenApiDoc;
 
-class Type
+class Type implements \Stringable
 {
     protected $typehint;
     protected $context;
@@ -22,9 +22,9 @@ class Type
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->typehint;
+        return (string) $this->typehint;
     }
 
     /**
@@ -88,22 +88,14 @@ class Type
      */
     public function getOpenApiType()
     {
-        switch ($this->getBaseType()) {
-            case 'int':
-                return 'integer';
-            case 'bool':
-                return 'boolean';
-            case 'array':
-                return 'array';
-            case 'string':
-            case 'mixed':
-                return 'string';
-            case 'double':
-            case 'float':
-                return 'number';
-            default:
-                return 'object';
-        }
+        return match ($this->getBaseType()) {
+            'int' => 'integer',
+            'bool' => 'boolean',
+            'array' => 'array',
+            'string', 'mixed' => 'string',
+            'double', 'float' => 'number',
+            default => 'object',
+        };
     }
 
 

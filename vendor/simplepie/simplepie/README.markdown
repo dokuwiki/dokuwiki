@@ -14,9 +14,25 @@ Requirements
 * PHP 7.2+ (Required since SimplePie 1.8.0)
 * libxml2 (certain 2.7.x releases are too buggy for words, and will crash)
 * One of iconv, mbstring or intl extensions
+* Optionally, intl extension, [symfony/polyfill-intl-idn](https://github.com/symfony/polyfill-intl-idn) or cURL extension built with IDN support to support IDNs
 * cURL or fsockopen()
 * PCRE support
 
+PSR-18: HTTP Client support
+--------------
+
+Since SimplePie 1.9.0 you can use a [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client like [Guzzle](https://guzzlephp.org)
+or [every other implementation](https://packagist.org/providers/psr/http-client-implementation).
+Please note that you would also need [PSR-17](https://www.php-fig.org/psr/psr-17/) implementations of `RequestFactoryInterface` and an `UriFactoryInterface` implementation.
+
+```php
+$simplepie = new \SimplePie\SimplePie();
+$simplepie->set_http_client(
+    new \GuzzleHttp\Client(),
+    new \GuzzleHttp\Psr7\HttpFactory(),
+    new \GuzzleHttp\Psr7\HttpFactory(),
+);
+```
 
 PSR-16: Caching support
 --------------
@@ -40,15 +56,13 @@ What comes in the package?
 2. `autoloader.php` - The SimplePie Autoloader if you want to use the separate
    file version.
 3. `README.markdown` - This document.
-4. `LICENSE.txt` - A copy of the BSD license.
+4. `LICENSES/BSD-3-Clause.txt` - A copy of the BSD license.
 5. `compatibility_test/` - The SimplePie compatibility test that checks your
    server for required settings.
 6. `demo/` - A basic feed reader demo that shows off some of SimplePie's more
    noticeable features.
-7. `idn/` - A third-party library that SimplePie can optionally use to
-   understand Internationalized Domain Names (IDNs).
-8. `build/` - Scripts related to generating pieces of SimplePie
-9. `test/` - SimplePie's unit test suite.
+7. `build/` - Scripts related to generating pieces of SimplePie
+8. `test/` - SimplePie's unit test suite.
 
 ### Where's `simplepie.inc`?
 Since SimplePie 1.3, we've split the classes into separate files to make it easier

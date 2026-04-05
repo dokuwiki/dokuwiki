@@ -137,7 +137,7 @@ class StyleUtils
     {
         global $conf;
         if (!file_exists($incbase . $file)) {
-            [$extension, $basename] = array_map('strrev', sexplode('.', strrev($file), 2, ''));
+            [$extension, $basename] = array_map(strrev(...), sexplode('.', strrev($file), 2, ''));
             $newExtension = $extension === 'css' ? 'less' : 'css';
             if (file_exists($incbase . $basename . '.' . $newExtension)) {
                 $stylesheets[$mode][$incbase . $basename . '.' . $newExtension] = $webbase;

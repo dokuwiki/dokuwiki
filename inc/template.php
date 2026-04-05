@@ -605,7 +605,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
          * @var string $replacement
          */
         extract($data);
-        if (strpos($id, '#') === 0) {
+        if (str_starts_with($id, '#')) {
             $linktarget = $id;
         } else {
             $linktarget = wl($id, $params);
@@ -660,7 +660,7 @@ function tpl_get_action($type)
             $item = new $class();
             $data = $item->getLegacyData();
             $unknown = false;
-        } catch (RuntimeException $ignored) {
+        } catch (RuntimeException) {
             return false;
         }
     } else {

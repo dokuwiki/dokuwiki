@@ -45,7 +45,7 @@ class action_plugin_styling extends ActionPlugin
         for ($i = 0; $i < $len; $i++) {
             if (
                 $event->data['link'][$i]['rel'] == 'stylesheet' &&
-                strpos($event->data['link'][$i]['href'], 'lib/exe/css.php') !== false
+                str_contains($event->data['link'][$i]['href'], 'lib/exe/css.php')
             ) {
                 $event->data['link'][$i]['href'] .= '&preview=1&tseed=' . time();
             }

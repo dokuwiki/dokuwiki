@@ -103,7 +103,7 @@ class JWT
         if (file_exists($file)) {
             try {
                 return self::validate(io_readFile($file));
-            } catch (\Exception $ignored) {
+            } catch (\Exception) {
             }
         }
 

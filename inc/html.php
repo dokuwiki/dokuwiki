@@ -102,7 +102,7 @@ function html_secedit($text, $show = true)
 
     return preg_replace_callback(
         SEC_EDIT_PATTERN,
-        'html_secedit_button',
+        html_secedit_button(...),
         $text
     );
 }
@@ -123,7 +123,7 @@ function html_secedit_button($matches)
 
     try {
         $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-    } catch (JsonException $e) {
+    } catch (JsonException) {
         return '';
     }
     $data['target'] = strtolower($data['target']);
@@ -300,7 +300,7 @@ function html_hilight($html, $phrases)
 {
     $FulltextSearch = new FulltextSearch();
     $phrases = (array) $phrases;
-    $phrases = array_map('preg_quote_cb', $phrases);
+    $phrases = array_map(preg_quote_cb(...), $phrases);
     $phrases = array_map([$FulltextSearch, 'snippetRePreprocess'], $phrases);
     $phrases = array_filter($phrases);
 

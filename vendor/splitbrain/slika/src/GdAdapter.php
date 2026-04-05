@@ -30,6 +30,7 @@ class GdAdapter extends Adapter
      */
     public function __destruct()
     {
+        // destroy the GD image resource (only needed on PHP < 8.0)
         if (is_resource($this->image)) {
             imagedestroy($this->image);
         }
@@ -106,7 +107,7 @@ class GdAdapter extends Adapter
             imageflip($image, IMG_FLIP_HORIZONTAL);
         }
 
-        imagedestroy($this->image);
+        $this->__destruct(); // destroy old image
         $this->image = $image;
 
         //keep png alpha channel if possible
@@ -163,7 +164,7 @@ class GdAdapter extends Adapter
             $saver($this->image, $path);
         }
 
-        imagedestroy($this->image);
+        $this->__destruct();
     }
 
     /**
@@ -436,7 +437,7 @@ class GdAdapter extends Adapter
         }
 
         // destroy original GD image ressource and replace with new one
-        imagedestroy($this->image);
+        $this->__destruct();
         $this->image = $newimg;
         $this->width = $toWidth;
         $this->height = $toHeight;

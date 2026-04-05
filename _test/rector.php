@@ -18,24 +18,27 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\StrictArraySearchRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
-use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
+use Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Block\ReplaceBlockToItsStmtsRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
+use Rector\DeadCode\Rector\If_\RemoveDeadIfBlockRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
-use Rector\Php80\Rector\Identical\StrEndsWithRector;
-use Rector\Php80\Rector\Identical\StrStartsWithRector;
-use Rector\Php80\Rector\NotIdentical\StrContainsRector;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php82\Rector\FuncCall\Utf8DecodeEncodeToMbConvertEncodingRector;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -69,7 +72,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->cacheDirectory(__DIR__ . '/.rector-cache');
 
     // supported minimum PHP version can be overridden by environment variable
-    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '' ?: '7.4');
+    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '' ?: '8.2');
     $phpset = LevelSetList::class . '::UP_TO_PHP_' . $major . $minor;
     fwrite(STDERR, "Using PHP set $phpset\n");
 
@@ -80,11 +83,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::CODING_STYLE,
     ]);
-
-    // future rules for which we have polyfills
-    $rectorConfig->rule(StrContainsRector::class);
-    $rectorConfig->rule(StrEndsWithRector::class);
-    $rectorConfig->rule(StrStartsWithRector::class);
 
     $rectorConfig->skip([
         // skip paths
@@ -113,7 +111,7 @@ return static function (RectorConfig $rectorConfig): void {
         CombineIfRector::class,
         ExplicitBoolCompareRector::class,
         IssetOnPropertyObjectToPropertyExistsRector::class, // maybe?
-        SymplifyQuoteEscapeRector::class,
+        SimplifyQuoteEscapeRector::class,
         CatchExceptionNameMatchingTypeRector::class,
         EncapsedStringsToSprintfRector::class,
         SimplifyUselessVariableRector::class, // seems to strip constructor property initializations
@@ -135,7 +133,12 @@ return static function (RectorConfig $rectorConfig): void {
         ExplicitReturnNullRector::class, // we sometimes return void or string intentionally
         UseIdenticalOverEqualWithSameTypeRector::class, // probably a good idea, maybe later
         ReduceAlwaysFalseIfOrRector::class, // see rectorphp/rector#8916
-
+        NewlineBetweenClassLikeStmtsRector::class, // looks ugly
+        NullToStrictStringFuncCallArgRector::class, // might hide warnings we want to see explicitly
+        ClassPropertyAssignToConstructorPromotionRector::class, // not sure I like the syntax, maybe later
+        ReplaceBlockToItsStmtsRector::class, // blocks sometimes help readability
+        Utf8DecodeEncodeToMbConvertEncodingRector::class, // we probably want our own mapping to the UTF8/* functions
+        RemoveDeadIfBlockRector::class, // creates harder to read statements
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [

@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+use dokuwiki\Logger;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 use dokuwiki\Search\Indexer;
@@ -37,7 +38,7 @@ class IndexerCLI extends CLI
         );
         $options->registerOption(
             'quiet',
-            'don\'t produce any output',
+            'DEPRECATED',
             'q'
         );
     }
@@ -55,6 +56,11 @@ class IndexerCLI extends CLI
         $this->clear = $options->getOpt('clear');
         $this->quiet = $options->getOpt('quiet');
 
+        if ($this->quiet) {
+            Logger::deprecated('Calling bin/indexer.php with -q/--quiet is deprecated. Use --loglevel instead.');
+            $this->setLogLevel('emergency');
+        }
+
         if ($this->clear) $this->clearindex();
 
         $this->update();
@@ -67,9 +73,9 @@ class IndexerCLI extends CLI
     {
         global $conf;
         $data = [];
-        $this->quietecho("Searching pages... ");
+        $this->notice('Searching pages...');
         search($data, $conf['datadir'], 'search_allpages', ['skipacl' => true]);
-        $this->quietecho(count($data) . " pages found.\n");
+        $this->info(count($data) . ' pages found.');
 
         foreach ($data as $val) {
             $this->index($val['id']);
@@ -83,9 +89,15 @@ class IndexerCLI extends CLI
      */
     protected function index($id)
     {
-        $this->quietecho("$id... ");
-        (new Indexer($id))->addPage(!$this->quiet, $this->clear);
-        $this->quietecho("done.\n");
+        $this->notice("$id indexing...");
+        try {
+            (new Indexer($id))->addPage(!$this->quiet, $this->clear);
+            $this->success("$id indexed.");
+        } catch (Throwable $e) {
+            $this->error("$id indexing error: " . $e->getMessage());
+            $this->debug($e->getTraceAsString());
+            return;
+        }
     }
 
     /**
@@ -93,19 +105,9 @@ class IndexerCLI extends CLI
      */
     protected function clearindex()
     {
-        $this->quietecho("Clearing index... ");
+        $this->notice('Clearing index...');
         (new Indexer())->clear();
-        $this->quietecho("done.\n");
-    }
-
-    /**
-     * Print message if not supressed
-     *
-     * @param string $msg
-     */
-    protected function quietecho($msg)
-    {
-        if (!$this->quiet) echo $msg;
+        $this->success('Index cleared.');
     }
 }
 

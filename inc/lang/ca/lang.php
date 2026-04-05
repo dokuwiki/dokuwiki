@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Juanma <juxmix@gmail.com>
  * @author pau <pau@estuditic.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author Joan <aseques@gmail.com>
@@ -153,6 +154,9 @@ $lang['profdeleted']           = 'El vostre compte ha sigut esborrat d\'aquest c
 $lang['profconfdelete']        = 'Vull esmorrar el meu compte d\'aquesta wiki. </br> Aquesta acció no pot desfer-se.';
 $lang['profconfdeletemissing'] = 'Confirmació no acceptada';
 $lang['proffail']              = 'Perfil d\'usuari no actialitzat';
+$lang['proftokenlegend']       = 'Token d\'autenticació';
+$lang['proftokengenerate']     = 'Token de reseteig';
+$lang['proftokeninfo']         = 'El token d\'autenticació pot ser usat per aplicacions de 3ers per a identificar-se i actual en el teu nom. Reinicialitzant el token invalidarà l\'antic i desautenticarà totes les aplicacions que usaven el token antic';
 $lang['pwdforget']             = 'Heu oblidat la contrasenya? Podeu obtenir-ne una de nova.';
 $lang['resendna']              = 'Aquest wiki no permet tornar a enviar la contrasenya.';
 $lang['resendpwd']             = 'Estableix una nova contrasenya per';
@@ -309,7 +313,6 @@ $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està dispon
 $lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La funció de correu PHP no està disponible. %s Si es manté no disponible, podeu instal·lar el <a href="https://www.dokuwiki.org/plugin:smtp">connector smtp</a>.';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload cal que sigui deshabilitada en php.ini perquè funcioni DokuWiki';
 $lang['i_urandom']             = 'DokuWiki no pot crear números criptogràficament segurs per a les galetes. És possible que vulgueu comprovar la vostra configuració d\'open_basedir al php.ini per un accés correcte a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
 $lang['i_confexists']          = '<code>%s</code> ja existeix';
@@ -371,3 +374,5 @@ $lang['unable_to_parse_date']  = 'Impossible de esbrinar el paràmetre "%s".';
 $lang['email_signature_text']  = 'Aquest mail ha estat generat per DokuWiki a
 @DOKUWIKIURL@';
 $lang['log_file_too_large']    = 'Fitxer de log massa gran. Linies anteriors ignorades!';
+$lang['log_file_failed_to_open'] = 'No s\'ha pogut obir el fitxer de log.';
+$lang['log_file_failed_to_read'] = 'Ha ocorregut un error llegint el log.';

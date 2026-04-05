@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Ip;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
@@ -103,7 +104,7 @@ function js_out()
     echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
     echo "var DOKU_COOKIE_PARAM = " . json_encode([
             'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-            'secure' => $conf['securecookie'] && \dokuwiki\Ip::isSsl(),
+            'secure' => $conf['securecookie'] && Ip::isSsl(),
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
     echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
@@ -128,7 +129,7 @@ function js_out()
     foreach ($files as $file) {
         if (!file_exists($file)) continue;
         $ismin = str_ends_with($file, '.min.js');
-        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
+        $debugjs = ($conf['allowdebug'] && !str_starts_with($file, DOKU_INC . 'lib/scripts/'));
 
         echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
         if ($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";

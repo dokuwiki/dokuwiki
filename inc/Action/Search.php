@@ -107,19 +107,19 @@ class Search extends AbstractAction
 
         if ($conf['search_fragment'] !== 'exact') {
             if (empty(array_diff($parsedQuery['words'], $parsedQuery['and']))) {
-                if (strpos($QUERY, '*') === false) {
+                if (!str_contains($QUERY, '*')) {
                     $queryParts = explode(' ', $QUERY);
                     $queryParts = array_map(function ($part) {
-                        if (strpos($part, '@') === 0) {
+                        if (str_starts_with($part, '@')) {
                             return $part;
                         }
-                        if (strpos($part, 'ns:') === 0) {
+                        if (str_starts_with($part, 'ns:')) {
                             return $part;
                         }
-                        if (strpos($part, '^') === 0) {
+                        if (str_starts_with($part, '^')) {
                             return $part;
                         }
-                        if (strpos($part, '-ns:') === 0) {
+                        if (str_starts_with($part, '-ns:')) {
                             return $part;
                         }
 

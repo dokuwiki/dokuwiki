@@ -6,7 +6,7 @@ use dokuwiki\Extension\PluginController;
 use dokuwiki\Utf8\PhpString;
 use RuntimeException;
 
-class Extension
+class Extension implements \Stringable
 {
     public const TYPE_PLUGIN = 'plugin';
     public const TYPE_TEMPLATE = 'template';
@@ -23,6 +23,18 @@ class Extension
         128 => 'Auth',
         256 => 'CLI',
         512 => 'CSS/JS-only',
+    ];
+
+    /** @var string[] List of plugin component file base names */
+    public const COMPONENT_FILES = [
+        'syntax',
+        'admin',
+        'action',
+        'render',
+        'helper',
+        'remote',
+        'auth',
+        'cli',
     ];
 
     /** @var string "plugin"|"template" */
@@ -117,7 +129,7 @@ class Extension
         } elseif (isset($this->localInfo['base'])) {
             $this->base = $this->localInfo['base'];
         } else {
-            $this->base = basename($dir);
+            $this->base = $this->getBaseFromClass($dir) ?: basename($dir);
         }
     }
 
@@ -770,6 +782,28 @@ class Extension
     }
 
     /**
+     * Try to determine the extension's base name from a plugin class name
+     *
+     * We use this as a fallback for old plugins without an info file
+     *
+     * @param string $dir The directory where the extension is located
+     * @return string
+     */
+    protected function getBaseFromClass($dir)
+    {
+        foreach (Extension::COMPONENT_FILES as $type) {
+            $file = $dir . '/' . $type . '.php';
+            if (!is_readable($file)) continue;
+            $class = $this->getClassNameFromFile($file);
+            if ($class === null) continue;
+            if (preg_match('/' . $type . '_plugin_(\w+)/', $class, $matches)) {
+                return $matches[1];
+            }
+        }
+        return '';
+    }
+
+    /**
      * Fetches the remote info from the repository
      *
      * This ignores any errors coming from the repository and just sets the remoteInfo to an empty array in that case
@@ -780,7 +814,7 @@ class Extension
         $remote = Repository::getInstance();
         try {
             $this->remoteInfo = (array)$remote->getExtensionData($this->getId());
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->remoteInfo = [];
         }
     }
@@ -846,9 +880,42 @@ class Extension
     }
 
     /**
+     * Extract the class name from a file
+     *
+     * @param string $filePath
+     * @return string|null
+     */
+    protected function getClassNameFromFile($filePath)
+    {
+        $code = file_get_contents($filePath);
+        $tokens = token_get_all($code);
+
+        for ($i = 0, $count = count($tokens); $i < $count; $i++) {
+            if (is_array($tokens[$i]) && $tokens[$i][0] === T_CLASS) {
+                // Skip whitespace/comments after T_CLASS
+                $j = $i + 1;
+                while (
+                    isset($tokens[$j]) &&
+                    is_array($tokens[$j]) &&
+                    in_array($tokens[$j][0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT])
+                ) {
+                    $j++;
+                }
+
+                // The next token should be the class name
+                if (isset($tokens[$j]) && is_array($tokens[$j]) && $tokens[$j][0] === T_STRING) {
+                    return $tokens[$j][1]; // Return class name
+                }
+            }
+        }
+
+        return null; // No class found
+    }
+
+    /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getId();
     }

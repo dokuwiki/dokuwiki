@@ -57,7 +57,7 @@ class Index extends Ui
         search($data, $conf['datadir'], 'search_index', ['ns' => $ns]);
 
         return '<div id="index__tree" class="index__tree">'
-            . html_buildlist($data, 'idx', [$this, 'formatListItem'], [$this, 'tagListItem'])
+            . html_buildlist($data, 'idx', $this->formatListItem(...), $this->tagListItem(...))
             . '</div>';
     }
 

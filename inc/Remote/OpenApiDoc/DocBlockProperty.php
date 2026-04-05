@@ -43,7 +43,7 @@ class DocBlockProperty extends DocBlock
 
         if (!isset($this->tags['var'])) return;
 
-        [$type, $description] = array_map('trim', sexplode(' ', $this->tags['var'][0], 2, ''));
+        [$type, $description] = array_map(trim(...), sexplode(' ', $this->tags['var'][0], 2, ''));
         $this->type = new Type($type, $this->getContext());
         $this->summary = $description;
     }

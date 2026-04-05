@@ -207,7 +207,7 @@ abstract class AbstractItem
     public function getType()
     {
         if ($this->type === '') {
-            $this->type = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+            $this->type = strtolower(substr(strrchr(static::class, '\\'), 1));
         }
         return $this->type;
     }

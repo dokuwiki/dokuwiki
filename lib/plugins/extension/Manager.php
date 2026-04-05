@@ -84,7 +84,7 @@ class Manager
         if (!$date) return null;
         try {
             return new \DateTime($date);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
     }
@@ -103,7 +103,7 @@ class Manager
         if (!$date) return null;
         try {
             return new \DateTime($date);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
     }

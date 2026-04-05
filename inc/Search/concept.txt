@@ -62,7 +62,7 @@ The Term class internally handles these wildcards by:
 **Length-Based Organization:**
 
 Terms organize their matching tokens by length. This is crucial for working with split indexes:
-  * A term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks)
+  * A term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks) but never 3-letter words, because the base term "wiki" is 4 letters long.
   * Each length group can be looked up in the corresponding suffixed token index
   * This allows efficient searching across split indexes without loading irrelevant files
 

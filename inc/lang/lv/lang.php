@@ -281,7 +281,6 @@ $lang['i_modified']            = 'Drošības nolūkos šis skripts darbosies tik
 Vai nu no jauna jāatarhivē faili no lejupielādētās pakas vai jāraugās pēc padoma pilnā Dokuwiki instalācijas instrukcijā <a href="https://www.dokuwiki.org/install"></a>';
 $lang['i_funcna']              = 'PHP funkcija <code>%s</code> nav pieejama. Varbūt jūsu servera īpašnieks to kāda iemesla dēļ atslēdzis?';
 $lang['i_phpver']              = 'Jūsu PHP versija <code>%s</code> ir par vecu. Vajag versiju <code>%s</code>. Atjaunojiet savu PHP instalāciju.';
-$lang['i_mbfuncoverload']      = 'Lai darbinātu  DokuWiki,  php.ini failā ir jāatspējo mbstring.func_overload.';
 $lang['i_permfail']            = 'Dokuwiki nevar ierakstīt <code>%s</code>. Jālabo direktorijas tiesības!';
 $lang['i_confexists']          = '<code>%s</code> jau ir';
 $lang['i_writeerr']            = 'Nevar izveidot <code>%s</code>. Jāpārbauda direktorijas/faila tiesības un fails jāizveido pašam.';

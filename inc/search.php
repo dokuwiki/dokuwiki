@@ -53,7 +53,7 @@ function search(&$data, $base, $func, $opts, $dir = '', $lvl = 1, $sort = 'natur
     closedir($dh);
     if (!empty($sort)) {
         if ($sort == 'date') {
-            @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
+            @array_multisort(array_map(filemtime(...), $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
             Sort::asortFN($files);
         }
@@ -346,7 +346,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
 
     //simple stringmatching
     if (!empty($opts['query'])) {
-        if (strpos($file, (string)$opts['query']) !== false) {
+        if (str_contains($file, (string) $opts['query'])) {
             //check ACL
             $id = pathID($file);
             if (auth_quickaclcheck($id) < AUTH_READ) {

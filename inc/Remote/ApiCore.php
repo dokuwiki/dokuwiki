@@ -36,43 +36,43 @@ class ApiCore
     public function getMethods()
     {
         return [
-            'core.getAPIVersion' => (new ApiCall([$this, 'getAPIVersion'], 'info'))->setPublic(),
+            'core.getAPIVersion' => (new ApiCall($this->getAPIVersion(...), 'info'))->setPublic(),
 
             'core.getWikiVersion' => new ApiCall('getVersion', 'info'),
-            'core.getWikiTitle' => (new ApiCall([$this, 'getWikiTitle'], 'info'))->setPublic(),
-            'core.getWikiTime' => (new ApiCall([$this, 'getWikiTime'], 'info')),
+            'core.getWikiTitle' => (new ApiCall($this->getWikiTitle(...), 'info'))->setPublic(),
+            'core.getWikiTime' => (new ApiCall($this->getWikiTime(...), 'info')),
 
-            'core.login' => (new ApiCall([$this, 'login'], 'user'))->setPublic(),
-            'core.logoff' => new ApiCall([$this, 'logoff'], 'user'),
-            'core.whoAmI' => (new ApiCall([$this, 'whoAmI'], 'user')),
-            'core.aclCheck' => new ApiCall([$this, 'aclCheck'], 'user'),
+            'core.login' => (new ApiCall($this->login(...), 'user'))->setPublic(),
+            'core.logoff' => new ApiCall($this->logoff(...), 'user'),
+            'core.whoAmI' => (new ApiCall($this->whoAmI(...), 'user')),
+            'core.aclCheck' => new ApiCall($this->aclCheck(...), 'user'),
 
-            'core.listPages' => new ApiCall([$this, 'listPages'], 'pages'),
-            'core.searchPages' => new ApiCall([$this, 'searchPages'], 'pages'),
-            'core.getRecentPageChanges' => new ApiCall([$this, 'getRecentPageChanges'], 'pages'),
+            'core.listPages' => new ApiCall($this->listPages(...), 'pages'),
+            'core.searchPages' => new ApiCall($this->searchPages(...), 'pages'),
+            'core.getRecentPageChanges' => new ApiCall($this->getRecentPageChanges(...), 'pages'),
 
-            'core.getPage' => (new ApiCall([$this, 'getPage'], 'pages')),
-            'core.getPageHTML' => (new ApiCall([$this, 'getPageHTML'], 'pages')),
-            'core.getPageInfo' => (new ApiCall([$this, 'getPageInfo'], 'pages')),
-            'core.getPageHistory' => new ApiCall([$this, 'getPageHistory'], 'pages'),
-            'core.getPageLinks' => new ApiCall([$this, 'getPageLinks'], 'pages'),
-            'core.getPageBackLinks' => new ApiCall([$this, 'getPageBackLinks'], 'pages'),
+            'core.getPage' => (new ApiCall($this->getPage(...), 'pages')),
+            'core.getPageHTML' => (new ApiCall($this->getPageHTML(...), 'pages')),
+            'core.getPageInfo' => (new ApiCall($this->getPageInfo(...), 'pages')),
+            'core.getPageHistory' => new ApiCall($this->getPageHistory(...), 'pages'),
+            'core.getPageLinks' => new ApiCall($this->getPageLinks(...), 'pages'),
+            'core.getPageBackLinks' => new ApiCall($this->getPageBackLinks(...), 'pages'),
 
-            'core.lockPages' => new ApiCall([$this, 'lockPages'], 'pages'),
-            'core.unlockPages' => new ApiCall([$this, 'unlockPages'], 'pages'),
-            'core.savePage' => new ApiCall([$this, 'savePage'], 'pages'),
-            'core.appendPage' => new ApiCall([$this, 'appendPage'], 'pages'),
+            'core.lockPages' => new ApiCall($this->lockPages(...), 'pages'),
+            'core.unlockPages' => new ApiCall($this->unlockPages(...), 'pages'),
+            'core.savePage' => new ApiCall($this->savePage(...), 'pages'),
+            'core.appendPage' => new ApiCall($this->appendPage(...), 'pages'),
 
-            'core.listMedia' => new ApiCall([$this, 'listMedia'], 'media'),
-            'core.getRecentMediaChanges' => new ApiCall([$this, 'getRecentMediaChanges'], 'media'),
+            'core.listMedia' => new ApiCall($this->listMedia(...), 'media'),
+            'core.getRecentMediaChanges' => new ApiCall($this->getRecentMediaChanges(...), 'media'),
 
-            'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
-            'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
-            'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
-            'core.getMediaHistory' => new ApiCall([$this, 'getMediaHistory'], 'media'),
+            'core.getMedia' => new ApiCall($this->getMedia(...), 'media'),
+            'core.getMediaInfo' => new ApiCall($this->getMediaInfo(...), 'media'),
+            'core.getMediaUsage' => new ApiCall($this->getMediaUsage(...), 'media'),
+            'core.getMediaHistory' => new ApiCall($this->getMediaHistory(...), 'media'),
 
-            'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
-            'core.deleteMedia' => new ApiCall([$this, 'deleteMedia'], 'media'),
+            'core.saveMedia' => new ApiCall($this->saveMedia(...), 'media'),
+            'core.deleteMedia' => new ApiCall($this->deleteMedia(...), 'media'),
         ];
     }
 

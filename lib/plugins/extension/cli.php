@@ -206,7 +206,7 @@ class cli_plugin_extension extends CLIPlugin
 
             try {
                 if (preg_match("/^https?:\/\//i", $extname)) {
-                    $installer->installFromURL($extname, true);
+                    $installer->installFromURL($extname);
                 } else {
                     $installer->installFromId($extname);
                 }
@@ -308,7 +308,7 @@ class cli_plugin_extension extends CLIPlugin
                 $vcolor = null;
             }
 
-            if ($filter && strpos($status, $filter) === false) {
+            if ($filter && !str_contains($status, $filter)) {
                 continue;
             }
 

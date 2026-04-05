@@ -105,7 +105,7 @@ function getVersionData()
         // we cannot use git on the shell -- let's do it manually!
         if (file_exists(DOKU_INC . '.git/HEAD')) {
             $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
-            if (strpos($headCommit, 'ref: ') === 0) {
+            if (str_starts_with($headCommit, 'ref: ')) {
                 // it is something like `ref: refs/heads/master`
                 $headCommit = substr($headCommit, 5);
                 $pathToHead = DOKU_INC . '.git/' . $headCommit;
@@ -238,12 +238,12 @@ function check()
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
         msg('DokuWiki version: ' . getVersion(), 1);
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            msg('Your PHP version is too old (' . phpversion() . ' vs. 7.4+ needed)', -1);
+        if (version_compare(phpversion(), '8.2.0', '<')) {
+            msg('Your PHP version is too old (' . phpversion() . ' vs. 8.2+ needed)', -1);
         } else {
             msg('PHP version ' . phpversion(), 1);
         }
-    } elseif (version_compare(phpversion(), '7.4.0', '<')) {
+    } elseif (version_compare(phpversion(), '8.2.0', '<')) {
         msg('Your PHP version is too old', -1);
     }
 
@@ -306,9 +306,6 @@ function check()
             msg('mb_string extension is available but will not be used', 0);
         } else {
             msg('mb_string extension is available and will be used', 1);
-            if (ini_get('mbstring.func_overload') != 0) {
-                msg('mb_string function overloading is enabled, this will cause problems and should be disabled', -1);
-            }
         }
     } else {
         msg('mb_string extension not available - PHP only replacements will be used', 0);
@@ -408,6 +405,7 @@ function check()
     $http->max_redirect = 0;
     $http->timeout = 3;
     $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
+
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
@@ -555,7 +553,7 @@ function dbglog($msg, $header = '')
     dbg_deprecated('\\dokuwiki\\Logger');
 
     // was the msg as single line string? use it as header
-    if ($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
+    if ($header === '' && is_string($msg) && !str_contains($msg, "\n")) {
         $header = $msg;
         $msg = '';
     }
@@ -609,7 +607,7 @@ function dbg_backtrace()
         if (isset($call['args'])) {
             foreach ($call['args'] as $arg) {
                 if (is_object($arg)) {
-                    $params[] = '[Object ' . get_class($arg) . ']';
+                    $params[] = '[Object ' . $arg::class . ']';
                 } elseif (is_array($arg)) {
                     $params[] = '[Array]';
                 } elseif (is_null($arg)) {

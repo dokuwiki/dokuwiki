@@ -601,7 +601,7 @@ class Tar extends Archive
         $gid   = sprintf("%6s ", decoct($gid));
         $perm  = sprintf("%6s ", decoct($perm));
         $size  = self::numberEncode($size, 12);
-        $mtime = self::numberEncode($size, 12);
+        $mtime = self::numberEncode($mtime, 12);
 
         $data_first = pack("a100a8a8a8a12A12", $name, $perm, $uid, $gid, $size, $mtime);
         $data_last  = pack("a1a100a6a2a32a32a8a8a155a12", $typeflag, '', 'ustar', '', '', '', '', '', $prefix, "");
