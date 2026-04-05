@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search\Collection;
 
+use dokuwiki\Search\Index\AbstractIndex;
+
 /**
  * Collection for page titles
  *
@@ -13,8 +15,8 @@ namespace dokuwiki\Search\Collection;
 class PageTitleCollection extends DirectCollection
 {
     /** @inheritdoc */
-    public function __construct()
+    public function __construct(?AbstractIndex $pageIndex = null)
     {
-        parent::__construct('page', 'title');
+        parent::__construct($pageIndex ?? 'page', 'title');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search\Collection;
 
+use dokuwiki\Search\Index\AbstractIndex;
+
 /**
  * Collection for page-to-page reference relationships
  *
@@ -13,8 +15,8 @@ namespace dokuwiki\Search\Collection;
 class ReferencesCollection extends LookupCollection
 {
     /** @inheritdoc */
-    public function __construct()
+    public function __construct(?AbstractIndex $pageIndex = null)
     {
-        parent::__construct('page', 'relation_references_w', 'relation_references_i', 'relation_references_p');
+        parent::__construct($pageIndex ?? 'page', 'relation_references_w', 'relation_references_i', 'relation_references_p');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Search\Collection;
 
+use dokuwiki\Search\Index\AbstractIndex;
+
 /**
  * Fulltext search collection for wiki pages
  *
@@ -14,8 +16,8 @@ namespace dokuwiki\Search\Collection;
 class PageFulltextCollection extends FrequencyCollection
 {
     /** @inheritdoc */
-    public function __construct()
+    public function __construct(?AbstractIndex $pageIndex = null)
     {
-        parent::__construct('page', 'w', 'i', 'pageword', true);
+        parent::__construct($pageIndex ?? 'page', 'w', 'i', 'pageword', true);
     }
 }

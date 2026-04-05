@@ -4,7 +4,9 @@ namespace dokuwiki\Search\Collection;
 
 use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Exception\IndexWriteException;
+use dokuwiki\Search\Index\AbstractIndex;
 use dokuwiki\Search\Index\FileIndex;
 use dokuwiki\Search\Index\Lock;
 use dokuwiki\Search\Index\MemoryIndex;
@@ -28,7 +30,7 @@ use dokuwiki\Search\Tokenizer;
  */
 abstract class AbstractCollection
 {
-    /** @var string[] Index names that have been successfully locked */
+    /** @var array<string|AbstractIndex> Index names or objects that have been successfully locked */
     protected array $lockedIndexes = [];
 
     /** @var bool Has a lock been acquired for all used indexes? */
@@ -37,20 +39,27 @@ abstract class AbstractCollection
     /**
      * Initialize the collection with the names of the indexes it manages
      *
-     * @param string $idxEntity Name of the primary entity index, eg. 'page'
-     * @param string $idxToken Base name of the secondary entity index, eg. 'w' for words
+     * Entity and token indexes can be passed as already instantiated AbstractIndex objects
+     * for sharing between collections. When $idxToken is an object, $splitByLength must be false.
+     *
+     * @param string|AbstractIndex $idxEntity Name or instance of the primary entity index, eg. 'page'
+     * @param string|AbstractIndex $idxToken Name or instance of the secondary entity index, eg. 'w' for words
      * @param string $idxFrequency Base name of the frequency index, eg. 'i' for word frequencies
      * @param string $idxReverse Name of the reverse index, eg. 'pageword'
      * @param bool $splitByLength Whether to split token/frequency indexes by token length
+     * @throws IndexUsageException
      */
     public function __construct(
-        protected string $idxEntity,
-        protected string $idxToken,
+        protected string|AbstractIndex $idxEntity,
+        protected string|AbstractIndex $idxToken,
         protected string $idxFrequency = '',
         protected string $idxReverse = '',
         protected bool   $splitByLength = false
     )
     {
+        if ($idxToken instanceof AbstractIndex && $splitByLength) {
+            throw new IndexUsageException('Cannot split by length when using a pre-instantiated token index');
+        }
     }
 
     /**
@@ -71,15 +80,21 @@ abstract class AbstractCollection
      */
     public function lock(): static
     {
-        foreach (array_filter([
+        foreach ([
             $this->idxEntity,
             $this->idxToken,
             $this->idxFrequency,
             $this->idxReverse
-        ]) as $idxName) {
+        ] as $idx) {
+            if ($idx === '') continue;
             try {
-                Lock::acquire($idxName);
-                $this->lockedIndexes[] = $idxName;
+                if ($idx instanceof AbstractIndex) {
+                    $idx->lock();
+                    $this->lockedIndexes[] = $idx;
+                } else {
+                    Lock::acquire($idx);
+                    $this->lockedIndexes[] = $idx;
+                }
             } catch (IndexLockException $e) {
                 $this->unlock();
                 throw $e;
@@ -96,47 +111,57 @@ abstract class AbstractCollection
      */
     public function unlock(): void
     {
-        foreach ($this->lockedIndexes as $idxName) {
-            Lock::release($idxName);
+        foreach ($this->lockedIndexes as $idx) {
+            if ($idx instanceof AbstractIndex) {
+                $idx->unlock();
+            } else {
+                Lock::release($idx);
+            }
         }
         $this->lockedIndexes = [];
         $this->isWritable = false;
     }
 
     /**
-     * @return FileIndex
+     * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getEntityIndex(): FileIndex
+    public function getEntityIndex(): AbstractIndex
     {
+        if ($this->idxEntity instanceof AbstractIndex) {
+            return $this->idxEntity;
+        }
         return new FileIndex($this->idxEntity, '', $this->isWritable);
     }
 
     /**
      * @param int|string $suffix
-     * @return MemoryIndex
+     * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getTokenIndex(int|string $suffix): MemoryIndex
+    public function getTokenIndex(int|string $suffix): AbstractIndex
     {
+        if ($this->idxToken instanceof AbstractIndex) {
+            return $this->idxToken;
+        }
         return new MemoryIndex($this->idxToken, $suffix, $this->isWritable);
     }
 
     /**
      * @param int|string $suffix
-     * @return MemoryIndex
+     * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getFrequencyIndex(int|string $suffix): MemoryIndex
+    public function getFrequencyIndex(int|string $suffix): AbstractIndex
     {
         return new MemoryIndex($this->idxFrequency, $suffix, $this->isWritable);
     }
 
     /**
-     * @return FileIndex
+     * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getReverseIndex(): FileIndex
+    public function getReverseIndex(): AbstractIndex
     {
         return new FileIndex($this->idxReverse, '', $this->isWritable);
     }
