@@ -43,8 +43,8 @@ abstract class AbstractCollection
     public function __construct(
         protected string $idxEntity,
         protected string $idxToken,
-        protected string $idxFrequency,
-        protected string $idxReverse,
+        protected string $idxFrequency = '',
+        protected string $idxReverse = '',
         protected bool   $splitByLength = false
     ) {
     }
@@ -69,7 +69,7 @@ abstract class AbstractCollection
      */
     public function lock(): static
     {
-        foreach ([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse] as $idxName) {
+        foreach (array_filter([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse]) as $idxName) {
             if (!(new Lock($idxName))->acquire()) {
                 $this->unlock(); // release any already acquired locks
                 throw new IndexLockException('Could not lock ' . $idxName . ' for writing');
@@ -87,7 +87,7 @@ abstract class AbstractCollection
      */
     public function unlock(): void
     {
-        foreach ([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse] as $idxName) {
+        foreach (array_filter([$this->idxEntity, $this->idxToken, $this->idxFrequency, $this->idxReverse]) as $idxName) {
             (new Lock($idxName))->release();
         }
         $this->isWritable = false;
