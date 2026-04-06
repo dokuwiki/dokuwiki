@@ -505,22 +505,186 @@ h6,
     margin-bottom: 0;
 }
 
-/* Sidebar adjustments when present */
+/* Top navigation (sidebar converted to top bar) */
 #dokuwiki__aside {
-    .pad {
-        padding: @padding-desktop-vertical @padding-desktop-horizontal;
+    background-color: @background-site;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0;
+    position: relative;
+
+    > .pad {
+        margin: 0;
+        padding: 0 @padding-desktop-horizontal;
+        overflow: visible;
     }
+
+    .aside,
+    .content,
+    .group {
+        overflow: visible;
+    }
+
+    h3.toggle {
+        display: none !important;
+    }
+
+    div.content {
+        display: block !important;
+        padding: 0;
+    }
+
+    div.content > .group {
+        display: block !important;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    > .pad > .content > .group > ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .level1 {
+        position: relative;
+    }
+
+    .level1 > .li {
+        padding: 12px 10px;
+        font-weight: 600;
+        color: @text-color;
+    }
+
+    .level1 > .li a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .level1 > .li a:hover,
+    .level1 > .li a:focus {
+        color: @brand-primary;
+        text-decoration: none;
+    }
+
+    a.wikilink2 {
+        color: #d30;
+    }
+
+    a.wikilink2:hover,
+    a.wikilink2:focus {
+        color: darken(#d30, 10%);
+    }
+
+    .level1.node > .li {
+        cursor: default;
+        position: relative;
+        padding-right: 26px;
+    }
+
+    .level1.node > .li::after {
+        content: "";
+        border-style: solid;
+        border-width: 4px 4px 0 4px;
+        border-color: @text-color transparent transparent transparent;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .level1:hover > .li::after,
+    .level1:focus-within > .li::after {
+        border-top-color: @brand-primary;
+    }
+
+    .level1 > ul {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        min-width: 220px;
+        background-color: @background-color;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+        padding: 6px 0;
+        margin: 0;
+        display: none;
+        z-index: @z-index-dropdown;
+    }
+
+    .level1:hover > ul,
+    .level1:focus-within > ul {
+        display: block;
+    }
+
+    .level1 > ul > li > .li {
+        padding: 8px 16px;
+        font-weight: 400;
+        white-space: nowrap;
+    }
+
+    .level1 > ul > li > .li a {
+        color: @text-color;
+        text-decoration: none;
+    }
+
+    .level1 > ul > li > .li a:hover,
+    .level1 > ul > li > .li a:focus {
+        color: @brand-primary;
+        text-decoration: none;
+    }
+
+    .curid a {
+        color: @brand-primary;
+        font-weight: 700;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #e0e0e0;
+        margin: 0;
+    }
+}
+
+[dir=rtl] #dokuwiki__aside {
+    .level1.node > .li {
+        padding-right: 10px;
+        padding-left: 26px;
+    }
+
+    .level1.node > .li::after {
+        right: auto;
+        left: 10px;
+    }
+
+    .level1 > ul {
+        left: auto;
+        right: 0;
+    }
+}
+
+/* Remove sidebar preview border for top navigation layout */
+.dokuwiki.hasSidebar div.preview {
+    border-right: 0;
+}
+
+[dir=rtl] .dokuwiki.hasSidebar div.preview {
+    border-left: 0;
 }
 
 /* Mobile responsive padding */
 @media (max-width: @breakpoint-mobile) {
     #dokuwiki__content {
-        .pad {
-            padding: @padding-mobile-vertical @padding-mobile-horizontal;
-        }
-    }
-
-    #dokuwiki__aside {
         .pad {
             padding: @padding-mobile-vertical @padding-mobile-horizontal;
         }
@@ -674,11 +838,6 @@ h6,
         }
     }
 
-    #dokuwiki__aside {
-        .pad {
-            padding: @padding-mobile-vertical @padding-mobile-horizontal;
-        }
-    }
 }
 
 /* ============================================
@@ -1402,6 +1561,9 @@ label.menu {
 }
 
 .button-toggle {
+    display: none;
+    visibility: hidden;
+
     .menu-button;
     padding: 30px 0;
     width: 80px;
