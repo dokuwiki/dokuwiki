@@ -3,35 +3,56 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\Collection\FrequencyCollectionSearch;
+use dokuwiki\Search\Collection\PageFulltextCollection;
+use dokuwiki\Search\Exception\SearchException;
+use dokuwiki\Search\Query\QueryEvaluator;
+use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8;
 
-// create snippets for the first few results only
-const FT_SNIPPET_NUMBER = 15;
-
 /**
- * Class DokuWiki Fulltext Search
+ * DokuWiki Fulltext Search
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 class FulltextSearch
 {
+    /** @var int Maximum number of results to generate snippets for */
+    protected int $maxSnippets = 15;
+
+    /**
+     * @return int
+     */
+    public function getMaxSnippets(): int
+    {
+        return $this->maxSnippets;
+    }
+
+    /**
+     * @param int $maxSnippets
+     */
+    public function setMaxSnippets(int $maxSnippets): void
+    {
+        $this->maxSnippets = $maxSnippets;
+    }
+
     /**
      * The fulltext search
      *
      * Returns a list of matching documents for the given query
      *
-     * refactored into pageSearch(), pageSearchCallBack() and trigger_event()
+     * @triggers SEARCH_QUERY_FULLPAGE
      *
-     * @param string     $query
-     * @param array      $highlight
-     * @param string     $sort
-     * @param int|string $after  only show results with mtime after this date,
-     *                           accepts timestap or strtotime arguments
-     * @param int|string $before only show results with mtime before this date,
-     *                           accepts timestap or strtotime arguments
+     * @param string     $query   the search query string
+     * @param array      $highlight  will be filled with terms to highlight
+     * @param string     $sort    sort mode: 'hits' (default) or 'mtime'
+     * @param int|string $after   only show results with mtime after this date,
+     *                            accepts timestamp or strtotime arguments
+     * @param int|string $before  only show results with mtime before this date,
+     *                            accepts timestamp or strtotime arguments
      *
-     * @return array
+     * @return array matching documents as pageid => score
      */
     public function pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
     {
@@ -56,7 +77,7 @@ class FulltextSearch
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
      * @param array $data  event data
-     * @return array       matching documents
+     * @return array       matching documents as pageid => score
      */
     public function pageSearchCallBack(&$data)
     {
@@ -64,150 +85,52 @@ class FulltextSearch
         $q = (new QueryParser)->convert($data['query']);
         $data['highlight'] = $q['highlight'];
 
-        if (empty($q['parsed_ary'])) return array();
+        if (empty($q['parsed_ary'])) return [];
 
-        // lookup all words found in the query
-        $FulltextIndex = new FulltextIndex();
-        $lookup = $FulltextIndex->lookupWords($q['words']);
-
-        // get all pages in this dokuwiki site (!: includes nonexistent pages)
-        $pages_all = array();
-        foreach ($FulltextIndex->getPages() as $id) {
-            $pages_all[$id] = 0; // base: 0 hit
-        }
-
-        // process the query
-        $stack = array();
-        foreach ($q['parsed_ary'] as $token) {
-            switch (substr($token, 0, 3)) {
-                case 'W+:':
-                case 'W-:':
-                case 'W_:': // word
-                    $word = substr($token, 3);
-                    if (array_key_exists($word, $lookup)) $stack[] = (array) $lookup[$word];
-                    break;
-                case 'P+:':
-                case 'P-:': // phrase
-                    $phrase = substr($token, 3);
-                    // since phrases are always parsed as ((W1)(W2)...(P)),
-                    // the end($stack) always points the pages that contain
-                    // all words in this phrase
-                    $pages  = end($stack);
-                    $pages_matched = array();
-                    foreach (array_keys($pages) as $id) {
-                        $evdata = array(
-                            'id' => $id,
-                            'phrase' => $phrase,
-                            'text' => rawWiki($id)
-                        );
-                        $event = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
-                        if ($event->advise_before() && $event->result !== true) {
-                            $text = Utf8\PhpString::strtolower($evdata['text']);
-                            if (strpos($text, $phrase) !== false) {
-                                $event->result = true;
-                            }
-                        }
-                        $event->advise_after();
-                        if ($event->result === true) {
-                            $pages_matched[$id] = 0; // phrase: always 0 hit
-                        }
-                    }
-                    $stack[] = $pages_matched;
-                    break;
-                case 'N+:':
-                case 'N-:': // namespace
-                    $ns = cleanID(substr($token, 3)) . ':';
-                    $pages_matched = array();
-                    foreach (array_keys($pages_all) as $id) {
-                        if (strpos($id, $ns) === 0) {
-                            $pages_matched[$id] = 0; // namespace: always 0 hit
-                        }
-                    }
-                    $stack[] = $pages_matched;
-                    break;
-                case 'AND': // and operation
-                    list($pages1, $pages2) = array_splice($stack, -2);
-                    $stack[] = $this->resultCombine(array($pages1, $pages2));
-                    break;
-                case 'OR':  // or operation
-                    list($pages1, $pages2) = array_splice($stack, -2);
-                    $stack[] = $this->resultUnite(array($pages1, $pages2));
-                    break;
-                case 'NOT': // not operation (unary)
-                    $pages   = array_pop($stack);
-                    $stack[] = $this->resultComplement(array($pages_all, $pages));
-                    break;
+        // look up all words via FrequencyCollectionSearch
+        $collection = new PageFulltextCollection();
+        $search = new FrequencyCollectionSearch($collection);
+        foreach ($q['words'] as $word) {
+            try {
+                $search->addTerm($word);
+            } catch (SearchException $e) {
+                // term too short or invalid, skip
             }
         }
-        $docs = array_pop($stack);
+        $terms = $search->execute();
 
-        if (empty($docs)) return array();
+        // evaluate the query
+        $evaluator = new QueryEvaluator($q['parsed_ary'], $terms);
+        $docs = $evaluator->evaluate();
 
-        // check: settings, acls, existence
-        foreach (array_keys($docs) as $id) {
-            if (isHiddenPage($id)
-                || auth_quickaclcheck($id) < AUTH_READ
-                || !page_exists($id, '', false)
-            ) {
-                unset($docs[$id]);
+        if (empty($docs)) return [];
+
+        // prepare time filters
+        $after = $data['after'] ? (is_int($data['after']) ? $data['after'] : strtotime($data['after'])) : null;
+        $before = $data['before'] ? (is_int($data['before']) ? $data['before'] : strtotime($data['before'])) : null;
+
+        // filter by settings, acls, existence, and time range
+        $docs = array_filter($docs, static function ($score, $id) use ($after, $before) {
+            if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_READ || !page_exists($id, '', false)) {
+                return false;
             }
-        }
-
-        $docs = $this->filterResultsByTime($docs, $data['after'], $data['before']);
+            if ($after || $before) {
+                $mTime = filemtime(wikiFN($id));
+                if ($after && $after > $mTime) return false;
+                if ($before && $before < $mTime) return false;
+            }
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
 
         if ($data['sort'] === 'mtime') {
-            uksort($docs, [$this, 'pagemtimesorter']);
+            uksort($docs, static function ($a, $b) {
+                return filemtime(wikiFN($b)) - filemtime(wikiFN($a));
+            });
         } else {
-            // sort docs by count
             arsort($docs);
         }
 
         return $docs;
-    }
-
-    /**
-     * @param array      $results search results in the form pageid => value
-     * @param int|string $after   only returns results with mtime after this date,
-     *                            accepts timestap or strtotime arguments
-     * @param int|string $before  only returns results with mtime after this date,
-     *                            accepts timestap or strtotime arguments
-     *
-     * @return array
-     */
-    protected function filterResultsByTime(array $results, $after, $before)
-    {
-        if ($after || $before) {
-            $after = is_int($after) ? $after : strtotime($after);
-            $before = is_int($before) ? $before : strtotime($before);
-
-            foreach ($results as $id => $value) {
-                $mTime = filemtime(wikiFN($id));
-                if ($after && $after > $mTime) {
-                    unset($results[$id]);
-                    continue;
-                }
-                if ($before && $before < $mTime) {
-                    unset($results[$id]);
-                }
-            }
-        }
-        return $results;
-    }
-
-    /**
-     * Sort pages by their mtime, from newest to oldest
-     *
-     * @param string $a
-     * @param string $b
-     *
-     * @return int Returns < 0 if $a is newer than $b, > 0 if $b is newer than $a
-     *             and 0 if they are of the same age
-     */
-    protected function pagemtimesorter($a, $b)
-    {
-        $mtimeA = filemtime(wikiFN($a));
-        $mtimeB = filemtime(wikiFN($b));
-        return $mtimeB - $mtimeA;
     }
 
     /**
@@ -365,89 +288,5 @@ class FulltextSearch
             $term = '';
         }
         return $term;
-    }
-
-    /**
-     * Combine found documents and sum up their scores
-     *
-     * This function is used to combine searched words with a logical
-     * AND. Only documents available in all arrays are returned.
-     *
-     * based upon PEAR's PHP_Compat function for array_intersect_key()
-     *
-     * @param array $args An array of page arrays
-     * @return array
-     */
-    protected function resultCombine($args)
-    {
-        $array_count = count($args);
-        if ($array_count == 1) {
-            return $args[0];
-        }
-
-        $result = array();
-        if ($array_count > 1) {
-            foreach ($args[0] as $key => $value) {
-                $result[$key] = $value;
-                for ($i = 1; $i !== $array_count; $i++) {
-                    if (!isset($args[$i][$key])) {
-                        unset($result[$key]);
-                        break;
-                    }
-                    $result[$key] += $args[$i][$key];
-                }
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Unites found documents and sum up their scores
-     * based upon resultCombine() method
-     *
-     * @param array $args An array of page arrays
-     * @return array
-     *
-     * @author Kazutaka Miyasaka <kazmiya@gmail.com>
-     */
-    protected function resultUnite($args)
-    {
-        $array_count = count($args);
-        if ($array_count === 1) {
-            return $args[0];
-        }
-
-        $result = $args[0];
-        for ($i = 1; $i !== $array_count; $i++) {
-            foreach (array_keys($args[$i]) as $id) {
-                $result[$id] += $args[$i][$id];
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Computes the difference of documents using page id for comparison
-     * nearly identical to PHP5's array_diff_key()
-     *
-     * @param array $args An array of page arrays
-     * @return array
-     *
-     * @author Kazutaka Miyasaka <kazmiya@gmail.com>
-     */
-    protected function resultComplement($args)
-    {
-        $array_count = count($args);
-        if ($array_count === 1) {
-            return $args[0];
-        }
-
-        $result = $args[0];
-        foreach (array_keys($result) as $id) {
-            for ($i = 1; $i !== $array_count; $i++) {
-                if (isset($args[$i][$id])) unset($result[$id]);
-            }
-        }
-        return $result;
     }
 }

@@ -4,7 +4,7 @@ namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\MetadataIndex;
-use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8;
 
 /**

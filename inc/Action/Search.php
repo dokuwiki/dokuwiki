@@ -5,7 +5,7 @@ namespace dokuwiki\Action;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataSearch;
-use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Query\QueryParser;
 
 /**
  * Class Search

@@ -5,11 +5,10 @@ namespace dokuwiki\Ui;
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
-use const dokuwiki\Search\FT_SNIPPET_NUMBER;
 
 
 class Search extends Ui
@@ -579,7 +578,7 @@ class Search extends Ui
                 $num++;
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 $resultBody['meta'] = $hits . $resultBody['meta'];
-                if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
+                if ($num <= $FulltextSearch->getMaxSnippets()) {
                     $resultBody['snippet'] = $FulltextSearch->snippet($id, $highlight);
                 }
             }

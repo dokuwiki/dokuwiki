@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Query\QueryParser;
 
 class SearchState
 {

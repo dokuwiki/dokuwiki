@@ -1,6 +1,6 @@
 <?php
 
-namespace dokuwiki\Search;
+namespace dokuwiki\Search\Query;
 
 use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;

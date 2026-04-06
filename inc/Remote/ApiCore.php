@@ -335,7 +335,7 @@ class ApiCore
         // prepare additional data
         $idx = 0;
         foreach ($data as $id => $score) {
-            if ($idx < FT_SNIPPET_NUMBER) {
+            if ($idx < $FulltextSearch->getMaxSnippets()) {
                 $snippet = $FulltextSearch->snippet($id, $regex);
                 $idx++;
             } else {
