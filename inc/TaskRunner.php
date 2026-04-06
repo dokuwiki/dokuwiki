@@ -206,7 +206,13 @@ class TaskRunner
 
         // do the work
         try {
-            return (new Indexer($ID))->dispatch(true);
+            $indexer = (new Indexer())->setLogger(function ($msg) { echo $msg . NL; });
+            if (!page_exists($ID)) {
+                $indexer->deletePage($ID, true);
+            } else {
+                $indexer->addPage($ID, true);
+            }
+            return true;
         } catch (Search\Exception\SearchException $e) {
             $msg = get_class($e) .' : '. $e->getMessage();
             echo $msg;

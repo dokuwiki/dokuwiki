@@ -213,4 +213,17 @@ class FileIndex extends AbstractIndex
         $this->ridCache[$value] = $this->getRowID($value);
         return $this->ridCache[$value];
     }
+
+    /** @inheritdoc */
+    public function getIterator(): \Generator
+    {
+        if (!file_exists($this->filename)) return;
+        $fh = @fopen($this->filename, 'r');
+        if (!$fh) return;
+        $ln = 0;
+        while (($line = fgets($fh)) !== false) {
+            yield $ln++ => rtrim($line);
+        }
+        fclose($fh);
+    }
 }

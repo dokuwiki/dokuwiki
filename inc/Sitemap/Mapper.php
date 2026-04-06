@@ -56,7 +56,7 @@ class Mapper
 
         Logger::debug("Sitemapper::generate(): using $sitemap");
 
-        $pages = idx_get_indexer()->getPages();
+        $pages = (new \dokuwiki\Search\Indexer())->getAllPages();
         Logger::debug('Sitemapper::generate(): creating sitemap using ' . count($pages) . ' pages');
         $items = [];
 

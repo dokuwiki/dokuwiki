@@ -294,7 +294,7 @@ class ApiCore
     protected function getAllPages($hash = false)
     {
         $list = [];
-        $pages = (new Indexer())->getPages();
+        $pages = (new Indexer())->getAllPages();
         Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
@@ -701,7 +701,11 @@ class ApiCore
         unlock($page);
 
         // run the indexer if page wasn't indexed yet
-        (new Indexer($page))->addPage();
+        try {
+            (new Indexer())->addPage($page);
+        } catch (\Exception $e) {
+            // indexing failure is non-fatal, the page was saved successfully
+        }
 
         return true;
     }

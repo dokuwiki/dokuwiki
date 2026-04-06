@@ -107,9 +107,9 @@ abstract class AbstractCollection
     /**
      * Unlock all indexes that were successfully locked
      *
-     * @return void
+     * @return static
      */
-    public function unlock(): void
+    public function unlock(): static
     {
         foreach ($this->lockedIndexes as $idx) {
             if ($idx instanceof AbstractIndex) {
@@ -120,6 +120,7 @@ abstract class AbstractCollection
         }
         $this->lockedIndexes = [];
         $this->isWritable = false;
+        return $this;
     }
 
     /**
@@ -190,11 +191,12 @@ abstract class AbstractCollection
      *
      * @param string $entity The name of the entity
      * @param string[] $tokens The list of tokens for this entity
+     * @return static
      * @throws IndexAccessException
      * @throws IndexWriteException
      * @throws IndexLockException
      */
-    public function addEntity(string $entity, array $tokens): void
+    public function addEntity(string $entity, array $tokens): static
     {
         if (!$this->isWritable) {
             throw new IndexLockException('Indexes not locked. Forgot to call lock()?');
@@ -210,6 +212,8 @@ abstract class AbstractCollection
 
         $this->updateIndexes($merged, $entityId);
         $this->saveReverseAssignments($entity, $merged);
+
+        return $this;
     }
 
     /**

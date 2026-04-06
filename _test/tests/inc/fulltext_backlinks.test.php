@@ -16,7 +16,7 @@ class fulltext_backlinks_test extends DokuWikiTest
     public function test_internallink()
     {
         saveWikiText('test:internallinks', '[[internälLink]] [[..:internal link]]', 'Test initialization');
-        (new Indexer('test:internallinks'))->addPage();
+        (new Indexer())->addPage('test:internallinks');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:internallinks'), $MetadataIndex->backlinks('internal_link'));
@@ -26,7 +26,7 @@ class fulltext_backlinks_test extends DokuWikiTest
     public function test_links_in_footnotes()
     {
         saveWikiText('test:link_footnotes', '(([[footnote]] [[:foÖtnotel]]))', 'Test initialization');
-        (new Indexer('test:link_footnotes'))->addPage();
+        (new Indexer())->addPage('test:link_footnotes');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:link_footnotes'), $MetadataIndex->backlinks('test:footnote'));
@@ -38,9 +38,9 @@ class fulltext_backlinks_test extends DokuWikiTest
         global $conf;
         $conf['hidepages'] = 'hidden:.*';
         saveWikiText('hidden:links', '[[wiki:hiddenlink|linktitle]]', 'Test initialization');
-        (new Indexer('hidden:links'))->addPage();
+        (new Indexer())->addPage('hidden:links');
         saveWikiText('visible:links', '[[wiki:hiddenlink]]', 'Test initialization');
-        (new Indexer('visible:links'))->addPage();
+        (new Indexer())->addPage('visible:links');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('visible:links'), $MetadataIndex->backlinks('wiki:hiddenlink'));
@@ -63,9 +63,9 @@ class fulltext_backlinks_test extends DokuWikiTest
         $_SERVER['REMOTE_USER'] = 'eve';
 
         saveWikiText('secret:links', '[[wiki:secretlink]]', 'Test initialization');
-        (new Indexer('secret:links'))->addPage();
+        (new Indexer())->addPage('secret:links');
         saveWikiText('public:links', '[[wiki:secretlink]]', 'Test initialization');
-        (new Indexer('public:links'))->addPage();
+        (new Indexer())->addPage('public:links');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('public:links'), $MetadataIndex->backlinks('wiki:secretlink'));
@@ -76,7 +76,7 @@ class fulltext_backlinks_test extends DokuWikiTest
     public function test_links_in_deleted_pages()
     {
         saveWikiText('test:internallinks', '[[internallink]] [[..:internal link]]', 'Test initialization');
-        (new Indexer('test:internallinks'))->addPage();
+        (new Indexer())->addPage('test:internallinks');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:internallinks'), $MetadataIndex->backlinks('test:internallink'));
@@ -91,7 +91,7 @@ class fulltext_backlinks_test extends DokuWikiTest
     function test_parameters()
     {
         saveWikiText('test:links', '[[wiki:syntax?do=export_raw]] [[:web:scripts:add_vhost.sh?do=export_raw]]', 'Init tests');
-        (new Indexer('test:links'))->addPage();
+        (new Indexer())->addPage('test:links');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:links'), $MetadataIndex->backlinks('wiki:syntax'));

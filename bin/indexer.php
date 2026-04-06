@@ -91,7 +91,7 @@ class IndexerCLI extends CLI
     {
         $this->notice("$id indexing...");
         try {
-            (new Indexer($id))->addPage(!$this->quiet, $this->clear);
+            (new Indexer())->addPage($id, $this->clear);
             $this->success("$id indexed.");
         } catch (Throwable $e) {
             $this->error("$id indexing error: " . $e->getMessage());
@@ -106,7 +106,7 @@ class IndexerCLI extends CLI
     protected function clearindex()
     {
         $this->notice('Clearing index...');
-        (new Indexer())->clear();
+        (new Indexer)->clear();
         $this->success('Index cleared.');
     }
 }

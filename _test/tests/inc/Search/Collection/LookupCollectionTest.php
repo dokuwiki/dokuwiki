@@ -3,8 +3,7 @@
 namespace tests\Search\Collection;
 
 use dokuwiki\Search\Collection\LookupCollection;
-use dokuwiki\Search\Collection\MediaCollection;
-use dokuwiki\Search\Collection\ReferencesCollection;
+use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\MemoryIndex;
 
@@ -151,11 +150,11 @@ class LookupCollectionTest extends \DokuWikiTest
     }
 
     /**
-     * Test that MediaCollection uses correct index names
+     * Test that PageMetaCollection('relation_media') uses correct index names
      */
     public function testMediaCollection()
     {
-        $index = new MediaCollection();
+        $index = new PageMetaCollection('relation_media');
         $index->lock();
         $index->addEntity('wiki:start', ['wiki:logo.png', 'wiki:banner.jpg']);
         $index->unlock();
@@ -169,11 +168,11 @@ class LookupCollectionTest extends \DokuWikiTest
     }
 
     /**
-     * Test that ReferencesCollection uses correct index names
+     * Test that PageMetaCollection('relation_references') uses correct index names
      */
     public function testReferencesCollection()
     {
-        $index = new ReferencesCollection();
+        $index = new PageMetaCollection('relation_references');
         $index->lock();
         $index->addEntity('wiki:start', ['wiki:syntax', 'wiki:welcome']);
         $index->unlock();

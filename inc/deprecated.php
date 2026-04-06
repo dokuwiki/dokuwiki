@@ -190,9 +190,9 @@ function ptln($string, $indent = 0)
  */
 function idx_addPage($page, $verbose = false, $force = false)
 {
-    DebugHelper::dbgDeprecatedFunction('dokuwiki\Search\Indexer($id)::addPage()');
+    DebugHelper::dbgDeprecatedFunction('dokuwiki\Search\Indexer::addPage()');
     try {
-        (new dokuwiki\Search\Indexer($page))->addPage($verbose, $force);
+        (new dokuwiki\Search\Indexer())->addPage($page, $force);
         return true;
     } catch (\dokuwiki\Search\Exception\SearchException $e) {
         return false;

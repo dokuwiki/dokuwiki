@@ -8,8 +8,10 @@ use dokuwiki\Search\Exception\IndexLockException;
  * Basic building block to access individual index files
  *
  * To be able to write to an index, a lock must be acquired.
+ *
+ * Indexes are iterable, yielding RID => value pairs.
  */
-abstract class AbstractIndex
+abstract class AbstractIndex implements \IteratorAggregate
 {
     /** @var string name of the index */
     protected $idx;

@@ -174,4 +174,10 @@ class MemoryIndex extends AbstractIndex
     {
         return $this->dirty;
     }
+
+    /** @inheritdoc */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->data);
+    }
 }

@@ -27,11 +27,12 @@ abstract class DirectCollection extends AbstractCollection
      *
      * @param string $entity The name of the entity
      * @param string[] $tokens The list of tokens (only the first is used)
+     * @return static
      * @throws IndexLockException
      * @throws IndexAccessException
      * @throws IndexWriteException
      */
-    public function addEntity(string $entity, array $tokens): void
+    public function addEntity(string $entity, array $tokens): static
     {
         if (!$this->isWritable) {
             throw new IndexLockException('Indexes not locked. Forgot to call lock()?');
@@ -44,6 +45,8 @@ abstract class DirectCollection extends AbstractCollection
         $tokenIndex = $this->getTokenIndex('');
         $tokenIndex->changeRow($entityId, $token);
         $tokenIndex->save();
+
+        return $this;
     }
 
     /**

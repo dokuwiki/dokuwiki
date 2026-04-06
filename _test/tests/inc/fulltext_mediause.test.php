@@ -16,7 +16,7 @@ class fultext_mediause_test extends DokuWikiTest
     public function test_internalmedia()
     {
         saveWikiText('test:internalmedia_usage', '{{internalmedia.png}} {{..:internal media.png}}', 'Test initialization');
-        (new Indexer('test:internalmedia_usage'))->addPage();
+        (new Indexer())->addPage('test:internalmedia_usage');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:internalmedia_usage'), $MetadataIndex->mediause('internal_media.png'));
@@ -26,7 +26,7 @@ class fultext_mediause_test extends DokuWikiTest
     public function test_media_in_links()
     {
         saveWikiText('test:medialinks', '[[doku>wiki:dokuwiki|{{wiki:logo.png}}]] [[http://www.example.com|{{example.png?200x800}}]]', 'Test init');
-        (new Indexer('test:medialinks'))->addPage();
+        (new Indexer())->addPage('test:medialinks');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:medialinks'), $MetadataIndex->mediause('wiki:logo.png'));
@@ -36,7 +36,7 @@ class fultext_mediause_test extends DokuWikiTest
     public function test_media_in_local_links()
     {
         saveWikiText('test:locallinks', '[[#test|{{wiki:logolocal.png}}]]', 'Test init');
-        (new Indexer('test:locallinks'))->addPage();
+        (new Indexer())->addPage('test:locallinks');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:locallinks'), $MetadataIndex->mediause('wiki:logolocal.png'));
@@ -45,7 +45,7 @@ class fultext_mediause_test extends DokuWikiTest
     public function test_media_in_footnotes()
     {
         saveWikiText('test:media_footnotes', '(({{footnote.png?20x50}} [[foonote|{{:footlink.png}}]]))', 'Test initialization');
-        (new Indexer('test:media_footnotes'))->addPage();
+        (new Indexer())->addPage('test:media_footnotes');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array('test:media_footnotes'), $MetadataIndex->mediause('test:footnote.png'));
@@ -57,7 +57,7 @@ class fultext_mediause_test extends DokuWikiTest
         global $conf;
         $conf['hidepages'] = 'hidden:.*';
         saveWikiText('hidden:medias', '[[doku>wiki:dokuwiki|{{wiki:hiddenlogo.png}}]]', 'Test initialization');
-        (new Indexer('hidden:medias'))->addPage();
+        (new Indexer())->addPage('hidden:medias');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array(), $MetadataIndex->mediause('wiki:hiddenlogo.png'));
@@ -80,7 +80,7 @@ class fultext_mediause_test extends DokuWikiTest
         $_SERVER['REMOTE_USER'] = 'eve';
 
         saveWikiText('secret:medias', '[[doku>wiki:dokuwiki|{{wiki:secretlogo.png}}]]', 'Test initialization');
-        (new Indexer('secret:medias'))->addPage();
+        (new Indexer())->addPage('secret:medias');
         $MetadataIndex = new MetadataIndex();
 
         $this->assertEquals(array(), $MetadataIndex->mediause('wiki:secretlogo.png'));
@@ -91,7 +91,7 @@ class fultext_mediause_test extends DokuWikiTest
     public function test_media_in_deleted_pages()
     {
         saveWikiText('test:internalmedia_usage', '{{internalmedia.png}} {{..:internal media.png}}', 'Test initialization');
-        (new Indexer('test:internalmedia_usage'))->addPage();
+        (new Indexer())->addPage('test:internalmedia_usage');
         saveWikiText('test:internalmedia_usage', '', 'Deleted');
         $MetadataIndex = new MetadataIndex();
 

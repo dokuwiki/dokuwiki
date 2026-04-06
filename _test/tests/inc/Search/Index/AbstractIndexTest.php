@@ -69,4 +69,14 @@ abstract class AbstractIndexTest extends \DokuWikiTest
             $result
         );
     }
+
+    public function testIterable()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']);
+        $index->save();
+
+        $result = iterator_to_array($index);
+        $this->assertEquals([0 => 'foo', 1 => 'bar', 2 => 'baz'], $result);
+    }
 }
