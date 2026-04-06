@@ -305,7 +305,6 @@ $lang['i_funcna']              = 'La PHP-a funkcio <code>%s</code> ne estas uzeb
 $lang['i_disabled']            = 'Ĝi estis malŝaltita de via provizanto.';
 $lang['i_funcnmail']           = '<b>Noto:</b> La PHP-poŝta funkcio ne disponeblas. %s Se ĝi restas neatingebla, vi povas instali la <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-kromaĵon</a>.';
 $lang['i_phpver']              = 'La versio de la PHP <code>%s</code> estas pli malnova ol la bezonata <code>%s</code>. Vi bezonas ĝisdatigi la PHP-an instalon.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload devas esti malŝaltita en php.ini por ruli DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki ne povas krei kriptografie sekurajn nombrojn por kuketoj. Vi eble volas kontroli viajn open_basedir-agordojn en php.ini por taŭga aliro <code>/dev/urandom</code>.';
 $lang['i_permfail']            = '<code>%s</code> ne estas skribebla por DokuWiki. Vi devas redifini la permes-atributojn de tiu ĉi dosierujo!';
 $lang['i_confexists']          = '<code>%s</code> jam ekzistas';

@@ -313,7 +313,6 @@ $lang['i_funcna']              = 'La funció PHP <code>%s</code> no està dispon
 $lang['i_disabled']            = 'El vostre proveïdor l\'ha desactivat.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La funció de correu PHP no està disponible. %s Si es manté no disponible, podeu instal·lar el <a href="https://www.dokuwiki.org/plugin:smtp">connector smtp</a>.';
 $lang['i_phpver']              = 'La vostra versió de PHP <code>%s</code> és inferior a la requerida <code>%s</code>. Necessiteu actualitzar la vostra instal·lació de PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload cal que sigui deshabilitada en php.ini perquè funcioni DokuWiki';
 $lang['i_urandom']             = 'DokuWiki no pot crear números criptogràficament segurs per a les galetes. És possible que vulgueu comprovar la vostra configuració d\'open_basedir al php.ini per un accés correcte a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki no pot escriure <code>%s</code>. Heu d\'arreglar els permisos d\'aquest directori';
 $lang['i_confexists']          = '<code>%s</code> ja existeix';

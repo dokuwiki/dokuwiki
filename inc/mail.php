@@ -119,7 +119,7 @@ function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit =
         if ($bEmulate_imap_8bit)
             $sRegExp = '/[^\x20\x21-\x3C\x3E-\x7E]/';
 
-        $sLine = preg_replace_callback($sRegExp, 'mail_quotedprintable_encode_callback', $sLine);
+        $sLine = preg_replace_callback($sRegExp, mail_quotedprintable_encode_callback(...), $sLine);
 
         // encode x09,x20 at lineends
         {

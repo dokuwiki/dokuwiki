@@ -257,8 +257,8 @@ class admin_plugin_acl extends AdminPlugin
         echo html_buildlist(
             $data,
             'acl',
-            [$this, 'makeTreeItem'],
-            [$this, 'makeListItem']
+            $this->makeTreeItem(...),
+            $this->makeListItem(...)
         );
     }
 
@@ -284,7 +284,7 @@ class admin_plugin_acl extends AdminPlugin
         unset($media);
 
         // combine by sorting and removing duplicates
-        usort($data, [$this, 'treeSort']);
+        usort($data, $this->treeSort(...));
         $count = count($data);
         if ($count > 0) for ($i = 1; $i < $count; $i++) {
             if ($data[$i - 1]['id'] == $data[$i]['id'] && $data[$i - 1]['type'] == $data[$i]['type']) {
@@ -591,7 +591,7 @@ class admin_plugin_acl extends AdminPlugin
             $this->specials = array_merge(
                 $this->specials,
                 array_map(
-                    'trim',
+                    trim(...),
                     explode(',', $conf['manager'])
                 )
             );
@@ -737,7 +737,7 @@ class admin_plugin_acl extends AdminPlugin
         $acl_user = auth_nameencode($acl_user, true);
 
         // max level for pagenames is edit
-        if (strpos($acl_scope, '*') === false) {
+        if (!str_contains($acl_scope, '*')) {
             if ($acl_level > AUTH_EDIT) $acl_level = AUTH_EDIT;
         }
 

@@ -121,12 +121,12 @@ class Ip
             // If it's not a range, compare the addresses directly.
             // Addresses are converted to numbers because the same address may be
             // represented by different strings, e.g. "::1" and "::0001".
-            if (strpos($ipOrRange, '/') === false) {
+            if (!str_contains($ipOrRange, '/')) {
                 return Ip::ipToNumber($ip) === Ip::ipToNumber($ipOrRange);
             }
 
             return Ip::ipInRange($ip, $ipOrRange);
-        } catch (Exception $ex) {
+        } catch (Exception) {
             // The IP address was invalid.
             return false;
         }

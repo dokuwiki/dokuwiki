@@ -35,7 +35,7 @@ class Smiley extends AbstractMode
     {
         if (!count($this->smileys)) return;
 
-        if (strlen($this->pattern) > 0) {
+        if ((string) $this->pattern !== '') {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'smiley');
         }
     }

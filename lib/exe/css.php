@@ -190,7 +190,7 @@ function css_out()
     // embed small images right into the stylesheet
     if ($conf['cssdatauri']) {
         $base = preg_quote(DOKU_BASE, '#');
-        $css = preg_replace_callback('#(url\([ \'"]*)(' . $base . ')(.*?(?:\.(png|gif)))#i', 'css_datauri', $css);
+        $css = preg_replace_callback('#(url\([ \'"]*)(' . $base . ')(.*?(?:\.(png|gif)))#i', css_datauri(...), $css);
     }
 
     http_cached_finish($cache->cache, $css);
@@ -448,8 +448,8 @@ class DokuCssFile
 
         $this->location = $location;
 
-        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#', [$this, 'replacements'], $css);
-        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#', [$this, 'replacements'], $css);
+        $css = preg_replace_callback('#(url\( *)([\'"]?)(.*?)(\2)( *\))#', $this->replacements(...), $css);
+        $css = preg_replace_callback('#(@import\s+)([\'"])(.*?)(\2)#', $this->replacements(...), $css);
 
         return $css;
     }
@@ -470,7 +470,7 @@ class DokuCssFile
                 $basedir[] = realpath(TMP_DIR);
             }
 
-            $basedir = array_map('preg_quote_cb', $basedir);
+            $basedir = array_map(preg_quote_cb(...), $basedir);
             $regex = '/^(' . implode('|', $basedir) . ')/';
             $this->relative_path = preg_replace($regex, '', dirname($this->filepath));
         }
@@ -578,10 +578,10 @@ function css_compress($css)
     $css = preg_replace_callback('/(([\'"]).*?(?<!\\\\)\2)/', $quote_cb, $css);
 
     // strip comments through a callback
-    $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s', 'css_comment_cb', $css);
+    $css = preg_replace_callback('#(/\*)(.*?)(\*/)#s', css_comment_cb(...), $css);
 
     // strip (incorrect but common) one line comments
-    $css = preg_replace_callback('/^.*\/\/.*$/m', 'css_onelinecomment_cb', $css);
+    $css = preg_replace_callback('/^.*\/\/.*$/m', css_onelinecomment_cb(...), $css);
 
     // strip whitespaces
     $css = preg_replace('![\r\n\t ]+!', ' ', $css);

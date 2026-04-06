@@ -63,7 +63,7 @@ div.picker button.toolbutton {
 /*____________ below the textarea ____________*/
 
 .dokuwiki div.editBar {
-    overflow: hidden;
+    display: flow-root;
     margin-bottom: .5em;
 }
 
@@ -74,7 +74,10 @@ div.picker button.toolbutton {
 [dir=rtl] #size__ctl {
     float: left;
 }
-#size__ctl img {
+#size__ctl button {
+    border: 0;
+    background: none;
+    padding: 0;
     cursor: pointer;
 }
 
@@ -139,4 +142,11 @@ div.picker button.toolbutton {
     padding: 0 .5em;
     border: solid @ini_background_alt;
     border-width: 0 .5em;
+}
+
+/* make sure that focus outlines are rendered above other content */
+.dokuwiki .toolbutton:focus-visible,
+.dokuwiki .editBar :focus-visible {
+    position: relative;
+    z-index: 1;
 }

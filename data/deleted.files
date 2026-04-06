@@ -2,6 +2,14 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-03-22
+vendor/simplepie/simplepie/.php-cs-fixer.dist.php
+vendor/simplepie/simplepie/LICENSE.txt
+vendor/simplepie/simplepie/idn/LICENCE
+vendor/simplepie/simplepie/idn/ReadMe.txt
+vendor/simplepie/simplepie/idn/idna_convert.class.php
+vendor/simplepie/simplepie/idn/npdata.ser
+
 # removed on 2024-12-09
 lib/plugins/extension/_test/extension.test.php
 lib/plugins/extension/all.less
@@ -993,7 +1001,6 @@ vendor/kissifrot/php-ixr/.editorconfig
 vendor/kissifrot/php-ixr/.gitignore
 _test/tests/inc/pageutils_resolve_mediaid.test.php
 _test/tests/inc/pageutils_resolve_pageid.test.php
-vendor/phpseclib/phpseclib/phpseclib/Net/SCP.php
 vendor/phpseclib/phpseclib/phpseclib/Net/SSH1.php
 vendor/marcusschwarz/lesserphp/README.md
 vendor/marcusschwarz/lesserphp/lessc.inc.php

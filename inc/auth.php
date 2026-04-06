@@ -204,7 +204,7 @@ function auth_tokenlogin()
     // get the headers from $_SERVER
     if (!$headers) {
         foreach ($_SERVER as $key => $value) {
-            if (substr($key, 0, 5) === 'HTTP_') {
+            if (str_starts_with($key, 'HTTP_')) {
                 $headers[strtolower(substr($key, 5))] = $value;
             }
         }
@@ -241,6 +241,7 @@ function auth_tokenlogin()
     $_SESSION[DOKU_COOKIE]['auth']['user'] = $user;
     $_SESSION[DOKU_COOKIE]['auth']['pass'] = 'nope';
     $_SESSION[DOKU_COOKIE]['auth']['info'] = $USERINFO;
+    $_SESSION[DOKU_COOKIE]['auth']['token'] = $token;
 
     return true;
 }
@@ -332,12 +333,13 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
             if (isset($_SESSION[DOKU_COOKIE])) {
                 $session = $_SESSION[DOKU_COOKIE]['auth'] ?? [];
                 if (
-                    ($session !== []) &&
+                    isset($session['user']) &&
+                    isset($session['pass']) &&
                     $auth->useSessionCache($user) &&
                     ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                    ($session['user'] == $user) &&
-                    ($session['pass'] == sha1($pass)) && //still crypted
-                    ($session['buid'] == auth_browseruid())
+                    ($session['user'] === $user) &&
+                    ($session['pass'] === sha1($pass)) && //still crypted
+                    ($session['buid'] === auth_browseruid())
                 ) {
                     // he has session, cookie and browser right - let him in
                     $INPUT->server->set('REMOTE_USER', $user);
@@ -650,14 +652,14 @@ function auth_isMember($memberlist, $user, array $groups)
     // clean user and groups
     if (!$auth->isCaseSensitive()) {
         $user   = PhpString::strtolower($user);
-        $groups = array_map([PhpString::class, 'strtolower'], $groups);
+        $groups = array_map(PhpString::strtolower(...), $groups);
     }
     $user   = $auth->cleanUser($user);
-    $groups = array_map([$auth, 'cleanGroup'], $groups);
+    $groups = array_map($auth->cleanGroup(...), $groups);
 
     // extract the memberlist
     $members = explode(',', $memberlist);
-    $members = array_map('trim', $members);
+    $members = array_map(trim(...), $members);
     $members = array_unique($members);
     $members = array_filter($members);
 
@@ -757,10 +759,10 @@ function auth_aclcheck_cb($data)
 
     if (!$auth->isCaseSensitive()) {
         $user   = PhpString::strtolower($user);
-        $groups = array_map([PhpString::class, 'strtolower'], $groups);
+        $groups = array_map(PhpString::strtolower(...), $groups);
     }
     $user   = auth_nameencode($auth->cleanUser($user));
-    $groups = array_map([$auth, 'cleanGroup'], $groups);
+    $groups = array_map($auth->cleanGroup(...), $groups);
 
     //prepend groups with @ and nameencode
     foreach ($groups as &$group) {
@@ -876,13 +878,13 @@ function auth_nameencode($name, $skip_group = false)
         if ($skip_group && $name[0] == '@') {
             $cache[$name][$skip_group] = '@' . preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
-                'auth_nameencode_callback',
+                auth_nameencode_callback(...),
                 substr($name, 1)
             );
         } else {
             $cache[$name][$skip_group] = preg_replace_callback(
                 '/([\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f])/',
-                'auth_nameencode_callback',
+                auth_nameencode_callback(...),
                 $name
             );
         }

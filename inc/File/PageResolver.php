@@ -19,7 +19,7 @@ class PageResolver extends Resolver
         $id = (string) $id;
 
         // pages may have a hash attached, we separate it on resolving
-        if (strpos($id, '#') !== false) {
+        if (str_contains($id, '#')) {
             [$id, $hash] = sexplode('#', $id, 2);
             $hash = cleanID($hash);
         } else {

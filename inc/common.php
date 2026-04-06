@@ -81,7 +81,7 @@ function blank(&$in, $trim = false)
     if (is_array($in)) return $in === [];
     if ($in === "\0") return true;
     if ($trim && trim($in) === '') return true;
-    if (strlen($in) > 0) return false;
+    if ((string) $in !== '') return false;
     return empty($in);
 }
 
@@ -472,7 +472,7 @@ function idfilter($id, $ue = true)
     } elseif (
         str_starts_with(strtoupper(PHP_OS), 'WIN') &&
         $conf['userewrite'] &&
-        strpos($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS') === false
+        !str_contains($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS')
     ) {
         $id = strtr($id, ':', ';');
     }
@@ -1383,7 +1383,7 @@ function getGoogleQuery()
 
     if (!$q) return '';
     // ignore if query includes a full URL
-    if (strpos($q, '//') !== false) return '';
+    if (str_contains($q, '//')) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
@@ -1544,20 +1544,12 @@ function unslash($string, $char = "'")
  */
 function php_to_byte($value)
 {
-    switch (strtoupper(substr($value, -1))) {
-        case 'G':
-            $ret = (int)substr($value, 0, -1) * 1024 * 1024 * 1024;
-            break;
-        case 'M':
-            $ret = (int)substr($value, 0, -1) * 1024 * 1024;
-            break;
-        case 'K':
-            $ret = (int)substr($value, 0, -1) * 1024;
-            break;
-        default:
-            $ret = (int)$value;
-            break;
-    }
+    $ret = match (strtoupper(substr($value, -1))) {
+        'G' => (int)substr($value, 0, -1) * 1024 * 1024 * 1024,
+        'M' => (int)substr($value, 0, -1) * 1024 * 1024,
+        'K' => (int)substr($value, 0, -1) * 1024,
+        default => (int)$value,
+    };
     return $ret;
 }
 
@@ -1831,7 +1823,7 @@ function send_redirect($url)
     // check if running on IIS < 6 with CGI-PHP
     if (
         $INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
-        (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
+        (str_contains($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI')) &&
         (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($INPUT->server->str('SERVER_SOFTWARE')), $matches)) &&
         $matches[1] < 6
     ) {

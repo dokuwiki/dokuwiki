@@ -60,7 +60,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if ((string)$password === '') {
             try {
                 $password = auth_pwgen($user);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 throw new RemoteException('Could not generate password', 405);
             }
         }

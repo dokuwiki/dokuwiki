@@ -243,7 +243,7 @@ class GuiExtension extends Gui
             ));
         }
 
-        $list['provides'] = implode(', ', array_map('hsc', $this->extension->getComponentTypes()));
+        $list['provides'] = implode(', ', array_map(hsc(...), $this->extension->getComponentTypes()));
 
         $tags = $this->extension->getTags();
         if ($tags) {
@@ -288,7 +288,7 @@ class GuiExtension extends Gui
         }
 
         $names = explode(',', $this->extension->getAuthor());
-        $names = array_map('trim', $names);
+        $names = array_map(trim(...), $names);
         if (count($names) > 2) {
             $names = array_slice($names, 0, 2);
             $names[] = '…';
@@ -351,7 +351,7 @@ class GuiExtension extends Gui
         // check permissions
         try {
             Installer::ensurePermissions($this->extension);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return '';
         }
 

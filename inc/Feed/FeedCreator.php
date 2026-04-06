@@ -36,19 +36,12 @@ class FeedCreator
      */
     public function build()
     {
-        switch ($this->options->get('feed_mode')) {
-            case 'list':
-                $items = $this->fetchItemsFromNamespace();
-                break;
-            case 'search':
-                $items = $this->fetchItemsFromSearch();
-                break;
-            case 'recent':
-                $items = $this->fetchItemsFromRecentChanges();
-                break;
-            default:
-                $items = $this->fetchItemsFromPlugin();
-        }
+        $items = match ($this->options->get('feed_mode')) {
+            'list' => $this->fetchItemsFromNamespace(),
+            'search' => $this->fetchItemsFromSearch(),
+            'recent' => $this->fetchItemsFromRecentChanges(),
+            default => $this->fetchItemsFromPlugin(),
+        };
 
         $eventData = [
             'rss' => $this->feed,

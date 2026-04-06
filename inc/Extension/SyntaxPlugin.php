@@ -119,7 +119,7 @@ abstract class SyntaxPlugin extends Plugin
                 $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
             }
 
-            $idx = array_search(substr(get_class($this), 7), (array)$this->allowedModes, true);
+            $idx = array_search(substr(static::class, 7), (array)$this->allowedModes, true);
             if ($idx !== false) {
                 unset($this->allowedModes[$idx]);
             }

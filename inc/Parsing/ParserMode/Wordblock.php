@@ -39,7 +39,7 @@ class Wordblock extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        if (strlen($this->pattern) > 0) {
+        if ((string) $this->pattern !== '') {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'wordblock');
         }
     }

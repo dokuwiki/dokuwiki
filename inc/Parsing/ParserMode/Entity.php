@@ -36,7 +36,7 @@ class Entity extends AbstractMode
     {
         if (!count($this->entities)) return;
 
-        if (strlen($this->pattern) > 0) {
+        if ((string) $this->pattern !== '') {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'entity');
         }
     }

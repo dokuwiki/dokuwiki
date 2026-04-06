@@ -972,7 +972,7 @@ abstract class Doku_Renderer extends Plugin
         if ($url && $url[0] === ':') {
             $urlparam = '';
             $id = $url;
-            if (strpos($url, '?') !== false) {
+            if (str_contains($url, '?')) {
                 [$id, $urlparam] = sexplode('?', $url, 2, '');
             }
             $url = wl(cleanID($id), $urlparam);

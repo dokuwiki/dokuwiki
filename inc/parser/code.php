@@ -31,7 +31,7 @@ class Doku_Renderer_code extends Doku_Renderer
         $filename = Clean::stripspecials($filename, '_');
 
         // send CRLF to Windows clients
-        if (strpos($INPUT->server->str('HTTP_USER_AGENT'), 'Windows') !== false) {
+        if (str_contains($INPUT->server->str('HTTP_USER_AGENT'), 'Windows')) {
             $text = str_replace("\n", "\r\n", $text);
         }
 

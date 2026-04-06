@@ -130,7 +130,7 @@ class Sort
     {
         $collator = self::getCollator();
         if (isset($collator)) {
-            return uksort($array, [$collator, 'compare']);
+            return uksort($array, $collator->compare(...));
         } else {
             return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }

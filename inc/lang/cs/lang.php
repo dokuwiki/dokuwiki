@@ -323,7 +323,6 @@ $lang['i_funcna']              = 'PHP funkce <code>%s</code> není dostupná. V�
 $lang['i_disabled']            = 'Bylo zakázáno vaším poskytovatelem.';
 $lang['i_funcnmail']           = '<b>Poznámka:</b> Funkce mail() není v PHP dostupná. %s Pokud tento problém přetrvává, zkuste nainstalovat <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Verze vaší instalace PHP <code>%s</code> je nižší než požadovaná <code>%s</code>. Budete muset aktualizovat svou instalaci PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload musí být vypnut v php.ini pro běh DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki nemůže vytvořit kryptograficky bezpečná čísla pro cookies. Zkuste zkontrolovat nastavení open_basedir v php.ini, zda máte přistup k  <code>/dev/urandom </code>.';
 $lang['i_permfail']            = 'DokuWiki nemůže zapisovat do <code>%s</code>. Budete muset opravit práva k tomuto adresáři.';
 $lang['i_confexists']          = '<code>%s</code> již existuje';

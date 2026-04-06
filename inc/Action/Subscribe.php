@@ -76,7 +76,7 @@ class Subscribe extends AbstractUserAction
         if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, $this->handlePostData(...));
 
         $target = $params['target'];
         $style = $params['style'];

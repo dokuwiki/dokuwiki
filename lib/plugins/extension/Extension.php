@@ -6,7 +6,7 @@ use dokuwiki\Extension\PluginController;
 use dokuwiki\Utf8\PhpString;
 use RuntimeException;
 
-class Extension
+class Extension implements \Stringable
 {
     public const TYPE_PLUGIN = 'plugin';
     public const TYPE_TEMPLATE = 'template';
@@ -814,7 +814,7 @@ class Extension
         $remote = Repository::getInstance();
         try {
             $this->remoteInfo = (array)$remote->getExtensionData($this->getId());
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->remoteInfo = [];
         }
     }
@@ -915,7 +915,7 @@ class Extension
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getId();
     }

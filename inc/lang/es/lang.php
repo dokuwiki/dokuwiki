@@ -102,7 +102,7 @@ $lang['user']                  = 'Usuario';
 $lang['pass']                  = 'Contraseña';
 $lang['newpass']               = 'Nueva contraseña';
 $lang['oldpass']               = 'Confirma tu contraseña actual';
-$lang['passchk']               = 'otra vez';
+$lang['passchk']               = 'una vez más';
 $lang['remember']              = 'Recordarme';
 $lang['fullname']              = 'Nombre real';
 $lang['email']                 = 'Correo electrónico';
@@ -350,7 +350,6 @@ $lang['i_funcna']              = 'La función de PHP <code>%s</code> no está di
 $lang['i_disabled']            = 'Ha sido deshabilitado por tu proveedor.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La función de PHP mail() no está disponible. %s si no está disponible, puede instalar el <a href="https://www.dokuwiki.org/plugin:smtp">complemento smtp</a>.';
 $lang['i_phpver']              = 'Tu versión de PHP <code>%s</code> es inferior a la requerida <code>%s</code>. Necesitas actualizar tu instalación de PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload se debe deshabilitar en php.ini para que funcione DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki no puede crear números criptográficamente seguros para las cookies. Es posible que debas verificar la configuración de open_basedir en php.ini para obtener el acceso apropiado a <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki no puede escribir <code>%s</code>. ¡Es necesario establecer  correctamente los permisos de este directorio!';
 $lang['i_confexists']          = '<code>%s</code> ya existe';

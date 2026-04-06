@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace ParagonIE\ConstantTime;
 
+use SensitiveParameter;
 use TypeError;
 
 /**
@@ -33,6 +34,7 @@ use TypeError;
  * This class conforms strictly to the RFC
  *
  * @package ParagonIE\ConstantTime
+ * @api
  */
 abstract class RFC4648
 {
@@ -47,7 +49,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base64Encode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base64::encode($str);
@@ -64,7 +66,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base64Decode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base64::decode($str, true);
@@ -81,7 +83,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base64UrlSafeEncode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base64UrlSafe::encode($str);
@@ -98,7 +100,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base64UrlSafeDecode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base64UrlSafe::decode($str, true);
@@ -115,7 +117,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base32Encode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base32::encodeUpper($str);
@@ -132,7 +134,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base32Decode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base32::decodeUpper($str, true);
@@ -149,7 +151,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base32HexEncode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base32::encodeUpper($str);
@@ -166,7 +168,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base32HexDecode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Base32::decodeUpper($str, true);
@@ -183,7 +185,7 @@ abstract class RFC4648
      * @throws TypeError
      */
     public static function base16Encode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Hex::encodeUpper($str);
@@ -198,7 +200,7 @@ abstract class RFC4648
      * @return string
      */
     public static function base16Decode(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $str
     ): string {
         return Hex::decode($str, true);

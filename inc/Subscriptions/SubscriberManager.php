@@ -190,7 +190,7 @@ class SubscriberManager
             $lines = file($file);
             foreach ($lines as $line) {
                 // fix old style subscription files
-                if (strpos($line, ' ') === false) {
+                if (!str_contains($line, ' ')) {
                     $line = trim($line) . " every\n";
                 }
 

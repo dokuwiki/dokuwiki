@@ -43,7 +43,7 @@ class ActionRouter
         global $conf;
 
         $this->disabled = explode(',', $conf['disableactions']);
-        $this->disabled = array_map('trim', $this->disabled);
+        $this->disabled = array_map(trim(...), $this->disabled);
 
         $ACT = act_clean($ACT);
         $this->setupAction($ACT);
@@ -105,7 +105,7 @@ class ActionRouter
 
             // do setup for new action
             $this->transitionAction($presetup, $actionname);
-        } catch (NoActionException $e) {
+        } catch (NoActionException) {
             msg('Action unknown: ' . hsc($actionname), -1);
             $actionname = 'show';
             $this->transitionAction($presetup, $actionname);

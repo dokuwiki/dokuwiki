@@ -325,7 +325,6 @@ $lang['i_modified']            = 'Uit veiligheidsoverwegingen werkt dit script a
 $lang['i_funcna']              = 'PHP functie <code>%s</code> is niet beschikbaar. Wellicht heeft je hosting provider deze uitgeschakeld?';
 $lang['i_disabled']            = 'Niet toegestaan door je provider';
 $lang['i_phpver']              = 'PHP-versie <code>%s</code> is lager dan de vereiste <code>%s</code>. Upgrade PHP.';
-$lang['i_mbfuncoverload']      = 'Om DokuWiki te draaien moet mbstring.func_overload uitgeschakeld zijn in php.ini.';
 $lang['i_permfail']            = '<code>%s</code> is niet schrijfbaar voor DokuWiki. Pas de permissie-instellingen van deze directory aan.';
 $lang['i_confexists']          = '<code>%s</code> bestaat reeds';
 $lang['i_writeerr']            = 'Niet mogelijk om <code>%s</code> aan te maken. Controleer de directory/bestandspermissies en maak het bestand handmatig aan.';

@@ -129,7 +129,7 @@ function js_out()
     foreach ($files as $file) {
         if (!file_exists($file)) continue;
         $ismin = str_ends_with($file, '.min.js');
-        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
+        $debugjs = ($conf['allowdebug'] && !str_starts_with($file, DOKU_INC . 'lib/scripts/'));
 
         echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
         if ($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";

@@ -193,7 +193,7 @@ class Doku_Handler
                 $key = substr($match[0], 0, $equal_sign);
                 $value = substr($match[0], $equal_sign + 1);
                 $value = trim($value, '"');
-                if (strlen($value) > 0) {
+                if ($value !== '') {
                     $result [$key] = $value;
                 } else {
                     $result [$key] = 1;
@@ -220,7 +220,7 @@ class Doku_Handler
             $result['enable_line_numbers'] = (bool)$result['enable_line_numbers'];
         }
         if (isset($result['highlight_lines_extra'])) {
-            $result['highlight_lines_extra'] = array_map('intval', explode(',', $result['highlight_lines_extra']));
+            $result['highlight_lines_extra'] = array_map(intval(...), explode(',', $result['highlight_lines_extra']));
             $result['highlight_lines_extra'] = array_filter($result['highlight_lines_extra']);
             $result['highlight_lines_extra'] = array_unique($result['highlight_lines_extra']);
         }

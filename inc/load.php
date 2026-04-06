@@ -67,7 +67,7 @@ return new class {
     public function __construct()
     {
         require_once(DOKU_INC . 'vendor/autoload.php');
-        spl_autoload_register([$this, 'autoload']);
+        spl_autoload_register($this->autoload(...));
         $this->loadCommonLibs();
     }
 

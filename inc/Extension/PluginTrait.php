@@ -19,7 +19,7 @@ trait PluginTrait
      */
     public function getInfo()
     {
-        $class = get_class($this);
+        $class = $this::class;
         $parts = sexplode('_', $class, 3);
         $ext = $parts[2];
 
@@ -82,7 +82,7 @@ trait PluginTrait
      */
     public function getPluginType()
     {
-        [$t] = explode('_', get_class($this), 2);
+        [$t] = explode('_', $this::class, 2);
         return $t;
     }
 
@@ -91,7 +91,7 @@ trait PluginTrait
      */
     public function getPluginName()
     {
-        [/* t */, /* p */, $n] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, $n] = sexplode('_', $this::class, 4, '');
         return $n;
     }
 
@@ -100,7 +100,7 @@ trait PluginTrait
      */
     public function getPluginComponent()
     {
-        [/* t */, /* p */, /* n */, $c] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, /* n */, $c] = sexplode('_', $this::class, 4, '');
         return $c;
     }
 

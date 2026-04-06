@@ -97,7 +97,7 @@ class admin_plugin_revert extends AdminPlugin
             if ($old !== []) {
                 foreach ($old as $REV) {
                     $data = rawWiki($id, $REV);
-                    if (strpos($data, (string) $filter) === false) break;
+                    if (!str_contains($data, (string) $filter)) break;
                 }
             }
 
@@ -134,7 +134,7 @@ class admin_plugin_revert extends AdminPlugin
         $cnt = 0;
         foreach ($recents as $recent) {
             if ($filter) {
-                if (strpos(rawWiki($recent['id']), (string) $filter) === false) continue;
+                if (!str_contains(rawWiki($recent['id']), (string) $filter)) continue;
             }
 
             $cnt++;

@@ -62,7 +62,7 @@ class PageView extends Ui
             if ($REV || $DATE_AT) {
                 // print intro for old revisions
                 $data = ['rev' => &$REV, 'date_at' => &$DATE_AT];
-                Event::createAndTrigger('HTML_SHOWREV_OUTPUT', $data, [$this, 'showrev']);
+                Event::createAndTrigger('HTML_SHOWREV_OUTPUT', $data, $this->showrev(...));
             }
             $html = p_wiki_xhtml($ID, $REV, true, $DATE_AT);
             $html = html_secedit($html, $secedit);

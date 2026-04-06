@@ -33,7 +33,7 @@ class SettingEmail extends SettingString
 
         // multiple mail addresses?
         if ($this->multiple) {
-            $mails = array_filter(array_map('trim', explode(',', $mail)));
+            $mails = array_filter(array_map(trim(...), explode(',', $mail)));
         } else {
             $mails = [$mail];
         }

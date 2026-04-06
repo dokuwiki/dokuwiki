@@ -83,7 +83,7 @@ class Cache
                 Event::createAndTrigger(
                     $this->getEvent(),
                     $this,
-                    [$this, 'makeDefaultCacheDecision']
+                    $this->makeDefaultCacheDecision(...)
                 )
             );
         }

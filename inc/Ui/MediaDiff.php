@@ -142,16 +142,10 @@ class MediaDiff extends Diff
             echo '<div id="mediamanager__diff" >';
         }
 
-        switch ($this->preference['difftype']) {
-            case 'opacity':
-            case 'portions':
-                $this->showImageDiff();
-                break;
-            case 'both':
-            default:
-                $this->showFileDiff();
-                break;
-        }
+        match ($this->preference['difftype']) {
+            'opacity', 'portions' => $this->showImageDiff(),
+            default => $this->showFileDiff(),
+        };
 
         if ($this->is_img && !$this->preference['fromAjax']) {
             echo '</div>';

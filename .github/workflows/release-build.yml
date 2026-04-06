@@ -56,9 +56,13 @@ jobs:
 
       - name: Build Archives
         run: |
-          for F in $(awk '/export-ignore/{print $1}' .gitattributes); do
-            rm -rf $F
+          git ls-files | while read path; do
+            if git check-attr export-ignore -- "$path" | grep -q 'export-ignore: set'; then
+              echo "Deleting $path"
+              rm -f "$path"
+            fi
           done
+          find . -type d -empty -delete
           mkdir -p data/pages/playground
           echo "====== PlayGround ======" > data/pages/playground/playground.txt
           cd ..

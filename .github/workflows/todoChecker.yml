@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   find_todos:
     runs-on: ubuntu-latest
@@ -18,3 +22,5 @@ jobs:
         uses: phntmxyz/pr_todo_checker@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          exclude: |
+            vendor/**

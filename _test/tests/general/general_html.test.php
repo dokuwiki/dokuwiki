@@ -10,6 +10,7 @@ class general_html_test extends DokuWikiTest
     /** @var string[] we consider these hits shortcomings in the validator and not errors */
     protected $allowedErrors = [
         'The string “ugc” is not a registered keyword.',
+        'skipping 1 heading level'
     ];
 
     /**
@@ -45,7 +46,11 @@ class general_html_test extends DokuWikiTest
         $result = $http->post('https://validator.w3.org/nu/?out=json&level=error', $html);
 
         if ($result === false) {
-            throw new \Exception($http->error);
+            if($http->status == 429) {
+                throw new \Exception('Validator rejected requests because of too many requests');
+            } else {
+                throw new \Exception('Status: '. $http->status . ': ' . $http->error);
+            }
         }
 
         $result = json_decode($result, true);

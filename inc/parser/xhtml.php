@@ -939,7 +939,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if ($search) {
             ($conf['userewrite']) ? $link['url'] .= '?' : $link['url'] .= '&amp;';
             if (is_array($search)) {
-                $search = array_map('rawurlencode', $search);
+                $search = array_map(rawurlencode(...), $search);
                 $link['url'] .= 's[]=' . implode('&amp;s[]=', $search);
             } else {
                 $link['url'] .= 's=' . rawurlencode($search);
@@ -1054,7 +1054,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         //do we stay at the same server? Use local target
-        if (strpos($url, DOKU_URL) === 0 || strpos($url, DOKU_BASE) === 0) {
+        if (str_starts_with($url, DOKU_URL) || str_starts_with($url, DOKU_BASE)) {
             $link['target'] = $conf['target']['wiki'];
         }
         if ($exists !== null && !$isImage) {
@@ -1193,7 +1193,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $return = false
     ) {
         global $ID;
-        if (strpos($src, '#') !== false) {
+        if (str_contains($src, '#')) {
             [$src, $hash] = sexplode('#', $src, 2);
         }
         $src = (new MediaResolver($ID))->resolveId($src, $this->date_at, true);
@@ -1970,7 +1970,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output each track if any
         foreach ($tracks as $trackid => $info) {
-            [$kind, $srclang] = array_map('hsc', $info);
+            [$kind, $srclang] = array_map(hsc(...), $info);
             $out .= "<track kind=\"$kind\" srclang=\"$srclang\" ";
             $out .= "label=\"$srclang\" ";
             $out .= 'src="' . ml($trackid, '', true) . '">' . NL;

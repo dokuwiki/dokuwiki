@@ -44,7 +44,7 @@ class Mailer
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if (strpos($server, '.') === false) $server .= '.localhost';
+        if (!str_contains($server, '.')) $server .= '.localhost';
 
         $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8) . '@' . $server;
         $this->boundary = '__________' . md5(uniqid(random_int(0, mt_getrandmax()), true));
@@ -158,7 +158,7 @@ class Mailer
 
         // empty value deletes
         if (is_array($value)) {
-            $value = array_map('trim', $value);
+            $value = array_map(trim(...), $value);
             $value = array_filter($value);
             if (!$value) $value = '';
         } else {
@@ -219,7 +219,7 @@ class Mailer
             $html = str_replace('@HTMLBODY@', $html, $wrapper);
         }
 
-        if (strpos($text, '@EMAILSIGNATURE@') === false) {
+        if (!str_contains($text, '@EMAILSIGNATURE@')) {
             $text .= '@EMAILSIGNATURE@';
         }
 
@@ -236,7 +236,7 @@ class Mailer
         // embed media from templates
         $html = preg_replace_callback(
             '/@MEDIA\(([^\)]+)\)@/',
-            [$this, 'autoEmbedCallBack'],
+            $this->autoEmbedCallBack(...),
             $html
         );
 
@@ -351,7 +351,7 @@ class Mailer
     {
         $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
-        if ($count > 0 || strpos($name, ',') !== false) {
+        if ($count > 0 || str_contains($name, ',')) {
             $name = '"' . $name . '"';
         }
         return $name;
@@ -426,7 +426,7 @@ class Mailer
                     $text = Clean::strip($text);
                 }
 
-                if (strpos($text, ',') !== false || !Clean::isASCII($text)) {
+                if (str_contains($text, ',') || !Clean::isASCII($text)) {
                     $text = '=?UTF-8?B?' . base64_encode($text) . '?=';
                 }
             } else {

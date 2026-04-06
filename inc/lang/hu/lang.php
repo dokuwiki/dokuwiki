@@ -313,7 +313,6 @@ $lang['i_funcna']              = 'A <code>%s</code> PHP funkció nem elérhető.
 $lang['i_disabled']            = 'A szolgáltató által letiltva.';
 $lang['i_funcnmail']           = '<b>Megjegyzés:</b> A PHP mail függvény nem érhető el. %s Amennyiben a későbbiekben sem lesz elérhető, érdemes lehet telepíteni az <a href="https://www.dokuwiki.org/plugin:smtp">smtp bővítményt</a>.	';
 $lang['i_phpver']              = 'A PHP <code>%s</code> verziója alacsonyabb, mint ami szükséges lenne: <code>%s</code>. Frissítsd a PHP-t újabb verzióra.';
-$lang['i_mbfuncoverload']      = 'A DokuWiki futtatásához az mbstring.func_overload opciót ki kell kapcsolni a php.ini-ben.';
 $lang['i_urandom']             = 'A DokuWiki nem tud kriptográfiailag biztonságos számokat létrehozni a sütikhez. Érdemes ellenőrizni az open_basedir beállításokat a php.ini-ben a <code>/dev/urandom</code> megfelelő hozzáféréséhez.	';
 $lang['i_permfail']            = 'A DokuWiki nem tud írni a(z) <code>%s</code> könyvtárba. Be kell állítanod ehhez a könyvtárhoz a megfelelő jogosultságokat.';
 $lang['i_confexists']          = 'A(z) <code>%s</code> már létezik.';

@@ -310,7 +310,6 @@ $lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve d
 $lang['i_funcna']              = '<code>%s</code> PHP fonksiyonu bulunmamaktadır. Barındırma(Hosting) hizmetinde bu özellik kapatılmış olabilir.';
 $lang['i_disabled']            = 'Sağlayıcınız tarafından devre dışı bırakılmış.';
 $lang['i_phpver']              = '<code>%s</code> PHP sürümü, gereken <code>%s</code>  sürümünden daha düşük. PHP kurulumunu yükseltmeniz gerekmektedir.';
-$lang['i_mbfuncoverload']      = 'DokuWiki\'nin çalışması için php.ini dosyasında mbstring.func_overload seçeneği kapalı (değeri 0) olarak ayarlanmalıdır.';
 $lang['i_permfail']            = '<code>%s</code> Dokuwiki tarafından yazılabilir değil. İzin ayarlarını bu klasör için düzeltmeniz gerekmektedir!';
 $lang['i_confexists']          = '<code>%s</code> zaten var';
 $lang['i_writeerr']            = '<code>%s</code> oluşturulamadı. Dosya/Klasör izin ayarlarını gözden geçirip dosyayı elle oluşturmalısınız.';

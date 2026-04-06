@@ -154,6 +154,9 @@ $lang['js']['media_drop']      = 'Dateien hier hinziehen, um sie hochzuladen';
 $lang['js']['media_cancel']    = 'Entfernen';
 $lang['js']['media_overwrt']   = 'Existierende Dateien überschreiben';
 $lang['js']['data_insecure']   = 'WARNUNG: Es scheint, als wäre Ihr Datenverzeichnis nicht ausreichend geschützt. Bitte informieren Sie sich zur <a href="https://www.dokuwiki.org/security#web_access_security">Sicherheit von Webzugriffen in DokuWiki</a>';
+$lang['js']['size_larger']     = 'Eingabefeld vergrößern';
+$lang['js']['size_smaller']    = 'Eingabefeld verkleinern';
+$lang['js']['size_wrap']       = 'Zeilenumbrüche umschalten';
 $lang['search_exact_match']    = 'Genaue Treffer';
 $lang['search_starts_with']    = 'Beginnt mit';
 $lang['search_ends_with']      = 'Endet mit';
@@ -345,7 +348,6 @@ $lang['i_funcna']              = 'Die PHP-Funktion <code>%s</code> ist nicht ver
 $lang['i_disabled']            = 'Es wurde von Ihrem Provider deaktiviert.';
 $lang['i_funcnmail']           = '<b>Hinweis:</b> Die PHP-Funktion "mail()" ist nicht verfügbar. %s Alternativ können Sie das <a href="https://www.dokuwiki.org/plugin:smtp">SMTP-Plugin</a> installieren.';
 $lang['i_phpver']              = 'Ihre PHP-Version <code>%s</code> ist niedriger als die benötigte Version <code>%s</code>. Bitte aktualisieren Sie Ihre PHP-Installation.';
-$lang['i_mbfuncoverload']      = 'Um DokuWiki zu starten muss mbstring.func_overload in php.ini ausgeschaltet sein.';
 $lang['i_urandom']             = 'DokuWiki kann keine kryptografisch sicheren Werte für Cookies generieren. Möglicherweise möchten Sie Ihre "open_basedir"-Einstellungen in der zutreffenden php.ini auf korrekten Zugriff auf <code>/ dev/urandom</ code> überprüfen.';
 $lang['i_permfail']            = '<code>%s</code> ist nicht durch DokuWiki beschreibbar. Sie müssen die Berechtigungen dieses Ordners ändern!';
 $lang['i_confexists']          = '<code>%s</code> existiert bereits';

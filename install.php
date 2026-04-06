@@ -185,7 +185,7 @@ function print_form($d)
     include(DOKU_CONF . 'license.php');
 
     if (!is_array($d)) $d = [];
-    $d = array_map('hsc', $d);
+    $d = array_map(hsc(...), $d);
 
     if (!isset($d['acl'])) $d['acl'] = 1;
     if (!isset($d['pop'])) $d['pop'] = 1;
@@ -602,26 +602,16 @@ function check_functions()
     global $lang;
     $ok = true;
 
-    if (version_compare(phpversion(), '7.4.0', '<')) {
-        $error[] = sprintf($lang['i_phpver'], phpversion(), '7.4.0');
-        $ok = false;
-    }
-
-    if (ini_get('mbstring.func_overload') != 0) {
-        $error[] = $lang['i_mbfuncoverload'];
+    if (version_compare(phpversion(), '8.2.0', '<')) {
+        $error[] = sprintf($lang['i_phpver'], phpversion(), '8.2.0');
         $ok = false;
     }
 
     try {
         random_bytes(1);
-    } catch (Exception $th) {
+    } catch (Exception) {
         // If an appropriate source of randomness cannot be found, an Exception will be thrown by PHP 7+
         $error[] = $lang['i_urandom'];
-        $ok = false;
-    }
-
-    if (ini_get('mbstring.func_overload') != 0) {
-        $error[] = $lang['i_mbfuncoverload'];
         $ok = false;
     }
 
@@ -634,7 +624,7 @@ function check_functions()
         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
 
     if (!function_exists('mail')) {
-        if (strpos(ini_get('disable_functions'), 'mail') !== false) {
+        if (str_contains(ini_get('disable_functions'), 'mail')) {
             $disabled = $lang['i_disabled'];
         } else {
             $disabled = "";

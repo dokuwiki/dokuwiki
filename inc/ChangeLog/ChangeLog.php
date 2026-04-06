@@ -163,7 +163,9 @@ abstract class ChangeLog
         }
 
         //read lines from changelog
-        [$fp, $lines] = $this->readloglines($rev);
+        $result = $this->readloglines($rev);
+        if ($result === false) return false;
+        [$fp, $lines] = $result;
         if ($fp) {
             fclose($fp);
         }
@@ -331,7 +333,9 @@ abstract class ChangeLog
         }
 
         //get lines from changelog
-        [$fp, $lines, $head, $tail, $eof] = $this->readloglines($rev);
+        $result = $this->readloglines($rev);
+        if ($result === false) return false;
+        [$fp, $lines, $head, $tail, $eof] = $result;
         if (empty($lines)) return false;
 
         // look for revisions later/earlier than $rev, when founded count till the wanted revision is reached
@@ -407,7 +411,9 @@ abstract class ChangeLog
             $rev2 = $this->currentRevision();
         }
         //collect revisions around rev2
-        [$revs2, $allRevs, $fp, $lines, $head, $tail] = $this->retrieveRevisionsAround($rev2, $max);
+        $result2 = $this->retrieveRevisionsAround($rev2, $max);
+        if ($result2 === false) return [[], []];
+        [$revs2, $allRevs, $fp, $lines, $head, $tail] = $result2;
 
         if (empty($revs2)) return [[], []];
 
@@ -415,8 +421,13 @@ abstract class ChangeLog
         $index = array_search($rev1, $allRevs);
         if ($index === false) {
             //no overlapping revisions
-            [$revs1, , , , , ] = $this->retrieveRevisionsAround($rev1, $max);
-            if (empty($revs1)) $revs1 = [];
+            $result1 = $this->retrieveRevisionsAround($rev1, $max);
+            if ($result1 === false) {
+                $revs1 = [];
+            } else {
+                [$revs1, , , , , ] = $result1;
+                if (empty($revs1)) $revs1 = [];
+            }
         } else {
             //revisions overlaps, reuse revisions around rev2
             $lastRev = array_pop($allRevs); //keep last entry that could be external edit
@@ -493,7 +504,9 @@ abstract class ChangeLog
         $beforeCount = 0;
 
         //get lines from changelog
-        [$fp, $lines, $startHead, $startTail, $eof] = $this->readloglines($rev);
+        $result = $this->readloglines($rev);
+        if ($result === false) return false;
+        [$fp, $lines, $startHead, $startTail, $eof] = $result;
         if (empty($lines)) return false;
 
         //parse changelog lines in chunk, and read forward more chunks until $max/2 is reached

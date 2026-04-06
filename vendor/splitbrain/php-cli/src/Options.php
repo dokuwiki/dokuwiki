@@ -40,7 +40,7 @@ class Options
      * @param Colors $colors optional configured color object
      * @throws Exception when arguments can't be read
      */
-    public function __construct(Colors $colors = null)
+    public function __construct(?Colors $colors = null)
     {
         if (!is_null($colors)) {
             $this->colors = $colors;
