@@ -4,7 +4,7 @@ namespace dokuwiki\test\Search\Index;
 
 use dokuwiki\Search\Index\AbstractIndex;
 
-abstract class AbstractIndexTest extends \DokuWikiTest
+abstract class AbstractIndexTestCase extends \DokuWikiTest
 {
 
     /**

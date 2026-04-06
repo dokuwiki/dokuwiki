@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Search;
+namespace dokuwiki\test\Search;
 
 use dokuwiki\Search\Indexer;
 use dokuwiki\Search\Index\FileIndex;

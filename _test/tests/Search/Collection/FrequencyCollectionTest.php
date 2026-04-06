@@ -1,21 +1,8 @@
 <?php
 
-namespace tests\Search\Collection;
+namespace dokuwiki\test\Search\Collection;
 
-use dokuwiki\Search\Collection\FrequencyCollection;
 use dokuwiki\Search\Index\MemoryIndex;
-
-/**
- * A test helper extending FrequencyCollection with custom index names
- */
-class TestFrequencyCollection extends FrequencyCollection
-{
-    /** @inheritdoc */
-    public function __construct($entity = 'entity', $token = 'token', $freq = 'freq', $reverse = 'reverse')
-    {
-        parent::__construct($entity, $token, $freq, $reverse, true);
-    }
-}
 
 class FrequencyCollectionTest extends \DokuWikiTest
 {
@@ -25,7 +12,7 @@ class FrequencyCollectionTest extends \DokuWikiTest
      */
     public function testDirectly()
     {
-        $index = new TestFrequencyCollection('entity', 'token', 'freq', 'reverse');
+        $index = new MockFrequencyCollection('entity', 'token', 'freq', 'reverse');
 
         $tokens = ['one', 'two', 'three', 'four', 'two'];
         $index->lock();
@@ -63,7 +50,7 @@ class FrequencyCollectionTest extends \DokuWikiTest
      */
     public function testReverse()
     {
-        $index = new TestFrequencyCollection('page', 'word', 'w', 'pageword');
+        $index = new MockFrequencyCollection('page', 'word', 'w', 'pageword');
         $index->lock();
         $index->addEntity('wiki:syntax', ['dokuwiki']);
         $index->unlock();
@@ -77,7 +64,7 @@ class FrequencyCollectionTest extends \DokuWikiTest
      */
     public function testResolveTokens()
     {
-        $index = new TestFrequencyCollection('rt_entity', 'rt_token', 'rt_freq', 'rt_reverse');
+        $index = new MockFrequencyCollection('rt_entity', 'rt_token', 'rt_freq', 'rt_reverse');
         $index->lock();
 
         $result = $this->callInaccessibleMethod($index, 'resolveTokens', [
@@ -99,7 +86,7 @@ class FrequencyCollectionTest extends \DokuWikiTest
      */
     public function testResolveTokensEmpty()
     {
-        $index = new TestFrequencyCollection('rte_entity', 'rte_token', 'rte_freq', 'rte_reverse');
+        $index = new MockFrequencyCollection('rte_entity', 'rte_token', 'rte_freq', 'rte_reverse');
         $index->lock();
 
         $result = $this->callInaccessibleMethod($index, 'resolveTokens', [[]]);
@@ -112,7 +99,7 @@ class FrequencyCollectionTest extends \DokuWikiTest
      */
     public function testCountTokens()
     {
-        $index = new TestFrequencyCollection();
+        $index = new MockFrequencyCollection();
 
         $result = $this->callInaccessibleMethod($index, 'countTokens', [
             ['one', 'two', 'two', 'three', 'three', 'three'],

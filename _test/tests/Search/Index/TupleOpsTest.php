@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Search\Index;
+namespace dokuwiki\test\Search\Index;
 
 use dokuwiki\Search\Index\TupleOps;
 

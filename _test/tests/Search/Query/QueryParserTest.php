@@ -1,22 +1,17 @@
 <?php
 
-use dokuwiki\Search\QueryParser;
+namespace dokuwiki\test\Search\Query;
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC')) {
-    die();
-}
+use dokuwiki\Search\Query\QueryParser;
 
 /**
- * Test cases for the link index
+ * Test cases for the QueryParser
  *
  * @author Michael Große <grosse@cosmocode.de>
- *
- * @group  fulltext
  */
-class fulltext_query_test extends DokuWikiTest
+class QueryParserTest extends \DokuWikiTest
 {
-    public function test_parse_query()
+    public function testConvert()
     {
         $inputQuery = 'test -baz "foo bar" @abc ^def';
 
@@ -71,35 +66,16 @@ class fulltext_query_test extends DokuWikiTest
         $this->assertEquals($expectedParsedQuery, $actualParsedQuery);
     }
 
-    public function test_unparse_query()
+    public function testRevert()
     {
-        $input = [
-            'and' => [
-                'test',
-            ],
-            'not' => [
-                'baz'
-            ],
-            'phrases' => [
-                'foo bar',
-            ],
-            'ns' => [
-                'abc',
-            ],
-            'notns' => [
-                'def'
-            ],
-        ];
-
         $actualQuery = (new QueryParser)->revert(
-            $input['and'],
-            $input['not'],
-            $input['phrases'],
-            $input['ns'],
-            $input['notns']
+            ['test'],
+            ['baz'],
+            ['foo bar'],
+            ['abc'],
+            ['def']
         );
 
-        $expectedQuery = 'test -baz "foo bar" @abc ^def';
-        $this->assertEquals($expectedQuery, $actualQuery);
+        $this->assertEquals('test -baz "foo bar" @abc ^def', $actualQuery);
     }
 }

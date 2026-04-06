@@ -33,10 +33,10 @@ class Term
     protected $wildcard;
 
     /** @var array The matching tokens for this term [length => [tokenID => tokenName, ...], ...] */
-    protected $tokens;
+    protected $tokens = [];
 
     /** @var array The entity frequencies this term matches (aggregated over all tokens) [entity => frequency] */
-    protected $frequencies;
+    protected $frequencies = [];
 
     /**
      * @throws SearchException

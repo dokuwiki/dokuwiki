@@ -1,23 +1,10 @@
 <?php
 
-namespace tests\Search\Collection;
+namespace dokuwiki\test\Search\Collection;
 
-use dokuwiki\Search\Collection\LookupCollection;
 use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\MemoryIndex;
-
-/**
- * A test helper extending LookupCollection with custom index names
- */
-class TestLookupCollection extends LookupCollection
-{
-    /** @inheritdoc */
-    public function __construct($entity = 'entity', $token = 'token', $freq = 'freq', $reverse = 'reverse')
-    {
-        parent::__construct($entity, $token, $freq, $reverse);
-    }
-}
 
 class LookupCollectionTest extends \DokuWikiTest
 {
@@ -26,7 +13,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testAddEntity()
     {
-        $index = new TestLookupCollection('a_entity', 'a_token', 'a_freq', 'a_reverse');
+        $index = new MockLookupCollection('a_entity', 'a_token', 'a_freq', 'a_reverse');
         $index->lock();
         $index->addEntity('wiki:start', ['wiki:logo.png', 'wiki:banner.jpg', 'wiki:icon.svg']);
         $index->unlock();
@@ -57,7 +44,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testAddEntityDedup()
     {
-        $index = new TestLookupCollection('b_entity', 'b_token', 'b_freq', 'b_reverse');
+        $index = new MockLookupCollection('b_entity', 'b_token', 'b_freq', 'b_reverse');
         $index->lock();
         $index->addEntity('wiki:start', ['wiki:logo.png', 'wiki:logo.png', 'wiki:banner.jpg']);
         $index->unlock();
@@ -75,7 +62,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testUpdateEntity()
     {
-        $index = new TestLookupCollection('c_entity', 'c_token', 'c_freq', 'c_reverse');
+        $index = new MockLookupCollection('c_entity', 'c_token', 'c_freq', 'c_reverse');
 
         // initial add
         $index->lock();
@@ -103,7 +90,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testReverseAssignments()
     {
-        $index = new TestLookupCollection('d_entity', 'd_token', 'd_freq', 'd_reverse');
+        $index = new MockLookupCollection('d_entity', 'd_token', 'd_freq', 'd_reverse');
         $index->lock();
         $index->addEntity('wiki:start', ['wiki:logo.png', 'wiki:banner.jpg']);
         $index->unlock();
@@ -119,7 +106,7 @@ class LookupCollectionTest extends \DokuWikiTest
     {
         $this->expectException(IndexLockException::class);
 
-        $index = new TestLookupCollection();
+        $index = new MockLookupCollection();
         $index->addEntity('wiki:start', ['wiki:logo.png']);
     }
 
@@ -128,7 +115,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testEmptyTokens()
     {
-        $index = new TestLookupCollection('f_entity', 'f_token', 'f_freq', 'f_reverse');
+        $index = new MockLookupCollection('f_entity', 'f_token', 'f_freq', 'f_reverse');
 
         // add some tokens first
         $index->lock();
@@ -193,7 +180,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testResolveTokens()
     {
-        $index = new TestLookupCollection('rt_entity', 'rt_token', 'rt_freq', 'rt_reverse');
+        $index = new MockLookupCollection('rt_entity', 'rt_token', 'rt_freq', 'rt_reverse');
         $index->lock();
 
         $result = $this->callInaccessibleMethod($index, 'resolveTokens', [
@@ -214,7 +201,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testResolveTokensEmpty()
     {
-        $index = new TestLookupCollection('rte_entity', 'rte_token', 'rte_freq', 'rte_reverse');
+        $index = new MockLookupCollection('rte_entity', 'rte_token', 'rte_freq', 'rte_reverse');
         $index->lock();
 
         $result = $this->callInaccessibleMethod($index, 'resolveTokens', [[]]);
@@ -227,7 +214,7 @@ class LookupCollectionTest extends \DokuWikiTest
      */
     public function testCountTokens()
     {
-        $index = new TestLookupCollection();
+        $index = new MockLookupCollection();
 
         $result = $this->callInaccessibleMethod($index, 'countTokens', [
             ['wiki:logo.png', 'wiki:banner.jpg', 'wiki:logo.png'],

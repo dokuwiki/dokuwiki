@@ -5,7 +5,7 @@ namespace dokuwiki\test\Search\Index;
 use dokuwiki\Search\Index\FileIndex;
 use dokuwiki\Search\Index\Lock;
 
-class FileIndexTest extends AbstractIndexTest
+class FileIndexTest extends AbstractIndexTestCase
 {
     protected function getIndex()
     {

@@ -1,0 +1,10 @@
+====== DokuWiki Search Test Page ======
+
+DokuWiki is a simple to use wiki software. The dokuwiki project provides
+free documentation tools for everyone. This page tests the search
+indexing and querying functionality.
+
+Plugins can extend dokuwiki with additional features. Several plugins
+provide calendar integration and task management capabilities.
+
+The playground namespace contains example pages for testing purposes.

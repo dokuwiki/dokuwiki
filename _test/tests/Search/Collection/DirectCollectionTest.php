@@ -1,23 +1,10 @@
 <?php
 
-namespace tests\Search\Collection;
+namespace dokuwiki\test\Search\Collection;
 
-use dokuwiki\Search\Collection\DirectCollection;
 use dokuwiki\Search\Collection\PageTitleCollection;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\MemoryIndex;
-
-/**
- * A test helper extending DirectCollection with custom index names
- */
-class TestDirectCollection extends DirectCollection
-{
-    /** @inheritdoc */
-    public function __construct($entity = 'entity', $token = 'token')
-    {
-        parent::__construct($entity, $token);
-    }
-}
 
 class DirectCollectionTest extends \DokuWikiTest
 {
@@ -26,7 +13,7 @@ class DirectCollectionTest extends \DokuWikiTest
      */
     public function testAddEntity()
     {
-        $index = new TestDirectCollection('a_entity', 'a_token');
+        $index = new MockDirectCollection('a_entity', 'a_token');
         $index->lock();
         $index->addEntity('wiki:start', ['Welcome to DokuWiki']);
         $index->unlock();
@@ -43,7 +30,7 @@ class DirectCollectionTest extends \DokuWikiTest
      */
     public function testUpdateEntity()
     {
-        $index = new TestDirectCollection('b_entity', 'b_token');
+        $index = new MockDirectCollection('b_entity', 'b_token');
 
         $index->lock();
         $index->addEntity('wiki:start', ['Old Title']);
@@ -62,7 +49,7 @@ class DirectCollectionTest extends \DokuWikiTest
      */
     public function testEmptyToken()
     {
-        $index = new TestDirectCollection('c_entity', 'c_token');
+        $index = new MockDirectCollection('c_entity', 'c_token');
         $index->lock();
         $index->addEntity('wiki:start', []);
         $index->unlock();
@@ -76,7 +63,7 @@ class DirectCollectionTest extends \DokuWikiTest
      */
     public function testGetToken()
     {
-        $index = new TestDirectCollection('d_entity', 'd_token');
+        $index = new MockDirectCollection('d_entity', 'd_token');
         $index->lock();
         $index->addEntity('wiki:start', ['My Page Title']);
         $index->unlock();
@@ -91,7 +78,7 @@ class DirectCollectionTest extends \DokuWikiTest
     {
         $this->expectException(IndexLockException::class);
 
-        $index = new TestDirectCollection();
+        $index = new MockDirectCollection();
         $index->addEntity('wiki:start', ['Title']);
     }
 

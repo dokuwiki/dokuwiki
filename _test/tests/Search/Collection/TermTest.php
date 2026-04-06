@@ -1,13 +1,13 @@
 <?php
 
-namespace tests\Search\Collection;
+namespace dokuwiki\test\Search\Collection;
 
 use dokuwiki\Search\Collection\FulltextCollection;
 use dokuwiki\Search\Collection\FulltextCollectionSearch;
 use dokuwiki\Search\Collection\Term;
 use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Search\Index\MemoryIndex;
-use dokuwiki\Search\QueryParser;
+use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Search\Tokenizer;
 
 class TermTest extends \DokuWikiTest
