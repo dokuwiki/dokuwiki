@@ -58,7 +58,7 @@ if (!defined('DOKU_INC')) die();
                             <dl>
                             <?php
                             echo '<dt>' . $lang['reference'] . ':</dt>';
-                            $media_usage = (new \dokuwiki\Search\MetadataIndex())->mediause($IMG, true);
+                            $media_usage = (new \dokuwiki\Search\MetadataSearch())->mediause($IMG);
                             if ($media_usage !== []) {
                                 foreach ($media_usage as $path) {
                                     echo '<dd>' . html_wikilink($path) . '</dd>';
