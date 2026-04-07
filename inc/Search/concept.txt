@@ -1,111 +1,58 @@
 ====== Search Indexing ======
 
-This document is meant to describe the various concepts behind the indexing mechanism. It's work in progress and will be moved to the wiki once the new index code is merged.
-
-===== Uses =====
-
 The indexing mechanism is meant to make information that is normally distributed over several locations (eg. words on pages) available through a central, faster mechanism. The primary goal is to cover fulltext search, but it is also used for other things like page meta data and possibly more in the future.
 
-===== Collections =====
+===== Core API =====
 
-A collection describes how data is aggregated into multiple indexes to make it accessible for a specific use case. Eg. fulltext search for page contents is a usecase covered by a collection.
+Most code interacting with the search index will use one of three high-level classes. All live in the ''\dokuwiki\Search'' namespace.
 
-Please note: because index has a specific meaning in our context (see below) you should avoid using that word, when you're actually talking about a collection. There is no "fulltext index" - that functionality is only achieved by using multiple indexes in a collection.
+==== Indexer ====
 
-Collections have two independent properties:
+The ''Indexer'' class manages the search index. It coordinates all collections and handles the actual writing.
 
-=== Collection Types ===
+  * ''addPage($page, $force)'' - Add or re-index a page. Handles locking, tokenization, and metadata internally.
+  * ''deletePage($page, $force)'' - Remove a page from all indexes.
+  * ''renamePage($oldpage, $newpage)'' - Update the page name in the entity index.
+  * ''needsIndexing($page, $force)'' - Check whether a page needs (re-)indexing based on version and modification time.
+  * ''getAllPages($existsFilter)'' - Return all indexed page names. Optionally filter to only pages that exist on disk.
+  * ''getVersion()'' - Return the indexer version string, including plugin versions (see [[devel:event:INDEXER_VERSION_GET]]).
+  * ''clear()'' - Delete all index files.
+  * ''checkIntegrity()'' - Verify structural consistency across all indexes.
+  * ''setLogger($callback)'' - Register a logging callback for progress output.
 
-The collection type determines how tokens relate to entities:
+==== FulltextSearch ====
 
-  * frequency collections - The same token can appear multiple times in the same entity and searches are usually interested in the number of times it appears. This is the words on pages use case.
-  * lookup collections - Basically the same as frequency collections, but each token appears only once per entity thus all frequencies are 1. Searches do not care for the frequency but are only interested if a token appears for the entity or not. Internally the same mechanisms are used; only the way tokens are processed on input differs (deduplication instead of counting).
-  * direct collections - Here a 1:1 relation between the entity and a token exists. For example a page has exactly one title.
+The ''FulltextSearch'' class handles fulltext search queries.
 
-=== Index File Splitting ===
+  * ''pageSearch($query, &$highlight, $sort, $after, $before)'' - Run a fulltext search. Returns matching pages as ''pageid => score''. The ''$highlight'' array is filled with terms to highlight. ''$sort'' can be ''"hits"'' (default) or ''"mtime"''. ''$after''/''$before'' filter by modification time.
+  * ''snippet($id, $highlight)'' - Generate a search result snippet for a page.
 
-Independently of the collection type, a collection can use split or non-split token indexes. When split, the token and frequency indexes are distributed across multiple files based on token length. This also affects the reverse index format (see below). Any collection type can use either mode.
+==== MetadataSearch ====
 
-=== Indexes ===
+The ''MetadataSearch'' class provides search operations on page metadata.
 
-A collection works on four indexes:
+  * ''pageLookup($id, $in_ns, $in_title, $after, $before)'' - Quick search for page names. Optionally matches against the namespace and title.
+  * ''lookupKey($key, $value, $func)'' - Find pages by metadata value. Supports exact match, wildcards (''*'' at start/end) or a custom comparison callback. When ''$value'' is a string the result is a flat list of page names. When it is an array, the result is keyed by each search value.
+  * ''backlinks($id, $ignore_perms)'' - Find all pages linking to ''$id''.
+  * ''mediause($id, $ignore_perms)'' - Find all pages using a media file.
+  * ''getPages($key)'' - Return all indexed pages, optionally limited to those having a value for the given metadata key.
 
-  * entity - This is the main entity that will be the result of a search. Eg. a page
-  * token - This is the actual information strewn across the entities. Eg. words
-    * can be split into several files based on token length (see Index File Splitting below)
-  * frequency - This maps tokens to entities and records their frequency. Eg. freq(words)->page
-    * if tokens are split into several files, this is too
-  * reverse - This records which tokens are assigned to a specific entity. This is used for updating: when an entity is re-indexed, the old reverse record provides the list of tokens to clean up. The format depends on whether the collection uses split indexes or not.
+===== Internals =====
 
-The latter two index files do not exist for direct collections
+The following sections describe how the search index is structured and how the core classes work together to provide the indexing and search functionality. This is meant for developers who want to understand the inner workings of the search system or make use of it in their own plugins.
 
-Collections can be searched for one or more ''terms'' via a CollectionSearch class. In the most simple case a term is a single token. But it is also possible to use wildcards signifiers ''*'' at the start and end of a term. In that case, the term refers to a list of tokens. A CollectionSearch will return the frequency with which each term occurs on each entity.
-
-==== List of Collections =====
-
-^ Name                   ^ Type      ^ Split? ^ Entity ^ Token                 ^ Frequency             ^ Reverse               ^
-| FullText               | frequency | yes    | page   | w*                    | i*                    | pageword              |
-| MetaRelationMedia      | lookup    | no     | page   | relation_media_w      | relation_media_i      | relation_media_p      |
-| MetaRelationReferences | lookup    | no     | page   | relation_references_w | relation_references_i | relation_references_p |
-
-
-
-
-==== Terms ====
-
-A ''Term'' is a representation of a single search query component that can match one or more tokens in an index. The Term class is used by CollectionSearch implementations to handle wildcard searches and track which entities contain matching tokens.
-
-**Wildcard Support:**
-
-Terms can include wildcards using the ''*'' character:
-  * ''wiki'' - matches exactly "wiki"
-  * ''wiki*'' - matches tokens starting with "wiki" (e.g., "wiki", "wikitext", "wikipedia")
-  * ''*wiki'' - matches tokens ending with "wiki" (e.g., "wiki", "dokuwiki")
-  * ''*wiki*'' - matches tokens containing "wiki" anywhere (e.g., "wiki", "dokuwiki", "wikitext")
-
-The Term class internally handles these wildcards by:
-  * Storing the original term with wildcards
-  * Extracting the base term (without wildcard characters)
-  * Converting wildcards into a regular expression pattern for matching
-  * Tracking which type of wildcard is used (none, start, end, or both)
-
-**Length-Based Organization:**
-
-Terms organize their matching tokens by length. This is crucial for working with split indexes:
-  * A term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks) but never 3-letter words, because the base term "wiki" is 4 letters long.
-  * Each length group can be looked up in the corresponding suffixed token index
-  * This allows efficient searching across split indexes without loading irrelevant files
-
-**Token and Frequency Tracking:**
-
-During a search operation, Terms:
-  1. Collect all token IDs that match the term pattern (organized by token length)
-  2. Look up which entities contain those tokens
-  3. Aggregate the frequencies across all matching tokens
-  4. Map entity IDs to entity names for the final result
-
-For example, searching for ''wiki*'' might find:
-  * Token "wiki" (ID 42) appears 5 times on page "start" (ID 10)
-  * Token "wikitext" (ID 87) appears 3 times on page "start" (ID 10)
-  * Term result: "start" matches with total frequency 8
-
-**Validation:**
-
-Terms are validated on creation:
-  * Minimum length requirements are enforced (except for numeric terms)
-  * Terms that are too short throw a SearchException
-  * The base term (without wildcards) must meet the minimum token length configured in the Tokenizer
-
-===== Indexes ======
+==== Indexes ====
 
 Indexes refer to individual index files that store one kind of information. E.g. a list of all page names or a list of page-word frequencies.
 
 Indexes are row based. The line number is important information of the index. The lines are counted from zero and referred to as ''rid'' in the code.
 
+All index files are stored in the ''data/index'' directory. The file name is the name of the index with an ''idx'' extension. For example, the page name index is stored in ''data/index/page.idx''. Some indexes have additional suffixes (eg. ''w3.idx'') to split the data into multiple files (see [[#Index File Splitting]] below).
+
 Index files can be accessed through two classes:
 
-  * \dokuwiki\Search\Index\FileIndex
-  * \dokuwiki\Search\Index\MemoryIndex
+  * ''\dokuwiki\Search\Index\FileIndex''
+  * ''\dokuwiki\Search\Index\MemoryIndex''
 
 Both classes expose the same API, the only difference is their way of accessing the data.
 
@@ -122,37 +69,17 @@ Within an index two kinds of data can be stored per row:
   * A single value. Eg. an entity or a token
   * A list of tuples. Eg. a list of pageIDs and frequencies
 
-The former is straight forward, it's a simple ''rid -> value'' store.  The latter maps to ''rid -> [key -> value, ...]'' where key is usally the ''rid'' in another index.
+The former is straight forward, it's a simple ''rid -> value'' store. The latter maps to ''rid -> [key -> value, ...]'' where key is usually the ''rid'' in another index.
 
-==== Index Types ====
+=== Index File Splitting ===
 
-A Collection consists of 4 (or 2 for direct collections) index types:
-
-The **entity** index lists the main entity the index will return as a result. entity.RID -> entity
-
-The **token** index contains the tokens used to search (eg. words). token.RID -> token
-
-The **frequency** index contains tuples of entity.RIDs and usage frequencies. token.RID -> entity.RID*frequency:...
-
-The **reverse** index records which tokens are assigned to each entity. Its format depends on whether the collection uses split indexes:
-
-  * **Split collections**: Each entry is a ''tokenLength*tokenId'' pair because the token length is needed to locate the correct split index file. Format: ''tokenLength*tokenId:tokenLength*tokenId:...''
-  * **Non-split collections**: Only the token ID is needed since all tokens live in a single file. Format: ''tokenId:tokenId:...''
-
-The reverse index does not store frequencies. It is used internally when updating an entity: the old reverse record provides the set of previously assigned tokens so they can be cleaned up (see the addEntity description in the Collection Types section above).
-
-Direct collections only use entity and token index files with entity.RID === token.RID
-
-
-==== Index File Splitting ====
-
-To improve memory efficiency and access speed, a collection can split its token and frequency indexes into multiple physical files using suffixes based on token length. This is configured per collection and is independent of the collection type (frequency or lookup).
-
-When splitting is enabled, both the token index and the frequency index are distributed across files. A suffix parameter is appended to the base index name to create the actual filename. For example:
+To improve memory efficiency and access speed, token and frequency indexes can be split into multiple physical files using suffixes based on token length. A suffix parameter is appended to the base index name to create the actual filename. For example:
 
   * Base name: ''w'' (for word tokens)
   * Suffix: ''3'' (for 3-letter tokens)
   * Resulting file: ''w3.idx''
+
+> Note: token lengths are counted in bytes, not characters. This means that for languages with multi-byte characters, the suffixes will reflect the byte length of the tokens, which may differ from the character count.
 
 In a fulltext collection with splitting enabled:
 
@@ -165,16 +92,16 @@ When splitting is disabled, a single file is used for each index (eg. ''relation
 
 When an index uses suffixes, the ''max()'' method can be used to find the highest numeric suffix currently in use. This is useful for operations that need to iterate over all splits of an index (eg. when a Term is using a wildcard).
 
-==== Tuple Data Format ====
+=== Tuple Data Format ===
 
-Tuple-based index rows store associations between keys (typically RIDs from another index) and numeric values (typically frequency counts). The internal format uses a compact string representation:
+Tuple-based index rows store associations between keys (typically ''rid''s from another index) and numeric values (typically frequency counts). The internal format uses a compact string representation:
 
 <code>
 key*count:key*count:key*count
 </code>
 
 Where:
-  * ''key'' - Usually the RID from another index (e.g., a page ID)
+  * ''key'' - Usually the ''rid'' from another index (e.g., a page ID)
   * ''count'' - A numeric value (e.g., how many times a word appears on that page)
   * '':'' - Separates individual tuples
   * ''*'' - Separates the key from its count within a tuple
@@ -206,10 +133,191 @@ The ''TupleOps'' class provides utility methods for working with tuple records:
   * ''parseTuples()'' - Parse a record into an array of key->count associations
   * ''aggregateTupleCounts()'' - Sum all counts in a record
 
-===== Locking =====
+==== Collections ====
+
+A collection describes how data is aggregated into multiple indexes to make it accessible for a specific use case. Eg. fulltext search for page contents is a usecase covered by a collection.
+
+> Please note: because index has a specific meaning in our context (see above) you should avoid using that word, when you're actually talking about a collection. There is no "fulltext index" - that functionality is only achieved by using multiple indexes in a collection.
+
+A collection manages up to four indexes:
+
+  * **entity** - The main entity that will be the result of a search. Eg. a page. entity.RID -> entity
+  * **token** - The actual information strewn across the entities. Eg. words. token.RID -> token
+  * **frequency** - Maps tokens to entities and records their frequency. token.RID -> entity.RID*frequency:...
+  * **reverse** - Records which tokens are assigned to each entity. Used for updating: when an entity is re-indexed, the old reverse record provides the list of tokens to clean up.
+
+The reverse index format depends on whether the collection uses split indexes:
+  * **Split collections**: Each entry is a ''tokenLength*tokenId'' pair because the token length is needed to locate the correct split index file. Format: ''tokenLength*tokenId:tokenLength*tokenId:...''
+  * **Non-split collections**: Only the token ID is needed since all tokens live in a single file. Format: ''tokenId:tokenId:...''
+
+Collections have two independent properties: a type and whether they use split indexes or not.
+
+The **collection type** determines how tokens relate to entities:
+
+  * frequency collections - The same token can appear multiple times in the same entity and searches are usually interested in the number of times it appears. This is the words on pages use case.
+  * lookup collections - Basically the same as frequency collections, but each token appears only once per entity thus all frequencies are 1. Searches do not care for the frequency but are only interested if a token appears for the entity or not. Internally the same mechanisms are used; only the way tokens are processed on input differs (deduplication instead of counting).
+  * direct collections - Here a 1:1 relation between the entity and a token exists. For example a page has exactly one title. Direct collections only use entity and token index files (entity.RID === token.RID), no frequency or reverse indexes.
+
+Independently of the collection type, a collection can use **split or non-split token indexes**. See the [[#Index File Splitting]] section above.
+
+^ Name                   ^ Type      ^ Split? ^ Entity ^ Token                 ^ Frequency             ^ Reverse               ^
+| FullText               | frequency | yes    | page   | w*                    | i*                    | pageword              |
+| Title                  | direct    | no     | page   | title                 | -                     | -                     |
+| MetaRelationMedia      | lookup    | no     | page   | relation_media_w      | relation_media_i      | relation_media_p      |
+| MetaRelationReferences | lookup    | no     | page   | relation_references_w | relation_references_i | relation_references_p |
+
+=== Writing data ===
+
+''addEntity($entity, $tokens)'' is the main method for writing data to a collection. It replaces all previously stored tokens for the given entity. An empty token list removes the entity's data. The collection must be locked before calling this method.
+
+<code php>
+$collection = new PageFulltextCollection($pageIndex);
+$collection->lock();
+$collection->addEntity('wiki:page', $words);
+$collection->unlock();
+</code>
+
+Internally, ''addEntity()'' reads the reverse index to find the entity's old tokens, resolves the new tokens to IDs (creating them in the token index if needed), merges old and new, and updates the frequency and reverse indexes accordingly. Tokens no longer present are automatically removed from the frequency index.
+
+For direct collections, ''addEntity()'' simply writes the first token at the entity's position in the token index.
+
+=== Reading data ===
+
+Collections provide some basic information retrieval methods, but they are not meant for searching.
+
+  * ''getEntitiesWithData()'' - Return all entity names that have data in this collection.
+  * For direct collections, ''getToken($entity)'' retrieves the single token stored for an entity (eg. a page title).
+
+Searching across a collection is done through the ''CollectionSearch'' class (see below).
+
+==== Locking ====
 
 Only one process may write to an index at any time. To ensure this, a locking mechanism has to be employed.
 
-Indexes can be read in write or readonly mode according to the acquired locks. However, managing locks has to be done outside the index. Usually within a collection.
+Indexes are opened in readonly mode by default. Passing ''$isWritable = true'' to the constructor (or calling ''lock()'' later) acquires a lock and enables writing. Calling ''unlock()'' releases it.
 
-The ''Lock'' class is used to acquire the needed locks.
+The ''Lock'' class is a static registry with reference counting. ''Lock::acquire($name)'' creates a filesystem lock directory. Multiple calls within the same process share a single lock via reference counting. ''Lock::release($name)'' decrements the count and removes the directory when it reaches zero. Stale locks older than 5 minutes are automatically broken.
+
+Collections call ''lock()'' to acquire locks for all their indexes at once, and ''unlock()'' to release them.
+
+==== Tokenizer ====
+
+The ''Tokenizer'' class (in ''\dokuwiki\Search'') is responsible for splitting text into indexable tokens.
+
+''Tokenizer::getWords($text, $wc)'' splits the given text into an array of lowercase tokens. Tokens shorter than the minimum word length (default 2, configurable via ''IDX_MINWORDLENGTH'') are discarded, as are language-specific stop words loaded from ''inc/lang/<lang>/stopwords.txt''. Asian characters receive special treatment: they are separated into individual characters and measured with a length function that accounts for multi-byte sequences.
+
+When ''$wc'' is true, wildcard characters (''*'') are preserved in the output. This is used by the query parser.
+
+The [[devel:event:INDEXER_TEXT_PREPARE]] event fires before tokenization, allowing plugins to pre-process the text.
+
+==== CollectionSearch and Terms ====
+
+The ''CollectionSearch'' class executes searches against any collection. It provides two APIs:
+
+=== Term-based search ===
+
+Used by fulltext search. Terms are validated against the minimum token length.
+
+<code php>
+$search = new CollectionSearch($collection);
+$search->addTerm('wiki*');
+$terms = $search->execute();
+foreach ($terms as $term) {
+    // $term->getEntityFrequencies() returns [entityName => frequency, ...]
+}
+</code>
+
+''addTerm()'' returns a ''Term'' object. After ''execute()'', each Term holds the matching entities and their aggregated frequencies.
+
+A ''Term'' represents a single search query component that can match one or more tokens in an index. Terms can include wildcards using the ''*'' character:
+  * ''wiki'' - matches exactly "wiki"
+  * ''wiki*'' - matches tokens starting with "wiki" (e.g., "wiki", "wikitext", "wikipedia")
+  * ''*wiki'' - matches tokens ending with "wiki" (e.g., "wiki", "dokuwiki")
+  * ''*wiki*'' - matches tokens containing "wiki" anywhere (e.g., "wiki", "dokuwiki", "wikitext")
+
+Terms organize their matching tokens by length. This is crucial for working with split indexes: a term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks) but never 3-letter words, because the base term "wiki" is 4 letters long. Each length group can be looked up in the corresponding suffixed token index, allowing efficient searching without loading irrelevant files.
+
+During a search operation, Terms:
+  - Collect all token IDs that match the term pattern (organized by token length)
+  - Look up which entities contain those tokens
+  - Aggregate the frequencies across all matching tokens
+  - Map entity IDs to entity names for the final result
+
+For example, searching for ''wiki*'' might find:
+  * Token "wiki" (ID 42) appears 5 times on page "start" (ID 10)
+  * Token "wikitext" (ID 87) appears 3 times on page "start" (ID 10)
+  * Term result: "start" matches with total frequency 8
+
+Terms are validated on creation. The base term (without wildcards) must meet the minimum token length configured in the Tokenizer. Numeric terms are exempt from this check. Terms that are too short throw a SearchException.
+
+=== Lookup search ===
+
+Used by metadata search. No minimum length restrictions. Supports exact match, wildcards, and custom callbacks.
+
+<code php>
+$search = new CollectionSearch($collection);
+$result = $search->lookup(['targetpage', 'other*'], $callbackOrNull);
+// $result = ['targetpage' => ['page1', 'page2'], 'other*' => ['page3']]
+</code>
+
+==== Fulltext Search Query Processing ====
+
+For fulltext searches a proper query language is supported (see [[:Search]]). Queries go through two stages:
+
+=== QueryParser ===
+
+''QueryParser::convert($query)'' parses a search query string into an intermediate representation. It supports:
+
+  * Individual words and phrases (quoted strings)
+  * Namespace filtering with ''@ns:'' or ''ns:'' and ''-ns:'' for exclusion
+  * Negation with ''-'' prefix
+  * Boolean ''OR'' between terms
+  * Grouping with parentheses
+
+The output includes an array in Reverse Polish Notation (RPN) used by the evaluator, plus extracted highlights, word lists, phrase lists, and namespace filters.
+
+=== QueryEvaluator ===
+
+''QueryEvaluator'' takes the RPN array and the ''Term'' results from ''CollectionSearch'' and evaluates the boolean logic. It uses typed stack entries during processing:
+
+  * **PageSet** - Concrete set of pages with scores. Supports intersect (AND), unite (OR), subtract (NOT).
+  * **NamespacePredicate** - Lazy filter that only materializes when combined with a PageSet.
+  * **NegatedEntry** - Wraps another entry to represent logical NOT, allowing AND to convert it to set subtraction.
+
+The result is a list of matching pages and their frequency scores.
+
+Phrase verification reads the raw wiki text of candidate pages. Plugins can override this via [[devel:event:FULLTEXT_PHRASE_MATCH]].
+
+
+==== Background Indexing ====
+
+Pages are indexed asynchronously by the [[:taskrunner|TaskRunner]] which is triggered after each page view. It calls ''Indexer::addPage()'' for pages that need re-indexing and ''Indexer::deletePage()'' for pages that no longer exist on disk. The CLI tool ''bin/indexer.php'' can be used to index all pages at once.
+
+The [[devel:event:INDEXER_TASKS_RUN]] event fires during background task execution, allowing plugins to hook their own maintenance tasks into the indexing cycle.
+
+===== Plugin Events =====
+
+The search system fires several events that plugins can use to extend or modify indexing and search behavior.
+
+Indexing:
+  * [[devel:event:INDEXER_VERSION_GET]] - Plugins add their version to force re-indexing when the plugin changes.
+  * [[devel:event:INDEXER_PAGE_ADD]] - Modify page body, title, or metadata before it enters the index.
+  * [[devel:event:INDEXER_TEXT_PREPARE]] - Pre-process text before tokenization.
+  * [[devel:event:INDEXER_TASKS_RUN]] - Hook into the background task runner.
+
+Searching:
+  * [[devel:event:SEARCH_QUERY_FULLPAGE]] - Intercept or replace fulltext search.
+  * [[devel:event:SEARCH_QUERY_PAGELOOKUP]] - Intercept or replace page name lookup.
+  * [[devel:event:FULLTEXT_SNIPPET_CREATE]] - Provide custom search result snippets.
+  * [[devel:event:FULLTEXT_PHRASE_MATCH]] - Override phrase matching logic.
+
+===== Exceptions =====
+
+All search-related exceptions extend ''SearchException'':
+
+  * ''SearchException'' - Base class for search/index errors
+  * ''IndexAccessException'' - Failed to read an index file
+  * ''IndexWriteException'' - Failed to write to an index file
+  * ''IndexLockException'' - Failed to acquire or release a lock
+  * ''IndexUsageException'' - Incorrect API usage (eg. writing without a lock)
+  * ''IndexIntegrityException'' - Structural inconsistency detected in the indexes
