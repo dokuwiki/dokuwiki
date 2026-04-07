@@ -2,7 +2,7 @@
 
 namespace dokuwiki\Ui;
 
-use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\MetadataSearch;
 
 /**
  * DokuWiki Backlinks Interface
@@ -27,7 +27,7 @@ class Backlinks extends Ui
         // print intro
         echo p_locale_xhtml('backlinks');
 
-        $data = (new MetadataIndex())->backlinks($ID);
+        $data = (new MetadataSearch())->backlinks($ID);
 
         if (!empty($data)) {
             echo '<ul class="idx">';

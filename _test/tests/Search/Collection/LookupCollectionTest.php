@@ -96,7 +96,7 @@ class LookupCollectionTest extends \DokuWikiTest
         $index->unlock();
 
         $result = $index->getReverseAssignments('wiki:start');
-        $this->assertEquals(['' => [0 => 0, 1 => 0]], $result);
+        $this->assertEquals([0 => [0 => 0, 1 => 0]], $result);
     }
 
     /**
@@ -172,11 +172,11 @@ class LookupCollectionTest extends \DokuWikiTest
         $this->assertEquals('0:1', $idxRev->retrieveRow(0));
 
         $result = $index->getReverseAssignments('wiki:start');
-        $this->assertEquals(['' => [0 => 0, 1 => 0]], $result);
+        $this->assertEquals([0 => [0 => 0, 1 => 0]], $result);
     }
 
     /**
-     * resolveTokens should deduplicate and assign frequency 1 under empty group key
+     * resolveTokens should deduplicate and assign frequency 1 under group 0
      */
     public function testResolveTokens()
     {
@@ -187,13 +187,13 @@ class LookupCollectionTest extends \DokuWikiTest
             ['wiki:logo.png', 'wiki:banner.jpg', 'wiki:logo.png'],
         ]);
 
-        // all tokens under empty group key
-        $this->assertArrayHasKey('', $result);
-        $this->assertCount(2, $result['']); // deduplicated
+        // all tokens under group 0 (non-split)
+        $this->assertArrayHasKey(0, $result);
+        $this->assertCount(2, $result[0]); // deduplicated
 
         // token IDs are sequential: logo=0, banner=1
-        $this->assertEquals(1, $result[''][0]); // logo freq=1
-        $this->assertEquals(1, $result[''][1]); // banner freq=1
+        $this->assertEquals(1, $result[0][0]); // logo freq=1
+        $this->assertEquals(1, $result[0][1]); // banner freq=1
     }
 
     /**
@@ -224,5 +224,51 @@ class LookupCollectionTest extends \DokuWikiTest
             'wiki:logo.png' => 1,
             'wiki:banner.jpg' => 1,
         ], $result);
+    }
+
+    /**
+     * getEntitiesWithData returns entities that have frequency data
+     */
+    public function testGetEntitiesWithData()
+    {
+        $index = new MockLookupCollection('ewd_entity', 'ewd_token', 'ewd_freq', 'ewd_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax', 'wiki:welcome']);
+        $index->addEntity('wiki:other', ['wiki:syntax']);
+        $index->addEntity('wiki:empty', []);
+        $index->unlock();
+
+        $result = $index->getEntitiesWithData();
+        sort($result);
+        $this->assertEquals(['wiki:other', 'wiki:start'], $result);
+    }
+
+    /**
+     * resolveTokenFrequencies returns entity frequencies for given token IDs
+     */
+    public function testResolveTokenFrequencies()
+    {
+        $index = new MockLookupCollection('rtf_entity', 'rtf_token', 'rtf_freq', 'rtf_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax', 'wiki:welcome']);
+        $index->addEntity('wiki:other', ['wiki:syntax']);
+        $index->unlock();
+
+        // token ID 0 = wiki:syntax, referenced by both entities
+        $result = $index->resolveTokenFrequencies(0, [0]);
+        $this->assertArrayHasKey(0, $result);
+        $this->assertCount(2, $result[0]); // two entities have this token
+    }
+
+    /**
+     * groupToSuffix throws on non-0 group for non-split collection
+     */
+    public function testGroupToSuffixValidation()
+    {
+        $this->expectException(\dokuwiki\Search\Exception\IndexUsageException::class);
+
+        $index = new MockLookupCollection('gs_entity', 'gs_token', 'gs_freq', 'gs_reverse');
+        // non-split collection should reject group 5
+        $index->getTokenIndex(5);
     }
 }

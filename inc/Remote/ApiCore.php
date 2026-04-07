@@ -16,7 +16,7 @@ use dokuwiki\Remote\Response\PageHit;
 use dokuwiki\Remote\Response\User;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -574,7 +574,7 @@ class ApiCore
     public function getPageBackLinks($page)
     {
         $page = $this->checkPage($page, 0, false);
-        return (new MetadataIndex())->backlinks($page);
+        return (new MetadataSearch())->backlinks($page);
    }
 
     /**

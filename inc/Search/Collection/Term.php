@@ -18,30 +18,31 @@ class Term
     const WILDCARD_END = 2;
 
     /** @var string the original term including wildcard chars */
-    protected $original;
+    protected string $original;
 
-    /** @var string the base of the term without wildcard chars FIXME */
-    protected $base;
+    /** @var string the base of the term without wildcard chars */
+    protected string $base;
 
     /** @var string the quoted term to be used in a regular expression */
-    protected $quoted;
+    protected string $quoted;
 
     /** @var int the length of the base term (not counting wildcards) */
-    protected $length;
+    protected int $length;
 
     /** @var int The type of wildcards */
-    protected $wildcard;
+    protected int $wildcard;
 
-    /** @var array The matching tokens for this term [length => [tokenID => tokenName, ...], ...] */
-    protected $tokens = [];
+    /** @var array<int, array<int, string>> The matching tokens for this term, keyed by group then token ID */
+    protected array $tokens = [];
 
-    /** @var array The entity frequencies this term matches (aggregated over all tokens) [entity => frequency] */
-    protected $frequencies = [];
+    /** @var array<int|string, int> The entity frequencies this term matches (aggregated over all tokens), keyed by entity ID or name */
+    protected array $frequencies = [];
 
     /**
+     * @param string $term
      * @throws SearchException
      */
-    public function __construct($term)
+    public function __construct(string $term)
     {
         $this->original = $term;
         $this->base = trim($term, '*');
@@ -69,7 +70,7 @@ class Term
     /**
      * @return string
      */
-    public function getOriginal()
+    public function getOriginal(): string
     {
         return $this->original;
     }
@@ -77,7 +78,7 @@ class Term
     /**
      * @return string
      */
-    public function getBase()
+    public function getBase(): string
     {
         return $this->base;
     }
@@ -85,7 +86,7 @@ class Term
     /**
      * @return string
      */
-    public function getQuoted()
+    public function getQuoted(): string
     {
         return $this->quoted;
     }
@@ -93,7 +94,7 @@ class Term
     /**
      * @return int
      */
-    public function getLength()
+    public function getLength(): int
     {
         return $this->length;
     }
@@ -101,7 +102,7 @@ class Term
     /**
      * @return int
      */
-    public function getWildcard()
+    public function getWildcard(): int
     {
         return $this->wildcard;
     }
@@ -109,23 +110,24 @@ class Term
     /**
      * @return array [entity => frequency, ...]
      */
-    public function getEntityFrequencies()
+    public function getEntityFrequencies(): array
     {
         return $this->frequencies;
     }
 
     /**
-     * Add found tokens IDs of a specific length
-     * @param int $length
+     * Add found token IDs for a specific index group
+     *
+     * @param int $group Index group (length for split collections, 0 for non-split)
      * @param array $tokens [tokenID => tokenName, ...]
      * @return void
      * @internal
      */
-    public function addTokens($length, $tokens)
+    public function addTokens(int $group, array $tokens): void
     {
-        $this->tokens[$length] = [];
+        $this->tokens[$group] = [];
         foreach ($tokens as $tokenID => $tokenName) {
-            $this->tokens[$length][$tokenID] = $tokenName;
+            $this->tokens[$group][$tokenID] = $tokenName;
         }
     }
 
@@ -134,20 +136,21 @@ class Term
      *
      * @return string[]
      */
-    public function getTokens()
+    public function getTokens(): array
     {
+        if (empty($this->tokens)) return [];
         return array_merge(...array_map('array_values', array_values($this->tokens)));
     }
 
     /**
-     * Return all token IDs of the given length
+     * Return all token IDs for a specific index group
      *
-     * @param $length
+     * @param int $group Index group (length for split collections, 0 for non-split)
      * @return int[]
      */
-    public function getTokenIDsByLength($length)
+    public function getTokenIDsByGroup(int $group): array
     {
-        return isset($this->tokens[$length]) ? array_keys($this->tokens[$length]) : [];
+        return isset($this->tokens[$group]) ? array_keys($this->tokens[$group]) : [];
     }
 
     /**
@@ -158,7 +161,7 @@ class Term
      * @return void
      * @internal
      */
-    public function addEntityFrequency($entityID, $frequency)
+    public function addEntityFrequency(int $entityID, int $frequency): void
     {
         if (!isset($this->frequencies[$entityID])) {
             $this->frequencies[$entityID] = 0;
@@ -170,10 +173,11 @@ class Term
     /**
      * Update the entity frequencies to use actual entity names
      *
-     * @param array $entityMap [entityID => entityName]
+     * @param array<int, string> $entityMap [entityID => entityName]
      * @return void
      */
-    public function resolveEntities($entityMap) {
+    public function resolveEntities(array $entityMap): void
+    {
         $resolved = [];
         foreach ($this->frequencies as $eid => $freq) {
             $name = $entityMap[$eid];

@@ -136,26 +136,26 @@ abstract class AbstractCollection
     }
 
     /**
-     * @param int|string $suffix
+     * @param int $group Index group (0 for non-split, token length for split)
      * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getTokenIndex(int|string $suffix): AbstractIndex
+    public function getTokenIndex(int $group = 0): AbstractIndex
     {
         if ($this->idxToken instanceof AbstractIndex) {
             return $this->idxToken;
         }
-        return new MemoryIndex($this->idxToken, $suffix, $this->isWritable);
+        return new MemoryIndex($this->idxToken, $this->groupToSuffix($group), $this->isWritable);
     }
 
     /**
-     * @param int|string $suffix
+     * @param int $group Index group (0 for non-split, token length for split)
      * @return AbstractIndex
      * @throws IndexLockException
      */
-    public function getFrequencyIndex(int|string $suffix): AbstractIndex
+    public function getFrequencyIndex(int $group = 0): AbstractIndex
     {
-        return new MemoryIndex($this->idxFrequency, $suffix, $this->isWritable);
+        return new MemoryIndex($this->idxFrequency, $this->groupToSuffix($group), $this->isWritable);
     }
 
     /**
@@ -168,6 +168,85 @@ abstract class AbstractCollection
     }
 
     /**
+     * Whether this collection splits token/frequency indexes by token length
+     *
+     * @return bool
+     */
+    public function isSplitByLength(): bool
+    {
+        return $this->splitByLength;
+    }
+
+    /**
+     * Convert a logical group number to the index file suffix
+     *
+     * Group 0 represents non-split indexes (suffix '') while positive integers
+     * represent split-by-length indexes (suffix = the length).
+     *
+     * @param int $group
+     * @return string The file suffix ('' for group 0, the group number as string otherwise)
+     * @throws IndexUsageException when group does not match the collection's split mode
+     */
+    protected function groupToSuffix(int $group): string
+    {
+        if ($group === 0 && $this->splitByLength) {
+            throw new IndexUsageException('Group 0 is not valid for split-by-length collections');
+        }
+        if ($group !== 0 && !$this->splitByLength) {
+            throw new IndexUsageException("Group $group is not valid for non-split collections");
+        }
+        return $group === 0 ? '' : (string)$group;
+    }
+
+    /**
+     * Resolve token IDs to entity frequencies
+     *
+     * Given a set of token IDs from a specific index group, returns the entities
+     * that have those tokens and their frequencies. This encapsulates the frequency
+     * index access so that subclasses (e.g. DirectCollection) can provide alternative
+     * mappings.
+     *
+     * @param int $group Index group (0 for non-split, token length for split)
+     * @param int[] $tokenIds The token IDs to resolve
+     * @return array [tokenId => [entityId => frequency, ...], ...]
+     */
+    public function resolveTokenFrequencies(int $group, array $tokenIds): array
+    {
+        $freqIndex = $this->getFrequencyIndex($group);
+        if (!$freqIndex->exists()) return [];
+        return array_map([TupleOps::class, 'parseTuples'], $freqIndex->retrieveRows($tokenIds));
+    }
+
+    /**
+     * Return all entity names that have data in this collection
+     *
+     * @return string[] entity names
+     */
+    public function getEntitiesWithData(): array
+    {
+        $entityIndex = $this->getEntityIndex();
+
+        // collect entity IDs from all frequency index groups
+        $groups = $this->splitByLength
+            ? range(1, $this->getTokenIndexMaximum())
+            : [0];
+
+        $entityIds = [];
+        foreach ($groups as $group) {
+            $freqIndex = $this->getFrequencyIndex($group);
+            if (!$freqIndex->exists()) continue;
+            foreach ($freqIndex as $line) {
+                foreach (TupleOps::parseTuples($line) as $entityId => $count) {
+                    $entityIds[$entityId] = true;
+                }
+            }
+        }
+
+        $names = $entityIndex->retrieveRows(array_keys($entityIds));
+        return array_values(array_filter($names, static fn($v) => $v !== ''));
+    }
+
+    /**
      * Maximum suffix for the token indexes (eg. max word length currently stored)
      *
      * @return int
@@ -175,7 +254,10 @@ abstract class AbstractCollection
      */
     public function getTokenIndexMaximum(): int
     {
-        return $this->getTokenIndex('')->max(); // no suffix needed to access the maximum
+        if ($this->idxToken instanceof AbstractIndex) {
+            return $this->idxToken->max();
+        }
+        return (new MemoryIndex($this->idxToken, ''))->max();
     }
 
     /**
@@ -235,7 +317,7 @@ abstract class AbstractCollection
         // group tokens by their index suffix
         $groups = [];
         foreach ($counted as $token => $freq) {
-            $group = $this->splitByLength ? (string)Tokenizer::tokenLength($token) : '';
+            $group = $this->splitByLength ? Tokenizer::tokenLength($token) : 0;
             $groups[$group][$token] = $freq;
         }
 
@@ -336,7 +418,7 @@ abstract class AbstractCollection
         foreach (explode(':', $record) as $entry) {
             $parts = explode('*', $entry, 2);
             $tokenId = array_pop($parts);
-            $group = array_pop($parts) ?? '';
+            $group = (int)(array_pop($parts) ?? 0);
             $result[$group][$tokenId] = 0;
         }
         return $result;
@@ -352,7 +434,7 @@ abstract class AbstractCollection
     {
         $parts = [];
         foreach ($data as $group => $tokens) {
-            $prefix = $group === '' ? '' : "$group*";
+            $prefix = $group === 0 ? '' : "$group*";
             foreach (array_keys($tokens) as $tokenId) {
                 $parts[] = $prefix . $tokenId;
             }

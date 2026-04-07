@@ -3,12 +3,17 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\MetadataIndex;
+use dokuwiki\Search\Collection\CollectionSearch;
+use dokuwiki\Search\Collection\PageMetaCollection;
+use dokuwiki\Search\Collection\PageTitleCollection;
+use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8;
 
 /**
  * Class DokuWiki Metadata Search
+ *
+ * Provides search operations on metadata indexes using the Collection/Index architecture.
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Andreas Gohr <andi@splitbrain.org>
@@ -25,20 +30,25 @@ class MetadataSearch
      * The function always returns titles as well
      *
      * @triggers SEARCH_QUERY_PAGELOOKUP
-     * @author   Andreas Gohr <andi@splitbrain.org>
-     * @author   Adrian Lang <lang@cosmocode.de>
-     *
      * @param string     $id       page id
-     * @param bool       $in_ns    match against namespace as well?
-     * @param bool       $in_title search in title?
-     * @param int|string $after    only show results with mtime after this date,
+     * @param bool $in_ns    match against namespace as well?
+     * @param bool $in_title search in title?
+     * @param int|string|null $after    only show results with mtime after this date,
      *                             accepts timestap or strtotime arguments
-     * @param int|string $before   only show results with mtime before this date,
+     * @param int|string|null $before   only show results with mtime before this date,
      *                             accepts timestap or strtotime arguments
      *
      * @return string[]
+     * @author   Andreas Gohr <andi@splitbrain.org>
+     * @author   Adrian Lang <lang@cosmocode.de>
+     *
      */
-    public function pageLookup($id, $in_ns = false, $in_title = false, $after = null, $before = null)
+    public function pageLookup(
+        string     $id,
+        bool       $in_ns = false,
+        bool       $in_title = false,
+        int|string|null $after = null,
+        int|string|null $before = null): array
     {
         $data = [
             'id' => $id,
@@ -48,99 +58,195 @@ class MetadataSearch
             'before' => $before
         ];
         $data['has_titles'] = true; // for plugin backward compatibility check
-        $action = [$this, 'pageLookupCallBack'];
-        return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, $action);
+        return Event::createAndTrigger('SEARCH_QUERY_PAGELOOKUP', $data, $this->pageLookupCallBack(...));
     }
 
     /**
      * Returns list of pages as array(pageid => First Heading)
      *
-     * @param array $data  event data
+     * @param array $data event data
      * @return string[]
+     * @throws IndexUsageException
      */
-    public function pageLookupCallBack(&$data)
+    public function pageLookupCallBack(array &$data): array
     {
-        // split out original parameters
-        $id = $data['id'];
-        $parsedQuery = (new QueryParser)->convert($id);
+        $parsedQuery = (new QueryParser)->convert($data['id']);
+        $ns = $parsedQuery['ns'] ? cleanID($parsedQuery['ns'][0]) . ':' : null;
+        $notns = $parsedQuery['notns'] ? cleanID($parsedQuery['notns'][0]) . ':' : null;
+        $query = ($ns || $notns) ? implode(' ', $parsedQuery['highlight']) : $data['id'];
+        $cleaned = cleanID($query);
 
-        if (count($parsedQuery['ns']) > 0) {
-            $ns = cleanID($parsedQuery['ns'][0]) . ':';
-            $id = implode(' ', $parsedQuery['highlight']);
-        }
-        if (count($parsedQuery['notns']) > 0) {
-            $notns = cleanID($parsedQuery['notns'][0]) . ':';
-            $id = implode(' ', $parsedQuery['highlight']);
-        }
+        if ($cleaned === '') return [];
 
-        $in_ns    = $data['in_ns'];
-        $in_title = $data['in_title'];
-        $cleaned = cleanID($id);
+        // find pages matching by page name
+        $pages = [];
+        foreach ($this->getPages() as $page) {
+            if ($ns && !str_starts_with($page, $ns)) continue;
+            if ($notns && str_starts_with($page, $notns)) continue;
 
-        $MetadataIndex = new MetadataIndex();
-        $page_idx = $MetadataIndex->getPages();
-
-        $pages = array();
-        if ($id !== '' && $cleaned !== '') {
-            foreach ($page_idx as $p_id) {
-                if ((strpos($in_ns ? $p_id : noNSorNS($p_id), $cleaned) !== false)) {
-                    if (!isset($pages[$p_id])) {
-                        $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
-                    }
-                }
+            $match = $data['in_ns'] ? $page : noNSorNS($page);
+            if (str_contains($match, $cleaned)) {
+                $pages[$page] = p_get_first_heading($page, METADATA_DONT_RENDER);
             }
-            if ($in_title) {
-                $func = [$this, 'pageLookupTitleCompare'];
-                foreach ($MetadataIndex->lookupKey('title', $id, $func) as $p_id) {
-                    if (!isset($pages[$p_id])) {
-                        $pages[$p_id] = p_get_first_heading($p_id, METADATA_DONT_RENDER);
-                    }
+        }
+
+        // additionally find pages matching by title
+        if ($data['in_title']) {
+            foreach ($this->lookupKey('title', $query, static fn($search, $title) => stripos($title, $search) !== false) as $page) {
+                if ($ns && !str_starts_with($page, $ns)) continue;
+                if ($notns && str_starts_with($page, $notns)) continue;
+
+                if (!isset($pages[$page])) {
+                    $pages[$page] = p_get_first_heading($page, METADATA_DONT_RENDER);
                 }
             }
         }
 
-        if (isset($ns)) {
-            foreach (array_keys($pages) as $p_id) {
-                if (strpos($p_id, $ns) !== 0) {
-                    unset($pages[$p_id]);
-                }
-            }
-        }
-        if (isset($notns)) {
-            foreach (array_keys($pages) as $p_id) {
-                if (strpos($p_id, $notns) === 0) {
-                    unset($pages[$p_id]);
-                }
-            }
-        }
-
-        // discard hidden pages
-        // discard nonexistent pages
-        // check ACL permissions
-        foreach (array_keys($pages) as $idx) {
-            if (!isVisiblePage($idx) || !page_exists($idx) || auth_quickaclcheck($idx) < AUTH_READ) {
-                unset($pages[$idx]);
-            }
-        }
-
-        $pages = $this->filterResultsByTime($pages, $data['after'], $data['before']);
-
-        uksort($pages, [$this, 'pagesorter']);
+        $pages = static::filterPages($pages, false, $data['after'], $data['before']);
+        uksort($pages, $this->pagesorter(...));
         return $pages;
     }
 
     /**
-     * Tiny helper function for comparing the searched title with the title
-     * from the search index. This function is a wrapper around stripos with
-     * adapted argument order and return value.
+     * Return a list of all indexed pages, optionally limited to those that have a specific metadata key
      *
-     * @param string $search searched title
-     * @param string $title  title from index
-     * @return bool
+     * When a key is given, only pages that have any value stored for that metadata key are returned.
+     * This does not filter by the metadata value itself.
+     *
+     * @param string|null $key metadata key name, or null for all pages
+     * @return string[] list of page names
      */
-    protected function pageLookupTitleCompare($search, $title)
+    public function getPages(?string $key = null): array
     {
-        return stripos($title, $search) !== false;
+        if ($key === null) {
+            return (new Indexer())->getAllPages();
+        }
+
+        if ($key === 'title') {
+            return (new PageTitleCollection())->getEntitiesWithData();
+        }
+
+        return (new PageMetaCollection($key))->getEntitiesWithData();
+    }
+
+    /**
+     * Find pages containing a metadata value
+     *
+     * The metadata values are compared as case-sensitive strings. Pass a
+     * callback function that returns true or false to use a different
+     * comparison function. The function will be called with the $value being
+     * searched for as the first argument, and the word in the index as the
+     * second argument. The function preg_match can be used directly if the
+     * values are regexes.
+     *
+     * When $value is a string, the result is a flat list of matching page names.
+     * When $value is an array, each value is searched independently and the result
+     * is an associative array keyed by the search values, each containing a list
+     * of matching page names.
+     *
+     * Without a callback, values support wildcard matching with * at the start
+     * and/or end (e.g. '*foo', 'bar*', '*baz*').
+     *
+     * @param string $key name of the metadata key to look for
+     * @param string|string[] $value search term or array of search terms
+     * @param callable|null $func comparison function: fn($searchValue, $indexWord) => bool
+     * @return array flat list of page names (scalar $value) or [value => [pageName, ...]] (array $value)
+     *
+     * @throws IndexUsageException
+     * @author Michael Hamann <michael@content-space.de>
+     * @author Tom N Harris <tnharris@whoopdedo.org>
+     */
+    public function lookupKey(string $key, string|array &$value, ?callable $func = null): array
+    {
+        $isScalar = !is_array($value);
+        $valueArray = $isScalar ? [$value] : $value;
+
+        if ($key === 'title') {
+            $collection = new PageTitleCollection();
+        } else {
+            $collection = new PageMetaCollection($key);
+        }
+
+        $result = (new CollectionSearch($collection))->lookup($valueArray, $func);
+
+        return $isScalar ? $result[$value] : $result;
+    }
+
+    /**
+     * Returns the backlinks for a given page
+     *
+     * @param string $id The id for which links shall be returned
+     * @param bool $ignore_perms Ignore the fact that pages are hidden or read-protected
+     * @return string[] The pages that contain links to the given page
+     *
+     * @throws IndexUsageException
+     * @author     Andreas Gohr <andi@splitbrain.org>
+     */
+    public function backlinks(string $id, bool $ignore_perms = false): array
+    {
+        $result = $this->lookupKey('relation_references', $id);
+        if (!count($result)) return $result;
+
+        $result = array_flip($result);
+        $result = static::filterPages($result, $ignore_perms);
+        $result = array_keys($result);
+
+        Utf8\Sort::sort($result);
+        return $result;
+    }
+
+    /**
+     * Returns the pages that use a given media file
+     *
+     * @param string $id           The media id to look for
+     * @param bool   $ignore_perms Ignore hidden pages and acls (optional, default: false)
+     * @return string[] A list of pages that use the given media file
+     *
+     * @author     Andreas Gohr <andi@splitbrain.org>
+     */
+    public function mediause(string $id, bool $ignore_perms = false): array
+    {
+        $result = $this->lookupKey('relation_media', $id);
+        if (!count($result)) return $result;
+
+        $result = array_flip($result);
+        $result = static::filterPages($result, $ignore_perms);
+        $result = array_keys($result);
+
+        Utf8\Sort::sort($result);
+        return $result;
+    }
+
+    /**
+     * Filter a list of pages by visibility, existence, permissions, and time range
+     *
+     * @param array $pages pages to filter (keys are page IDs)
+     * @param bool $ignorePerms skip visibility and ACL checks
+     * @param int|string|null $after only keep pages modified after this date
+     * @param int|string|null $before only keep pages modified before this date
+     * @return array filtered pages
+     */
+    public static function filterPages(array $pages, bool $ignorePerms = false, $after = null, $before = null): array
+    {
+        if ($after) $after = is_int($after) ? $after : strtotime($after);
+        if ($before) $before = is_int($before) ? $before : strtotime($before);
+
+        return array_filter($pages, static function ($value, $id) use ($ignorePerms, $after, $before) {
+            if (!$ignorePerms) {
+                if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_READ) {
+                    return false;
+                }
+            }
+            if (!page_exists($id, '', false)) {
+                return false;
+            }
+            if ($after || $before) {
+                $mTime = filemtime(wikiFN($id));
+                if ($after && $after > $mTime) return false;
+                if ($before && $before < $mTime) return false;
+            }
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
     }
 
     /**
@@ -153,44 +259,9 @@ class MetadataSearch
      * @return int Returns < 0 if $a is less than $b; > 0 if $a is greater than $b,
      *             and 0 if they are equal.
      */
-    protected function pagesorter($a, $b)
+    protected function pagesorter(string $a, string $b): int
     {
-        $ac = count(explode(':',$a));
-        $bc = count(explode(':',$b));
-        if ($ac < $bc) {
-            return -1;
-        } elseif ($ac > $bc) {
-            return 1;
-        }
-        return Utf8\Sort::strcmp ($a,$b);
-    }
-
-    /**
-     * @param array      $results search results in the form pageid => value
-     * @param int|string $after   only returns results with mtime after this date,
-     *                            accepts timestap or strtotime arguments
-     * @param int|string $before  only returns results with mtime after this date,
-     *                            accepts timestap or strtotime arguments
-     *
-     * @return array
-     */
-    protected function filterResultsByTime(array $results, $after, $before)
-    {
-        if ($after || $before) {
-            $after = is_int($after) ? $after : strtotime($after);
-            $before = is_int($before) ? $before : strtotime($before);
-
-            foreach ($results as $id => $value) {
-                $mTime = filemtime(wikiFN($id));
-                if ($after && $after > $mTime) {
-                    unset($results[$id]);
-                    continue;
-                }
-                if ($before && $before < $mTime) {
-                    unset($results[$id]);
-                }
-            }
-        }
-        return $results;
+        $diff = substr_count($a, ':') - substr_count($b, ':');
+        return $diff ?: Utf8\Sort::strcmp($a, $b);
     }
 }

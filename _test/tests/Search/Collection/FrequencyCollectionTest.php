@@ -111,4 +111,32 @@ class FrequencyCollectionTest extends \DokuWikiTest
             'three' => 3,
         ], $result);
     }
+
+    /**
+     * getEntitiesWithData on a split FrequencyCollection
+     */
+    public function testGetEntitiesWithData()
+    {
+        $index = new MockFrequencyCollection('ewd_page', 'ewd_w', 'ewd_i', 'ewd_pw');
+        $index->lock();
+        $index->addEntity('page1', ['dokuwiki', 'wiki']);
+        $index->addEntity('page2', ['other', 'words']);
+        $index->unlock();
+
+        $result = $index->getEntitiesWithData();
+        sort($result);
+        $this->assertEquals(['page1', 'page2'], $result);
+    }
+
+    /**
+     * groupToSuffix throws on group 0 for split collection
+     */
+    public function testGroupToSuffixValidationSplit()
+    {
+        $this->expectException(\dokuwiki\Search\Exception\IndexUsageException::class);
+
+        $index = new MockFrequencyCollection('gs_page', 'gs_w', 'gs_i', 'gs_pw');
+        // split collection should reject group 0
+        $index->getTokenIndex(0);
+    }
 }

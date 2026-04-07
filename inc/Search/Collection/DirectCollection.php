@@ -42,7 +42,7 @@ abstract class DirectCollection extends AbstractCollection
         $entityId = $entityIndex->accessCachedValue($entity);
 
         $token = $tokens[0] ?? '';
-        $tokenIndex = $this->getTokenIndex('');
+        $tokenIndex = $this->getTokenIndex(0);
         $tokenIndex->changeRow($entityId, $token);
         $tokenIndex->save();
 
@@ -63,8 +63,36 @@ abstract class DirectCollection extends AbstractCollection
         $entityIndex = $this->getEntityIndex();
         $entityId = $entityIndex->accessCachedValue($entity);
 
-        $tokenIndex = $this->getTokenIndex('');
+        $tokenIndex = $this->getTokenIndex(0);
         return $tokenIndex->retrieveRow($entityId);
+    }
+
+    /** @inheritdoc */
+    public function resolveTokenFrequencies(int $group, array $tokenIds): array
+    {
+        // In a DirectCollection, token RID = entity RID, frequency is always 1
+        $result = [];
+        foreach ($tokenIds as $tokenId) {
+            $result[$tokenId] = [$tokenId => 1];
+        }
+        return $result;
+    }
+
+    /** @inheritdoc */
+    public function getEntitiesWithData(): array
+    {
+        $entityIndex = $this->getEntityIndex();
+        $tokenIndex = $this->getTokenIndex(0);
+
+        $entities = [];
+        foreach ($tokenIndex as $entityId => $token) {
+            if ($token === '') continue;
+            $name = $entityIndex->retrieveRow($entityId);
+            if ($name !== '') {
+                $entities[] = $name;
+            }
+        }
+        return $entities;
     }
 
     /**

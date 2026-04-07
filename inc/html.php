@@ -15,7 +15,6 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\FulltextSearch;
-use dokuwiki\Search\MetadataIndex;
 use dokuwiki\Utf8;
 use dokuwiki\Ui\Backlinks;
 use dokuwiki\Ui\Editor;

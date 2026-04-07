@@ -97,4 +97,39 @@ class DirectCollectionTest extends \DokuWikiTest
 
         $this->assertEquals('Welcome', $index->getToken('wiki:start'));
     }
+
+    /**
+     * resolveTokenFrequencies maps token RID = entity RID with frequency 1
+     */
+    public function testResolveTokenFrequencies()
+    {
+        $index = new MockDirectCollection('rtf_entity', 'rtf_token');
+        $index->lock();
+        $index->addEntity('wiki:start', ['Title One']);
+        $index->addEntity('wiki:syntax', ['Title Two']);
+        $index->unlock();
+
+        $result = $index->resolveTokenFrequencies(0, [0, 1]);
+        $this->assertEquals([
+            0 => [0 => 1],
+            1 => [1 => 1],
+        ], $result);
+    }
+
+    /**
+     * getEntitiesWithData returns entities that have non-empty tokens
+     */
+    public function testGetEntitiesWithData()
+    {
+        $index = new MockDirectCollection('ewd_entity', 'ewd_token');
+        $index->lock();
+        $index->addEntity('wiki:start', ['Title One']);
+        $index->addEntity('wiki:empty', []);
+        $index->addEntity('wiki:syntax', ['Title Two']);
+        $index->unlock();
+
+        $result = $index->getEntitiesWithData();
+        sort($result);
+        $this->assertEquals(['wiki:start', 'wiki:syntax'], $result);
+    }
 }

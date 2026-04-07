@@ -3,7 +3,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Extension\Event;
-use dokuwiki\Search\Collection\FrequencyCollectionSearch;
+use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageFulltextCollection;
 use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Search\Query\QueryEvaluator;
@@ -87,9 +87,9 @@ class FulltextSearch
 
         if (empty($q['parsed_ary'])) return [];
 
-        // look up all words via FrequencyCollectionSearch
+        // look up all words via CollectionSearch
         $collection = new PageFulltextCollection();
-        $search = new FrequencyCollectionSearch($collection);
+        $search = new CollectionSearch($collection);
         foreach ($q['words'] as $word) {
             try {
                 $search->addTerm($word);
@@ -105,22 +105,8 @@ class FulltextSearch
 
         if (empty($docs)) return [];
 
-        // prepare time filters
-        $after = $data['after'] ? (is_int($data['after']) ? $data['after'] : strtotime($data['after'])) : null;
-        $before = $data['before'] ? (is_int($data['before']) ? $data['before'] : strtotime($data['before'])) : null;
-
-        // filter by settings, acls, existence, and time range
-        $docs = array_filter($docs, static function ($score, $id) use ($after, $before) {
-            if (isHiddenPage($id) || auth_quickaclcheck($id) < AUTH_READ || !page_exists($id, '', false)) {
-                return false;
-            }
-            if ($after || $before) {
-                $mTime = filemtime(wikiFN($id));
-                if ($after && $after > $mTime) return false;
-                if ($before && $before < $mTime) return false;
-            }
-            return true;
-        }, ARRAY_FILTER_USE_BOTH);
+        // filter by visibility, acls, existence, and time range
+        $docs = MetadataSearch::filterPages($docs, false, $data['after'], $data['before']);
 
         if ($data['sort'] === 'mtime') {
             uksort($docs, static function ($a, $b) {

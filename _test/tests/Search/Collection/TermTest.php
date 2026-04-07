@@ -71,9 +71,9 @@ class TermTest extends \DokuWikiTest
 
         $this->assertEquals(['dokuwiki', 'wikis', 'awiki'], $term->getTokens());
 
-        $this->assertEquals([0], $term->getTokenIDsByLength(8));
-        $this->assertEquals([0, 134], $term->getTokenIDsByLength(5));
-        $this->assertEquals([], $term->getTokenIDsByLength(3));
+        $this->assertEquals([0], $term->getTokenIDsByGroup(8));
+        $this->assertEquals([0, 134], $term->getTokenIDsByGroup(5));
+        $this->assertEquals([], $term->getTokenIDsByGroup(3));
     }
 
     public function testFrequencyAdding()
@@ -180,10 +180,10 @@ class TermTest extends \DokuWikiTest
         $this->assertContains('mediawiki', $allTokens);
 
         // Check we can get tokens by specific length
-        $this->assertEquals([10, 11], $term->getTokenIDsByLength(4));
-        $this->assertEquals([20, 21], $term->getTokenIDsByLength(8));
-        $this->assertEquals([30], $term->getTokenIDsByLength(9));
-        $this->assertEquals([], $term->getTokenIDsByLength(5));
+        $this->assertEquals([10, 11], $term->getTokenIDsByGroup(4));
+        $this->assertEquals([20, 21], $term->getTokenIDsByGroup(8));
+        $this->assertEquals([30], $term->getTokenIDsByGroup(9));
+        $this->assertEquals([], $term->getTokenIDsByGroup(5));
     }
 
     public function testFrequencyAggregationAcrossTokens()
@@ -209,11 +209,11 @@ class TermTest extends \DokuWikiTest
         $term = new Term('dokuwiki');
 
         // Before adding any tokens, getting by length should return empty
-        $this->assertEquals([], $term->getTokenIDsByLength(8));
+        $this->assertEquals([], $term->getTokenIDsByGroup(8));
 
         // After adding tokens, querying a non-existent length returns empty
         $term->addTokens(4, [10 => 'wiki']);
-        $this->assertEquals([], $term->getTokenIDsByLength(8));
+        $this->assertEquals([], $term->getTokenIDsByGroup(8));
     }
 
     public function testZeroFrequency()

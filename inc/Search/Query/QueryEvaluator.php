@@ -19,7 +19,7 @@ class QueryEvaluator
     /** @var string[] RPN token array from QueryParser */
     protected array $rpn;
 
-    /** @var Term[] word => Term mapping from FrequencyCollectionSearch */
+    /** @var Term[] word => Term mapping from CollectionSearch */
     protected array $terms;
 
     /** @var PageSet|null lazy-loaded universe of all indexed pages */
@@ -27,7 +27,7 @@ class QueryEvaluator
 
     /**
      * @param string[] $rpn RPN token array from QueryParser::convert()['parsed_ary']
-     * @param Term[] $terms word => Term mapping from FrequencyCollectionSearch::execute()
+     * @param Term[] $terms word => Term mapping from CollectionSearch::execute()
      */
     public function __construct(array $rpn, array $terms)
     {
