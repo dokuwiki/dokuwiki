@@ -215,6 +215,18 @@ class FileIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
+    public function count(): int
+    {
+        if (!file_exists($this->filename)) return 0;
+        $fh = @fopen($this->filename, 'r');
+        if (!$fh) return 0;
+        $count = 0;
+        while (fgets($fh) !== false) $count++;
+        fclose($fh);
+        return $count;
+    }
+
+    /** @inheritdoc */
     public function getIterator(): \Generator
     {
         if (!file_exists($this->filename)) return;

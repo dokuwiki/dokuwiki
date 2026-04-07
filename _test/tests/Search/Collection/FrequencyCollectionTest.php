@@ -2,6 +2,7 @@
 
 namespace dokuwiki\test\Search\Collection;
 
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Index\MemoryIndex;
 
 class FrequencyCollectionTest extends \DokuWikiTest
@@ -126,6 +127,78 @@ class FrequencyCollectionTest extends \DokuWikiTest
         $result = $index->getEntitiesWithData();
         sort($result);
         $this->assertEquals(['page1', 'page2'], $result);
+    }
+
+    /**
+     * getEntitiesWithData on an empty split collection returns empty array
+     */
+    public function testGetEntitiesWithDataEmpty()
+    {
+        $index = new MockFrequencyCollection('empty_page', 'empty_w', 'empty_i', 'empty_pw');
+        $result = $index->getEntitiesWithData();
+        $this->assertEquals([], $result);
+    }
+
+    /**
+     * checkIntegrity on an empty split collection does not throw
+     */
+    public function testCheckIntegrityEmpty()
+    {
+        $index = new MockFrequencyCollection('ci_page', 'ci_w', 'ci_i', 'ci_pw');
+        $index->checkIntegrity();
+        $this->assertTrue(true); // no exception thrown
+    }
+
+    /**
+     * checkIntegrity passes on a healthy split collection
+     */
+    public function testCheckIntegrityHealthy()
+    {
+        $index = new MockFrequencyCollection('cih_page', 'cih_w', 'cih_i', 'cih_pw');
+        $index->lock();
+        $index->addEntity('page1', ['dokuwiki', 'wiki']);
+        $index->unlock();
+
+        $index->checkIntegrity(); // should not throw
+        $this->assertTrue(true);
+    }
+
+    /**
+     * checkIntegrity detects missing frequency index for a group
+     */
+    public function testCheckIntegrityMissingFreqIndex()
+    {
+        global $conf;
+        $index = new MockFrequencyCollection('cimf_page', 'cimf_w', 'cimf_i', 'cimf_pw');
+        $index->lock();
+        $index->addEntity('page1', ['dokuwiki', 'wiki']);
+        $index->unlock();
+
+        // find a group that exists and delete its frequency index
+        $max = $index->getTokenIndexMaximum();
+        @unlink($conf['indexdir'] . '/cimf_i' . $max . '.idx');
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockFrequencyCollection('cimf_page', 'cimf_w', 'cimf_i', 'cimf_pw'))->checkIntegrity();
+    }
+
+    /**
+     * checkIntegrity detects missing token index for a group
+     */
+    public function testCheckIntegrityMissingTokenIndex()
+    {
+        global $conf;
+        $index = new MockFrequencyCollection('cimt_page', 'cimt_w', 'cimt_i', 'cimt_pw');
+        $index->lock();
+        // use words of different lengths to create multiple groups
+        $index->addEntity('page1', ['hi', 'dokuwiki', 'wiki']);
+        $index->unlock();
+
+        // delete the token index for the shortest group (not the max)
+        @unlink($conf['indexdir'] . '/cimt_w2.idx');
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockFrequencyCollection('cimt_page', 'cimt_w', 'cimt_i', 'cimt_pw'))->checkIntegrity();
     }
 
     /**

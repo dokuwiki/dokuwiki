@@ -3,6 +3,7 @@
 namespace dokuwiki\Search\Collection;
 
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Exception\IndexWriteException;
@@ -227,9 +228,8 @@ abstract class AbstractCollection
         $entityIndex = $this->getEntityIndex();
 
         // collect entity IDs from all frequency index groups
-        $groups = $this->splitByLength
-            ? range(1, $this->getTokenIndexMaximum())
-            : [0];
+        $max = $this->splitByLength ? $this->getTokenIndexMaximum() : 0;
+        $groups = $this->splitByLength ? ($max > 0 ? range(1, $max) : []) : [0];
 
         $entityIds = [];
         foreach ($groups as $group) {
@@ -258,6 +258,57 @@ abstract class AbstractCollection
             return $this->idxToken->max();
         }
         return (new MemoryIndex($this->idxToken, ''))->max();
+    }
+
+    /**
+     * Check the structural integrity of this collection's indexes
+     *
+     * Verifies that paired indexes have matching line counts:
+     * - token == frequency (per group, both keyed by token RID)
+     * - entity == reverse (both keyed by entity RID)
+     *
+     * @throws IndexIntegrityException when a structural inconsistency is found
+     */
+    public function checkIntegrity(): void
+    {
+        // Check token/frequency pairs
+        $max = $this->splitByLength ? $this->getTokenIndexMaximum() : 0;
+        $groups = $this->splitByLength ? ($max > 0 ? range(1, $max) : []) : [0];
+
+        foreach ($groups as $group) {
+            $tokenIndex = $this->getTokenIndex($group);
+            $freqIndex = $this->getFrequencyIndex($group);
+
+            if (!$tokenIndex->exists() && !$freqIndex->exists()) continue;
+
+            if ($tokenIndex->exists() !== $freqIndex->exists()) {
+                throw new IndexIntegrityException(
+                    "Group $group: missing " .
+                    ($tokenIndex->exists() ? 'frequency' : 'token') . ' index'
+                );
+            }
+
+            $tc = count($tokenIndex);
+            $fc = count($freqIndex);
+            if ($tc !== $fc) {
+                throw new IndexIntegrityException(
+                    "Group $group: token count ($tc) != frequency count ($fc)"
+                );
+            }
+        }
+
+        // Check entity/reverse pair
+        $entityIndex = $this->getEntityIndex();
+        $reverseIndex = $this->getReverseIndex();
+        if ($entityIndex->exists() && $reverseIndex->exists()) {
+            $ec = count($entityIndex);
+            $rc = count($reverseIndex);
+            if ($ec !== $rc) {
+                throw new IndexIntegrityException(
+                    "Entity count ($ec) != reverse count ($rc)"
+                );
+            }
+        }
     }
 
     /**

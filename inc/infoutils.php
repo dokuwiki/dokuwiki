@@ -12,8 +12,8 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
-use dokuwiki\Search\MetadataIndex;
-use dokuwiki\Search\FulltextIndex;
+use dokuwiki\Search\Exception\IndexIntegrityException;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Utf8;
 use dokuwiki\Utf8\PhpString;
 
@@ -361,42 +361,27 @@ function check()
         msg('The current page is not writable by you', -1);
     }
 
-    // Check for corrupted fulltext search index
-    $FulltextIndex = new FulltextIndex();
-    $lengths = $FulltextIndex->listIndexLengths();
-    $index_corrupted = false;
-    foreach ($lengths as $length) {
-        if (count($FulltextIndex->getIndex('w', $length)) !== count($FulltextIndex->getIndex('i', $length))) {
-            $index_corrupted = true;
-            break;
+    // Check for corrupted search index
+    $indexer = new Indexer();
+    try {
+        $indexer->checkIntegrity();
+        if (!$indexer->isIndexEmpty()) {
+            msg('The search index seems to be working', 1);
+        } else {
+            msg(
+                'The search index is empty. See
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                for help on how to fix the search index. If the default indexer
+                isn\'t used or the wiki is actually empty this is normal.'
+            );
         }
-    }
-
-    // Check for corrupted metadata index
-    $MetadataIndex = new MetadataIndex();
-    foreach ($MetadataIndex->getIndex('metadata', '') as $name) {
-        if (count($MetadataIndex->getIndex($name . '_w', '')) !== count($MetadataIndex->getIndex($name . '_i', ''))) {
-            $index_corrupted = true;
-            break;
-        }
-    }
-
-    if ($index_corrupted) {
+    } catch (IndexIntegrityException $e) {
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
-        );
-    } elseif (!empty($lengths)) {
-        msg('The search index seems to be working', 1);
-    } else {
-        msg(
-            'The search index is empty. See
-                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for help on how to fix the search index. If the default indexer
-                isn\'t used or the wiki is actually empty this is normal.'
         );
     }
 

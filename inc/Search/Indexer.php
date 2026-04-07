@@ -7,6 +7,7 @@ use dokuwiki\Search\Collection\PageFulltextCollection;
 use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Collection\PageTitleCollection;
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 use dokuwiki\Search\Index\FileIndex;
@@ -279,6 +280,31 @@ class Indexer
         @unlink($conf['indexdir'] . '/metadata.idx');
 
         Lock::release('page');
+    }
+
+    /**
+     * Check the structural integrity of all search indexes
+     *
+     * @throws IndexIntegrityException when a structural inconsistency is found
+     */
+    public function checkIntegrity(): void
+    {
+        (new PageFulltextCollection())->checkIntegrity();
+        (new PageTitleCollection())->checkIntegrity();
+
+        foreach ($this->getMetadataRegistryKeys() as $key) {
+            (new PageMetaCollection($key))->checkIntegrity();
+        }
+    }
+
+    /**
+     * Whether the search index is empty (no fulltext data indexed yet)
+     *
+     * @return bool
+     */
+    public function isIndexEmpty(): bool
+    {
+        return (new PageFulltextCollection())->getTokenIndexMaximum() === 0;
     }
 
     /**

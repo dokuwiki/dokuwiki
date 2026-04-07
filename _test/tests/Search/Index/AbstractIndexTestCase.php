@@ -79,4 +79,26 @@ abstract class AbstractIndexTestCase extends \DokuWikiTest
         $result = iterator_to_array($index);
         $this->assertEquals([0 => 'foo', 1 => 'bar', 2 => 'baz'], $result);
     }
+
+    public function testCountEmpty()
+    {
+        $index = $this->getIndex();
+        $this->assertEquals(0, count($index));
+    }
+
+    public function testCountWithData()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']);
+        $index->save();
+        $this->assertEquals(3, count($index));
+    }
+
+    public function testCountWithGaps()
+    {
+        $index = $this->getIndex();
+        $index->changeRow(5, 'test');
+        $index->save();
+        $this->assertEquals(6, count($index)); // lines 0-5
+    }
 }

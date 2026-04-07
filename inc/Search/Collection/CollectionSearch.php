@@ -121,8 +121,9 @@ class CollectionSearch
         $result = array_fill_keys($values, []);
 
         // determine which groups to search
+        $max = $this->collection->isSplitByLength() ? $this->collection->getTokenIndexMaximum() : 0;
         $groups = $this->collection->isSplitByLength()
-            ? range(1, $this->collection->getTokenIndexMaximum())
+            ? ($max > 0 ? range(1, $max) : [])
             : [0];
 
         // find matching token IDs across all groups

@@ -261,4 +261,29 @@ class CollectionSearchTest extends \DokuWikiTest
         sort($pages);
         $this->assertEquals(['page1', 'page2'], $pages);
     }
+
+    /**
+     * Searching an empty collection returns no results
+     */
+    public function testSearchEmptyCollection()
+    {
+        $collection = new MockFrequencyCollection('empty_page', 'empty_w', 'empty_i', 'empty_pw');
+
+        $search = new CollectionSearch($collection);
+        $term = $search->addTerm('anything');
+        $search->execute();
+        $this->assertEquals([], $term->getEntityFrequencies());
+    }
+
+    /**
+     * Lookup on an empty collection returns empty arrays
+     */
+    public function testLookupEmptyCollection()
+    {
+        $collection = new MockFrequencyCollection('empty2_page', 'empty2_w', 'empty2_i', 'empty2_pw');
+
+        $search = new CollectionSearch($collection);
+        $result = $search->lookup('anything');
+        $this->assertEquals([], $result['anything']);
+    }
 }

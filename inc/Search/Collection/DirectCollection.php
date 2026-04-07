@@ -3,6 +3,7 @@
 namespace dokuwiki\Search\Collection;
 
 use dokuwiki\Search\Exception\IndexAccessException;
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
@@ -19,6 +20,23 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 abstract class DirectCollection extends AbstractCollection
 {
+    /** @inheritdoc */
+    public function checkIntegrity(): void
+    {
+        $entityIndex = $this->getEntityIndex();
+        $tokenIndex = $this->getTokenIndex(0);
+
+        if ($entityIndex->exists() && $tokenIndex->exists()) {
+            $ec = count($entityIndex);
+            $tc = count($tokenIndex);
+            if ($ec !== $tc) {
+                throw new IndexIntegrityException(
+                    "Entity count ($ec) != token count ($tc)"
+                );
+            }
+        }
+    }
+
     /**
      * Store a single token for the given entity
      *

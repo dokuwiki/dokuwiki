@@ -11,7 +11,7 @@ use dokuwiki\Search\Exception\IndexLockException;
  *
  * Indexes are iterable, yielding RID => value pairs.
  */
-abstract class AbstractIndex implements \IteratorAggregate
+abstract class AbstractIndex implements \IteratorAggregate, \Countable
 {
     /** @var string name of the index */
     protected $idx;
@@ -210,6 +210,13 @@ abstract class AbstractIndex implements \IteratorAggregate
     {
         @unlink($this->filename);
     }
+
+    /**
+     * Return the number of lines in the index
+     *
+     * @return int
+     */
+    abstract public function count(): int;
 
     /**
      * Saves the index if needed

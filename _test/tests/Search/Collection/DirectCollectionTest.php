@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Search\Collection;
 
 use dokuwiki\Search\Collection\PageTitleCollection;
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\MemoryIndex;
 
@@ -131,5 +132,47 @@ class DirectCollectionTest extends \DokuWikiTest
         $result = $index->getEntitiesWithData();
         sort($result);
         $this->assertEquals(['wiki:start', 'wiki:syntax'], $result);
+    }
+
+    /**
+     * checkIntegrity passes on a healthy DirectCollection
+     */
+    public function testCheckIntegrityHealthy()
+    {
+        $index = new MockDirectCollection('cih_entity', 'cih_token');
+        $index->lock();
+        $index->addEntity('wiki:start', ['Title One']);
+        $index->unlock();
+
+        $index->checkIntegrity(); // should not throw
+        $this->assertTrue(true);
+    }
+
+    /**
+     * checkIntegrity passes on an empty DirectCollection
+     */
+    public function testCheckIntegrityEmpty()
+    {
+        $index = new MockDirectCollection('cie_entity', 'cie_token');
+        $index->checkIntegrity(); // should not throw
+        $this->assertTrue(true);
+    }
+
+    /**
+     * checkIntegrity detects entity/token line count mismatch
+     */
+    public function testCheckIntegrityMismatch()
+    {
+        global $conf;
+        $index = new MockDirectCollection('cim_entity', 'cim_token');
+        $index->lock();
+        $index->addEntity('wiki:start', ['Title One']);
+        $index->unlock();
+
+        // corrupt: add extra line to token index
+        file_put_contents($conf['indexdir'] . '/cim_token.idx', "extra\n", FILE_APPEND);
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockDirectCollection('cim_entity', 'cim_token'))->checkIntegrity();
     }
 }

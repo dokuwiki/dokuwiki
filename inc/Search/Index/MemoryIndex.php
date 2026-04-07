@@ -176,6 +176,12 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
+    public function count(): int
+    {
+        return count($this->data);
+    }
+
+    /** @inheritdoc */
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->data);

@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Search\Collection;
 
 use dokuwiki\Search\Collection\PageMetaCollection;
+use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\MemoryIndex;
 
@@ -258,6 +259,84 @@ class LookupCollectionTest extends \DokuWikiTest
         $result = $index->resolveTokenFrequencies(0, [0]);
         $this->assertArrayHasKey(0, $result);
         $this->assertCount(2, $result[0]); // two entities have this token
+    }
+
+    /**
+     * checkIntegrity passes on a healthy non-split collection
+     */
+    public function testCheckIntegrityHealthy()
+    {
+        $index = new MockLookupCollection('cih_entity', 'cih_token', 'cih_freq', 'cih_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax']);
+        $index->unlock();
+
+        $index->checkIntegrity(); // should not throw
+        $this->assertTrue(true);
+    }
+
+    /**
+     * checkIntegrity passes on an empty non-split collection
+     */
+    public function testCheckIntegrityEmpty()
+    {
+        $index = new MockLookupCollection('cie_entity', 'cie_token', 'cie_freq', 'cie_reverse');
+        $index->checkIntegrity(); // should not throw
+        $this->assertTrue(true);
+    }
+
+    /**
+     * checkIntegrity detects token/frequency mismatch on non-split collection
+     */
+    public function testCheckIntegrityTokenFreqMismatch()
+    {
+        global $conf;
+        $index = new MockLookupCollection('cim_entity', 'cim_token', 'cim_freq', 'cim_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax']);
+        $index->unlock();
+
+        // corrupt: add extra line to token index
+        file_put_contents($conf['indexdir'] . '/cim_token.idx', "extra\n", FILE_APPEND);
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockLookupCollection('cim_entity', 'cim_token', 'cim_freq', 'cim_reverse'))->checkIntegrity();
+    }
+
+    /**
+     * checkIntegrity detects entity/reverse mismatch on non-split collection
+     */
+    public function testCheckIntegrityEntityReverseMismatch()
+    {
+        global $conf;
+        $index = new MockLookupCollection('cir_entity', 'cir_token', 'cir_freq', 'cir_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax']);
+        $index->unlock();
+
+        // corrupt: add extra line to reverse index
+        file_put_contents($conf['indexdir'] . '/cir_reverse.idx', "0\n", FILE_APPEND);
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockLookupCollection('cir_entity', 'cir_token', 'cir_freq', 'cir_reverse'))->checkIntegrity();
+    }
+
+    /**
+     * checkIntegrity detects missing frequency index when token index exists
+     */
+    public function testCheckIntegrityMissingFreqIndex()
+    {
+        global $conf;
+        $index = new MockLookupCollection('cimf_entity', 'cimf_token', 'cimf_freq', 'cimf_reverse');
+        $index->lock();
+        $index->addEntity('wiki:start', ['wiki:syntax']);
+        $index->unlock();
+
+        // corrupt: delete frequency index
+        @unlink($conf['indexdir'] . '/cimf_freq.idx');
+
+        $this->expectException(IndexIntegrityException::class);
+        (new MockLookupCollection('cimf_entity', 'cimf_token', 'cimf_freq', 'cimf_reverse'))->checkIntegrity();
     }
 
     /**
