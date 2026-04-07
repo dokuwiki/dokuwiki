@@ -2,7 +2,9 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Debug\DebugHelper;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageFulltextCollection;
 use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Collection\PageTitleCollection;
@@ -10,8 +12,11 @@ use dokuwiki\Search\Exception\IndexAccessException;
 use dokuwiki\Search\Exception\IndexIntegrityException;
 use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Exception\IndexWriteException;
+use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Search\Index\FileIndex;
 use dokuwiki\Search\Index\Lock;
+use dokuwiki\Search\Index\MemoryIndex;
+use dokuwiki\Search\Index\TupleOps;
 
 // Version tag used to force rebuild on upgrade
 const INDEXER_VERSION = 8;
@@ -345,4 +350,191 @@ class Indexer
             io_saveFile($fn, implode("\n", $existing) . "\n");
         }
     }
+
+    // region Deprecated methods
+
+    /**
+     * Find pages containing a metadata value
+     *
+     * @param string $key metadata key name
+     * @param string|string[] $value search term(s)
+     * @param callable|null $func comparison function
+     * @return array
+     *
+     * @deprecated 2026-04-07 use MetadataSearch::lookupKey() instead
+     */
+    public function lookupKey($key, &$value, $func = null)
+    {
+        DebugHelper::dbgDeprecatedFunction(MetadataSearch::class . '::lookupKey()');
+        return (new MetadataSearch())->lookupKey($key, $value, $func);
+    }
+
+    /**
+     * Return a list of all indexed pages, optionally filtered by metadata key
+     *
+     * @param string|null $key metadata key name
+     * @return string[]
+     *
+     * @deprecated 2026-04-07 use MetadataSearch::getPages() or Indexer::getAllPages() instead
+     */
+    public function getPages($key = null)
+    {
+        DebugHelper::dbgDeprecatedFunction(MetadataSearch::class . '::getPages()');
+        return (new MetadataSearch())->getPages($key);
+    }
+
+    /**
+     * Add metadata values for a page
+     *
+     * @param string $page page name
+     * @param string $key metadata key name
+     * @param string|string[]|null $value value(s) to add
+     * @return bool|string
+     *
+     * @deprecated 2026-04-07 use Collection classes directly instead
+     */
+    public function addMetaKeys($page, $key, $value = null)
+    {
+        DebugHelper::dbgDeprecatedFunction('Collection classes');
+        try {
+            if ($key === 'title') {
+                $collection = new PageTitleCollection();
+            } else {
+                $collection = new PageMetaCollection($key);
+            }
+            $values = is_array($value) ? $value : ($value !== null && $value !== '' ? [$value] : []);
+            $collection->lock()->addEntity($page, $values)->unlock();
+            $this->updateMetadataRegistry([$key]);
+            return true;
+        } catch (SearchException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Rename a metadata value in the index
+     *
+     * @param string $key metadata key name
+     * @param string $oldvalue old value
+     * @param string $newvalue new value
+     * @return bool|string
+     *
+     * @deprecated 2026-04-07 use Collection classes directly instead
+     */
+    public function renameMetaValue($key, $oldvalue, $newvalue)
+    {
+        DebugHelper::dbgDeprecatedFunction('Collection classes');
+        try {
+            $collection = new PageMetaCollection($key);
+            $collection->lock();
+
+            $tokenIndex = $collection->getTokenIndex(0);
+
+            // find old value — search() is read-only, won't create entries
+            $matches = $tokenIndex->search('/^' . preg_quote($oldvalue, '/') . '$/');
+            if (empty($matches)) {
+                $collection->unlock();
+                return true;
+            }
+            $oldid = array_key_first($matches);
+
+            // check if new value already exists (read-only lookup)
+            $newMatches = $tokenIndex->search('/^' . preg_quote($newvalue, '/') . '$/');
+
+            if (!empty($newMatches)) {
+                // both values exist — merge frequency data from old to new
+                $newid = array_key_first($newMatches);
+                $freqIndex = $collection->getFrequencyIndex(0);
+                $reverseIndex = $collection->getReverseIndex();
+                $oldFreqLine = $freqIndex->retrieveRow($oldid);
+
+                if ($oldFreqLine !== '') {
+                    $newFreqLine = $freqIndex->retrieveRow($newid);
+                    foreach (TupleOps::parseTuples($oldFreqLine) as $entityId => $count) {
+                        $newFreqLine = TupleOps::updateTuple($newFreqLine, $entityId, $count);
+
+                        // update reverse index: remove old token, add new
+                        $reverseRow = $reverseIndex->retrieveRow((int)$entityId);
+                        $keyline = explode(':', $reverseRow);
+                        $keyline = array_diff($keyline, [(string)$oldid]);
+                        if (!in_array((string)$newid, $keyline)) {
+                            $keyline[] = $newid;
+                        }
+                        $reverseIndex->changeRow((int)$entityId, implode(':', array_filter($keyline, fn($v) => $v !== '')));
+                    }
+                    $freqIndex->changeRow($oldid, '');
+                    $freqIndex->changeRow($newid, $newFreqLine);
+                }
+            } else {
+                // new value doesn't exist — simple rename
+                $tokenIndex->changeRow($oldid, $newvalue);
+            }
+
+            $collection->unlock();
+            return true;
+        } catch (SearchException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the page ID for a page name
+     *
+     * @param string $page page name
+     * @return int|false
+     *
+     * @deprecated 2026-04-07 use FileIndex directly instead
+     */
+    public function getPID($page)
+    {
+        DebugHelper::dbgDeprecatedFunction(FileIndex::class);
+        try {
+            return (new FileIndex('page', '', true))->accessCachedValue($page);
+        } catch (SearchException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Find tokens in the fulltext index
+     *
+     * @param array $tokens list of words to search for
+     * @return array list of pages found [word => [page => count, ...]]
+     *
+     * @deprecated 2026-04-07 use CollectionSearch on PageFulltextCollection instead
+     */
+    public function lookup(&$tokens)
+    {
+        DebugHelper::dbgDeprecatedFunction(CollectionSearch::class);
+        $collection = new PageFulltextCollection();
+        $search = new CollectionSearch($collection);
+        $termMap = [];
+        foreach ($tokens as $token) {
+            try {
+                $term = $search->addTerm($token);
+                $termMap[$token] = $term;
+            } catch (SearchException $e) {
+                // skip invalid terms
+            }
+        }
+
+        if (empty($termMap)) return [];
+        $search->execute();
+
+        $result = [];
+        foreach ($termMap as $word => $term) {
+            $freqs = $term->getEntityFrequencies();
+            // filter to only existing pages
+            $filtered = [];
+            foreach ($freqs as $page => $count) {
+                if (page_exists($page, '', false)) {
+                    $filtered[$page] = $count;
+                }
+            }
+            $result[$word] = $filtered;
+        }
+        return $result;
+    }
+
+    // endregion
 }

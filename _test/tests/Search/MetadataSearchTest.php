@@ -2,6 +2,7 @@
 
 namespace dokuwiki\test\Search;
 
+use dokuwiki\Search\Indexer;
 use dokuwiki\Search\MetadataSearch;
 
 /**
@@ -9,6 +10,29 @@ use dokuwiki\Search\MetadataSearch;
  */
 class MetadataSearchTest extends \DokuWikiTest
 {
+    /**
+     * pageLookup finds pages by name, respects namespace filters, and searches titles with UTF-8
+     */
+    public function testPageLookup()
+    {
+        $indexer = new Indexer();
+        $search = new MetadataSearch();
+
+        saveWikiText('test:page1', 'Some text', 'Test initialization');
+        $indexer->addPage('test:page1', true);
+        saveWikiText('ns:page2', 'Other text', 'Test initialization');
+        $indexer->addPage('ns:page2', true);
+        saveWikiText('ns:utf8', '====== Title with ÄöÜ ======', 'Test initialization');
+        $indexer->addPage('ns:utf8', true);
+
+        $this->assertEquals(['test:page1' => null, 'ns:page2' => null], $search->pageLookup('page'));
+        $this->assertEquals(['test:page1' => null], $search->pageLookup('page @test'));
+        $this->assertEquals(['ns:page2' => null], $search->pageLookup('page ^test'));
+
+        $this->assertEquals(['ns:utf8' => 'Title with ÄöÜ'], $search->pageLookup('title', false, true));
+        $this->assertEquals(['ns:utf8' => 'Title with ÄöÜ'], $search->pageLookup('äöü', false, true));
+    }
+
     /**
      * filterPages removes non-existent pages
      */

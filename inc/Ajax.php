@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Ui\MediaDiff;
 use dokuwiki\Ui\Index;
 use dokuwiki\Ui;
@@ -367,7 +368,7 @@ class Ajax
             // If 'useheading' option is 'always' or 'content',
             // search page titles with original query as well.
             if ($conf['useheading'] == '1' || $conf['useheading'] == 'content') {
-                $pages = array_merge($pages, ft_pageLookup($q, true, true));
+                $pages = array_merge($pages, (new MetadataSearch)->pageLookup($q, true, true));
                 asort($pages, SORT_STRING);
             }
 

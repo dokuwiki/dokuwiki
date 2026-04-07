@@ -919,7 +919,7 @@ class ApiCore
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
-        return ft_mediause($media);
+        return (new \dokuwiki\Search\MetadataSearch())->mediause($media);
     }
 
     /**

@@ -92,7 +92,15 @@ class MetadataSearch
 
         // additionally find pages matching by title
         if ($data['in_title']) {
-            foreach ($this->lookupKey('title', $query, static fn($search, $title) => stripos($title, $search) !== false) as $page) {
+            foreach ($this->lookupKey('title', $query, static function ($search, $title) {
+                if (Utf8\Clean::isASCII($search)) {
+                    return stripos($title, $search) !== false;
+                }
+                return Utf8\PhpString::strpos(
+                    Utf8\PhpString::strtolower($title),
+                    Utf8\PhpString::strtolower($search)
+                ) !== false;
+            }) as $page) {
                 if ($ns && !str_starts_with($page, $ns)) continue;
                 if ($notns && str_starts_with($page, $notns)) continue;
 
