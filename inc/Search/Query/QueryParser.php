@@ -3,7 +3,8 @@
 namespace dokuwiki\Search\Query;
 
 use dokuwiki\Search\Tokenizer;
-use dokuwiki\Utf8;
+use dokuwiki\Utf8\Asian;
+use dokuwiki\Utf8\PhpString;
 
 /**
  * DokuWuki QueryParser class
@@ -15,37 +16,37 @@ class QueryParser
      *
      * This function is used in QueryParser::convert() and not for general purpose use.
      *
+     * @param string $term
+     * @param bool $consider_asian
+     * @param bool $phrase_mode
+     * @return string
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
-     * @param string       $term
-     * @param bool         $consider_asian
-     * @param bool         $phrase_mode
-     * @return string
      */
-    public function termParser($term, $consider_asian = true, $phrase_mode = false)
+    public function termParser(string $term, bool $consider_asian = true, bool $phrase_mode = false): string
     {
         $parsed = '';
         if ($consider_asian) {
             // successive asian characters need to be searched as a phrase
-            $words = Utf8\Asian::splitAsianWords($term);
+            $words = Asian::splitAsianWords($term);
             foreach ($words as $word) {
-                $phrase_mode = $phrase_mode ? true : Utf8\Asian::isAsianWords($word);
+                $phrase_mode = $phrase_mode || Asian::isAsianWords($word);
                 $parsed .= $this->termParser($word, false, $phrase_mode);
             }
         } else {
-            $term_noparen = str_replace(['(',')'], ' ', $term);
+            $term_noparen = str_replace(['(', ')'], ' ', $term);
             $words = Tokenizer::getWords($term_noparen, true);
 
             // W_: no need to highlight
-            if (empty($words)) {
+            if ($words === []) {
                 $parsed = '()'; // important: do not remove
             } elseif ($words[0] === $term) {
-                $parsed = '(W+:'.$words[0].')';
+                $parsed = '(W+:' . $words[0] . ')';
             } elseif ($phrase_mode) {
-                $term_encoded = str_replace(['(',')'], ['OP','CP'], $term);
-                $parsed = '((W_:'.implode(')(W_:', $words).')(P+:'.$term_encoded.'))';
+                $term_encoded = str_replace(['(', ')'], ['OP', 'CP'], $term);
+                $parsed = '((W_:' . implode(')(W_:', $words) . ')(P+:' . $term_encoded . '))';
             } else {
-                $parsed = '((W+:'.implode(')(W+:', $words).'))';
+                $parsed = '((W+:' . implode(')(W+:', $words) . '))';
             }
         }
         return $parsed;
@@ -54,13 +55,13 @@ class QueryParser
     /**
      * Parses a search query and builds an array of search formulas
      *
+     * @param string $query search query
+     * @return array of search formulas
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
-     * @param string $query search query
-     * @return array of search formulas
      */
-    public function convert($query)
+    public function convert(string $query): array
     {
         /**
          * parse a search query and transform it into intermediate representation
@@ -74,7 +75,7 @@ class QueryParser
          *     "phrase to be included"
          *     -"phrase you want to exclude"
          *   namespaces:
-         *     @include:namespace (or ns:include:namespace)
+         * @include:namespace (or ns:include:namespace)
          *     ^exclude:namespace (or -ns:exclude:namespace)
          *   groups:
          *     ()
@@ -100,8 +101,11 @@ class QueryParser
          */
         $parsed_query = '';
         $parens_level = 0;
-        $terms = preg_split('/(-?".*?")/u', Utf8\PhpString::strtolower($query),
-                    -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+        $terms = preg_split(
+            '/(-?".*?")/u',
+            PhpString::strtolower($query),
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
 
         foreach ($terms as $term) {
@@ -115,8 +119,8 @@ class QueryParser
                 $term = str_replace('"', ' ', $term);
 
                 // fix parentheses
-                $term = str_replace(')'  , ' ) ', $term);
-                $term = str_replace('('  , ' ( ', $term);
+                $term = str_replace(')', ' ) ', $term);
+                $term = str_replace('(', ' ( ', $term);
                 $term = str_replace('- (', ' -(', $term);
 
                 // treat pipe symbols as 'OR' operators
@@ -124,7 +128,7 @@ class QueryParser
 
                 // treat ideographic spaces (U+3000) as search term separators
                 // FIXME: some more separators?
-                $term = preg_replace('/[ \x{3000}]+/u', ' ',  $term);
+                $term = preg_replace('/[ \x{3000}]+/u', ' ', $term);
                 $term = trim($term);
                 if ($term === '') continue;
 
@@ -150,13 +154,13 @@ class QueryParser
                         $parsed .= 'OR';
                     } elseif (preg_match('/^(?:\^|-ns:)(.+)$/u', $token, $matches)) {
                         // namespace-exclude
-                        $parsed .= 'NOT(N+:'.$matches[1].')';
+                        $parsed .= 'NOT(N+:' . $matches[1] . ')';
                     } elseif (preg_match('/^(?:@|ns:)(.+)$/u', $token, $matches)) {
                         // namespace-include
-                        $parsed .= '(N+:'.$matches[1].')';
+                        $parsed .= '(N+:' . $matches[1] . ')';
                     } elseif (preg_match('/^-(.+)$/', $token, $matches)) {
                         // word-exclude
-                        $parsed .= 'NOT('.$this->termParser($matches[1]).')';
+                        $parsed .= 'NOT(' . $this->termParser($matches[1]) . ')';
                     } else {
                         // word-include
                         $parsed .= $this->termParser($token);
@@ -172,18 +176,21 @@ class QueryParser
             $parsed_query_old = $parsed_query;
             $parsed_query = preg_replace('/(NOT)?\(\)/u', '', $parsed_query);
         } while ($parsed_query !== $parsed_query_old);
-        $parsed_query = preg_replace('/(NOT|OR)+\)/u', ')'      , $parsed_query);
-        $parsed_query = preg_replace('/(OR)+/u'      , 'OR'     , $parsed_query);
-        $parsed_query = preg_replace('/\(OR/u'       , '('      , $parsed_query);
-        $parsed_query = preg_replace('/^OR|OR$/u'    , ''       , $parsed_query);
-        $parsed_query = preg_replace('/\)(NOT)?\(/u' , ')AND$1(', $parsed_query);
+        $parsed_query = preg_replace('/(NOT|OR)+\)/u', ')', $parsed_query);
+        $parsed_query = preg_replace('/(OR)+/u', 'OR', $parsed_query);
+        $parsed_query = preg_replace('/\(OR/u', '(', $parsed_query);
+        $parsed_query = preg_replace('/^OR|OR$/u', '', $parsed_query);
+        $parsed_query = preg_replace('/\)(NOT)?\(/u', ')AND$1(', $parsed_query);
 
         // adjustment: make highlightings right
-        $parens_level     = 0;
-        $notgrp_levels    = array();
+        $parens_level = 0;
+        $notgrp_levels = [];
         $parsed_query_new = '';
-        $tokens = preg_split('/(NOT\(|[()])/u', $parsed_query,
-                    -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+        $tokens = preg_split(
+            '/(NOT\(|[()])/u',
+            $parsed_query,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
         foreach ($tokens as $token) {
             if ($token === 'NOT(') {
@@ -207,19 +214,23 @@ class QueryParser
          * see: http://en.wikipedia.org/wiki/Reverse_Polish_notation
          * see: http://en.wikipedia.org/wiki/Shunting-yard_algorithm
          */
-        $parsed_ary     = array();
-        $ope_stack      = array();
-        $ope_precedence = array(')' => 1, 'OR' => 2, 'AND' => 3, 'NOT' => 4, '(' => 5);
-        $ope_regex      = '/([()]|OR|AND|NOT)/u';
+        $parsed_ary = [];
+        $ope_stack = [];
+        $ope_precedence = [')' => 1, 'OR' => 2, 'AND' => 3, 'NOT' => 4, '(' => 5];
+        $ope_regex = '/([()]|OR|AND|NOT)/u';
 
-        $tokens = preg_split($ope_regex, $parsed_query,
-                    -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+        $tokens = preg_split(
+            $ope_regex,
+            $parsed_query,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
         foreach ($tokens as $token) {
             if (preg_match($ope_regex, $token)) {
                 // operator
                 $last_ope = end($ope_stack);
-                while ($last_ope !== false
+                while (
+                    $last_ope !== false
                     && $ope_precedence[$token] <= $ope_precedence[$last_ope]
                     && $last_ope != '('
                 ) {
@@ -233,7 +244,7 @@ class QueryParser
                 }
             } else {
                 // operand
-                $token_decoded = str_replace(['OP','CP'], ['(',')'], $token);
+                $token_decoded = str_replace(['OP', 'CP'], ['(', ')'], $token);
                 $parsed_ary[] = $token_decoded;
             }
         }
@@ -249,8 +260,8 @@ class QueryParser
         $parsed_ary = array_values($parsed_ary);
 
         // build return value
-        $q = array();
-        $q['query']      = $query;
+        $q = [];
+        $q['query'] = $query;
         $q['parsed_str'] = $parsed_query;
         $q['parsed_ary'] = $parsed_ary;
 
@@ -260,34 +271,34 @@ class QueryParser
 
             switch (substr($token, 0, 3)) {
                 case 'N+:':
-                     $q['ns'][]        = $body; // for backward compatibility
-                     break;
+                    $q['ns'][] = $body; // for backward compatibility
+                    break;
                 case 'N-:':
-                     $q['notns'][]     = $body; // for backward compatibility
-                     break;
+                    $q['notns'][] = $body; // for backward compatibility
+                    break;
                 case 'W_:':
-                     $q['words'][]     = $body;
-                     break;
+                    $q['words'][] = $body;
+                    break;
                 case 'W-:':
-                     $q['words'][]     = $body;
-                     $q['not'][]       = $body; // for backward compatibility
-                     break;
+                    $q['words'][] = $body;
+                    $q['not'][] = $body; // for backward compatibility
+                    break;
                 case 'W+:':
-                     $q['words'][]     = $body;
-                     $q['highlight'][] = $body;
-                     $q['and'][]       = $body; // for backward compatibility
-                     break;
+                    $q['words'][] = $body;
+                    $q['highlight'][] = $body;
+                    $q['and'][] = $body; // for backward compatibility
+                    break;
                 case 'P-:':
-                     $q['phrases'][]   = $body;
-                     break;
+                    $q['phrases'][] = $body;
+                    break;
                 case 'P+:':
-                     $q['phrases'][]   = $body;
-                     $q['highlight'][] = $body;
-                     break;
+                    $q['phrases'][] = $body;
+                    $q['highlight'][] = $body;
+                    break;
             }
         }
         foreach (['words', 'phrases', 'highlight', 'ns', 'notns', 'and', 'not'] as $key) {
-            $q[$key] = empty($q[$key]) ? array() : array_values(array_unique($q[$key]));
+            $q[$key] = empty($q[$key]) ? [] : array_values(array_unique($q[$key]));
         }
 
         return $q;
@@ -309,16 +320,16 @@ class QueryParser
     {
         $query = implode(' ', $and);
 
-        if (!empty($not)) {
+        if ($not !== []) {
             $query .= ' -' . implode(' -', $not);
         }
-        if (!empty($phrases)) {
+        if ($phrases !== []) {
             $query .= ' "' . implode('" "', $phrases) . '"';
         }
-        if (!empty($ns)) {
+        if ($ns !== []) {
             $query .= ' @' . implode(' @', $ns);
         }
-        if (!empty($notns)) {
+        if ($notns !== []) {
             $query .= ' ^' . implode(' ^', $notns);
         }
         return $query;

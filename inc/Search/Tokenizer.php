@@ -2,6 +2,9 @@
 
 namespace dokuwiki\Search;
 
+use dokuwiki\Utf8\Asian;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\Event;
 use dokuwiki\Utf8;
 
@@ -15,10 +18,10 @@ const MINWORDLENGTH = 2;
 class Tokenizer
 {
     /** @var array $Stopwords Words that tokenizer ignores */
-    protected static $Stopwords;
+    protected static array $Stopwords;
 
     /** @var int $MinWordLength minimum token length */
-    protected static $MinWordLength;
+    protected static int $MinWordLength;
 
     /**
      * Returns words that will be ignored
@@ -27,15 +30,15 @@ class Tokenizer
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public static function getStopwords()
+    public static function getStopwords(): array
     {
         if (!isset(static::$Stopwords)) {
             global $conf;
-            $swFile = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
+            $swFile = DOKU_INC . 'inc/lang/' . $conf['lang'] . '/stopwords.txt';
             if (file_exists($swFile)) {
                 static::$Stopwords = file($swFile, FILE_IGNORE_NEW_LINES);
             } else {
-                static::$Stopwords = array();
+                static::$Stopwords = [];
             }
         }
         return static::$Stopwords;
@@ -46,7 +49,7 @@ class Tokenizer
      *
      * @return int
      */
-    public static function getMinWordLength()
+    public static function getMinWordLength(): int
     {
         if (!isset(static::$MinWordLength)) {
             // set the minimum token length to use in the index
@@ -72,39 +75,41 @@ class Tokenizer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public static function getWords($text, $wc = false)
+    public static function getWords(string $text, bool $wc = false): array
     {
         $wc = ($wc) ? '' : '\*';
 
         // prepare the text to be tokenized
         $event = new Event('INDEXER_TEXT_PREPARE', $text);
-        if ($event->advise_before(true)) {
+        if ($event->advise_before()) {
             if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-                $text = Utf8\Asian::separateAsianWords($text);
+                $text = Asian::separateAsianWords($text);
             }
         }
         $event->advise_after();
         unset($event);
 
-        $text = strtr($text, array(
+        $text = strtr($text, [
                 "\r" => ' ',
                 "\n" => ' ',
                 "\t" => ' ',
                 "\xC2\xAD" => '', //soft-hyphen
-        ));
+        ]);
         if (preg_match('/[^0-9A-Za-z ]/u', $text)) {
-            $text = Utf8\Clean::stripspecials($text, ' ', '\._\-:'.$wc);
+            $text = Clean::stripspecials($text, ' ', '\._\-:' . $wc);
         }
 
         $wordlist = explode(' ', $text);
         foreach ($wordlist as $i => $word) {
             $wordlist[$i] = (preg_match('/[^0-9A-Za-z]/u', $word)) ?
-                Utf8\PhpString::strtolower($word) : strtolower($word);
+                PhpString::strtolower($word) : strtolower($word);
         }
 
         foreach ($wordlist as $i => $word) {
-            if ((!is_numeric($word) && strlen($word) < static::getMinWordLength())
-              || array_search($word, static::getStopwords(), true) !== false) {
+            if (
+                (!is_numeric($word) && strlen($word) < static::getMinWordLength())
+                || in_array($word, static::getStopwords(), true)
+            ) {
                 unset($wordlist[$i]);
             }
         }
@@ -138,7 +143,7 @@ class Tokenizer
      * @author Tom N Harris <tnharris@whoopdedo.org>
      *
      */
-    public static function tokenLength($token)
+    public static function tokenLength(string $token): int
     {
         $length = strlen($token);
         // If left alone, all chinese "words" will have the same lenght of 3, so the "length" of a "word" is faked
@@ -149,5 +154,4 @@ class Tokenizer
         }
         return $length;
     }
-
 }

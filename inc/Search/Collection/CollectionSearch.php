@@ -117,7 +117,7 @@ class CollectionSearch
                     }
                 }
             }
-            if (empty($tokenMatches)) continue;
+            if ($tokenMatches === []) continue;
 
             // resolve which entities have these tokens
             $freqs = $this->collection->resolveTokenFrequencies($group, array_keys($tokenMatches));
@@ -132,7 +132,7 @@ class CollectionSearch
             $groupResults[] = ['matches' => $tokenMatches, 'freqs' => $freqs];
         }
 
-        if (empty($allEntityIds)) return $this->allTerms;
+        if ($allEntityIds === []) return $this->allTerms;
 
         // Batch resolve entity IDs to names (single sequential file read)
         $entityMap = $this->collection->getEntityIndex()->retrieveRows(array_keys($allEntityIds));

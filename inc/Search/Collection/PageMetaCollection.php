@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Search\Collection;
 
+use dokuwiki\Utf8\Clean;
 use dokuwiki\Search\Index\AbstractIndex;
 use dokuwiki\Utf8;
 
@@ -43,7 +44,7 @@ class PageMetaCollection extends LookupCollection
      */
     public static function cleanName(string $name): string
     {
-        $name = Utf8\Clean::romanize(trim($name));
+        $name = Clean::romanize(trim($name));
         $name = preg_replace('#[ \./\\:-]+#', '_', $name);
         $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
         return strtolower($name);

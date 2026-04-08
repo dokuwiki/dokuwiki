@@ -17,11 +17,11 @@ use dokuwiki\Search\Exception\IndexWriteException;
  */
 class MemoryIndex extends AbstractIndex
 {
-    /** @var string the raw data lines of the index, no newlines */
-    protected $data;
+    /** @var string[] the raw data lines of the index, no newlines */
+    protected array $data = [];
 
     /** @var bool has the index been modified? */
-    protected $dirty = false;
+    protected bool $dirty = false;
 
     /**
      * Loads the full contents of the index into memory
@@ -31,8 +31,6 @@ class MemoryIndex extends AbstractIndex
     public function __construct($idx, $suffix = '', $isWritable = false)
     {
         parent::__construct($idx, $suffix, $isWritable);
-
-        $this->data = [];
         if (!file_exists($this->filename)) {
             return;
         }
@@ -52,7 +50,7 @@ class MemoryIndex extends AbstractIndex
      *
      * @inheritdoc
      */
-    public function unlock()
+    public function unlock(): void
     {
         if ($this->isDirty()) {
             try {
@@ -68,7 +66,7 @@ class MemoryIndex extends AbstractIndex
      * @inheritdoc
      * @throws IndexLockException
      */
-    public function changeRow($rid, $value)
+    public function changeRow(int $rid, string $value): void
     {
         if (!$this->isWritable) throw new IndexLockException();
 
@@ -83,7 +81,7 @@ class MemoryIndex extends AbstractIndex
      * @inheritdoc
      * @throws IndexLockException
      */
-    public function retrieveRow($rid)
+    public function retrieveRow(int $rid): string
     {
         if (isset($this->data[$rid])) {
             return $this->data[$rid];
@@ -95,7 +93,7 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
-    public function retrieveRows($rids)
+    public function retrieveRows(array $rids): array
     {
         $result = [];
         foreach ($rids as $rid) {
@@ -106,9 +104,9 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
-    public function getRowIDs($values)
+    public function getRowIDs(array $values): array
     {
-        $values = array_map('trim', $values);
+        $values = array_map(trim(...), $values);
         $values = array_fill_keys($values, 1); // easier access as associative array
 
         $result = [];
@@ -134,7 +132,7 @@ class MemoryIndex extends AbstractIndex
     }
 
     /** @inheritdoc */
-    public function search($re)
+    public function search(string $re): array
     {
         return preg_grep($re, $this->data);
     }
@@ -147,7 +145,7 @@ class MemoryIndex extends AbstractIndex
      * @throws IndexWriteException
      * @throws IndexLockException
      */
-    public function save()
+    public function save(): void
     {
         global $conf;
 
@@ -164,7 +162,7 @@ class MemoryIndex extends AbstractIndex
             throw new IndexWriteException("Failed to write $tempname");
         }
         fwrite($fh, implode("\n", $this->data));
-        if (count($this->data)) {
+        if ($this->data !== []) {
             fwrite($fh, "\n");
         }
         fclose($fh);
@@ -174,7 +172,7 @@ class MemoryIndex extends AbstractIndex
         }
 
         if (!io_rename($tempname, $this->filename)) {
-            throw new IndexWriteException("Failed to write {$this->filename}");
+            throw new IndexWriteException("Failed to write $this->filename");
         }
 
         $this->dirty = false;
@@ -184,7 +182,7 @@ class MemoryIndex extends AbstractIndex
      * Check if the index has been modified and needs to be saved
      * @return bool
      */
-    public function isDirty()
+    public function isDirty(): bool
     {
         return $this->dirty;
     }

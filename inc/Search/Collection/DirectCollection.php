@@ -24,7 +24,7 @@ abstract class DirectCollection extends AbstractCollection
     public function checkIntegrity(): void
     {
         $entityIndex = $this->getEntityIndex();
-        $tokenIndex = $this->getTokenIndex(0);
+        $tokenIndex = $this->getTokenIndex();
 
         if ($entityIndex->exists() && $tokenIndex->exists()) {
             $ec = count($entityIndex);
@@ -60,7 +60,7 @@ abstract class DirectCollection extends AbstractCollection
         $entityId = $entityIndex->accessCachedValue($entity);
 
         $token = $tokens[0] ?? '';
-        $tokenIndex = $this->getTokenIndex(0);
+        $tokenIndex = $this->getTokenIndex();
         $tokenIndex->changeRow($entityId, $token);
         $tokenIndex->save();
 
@@ -81,7 +81,7 @@ abstract class DirectCollection extends AbstractCollection
         $entityIndex = $this->getEntityIndex();
         $entityId = $entityIndex->accessCachedValue($entity);
 
-        $tokenIndex = $this->getTokenIndex(0);
+        $tokenIndex = $this->getTokenIndex();
         return $tokenIndex->retrieveRow($entityId);
     }
 
@@ -100,7 +100,7 @@ abstract class DirectCollection extends AbstractCollection
     public function getEntitiesWithData(): array
     {
         $entityIndex = $this->getEntityIndex();
-        $tokenIndex = $this->getTokenIndex(0);
+        $tokenIndex = $this->getTokenIndex();
 
         $entities = [];
         foreach ($tokenIndex as $entityId => $token) {

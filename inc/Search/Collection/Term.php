@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Search\Collection;
 
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Search\Tokenizer;
 use dokuwiki\Utf8;
 
@@ -14,10 +15,9 @@ use dokuwiki\Utf8;
  */
 class Term
 {
-
-    const WILDCARD_NONE = 0;
-    const WILDCARD_START = 1;
-    const WILDCARD_END = 2;
+    public const WILDCARD_NONE = 0;
+    public const WILDCARD_START = 1;
+    public const WILDCARD_END = 2;
 
     /** @var string the original term including wildcard chars */
     protected string $original;
@@ -32,7 +32,7 @@ class Term
     protected int $length;
 
     /** @var int The type of wildcards */
-    protected int $wildcard;
+    protected int $wildcard = self::WILDCARD_NONE;
 
     /** @var bool Whether to match case-insensitively */
     protected bool $isCaseInsensitive = false;
@@ -50,17 +50,16 @@ class Term
         $this->original = $term;
         $this->base = trim($term, '*');
         $this->quoted = preg_quote_cb($this->base);
-        $this->wildcard = self::WILDCARD_NONE;
         $this->length = Tokenizer::tokenLength($this->base);
 
         // handle wildcard
-        if (substr($term, 0, 1) === '*') {
+        if (str_starts_with($term, '*')) {
             $this->quoted = '.*' . $this->quoted;
             $this->wildcard += self::WILDCARD_START;
         }
 
-        if (substr($term, -1, 1) === '*') {
-            $this->quoted = $this->quoted . '.*';
+        if (str_ends_with($term, '*')) {
+            $this->quoted .= '.*';
             $this->wildcard += self::WILDCARD_END;
         }
     }
@@ -76,7 +75,7 @@ class Term
     public function caseInsensitive(): static
     {
         $this->isCaseInsensitive = true;
-        $this->base = Utf8\PhpString::strtolower($this->base);
+        $this->base = PhpString::strtolower($this->base);
         return $this;
     }
 
@@ -137,7 +136,7 @@ class Term
     public function matches(string $tokenValue): bool
     {
         if ($this->isCaseInsensitive) {
-            $tokenValue = Utf8\PhpString::strtolower($tokenValue);
+            $tokenValue = PhpString::strtolower($tokenValue);
         }
 
         return match ($this->wildcard) {
@@ -192,7 +191,7 @@ class Term
      */
     public function getEntityFrequencies(): array
     {
-        return array_map('array_sum', $this->matches);
+        return array_map(array_sum(...), $this->matches);
     }
 
     /**
@@ -202,7 +201,7 @@ class Term
      */
     public function getEntityTokens(): array
     {
-        return array_map('array_keys', $this->matches);
+        return array_map(array_keys(...), $this->matches);
     }
 
     /**
@@ -212,7 +211,7 @@ class Term
      */
     public function getTokens(): array
     {
-        if (empty($this->matches)) return [];
+        if ($this->matches === []) return [];
         return array_keys(array_merge(...array_values($this->matches)));
     }
 

@@ -57,7 +57,7 @@ class Indexer
      */
     protected function log(string $message): void
     {
-        if ($this->logger) ($this->logger)($message);
+        if ($this->logger)($this->logger)($message);
     }
 
     /**
@@ -71,7 +71,7 @@ class Indexer
      *
      * @return int|string
      */
-    public function getVersion()
+    public function getVersion(): int|string
     {
         static $indexer_version = null;
         if ($indexer_version == null) {
@@ -97,7 +97,7 @@ class Indexer
      */
     public function getAllPages(bool $existsFilter = false): array
     {
-        $pageIndex = new Index\MemoryIndex('page');
+        $pageIndex = new MemoryIndex('page');
         return array_filter(
             iterator_to_array($pageIndex),
             static fn($v) => $v !== '' && (!$existsFilter || page_exists($v, '', false))
@@ -137,7 +137,7 @@ class Indexer
     public function addPage(string $page, bool $force = false): void
     {
         if (!$this->needsIndexing($page, $force)) {
-            $this->log("Indexer: index for {$page} up to date");
+            $this->log("Indexer: index for $page up to date");
             return;
         }
 
@@ -217,7 +217,7 @@ class Indexer
     {
         $idxtag = metaFN($page, '.indexed');
         if (!$force && !file_exists($idxtag)) {
-            $this->log("Indexer: {$page}.indexed file does not exist, ignoring");
+            $this->log("Indexer: $page.indexed file does not exist, ignoring");
             return;
         }
 
@@ -230,7 +230,7 @@ class Indexer
             (new PageMetaCollection($key, $pageIndex))->lock()->addEntity($page, [])->unlock();
         }
 
-        $this->log("Indexer: deleted {$page} from index");
+        $this->log("Indexer: deleted $page from index");
         @unlink($idxtag);
     }
 
@@ -389,7 +389,7 @@ class Indexer
      * @param string $page page name
      * @param string $key metadata key name
      * @param string|string[]|null $value value(s) to add
-     * @return bool|string
+     * @return bool
      *
      * @deprecated 2026-04-07 use Collection classes directly instead
      */
@@ -406,7 +406,7 @@ class Indexer
             $collection->lock()->addEntity($page, $values)->unlock();
             $this->updateMetadataRegistry([$key]);
             return true;
-        } catch (SearchException $e) {
+        } catch (SearchException) {
             return false;
         }
     }
@@ -417,7 +417,7 @@ class Indexer
      * @param string $key metadata key name
      * @param string $oldvalue old value
      * @param string $newvalue new value
-     * @return bool|string
+     * @return bool
      *
      * @deprecated 2026-04-07 use Collection classes directly instead
      */
@@ -428,11 +428,11 @@ class Indexer
             $collection = new PageMetaCollection($key);
             $collection->lock();
 
-            $tokenIndex = $collection->getTokenIndex(0);
+            $tokenIndex = $collection->getTokenIndex();
 
             // find old value — search() is read-only, won't create entries
             $matches = $tokenIndex->search('/^' . preg_quote($oldvalue, '/') . '$/');
-            if (empty($matches)) {
+            if ($matches === []) {
                 $collection->unlock();
                 return true;
             }
@@ -441,10 +441,10 @@ class Indexer
             // check if new value already exists (read-only lookup)
             $newMatches = $tokenIndex->search('/^' . preg_quote($newvalue, '/') . '$/');
 
-            if (!empty($newMatches)) {
+            if ($newMatches !== []) {
                 // both values exist — merge frequency data from old to new
                 $newid = array_key_first($newMatches);
-                $freqIndex = $collection->getFrequencyIndex(0);
+                $freqIndex = $collection->getFrequencyIndex();
                 $reverseIndex = $collection->getReverseIndex();
                 $oldFreqLine = $freqIndex->retrieveRow($oldid);
 
@@ -460,7 +460,10 @@ class Indexer
                         if (!in_array((string)$newid, $keyline)) {
                             $keyline[] = $newid;
                         }
-                        $reverseIndex->changeRow((int)$entityId, implode(':', array_filter($keyline, fn($v) => $v !== '')));
+                        $reverseIndex->changeRow(
+                            (int)$entityId,
+                            implode(':', array_filter($keyline, fn($v) => $v !== ''))
+                        );
                     }
                     $freqIndex->changeRow($oldid, '');
                     $freqIndex->changeRow($newid, $newFreqLine);
@@ -472,7 +475,7 @@ class Indexer
 
             $collection->unlock();
             return true;
-        } catch (SearchException $e) {
+        } catch (SearchException) {
             return false;
         }
     }
@@ -490,7 +493,7 @@ class Indexer
         DebugHelper::dbgDeprecatedFunction(FileIndex::class);
         try {
             return (new FileIndex('page', '', true))->accessCachedValue($page);
-        } catch (SearchException $e) {
+        } catch (SearchException) {
             return false;
         }
     }
@@ -503,7 +506,7 @@ class Indexer
      *
      * @deprecated 2026-04-07 use CollectionSearch on PageFulltextCollection instead
      */
-    public function lookup(&$tokens)
+    public function lookup($tokens)
     {
         DebugHelper::dbgDeprecatedFunction(CollectionSearch::class);
         $collection = new PageFulltextCollection();
@@ -515,19 +518,14 @@ class Indexer
             $termMap[$token] = $term;
         }
 
-        if (empty($termMap)) return [];
+        if ($termMap === []) return [];
         $search->execute();
 
         $result = [];
         foreach ($termMap as $word => $term) {
             $freqs = $term->getEntityFrequencies();
             // filter to only existing pages
-            $filtered = [];
-            foreach ($freqs as $page => $count) {
-                if (page_exists($page, '', false)) {
-                    $filtered[$page] = $count;
-                }
-            }
+            $filtered = array_filter($freqs, fn($page) => page_exists($page, '', false), ARRAY_FILTER_USE_KEY);
             $result[$word] = $filtered;
         }
         return $result;

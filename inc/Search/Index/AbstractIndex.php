@@ -14,16 +14,16 @@ use dokuwiki\Search\Exception\IndexLockException;
 abstract class AbstractIndex implements \IteratorAggregate, \Countable
 {
     /** @var string name of the index */
-    protected $idx;
+    protected string $idx;
 
     /** @var string suffix of the index */
-    protected $suffix;
+    protected string $suffix;
 
     /** @var string full filename to the index */
-    protected $filename;
+    protected string $filename;
 
     /** @var bool has this instance acquired a lock? */
-    protected $isWritable = false;
+    protected bool $isWritable = false;
 
     /**
      * Initialize the index
@@ -38,7 +38,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param bool $isWritable acquire a lock immediately?
      * @throws IndexLockException
      */
-    public function __construct($idx, $suffix = '', $isWritable = false)
+    public function __construct(string $idx, string $suffix = '', bool $isWritable = false)
     {
         global $conf;
         $this->filename = $conf['indexdir'] . '/' . $idx . $suffix . '.idx';
@@ -52,7 +52,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      *
      * @throws IndexLockException
      */
-    public function lock()
+    public function lock(): void
     {
         if ($this->isWritable) return;
         Lock::acquire($this->idx);
@@ -65,7 +65,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * Decrements the reference count in the Lock registry. The filesystem
      * lock is only removed when the count reaches zero.
      */
-    public function unlock()
+    public function unlock(): void
     {
         if (!$this->isWritable) return;
         Lock::release($this->idx);
@@ -77,7 +77,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      *
      * @return bool
      */
-    public function isWritable()
+    public function isWritable(): bool
     {
         return $this->isWritable;
     }
@@ -93,7 +93,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
     /**
      * @return string the full path to the underlying file
      */
-    public function getFilename()
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -103,7 +103,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      *
      * @return bool
      */
-    public function exists()
+    public function exists(): bool
     {
         return file_exists($this->getFilename());
     }
@@ -115,7 +115,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      *
      * @return int 0 if no numeric suffix indexes are found
      */
-    public function max()
+    public function max(): int
     {
         global $conf;
         $result = 0;
@@ -139,7 +139,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param int $rid the line number, count starting at 0
      * @param string $value line content to write
      */
-    abstract public function changeRow($rid, $value);
+    abstract public function changeRow(int $rid, string $value);
 
     /**
      * Retrieve a line from the index
@@ -149,7 +149,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param int $rid the line number
      * @return string a line with trailing whitespace removed
      */
-    abstract public function retrieveRow($rid);
+    abstract public function retrieveRow(int $rid): string;
 
     /**
      * Retrieve multiple lines from the index
@@ -159,7 +159,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param int[] $rids
      * @return array [rid => value]
      */
-    abstract public function retrieveRows($rids);
+    abstract public function retrieveRows(array $rids): array;
 
     /**
      * Searches the Index for a given value
@@ -175,7 +175,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      *
      * @return int|null the RID of the entry, null if not found and not added
      */
-    public function getRowID($value)
+    public function getRowID(string $value): ?int
     {
         $result = $this->getRowIDs([$value]);
         return $result[$value] ?? null;
@@ -189,7 +189,7 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param string[] $values
      * @return array the RIDs of the entries (value => rid)
      */
-    abstract public function getRowIDs($values);
+    abstract public function getRowIDs(array $values): array;
 
     /**
      * Find all RIDs matching a regular expression
@@ -202,14 +202,14 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
      * @param string $re the regular expression to match against
      * @return array (rid => value)
      */
-    abstract public function search($re);
+    abstract public function search(string $re): array;
 
     /**
      * Clears the index by deleting its file
      *
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         @unlink($this->filename);
     }

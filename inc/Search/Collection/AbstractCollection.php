@@ -55,9 +55,8 @@ abstract class AbstractCollection
         protected string|AbstractIndex $idxToken,
         protected string $idxFrequency = '',
         protected string $idxReverse = '',
-        protected bool   $splitByLength = false
-    )
-    {
+        protected bool $splitByLength = false
+    ) {
         if ($idxToken instanceof AbstractIndex && $splitByLength) {
             throw new IndexUsageException('Cannot split by length when using a pre-instantiated token index');
         }
@@ -81,21 +80,22 @@ abstract class AbstractCollection
      */
     public function lock(): static
     {
-        foreach ([
+        foreach (
+            [
             $this->idxEntity,
             $this->idxToken,
             $this->idxFrequency,
             $this->idxReverse
-        ] as $idx) {
+            ] as $idx
+        ) {
             if ($idx === '') continue;
             try {
                 if ($idx instanceof AbstractIndex) {
                     $idx->lock();
-                    $this->lockedIndexes[] = $idx;
                 } else {
                     Lock::acquire($idx);
-                    $this->lockedIndexes[] = $idx;
                 }
+                $this->lockedIndexes[] = $idx;
             } catch (IndexLockException $e) {
                 $this->unlock();
                 throw $e;
@@ -215,7 +215,7 @@ abstract class AbstractCollection
     {
         $freqIndex = $this->getFrequencyIndex($group);
         if (!$freqIndex->exists()) return [];
-        return array_map([TupleOps::class, 'parseTuples'], $freqIndex->retrieveRows($tokenIds));
+        return array_map(TupleOps::parseTuples(...), $freqIndex->retrieveRows($tokenIds));
     }
 
     /**
@@ -236,7 +236,7 @@ abstract class AbstractCollection
             $freqIndex = $this->getFrequencyIndex($group);
             if (!$freqIndex->exists()) continue;
             foreach ($freqIndex as $line) {
-                foreach (TupleOps::parseTuples($line) as $entityId => $count) {
+                foreach (array_keys(TupleOps::parseTuples($line)) as $entityId) {
                     $entityIds[$entityId] = true;
                 }
             }
@@ -359,7 +359,6 @@ abstract class AbstractCollection
      * @param string[] $tokens The raw token list
      * @return array [group => [tokenId => frequency, ...], ...]
      * @throws IndexLockException
-     * @throws IndexWriteException
      */
     protected function resolveTokens(array $tokens): array
     {
@@ -437,7 +436,7 @@ abstract class AbstractCollection
     protected function saveReverseAssignments(string $entity, array $data): void
     {
         // remove tokens with frequency 0 (no longer assigned), then remove empty groups
-        $data = array_map('array_filter', $data);
+        $data = array_map(array_filter(...), $data);
         $data = array_filter($data);
 
         $record = $this->formatReverseRecord($data);
@@ -503,7 +502,6 @@ abstract class AbstractCollection
      * @param array $data [group => [tokenId => frequency, ...], ...]
      * @param int $entityId The entity ID
      * @throws IndexLockException
-     * @throws IndexWriteException
      */
     protected function updateIndexes(array $data, int $entityId): void
     {

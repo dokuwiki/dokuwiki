@@ -7,7 +7,7 @@ use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Collection\PageTitleCollection;
 use dokuwiki\Search\Query\QueryParser;
-use dokuwiki\Utf8;
+use dokuwiki\Utf8\Sort;
 
 /**
  * Class DokuWiki Metadata Search
@@ -29,12 +29,12 @@ class MetadataSearch
      * The function always returns titles as well
      *
      * @triggers SEARCH_QUERY_PAGELOOKUP
-     * @param string     $id       page id
-     * @param bool $in_ns    match against namespace as well?
+     * @param string $id page id
+     * @param bool $in_ns match against namespace as well?
      * @param bool $in_title search in title?
-     * @param int|string|null $after    only show results with mtime after this date,
+     * @param int|string|null $after only show results with mtime after this date,
      *                             accepts timestap or strtotime arguments
-     * @param int|string|null $before   only show results with mtime before this date,
+     * @param int|string|null $before only show results with mtime before this date,
      *                             accepts timestap or strtotime arguments
      *
      * @return string[]
@@ -43,12 +43,12 @@ class MetadataSearch
      *
      */
     public function pageLookup(
-        string     $id,
-        bool       $in_ns = false,
-        bool       $in_title = false,
+        string $id,
+        bool $in_ns = false,
+        bool $in_title = false,
         int|string|null $after = null,
-        int|string|null $before = null): array
-    {
+        int|string|null $before = null
+    ): array {
         $data = [
             'id' => $id,
             'in_ns' => $in_ns,
@@ -65,11 +65,10 @@ class MetadataSearch
      *
      * @param array $data event data
      * @return string[]
-     * @throws IndexUsageException
      */
-    public function pageLookupCallBack(array &$data): array
+    public function pageLookupCallBack(array $data): array
     {
-        $parsedQuery = (new QueryParser)->convert($data['id']);
+        $parsedQuery = (new QueryParser())->convert($data['id']);
         $ns = $parsedQuery['ns'] ? cleanID($parsedQuery['ns'][0]) . ':' : null;
         $notns = $parsedQuery['notns'] ? cleanID($parsedQuery['notns'][0]) . ':' : null;
         $query = ($ns || $notns) ? implode(' ', $parsedQuery['highlight']) : $data['id'];
@@ -182,27 +181,26 @@ class MetadataSearch
      * @param bool $ignore_perms Ignore the fact that pages are hidden or read-protected
      * @return string[] The pages that contain links to the given page
      *
-     * @throws IndexUsageException
      * @author     Andreas Gohr <andi@splitbrain.org>
      */
     public function backlinks(string $id, bool $ignore_perms = false): array
     {
         $result = $this->lookupKey('relation_references', $id);
-        if (!count($result)) return $result;
+        if ($result === []) return $result;
 
         $result = array_flip($result);
         $result = static::filterPages($result, $ignore_perms);
         $result = array_keys($result);
 
-        Utf8\Sort::sort($result);
+        Sort::sort($result);
         return $result;
     }
 
     /**
      * Returns the pages that use a given media file
      *
-     * @param string $id           The media id to look for
-     * @param bool   $ignore_perms Ignore hidden pages and acls (optional, default: false)
+     * @param string $id The media id to look for
+     * @param bool $ignore_perms Ignore hidden pages and acls (optional, default: false)
      * @return string[] A list of pages that use the given media file
      *
      * @author     Andreas Gohr <andi@splitbrain.org>
@@ -210,13 +208,13 @@ class MetadataSearch
     public function mediause(string $id, bool $ignore_perms = false): array
     {
         $result = $this->lookupKey('relation_media', $id);
-        if (!count($result)) return $result;
+        if ($result === []) return $result;
 
         $result = array_flip($result);
         $result = static::filterPages($result, $ignore_perms);
         $result = array_keys($result);
 
-        Utf8\Sort::sort($result);
+        Sort::sort($result);
         return $result;
     }
 
@@ -229,8 +227,12 @@ class MetadataSearch
      * @param int|string|null $before only keep pages modified before this date
      * @return array filtered pages
      */
-    public static function filterPages(array $pages, bool $ignorePerms = false, $after = null, $before = null): array
-    {
+    public static function filterPages(
+        array $pages,
+        bool $ignorePerms = false,
+        int|string|null $after = null,
+        int|string|null $before = null
+    ): array {
         if ($after) $after = is_int($after) ? $after : strtotime($after);
         if ($before) $before = is_int($before) ? $before : strtotime($before);
 
@@ -265,6 +267,6 @@ class MetadataSearch
     protected function pagesorter(string $a, string $b): int
     {
         $diff = substr_count($a, ':') - substr_count($b, ':');
-        return $diff ?: Utf8\Sort::strcmp($a, $b);
+        return $diff ?: Sort::strcmp($a, $b);
     }
 }

@@ -33,12 +33,11 @@ class NamespacePredicate implements StackEntry
      */
     public function filter(PageSet $pages): PageSet
     {
-        $result = [];
-        foreach ($pages->getPages() as $id => $score) {
-            if (str_starts_with($id, $this->prefix)) {
-                $result[$id] = $score;
-            }
-        }
+        $result = array_filter(
+            $pages->getPages(),
+            fn($id) => str_starts_with($id, $this->prefix),
+            ARRAY_FILTER_USE_KEY
+        );
         return new PageSet($result);
     }
 
@@ -47,12 +46,11 @@ class NamespacePredicate implements StackEntry
      */
     public function exclude(PageSet $pages): PageSet
     {
-        $result = [];
-        foreach ($pages->getPages() as $id => $score) {
-            if (!str_starts_with($id, $this->prefix)) {
-                $result[$id] = $score;
-            }
-        }
+        $result = array_filter(
+            $pages->getPages(),
+            fn($id) => !str_starts_with($id, $this->prefix),
+            ARRAY_FILTER_USE_KEY
+        );
         return new PageSet($result);
     }
 }

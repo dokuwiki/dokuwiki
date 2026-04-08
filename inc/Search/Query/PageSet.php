@@ -76,6 +76,6 @@ class PageSet implements StackEntry
      */
     public function isEmpty(): bool
     {
-        return empty($this->pages);
+        return $this->pages === [];
     }
 }

@@ -18,9 +18,8 @@ class TupleOps
      * @param int $count The count to store
      * @return string A new row value
      * @author Tom N Harris <tnharris@whoopdedo.org>
-     *
      */
-    public static function updateTuple($record, $key, $count)
+    public static function updateTuple(string $record, int|string $key, int $count): string
     {
         if ($record != '') {
             // remove any current version of the tuple (with or without explicit count)
@@ -29,9 +28,9 @@ class TupleOps
         $record = trim($record, ':');
         if ($count) {
             // Write tuples with frequency=1 without the asterisk
-            $tuple = ($count == 1) ? $key : "{$key}*{$count}";
+            $tuple = ($count == 1) ? $key : "$key*$count";
             if ($record !== '') {
-                return "{$tuple}:" . $record;
+                return "$tuple:" . $record;
             } else {
                 return $tuple;
             }
@@ -48,13 +47,13 @@ class TupleOps
      * @return int sum of all counts
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public static function aggregateTupleCounts($record)
+    public static function aggregateTupleCounts(string $record): int
     {
         $freq = 0;
         $parts = explode(':', $record);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
-            if (strpos($tuple, '*') !== false) {
+            if (str_contains($tuple, '*')) {
                 [/* $key */, $cnt] = explode('*', $tuple);
                 $freq += (int)$cnt;
             } else {
@@ -83,16 +82,16 @@ class TupleOps
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public static function parseTuples($record, $filtermap = null)
+    public static function parseTuples(string $record, ?array $filtermap = null): array
     {
-        $result = array();
+        $result = [];
         if ($record == '') return $result;
         $parts = explode(':', $record);
         foreach ($parts as $tuple) {
             if ($tuple === '') continue;
 
             // Handle both "key*count" and "key" formats
-            if (strpos($tuple, '*') !== false) {
+            if (str_contains($tuple, '*')) {
                 [$key, $cnt] = explode('*', $tuple);
                 if (!$cnt) continue;
             } else {

@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Search\Query;
 
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Collection\Term;
 use dokuwiki\Search\Indexer;
@@ -69,7 +70,7 @@ class QueryEvaluator
                 case 'W_:':
                     $word = substr($token, 3);
                     if (isset($this->terms[$word])) {
-                        $stack[] = new PageSet((array)$this->terms[$word]->getEntityFrequencies());
+                        $stack[] = new PageSet($this->terms[$word]->getEntityFrequencies());
                     }
                     break;
 
@@ -219,7 +220,7 @@ class QueryEvaluator
             ];
             $event = new Event('FULLTEXT_PHRASE_MATCH', $evdata);
             if ($event->advise_before() && $event->result !== true) {
-                $text = Utf8\PhpString::strtolower($evdata['text']);
+                $text = PhpString::strtolower($evdata['text']);
                 if (str_contains($text, $phrase)) {
                     $event->result = true;
                 }
@@ -276,7 +277,7 @@ class QueryEvaluator
      */
     protected function getAllPages(): PageSet
     {
-        if ($this->allPages === null) {
+        if (!$this->allPages instanceof PageSet) {
             $pages = (new Indexer())->getAllPages();
             $this->allPages = new PageSet(array_fill_keys($pages, 0));
         }

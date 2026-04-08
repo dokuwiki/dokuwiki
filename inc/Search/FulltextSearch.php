@@ -7,7 +7,9 @@ use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageFulltextCollection;
 use dokuwiki\Search\Query\QueryEvaluator;
 use dokuwiki\Search\Query\QueryParser;
-use dokuwiki\Utf8;
+use dokuwiki\Utf8\Asian;
+use dokuwiki\Utf8\Clean;
+use dokuwiki\Utf8\PhpString;
 
 /**
  * DokuWiki Fulltext Search
@@ -43,18 +45,23 @@ class FulltextSearch
      *
      * @triggers SEARCH_QUERY_FULLPAGE
      *
-     * @param string     $query   the search query string
-     * @param array      $highlight  will be filled with terms to highlight
-     * @param string     $sort    sort mode: 'hits' (default) or 'mtime'
-     * @param int|string $after   only show results with mtime after this date,
+     * @param string $query the search query string
+     * @param array $highlight will be filled with terms to highlight
+     * @param string|null $sort sort mode: 'hits' (default) or 'mtime'
+     * @param int|string|null $after only show results with mtime after this date,
      *                            accepts timestamp or strtotime arguments
-     * @param int|string $before  only show results with mtime before this date,
+     * @param int|string|null $before only show results with mtime before this date,
      *                            accepts timestamp or strtotime arguments
      *
      * @return array matching documents as pageid => score
      */
-    public function pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
-    {
+    public function pageSearch(
+        string $query,
+        array &$highlight,
+        ?string $sort = null,
+        int|string|null $after = null,
+        int|string|null $before = null
+    ): array {
         if ($sort === null) {
             $sort = 'hits';
         }
@@ -65,23 +72,23 @@ class FulltextSearch
             'before' => $before
         ];
         $data['highlight'] =& $highlight;
-        $action = [$this, 'pageSearchCallBack'];
+        $action = $this->pageSearchCallBack(...);
         return Event::createAndTrigger('SEARCH_QUERY_FULLPAGE', $data, $action);
     }
 
     /**
      * Returns a list of matching documents for the given query
      *
+     * @param array $data event data
+     * @return array       matching documents as pageid => score
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Kazutaka Miyasaka <kazmiya@gmail.com>
      *
-     * @param array $data  event data
-     * @return array       matching documents as pageid => score
      */
-    public function pageSearchCallBack(&$data)
+    public function pageSearchCallBack(array &$data): array
     {
         // parse the given query
-        $q = (new QueryParser)->convert($data['query']);
+        $q = (new QueryParser())->convert($data['query']);
         $data['highlight'] = $q['highlight'];
 
         if (empty($q['parsed_ary'])) return [];
@@ -99,15 +106,13 @@ class FulltextSearch
         $evaluator = new QueryEvaluator($q['parsed_ary'], $terms);
         $docs = $evaluator->evaluate();
 
-        if (empty($docs)) return [];
+        if ($docs === []) return [];
 
         // filter by visibility, acls, existence, and time range
         $docs = MetadataSearch::filterPages($docs, false, $data['after'], $data['before']);
 
         if ($data['sort'] === 'mtime') {
-            uksort($docs, static function ($a, $b) {
-                return filemtime(wikiFN($b)) - filemtime(wikiFN($a));
-            });
+            uksort($docs, static fn($a, $b) => filemtime(wikiFN($b)) - filemtime(wikiFN($a)));
         } else {
             arsort($docs);
         }
@@ -118,61 +123,64 @@ class FulltextSearch
     /**
      * Creates a snippet extract
      *
-     * @author Andreas Gohr <andi@splitbrain.org>
-     * @triggers FULLTEXT_SNIPPET_CREATE
-     *
      * @param string $id page id
      * @param array $highlight
      * @return mixed
+     * @author Andreas Gohr <andi@splitbrain.org>
+     * @triggers FULLTEXT_SNIPPET_CREATE
+     *
      */
-    public function snippet($id, $highlight)
+    public function snippet(string $id, array $highlight): mixed
     {
         $text = rawWiki($id);
-        $text = str_replace("\xC2\xAD",'',$text); // remove soft-hyphens
-        $evdata = array(
-            'id'        => $id,
-            'text'      => &$text,
+        $text = str_replace("\xC2\xAD", '', $text);
+        // remove soft-hyphens
+        $evdata = [
+            'id' => $id,
+            'text' => &$text,
             'highlight' => &$highlight,
-            'snippet'   => '',
-        );
+            'snippet' => '',
+        ];
 
         $evt = new Event('FULLTEXT_SNIPPET_CREATE', $evdata);
         if ($evt->advise_before()) {
-            $match = array();
-            $snippets = array();
-            $utf8_offset = $offset = $end = 0;
-            $len = Utf8\PhpString::strlen($text);
+            $match = [];
+            $snippets = [];
+            $utf8_offset = 0;
+            $offset = 0;
+            $end = 0;
+            $len = PhpString::strlen($text);
 
             // build a regexp from the phrases to highlight
             $re1 = '(' .
-                join(
+                implode(
                     '|',
                     array_map(
-                        [$this, 'snippetRePreprocess'],
+                        $this->snippetRePreprocess(...),
                         array_map(
-                            'preg_quote_cb',
-                            array_filter((array) $highlight)
+                            preg_quote_cb(...),
+                            array_filter($highlight)
                         )
                     )
                 ) .
                 ')';
-            $re2 = "$re1.{0,75}(?!\\1)$re1";
-            $re3 = "$re1.{0,45}(?!\\1)$re1.{0,45}(?!\\1)(?!\\2)$re1";
+            $re2 = "$re1.{0,75}(?!\\\\1)$re1";
+            $re3 = "$re1.{0,45}(?!\\\\1)$re1.{0,45}(?!\\\\1)(?!\\\\2)$re1";
 
-            for ($cnt=4; $cnt--;) {
+            for ($cnt = 4; $cnt--;) {
                 if (0) {
-                } elseif (preg_match('/'.$re3.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-                } elseif (preg_match('/'.$re2.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
-                } elseif (preg_match('/'.$re1.'/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+                } elseif (preg_match('/' . $re3 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+                } elseif (preg_match('/' . $re2 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
+                } elseif (preg_match('/' . $re1 . '/iu', $text, $match, PREG_OFFSET_CAPTURE, $offset)) {
                 } else {
                     break;
                 }
 
-                list($str, $idx) = $match[0];
+                [$str, $idx] = $match[0];
 
                 // convert $idx (a byte offset) into a utf8 character offset
-                $utf8_idx = Utf8\PhpString::strlen(substr($text, 0, $idx));
-                $utf8_len = Utf8\PhpString::strlen($str);
+                $utf8_idx = PhpString::strlen(substr($text, 0, $idx));
+                $utf8_len = PhpString::strlen($str);
 
                 // establish context, 100 bytes surrounding the match string
                 // first look to see if we can go 100 either side,
@@ -181,7 +189,8 @@ class FulltextSearch
                 $post = min($len - $utf8_idx - $utf8_len, 100);
 
                 if ($pre > 50 && $post > 50) {
-                    $pre = $post = 50;
+                    $pre = 50;
+                    $post = 50;
                 } elseif ($pre > 50) {
                     $pre = min($pre, 100 - $post);
                 } elseif ($post > 50) {
@@ -190,7 +199,7 @@ class FulltextSearch
                     // both are less than 50, means the context is the whole string
                     // make it so and break out of this loop - there is no need for the
                     // complex snippet calculations
-                    $snippets = array($text);
+                    $snippets = [$text];
                     break;
                 }
 
@@ -201,9 +210,9 @@ class FulltextSearch
                 $end = $utf8_idx + $utf8_len + $post;      // now set it to the end of this context
 
                 if ($append) {
-                    $snippets[count($snippets)-1] .= Utf8\PhpString::substr($text, $append, $end-$append);
+                    $snippets[count($snippets) - 1] .= PhpString::substr($text, $append, $end - $append);
                 } else {
-                    $snippets[] = Utf8\PhpString::substr($text, $start, $end-$start);
+                    $snippets[] = PhpString::substr($text, $start, $end - $start);
                 }
 
                 // set $offset for next match attempt
@@ -212,16 +221,16 @@ class FulltextSearch
                 // this prevents further matching of this snippet but for possible matches of length
                 // smaller than match length + context (at least 50 characters) this match is part of the context
                 $utf8_offset = $utf8_idx + $utf8_len;
-                $offset = $idx + strlen(Utf8\PhpString::substr($text, $utf8_idx, $utf8_len));
-                $offset = Utf8\Clean::correctIdx($text, $offset);
+                $offset = $idx + strlen(PhpString::substr($text, $utf8_idx, $utf8_len));
+                $offset = Clean::correctIdx($text, $offset);
             }
 
             $m = "\1";
-            $snippets = preg_replace('/'.$re1.'/iu', $m.'$1'.$m, $snippets);
+            $snippets = preg_replace('/' . $re1 . '/iu', $m . '$1' . $m, $snippets);
             $snippet = preg_replace(
                 '/' . $m . '([^' . $m . ']*?)' . $m . '/iu',
                 '<strong class="search_hit">$1</strong>',
-                hsc(join('... ', $snippets))
+                hsc(implode('... ', $snippets))
             );
 
             $evdata['snippet'] = $snippet;
@@ -238,10 +247,10 @@ class FulltextSearch
      * @param string $term
      * @return string
      */
-    public function snippetRePreprocess($term)
+    public function snippetRePreprocess(string $term): string
     {
         // do not process asian terms where word boundaries are not explicit
-        if (Utf8\Asian::isAsianWords($term)) return $term;
+        if (Asian::isAsianWords($term)) return $term;
 
         if (UTF8_PROPERTYSUPPORT) {
             // unicode word boundaries
@@ -254,19 +263,19 @@ class FulltextSearch
             $BR = '\b';
         }
 
-        if (substr($term, 0, 2) == '\\*') {
+        if (str_starts_with($term, '\\*')) {
             $term = substr($term, 2);
         } else {
-            $term = $BL.$term;
+            $term = $BL . $term;
         }
 
-        if (substr($term, -2, 2) == '\\*') {
+        if (str_ends_with($term, '\\*')) {
             $term = substr($term, 0, -2);
         } else {
-            $term = $term.$BR;
+            $term .= $BR;
         }
 
-        if ($term == $BL || $term == $BR || $term == $BL.$BR) {
+        if (in_array($term, [$BL, $BR, $BL . $BR])) {
             $term = '';
         }
         return $term;
