@@ -58,7 +58,7 @@ Both classes expose the same API, the only difference is their way of accessing 
 
 A FileIndex will read through the index file line-by-line without ever loading the full file into memory. Each modification will directly write back to the index.
 
-The MemoryIndex loads the whole file into an internal array. Changes are only written back when explicitly calling the ''save()'' method. A memory index is faster but requires more memory.
+The MemoryIndex loads the whole file into an internal array. Changes can be saved explicitly via the ''save()'' method and are also auto-saved when the index is unlocked or destroyed. This prevents data loss when indexes are used in tandem, where a new RID in one index may already be referenced by another. A memory index is faster but requires more memory.
 
 Which method to use depends mostly on the size of the file.
 

@@ -2,15 +2,17 @@
 
 namespace dokuwiki\Search\Index;
 
+use dokuwiki\Logger;
 use dokuwiki\Search\Exception\IndexLockException;
-use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Exception\IndexWriteException;
 
 /**
  * Access to a single index file
  *
  * Access using this class always happens by loading the full index into memory.
- * All modifications need to be explicitly made permanent using the save() method.
+ * Changes can be made permanent explicitly via save(), but will also be
+ * auto-saved on destruction to prevent data loss when indexes are used in tandem
+ * (a new RID in one index may already be referenced by another).
  * Should be used for small indexes that receive many changes at once.
  */
 class MemoryIndex extends AbstractIndex
@@ -38,14 +40,26 @@ class MemoryIndex extends AbstractIndex
     }
 
     /**
-     * Warn about dirty unlocks
+     * Auto-save dirty data before releasing the lock
+     *
+     * When indexes are used in tandem, a new RID written to one index may already
+     * be referenced by other indexes that were saved. Losing unsaved data here
+     * would leave dangling references, causing silent index corruption.
+     *
+     * The try/catch is necessary because unlock() is called from __destruct()
+     * (in the parent class), and PHP destructors must not throw — a throw
+     * during exception unwinding causes a fatal error.
      *
      * @inheritdoc
      */
     public function unlock()
     {
         if ($this->isDirty()) {
-            throw new IndexUsageException('MemoryIndex unlocked in dirty state - forgot to call save()?');
+            try {
+                $this->save();
+            } catch (\Exception $e) {
+                Logger::error('MemoryIndex failed to save on unlock: ' . $e->getMessage());
+            }
         }
         parent::unlock();
     }

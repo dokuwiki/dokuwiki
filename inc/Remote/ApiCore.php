@@ -575,7 +575,7 @@ class ApiCore
     {
         $page = $this->checkPage($page, 0, false);
         return (new MetadataSearch())->backlinks($page);
-   }
+    }
 
     /**
      * Lock the given set of pages

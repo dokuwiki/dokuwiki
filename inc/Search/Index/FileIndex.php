@@ -66,6 +66,11 @@ class FileIndex extends AbstractIndex
 
     /**
      * @inheritdoc
+     *
+     * When writable and the requested RID is beyond the end of the file,
+     * the file is padded with empty lines up to that RID. This avoids
+     * a more expensive line-by-line copy in a subsequent changeRow() call.
+     *
      * @throws IndexWriteException
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */

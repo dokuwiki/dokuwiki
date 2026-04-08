@@ -107,7 +107,7 @@ class TupleOps
             } else {
                 $mapped = $key;
             }
-            $result[$mapped] = $cnt;
+            $result[$mapped] = (int)$cnt;
         }
         return $result;
     }
