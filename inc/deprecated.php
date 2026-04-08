@@ -312,6 +312,7 @@ function idx_indexLengths($filter)
 function ft_pageSearch($query, &$highlight, $sort = null, $after = null, $before = null)
 {
     DebugHelper::dbgDeprecatedFunction(dokuwiki\Search\FulltextSearch::class . '::pageSearch()');
+    if (!is_array($highlight)) $highlight = [];
     return (new dokuwiki\Search\FulltextSearch())->pageSearch($query, $highlight, $sort, $after, $before);
 }
 

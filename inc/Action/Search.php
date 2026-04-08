@@ -74,6 +74,7 @@ class Search extends AbstractAction
         $this->pageLookupResults = (new MetadataSearch)->pageLookup(
                 $QUERY, true, useHeading('navigation'), $after, $before
         );
+        $highlight = [];
         $this->fullTextResults = (new FulltextSearch)->pageSearch(
                 $QUERY, $highlight, $INPUT->str('srt'), $after, $before
         );
