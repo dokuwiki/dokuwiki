@@ -243,7 +243,7 @@ For example, searching for ''wiki*'' might find:
   * ''getEntityFrequencies()'' returns ''['start' => 8]''
   * ''getMatches()'' returns ''['start' => ['wiki' => 5, 'wikitext' => 3]]''
 
-Term does not enforce minimum token length. For fulltext search, callers should filter short words before calling ''addTerm()'' using ''Tokenizer::getMinWordLength()''.
+Term does not enforce minimum token length. For fulltext search, callers should filter short words before calling ''addTerm()'' using ''Tokenizer::isValidSearchTerm($term)''.
 
 ==== Fulltext Search Query Processing ====
 
