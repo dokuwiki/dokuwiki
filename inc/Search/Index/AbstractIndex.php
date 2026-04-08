@@ -194,7 +194,10 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
     /**
      * Find all RIDs matching a regular expression
      *
-     * A full regular expression including delimiters and modifiers is expected
+     * A full regular expression including delimiters and modifiers is expected.
+     *
+     * For searching across collections, prefer using CollectionSearch which scans each
+     * index only once for all terms instead of once per term.
      *
      * @param string $re the regular expression to match against
      * @return array (rid => value)

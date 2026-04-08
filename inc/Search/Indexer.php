@@ -358,7 +358,7 @@ class Indexer
      *
      * @param string $key metadata key name
      * @param string|string[] $value search term(s)
-     * @param callable|null $func comparison function
+     * @param callable|null $func ignored, kept for backward compatibility
      * @return array
      *
      * @deprecated 2026-04-07 use MetadataSearch::lookupKey() instead
@@ -366,7 +366,7 @@ class Indexer
     public function lookupKey($key, &$value, $func = null)
     {
         DebugHelper::dbgDeprecatedFunction(MetadataSearch::class . '::lookupKey()');
-        return (new MetadataSearch())->lookupKey($key, $value, $func);
+        return (new MetadataSearch())->lookupKey($key, $value);
     }
 
     /**
@@ -510,12 +510,9 @@ class Indexer
         $search = new CollectionSearch($collection);
         $termMap = [];
         foreach ($tokens as $token) {
-            try {
-                $term = $search->addTerm($token);
-                $termMap[$token] = $term;
-            } catch (SearchException $e) {
-                // skip invalid terms
-            }
+            if (!Tokenizer::isValidSearchTerm($token)) continue;
+            $term = $search->addTerm($token);
+            $termMap[$token] = $term;
         }
 
         if (empty($termMap)) return [];

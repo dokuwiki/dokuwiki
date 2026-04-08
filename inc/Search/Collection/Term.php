@@ -2,13 +2,15 @@
 
 namespace dokuwiki\Search\Collection;
 
-use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Search\Tokenizer;
+use dokuwiki\Utf8;
 
 /**
- * Represents a term that is searched on a frequency based index
+ * Represents a search term that can match one or more tokens in an index
  *
- * A term can contain wildcards and thus may refer to various tokens of different lengths.
+ * A term can contain wildcards (* at start/end) and thus may refer to various tokens
+ * of different lengths. After a CollectionSearch executes, each Term holds the full
+ * match detail: which tokens matched on which entities with what frequencies.
  */
 class Term
 {
@@ -32,15 +34,16 @@ class Term
     /** @var int The type of wildcards */
     protected int $wildcard;
 
-    /** @var array<int, array<int, string>> The matching tokens for this term, keyed by group then token ID */
-    protected array $tokens = [];
+    /** @var bool Whether to match case-insensitively */
+    protected bool $isCaseInsensitive = false;
 
-    /** @var array<int|string, int> The entity frequencies this term matches (aggregated over all tokens), keyed by entity ID or name */
-    protected array $frequencies = [];
+    /** @var array<string, array<string, int>> Match results: [entityName => [tokenName => freq, ...], ...] */
+    protected array $matches = [];
+
+    // region Setup
 
     /**
      * @param string $term
-     * @throws SearchException
      */
     public function __construct(string $term)
     {
@@ -60,11 +63,21 @@ class Term
             $this->quoted = $this->quoted . '.*';
             $this->wildcard += self::WILDCARD_END;
         }
+    }
 
-        // ignore terms that are too short, with an exception on numbers
-        if ($this->length === 0 || ($this->length < Tokenizer::getMinWordLength() && !is_numeric($term))) {
-            throw new SearchException('Too short term');
-        }
+    /**
+     * Enable case-insensitive matching
+     *
+     * The fulltext token index is already lowercased by the Tokenizer, so this is only
+     * needed for metadata/title searches where indexed values preserve case.
+     *
+     * @return static
+     */
+    public function caseInsensitive(): static
+    {
+        $this->isCaseInsensitive = true;
+        $this->base = Utf8\PhpString::strtolower($this->base);
+        return $this;
     }
 
     /**
@@ -107,82 +120,101 @@ class Term
         return $this->wildcard;
     }
 
+    // endregion
+
+    // region Matching
+
     /**
-     * @return array [entity => frequency, ...]
+     * Check if a token value matches this term
+     *
+     * Uses efficient string functions instead of regex:
+     * exact match → ===, wildcards → str_starts_with/str_ends_with/str_contains.
+     * When caseInsensitive() is set, the token value is lowercased before comparison.
+     *
+     * @param string $tokenValue
+     * @return bool
+     */
+    public function matches(string $tokenValue): bool
+    {
+        if ($this->isCaseInsensitive) {
+            $tokenValue = Utf8\PhpString::strtolower($tokenValue);
+        }
+
+        return match ($this->wildcard) {
+            self::WILDCARD_NONE => $this->base === $tokenValue,
+            self::WILDCARD_END => str_starts_with($tokenValue, $this->base),
+            self::WILDCARD_START => str_ends_with($tokenValue, $this->base),
+            default => str_contains($tokenValue, $this->base),
+        };
+    }
+
+    // endregion
+
+    // region Results (populated by CollectionSearch at the end of execute())
+
+    /**
+     * Record that a token matched an entity with a given frequency
+     *
+     * When called multiple times for the same entity/token pair, frequencies are summed.
+     *
+     * @param string $entityName
+     * @param string $tokenName
+     * @param int $frequency
+     * @return void
+     * @internal Called by CollectionSearch::resolveAndPopulateTerms()
+     */
+    public function addMatch(string $entityName, string $tokenName, int $frequency): void
+    {
+        $this->matches[$entityName][$tokenName] =
+            ($this->matches[$entityName][$tokenName] ?? 0) + $frequency;
+    }
+
+    // endregion
+
+    // region Result accessors
+
+    /**
+     * Return the full match detail
+     *
+     * @return array<string, array<string, int>> [entityName => [tokenName => freq, ...], ...]
+     */
+    public function getMatches(): array
+    {
+        return $this->matches;
+    }
+
+    /**
+     * Return the matching entities and their aggregated frequencies
+     *
+     * Values are the total frequency across all matching tokens for each entity.
+     *
+     * @return array<string, int> [entityName => totalFrequency, ...]
      */
     public function getEntityFrequencies(): array
     {
-        return $this->frequencies;
+        return array_map('array_sum', $this->matches);
     }
 
     /**
-     * Add found token IDs for a specific index group
+     * Return the matched token names per entity
      *
-     * @param int $group Index group (length for split collections, 0 for non-split)
-     * @param array $tokens [tokenID => tokenName, ...]
-     * @return void
-     * @internal
+     * @return array<string, string[]> [entityName => [tokenName, ...], ...]
      */
-    public function addTokens(int $group, array $tokens): void
+    public function getEntityTokens(): array
     {
-        $this->tokens[$group] = [];
-        foreach ($tokens as $tokenID => $tokenName) {
-            $this->tokens[$group][$tokenID] = $tokenName;
-        }
+        return array_map('array_keys', $this->matches);
     }
 
     /**
-     * Return all tokens that match the given term
+     * Return all unique matched token values
      *
      * @return string[]
      */
     public function getTokens(): array
     {
-        if (empty($this->tokens)) return [];
-        return array_merge(...array_map('array_values', array_values($this->tokens)));
+        if (empty($this->matches)) return [];
+        return array_keys(array_merge(...array_values($this->matches)));
     }
 
-    /**
-     * Return all token IDs for a specific index group
-     *
-     * @param int $group Index group (length for split collections, 0 for non-split)
-     * @return int[]
-     */
-    public function getTokenIDsByGroup(int $group): array
-    {
-        return isset($this->tokens[$group]) ? array_keys($this->tokens[$group]) : [];
-    }
-
-    /**
-     * Mathematically add the given frequency to existing frequency for the entityID
-     *
-     * @param int $entityID
-     * @param int $frequency
-     * @return void
-     * @internal
-     */
-    public function addEntityFrequency(int $entityID, int $frequency): void
-    {
-        if (!isset($this->frequencies[$entityID])) {
-            $this->frequencies[$entityID] = 0;
-        }
-
-        $this->frequencies[$entityID] += $frequency;
-    }
-
-    /**
-     * Update the entity frequencies to use actual entity names
-     *
-     * @param array<int, string> $entityMap [entityID => entityName]
-     * @return void
-     */
-    public function resolveEntities(array $entityMap): void
-    {
-        $resolved = [];
-        foreach ($this->frequencies as $eid => $freq) {
-            $name = $entityMap[$eid];
-            $resolved[$name] = $freq;
-        }
-        $this->frequencies = $resolved;
-    }
+    // endregion
 }

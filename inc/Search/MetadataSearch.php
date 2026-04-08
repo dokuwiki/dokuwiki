@@ -6,7 +6,6 @@ use dokuwiki\Extension\Event;
 use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageMetaCollection;
 use dokuwiki\Search\Collection\PageTitleCollection;
-use dokuwiki\Search\Exception\IndexUsageException;
 use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8;
 
@@ -92,20 +91,19 @@ class MetadataSearch
 
         // additionally find pages matching by title
         if ($data['in_title']) {
-            foreach ($this->lookupKey('title', $query, static function ($search, $title) {
-                if (Utf8\Clean::isASCII($search)) {
-                    return stripos($title, $search) !== false;
-                }
-                return Utf8\PhpString::strpos(
-                    Utf8\PhpString::strtolower($title),
-                    Utf8\PhpString::strtolower($search)
-                ) !== false;
-            }) as $page) {
-                if ($ns && !str_starts_with($page, $ns)) continue;
-                if ($notns && str_starts_with($page, $notns)) continue;
+            $search = new CollectionSearch(new PageTitleCollection());
+            $search->caseInsensitive();
+            $search->addTerm('*' . $query . '*');
+            $terms = $search->execute();
+            $term = reset($terms);
+            if ($term) {
+                foreach ($term->getEntityTokens() as $page => $titles) {
+                    if ($ns && !str_starts_with($page, $ns)) continue;
+                    if ($notns && str_starts_with($page, $notns)) continue;
 
-                if (!isset($pages[$page])) {
-                    $pages[$page] = p_get_first_heading($page, METADATA_DONT_RENDER);
+                    if (!isset($pages[$page])) {
+                        $pages[$page] = $titles[0];
+                    }
                 }
             }
         }
@@ -140,42 +138,39 @@ class MetadataSearch
     /**
      * Find pages containing a metadata value
      *
-     * The metadata values are compared as case-sensitive strings. Pass a
-     * callback function that returns true or false to use a different
-     * comparison function. The function will be called with the $value being
-     * searched for as the first argument, and the word in the index as the
-     * second argument. The function preg_match can be used directly if the
-     * values are regexes.
+     * Values are compared as case-sensitive strings. Wildcard matching with * at
+     * the start and/or end is supported (e.g. '*foo', 'bar*', '*baz*').
      *
      * When $value is a string, the result is a flat list of matching page names.
      * When $value is an array, each value is searched independently and the result
      * is an associative array keyed by the search values, each containing a list
      * of matching page names.
      *
-     * Without a callback, values support wildcard matching with * at the start
-     * and/or end (e.g. '*foo', 'bar*', '*baz*').
-     *
      * @param string $key name of the metadata key to look for
      * @param string|string[] $value search term or array of search terms
-     * @param callable|null $func comparison function: fn($searchValue, $indexWord) => bool
      * @return array flat list of page names (scalar $value) or [value => [pageName, ...]] (array $value)
      *
-     * @throws IndexUsageException
      * @author Michael Hamann <michael@content-space.de>
      * @author Tom N Harris <tnharris@whoopdedo.org>
      */
-    public function lookupKey(string $key, string|array &$value, ?callable $func = null): array
+    public function lookupKey(string $key, string|array &$value): array
     {
         $isScalar = !is_array($value);
         $valueArray = $isScalar ? [$value] : $value;
 
-        if ($key === 'title') {
-            $collection = new PageTitleCollection();
-        } else {
-            $collection = new PageMetaCollection($key);
-        }
+        $collection = ($key === 'title') ? new PageTitleCollection() : new PageMetaCollection($key);
 
-        $result = (new CollectionSearch($collection))->lookup($valueArray, $func);
+        $search = new CollectionSearch($collection);
+        foreach ($valueArray as $v) {
+            $search->addTerm($v);
+        }
+        $terms = $search->execute();
+
+        $result = [];
+        foreach ($valueArray as $v) {
+            $term = $terms[$v] ?? null;
+            $result[$v] = $term ? array_keys($term->getEntityFrequencies()) : [];
+        }
 
         return $isScalar ? $result[$value] : $result;
     }

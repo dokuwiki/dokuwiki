@@ -2,12 +2,7 @@
 
 namespace dokuwiki\test\Search\Collection;
 
-use dokuwiki\Search\Collection\FulltextCollection;
-use dokuwiki\Search\Collection\FulltextCollectionSearch;
 use dokuwiki\Search\Collection\Term;
-use dokuwiki\Search\Exception\SearchException;
-use dokuwiki\Search\Index\MemoryIndex;
-use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Search\Tokenizer;
 
 class TermTest extends \DokuWikiTest
@@ -58,41 +53,23 @@ class TermTest extends \DokuWikiTest
 
     public function testEmptyTerm()
     {
-        $this->expectException(SearchException::class);
-        $this->expectExceptionMessageMatches('/short/i');
-        new Term('');
+        $term = new Term('');
+        $this->assertEquals('', $term->getOriginal());
+        $this->assertEquals('', $term->getBase());
+        $this->assertEquals(0, $term->getLength());
     }
 
-    public function testTokenAdding()
-    {
-        $term = new Term('*wiki*');
-        $term->addTokens(8, [0 => 'dokuwiki']);
-        $term->addTokens(5, [0 => 'wikis', 134 => 'awiki']);
-
-        $this->assertEquals(['dokuwiki', 'wikis', 'awiki'], $term->getTokens());
-
-        $this->assertEquals([0], $term->getTokenIDsByGroup(8));
-        $this->assertEquals([0, 134], $term->getTokenIDsByGroup(5));
-        $this->assertEquals([], $term->getTokenIDsByGroup(3));
-    }
-
-    public function testFrequencyAdding()
+    public function testAddMatch()
     {
         $term = new Term('dokuwiki');
 
-        $term->addEntityFrequency(7, 7);
-        $term->addEntityFrequency(7, 7);
-        $term->addEntityFrequency(8, 1);
-
-        $this->assertEquals([7 => 14, 8 => 1], $term->getEntityFrequencies());
-
-        $map = [
-            7 => 'page1',
-            8 => 'page2'
-        ];
-        $term->resolveEntities($map);
+        $term->addMatch('page1', 'dokuwiki', 7);
+        $term->addMatch('page1', 'dokuwiki', 7);
+        $term->addMatch('page2', 'dokuwiki', 1);
 
         $this->assertEquals(['page1' => 14, 'page2' => 1], $term->getEntityFrequencies());
+        $this->assertEquals(['dokuwiki'], $term->getTokens());
+        $this->assertEquals(['page1' => ['dokuwiki'], 'page2' => ['dokuwiki']], $term->getEntityTokens());
     }
 
     public function testNumericTerm()
@@ -140,50 +117,20 @@ class TermTest extends \DokuWikiTest
         $this->assertEquals(Term::WILDCARD_START + Term::WILDCARD_END, $term->getWildcard());
     }
 
-    public function testTooShortTerm()
+    public function testShortTerm()
     {
-        // Get the minimum word length
-        $minLength = Tokenizer::getMinWordLength();
-
-        if ($minLength > 1) {
-            $this->expectException(SearchException::class);
-            $this->expectExceptionMessageMatches('/short/i');
-            // Create a term that's too short (one character less than minimum)
-            new Term(str_repeat('a', $minLength - 1));
-        } else {
-            // If minimum length is 1 or less, this test doesn't apply
-            $this->markTestSkipped('Minimum word length is too small for this test');
-        }
+        // Short terms are now accepted — length filtering is the caller's responsibility
+        $term = new Term('a');
+        $this->assertEquals('a', $term->getBase());
+        $this->assertEquals(1, $term->getLength());
     }
 
     public function testOnlyWildcards()
     {
-        $this->expectException(SearchException::class);
-        $this->expectExceptionMessageMatches('/short/i');
-        new Term('***');
-    }
-
-    public function testMultipleLengthTokens()
-    {
-        $term = new Term('*wiki*');
-
-        // Add tokens of various lengths
-        $term->addTokens(4, [10 => 'wiki', 11 => 'mwiki']);
-        $term->addTokens(8, [20 => 'dokuwiki', 21 => 'pmwiki']);
-        $term->addTokens(9, [30 => 'mediawiki']);
-
-        // Check we get all tokens
-        $allTokens = $term->getTokens();
-        $this->assertCount(5, $allTokens);
-        $this->assertContains('wiki', $allTokens);
-        $this->assertContains('dokuwiki', $allTokens);
-        $this->assertContains('mediawiki', $allTokens);
-
-        // Check we can get tokens by specific length
-        $this->assertEquals([10, 11], $term->getTokenIDsByGroup(4));
-        $this->assertEquals([20, 21], $term->getTokenIDsByGroup(8));
-        $this->assertEquals([30], $term->getTokenIDsByGroup(9));
-        $this->assertEquals([], $term->getTokenIDsByGroup(5));
+        // Wildcards-only terms are accepted but have an empty base
+        $term = new Term('***');
+        $this->assertEquals('', $term->getBase());
+        $this->assertEquals(0, $term->getLength());
     }
 
     public function testFrequencyAggregationAcrossTokens()
@@ -191,63 +138,53 @@ class TermTest extends \DokuWikiTest
         // Simulate a search where term matches multiple tokens on the same entity
         $term = new Term('*wiki*');
 
-        // Entity 1 has multiple matching tokens
-        $term->addEntityFrequency(1, 5);  // first token appears 5 times
-        $term->addEntityFrequency(1, 3);  // second token appears 3 times
-        $term->addEntityFrequency(1, 2);  // third token appears 2 times
-
-        // Entity 2 has one matching token
-        $term->addEntityFrequency(2, 7);
+        $term->addMatch('page1', 'wiki', 5);
+        $term->addMatch('page1', 'dokuwiki', 3);
+        $term->addMatch('page1', 'wikitext', 2);
+        $term->addMatch('page2', 'wikipedia', 7);
 
         $frequencies = $term->getEntityFrequencies();
-        $this->assertEquals(10, $frequencies[1]); // 5 + 3 + 2
-        $this->assertEquals(7, $frequencies[2]);
-    }
+        $this->assertEquals(10, $frequencies['page1']); // 5 + 3 + 2
+        $this->assertEquals(7, $frequencies['page2']);
 
-    public function testEmptyTokensByLength()
-    {
-        $term = new Term('dokuwiki');
+        // getTokens returns all unique tokens
+        $tokens = $term->getTokens();
+        sort($tokens);
+        $this->assertEquals(['dokuwiki', 'wiki', 'wikipedia', 'wikitext'], $tokens);
 
-        // Before adding any tokens, getting by length should return empty
-        $this->assertEquals([], $term->getTokenIDsByGroup(8));
+        // getEntityTokens returns tokens per entity
+        $entityTokens = $term->getEntityTokens();
+        $this->assertCount(3, $entityTokens['page1']);
+        $this->assertEquals(['wikipedia'], $entityTokens['page2']);
 
-        // After adding tokens, querying a non-existent length returns empty
-        $term->addTokens(4, [10 => 'wiki']);
-        $this->assertEquals([], $term->getTokenIDsByGroup(8));
+        // getMatches returns full detail
+        $matches = $term->getMatches();
+        $this->assertEquals(['wiki' => 5, 'dokuwiki' => 3, 'wikitext' => 2], $matches['page1']);
+        $this->assertEquals(['wikipedia' => 7], $matches['page2']);
     }
 
     public function testZeroFrequency()
     {
         $term = new Term('dokuwiki');
 
-        $term->addEntityFrequency(1, 5);
-        $term->addEntityFrequency(2, 0);  // Zero frequency
-        $term->addEntityFrequency(3, 3);
-
-        $frequencies = $term->getEntityFrequencies();
-        $this->assertEquals(5, $frequencies[1]);
-        $this->assertEquals(0, $frequencies[2]);  // Zero is stored
-        $this->assertEquals(3, $frequencies[3]);
-    }
-
-    public function testResolveEntitiesPartialMap()
-    {
-        $term = new Term('dokuwiki');
-
-        $term->addEntityFrequency(1, 5);
-        $term->addEntityFrequency(2, 3);
-
-        // Resolve with partial map - only some entities are mapped
-        $map = [
-            1 => 'page1',
-            2 => 'page2'
-        ];
-        $term->resolveEntities($map);
+        $term->addMatch('page1', 'dokuwiki', 5);
+        $term->addMatch('page2', 'dokuwiki', 0);
+        $term->addMatch('page3', 'dokuwiki', 3);
 
         $frequencies = $term->getEntityFrequencies();
         $this->assertEquals(5, $frequencies['page1']);
-        $this->assertEquals(3, $frequencies['page2']);
-        $this->assertCount(2, $frequencies);
+        $this->assertEquals(0, $frequencies['page2']);
+        $this->assertEquals(3, $frequencies['page3']);
+    }
+
+    public function testEmptyResults()
+    {
+        $term = new Term('dokuwiki');
+
+        $this->assertEquals([], $term->getMatches());
+        $this->assertEquals([], $term->getEntityFrequencies());
+        $this->assertEquals([], $term->getEntityTokens());
+        $this->assertEquals([], $term->getTokens());
     }
 
     public function testCaseSensitiveBase()

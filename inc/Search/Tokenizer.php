@@ -112,6 +112,23 @@ class Tokenizer
     }
 
     /**
+     * Check if a search term meets the minimum length requirement
+     *
+     * Strips wildcard characters, then checks the base against the minimum
+     * word length. Numeric terms are always accepted.
+     *
+     * @param string $term the search term, may include * wildcards
+     * @return bool true if the term is valid for searching
+     */
+    public static function isValidSearchTerm(string $term): bool
+    {
+        $base = trim($term, '*');
+        if ($base === '') return false;
+        if (is_numeric($base)) return true;
+        return static::tokenLength($base) >= static::getMinWordLength();
+    }
+
+    /**
      * Measure the length of a string
      *
      * Differs from strlen in handling of asian characters, otherwise byte lengths are used

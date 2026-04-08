@@ -32,7 +32,7 @@ The ''FulltextSearch'' class handles fulltext search queries.
 The ''MetadataSearch'' class provides search operations on page metadata.
 
   * ''pageLookup($id, $in_ns, $in_title, $after, $before)'' - Quick search for page names. Optionally matches against the namespace and title.
-  * ''lookupKey($key, $value, $func)'' - Find pages by metadata value. Supports exact match, wildcards (''*'' at start/end) or a custom comparison callback. When ''$value'' is a string the result is a flat list of page names. When it is an array, the result is keyed by each search value.
+  * ''lookupKey($key, $value)'' - Find pages by metadata value. Supports exact match and wildcards (''*'' at start/end). When ''$value'' is a string the result is a flat list of page names. When it is an array, the result is keyed by each search value.
   * ''backlinks($id, $ignore_perms)'' - Find all pages linking to ''$id''.
   * ''mediause($id, $ignore_perms)'' - Find all pages using a media file.
   * ''getPages($key)'' - Return all indexed pages, optionally limited to those having a value for the given metadata key.
@@ -212,22 +212,20 @@ The [[devel:event:INDEXER_TEXT_PREPARE]] event fires before tokenization, allowi
 
 ==== CollectionSearch and Terms ====
 
-The ''CollectionSearch'' class executes searches against any collection. It provides two APIs:
-
-=== Term-based search ===
-
-Used by fulltext search. Terms are validated against the minimum token length.
+The ''CollectionSearch'' class executes searches against any collection. Use ''addTerm()'' to register search terms, then call ''execute()''.
 
 <code php>
 $search = new CollectionSearch($collection);
 $search->addTerm('wiki*');
 $terms = $search->execute();
 foreach ($terms as $term) {
-    // $term->getEntityFrequencies() returns [entityName => frequency, ...]
+    $term->getEntityFrequencies(); // [entityName => totalFrequency, ...]
+    $term->getEntityTokens();      // [entityName => [tokenName, ...], ...]
+    $term->getMatches();           // [entityName => [tokenName => freq, ...], ...]
 }
 </code>
 
-''addTerm()'' returns a ''Term'' object. After ''execute()'', each Term holds the matching entities and their aggregated frequencies.
+''addTerm()'' returns a ''Term'' object. After ''execute()'', each Term holds the full match detail: which tokens matched on which entities with what frequencies. Various accessors provide different views on this data.
 
 A ''Term'' represents a single search query component that can match one or more tokens in an index. Terms can include wildcards using the ''*'' character:
   * ''wiki'' - matches exactly "wiki"
@@ -235,30 +233,17 @@ A ''Term'' represents a single search query component that can match one or more
   * ''*wiki'' - matches tokens ending with "wiki" (e.g., "wiki", "dokuwiki")
   * ''*wiki*'' - matches tokens containing "wiki" anywhere (e.g., "wiki", "dokuwiki", "wikitext")
 
+Matching uses efficient string functions (''==='' for exact, ''str_starts_with''/''str_ends_with''/''str_contains'' for wildcards). For case-insensitive matching, call ''caseInsensitive()'' on the search or on individual terms. This is useful for metadata/title searches where indexed values preserve case (the fulltext token index is already lowercased by the Tokenizer).
+
 Terms organize their matching tokens by length. This is crucial for working with split indexes: a term like ''*wiki*'' might match 4-letter words (wiki), 8-letter words (dokuwiki), and 9-letter words (wikilinks) but never 3-letter words, because the base term "wiki" is 4 letters long. Each length group can be looked up in the corresponding suffixed token index, allowing efficient searching without loading irrelevant files.
 
-During a search operation, Terms:
-  - Collect all token IDs that match the term pattern (organized by token length)
-  - Look up which entities contain those tokens
-  - Aggregate the frequencies across all matching tokens
-  - Map entity IDs to entity names for the final result
-
 For example, searching for ''wiki*'' might find:
-  * Token "wiki" (ID 42) appears 5 times on page "start" (ID 10)
-  * Token "wikitext" (ID 87) appears 3 times on page "start" (ID 10)
-  * Term result: "start" matches with total frequency 8
+  * Token "wiki" appears 5 times on page "start"
+  * Token "wikitext" appears 3 times on page "start"
+  * ''getEntityFrequencies()'' returns ''['start' => 8]''
+  * ''getMatches()'' returns ''['start' => ['wiki' => 5, 'wikitext' => 3]]''
 
-Terms are validated on creation. The base term (without wildcards) must meet the minimum token length configured in the Tokenizer. Numeric terms are exempt from this check. Terms that are too short throw a SearchException.
-
-=== Lookup search ===
-
-Used by metadata search. No minimum length restrictions. Supports exact match, wildcards, and custom callbacks.
-
-<code php>
-$search = new CollectionSearch($collection);
-$result = $search->lookup(['targetpage', 'other*'], $callbackOrNull);
-// $result = ['targetpage' => ['page1', 'page2'], 'other*' => ['page3']]
-</code>
+Term does not enforce minimum token length. For fulltext search, callers should filter short words before calling ''addTerm()'' using ''Tokenizer::getMinWordLength()''.
 
 ==== Fulltext Search Query Processing ====
 

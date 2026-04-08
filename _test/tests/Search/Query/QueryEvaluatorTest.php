@@ -23,15 +23,9 @@ class QueryEvaluatorTest extends \DokuWikiTest
     protected function makeTerm(string $word, array $frequencies): Term
     {
         $term = new Term($word);
-        // Use addEntityFrequency with numeric IDs, then resolve with a map
-        $map = [];
-        $id = 0;
         foreach ($frequencies as $page => $freq) {
-            $term->addEntityFrequency($id, $freq);
-            $map[$id] = $page;
-            $id++;
+            $term->addMatch($page, $word, $freq);
         }
-        $term->resolveEntities($map);
         return $term;
     }
 

@@ -25,17 +25,13 @@ class CollectionSearchTest extends \DokuWikiTest
         // execute search
         $search->execute();
 
-        // inspect the term updates first:
-
         // exact search should only match one token
-        $this->assertEquals(['dokuwiki'],  $term->getTokens());
-        // that token is 8 chars and should be the first in the index
-        $this->assertEquals([0], $term->getTokenIDsByGroup(8));
+        $this->assertEquals(['dokuwiki'], $term->getTokens());
         // the dokuwiki token is two times on page1 and 1 time on page2
         $this->assertEquals(['page1' => 2, 'page2' => 1], $term->getEntityFrequencies());
-
-        // entity IDs should be available from the search
-        $this->assertEquals([0 => 'page1', 1 => 'page2'], $search->getEntities());
+        // full detail available
+        $this->assertEquals(['dokuwiki' => 2], $term->getMatches()['page1']);
+        $this->assertEquals(['dokuwiki' => 1], $term->getMatches()['page2']);
 
     }
 
@@ -119,15 +115,15 @@ class CollectionSearchTest extends \DokuWikiTest
 
         $this->assertEmpty($term->getTokens());
         $this->assertEmpty($term->getEntityFrequencies());
-        $this->assertEmpty($search->getEntities());
+        $this->assertEmpty($term->getMatches());
     }
 
-    // --- lookup() tests ---
+    // --- metadata-style search tests (using addTerm/execute without length restrictions) ---
 
     /**
-     * Exact lookup on a non-split LookupCollection
+     * Exact search on a non-split LookupCollection
      */
-    public function testLookupExact()
+    public function testMetadataExact()
     {
         $collection = new MockLookupCollection('le_entity', 'le_token', 'le_freq', 'le_reverse');
         $collection->lock();
@@ -136,19 +132,18 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->unlock();
 
         $search = new CollectionSearch($collection);
-        $result = $search->lookup('wiki:syntax');
+        $term = $search->addTerm('wiki:syntax');
+        $search->execute();
 
-        $this->assertCount(1, $result);
-        $this->assertArrayHasKey('wiki:syntax', $result);
-        $pages = $result['wiki:syntax'];
+        $pages = array_keys($term->getEntityFrequencies());
         sort($pages);
         $this->assertEquals(['wiki:other', 'wiki:start'], $pages);
     }
 
     /**
-     * Wildcard lookup on a non-split LookupCollection
+     * Wildcard search on a non-split LookupCollection
      */
-    public function testLookupWildcard()
+    public function testMetadataWildcard()
     {
         $collection = new MockLookupCollection('lw_entity', 'lw_token', 'lw_freq', 'lw_reverse');
         $collection->lock();
@@ -156,27 +151,30 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->addEntity('wiki:other', ['wiki:syntax', 'other:page']);
         $collection->unlock();
 
-        $search = new CollectionSearch($collection);
-
         // end wildcard: wiki:* matches wiki:syntax and wiki:welcome
-        // wiki:start has both tokens, so it appears twice; wiki:other has wiki:syntax once
-        $result = $search->lookup('wiki:*');
-        $pages = $result['wiki:*'];
+        $search = new CollectionSearch($collection);
+        $term = $search->addTerm('wiki:*');
+        $search->execute();
+
+        $pages = array_keys($term->getEntityFrequencies());
         sort($pages);
-        $this->assertEquals(['wiki:other', 'wiki:start', 'wiki:start'], $pages);
+        // wiki:start has both tokens (freq 2), wiki:other has wiki:syntax (freq 1)
+        $this->assertEquals(['wiki:other', 'wiki:start'], $pages);
 
         // start wildcard: *syntax matches only wiki:syntax
         $search2 = new CollectionSearch($collection);
-        $result2 = $search2->lookup('*syntax');
-        $pages2 = $result2['*syntax'];
+        $term2 = $search2->addTerm('*syntax');
+        $search2->execute();
+
+        $pages2 = array_keys($term2->getEntityFrequencies());
         sort($pages2);
         $this->assertEquals(['wiki:other', 'wiki:start'], $pages2);
     }
 
     /**
-     * Callback lookup on a non-split LookupCollection
+     * Case-insensitive search on a non-split LookupCollection
      */
-    public function testLookupCallback()
+    public function testMetadataCaseInsensitive()
     {
         $collection = new MockLookupCollection('lc_entity', 'lc_token', 'lc_freq', 'lc_reverse');
         $collection->lock();
@@ -185,18 +183,19 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->unlock();
 
         $search = new CollectionSearch($collection);
-        // case-insensitive substring match
-        $result = $search->lookup('apple', static fn($search, $word) => stripos($word, $search) !== false);
+        $search->caseInsensitive();
+        $term = $search->addTerm('*apple*');
+        $search->execute();
 
-        $pages = $result['apple'];
+        $pages = array_keys($term->getEntityFrequencies());
         sort($pages);
         $this->assertEquals(['wiki:other', 'wiki:start'], $pages);
     }
 
     /**
-     * lookup() on a DirectCollection (title-style 1:1 mapping)
+     * Search on a DirectCollection (title-style 1:1 mapping)
      */
-    public function testLookupOnDirectCollection()
+    public function testSearchOnDirectCollection()
     {
         $collection = new MockDirectCollection('ld_entity', 'ld_token');
         $collection->lock();
@@ -205,27 +204,30 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->addEntity('wiki:other', ['Other Page']);
         $collection->unlock();
 
-        $search = new CollectionSearch($collection);
-
         // exact match
-        $result = $search->lookup('Welcome to DokuWiki');
-        $this->assertEquals(['wiki:start'], $result['Welcome to DokuWiki']);
+        $search = new CollectionSearch($collection);
+        $term = $search->addTerm('Welcome to DokuWiki');
+        $search->execute();
+        $this->assertEquals(['wiki:start'], array_keys($term->getEntityFrequencies()));
 
         // wildcard match
         $search2 = new CollectionSearch($collection);
-        $result2 = $search2->lookup('*Syntax');
-        $this->assertEquals(['wiki:syntax'], $result2['*Syntax']);
+        $term2 = $search2->addTerm('*Syntax');
+        $search2->execute();
+        $this->assertEquals(['wiki:syntax'], array_keys($term2->getEntityFrequencies()));
 
-        // callback match (case-insensitive substring)
+        // case-insensitive substring match
         $search3 = new CollectionSearch($collection);
-        $result3 = $search3->lookup('wiki', static fn($s, $w) => stripos($w, $s) !== false);
-        $this->assertEquals(['wiki:start'], $result3['wiki']);
+        $search3->caseInsensitive();
+        $term3 = $search3->addTerm('*wiki*');
+        $search3->execute();
+        $this->assertEquals(['wiki:start'], array_keys($term3->getEntityFrequencies()));
     }
 
     /**
-     * lookup() with multiple values
+     * Multiple terms in a single search
      */
-    public function testLookupMultipleValues()
+    public function testMultipleTerms()
     {
         $collection = new MockLookupCollection('lm_entity', 'lm_token', 'lm_freq', 'lm_reverse');
         $collection->lock();
@@ -234,19 +236,22 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->unlock();
 
         $search = new CollectionSearch($collection);
-        $result = $search->lookup(['wiki:syntax', 'wiki:welcome', 'nonexistent']);
+        $term1 = $search->addTerm('wiki:syntax');
+        $term2 = $search->addTerm('wiki:welcome');
+        $term3 = $search->addTerm('nonexistent');
+        $search->execute();
 
-        $syntax = $result['wiki:syntax'];
+        $syntax = array_keys($term1->getEntityFrequencies());
         sort($syntax);
         $this->assertEquals(['wiki:other', 'wiki:start'], $syntax);
-        $this->assertEquals(['wiki:start'], $result['wiki:welcome']);
-        $this->assertEquals([], $result['nonexistent']);
+        $this->assertEquals(['wiki:start'], array_keys($term2->getEntityFrequencies()));
+        $this->assertEquals([], array_keys($term3->getEntityFrequencies()));
     }
 
     /**
-     * lookup() on a split FrequencyCollection
+     * Search on a split FrequencyCollection
      */
-    public function testLookupOnSplitCollection()
+    public function testSearchOnSplitCollection()
     {
         $collection = new MockFrequencyCollection('ls_page', 'ls_w', 'ls_i', 'ls_pageword');
         $collection->lock();
@@ -255,9 +260,10 @@ class CollectionSearchTest extends \DokuWikiTest
         $collection->unlock();
 
         $search = new CollectionSearch($collection);
-        $result = $search->lookup('dokuwiki');
+        $term = $search->addTerm('dokuwiki');
+        $search->execute();
 
-        $pages = $result['dokuwiki'];
+        $pages = array_keys($term->getEntityFrequencies());
         sort($pages);
         $this->assertEquals(['page1', 'page2'], $pages);
     }
@@ -276,14 +282,15 @@ class CollectionSearchTest extends \DokuWikiTest
     }
 
     /**
-     * Lookup on an empty collection returns empty arrays
+     * Search on an empty collection returns empty frequencies
      */
-    public function testLookupEmptyCollection()
+    public function testSearchEmptyCollection2()
     {
         $collection = new MockFrequencyCollection('empty2_page', 'empty2_w', 'empty2_i', 'empty2_pw');
 
         $search = new CollectionSearch($collection);
-        $result = $search->lookup('anything');
-        $this->assertEquals([], $result['anything']);
+        $term = $search->addTerm('anything');
+        $search->execute();
+        $this->assertEquals([], $term->getEntityFrequencies());
     }
 }

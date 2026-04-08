@@ -5,7 +5,6 @@ namespace dokuwiki\Search;
 use dokuwiki\Extension\Event;
 use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageFulltextCollection;
-use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Search\Query\QueryEvaluator;
 use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8;
@@ -91,11 +90,8 @@ class FulltextSearch
         $collection = new PageFulltextCollection();
         $search = new CollectionSearch($collection);
         foreach ($q['words'] as $word) {
-            try {
-                $search->addTerm($word);
-            } catch (SearchException $e) {
-                // term too short or invalid, skip
-            }
+            if (!Tokenizer::isValidSearchTerm($word)) continue;
+            $search->addTerm($word);
         }
         $terms = $search->execute();
 
