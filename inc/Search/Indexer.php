@@ -19,7 +19,7 @@ use dokuwiki\Search\Index\MemoryIndex;
 use dokuwiki\Search\Index\TupleOps;
 
 // Version tag used to force rebuild on upgrade
-const INDEXER_VERSION = 8;
+const INDEXER_VERSION = 9;
 
 /**
  * Class DokuWiki Indexer
