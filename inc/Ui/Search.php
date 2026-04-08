@@ -32,7 +32,7 @@ class Search extends Ui
         global $QUERY;
 
         $this->query = $QUERY;
-        $this->parsedQuery = (new QueryParser)->convert($QUERY);
+        $this->parsedQuery = (new QueryParser)->convert($QUERY ?? '');
         $this->searchState = new SearchState($this->parsedQuery);
 
         $this->pageLookupResults = $pageLookupResults;
