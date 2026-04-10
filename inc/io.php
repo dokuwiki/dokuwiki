@@ -120,10 +120,8 @@ function io_readFile($file, $clean = true)
     if (file_exists($file)) {
         if (str_ends_with($file, '.gz')) {
             if (!DOKU_HAS_GZIP) return false;
-            $ret = gzfile($file);
-            if (is_array($ret)) {
-                $ret = implode('', $ret);
-            }
+            $ret = @gzdecode(file_get_contents($file));
+            if ($ret === false) return false;
         } elseif (str_ends_with($file, '.bz2')) {
             if (!DOKU_HAS_BZIP) return false;
             $ret = bzfile($file);
