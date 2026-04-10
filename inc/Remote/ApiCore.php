@@ -14,6 +14,9 @@ use dokuwiki\Remote\Response\Page;
 use dokuwiki\Remote\Response\PageChange;
 use dokuwiki\Remote\Response\PageHit;
 use dokuwiki\Remote\Response\User;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -291,7 +294,7 @@ class ApiCore
     protected function getAllPages($hash = false)
     {
         $list = [];
-        $pages = idx_get_indexer()->getPages();
+        $pages = (new Indexer())->getAllPages();
         Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
@@ -325,14 +328,15 @@ class ApiCore
     public function searchPages($query)
     {
         $regex = [];
-        $data = ft_pageSearch($query, $regex);
+        $FulltextSearch = new FulltextSearch();
+        $data = $FulltextSearch->pageSearch($query, $regex);
         $pages = [];
 
         // prepare additional data
         $idx = 0;
         foreach ($data as $id => $score) {
-            if ($idx < FT_SNIPPET_NUMBER) {
-                $snippet = ft_snippet($id, $regex);
+            if ($idx < $FulltextSearch->getMaxSnippets()) {
+                $snippet = $FulltextSearch->snippet($id, $regex);
                 $idx++;
             } else {
                 $snippet = '';
@@ -570,8 +574,7 @@ class ApiCore
     public function getPageBackLinks($page)
     {
         $page = $this->checkPage($page, 0, false);
-
-        return ft_backlinks($page);
+        return (new MetadataSearch())->backlinks($page);
     }
 
     /**
@@ -698,7 +701,11 @@ class ApiCore
         unlock($page);
 
         // run the indexer if page wasn't indexed yet
-        idx_addPage($page);
+        try {
+            (new Indexer())->addPage($page);
+        } catch (\Exception $e) {
+            // indexing failure is non-fatal, the page was saved successfully
+        }
 
         return true;
     }
@@ -912,7 +919,7 @@ class ApiCore
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
-        return ft_mediause($media);
+        return (new \dokuwiki\Search\MetadataSearch())->mediause($media);
     }
 
     /**

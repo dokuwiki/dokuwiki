@@ -3,6 +3,8 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Logger;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use dokuwiki\ChangeLog\ChangeLog;
@@ -203,7 +205,20 @@ class TaskRunner
         }
 
         // do the work
-        return idx_addPage($ID, true);
+        try {
+            $indexer = (new Indexer())->setLogger(function ($msg) { echo $msg . NL; });
+            if (!page_exists($ID)) {
+                $indexer->deletePage($ID, true);
+            } else {
+                $indexer->addPage($ID, true);
+            }
+            return true;
+        } catch (Search\Exception\SearchException $e) {
+            $msg = get_class($e) .' : '. $e->getMessage();
+            echo $msg;
+            Logger::debug($msg);
+            return false;
+        }
     }
 
     /**

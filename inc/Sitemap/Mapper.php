@@ -12,6 +12,7 @@ namespace dokuwiki\Sitemap;
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\Search\Indexer;
 
 /**
  * A class for building sitemaps and pinging search engines with the sitemap URL.
@@ -48,15 +49,15 @@ class Mapper
 
         if (
             @filesize($sitemap) &&
-            @filemtime($sitemap) > (time() - ($conf['sitemap'] * 86400))
-        ) { // 60*60*24=86400
+            @filemtime($sitemap) > (time() - ($conf['sitemap'] * 86400)) // 60*60*24=86400
+        ) {
             Logger::debug('Sitemapper::generate(): Sitemap up to date');
             return false;
         }
 
         Logger::debug("Sitemapper::generate(): using $sitemap");
 
-        $pages = idx_get_indexer()->getPages();
+        $pages = (new \dokuwiki\Search\Indexer())->getAllPages();
         Logger::debug('Sitemapper::generate(): creating sitemap using ' . count($pages) . ' pages');
         $items = [];
 

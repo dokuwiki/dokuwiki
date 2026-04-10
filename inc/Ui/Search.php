@@ -4,8 +4,12 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\Extension\Event;
 use dokuwiki\Form\Form;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
+
+
 
 class Search extends Ui
 {
@@ -26,10 +30,9 @@ class Search extends Ui
     public function __construct(array $pageLookupResults, array $fullTextResults, $highlight)
     {
         global $QUERY;
-        $Indexer = idx_get_indexer();
 
         $this->query = $QUERY;
-        $this->parsedQuery = ft_queryParser($Indexer, $QUERY);
+        $this->parsedQuery = (new QueryParser)->convert($QUERY ?? '');
         $this->searchState = new SearchState($this->parsedQuery);
 
         $this->pageLookupResults = $pageLookupResults;
@@ -550,6 +553,7 @@ class Search extends Ui
         $html .= '<dl class="search_results">';
         $num = 0;
         $position = 0;
+        $FulltextSearch = new FulltextSearch();
 
         foreach ($data as $id => $cnt) {
             ++$position;
@@ -574,8 +578,8 @@ class Search extends Ui
                 $num++;
                 $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
                 $resultBody['meta'] = $hits . $resultBody['meta'];
-                if ($num <= FT_SNIPPET_NUMBER) { // create snippets for the first number of matches only
-                    $resultBody['snippet'] = ft_snippet($id, $highlight);
+                if ($num <= $FulltextSearch->getMaxSnippets()) {
+                    $resultBody['snippet'] = $FulltextSearch->snippet($id, $highlight);
                 }
             }
 

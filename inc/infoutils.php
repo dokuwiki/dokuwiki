@@ -12,6 +12,9 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\Search\Exception\IndexIntegrityException;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Utf8;
 use dokuwiki\Utf8\PhpString;
 
 if (!defined('DOKU_MESSAGEURL')) {
@@ -359,38 +362,26 @@ function check()
     }
 
     // Check for corrupted search index
-    $lengths = idx_listIndexLengths();
-    $index_corrupted = false;
-    foreach ($lengths as $length) {
-        if (count(idx_getIndex('w', $length)) !== count(idx_getIndex('i', $length))) {
-            $index_corrupted = true;
-            break;
+    $indexer = new Indexer();
+    try {
+        $indexer->checkIntegrity();
+        if (!$indexer->isIndexEmpty()) {
+            msg('The search index seems to be working', 1);
+        } else {
+            msg(
+                'The search index is empty. See
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                for help on how to fix the search index. If the default indexer
+                isn\'t used or the wiki is actually empty this is normal.'
+            );
         }
-    }
-
-    foreach (idx_getIndex('metadata', '') as $index) {
-        if (count(idx_getIndex($index . '_w', '')) !== count(idx_getIndex($index . '_i', ''))) {
-            $index_corrupted = true;
-            break;
-        }
-    }
-
-    if ($index_corrupted) {
+    } catch (IndexIntegrityException $e) {
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
-        );
-    } elseif (!empty($lengths)) {
-        msg('The search index seems to be working', 1);
-    } else {
-        msg(
-            'The search index is empty. See
-                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for help on how to fix the search index. If the default indexer
-                isn\'t used or the wiki is actually empty this is normal.'
         );
     }
 

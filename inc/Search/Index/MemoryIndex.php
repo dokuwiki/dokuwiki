@@ -1,0 +1,192 @@
+<?php
+
+namespace dokuwiki\Search\Index;
+
+use dokuwiki\Logger;
+use dokuwiki\Search\Exception\IndexLockException;
+use dokuwiki\Search\Exception\IndexWriteException;
+
+/**
+ * Access to a single index file
+ *
+ * Access using this class always happens by loading the full index into memory.
+ * Changes can be made permanent explicitly via save(), but will also be
+ * auto-saved on destruction to prevent data loss when indexes are used in tandem
+ * (a new RID in one index may already be referenced by another).
+ * Should be used for small indexes that receive many changes at once.
+ */
+class MemoryIndex extends AbstractIndex
+{
+    /** @var string[] the raw data lines of the index, no newlines */
+    protected array $data = [];
+
+    /** @var bool has the index been modified? */
+    protected bool $dirty = false;
+
+    /**
+     * Loads the full contents of the index into memory
+     *
+     * @inheritdoc
+     */
+    public function __construct($idx, $suffix = '', $isWritable = false)
+    {
+        parent::__construct($idx, $suffix, $isWritable);
+        if (!file_exists($this->filename)) {
+            return;
+        }
+        $this->data = file($this->filename, FILE_IGNORE_NEW_LINES);
+    }
+
+    /**
+     * Auto-save dirty data before releasing the lock
+     *
+     * When indexes are used in tandem, a new RID written to one index may already
+     * be referenced by other indexes that were saved. Losing unsaved data here
+     * would leave dangling references, causing silent index corruption.
+     *
+     * The try/catch is necessary because unlock() is called from __destruct()
+     * (in the parent class), and PHP destructors must not throw — a throw
+     * during exception unwinding causes a fatal error.
+     *
+     * @inheritdoc
+     */
+    public function unlock(): void
+    {
+        if ($this->isDirty()) {
+            try {
+                $this->save();
+            } catch (\Exception $e) {
+                Logger::error('MemoryIndex failed to save on unlock: ' . $e->getMessage());
+            }
+        }
+        parent::unlock();
+    }
+
+    /**
+     * @inheritdoc
+     * @throws IndexLockException
+     */
+    public function changeRow(int $rid, string $value): void
+    {
+        if (!$this->isWritable) throw new IndexLockException();
+
+        if ($rid > count($this->data)) {
+            $this->data = array_pad($this->data, $rid, '');
+        }
+        $this->data[$rid] = $value;
+        $this->dirty = true;
+    }
+
+    /** @inheritdoc */
+    public function retrieveRow(int $rid): string
+    {
+        return $this->data[$rid] ?? '';
+    }
+
+    /** @inheritdoc */
+    public function retrieveRows(array $rids): array
+    {
+        $result = [];
+        foreach ($rids as $rid) {
+            if (isset($this->data[$rid])) $result[$rid] = $this->data[$rid];
+        }
+
+        return $result;
+    }
+
+    /** @inheritdoc */
+    public function getRowIDs(array $values): array
+    {
+        $values = array_map(trim(...), $values);
+        $values = array_fill_keys($values, 1); // easier access as associative array
+
+        $result = [];
+        $count = count($this->data);
+        for ($ln = 0; $ln < $count; $ln++) {
+            $line = $this->data[$ln];
+            if (isset($values[$line])) {
+                $result[$line] = $ln;
+                unset($values[$line]);
+            }
+        }
+
+        if (!$this->isWritable) return $result;
+
+        // if there are still values, they have not been found and will be appended
+        foreach (array_keys($values) as $value) {
+            $this->data[] = $value;
+            $result[$value] = $ln++;
+            $this->dirty = true;
+        }
+
+        return $result;
+    }
+
+    /** @inheritdoc */
+    public function search(string $re): array
+    {
+        return preg_grep($re, $this->data);
+    }
+
+    /**
+     * Save the changed index back to its file
+     *
+     * The method will check the internal dirty state and will only write when the index has actually been changed
+     *
+     * @throws IndexWriteException
+     * @throws IndexLockException
+     */
+    public function save(): void
+    {
+        global $conf;
+
+        if (!$this->isDirty()) {
+            return;
+        }
+
+        if (!$this->isWritable) throw new IndexLockException();
+
+        $tempname = $this->filename . '.tmp';
+
+        $fh = @fopen($tempname, 'w');
+        if (!$fh) {
+            throw new IndexWriteException("Failed to write $tempname");
+        }
+        fwrite($fh, implode("\n", $this->data));
+        if ($this->data !== []) {
+            fwrite($fh, "\n");
+        }
+        fclose($fh);
+
+        if ($conf['fperm']) {
+            chmod($tempname, $conf['fperm']);
+        }
+
+        if (!io_rename($tempname, $this->filename)) {
+            throw new IndexWriteException("Failed to write $this->filename");
+        }
+
+        $this->dirty = false;
+    }
+
+    /**
+     * Check if the index has been modified and needs to be saved
+     * @return bool
+     */
+    public function isDirty(): bool
+    {
+        return $this->dirty;
+    }
+
+    /** @inheritdoc */
+    public function count(): int
+    {
+        return count($this->data);
+    }
+
+    /** @inheritdoc */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->data);
+    }
+}

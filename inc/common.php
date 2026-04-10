@@ -21,6 +21,7 @@ use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ip;
+use dokuwiki\Search\MetadataSearch;
 
 use function PHP81_BC\strftime;
 
@@ -1276,7 +1277,7 @@ function saveWikiText($id, $text, $summary, $minor = false)
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
-        $pages = ft_backlinks($id, true);
+        $pages = (new MetadataSearch())->backlinks($id, true);
         foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
