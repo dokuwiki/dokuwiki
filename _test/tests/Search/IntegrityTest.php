@@ -13,7 +13,7 @@ use dokuwiki\Search\Indexer;
 class IntegrityTest extends \DokuWikiTest
 {
     /**
-     * Clear the index directory before each test
+     * Clear the index directory and indexing metadata before each test
      */
     public function setUp(): void
     {
@@ -23,6 +23,8 @@ class IntegrityTest extends \DokuWikiTest
         foreach ($files as $file) {
             @unlink($file);
         }
+        // remove the .indexed tag so needsIndexing() won't skip re-indexing
+        @unlink(metaFN('integritytest', '.indexed'));
         \dokuwiki\Search\Index\Lock::releaseAll();
     }
 
