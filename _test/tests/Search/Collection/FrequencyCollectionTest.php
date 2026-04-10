@@ -114,6 +114,55 @@ class FrequencyCollectionTest extends \DokuWikiTest
     }
 
     /**
+     * Adding a second entity creates new RIDs in the entity index that must be
+     * used consistently across frequency and reverse indexes, even when those
+     * indexes were originally sized for only the first entity.
+     */
+    public function testMultipleEntitiesShareTokens()
+    {
+        $index = new MockFrequencyCollection('me_page', 'me_w', 'me_i', 'me_pw');
+        $index->lock();
+        $index->addEntity('page1', ['alpha', 'beta']);
+        $index->addEntity('page2', ['beta', 'gamma']);
+        $index->unlock();
+
+        // entity index: page1=0, page2=1
+        $idxEntity = new MemoryIndex('me_page');
+        $this->assertEquals('page1', $idxEntity->retrieveRow(0));
+        $this->assertEquals('page2', $idxEntity->retrieveRow(1));
+
+        // token index (5-char group): alpha=0, gamma=1
+        $idxToken5 = new MemoryIndex('me_w', '5');
+        $this->assertEquals('alpha', $idxToken5->retrieveRow(0));
+        $this->assertEquals('gamma', $idxToken5->retrieveRow(1));
+
+        // token index (4-char group): beta=0
+        $idxToken4 = new MemoryIndex('me_w', '4');
+        $this->assertEquals('beta', $idxToken4->retrieveRow(0));
+
+        // frequency index: beta (token 0 in 4-char group) is on both entities
+        $idxFreq4 = new MemoryIndex('me_i', '4');
+        $betaFreq = explode(':', $idxFreq4->retrieveRow(0));
+        sort($betaFreq);
+        $this->assertEquals(['0', '1'], $betaFreq); // beta on page1(0) and page2(1)
+
+        // frequency index: alpha (token 0 in 5-char group) only on page1
+        $idxFreq5 = new MemoryIndex('me_i', '5');
+        $this->assertEquals('0', $idxFreq5->retrieveRow(0)); // alpha on page1(0) only
+        $this->assertEquals('1', $idxFreq5->retrieveRow(1)); // gamma on page2(1) only
+
+        // reverse index: page1 has alpha(5*0) and beta(4*0), page2 has beta(4*0) and gamma(5*1)
+        $idxRev = new MemoryIndex('me_pw');
+        $rev0 = explode(':', $idxRev->retrieveRow(0));
+        sort($rev0);
+        $this->assertEquals(['4*0', '5*0'], $rev0);
+
+        $rev1 = explode(':', $idxRev->retrieveRow(1));
+        sort($rev1);
+        $this->assertEquals(['4*0', '5*1'], $rev1);
+    }
+
+    /**
      * getEntitiesWithData on a split FrequencyCollection
      */
     public function testGetEntitiesWithData()

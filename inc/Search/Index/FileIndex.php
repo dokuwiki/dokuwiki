@@ -64,16 +64,7 @@ class FileIndex extends AbstractIndex
         io_rename($tempname, $this->filename);
     }
 
-    /**
-     * @inheritdoc
-     *
-     * When writable and the requested RID is beyond the end of the file,
-     * the file is padded with empty lines up to that RID. This avoids
-     * a more expensive line-by-line copy in a subsequent changeRow() call.
-     *
-     * @throws IndexWriteException
-     * @author Tom N Harris <tnharris@whoopdedo.org>
-     */
+    /** @inheritdoc */
     public function retrieveRow(int $rid): string
     {
         if (!file_exists($this->filename)) {
@@ -91,14 +82,6 @@ class FileIndex extends AbstractIndex
             }
         }
         fclose($fh);
-
-        if (!$this->isWritable) return '';
-
-        // still here? pad the index for the given ID
-        // we do not simply call changeRow() here because appending is faster than line-by-line copying
-        if (!file_put_contents($this->filename, implode("\n", array_fill(0, $rid - $ln + 1, '')), FILE_APPEND)) {
-            throw new IndexWriteException("Failed to write $this->filename");
-        }
 
         return '';
     }

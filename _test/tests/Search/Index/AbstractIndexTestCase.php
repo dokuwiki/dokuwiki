@@ -49,11 +49,11 @@ abstract class AbstractIndexTestCase extends \DokuWikiTest
         $index->save();
 
         $this->assertEquals('bar', $index->retrieveRow(1));
-        $this->assertEquals('', $index->retrieveRow(5)); // non existent, but will be created with padding
+        $this->assertEquals('', $index->retrieveRow(5)); // non existent
         $index->save();
 
-        // rows up to 5 exist now, 7 does not and is ignored
-        $this->assertEquals([0 => 'foo', 2 => 'baz', 4 => ''], $index->retrieveRows([0, 2, 4, 7]));
+        // only rows 0-2 exist (from getRowIDs), 4 and 7 do not and are ignored
+        $this->assertEquals([0 => 'foo', 2 => 'baz'], $index->retrieveRows([0, 2, 4, 7]));
         $index->save();
     }
 

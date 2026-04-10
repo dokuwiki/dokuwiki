@@ -48,11 +48,11 @@ class MemoryIndexTest extends AbstractIndexTestCase
         $index->changeRow(5, 'test');
         $this->assertEquals('test', $index->retrieveRow(5));
 
-        // out of bounds line should be empty, but pad the file
+        // out of bounds line should be empty and not modify the index
         $this->assertEquals('', $index->retrieveRow(10));
         $index->save();
         $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
-        $this->assertEquals(11, count($full));
+        $this->assertEquals(6, count($full));
     }
 
     public function testSave()

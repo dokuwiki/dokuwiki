@@ -77,19 +77,10 @@ class MemoryIndex extends AbstractIndex
         $this->dirty = true;
     }
 
-    /**
-     * @inheritdoc
-     * @throws IndexLockException
-     */
+    /** @inheritdoc */
     public function retrieveRow(int $rid): string
     {
-        if (isset($this->data[$rid])) {
-            return $this->data[$rid];
-        }
-        if ($this->isWritable) {
-            $this->changeRow($rid, ''); // add to index
-        }
-        return '';
+        return $this->data[$rid] ?? '';
     }
 
     /** @inheritdoc */
