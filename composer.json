@@ -4,6 +4,12 @@
     "homepage": "https://www.dokuwiki.org",
     "type": "project",
     "license": "GPL v2",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dokudeps/php-ixr.git"
+        }
+    ],
     "require": {
         "php": ">=8.2",
         "ext-json": "*",
@@ -16,7 +22,7 @@
         "splitbrain/lesserphp": "^0.10",
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
-        "kissifrot/php-ixr": "^1.8",
+        "kissifrot/php-ixr": "dev-dokuwiki",
         "splitbrain/php-jsstrip": "^1.0",
         "php81_bc/strftime": "dev-fallback-intl"
     },

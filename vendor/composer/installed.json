@@ -96,17 +96,17 @@
         },
         {
             "name": "kissifrot/php-ixr",
-            "version": "1.8.5",
-            "version_normalized": "1.8.5.0",
+            "version": "dev-dokuwiki",
+            "version_normalized": "dev-dokuwiki",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kissifrot/php-ixr.git",
-                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753"
+                "url": "https://github.com/dokudeps/php-ixr.git",
+                "reference": "2b4dfcd97d39969f6a1468badec854778abe160c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/17c5bc99f42fa086620a0ad2a593366ff6798753",
-                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753",
+                "url": "https://api.github.com/repos/dokudeps/php-ixr/zipball/2b4dfcd97d39969f6a1468badec854778abe160c",
+                "reference": "2b4dfcd97d39969f6a1468badec854778abe160c",
                 "shasum": ""
             },
             "require": {
@@ -116,16 +116,15 @@
             "require-dev": {
                 "phpunit/phpunit": "^8.0"
             },
-            "time": "2025-04-22T07:42:43+00:00",
+            "time": "2026-04-10T16:32:59+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "IXR\\": "src/",
-                    "IXR\\tests\\": "tests/"
+                    "IXR\\tests\\": "tests/",
+                    "IXR\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -144,8 +143,7 @@
                 "xmlrpc"
             ],
             "support": {
-                "issues": "https://github.com/kissifrot/php-ixr/issues",
-                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.5"
+                "source": "https://github.com/dokudeps/php-ixr/tree/dokuwiki"
             },
             "install-path": "../kissifrot/php-ixr"
         },
@@ -386,17 +384,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.49",
-            "version_normalized": "3.0.49.0",
+            "version": "3.0.50",
+            "version_normalized": "3.0.50.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9"
+                "reference": "aa6ad8321ed103dc3624fb600a25b66ebf78ec7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/6233a1e12584754e6b5daa69fe1289b47775c1b9",
-                "reference": "6233a1e12584754e6b5daa69fe1289b47775c1b9",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/aa6ad8321ed103dc3624fb600a25b66ebf78ec7b",
+                "reference": "aa6ad8321ed103dc3624fb600a25b66ebf78ec7b",
                 "shasum": ""
             },
             "require": {
@@ -414,7 +412,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2026-01-27T09:17:28+00:00",
+            "time": "2026-03-19T02:57:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -479,7 +477,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.49"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.50"
             },
             "funding": [
                 {
