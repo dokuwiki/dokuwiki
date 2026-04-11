@@ -380,7 +380,7 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
             }
 
             // be careful with some senisitive arrays of $meta
-        } elseif (in_array($key, $protected)) {
+        } elseif (in_array($key, $protected, true)) {
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
                 $meta['current'][$key] = empty($meta['current'][$key]) ?

@@ -59,9 +59,9 @@ class Ip
         $maskLengthLower = max(0, $maskLength - 64);
 
         if (PHP_INT_SIZE == 4) {
-            $needle_up = Ip32::bitmask64On32($needle['upper'],    $maskLengthUpper);
+            $needle_up = Ip32::bitmask64On32($needle['upper'], $maskLengthUpper);
             $net_up    = Ip32::bitmask64On32($networkIp['upper'], $maskLengthUpper);
-            $needle_lo = Ip32::bitmask64On32($needle['lower'],    $maskLengthLower);
+            $needle_lo = Ip32::bitmask64On32($needle['lower'], $maskLengthLower);
             $net_lo    = Ip32::bitmask64On32($networkIp['lower'], $maskLengthLower);
         } else {
             $maskUpper = ~0 << intval(64 - $maskLengthUpper);
@@ -109,7 +109,7 @@ class Ip
             $ipNum = unpack('Nip', $binary)['ip'];
             if (PHP_INT_SIZE == 4) {
                 // integer overlfow on 32bit: negative even though 'N'=unsigned
-                $ipNum = ($ipNum < 0)? bcadd($ipNum, Ip32::$b32) : (string)$ipNum;
+                $ipNum = ($ipNum < 0) ? bcadd($ipNum, Ip32::$b32) : (string)$ipNum;
             }
             return [
                 'version' => 4,
@@ -118,10 +118,10 @@ class Ip
             ];
         } else {
             // IPv6. strlen==16
-            if(PHP_INT_SIZE == 4) { // 32-bit
-               $result = Ip32::ipv6UpperLowerOn32($binary);
+            if (PHP_INT_SIZE == 4) { // 32-bit
+                $result = Ip32::ipv6UpperLowerOn32($binary);
             } else { // 64-bit arch
-               $result = unpack('Jupper/Jlower', $binary);
+                $result = unpack('Jupper/Jlower', $binary);
             }
             $result['version'] = 6;
             return $result;
