@@ -46,6 +46,7 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\DeadCode\Rector\If_\ReduceAlwaysFalseIfOrRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
@@ -139,6 +140,10 @@ return static function (RectorConfig $rectorConfig): void {
         ReplaceBlockToItsStmtsRector::class, // blocks sometimes help readability
         Utf8DecodeEncodeToMbConvertEncodingRector::class, // we probably want our own mapping to the UTF8/* functions
         RemoveDeadIfBlockRector::class, // creates harder to read statements
+
+        // we're not ready for full type safety. though this rule is probably safe I am not comfortable to add it yet
+        // https://getrector.com/blog/introducing-safe-and-progressive-strict-type-adoption-rule
+        SafeDeclareStrictTypesRector::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
