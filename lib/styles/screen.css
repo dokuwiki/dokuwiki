@@ -94,4 +94,21 @@ div.notify {
     right: -99999em !important;
 }
 
+/* copy to clipboard button on code blocks */
+.dokuwiki .code,
+.dokuwiki .file {
+    position: relative;
+}
+
+.dokuwiki .code-copy-btn {
+    position: absolute;
+    top: 0.25em;
+    right: 0.25em;
+}
+
+[dir=rtl] .dokuwiki .code-copy-btn {
+    right: unset;
+    left: 0.25em;
+}
+
 @import "geshi.less";
