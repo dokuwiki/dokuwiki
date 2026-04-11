@@ -593,7 +593,7 @@ function ft_snippet_re_preprocess($term)
         $term .= $BR;
     }
 
-    if (in_array($term, [$BL, $BR, $BL . $BR])) $term = '';
+    if (in_array($term, [$BL, $BR, $BL . $BR], true)) $term = '';
     return $term;
 }
 
