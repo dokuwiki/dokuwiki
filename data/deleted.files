@@ -2,6 +2,11 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-04-12
+lib/images/larger.gif
+lib/images/smaller.gif
+lib/images/wrap.gif
+
 # removed on 2026-03-22
 vendor/simplepie/simplepie/.php-cs-fixer.dist.php
 vendor/simplepie/simplepie/LICENSE.txt
