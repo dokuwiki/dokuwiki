@@ -256,11 +256,6 @@ class Ip
         // IPs in order of most to least preferred.
         $ips = [];
 
-        // Use the X-Real-IP header if it is enabled by the configuration.
-        if (!empty($conf['realip']) && $INPUT->server->str('HTTP_X_REAL_IP')) {
-            $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
-        }
-
         // Use a custom IP header (e.g. CDN) if it is set by the configuration.
         if (!empty($conf['client_ip_header']) && $INPUT->server->str('HTTP_' . $conf['client_ip_header'])) {
             $ips[] = $INPUT->server->str('HTTP_' . $conf['client_ip_header']);

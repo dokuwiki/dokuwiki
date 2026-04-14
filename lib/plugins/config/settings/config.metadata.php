@@ -256,7 +256,6 @@ $meta['_network'] = ['fieldset'];
 $meta['dnslookups'] = ['onoff'];
 $meta['jquerycdn'] = ['multichoice', '_choices' => [0, 'jquery', 'cdnjs']];
 $meta['trustedproxies'] = ['array', '_caution' => 'security'];
-$meta['realip'] = ['onoff', '_caution' => 'security'];
 $meta['client_ip_header'] = ['string', '_caution' => 'security', '_pattern' => '!^[A-Z0-9_]+$!'];
 $meta['proxy____host'] = ['string', '_pattern' => '#^(|[a-z0-9\-\.+]+)$#i'];
 $meta['proxy____port'] = ['numericopt'];

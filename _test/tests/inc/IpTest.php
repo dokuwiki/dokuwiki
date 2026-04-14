@@ -444,29 +444,28 @@ class IpTest extends \DokuWikiTest {
     public function client_ip_provider(): array
     {
         return [
-            // realip disabled, X-Real-IP present -> use REMOTE_ADDR
-            [false, null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
+            // client_ip_header disabled, X-Real-IP present -> use REMOTE_ADDR
+            [null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
 
             // realip enabled, X-Real-IP present -> use X-Real-IP
-            [true, null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
+            ['X_REAL_IP', ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
 
             // custom client_ip_header set to CF_CONNECTING_IP -> use CF header
-            [false, 'CF_CONNECTING_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
+            ['CF_CONNECTING_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
 
             // client_ip_header set to X_REAL_IP but only CF header present -> fallback to REMOTE_ADDR
-            [false, 'X_REAL_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
+            ['X_REAL_IP', ['HTTP_CF_CONNECTING_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
         ];
     }
 
     /**
      * @dataProvider client_ip_provider
      */
-    public function test_client_ip($realip, $client_ip_header, array $server, string $expected): void
+    public function test_client_ip($client_ip_header, array $server, string $expected): void
     {
         /* @var Input $INPUT */
         global $INPUT, $conf;
 
-        $conf['realip'] = $realip;
         if ($client_ip_header !== null) {
             $conf['client_ip_header'] = $client_ip_header;
         } else {
