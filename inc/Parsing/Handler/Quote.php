@@ -7,14 +7,9 @@ class Quote extends AbstractRewriter
     protected $quoteCalls = [];
 
     /** @inheritdoc */
-    public function finalise()
+    protected function getClosingCall(): string
     {
-        $last_call = end($this->calls);
-        $this->writeCall(['quote_end', [], $last_call[2]]);
-
-        $this->process();
-        $this->callWriter->finalise();
-        unset($this->callWriter);
+        return 'quote_end';
     }
 
     /** @inheritdoc */
