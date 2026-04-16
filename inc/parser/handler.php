@@ -152,23 +152,6 @@ class Doku_Handler
     }
 
     /**
-     * fetch the current call and advance the pointer to the next one
-     *
-     * @fixme seems to be unused?
-     * @return bool|mixed
-     */
-    public function fetch()
-    {
-        $call = current($this->calls);
-        if ($call !== false) {
-            next($this->calls); //advance the pointer
-            return $call;
-        }
-        return false;
-    }
-
-
-    /**
      * Internal function for parsing highlight options.
      * $options is parsed for key value pairs separated by commas.
      * A value might also be missing in which case the value will simple
