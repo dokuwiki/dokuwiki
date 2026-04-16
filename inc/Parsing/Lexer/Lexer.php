@@ -18,6 +18,11 @@ namespace dokuwiki\Parsing\Lexer;
  */
 class Lexer
 {
+    /** Signal for leaving a mode */
+    public const MODE_EXIT = '__exit';
+    /** Prefix marking special (enter-and-exit) patterns */
+    public const MODE_SPECIAL_PREFIX = '_';
+
     /** @var ParallelRegex[] */
     protected $regexes = [];
     /** @var \Doku_Handler */
@@ -90,7 +95,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "__exit");
+        $this->regexes[$mode]->addPattern($pattern, self::MODE_EXIT);
     }
 
     /**
@@ -108,7 +113,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "_$special");
+        $this->regexes[$mode]->addPattern($pattern, self::MODE_SPECIAL_PREFIX . $special);
     }
 
     /**
@@ -214,7 +219,7 @@ class Lexer
      */
     protected function isModeEnd($mode)
     {
-        return ($mode === "__exit");
+        return ($mode === self::MODE_EXIT);
     }
 
     /**
@@ -226,7 +231,7 @@ class Lexer
      */
     protected function isSpecialMode($mode)
     {
-        return str_starts_with($mode, '_');
+        return str_starts_with($mode, self::MODE_SPECIAL_PREFIX);
     }
 
     /**
@@ -237,7 +242,7 @@ class Lexer
      */
     protected function decodeSpecial($mode)
     {
-        return substr($mode, 1);
+        return substr($mode, strlen(self::MODE_SPECIAL_PREFIX));
     }
 
     /**
