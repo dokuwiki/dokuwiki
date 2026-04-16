@@ -4,7 +4,7 @@ use dokuwiki\Parsing\Handler\Lists;
 use dokuwiki\Parsing\ParserMode\Code;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Strong;
 use dokuwiki\Parsing\ParserMode\Hr;
 use dokuwiki\Parsing\ParserMode\Listblock;
 use dokuwiki\Parsing\ParserMode\Preformatted;
@@ -108,7 +108,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteStrong() {
-        $this->P->addMode('strong',new Formatting('strong'));
+        $this->P->addMode('strong',new Strong());
         $this->P->parse('Foo (( **testing** )) Bar');
         $calls = array (
             array('document_start',array()),
@@ -374,7 +374,7 @@ class TestOfDoku_Parser_Footnote extends TestOfDoku_Parser {
     }
 
     function testFootnoteNesting() {
-        $this->P->addMode('strong',new Formatting('strong'));
+        $this->P->addMode('strong',new Strong());
         $this->P->parse("(( a ** (( b )) ** c ))");
 
         $calls = array(

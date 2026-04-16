@@ -2,7 +2,7 @@
 
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Strong;
 use dokuwiki\Parsing\ParserMode\Linebreak;
 use dokuwiki\Parsing\ParserMode\Table;
 use dokuwiki\Parsing\ParserMode\Unformatted;
@@ -609,7 +609,7 @@ def');
 
     function testCellAlignmentFormatting() {
         $this->P->addMode('table',new Table());
-        $this->P->addMode('strong',new Formatting('strong'));
+        $this->P->addMode('strong',new Strong());
         $this->P->parse('
 abc
 |  **X** | Y  ^  Z  |
@@ -696,7 +696,7 @@ def');
     // Problem is fixing it would mean a major rewrite of table handling
     function testTableStrong() {
         $this->P->addMode('table',new Table());
-        $this->P->addMode('strong',new Formatting('strong'));
+        $this->P->addMode('strong',new Strong());
         $this->P->parse('
 abc
 | **Row 0 Col 1**    | **Row 0 Col 2     | Row 0 Col 3**        |

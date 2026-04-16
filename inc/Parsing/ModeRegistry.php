@@ -8,7 +8,6 @@ use dokuwiki\Parsing\ParserMode\Acronym;
 use dokuwiki\Parsing\ParserMode\ModeInterface;
 use dokuwiki\Parsing\ParserMode\Camelcaselink;
 use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Formatting;
 use dokuwiki\Parsing\ParserMode\Smiley;
 
 /**
@@ -169,6 +168,8 @@ class ModeRegistry
             'hr', 'unformatted', 'code', 'file', 'quote',
             'internallink', 'rss', 'media', 'externallink',
             'emaillink', 'windowssharelink', 'eol',
+            'strong', 'emphasis', 'underline', 'monospace',
+            'subscript', 'superscript', 'deleted',
         ];
         if ($conf['typography']) {
             $builtinModes[] = 'quotes';
@@ -184,21 +185,7 @@ class ModeRegistry
             ];
         }
 
-        // 3. Add formatting modes
-        $formattingTypes = [
-            'strong', 'emphasis', 'underline', 'monospace',
-            'subscript', 'superscript', 'deleted',
-        ];
-        foreach ($formattingTypes as $m) {
-            $obj = new Formatting($m);
-            $this->modes[] = [
-                'sort' => $obj->getSort(),
-                'mode' => $m,
-                'obj'  => $obj,
-            ];
-        }
-
-        // 4. Add data-driven modes (smileys, acronyms, entities)
+        // 3. Add data-driven modes
         $obj = new Smiley(array_keys(getSmileys()));
         $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'smiley', 'obj' => $obj];
 
@@ -208,13 +195,13 @@ class ModeRegistry
         $obj = new Entity(array_keys(getEntities()));
         $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'entity', 'obj' => $obj];
 
-        // 5. Optional camelcase mode
+        // 4. Optional camelcase mode
         if (!empty($conf['camelcase'])) {
             $obj = new Camelcaselink();
             $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'camelcaselink', 'obj' => $obj];
         }
 
-        // 6. Sort by priority
+        // 5. Sort by priority
         usort($this->modes, self::sortModes(...));
 
         return $this->modes;

@@ -3,7 +3,7 @@
 use dokuwiki\Parsing\Handler\Lists;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\Footnote;
-use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Strong;
 use dokuwiki\Parsing\ParserMode\Linebreak;
 use dokuwiki\Parsing\ParserMode\Listblock;
 use dokuwiki\Parsing\ParserMode\Unformatted;
@@ -227,7 +227,7 @@ Bar');
     // Problem is fixing it would mean a major rewrite of lists
     function testUnorderedListStrong() {
         $this->P->addMode('listblock',new Listblock());
-        $this->P->addMode('strong',new Formatting('strong'));
+        $this->P->addMode('strong',new Strong());
         $this->P->parse('
   ***A**
     *** B

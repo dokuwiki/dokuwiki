@@ -1,8 +1,14 @@
 <?php
 
 use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Formatting;
+use dokuwiki\Parsing\ParserMode\Deleted;
+use dokuwiki\Parsing\ParserMode\Emphasis;
 use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Monospace;
+use dokuwiki\Parsing\ParserMode\Strong;
+use dokuwiki\Parsing\ParserMode\Subscript;
+use dokuwiki\Parsing\ParserMode\Superscript;
+use dokuwiki\Parsing\ParserMode\Underline;
 use dokuwiki\Parsing\ParserMode\Internallink;
 use dokuwiki\Parsing\ParserMode\Table;
 
@@ -11,12 +17,17 @@ require_once 'parser.inc.php';
 class TestOfDoku_Parser_i18n extends TestOfDoku_Parser {
 
     function testFormatting() {
-        $formats = array (
-            'strong', 'emphasis', 'underline', 'monospace',
-            'subscript', 'superscript', 'deleted',
-        );
-        foreach ( $formats as $format ) {
-            $this->P->addMode($format,new Formatting($format));
+        $formats = [
+            'strong'      => new Strong(),
+            'emphasis'    => new Emphasis(),
+            'underline'   => new Underline(),
+            'monospace'   => new Monospace(),
+            'subscript'   => new Subscript(),
+            'superscript' => new Superscript(),
+            'deleted'     => new Deleted(),
+        ];
+        foreach ($formats as $name => $obj) {
+            $this->P->addMode($name, $obj);
         }
         $this->P->parse("I**ñ**t__ë__r//n//â<sup>t</sup>i<sub>ô</sub>n''à''liz<del>æ</del>tiøn");
         $calls = array (
