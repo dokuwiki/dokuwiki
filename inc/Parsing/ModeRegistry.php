@@ -32,6 +32,12 @@ class ModeRegistry
     /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
     private ?array $modes = null;
 
+    /** @var string[] Modes that handle their own line endings (skip EOL connection) */
+    private array $blockEolModes = [];
+
+    /** @var array<string, string[]> Mode name => regex-escaped line start marker characters */
+    private array $lineStartMarkers = [];
+
     private static ?self $instance = null;
 
     /**
@@ -125,6 +131,52 @@ class ModeRegistry
         global $PARSER_MODES;
         $PARSER_MODES[$category][] = $modeName;
         $this->modes = null; // invalidate cached mode list
+    }
+
+    /**
+     * Register a mode that handles its own line endings.
+     * Modes registered here will be skipped by Eol's connectTo().
+     *
+     * @param string $mode The mode name
+     * @return void
+     */
+    public function registerBlockEolMode(string $mode): void
+    {
+        $this->blockEolModes[] = $mode;
+    }
+
+    /**
+     * Get all modes that handle their own line endings.
+     *
+     * @return string[]
+     */
+    public function getBlockEolModes(): array
+    {
+        return $this->blockEolModes;
+    }
+
+    /**
+     * Register regex-escaped line start marker characters for a mode.
+     * Preformatted uses these to build a negative lookahead.
+     *
+     * @param string $mode The mode name
+     * @param string[] $markers Regex-escaped marker characters (e.g. ['\\*', '\\-'])
+     * @return void
+     */
+    public function registerLineStartMarkers(string $mode, array $markers): void
+    {
+        $this->lineStartMarkers[$mode] = $markers;
+    }
+
+    /**
+     * Get all registered line start markers, merged and deduplicated.
+     *
+     * @return string[]
+     */
+    public function getLineStartMarkers(): array
+    {
+        if (!$this->lineStartMarkers) return [];
+        return array_unique(array_merge(...array_values($this->lineStartMarkers)));
     }
 
     /**

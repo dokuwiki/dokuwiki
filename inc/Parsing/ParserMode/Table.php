@@ -20,6 +20,12 @@ class Table extends AbstractMode
     }
 
     /** @inheritdoc */
+    public function preConnect()
+    {
+        ModeRegistry::getInstance()->registerBlockEolMode('table');
+    }
+
+    /** @inheritdoc */
     public function connectTo($mode)
     {
         $this->Lexer->addEntryPattern('[\t ]*\n\^', $mode, 'table');

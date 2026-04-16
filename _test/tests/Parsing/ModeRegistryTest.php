@@ -159,4 +159,48 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertGreaterThan(0, ModeRegistry::sortModes($b, $a));
         $this->assertEquals(0, ModeRegistry::sortModes($a, $a));
     }
+
+    function testBlockEolModesEmptyByDefault()
+    {
+        $this->assertSame([], $this->registry->getBlockEolModes());
+    }
+
+    function testRegisterBlockEolMode()
+    {
+        $this->registry->registerBlockEolMode('listblock');
+        $this->registry->registerBlockEolMode('table');
+        $this->assertSame(['listblock', 'table'], $this->registry->getBlockEolModes());
+    }
+
+    function testLineStartMarkersEmptyByDefault()
+    {
+        $this->assertSame([], $this->registry->getLineStartMarkers());
+    }
+
+    function testRegisterLineStartMarkers()
+    {
+        $this->registry->registerLineStartMarkers('listblock', ['\\*', '\\-']);
+        $markers = $this->registry->getLineStartMarkers();
+        $this->assertContains('\\*', $markers);
+        $this->assertContains('\\-', $markers);
+    }
+
+    function testLineStartMarkersDeduplicates()
+    {
+        $this->registry->registerLineStartMarkers('mode_a', ['\\*', '\\-']);
+        $this->registry->registerLineStartMarkers('mode_b', ['\\-', '\\+']);
+        $markers = $this->registry->getLineStartMarkers();
+        $this->assertCount(3, $markers);
+        $this->assertContains('\\*', $markers);
+        $this->assertContains('\\-', $markers);
+        $this->assertContains('\\+', $markers);
+    }
+
+    function testBlockEolModesResetWithInstance()
+    {
+        $this->registry->registerBlockEolMode('listblock');
+        ModeRegistry::reset();
+        $fresh = ModeRegistry::getInstance();
+        $this->assertSame([], $fresh->getBlockEolModes());
+    }
 }

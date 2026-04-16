@@ -2,14 +2,18 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\ModeRegistry;
+
 class Preformatted extends AbstractMode
 {
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        // Has hard coded awareness of lists...
-        $this->Lexer->addEntryPattern('\n  (?![\*\-])', $mode, 'preformatted');
-        $this->Lexer->addEntryPattern('\n\t(?![\*\-])', $mode, 'preformatted');
+        $markers = ModeRegistry::getInstance()->getLineStartMarkers();
+        $lookahead = $markers ? '(?![' . implode('', $markers) . '])' : '';
+
+        $this->Lexer->addEntryPattern('\n  ' . $lookahead, $mode, 'preformatted');
+        $this->Lexer->addEntryPattern('\n\t' . $lookahead, $mode, 'preformatted');
 
         // How to effect a sub pattern with the Lexer!
         $this->Lexer->addPattern('\n  ', 'preformatted');

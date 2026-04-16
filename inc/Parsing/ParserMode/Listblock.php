@@ -20,6 +20,14 @@ class Listblock extends AbstractMode
     }
 
     /** @inheritdoc */
+    public function preConnect()
+    {
+        $registry = ModeRegistry::getInstance();
+        $registry->registerBlockEolMode('listblock');
+        $registry->registerLineStartMarkers('listblock', ['\\*', '\\-']);
+    }
+
+    /** @inheritdoc */
     public function connectTo($mode)
     {
         $this->Lexer->addEntryPattern('[ \t]*\n {2,}[\-\*]', $mode, 'listblock');

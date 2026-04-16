@@ -80,12 +80,15 @@ class Parser
             return;
         }
 
+        // Run all preConnect() first so modes can register shared
+        // metadata (e.g. line start markers) before any patterns are built
         foreach (array_keys($this->modes) as $mode) {
-            // Base isn't connected to anything
-            if ($mode == 'base') {
-                continue;
-            }
+            if ($mode == 'base') continue;
             $this->modes[$mode]->preConnect();
+        }
+
+        foreach (array_keys($this->modes) as $mode) {
+            if ($mode == 'base') continue;
 
             foreach (array_keys($this->modes) as $cm) {
                 if ($this->modes[$cm]->accepts($mode)) {
