@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\Plugin;
 use Doku_Handler;
 use Doku_Renderer;
@@ -112,12 +113,8 @@ abstract class SyntaxPlugin extends Plugin
     {
 
         if (!$this->allowedModesSetup) {
-            global $PARSER_MODES;
-
-            $allowedModeTypes = $this->getAllowedTypes();
-            foreach ($allowedModeTypes as $mt) {
-                $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
-            }
+            $registry = ModeRegistry::getInstance();
+            $this->allowedModes = $registry->getModesForCategories($this->getAllowedTypes());
 
             $idx = array_search(substr(static::class, 7), (array)$this->allowedModes, true);
             if ($idx !== false) {

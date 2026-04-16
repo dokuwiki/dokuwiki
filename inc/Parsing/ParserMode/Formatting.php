@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\ModeRegistry;
+
 /**
  * This class sets the markup for bold (=strong),
  * italic (=emphasis), underline etc.
@@ -54,26 +56,24 @@ class Formatting extends AbstractMode
      */
     public function __construct($type)
     {
-        global $PARSER_MODES;
-
         if (!array_key_exists($type, $this->formatting)) {
             trigger_error('Invalid formatting type ' . $type, E_USER_WARNING);
         }
 
         $this->type = $type;
 
-        // formatting may contain other formatting but not it self
-        $modes = $PARSER_MODES['formatting'];
-        $key = array_search($type, $modes);
-        if (is_int($key)) {
-            unset($modes[$key]);
-        }
+        $registry = ModeRegistry::getInstance();
+        $this->allowedModes = $registry->getModesForCategories([
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_DISABLED,
+        ]);
 
-        $this->allowedModes = array_merge(
-            $modes,
-            $PARSER_MODES['substition'],
-            $PARSER_MODES['disabled']
-        );
+        // formatting may contain other formatting but not itself
+        $key = array_search($type, $this->allowedModes);
+        if ($key !== false) {
+            unset($this->allowedModes[$key]);
+        }
     }
 
     /** @inheritdoc */

@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\ModeRegistry;
+
 class Footnote extends AbstractMode
 {
     /**
@@ -9,15 +11,13 @@ class Footnote extends AbstractMode
      */
     public function __construct()
     {
-        global $PARSER_MODES;
-
-        $this->allowedModes = array_merge(
-            $PARSER_MODES['container'],
-            $PARSER_MODES['formatting'],
-            $PARSER_MODES['substition'],
-            $PARSER_MODES['protected'],
-            $PARSER_MODES['disabled']
-        );
+        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+            ModeRegistry::CATEGORY_CONTAINER,
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_PROTECTED,
+            ModeRegistry::CATEGORY_DISABLED,
+        ]);
 
         unset($this->allowedModes[array_search('footnote', $this->allowedModes)]);
     }

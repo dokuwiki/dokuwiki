@@ -8,19 +8,13 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
-use dokuwiki\Extension\SyntaxPlugin;
+use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\Parser;
-use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Camelcaselink;
-use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Smiley;
 
 /**
  * How many pages shall be rendered for getting metadata during one request
@@ -219,7 +213,7 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 function p_get_instructions($text)
 {
 
-    $modes = p_get_parsermodes();
+    $modes = ModeRegistry::getInstance()->getModes();
 
     // Create the parser and handler
     $Parser = new Parser(new Doku_Handler());
@@ -543,112 +537,6 @@ function p_render_metadata($id, $orig)
     $ID = $keep;
     unset($METADATA_RENDERERS[$id]);
     return $evt->result;
-}
-
-/**
- * returns all available parser syntax modes in correct order
- *
- * @return array[] with for each plugin the array('sort' => sortnumber, 'mode' => mode string, 'obj'  => plugin object)
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- */
-function p_get_parsermodes()
-{
-    global $conf;
-
-    //reuse old data
-    static $modes = null;
-    if ($modes != null && !defined('DOKU_UNITTEST')) {
-        return $modes;
-    }
-
-    //import parser classes and mode definitions
-    require_once DOKU_INC . 'inc/parser/parser.php';
-
-    // we now collect all syntax modes and their objects, then they will
-    // be sorted and added to the parser in correct order
-    $modes = [];
-
-    // add syntax plugins
-    $pluginlist = plugin_list('syntax');
-    if ($pluginlist !== []) {
-        global $PARSER_MODES;
-        foreach ($pluginlist as $p) {
-            /** @var SyntaxPlugin $obj */
-            $obj = plugin_load('syntax', $p);
-            if (!$obj instanceof PluginInterface) continue;
-            $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
-            //add to modes
-            $modes[] = [
-                'sort' => $obj->getSort(),
-                'mode' => "plugin_$p",
-                'obj' => $obj,
-            ];
-            unset($obj); //remove the reference
-        }
-    }
-
-    // add default modes
-    $std_modes = [
-        'listblock', 'preformatted', 'notoc', 'nocache', 'header', 'table', 'linebreak', 'footnote', 'hr',
-        'unformatted', 'code', 'file', 'quote', 'internallink', 'rss', 'media', 'externallink',
-        'emaillink', 'windowssharelink', 'eol'
-    ];
-    if ($conf['typography']) {
-        $std_modes[] = 'quotes';
-        $std_modes[] = 'multiplyentity';
-    }
-    foreach ($std_modes as $m) {
-        $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($m);
-        $obj = new $class();
-        $modes[] = ['sort' => $obj->getSort(), 'mode' => $m, 'obj' => $obj];
-    }
-
-    // add formatting modes
-    $fmt_modes = [
-        'strong', 'emphasis', 'underline', 'monospace', 'subscript', 'superscript', 'deleted'
-    ];
-    foreach ($fmt_modes as $m) {
-        $obj = new Formatting($m);
-        $modes[] = [
-            'sort' => $obj->getSort(),
-            'mode' => $m,
-            'obj' => $obj
-        ];
-    }
-
-    // add modes which need files
-    $obj = new Smiley(array_keys(getSmileys()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'smiley', 'obj' => $obj];
-    $obj = new Acronym(array_keys(getAcronyms()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'acronym', 'obj' => $obj];
-    $obj = new Entity(array_keys(getEntities()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'entity', 'obj' => $obj];
-
-    // add optional camelcase mode
-    if ($conf['camelcase']) {
-        $obj = new Camelcaselink();
-        $modes[] = ['sort' => $obj->getSort(), 'mode' => 'camelcaselink', 'obj' => $obj];
-    }
-
-    //sort modes
-    usort($modes, p_sort_modes(...));
-
-    return $modes;
-}
-
-/**
- * Callback function for usort
- *
- * @param array $a
- * @param array $b
- * @return int $a is lower/equal/higher than $b
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- */
-function p_sort_modes($a, $b)
-{
-    return $a['sort'] <=> $b['sort'];
 }
 
 /**

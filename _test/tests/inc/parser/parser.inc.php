@@ -2,7 +2,6 @@
 
 use dokuwiki\Parsing\Parser;
 
-require_once DOKU_INC . 'inc/parser/parser.php';
 require_once DOKU_INC . 'inc/parser/handler.php';
 if (!defined('DOKU_PARSER_EOL')) define('DOKU_PARSER_EOL', "\n");   // add this to make handling test cases simpler
 

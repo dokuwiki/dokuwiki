@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\ModeRegistry;
+
 class Quote extends AbstractMode
 {
     /**
@@ -9,14 +11,12 @@ class Quote extends AbstractMode
      */
     public function __construct()
     {
-        global $PARSER_MODES;
-
-        $this->allowedModes = array_merge(
-            $PARSER_MODES['formatting'],
-            $PARSER_MODES['substition'],
-            $PARSER_MODES['disabled'],
-            $PARSER_MODES['protected']
-        );
+        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_DISABLED,
+            ModeRegistry::CATEGORY_PROTECTED,
+        ]);
     }
 
     /** @inheritdoc */
