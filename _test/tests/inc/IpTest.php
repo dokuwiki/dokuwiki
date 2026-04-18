@@ -436,10 +436,7 @@ class IpTest extends \DokuWikiTest {
     }
 
     /**
-     * Test x-real-ip and custom header vars.
-     *
-     * Note that the first config option could be replaced by the second with keeping it only for backward compatibility
-     *
+     * Test custom client IP header configuration.
      */
     public function client_ip_provider(): array
     {
@@ -447,7 +444,7 @@ class IpTest extends \DokuWikiTest {
             // client_ip_header disabled, X-Real-IP present -> use REMOTE_ADDR
             [null, ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '1.2.3.4'],
 
-            // realip enabled, X-Real-IP present -> use X-Real-IP
+            // client_ip_header set to X_REAL_IP, X-Real-IP present -> use X-Real-IP
             ['X_REAL_IP', ['HTTP_X_REAL_IP' => '5.6.7.8', 'REMOTE_ADDR' => '1.2.3.4'], '5.6.7.8'],
 
             // custom client_ip_header set to CF_CONNECTING_IP -> use CF header
@@ -477,7 +474,7 @@ class IpTest extends \DokuWikiTest {
             $INPUT->server->set($key, $value);
         }
 
-        $result = Ip::ClientIp();
+        $result = Ip::clientIp();
 
         $this->assertSame($expected, $result);
     }

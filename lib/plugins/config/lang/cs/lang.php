@@ -183,7 +183,6 @@ $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené 
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
 $lang['trustedproxies']        = 'Čárkou oddělený seznam důvěryhodných proxy serverů, ze kterých se načítá hlavička X-Forwarded-For. Každá položka v poli může být buď adresa IPv4 nebo IPv6, nebo rozsah IPv4 nebo IPv6 CIDR (např. 10.0.0.0/8). Pokud nechcete důvěřovat žádnému proxy serveru, ponechte prázdné pole.';
-$lang['realip']                = 'Důvěřovat záhlaví X-Real-IP. Tuto funkci povolte pouze v případě, že váš server tuto hlavičku zapisuje, jinak může dojít k jejímu podvržení.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, pouze lokální doručení';
 $lang['jquerycdn_o_jquery']    = 'CDN na code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN na cdnjs.com';
