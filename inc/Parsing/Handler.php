@@ -28,9 +28,6 @@ class Handler
         'footnote' => false,
     ];
 
-    /** @var bool should blocks be rewritten? FIXME seems to always be true */
-    protected $rewriteBlocks = true;
-
     /** @var array<string, ModeInterface> mode name → mode object for dispatch */
     protected $modeObjects = [];
 
@@ -200,10 +197,8 @@ class Handler
             $this->calls[] = ['section_close', [], $last_call[2]];
         }
 
-        if ($this->rewriteBlocks) {
-            $B = new Block();
-            $this->calls = $B->process($this->calls);
-        }
+        $B = new Block();
+        $this->calls = $B->process($this->calls);
 
         Event::createAndTrigger('PARSER_HANDLER_DONE', $this);
 
