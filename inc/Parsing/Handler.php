@@ -161,6 +161,7 @@ class Handler
     }
 
     /** @deprecated 2019-10-31 use addCall() instead */
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore -- backward compatibility
     public function _addCall($handler, $args, $pos)
     {
         dbg_deprecated('addCall');
