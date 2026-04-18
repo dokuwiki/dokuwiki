@@ -186,7 +186,6 @@ $lang['hidewarnings']          = 'Ne montrer aucun avertissement émis par PHP. 
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
 $lang['trustedproxies']        = 'Liste à virgule de serveurs mandataires inverses de confiance depuis lesquels lire l\'entête X-Forwarded-For. Chaque élément de la liste peut être une adresse, IPV4 ou IPV6, ou une plage en format CIDR (exple : 10.0.0.0/8). Laisser vide pour ne faire confiance en aucun mandataire.';
-$lang['realip']                = 'Avoir confiance en l\'entête X-Real-IP. N\'activer que si votre serveur produit cet entête, sinon cela autorise des usurpations d\'IP.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
 $lang['jquerycdn_o_jquery']    = 'Oui : CDN code.jquery.com.';
 $lang['jquerycdn_o_cdnjs']     = 'Oui : CDN cdnjs.com.';

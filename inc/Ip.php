@@ -240,12 +240,12 @@ class Ip
      *
      * The IP is sourced from, in order of preference:
      *
-     *   - The X-Real-IP header if $conf[realip] is true.
+     *   - The custom IP header if $conf[client_ip_header] is set.
      *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxy].
      *   - The TCP/IP connection remote address.
      *   - 0.0.0.0 if all else fails.
      *
-     * The 'realip' config value should only be set to true if the X-Real-IP header
+     * The 'client_ip_header' config value should only be set if the header
      * is being added by the web server, otherwise it may be spoofed by the client.
      *
      * The 'trustedproxy' setting must not allow any IP, otherwise the X-Forwarded-For
@@ -263,7 +263,7 @@ class Ip
      *
      * The IPs are sourced from, in order of preference:
      *
-     *   - The X-Real-IP header if $conf[realip] is true.
+     *   - The custom IP header if $conf[client_ip_header] is set.
      *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
      *   - The TCP/IP connection remote address.
      *   - 0.0.0.0 if all else fails.
@@ -278,9 +278,9 @@ class Ip
         // IPs in order of most to least preferred.
         $ips = [];
 
-        // Use the X-Real-IP header if it is enabled by the configuration.
-        if (!empty($conf['realip']) && $INPUT->server->str('HTTP_X_REAL_IP')) {
-            $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
+        // Use a custom IP header (e.g. CDN) if it is set by the configuration.
+        if (!empty($conf['client_ip_header']) && $INPUT->server->str('HTTP_' . $conf['client_ip_header'])) {
+            $ips[] = $INPUT->server->str('HTTP_' . $conf['client_ip_header']);
         }
 
         // Add the X-Forwarded-For addresses if all proxies are trusted.
