@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Superscript extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 120;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'superscript';
@@ -20,11 +26,5 @@ class Superscript extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '</sup>';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 120;
     }
 }

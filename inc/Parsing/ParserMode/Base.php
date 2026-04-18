@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
 
 class Base extends AbstractMode
@@ -26,5 +27,15 @@ class Base extends AbstractMode
     public function getSort()
     {
         return 0;
+    }
+
+    /** @inheritdoc */
+    public function handle($match, $state, $pos, Handler $handler)
+    {
+        if ($state === DOKU_LEXER_UNMATCHED) {
+            $handler->addCall('cdata', [$match], $pos);
+            return true;
+        }
+        return false;
     }
 }

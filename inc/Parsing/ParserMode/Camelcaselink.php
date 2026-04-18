@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Camelcaselink extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 290;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -15,8 +23,9 @@ class Camelcaselink extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 290;
+        $handler->addCall('camelcaselink', [$match], $pos);
+        return true;
     }
 }

@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Subscript extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 110;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'subscript';
@@ -20,11 +26,5 @@ class Subscript extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '</sub>';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 110;
     }
 }

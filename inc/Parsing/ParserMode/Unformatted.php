@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Unformatted extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 170;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -20,8 +28,11 @@ class Unformatted extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 170;
+        if ($state == DOKU_LEXER_UNMATCHED) {
+            $handler->addCall('unformatted', [$match], $pos);
+        }
+        return true;
     }
 }

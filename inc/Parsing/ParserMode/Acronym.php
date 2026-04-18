@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Acronym extends AbstractMode
 {
     // A list
@@ -17,6 +19,12 @@ class Acronym extends AbstractMode
     {
         usort($acronyms, $this->compare(...));
         $this->acronyms = $acronyms;
+    }
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 240;
     }
 
     /** @inheritdoc */
@@ -40,9 +48,10 @@ class Acronym extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 240;
+        $handler->addCall('acronym', [$match], $pos);
+        return true;
     }
 
     /**

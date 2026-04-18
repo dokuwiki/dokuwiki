@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Emphasis extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 80;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'emphasis';
@@ -25,11 +31,5 @@ class Emphasis extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '//';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 80;
     }
 }

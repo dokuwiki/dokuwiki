@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Monospace extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 100;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'monospace';
@@ -20,11 +26,5 @@ class Monospace extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '\x27\x27';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 100;
     }
 }

@@ -158,6 +158,9 @@ class TestOfLexerStateStack extends DokuWikiTest {
 class TestParser {
     function __construct() {
     }
+    function handleToken($mode, $match, $state, $pos, $originalModeName = '') {
+        return $this->$mode($match, $state, $pos);
+    }
     function accept() {
     }
     function a() {
@@ -168,13 +171,13 @@ class TestParser {
 
 class TestOfLexer extends DokuWikiTest {
     function testNoPatterns() {
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler->expects($this->never())->method('accept');
         $lexer = new Lexer($handler);
         $this->assertFalse($lexer->parse("abcdef"));
     }
     function testEmptyPage() {
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler->expects($this->never())->method('accept');
         $lexer = new Lexer($handler);
         $lexer->addPattern("a+");
@@ -193,7 +196,7 @@ class TestOfLexer extends DokuWikiTest {
         ];
         $acceptArgumentCount = count($acceptArguments);
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler
             ->expects($this->exactly($acceptArgumentCount))
             ->method('accept')
@@ -247,7 +250,7 @@ class TestOfLexerModes extends DokuWikiTest {
         ];
         $aArgumentCount = count($aArguments);
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler
             ->expects($this->exactly($aArgumentCount))
             ->method('a')
@@ -280,7 +283,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ],
         ];
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         foreach ($methodArguments as $method => $arguments) {
             $count = count($arguments);
             $handler
@@ -316,7 +319,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ],
         ];
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         foreach ($methodArguments as $method => $arguments) {
             $count = count($arguments);
             $handler
@@ -347,7 +350,7 @@ class TestOfLexerModes extends DokuWikiTest {
             ],
         ];
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         foreach ($methodArguments as $method => $arguments) {
             $count = count($arguments);
             $handler
@@ -369,7 +372,7 @@ class TestOfLexerModes extends DokuWikiTest {
         ];
         $aArgumentCount = count($aArguments);
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler
             ->expects($this->exactly($aArgumentCount))
             ->method('a')
@@ -396,7 +399,7 @@ class TestOfLexerHandlers extends DokuWikiTest {
         ];
         $aArgumentCount = count($aArguments);
 
-        $handler = $this->createMock('TestParser');
+        $handler = $this->createPartialMock('TestParser', ['accept', 'a', 'b']);
         $handler
             ->expects($this->exactly($aArgumentCount))
             ->method('a')
@@ -418,6 +421,10 @@ class TestParserByteIndex {
 
     function __construct() {}
 
+    function handleToken($mode, $match, $state, $pos, $originalModeName = '') {
+        return $this->$mode($match, $state, $pos);
+    }
+
     function ignore() {}
 
     function caught() {}
@@ -437,7 +444,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         ];
         $caughtArgumentCount = count($caughtArguments);
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler
             ->expects($this->exactly($caughtArgumentCount))
@@ -467,7 +474,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         ];
         $caughtArgumentCount = count($caughtArguments);
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler
             ->expects($this->exactly($caughtArgumentCount))
@@ -497,7 +504,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         ];
         $caughtArgumentCount = count($caughtArguments);
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler
             ->expects($this->exactly($caughtArgumentCount))
@@ -527,7 +534,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         ];
         $caughtArgumentCount = count($caughtArguments);
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler
             ->expects($this->exactly($caughtArgumentCount))
@@ -557,7 +564,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         ];
         $caughtArgumentCount = count($caughtArguments);
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
         $handler
             ->expects($this->exactly($caughtArgumentCount))
@@ -583,7 +590,7 @@ class TestOfLexerByteIndices extends DokuWikiTest {
         $doc = "ALL FOOLS ARE FOO";
         $pattern = '\bFOO\b';
 
-        $handler = $this->createMock('TestParserByteIndex');
+        $handler = $this->createPartialMock('TestParserByteIndex', ['ignore', 'caught']);
         $handler->expects($this->any())->method('ignore')->will($this->returnValue(true));
 
         $matches = [];

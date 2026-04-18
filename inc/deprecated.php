@@ -203,3 +203,12 @@ function ptln($string, $indent = 0)
     DebugHelper::dbgDeprecatedFunction('echo');
     echo str_repeat(' ', $indent) . "$string\n";
 }
+
+/**
+ * @deprecated 2026-04-16 use \dokuwiki\Parsing\ParserMode\Media::parseMedia() instead
+ */
+function Doku_Handler_Parse_Media($match)
+{
+    DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ParserMode\Media::class . '::parseMedia()');
+    return \dokuwiki\Parsing\ParserMode\Media::parseMedia($match);
+}

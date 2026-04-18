@@ -1,5 +1,7 @@
 <?php
 
+use dokuwiki\Parsing\ParserMode\Code;
+
 class TestOfDoku_Handler_ParseHighlightOptions extends DokuWikiTest {
 
     public function dataProvider() {
@@ -44,12 +46,10 @@ class TestOfDoku_Handler_ParseHighlightOptions extends DokuWikiTest {
      * @dataProvider dataProvider
      * @param string $input options to parse
      * @param array|null $expect expected outcome
-     * @throws ReflectionException
      */
     public function testOptionParser($input, $expect) {
-        $h = new Doku_Handler();
-
-        $output = $this->callInaccessibleMethod($h, 'parse_highlight_options', [$input]);
+        $code = new Code();
+        $output = $this->callInaccessibleMethod($code, 'parseHighlightOptions', [$input]);
 
         $this->assertEquals($expect, $output);
     }

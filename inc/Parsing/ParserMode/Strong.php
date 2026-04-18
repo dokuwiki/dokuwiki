@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Strong extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 70;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'strong';
@@ -20,11 +26,5 @@ class Strong extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '\*\*';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 70;
     }
 }

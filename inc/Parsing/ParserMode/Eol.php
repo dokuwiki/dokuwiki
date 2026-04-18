@@ -2,10 +2,17 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
 
 class Eol extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 370;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -18,8 +25,9 @@ class Eol extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 370;
+        $handler->addCall('eol', [], $pos);
+        return true;
     }
 }

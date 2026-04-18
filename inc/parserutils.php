@@ -13,6 +13,7 @@ use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\Parser;
 
@@ -216,7 +217,7 @@ function p_get_instructions($text)
     $modes = ModeRegistry::getInstance()->getModes();
 
     // Create the parser and handler
-    $Parser = new Parser(new Doku_Handler());
+    $Parser = new Parser(new Handler());
 
     //add modes to parser
     foreach ($modes as $mode) {

@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Deleted extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 130;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'deleted';
@@ -20,11 +26,5 @@ class Deleted extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '</del>';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 130;
     }
 }

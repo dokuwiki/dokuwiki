@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
 
 /**
@@ -11,21 +12,6 @@ use dokuwiki\Parsing\ModeRegistry;
  */
 abstract class AbstractFormatting extends AbstractMode
 {
-    /**
-     * @return string The regex pattern that starts this formatting
-     */
-    abstract protected function getEntryPattern(): string;
-
-    /**
-     * @return string The regex pattern that ends this formatting
-     */
-    abstract protected function getExitPattern(): string;
-
-    /**
-     * @return string The mode name used for lexer registration
-     */
-    abstract protected function getModeName(): string;
-
     /**
      * Constructor. Sets up allowed modes for this formatting type.
      *
@@ -60,6 +46,21 @@ abstract class AbstractFormatting extends AbstractMode
         );
     }
 
+    /**
+     * @return string The regex pattern that starts this formatting
+     */
+    abstract protected function getEntryPattern(): string;
+
+    /**
+     * @return string The regex pattern that ends this formatting
+     */
+    abstract protected function getExitPattern(): string;
+
+    /**
+     * @return string The mode name used for lexer registration
+     */
+    abstract protected function getModeName(): string;
+
     /** @inheritdoc */
     public function postConnect()
     {
@@ -67,5 +68,18 @@ abstract class AbstractFormatting extends AbstractMode
             $this->getExitPattern(),
             $this->getModeName()
         );
+    }
+
+    /** @inheritdoc */
+    public function handle($match, $state, $pos, Handler $handler)
+    {
+        $name = $this->getModeName();
+        match ($state) {
+            DOKU_LEXER_ENTER => $handler->addCall($name . '_open', [], $pos),
+            DOKU_LEXER_EXIT => $handler->addCall($name . '_close', [], $pos),
+            DOKU_LEXER_UNMATCHED => $handler->addCall('cdata', [$match], $pos),
+            default => true,
+        };
+        return true;
     }
 }

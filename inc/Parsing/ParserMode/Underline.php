@@ -5,6 +5,12 @@ namespace dokuwiki\Parsing\ParserMode;
 class Underline extends AbstractFormatting
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 90;
+    }
+
+    /** @inheritdoc */
     protected function getModeName(): string
     {
         return 'underline';
@@ -20,11 +26,5 @@ class Underline extends AbstractFormatting
     protected function getExitPattern(): string
     {
         return '__';
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 90;
     }
 }

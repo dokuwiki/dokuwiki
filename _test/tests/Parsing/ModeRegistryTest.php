@@ -203,4 +203,5 @@ class ModeRegistryTest extends \DokuWikiTest
         $fresh = ModeRegistry::getInstance();
         $this->assertSame([], $fresh->getBlockEolModes());
     }
+
 }

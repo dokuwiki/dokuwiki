@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Notoc extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 30;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -11,8 +19,9 @@ class Notoc extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 30;
+        $handler->addCall('notoc', [], $pos);
+        return true;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\Plugin;
-use Doku_Handler;
 use Doku_Renderer;
 
 /**
@@ -73,10 +73,10 @@ abstract class SyntaxPlugin extends Plugin
      * @param   string $match The text matched by the patterns
      * @param   int $state The lexer state for the match
      * @param   int $pos The character position of the matched text
-     * @param   Doku_Handler $handler The Doku_Handler object
+     * @param   Handler $handler The Handler object
      * @return  bool|array Return an array with all data you want to use in render, false don't add an instruction
      */
-    abstract public function handle($match, $state, $pos, Doku_Handler $handler);
+    abstract public function handle($match, $state, $pos, Handler $handler);
 
     /**
      * Handles the actual output creation.

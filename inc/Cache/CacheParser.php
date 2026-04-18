@@ -51,7 +51,7 @@ class CacheParser extends Cache
         $files = [
             $this->file, // source
             DOKU_INC . 'inc/Parsing/Parser.php', // parser
-            DOKU_INC . 'inc/parser/handler.php', // handler
+            DOKU_INC . 'inc/Parsing/Handler.php', // handler
         ];
         $files = array_merge($files, getConfigFiles('main')); // wiki settings
 
