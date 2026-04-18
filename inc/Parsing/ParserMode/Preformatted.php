@@ -23,7 +23,7 @@ class Preformatted extends AbstractMode
         $this->Lexer->addEntryPattern('\n  ' . $lookahead, $mode, 'preformatted');
         $this->Lexer->addEntryPattern('\n\t' . $lookahead, $mode, 'preformatted');
 
-        // How to effect a sub pattern with the Lexer!
+        // match continuation lines inside the preformatted block
         $this->Lexer->addPattern('\n  ', 'preformatted');
         $this->Lexer->addPattern('\n\t', 'preformatted');
     }
