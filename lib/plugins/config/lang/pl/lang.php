@@ -172,6 +172,7 @@ $lang['hidewarnings']          = 'Nie wyświetlaj żadnych ostrzeżeń wydawanyc
 $lang['dnslookups']            = 'DokiWiki wyszuka nazwy hostów dla zdalnych adresów IP użytkowników edytujących strony. Jeśli twój serwer DNS działa zbyt wolno, uległ awarii lub nie chcesz używać wyszukiwania, wyłącz tę opcję.';
 $lang['jquerycdn']             = 'Czy pliki skryptów jQuery i jQuery UI powinny być ładowane z CDN? Powoduje to dodanie dodatkowych żądań HTTP, ale pliki mogą być ładowane szybciej, a użytkownicy mogą już je mieć zbuforowane.';
 $lang['trustedproxies']        = 'Rozdzielana przecinkami lista zaufanych serwerów proxy, z których można odczytać nagłówek X-Forwarded-For. Każdy element tablicy może być adresem IPv4 lub IPv6 albo zakresem CIDR IPv4 lub IPv6 (np. 10.0.0.0/8). Pozostaw puste, aby nie ufać żadnemu serwerowi proxy.';
+$lang['client_ip_header']      = 'Użyj niestandardowego nagłówka zamiast zdalnego adresu IP (np. X_REAL_IP). Włącz tę opcję tylko wtedy, gdy Twój serwer zapisuje ten nagłówek, w przeciwnym razie może on zostać sfałszowany.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, tylko lokalne zasoby';
 $lang['jquerycdn_o_jquery']    = 'CDN z code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN z cdnjs.com';
