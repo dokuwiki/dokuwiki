@@ -179,10 +179,11 @@ class BulkSubscriptionSender extends SubscriptionSender
     /**
      * Return the last revision before lastupdate.
      *
-     * @param string $id The target page or namespace, specified by id; Namespaces
-     *                   are identified by appending a colon.
+     * @param string $id         The target page or namespace, specified by id; Namespaces
+     *                           are identified by appending a colon.
+     * @param int    $lastupdate Time of the last notification
      *
-     * @return int
+     * @return int|null The revision timestamp, or null if no earlier revision exists
      * @author Michael Stapelberg <stapelberg+dokuwiki@google.com>
      */
     protected function lastRevBefore($id, $lastupdate)
@@ -251,11 +252,17 @@ class BulkSubscriptionSender extends SubscriptionSender
         foreach ($ids as $id) {
             $last = $this->lastRevBefore($id, $lastupdate);
             $link = wl($id, [], true);
-            $tlist .= '* ' . $link . NL;
+            $difflink = $last ? wl($id, ['do' => 'diff', 'rev' => $last], true) : null;
+
+            $tlist .= '* ' . $link;
+            if ($difflink) {
+                $tlist .= ' (' . $lang['diff'] . ': ' . $difflink . ')';
+            }
+            $tlist .= NL;
+
             $hlist .= '<li>';
             $hlist .= '<a href="' . $link . '">' . hsc($id) . '</a>';
-            if (!is_null($last)) {
-                $difflink = wl($id, ['do' => 'diff', 'rev' => $last], true);
+            if ($difflink) {
                 $hlist .= ' (<a href="' . $difflink . '">' . $lang['diff'] . '</a>)';
             }
             $hlist .= '</li>' . NL;
