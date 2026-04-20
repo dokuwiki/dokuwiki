@@ -204,4 +204,96 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertSame([], $fresh->getBlockEolModes());
     }
 
+    /**
+     * The default syntax setting must produce the exact same mode set as before
+     * the syntax setting was introduced (no-op guarantee).
+     */
+    function testGetModesDefaultSyntaxMatchesLegacy()
+    {
+        global $conf;
+        $conf['syntax'] = 'dokuwiki';
+        ModeRegistry::reset();
+        $registry = ModeRegistry::getInstance();
+        $modes = $registry->getModes();
+        $modeNames = array_column($modes, 'mode');
+
+        // All original built-in modes must be present
+        $expected = [
+            'listblock', 'preformatted', 'notoc', 'nocache',
+            'header', 'table', 'linebreak', 'footnote',
+            'hr', 'unformatted', 'code', 'file', 'quote',
+            'internallink', 'rss', 'media', 'externallink',
+            'emaillink', 'windowssharelink', 'eol',
+            'strong', 'emphasis', 'underline', 'monospace',
+            'subscript', 'superscript', 'deleted',
+            'smiley', 'acronym', 'entity',
+        ];
+        foreach ($expected as $mode) {
+            $this->assertContains($mode, $modeNames, "Mode '$mode' missing in dokuwiki syntax setting");
+        }
+    }
+
+    /** DW-only modes must be absent when syntax is 'markdown' */
+    function testGetModesDwModesSkippedInMarkdownOnly()
+    {
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        ModeRegistry::reset();
+        $registry = ModeRegistry::getInstance();
+        $modes = $registry->getModes();
+        $modeNames = array_column($modes, 'mode');
+
+        $dwOnly = [
+            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'linebreak', 'internallink', 'media', 'listblock', 'table',
+        ];
+        foreach ($dwOnly as $mode) {
+            $this->assertNotContains($mode, $modeNames, "DW mode '$mode' should not load in markdown-only mode");
+        }
+    }
+
+    /** Always-loaded modes must still be present in markdown-only mode */
+    function testGetModesAlwaysModesPresentInMarkdownOnly()
+    {
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        ModeRegistry::reset();
+        $registry = ModeRegistry::getInstance();
+        $modes = $registry->getModes();
+        $modeNames = array_column($modes, 'mode');
+
+        $always = [
+            'strong', 'underline', 'monospace', 'subscript', 'superscript',
+            'footnote', 'eol', 'unformatted', 'preformatted', 'file',
+            'quote', 'externallink', 'emaillink', 'windowssharelink',
+            'notoc', 'nocache', 'rss',
+            'smiley', 'acronym', 'entity',
+        ];
+        foreach ($always as $mode) {
+            $this->assertContains($mode, $modeNames, "Always-loaded mode '$mode' missing in markdown syntax setting");
+        }
+    }
+
+    /** In mixed modes, DW modes must still load */
+    function testGetModesMixedModesLoadDwModes()
+    {
+        $dwOnly = [
+            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'linebreak', 'internallink', 'media', 'listblock', 'table',
+        ];
+
+        foreach (['dw+md', 'md+dw'] as $syntax) {
+            global $conf;
+            $conf['syntax'] = $syntax;
+            ModeRegistry::reset();
+            $registry = ModeRegistry::getInstance();
+            $modes = $registry->getModes();
+            $modeNames = array_column($modes, 'mode');
+
+            foreach ($dwOnly as $mode) {
+                $this->assertContains($mode, $modeNames, "DW mode '$mode' missing in '$syntax' syntax setting");
+            }
+        }
+    }
+
 }

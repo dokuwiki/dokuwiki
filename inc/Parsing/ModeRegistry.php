@@ -196,10 +196,28 @@ class ModeRegistry
             return $this->modes;
         }
 
-        global $PARSER_MODES;
         $this->modes = [];
+        $syntax = $conf['syntax'] ?? 'dokuwiki';
+        $loadDw = in_array($syntax, ['dokuwiki', 'dw+md', 'md+dw']);
+        $loadMd = in_array($syntax, ['markdown', 'dw+md', 'md+dw']);
 
-        // 1. Load syntax plugins and register their modes
+        $this->loadPluginModes();
+        $this->loadAlwaysModes();
+        if ($loadDw) $this->loadDokuWikiModes();
+        if ($loadMd) $this->loadMarkdownModes();
+        $this->loadDataModes();
+
+        usort($this->modes, self::sortModes(...));
+        return $this->modes;
+    }
+
+    /**
+     * Load syntax plugin modes and register them in their categories.
+     */
+    protected function loadPluginModes(): void
+    {
+        global $PARSER_MODES;
+
         $plugins = plugin_list('syntax');
         foreach ($plugins as $p) {
             $obj = plugin_load('syntax', $p);
@@ -212,32 +230,62 @@ class ModeRegistry
             ];
             unset($obj);
         }
+    }
 
-        // 2. Add standard built-in modes
-        $builtinModes = [
-            'listblock', 'preformatted', 'notoc', 'nocache',
-            'header', 'table', 'linebreak', 'footnote',
-            'hr', 'unformatted', 'code', 'file', 'quote',
-            'internallink', 'rss', 'media', 'externallink',
-            'emaillink', 'windowssharelink', 'eol',
-            'strong', 'emphasis', 'underline', 'monospace',
-            'subscript', 'superscript', 'deleted',
+    /**
+     * Load modes that have no equivalent in the other syntax.
+     * These are always active regardless of the syntax setting.
+     */
+    protected function loadAlwaysModes(): void
+    {
+        global $conf;
+
+        $modes = [
+            'strong', 'underline', 'monospace', 'subscript', 'superscript',
+            'footnote', 'eol', 'unformatted', 'preformatted', 'file',
+            'quote', 'externallink', 'emaillink', 'windowssharelink',
+            'notoc', 'nocache', 'rss',
         ];
+
         if ($conf['typography']) {
-            $builtinModes[] = 'quotes';
-            $builtinModes[] = 'multiplyentity';
-        }
-        foreach ($builtinModes as $mode) {
-            $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($mode);
-            $obj = new $class();
-            $this->modes[] = [
-                'sort' => $obj->getSort(),
-                'mode' => $mode,
-                'obj'  => $obj,
-            ];
+            $modes[] = 'quotes';
+            $modes[] = 'multiplyentity';
         }
 
-        // 3. Add data-driven modes
+        $this->instantiateModes($modes);
+    }
+
+    /**
+     * Load DokuWiki-specific modes for features that also exist in Markdown.
+     * Skipped when syntax is 'markdown'.
+     */
+    protected function loadDokuWikiModes(): void
+    {
+        $this->instantiateModes([
+            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'linebreak', 'internallink', 'media', 'listblock', 'table',
+        ]);
+    }
+
+    /**
+     * Load Markdown-specific modes for features that also exist in DokuWiki.
+     * Skipped when syntax is 'dokuwiki'.
+     */
+    protected function loadMarkdownModes(): void
+    {
+        $this->instantiateModes([
+            // Future: 'gfmemphasis', 'gfmdeleted', 'gfmcode', etc.
+        ]);
+    }
+
+    /**
+     * Load data-driven modes that require constructor arguments
+     * (smileys, acronyms, entities) and optional config-gated modes.
+     */
+    protected function loadDataModes(): void
+    {
+        global $conf;
+
         $obj = new Smiley(array_keys(getSmileys()));
         $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'smiley', 'obj' => $obj];
 
@@ -247,16 +295,30 @@ class ModeRegistry
         $obj = new Entity(array_keys(getEntities()));
         $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'entity', 'obj' => $obj];
 
-        // 4. Optional camelcase mode
         if (!empty($conf['camelcase'])) {
             $obj = new Camelcaselink();
             $this->modes[] = ['sort' => $obj->getSort(), 'mode' => 'camelcaselink', 'obj' => $obj];
         }
+    }
 
-        // 5. Sort by priority
-        usort($this->modes, self::sortModes(...));
-
-        return $this->modes;
+    /**
+     * Instantiate mode classes by name and add them to the mode list.
+     *
+     * Each name is resolved to a class in the ParserMode namespace via ucfirst().
+     *
+     * @param string[] $modeNames
+     */
+    protected function instantiateModes(array $modeNames): void
+    {
+        foreach ($modeNames as $mode) {
+            $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($mode);
+            $obj = new $class();
+            $this->modes[] = [
+                'sort' => $obj->getSort(),
+                'mode' => $mode,
+                'obj'  => $obj,
+            ];
+        }
     }
 
     /**
