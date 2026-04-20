@@ -166,6 +166,12 @@ class FormattingTest extends ParserTestBase
 
     function testNoSelfNesting()
     {
+        // With flanking-aware Strong: an opener matches only if a valid
+        // closer exists (closer preceded by non-whitespace); a closer only
+        // fires at `**` preceded by non-whitespace. Here the inner `**`s
+        // are adjacent to spaces, so they can't close; the outermost `**`
+        // on the right is preceded by `d` and closes the outermost opener.
+        // Strong does not re-open inside itself.
         $this->P->addMode('strong', new Strong());
         $this->P->parse('Foo **bold **not nested** end** Bar');
         $calls = [
@@ -173,13 +179,9 @@ class FormattingTest extends ParserTestBase
             ['p_open', []],
             ['cdata', ["\nFoo "]],
             ['strong_open', []],
-            ['cdata', ['bold ']],
+            ['cdata', ['bold **not nested']],
             ['strong_close', []],
-            ['cdata', ['not nested']],
-            ['strong_open', []],
-            ['cdata', [' end']],
-            ['strong_close', []],
-            ['cdata', [' Bar']],
+            ['cdata', [' end** Bar']],
             ['p_close', []],
             ['document_end', []],
         ];
@@ -236,5 +238,65 @@ class FormattingTest extends ParserTestBase
             array_column($this->H->calls, 0),
             'Strong must still match across a single newline'
         );
+    }
+
+    /**
+     * @dataProvider provideFlankingCases
+     *
+     * Flanking rules (simplified): an opening delimiter must be followed by
+     * a non-whitespace character, and a closing delimiter must be preceded
+     * by one. Empty delimiter pairs stay literal.
+     */
+    function testFlankingRejectsInvalidDelimiters(
+        string $modeName,
+        $mode,
+        string $input
+    ) {
+        $this->P->addMode($modeName, $mode);
+        $this->P->parse($input);
+        foreach ($this->H->calls as $call) {
+            $this->assertNotSame(
+                $modeName . '_open',
+                $call[0],
+                "Mode '$modeName' must not open in: " . json_encode($input)
+            );
+        }
+    }
+
+    public static function provideFlankingCases(): array
+    {
+        return [
+            // Leading-whitespace opener
+            'strong-lead-ws'      => ['strong',      new Strong(),      '** foo bar**'],
+            'emphasis-lead-ws'    => ['emphasis',    new Emphasis(),    '// foo bar//'],
+            'underline-lead-ws'   => ['underline',   new Underline(),   '__ foo bar__'],
+            'monospace-lead-ws'   => ['monospace',   new Monospace(),   "'' foo bar''"],
+            'subscript-lead-ws'   => ['subscript',   new Subscript(),   '<sub> foo bar</sub>'],
+            'superscript-lead-ws' => ['superscript', new Superscript(), '<sup> foo bar</sup>'],
+            'deleted-lead-ws'     => ['deleted',     new Deleted(),     '<del> foo bar</del>'],
+            // Trailing-whitespace closer
+            'strong-trail-ws'     => ['strong',      new Strong(),      '**foo bar **'],
+            'emphasis-trail-ws'   => ['emphasis',    new Emphasis(),    '//foo bar //'],
+            'underline-trail-ws'  => ['underline',   new Underline(),   '__foo bar __'],
+            'monospace-trail-ws'  => ['monospace',   new Monospace(),   "''foo bar ''"],
+            'subscript-trail-ws'  => ['subscript',   new Subscript(),   '<sub>foo bar </sub>'],
+            'superscript-trail-ws'=> ['superscript', new Superscript(), '<sup>foo bar </sup>'],
+            'deleted-trail-ws'    => ['deleted',     new Deleted(),     '<del>foo bar </del>'],
+            // Empty delimiter pairs
+            'strong-empty'        => ['strong',      new Strong(),      '**** stays literal'],
+            'underline-empty'     => ['underline',   new Underline(),   '____ stays literal'],
+            'monospace-empty'     => ['monospace',   new Monospace(),   "'''' stays literal"],
+        ];
+    }
+
+    /**
+     * Single-character bodies still match, they're the smallest valid span.
+     */
+    function testStrongSingleCharacterBody()
+    {
+        $this->P->addMode('strong', new Strong());
+        $this->P->parse('**a**');
+        $this->assertContains('strong_open', array_column($this->H->calls, 0));
+        $this->assertContains('strong_close', array_column($this->H->calls, 0));
     }
 }

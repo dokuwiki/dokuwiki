@@ -19,12 +19,15 @@ class Strong extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '\*\*(?=' . self::CONTENT_UNTIL_PARA . '\*\*)';
+        // Flanking rules (simplified): opener must be followed by non-whitespace
+        // non-`*`; closer must be preceded by non-whitespace. This rejects
+        // `** foo**`, `**foo **`, and empty pairs `****`.
+        return '\*\*(?=[^\s*])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]\*\*)';
     }
 
     /** @inheritdoc */
     protected function getExitPattern(): string
     {
-        return '\*\*';
+        return '(?<=[^\s])\*\*';
     }
 }

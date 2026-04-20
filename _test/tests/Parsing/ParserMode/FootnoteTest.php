@@ -401,6 +401,10 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteNesting() {
+        // Strong no longer opens where its inner `**` is adjacent to spaces
+        // (flanking rule). So `** (( b ` inside the footnote stays literal,
+        // and the footnote closes at the first `))`. The trailing `** c ))`
+        // outside has `**` adjacent to space too — also literal.
         $this->P->addMode('strong',new Strong());
         $this->P->parse("(( a ** (( b )) ** c ))");
 
@@ -410,14 +414,10 @@ class FootnoteTest extends ParserTestBase
             ['cdata',["\n"]],
             ['nest', [ [
               ['footnote_open',[]],
-              ['cdata',[' a ']],
-              ['strong_open',[]],
-              ['cdata',[' (( b ']],
+              ['cdata',[' a ** (( b ']],
               ['footnote_close',[]],
             ]]],
-            ['cdata',[" "]],
-            ['strong_close',[]],
-            ['cdata',[" c ))"]],
+            ['cdata',[" ** c ))"]],
             ['p_close',[]],
             ['document_end',[]],
         ];

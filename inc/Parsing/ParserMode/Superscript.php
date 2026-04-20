@@ -19,12 +19,12 @@ class Superscript extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '<sup>(?=' . self::CONTENT_UNTIL_PARA . '</sup>)';
+        return '<sup>(?=[^\s])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]</sup>)';
     }
 
     /** @inheritdoc */
     protected function getExitPattern(): string
     {
-        return '</sup>';
+        return '(?<=[^\s])</sup>';
     }
 }
