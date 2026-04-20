@@ -185,4 +185,56 @@ class FormattingTest extends ParserTestBase
         ];
         $this->assertCalls($calls, $this->H->calls);
     }
+
+    /**
+     * @dataProvider provideParagraphBoundaryModes
+     *
+     * Formatting delimiters must not match across a blank line. An unclosed
+     * delimiter followed by a blank line and then an unrelated delimiter
+     * further down must stay literal — otherwise the lexer greedily swallows
+     * the paragraph break.
+     */
+    function testDelimitersDoNotSpanParagraphBoundary(
+        string $modeName,
+        $mode,
+        string $input
+    ) {
+        $this->P->addMode($modeName, $mode);
+        $this->P->parse($input);
+        foreach ($this->H->calls as $call) {
+            $this->assertNotSame(
+                $modeName . '_open',
+                $call[0],
+                "Mode '$modeName' must not open across a blank line in: " . json_encode($input)
+            );
+        }
+    }
+
+    public static function provideParagraphBoundaryModes(): array
+    {
+        return [
+            'strong'      => ['strong',      new Strong(),      "**open\n\nclose**"],
+            'emphasis'    => ['emphasis',    new Emphasis(),    "//open\n\nclose//"],
+            'underline'   => ['underline',   new Underline(),   "__open\n\nclose__"],
+            'monospace'   => ['monospace',   new Monospace(),   "''open\n\nclose''"],
+            'subscript'   => ['subscript',   new Subscript(),   "<sub>open\n\nclose</sub>"],
+            'superscript' => ['superscript', new Superscript(), "<sup>open\n\nclose</sup>"],
+            'deleted'     => ['deleted',     new Deleted(),     "<del>open\n\nclose</del>"],
+        ];
+    }
+
+    /**
+     * A single newline inside a delimiter pair is still valid (multi-line
+     * formatting), only blank lines end it.
+     */
+    function testStrongAllowsSingleNewline()
+    {
+        $this->P->addMode('strong', new Strong());
+        $this->P->parse("**open\nclose**");
+        $this->assertContains(
+            'strong_open',
+            array_column($this->H->calls, 0),
+            'Strong must still match across a single newline'
+        );
+    }
 }

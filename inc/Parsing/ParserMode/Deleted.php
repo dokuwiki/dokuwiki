@@ -19,7 +19,7 @@ class Deleted extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '<del>(?=.*</del>)';
+        return '<del>(?=' . self::CONTENT_UNTIL_PARA . '</del>)';
     }
 
     /** @inheritdoc */

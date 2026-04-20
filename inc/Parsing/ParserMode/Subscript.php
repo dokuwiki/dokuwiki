@@ -19,7 +19,7 @@ class Subscript extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '<sub>(?=.*</sub>)';
+        return '<sub>(?=' . self::CONTENT_UNTIL_PARA . '</sub>)';
     }
 
     /** @inheritdoc */

@@ -24,7 +24,7 @@ class Emphasis extends AbstractFormatting
      */
     protected function getEntryPattern(): string
     {
-        return '//(?=[^\x00]*[^:])';
+        return '//(?=' . self::CONTENT_UNTIL_PARA . '[^:]//)';
     }
 
     /** @inheritdoc */

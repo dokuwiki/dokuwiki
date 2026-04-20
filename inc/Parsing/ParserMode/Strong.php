@@ -19,7 +19,7 @@ class Strong extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '\*\*(?=.*\*\*)';
+        return '\*\*(?=' . self::CONTENT_UNTIL_PARA . '\*\*)';
     }
 
     /** @inheritdoc */

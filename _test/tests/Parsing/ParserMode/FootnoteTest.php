@@ -374,6 +374,32 @@ class FootnoteTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    /**
+     * Footnotes are block-level containers (they can hold tables, lists,
+     * blockquotes, etc.), so unlike inline formatting they are allowed to
+     * span paragraph breaks. Pins this behavior down so future refactors
+     * of the inline-formatting paragraph guard don't accidentally restrict
+     * footnotes.
+     */
+    function testFootnoteSpansParagraphBoundary() {
+        $this->P->addMode('eol', new Eol());
+        $this->P->parse("Foo (( para one\n\npara two )) Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ['Foo ']],
+            ['nest', [[
+                ['footnote_open', []],
+                ['cdata', [" para one\n\npara two "]],
+                ['footnote_close', []],
+            ]]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testFootnoteNesting() {
         $this->P->addMode('strong',new Strong());
         $this->P->parse("(( a ** (( b )) ** c ))");
