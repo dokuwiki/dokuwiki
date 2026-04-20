@@ -347,8 +347,13 @@ class ModeRegistryTest extends \DokuWikiTest
     public static function provideModeLoadingCases(): array
     {
         $rules = [
+            // MD-always (`*` has no DW counterpart)
+            'gfm_emphasis'            => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            // MD-preferred (`_`, `__` clash with Underline in DW)
+            'gfm_emphasis_underscore' => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_strong_underscore'   => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
             // DW-preferred (Underline's `__` clashes with GFM strong)
-            'underline' => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
+            'underline'               => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
         ];
 
         $cases = [];
