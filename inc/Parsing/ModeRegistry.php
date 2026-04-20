@@ -241,7 +241,7 @@ class ModeRegistry
         global $conf;
 
         $modes = [
-            'strong', 'underline', 'monospace', 'subscript', 'superscript',
+            'strong', 'monospace', 'subscript', 'superscript',
             'footnote', 'eol', 'unformatted', 'preformatted', 'file',
             'quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
@@ -261,10 +261,23 @@ class ModeRegistry
      */
     protected function loadDokuWikiModes(): void
     {
-        $this->instantiateModes([
+        global $conf;
+        $syntax = $conf['syntax'] ?? 'dokuwiki';
+        $dwPreferred = in_array($syntax, ['dokuwiki', 'dw+md'], true);
+
+        $modes = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
             'linebreak', 'internallink', 'media', 'listblock', 'table',
-        ]);
+        ];
+
+        // Underline only loads when DokuWiki is preferred. In MD-preferred
+        // modes, `__` means strong (via gfm_strong_underscore) and loading
+        // Underline here would conflict.
+        if ($dwPreferred) {
+            $modes[] = 'underline';
+        }
+
+        $this->instantiateModes($modes);
     }
 
     /**
@@ -274,7 +287,7 @@ class ModeRegistry
     protected function loadMarkdownModes(): void
     {
         $this->instantiateModes([
-            // Future: 'gfmemphasis', 'gfmdeleted', 'gfmcode', etc.
+            // Future: 'gfm_emphasis', 'gfm_deleted', 'gfm_code', etc.
         ]);
     }
 
@@ -304,14 +317,17 @@ class ModeRegistry
     /**
      * Instantiate mode classes by name and add them to the mode list.
      *
-     * Each name is resolved to a class in the ParserMode namespace via ucfirst().
+     * Mode names are split on `_` and each segment is PascalCased to form the
+     * class name (e.g. `gfm_emphasis_underscore` → `GfmEmphasisUnderscore`,
+     * `internallink` → `Internallink`, `strong` → `Strong`).
      *
      * @param string[] $modeNames
      */
     protected function instantiateModes(array $modeNames): void
     {
         foreach ($modeNames as $mode) {
-            $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($mode);
+            $class = implode('', array_map('ucfirst', explode('_', $mode))); // snake_case to PascalCase
+            $class = 'dokuwiki\\Parsing\\ParserMode\\' . $class; // prepend namespace
             $obj = new $class();
             $this->modes[] = [
                 'sort' => $obj->getSort(),

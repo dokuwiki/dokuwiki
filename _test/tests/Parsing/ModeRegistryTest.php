@@ -263,7 +263,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $modeNames = array_column($modes, 'mode');
 
         $always = [
-            'strong', 'underline', 'monospace', 'subscript', 'superscript',
+            'strong', 'monospace', 'subscript', 'superscript',
             'footnote', 'eol', 'unformatted', 'preformatted', 'file',
             'quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
@@ -294,6 +294,70 @@ class ModeRegistryTest extends \DokuWikiTest
                 $this->assertContains($mode, $modeNames, "DW mode '$mode' missing in '$syntax' syntax setting");
             }
         }
+    }
+
+    /**
+     * Verifies that each mode is loaded in the expected combinations of
+     * `$conf['syntax']`. One data set per (mode, syntax) pair.
+     *
+     * Add new mode-gating rules to {@see provideModeLoadingCases} — each
+     * entry lists the four syntax settings and whether the mode should be
+     * loaded there.
+     *
+     * @dataProvider provideModeLoadingCases
+     */
+    function testModeLoadingBySyntax(string $mode, string $syntax, bool $shouldLoad): void
+    {
+        global $conf;
+        $conf['syntax'] = $syntax;
+        ModeRegistry::reset();
+        $modeNames = array_column(ModeRegistry::getInstance()->getModes(), 'mode');
+
+        if ($shouldLoad) {
+            $this->assertContains($mode, $modeNames, "$mode must load in '$syntax'");
+        } else {
+            $this->assertNotContains($mode, $modeNames, "$mode must NOT load in '$syntax'");
+        }
+    }
+
+    /**
+     * Data provider for {@see testModeLoadingBySyntax}.
+     *
+     * Declares, per parser mode, whether it should be loaded in each of the
+     * four `$conf['syntax']` settings (`dokuwiki`, `markdown`, `dw+md`,
+     * `md+dw`). Entries are expanded into one data set per (mode, syntax)
+     * pair so PHPUnit reports failures with a specific label.
+     *
+     * Three gating categories are represented:
+     *
+     * - **MD-always**: loaded whenever Markdown is part of the syntax. Used
+     *   when the delimiter has no DokuWiki counterpart (e.g. `*` for
+     *   emphasis).
+     * - **MD-preferred**: loaded only when Markdown is the primary syntax.
+     *   Used when the delimiter conflicts with a DokuWiki mode in DW-
+     *   preferred settings (e.g. `_`, `__`, `___` clash with Underline).
+     * - **DW-preferred**: mirror — loaded only when DokuWiki is primary.
+     *
+     * Add a new line to the `$rules` table to register additional mode-
+     * gating rules.
+     *
+     * @return array<string, array{0: string, 1: string, 2: bool}> map from
+     *     test-case label to [mode name, syntax setting, should-load]
+     */
+    public static function provideModeLoadingCases(): array
+    {
+        $rules = [
+            // DW-preferred (Underline's `__` clashes with GFM strong)
+            'underline' => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
+        ];
+
+        $cases = [];
+        foreach ($rules as $mode => $bySyntax) {
+            foreach ($bySyntax as $syntax => $shouldLoad) {
+                $cases["$mode in $syntax"] = [$mode, $syntax, $shouldLoad];
+            }
+        }
+        return $cases;
     }
 
 }
