@@ -30,6 +30,7 @@
 !/conf/smileys.conf
 !/conf/wordblock.conf
 !/conf/local.php
+!/conf/acl.auth.php
 /data/attic/*
 /data/cache/*
 /data/index/*
