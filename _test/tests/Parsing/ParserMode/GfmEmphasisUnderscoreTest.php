@@ -7,14 +7,6 @@ use dokuwiki\Parsing\ParserMode\GfmEmphasisUnderscore;
 
 /**
  * Tests for the GFM underscore emphasis mode (`_text_`).
- *
- * Only loaded when Markdown is preferred or the only syntax; see SPEC.md and
- * the registry test coverage in ModeRegistryTest.
- *
- * Follows the FormattingTest pattern: one mode loaded in isolation, assertions
- * against handler instruction sequences. The setUp flips ModeRegistry to
- * `markdown` syntax so the Base mode recognizes `gfm_emphasis_underscore` as
- * an allowed nested mode.
  */
 class GfmEmphasisUnderscoreTest extends ParserTestBase
 {

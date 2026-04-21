@@ -79,6 +79,7 @@ class ModeRegistry
                 'subscript', 'superscript', 'deleted', 'footnote',
                 'gfm_emphasis', 'gfm_emphasis_underscore', 'gfm_strong_underscore',
                 'gfm_emphasis_strong', 'gfm_emphasis_strong_underscore',
+                'gfm_deleted',
             ],
             self::CATEGORY_SUBSTITION => [
                 'acronym', 'smiley', 'wordblock', 'entity',
@@ -292,7 +293,7 @@ class ModeRegistry
         $syntax = $conf['syntax'] ?? 'dokuwiki';
         $mdPreferred = in_array($syntax, ['markdown', 'md+dw'], true);
 
-        $modes = ['gfm_emphasis', 'gfm_emphasis_strong'];
+        $modes = ['gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted'];
 
         // Underscore-based emphasis and strong only load when Markdown is
         // preferred. In DW-preferred modes, `__` means underline and loading

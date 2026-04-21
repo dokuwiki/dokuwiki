@@ -7,14 +7,6 @@ use dokuwiki\Parsing\ParserMode\GfmEmphasis;
 
 /**
  * Tests for the GFM asterisk emphasis mode (`*text*`).
- *
- * Mirrors the existing FormattingTest pattern: one mode loaded in isolation,
- * assertions against handler instruction sequences.
- *
- * The setUp flips ModeRegistry to `markdown` syntax so that the Base mode
- * (constructed by the Parser) recognizes `gfm_emphasis` as an allowed nested
- * mode. Without this, Base's allowedModes would be the dokuwiki set and would
- * silently drop our entry pattern.
  */
 class GfmEmphasisTest extends ParserTestBase
 {

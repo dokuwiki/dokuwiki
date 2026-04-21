@@ -7,11 +7,6 @@ use dokuwiki\Parsing\ParserMode\GfmStrongUnderscore;
 
 /**
  * Tests for GFM strong emphasis via double underscores (`__text__`).
- *
- * Only loaded when Markdown is the only or preferred syntax. Combines:
- *   - intraword word-boundary rule (multibyte-safe)
- *   - flanking-whitespace rule (no leading/trailing space inside delimiters)
- *   - paragraph-boundary rule (no crossing blank lines)
  */
 class GfmStrongUnderscoreTest extends ParserTestBase
 {

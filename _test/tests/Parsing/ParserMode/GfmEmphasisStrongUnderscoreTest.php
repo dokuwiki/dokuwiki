@@ -9,7 +9,7 @@ use dokuwiki\Parsing\ParserMode\GfmEmphasisStrongUnderscore;
  * Tests for the GFM em-wrapping-strong mode via underscores (`___text___`).
  *
  * Only the exact 3+3 symmetric variant is handled; intraword underscores
- * stay literal (multibyte-safe).
+ * stay literal
  */
 class GfmEmphasisStrongUnderscoreTest extends ParserTestBase
 {
