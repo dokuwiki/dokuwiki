@@ -143,26 +143,23 @@ class Lexer
         if (! isset($this->handler)) {
             return false;
         }
-        $initialLength = strlen($raw);
-        $length = $initialLength;
-        $pos = 0;
-        while (is_array($parsed = $this->reduce($raw))) {
+        $offset = 0;
+        while (is_array($parsed = $this->reduce($raw, $offset))) {
             [$unmatched, $matched, $mode] = $parsed;
-            $currentLength = strlen($raw);
-            $matchPos = $initialLength - $currentLength - strlen($matched);
-            if (! $this->dispatchTokens($unmatched, $matched, $mode, $pos, $matchPos)) {
+            $matchPos = $offset + strlen($unmatched);
+            if (! $this->dispatchTokens($unmatched, $matched, $mode, $offset, $matchPos)) {
                 return false;
             }
-            if ($currentLength === $length) {
+            $newOffset = $matchPos + strlen($matched);
+            if ($newOffset === $offset) {
                 return false;
             }
-            $length = $currentLength;
-            $pos = $initialLength - $currentLength;
+            $offset = $newOffset;
         }
         if (!$parsed) {
             return false;
         }
-        return $this->invokeHandler($raw, DOKU_LEXER_UNMATCHED, $pos);
+        return $this->invokeHandler(substr($raw, $offset), DOKU_LEXER_UNMATCHED, $offset);
     }
 
     /**
@@ -272,24 +269,29 @@ class Lexer
     }
 
     /**
-     * Tries to match a chunk of text and if successful removes the recognised chunk and any leading
-     * unparsed data. Empty strings will not be matched.
+     * Tries to match the next token starting at `$offset` in `$raw`.
      *
-     * @param string $raw         The subject to parse. This is the content that will be eaten.
-     * @return array|bool         Three item list of unparsed content followed by the
-     *                            recognised token and finally the action the parser is to take.
-     *                            True if no match, false if there is a parsing error.
+     * The full subject is passed to the regex engine (rather than a
+     * truncated tail) so that lookbehind assertions in the registered
+     * patterns can see characters before the current offset. Empty
+     * subjects (offset past end) will not be matched.
+     *
+     * @param string $raw     The full subject to parse.
+     * @param int    $offset  Byte offset at which to resume matching.
+     * @return array|bool     Three item list of unparsed content followed by the
+     *                        recognised token and finally the action the parser is to take.
+     *                        True if no match, false if there is a parsing error.
      */
-    protected function reduce(&$raw)
+    protected function reduce($raw, $offset)
     {
         if (! isset($this->regexes[$this->modeStack->getCurrent()])) {
             return false;
         }
-        if ($raw === "") {
+        if ($offset >= strlen($raw)) {
             return true;
         }
-        if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split)) {
-            [$unparsed, $match, $raw] = $split;
+        if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split, $offset)) {
+            [$unparsed, $match] = $split;
             return [$unparsed, $match, $action];
         }
         return true;

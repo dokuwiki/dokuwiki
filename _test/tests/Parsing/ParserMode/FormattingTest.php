@@ -4,6 +4,7 @@ namespace dokuwiki\test\Parsing\ParserMode;
 
 use dokuwiki\Parsing\ParserMode\Deleted;
 use dokuwiki\Parsing\ParserMode\Emphasis;
+use dokuwiki\Parsing\ParserMode\Internallink;
 use dokuwiki\Parsing\ParserMode\Monospace;
 use dokuwiki\Parsing\ParserMode\Strong;
 use dokuwiki\Parsing\ParserMode\Subscript;
@@ -158,6 +159,55 @@ class FormattingTest extends ParserTestBase
             ['cdata', [' text']],
             ['strong_close', []],
             ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testStrongClosesAfterLink()
+    {
+        // Regression: `**[[link]]**` must close Strong on the trailing `**`.
+        // Strong's exit pattern `(?<=[^\s])\*\*` needs to see the `]` that
+        // ends the link as the preceding non-whitespace char. The lexer
+        // passes the full subject + offset to PCRE so lookbehinds work
+        // across consumed tokens.
+        $this->P->addMode('strong', new Strong());
+        $this->P->addMode('internallink', new Internallink());
+        $this->P->parse('**[[wiki:x|link]]** bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n"]],
+            ['strong_open', []],
+            ['internallink', ['wiki:x', 'link']],
+            ['strong_close', []],
+            ['cdata', [' bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testStrongClosesAfterEmphasis()
+    {
+        // Regression: `**foo//bar//**` — after emphasis closes, Strong's
+        // closing `**` must still match; its lookbehind sees the `/` left
+        // behind by the emphasis exit.
+        $this->P->addMode('strong', new Strong());
+        $this->P->addMode('emphasis', new Emphasis());
+        $this->P->parse('**foo//bar//**');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n"]],
+            ['strong_open', []],
+            ['cdata', ['foo']],
+            ['emphasis_open', []],
+            ['cdata', ['bar']],
+            ['emphasis_close', []],
+            ['strong_close', []],
+            ['cdata', ['']],
             ['p_close', []],
             ['document_end', []],
         ];
