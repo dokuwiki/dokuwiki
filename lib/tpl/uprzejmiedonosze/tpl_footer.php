@@ -18,7 +18,7 @@ if (!defined('DOKU_INC')) die();
             <?php
             try {
                 $loginItem = new \dokuwiki\Menu\Item\Login();
-                echo $loginItem->asHtmlLink(false, false);
+                echo $loginItem->asHtmlLink('action ', false);
             } catch (\RuntimeException $ignored) {
             }
             ?>
