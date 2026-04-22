@@ -112,6 +112,101 @@ return [
     480 => 'CommonMark `**foo **bar baz**` — overlapping same delimiter',
 
     // --------------------------------------------------------------------
+    // Inline link `[text](url)` — features GfmLink deliberately does not
+    // implement. Either rarely-used syntax paid for with disproportionate
+    // regex complexity, or single-pass-lexer limits that can't be worked
+    // around inside one mode.
+    // --------------------------------------------------------------------
+
+    // GFM link title attribute (`"title"` / `'title'` / `(title)` after
+    // the URL). Parses cleanly but is discarded: DokuWiki's link handler
+    // instructions have no title-attribute slot, and plumbing one through
+    // every renderer is out of scope for GfmLink.
+    493 => 'link title attribute: GfmLink parses but discards — DokuWiki link instructions have no title slot',
+    513 => 'link title attribute (three quoting styles): discarded by GfmLink',
+    515 => 'link title separated by non-breaking space: title slot not supported',
+    516 => 'link title with nested balanced quotes: Markdown.pl quirk, not supported',
+    517 => 'link title with different quote type for inner quotes: title slot not supported',
+    518 => 'multi-line link title: title slot not supported',
+
+    // Pointy-bracket link destinations `<...>`. Rarely used; regex cost
+    // and interaction with raw-HTML detection outweigh the benefit.
+    496 => 'pointy-bracket link destination `<>`: not supported',
+    498 => 'pointy-bracket destination with spaces `<...>`: not supported',
+    500 => 'pointy-bracket destination with newline: not supported',
+    501 => 'pointy-bracket destination containing `)`: not supported',
+    502 => 'pointy-bracket destination with trailing backslash: not supported',
+    503 => 'malformed pointy-bracket destinations: renderer output differs',
+    507 => 'pointy-bracket destination wrapping unbalanced parens: not supported',
+
+    // Balanced-parens inside URL destinations.
+    505 => 'balanced-parens in URL destination: not supported (regex single-level)',
+
+    // Other URL-level edges.
+    495 => 'empty URL destination `[link]()`: pattern requires non-empty URL',
+    510 => 'backslash in URL destination: URL-encoding differs from spec',
+    511 => 'HTML entity / percent-encoding in URL: renderer normalization differs',
+    512 => 'link destination that parses as a title: edge case not supported',
+
+    // Inherent single-pass-lexer limits for link text containing nested
+    // structures. These cannot be resolved inside one mode.
+    522 => 'nested bracket forms inner link, outer falls back to literal',
+    526 => 'nested links: inner is a link, outer falls back to literal',
+    527 => 'nested links inside emphasis: not supported',
+    529 => 'link text grouping vs. emphasis: leftmost-match cannot override',
+    530 => 'emphasis/bracket crossing: leftmost-match cannot override',
+    532 => 'raw HTML inside link text: project-wide "no raw HTML" limit',
+    533 => 'code span inside link text: requires pre-scan pass (see #351)',
+    534 => 'autolink inside link text: raw `<URL>` autolinks not supported (see #356)',
+
+    // Reference links (`[text][id]`, `[text][]`, `[foo]` with matching
+    // `[foo]: url` definition). Not implemented: resolving forward
+    // references would require a two-pass parse, but DokuWiki's lexer is
+    // single-pass. Inline links `[text](url)` are the only supported
+    // form.
+    535 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    536 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    537 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    538 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    539 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    540 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    541 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    542 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    543 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    544 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    545 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    546 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    547 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    548 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    549 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    550 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    551 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    552 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    553 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    557 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    558 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    560 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    561 => 'collapsed reference link: forward-reference definitions not supported (single-pass lexer)',
+    562 => 'collapsed reference link: forward-reference definitions not supported (single-pass lexer)',
+    563 => 'collapsed reference link: forward-reference definitions not supported (single-pass lexer)',
+    564 => 'collapsed reference link: forward-reference definitions not supported (single-pass lexer)',
+    565 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    566 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    567 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    568 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    569 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    570 => 'shortcut reference link: forward-reference definitions not supported (single-pass lexer)',
+    571 => 'shortcut reference link with escape: forward-reference definitions not supported (single-pass lexer)',
+    572 => 'shortcut reference link with emphasis: forward-reference definitions not supported (single-pass lexer)',
+    573 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    574 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    575 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    576 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    577 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    578 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+    579 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
+
+    // --------------------------------------------------------------------
     // ATX heading collisions with DokuWiki-specific behavior.
     // --------------------------------------------------------------------
     38 => 'ATX heading with leading spaces: GFM tolerates 0-3 spaces of'
