@@ -207,6 +207,39 @@ return [
     579 => 'reference link: forward-reference definitions not supported (single-pass lexer)',
 
     // --------------------------------------------------------------------
+    // Inline image `![alt](url)`. The XHTML renderer's default media
+    // rendering diverges from GFM's bare <img> (it wraps in a details <a>
+    // with fetch.php/detail.php proxy URLs) — GfmSpecTest uses
+    // SpecCompatRenderer to emit spec-shape bare <img>, so only the
+    // parser-level or feature-level gaps remain as skips: title attribute
+    // (no DW slot), reference images, pointy-bracket destinations, nested
+    // brackets, and escape-dependent cases.
+    // --------------------------------------------------------------------
+
+    580 => 'image with title attribute: GfmMedia discards titles (no DW slot)',
+    581 => 'reference-style image: forward-reference definitions not supported (single-pass lexer)',
+    582 => 'nested image-in-image `![foo ![bar](x)](y)`: alt class forbids brackets;'
+         . ' leftmost-match cannot reorder — outer falls back to literal (see #526)',
+    583 => 'link-in-image alt `![foo [bar](x)](y)`: alt class forbids brackets;'
+         . ' leftmost-match cannot reorder — outer falls back to literal (see #526)',
+    584 => 'collapsed reference-style image: forward-reference definitions not supported',
+    585 => 'full reference-style image: forward-reference definitions not supported',
+    587 => 'image with title attribute: title discarded (no DW slot)',
+    588 => 'pointy-bracket image destination `![alt](<url>)`: not supported (see GfmLink #496)',
+    590 => 'reference-style image: forward-reference definitions not supported',
+    591 => 'reference-style image (case-insensitive label): forward-reference definitions not supported',
+    592 => 'collapsed reference-style image `![foo][]`: forward-reference definitions not supported',
+    593 => 'collapsed reference-style image with emphasis in label: forward-reference definitions not supported',
+    594 => 'collapsed reference-style image (case-insensitive): forward-reference definitions not supported',
+    595 => 'reference-style image with intervening whitespace: forward-reference definitions not supported',
+    596 => 'shortcut reference-style image `![foo]`: forward-reference definitions not supported',
+    597 => 'shortcut reference-style image with emphasis: forward-reference definitions not supported',
+    598 => 'image with unescaped nested brackets `![[foo]]`: literal-fallback behavior not supported',
+    599 => 'shortcut reference-style image (case-insensitive): forward-reference definitions not supported',
+    600 => 'escape in image syntax `!\[foo]`: depends on GfmEscape (pending)',
+    601 => 'backslash-escape of `!` before link: depends on GfmEscape (pending)',
+
+    // --------------------------------------------------------------------
     // ATX heading collisions with DokuWiki-specific behavior.
     // --------------------------------------------------------------------
     38 => 'ATX heading with leading spaces: GFM tolerates 0-3 spaces of'

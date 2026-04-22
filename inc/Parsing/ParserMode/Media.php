@@ -3,6 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Helpers;
 
 class Media extends AbstractMode
 {
@@ -69,45 +70,16 @@ class Media extends AbstractMode
         //remove aligning spaces
         $link[0] = trim($link[0]);
 
-        //split into src and parameters (using the very last questionmark)
-        $pos = strrpos($link[0], '?');
-        if ($pos !== false) {
-            $src = substr($link[0], 0, $pos);
-            $param = substr($link[0], $pos + 1);
-        } else {
-            $src = $link[0];
-            $param = '';
+        $p = Helpers::parseMediaParameters($link[0]);
+
+        // Explicit param-derived alignment (?left/?right/?center) beats
+        // the whitespace-derived one — it's unambiguous and visible, and
+        // is the only form GfmMedia can express.
+        if ($p['align'] !== null) {
+            $align = $p['align'];
         }
 
-        //parse width and height
-        if (preg_match('#(\d+)(x(\d+))?#i', $param, $size)) {
-            $w = empty($size[1]) ? null : $size[1];
-            $h = empty($size[3]) ? null : $size[3];
-        } else {
-            $w = null;
-            $h = null;
-        }
-
-        //get linking command
-        if (preg_match('/nolink/i', $param)) {
-            $linking = 'nolink';
-        } elseif (preg_match('/direct/i', $param)) {
-            $linking = 'direct';
-        } elseif (preg_match('/linkonly/i', $param)) {
-            $linking = 'linkonly';
-        } else {
-            $linking = 'details';
-        }
-
-        //get caching command
-        if (preg_match('/(nocache|recache)/i', $param, $cachemode)) {
-            $cache = $cachemode[1];
-        } else {
-            $cache = 'cache';
-        }
-
-        // Check whether this is a local or remote image or interwiki
-        if (media_isexternal($src) || link_isinterwiki($src)) {
+        if (media_isexternal($p['src']) || link_isinterwiki($p['src'])) {
             $call = 'externalmedia';
         } else {
             $call = 'internalmedia';
@@ -115,13 +87,13 @@ class Media extends AbstractMode
 
         return [
             'type' => $call,
-            'src' => $src,
+            'src' => $p['src'],
             'title' => $link[1],
             'align' => $align,
-            'width' => $w,
-            'height' => $h,
-            'cache' => $cache,
-            'linking' => $linking
+            'width' => $p['width'],
+            'height' => $p['height'],
+            'cache' => $p['cache'],
+            'linking' => $p['linking']
         ];
     }
 }

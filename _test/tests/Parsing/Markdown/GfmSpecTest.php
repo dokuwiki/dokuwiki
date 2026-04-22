@@ -55,8 +55,11 @@ class GfmSpecTest extends \DokuWikiTest
     }
 
     /**
-     * Render markdown text through DokuWiki's full parser + XHTML renderer
-     * pipeline under the `markdown` syntax setting.
+     * Render markdown text through DokuWiki's full parser pipeline under
+     * the `markdown` syntax setting, using {@see SpecCompatRenderer} —
+     * an XHTML renderer subclass that emits the minimal link/media HTML
+     * shape the GFM spec expects. Production rendering is unchanged;
+     * this override exists so spec output can be compared byte-for-byte.
      */
     private function renderMarkdown(string $text): string
     {
@@ -65,8 +68,20 @@ class GfmSpecTest extends \DokuWikiTest
         ModeRegistry::reset();
 
         $instructions = p_get_instructions($text);
-        $info = [];
-        return p_render('xhtml', $instructions, $info);
+
+        $renderer = new SpecCompatRenderer();
+        $renderer->reset();
+        $renderer->smileys   = getSmileys();
+        $renderer->entities  = getEntities();
+        $renderer->acronyms  = getAcronyms();
+        $renderer->interwiki = getInterwiki();
+
+        foreach ($instructions as $instruction) {
+            if (method_exists($renderer, $instruction[0])) {
+                call_user_func_array([$renderer, $instruction[0]], $instruction[1] ?: []);
+            }
+        }
+        return $renderer->doc;
     }
 
     /**

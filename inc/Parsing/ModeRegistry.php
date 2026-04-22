@@ -86,7 +86,7 @@ class ModeRegistry
                 'camelcaselink', 'internallink', 'media', 'externallink',
                 'linebreak', 'emaillink', 'windowssharelink', 'filelink',
                 'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
-                'gfm_link',
+                'gfm_link', 'gfm_media',
             ],
             self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file'],
             self::CATEGORY_DISABLED   => ['unformatted'],
@@ -297,7 +297,7 @@ class ModeRegistry
         $modes = [
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
             'gfm_backtick_single', 'gfm_backtick_double',
-            'gfm_header', 'gfm_link',
+            'gfm_header', 'gfm_link', 'gfm_media',
         ];
 
         // Underscore-based emphasis and strong only load when Markdown is

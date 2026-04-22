@@ -193,6 +193,50 @@ class MediaTest extends ParserTestBase
         $this->assertCalls($calls, $parser_response);
     }
 
+    function testAlignFromWhitespace() {
+        // DW's historical whitespace-inside-braces alignment still works.
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{ ' . $file . '}}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'right', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
+    function testAlignFromParameter() {
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{' . $file . '?left}}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'left', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
+    function testAlignParameterBeatsWhitespace() {
+        // Explicit ?center wins over whitespace-derived 'left' (trailing space).
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{' . $file . '?center }}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'center', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
     function testLinkTextWithWavedBrackets_3() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|We got a { and a } here.}}');

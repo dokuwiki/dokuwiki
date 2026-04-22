@@ -3,11 +3,10 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Helpers;
 
 class Internallink extends AbstractMode
 {
-    use LinkDispatch;
-
     /** @inheritdoc */
     public function getSort()
     {
@@ -35,7 +34,8 @@ class Internallink extends AbstractMode
         }
         $link[0] = trim($link[0]);
 
-        $this->dispatchLink($link[0], $link[1], $pos, $handler);
+        [$call, $args] = Helpers::classifyLink($link[0], $link[1]);
+        $handler->addCall($call, $args, $pos);
         return true;
     }
 }

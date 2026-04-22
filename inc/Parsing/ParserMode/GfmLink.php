@@ -3,26 +3,46 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Helpers;
 
 /**
  * GFM inline link [text](url) with optional title [text](url "title").
+ *
+ * The link text may be either plain text (the common case) or an inline
+ * image `![alt](imgUrl)` — the Markdown equivalent of DW's
+ * `[[target|{{imgUrl}}]]`. The image-as-label form emits a single link
+ * handler call with a media descriptor array in the label slot, reusing
+ * the same flow that `Internallink` already drives. No new handler
+ * instructions; renderers (xhtml, odt, metadata, …) already know how to
+ * render a link whose label is a media descriptor.
+ *
+ * Mirrors DW's `Internallink` architecture: a permissive outer pattern
+ * plus handle-time parsing, rather than encoding every GFM rule at
+ * pattern level.
  *
  * Deliberately not supported (see skip.php for the affected spec examples):
  *
  *   - Reference links [text][id] / [text][] / [foo] — the single-pass
  *     lexer cannot resolve forward references to [foo]: url definitions.
- *   - Pointy-bracket destinations [link](<foo bar>) — rarely used,
- *     regex cost outweighs the benefit.
- *   - Balanced-parens inside URLs [link](foo(bar)) — uncommon, complex.
- *   - Image-in-link [![alt](img)](url) — requires GfmMedia plus nested
- *     recursion across modes.
+ *   - Pointy-bracket destinations [link](<foo bar>) — the simplified
+ *     pattern will happily match, but handle() produces an internallink
+ *     with a broken src; spec tests for this stay in skip.php.
+ *   - Balanced-parens inside URLs [link](foo(bar)) — matches truncate
+ *     at first `)`, producing odd output; also in skip.php.
  *   - Title HTML attribute — DokuWiki link handler instructions have no
  *     title-attribute slot, and plumbing one through every renderer just
  *     for this is out of scope. The title parses cleanly but is discarded.
+ *   - Mixed text + image in the label ([prefix ![alt](img) suffix](url))
+ *     — matches DW's policy: Internallink only converts the label to a
+ *     media descriptor when it matches `^{{…}}$` exactly.
  */
 class GfmLink extends AbstractMode
 {
-    use LinkDispatch;
+    // Image sub-pattern reused for both the label alternative in the main
+    // pattern and the image-as-label detector in handle(). No capture
+    // groups here — the lexer wraps user patterns in a capture and
+    // additional captures would renumber unpredictably.
+    private const IMAGE_SUB = '!\[[^\[\]\n]*\]\([^)\n]+\)';
 
     /** @inheritdoc */
     public function getSort()
@@ -33,38 +53,74 @@ class GfmLink extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        // Pattern breakdown:
-        //   \[(?!\[)               — single `[`, not part of DW `[[`
-        //   [^\[\]\n]+              — text: no nested brackets, single line
-        //   \]\(                   — `]` immediately followed by `(` (GFM
-        //                             forbids whitespace between them)
-        //   \s*                    — optional whitespace around the URL
-        //   [^\s()\n]+             — URL: no whitespace, no parens, single line
-        //   (?:\s+(?:"[^"\n]*"
-        //          |'[^'\n]*'))?   — optional title in "..." or '...'
-        //   \s*\)                  — optional trailing whitespace, close paren
-        $pattern = '\[(?!\[)[^\[\]\n]+\]\('
-            . '\s*[^\s()\n]+'
-            . '(?:\s+(?:"[^"\n]*"|\'[^\'\n]*\'))?'
-            . '\s*\)';
+        // Outer shape: `[text-or-image](url)`. Text class forbids brackets
+        // and newlines; the image alternative explicitly matches one
+        // inline image. URL slot is permissive (`[^)\n]+`) — handle() does
+        // URL / title splitting post-entry, mirroring how DW Internallink
+        // parses inside `[[...]]`.
+        $pattern = '\[(?!\[)(?:[^\[\]\n]+|' . self::IMAGE_SUB . ')\]\([^)\n]+\)';
         $this->Lexer->addSpecialPattern($pattern, $mode, 'gfm_link');
     }
 
     /** @inheritdoc */
     public function handle($match, $state, $pos, Handler $handler)
     {
-        // The entry pattern has already validated the `[text](url)`
-        // shape, so we can destructure with plain string ops. Split on
-        // `](` to separate text from "url and optional title"; the URL
-        // is the first whitespace-delimited token of the remainder, and
-        // anything after it is the title — discarded, since DokuWiki
-        // link instructions have no title-attribute slot.
-        $sep    = strpos($match, '](');
-        $text   = substr($match, 1, $sep - 1);
-        $inside = trim(substr($match, $sep + 2, -1));
-        $url    = substr($inside, 0, strcspn($inside, " \t\n"));
+        // Detect image-as-label `[![alt](img)](target)`. Parallels
+        // Internallink's `^{{…}}$` check — when the label is exactly an
+        // inline image, parse it into a media descriptor; otherwise
+        // treat the label as plain text.
+        if (preg_match('/^\[(' . self::IMAGE_SUB . ')\]\(([^)\n]+)\)$/', $match, $m)) {
+            $label     = $this->parseImageDescriptor($m[1]);
+            $targetUrl = $this->extractUrl($m[2]);
+        } else {
+            // Plain text label can't contain `]`, so the first `](` is
+            // the label/target separator.
+            $sep       = strpos($match, '](');
+            $label     = substr($match, 1, $sep - 1);
+            $targetUrl = $this->extractUrl(substr($match, $sep + 2, -1));
+        }
 
-        $this->dispatchLink($url, $text, $pos, $handler);
+        [$call, $args] = Helpers::classifyLink($targetUrl, $label);
+        $handler->addCall($call, $args, $pos);
         return true;
+    }
+
+    /**
+     * Extract the URL from a parenthesized payload: trim surrounding
+     * whitespace, then take the first whitespace-delimited token. Any
+     * trailing title is discarded (no renderer slot for it).
+     */
+    private function extractUrl(string $inside): string
+    {
+        $inside = trim($inside);
+        return substr($inside, 0, strcspn($inside, " \t\n"));
+    }
+
+    /**
+     * Parse an inline image sub-match `![alt](imgUrl)` into the media
+     * descriptor shape Media::parseMedia() returns, so the link handler
+     * can treat it as a media label identically to `[[page|{{img}}]]`.
+     */
+    private function parseImageDescriptor(string $imageMatch): array
+    {
+        $sep    = strpos($imageMatch, '](');
+        $alt    = substr($imageMatch, 2, $sep - 2);
+        $imgUrl = $this->extractUrl(substr($imageMatch, $sep + 2, -1));
+
+        $p = Helpers::parseMediaParameters($imgUrl);
+        $type = (media_isexternal($p['src']) || link_isinterwiki($p['src']))
+            ? 'externalmedia'
+            : 'internalmedia';
+
+        return [
+            'type'    => $type,
+            'src'     => $p['src'],
+            'title'   => $alt !== '' ? $alt : null,
+            'align'   => $p['align'],
+            'width'   => $p['width'],
+            'height'  => $p['height'],
+            'cache'   => $p['cache'],
+            'linking' => $p['linking'],
+        ];
     }
 }

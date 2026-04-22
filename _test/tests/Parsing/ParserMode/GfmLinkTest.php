@@ -282,6 +282,168 @@ class GfmLinkTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    // ----- image-as-label (`[![alt](img)](target)`) -----
+
+    /**
+     * Media descriptor shape GfmLink emits for image-as-label, matching
+     * what Media::parseMedia() returns.
+     */
+    private function mediaArray(array $overrides): array
+    {
+        return array_merge([
+            'type'    => 'internalmedia',
+            'src'     => 'wiki:image.png',
+            'title'   => 'alt',
+            'align'   => null,
+            'width'   => null,
+            'height'  => null,
+            'cache'   => 'cache',
+            'linking' => 'details',
+        ], $overrides);
+    }
+
+    function testImageAsLabelInternalPageLink()
+    {
+        // The canonical case: image that links to a wiki page.
+        // Markdown equivalent of DW's `[[test:link|{{wiki:image.png}}]]`.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png)](test:link) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['test:link', $this->mediaArray([])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelExternalLink()
+    {
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png)](http://example.com) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['externallink', ['http://example.com', $this->mediaArray([])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelWithExternalMedia()
+    {
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![logo](https://example.com/logo.png)](test:link) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['test:link', $this->mediaArray([
+                'type'  => 'externalmedia',
+                'src'   => 'https://example.com/logo.png',
+                'title' => 'logo',
+            ])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelInterwikiLink()
+    {
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png)](wp>Example) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['interwikilink', ['wp>Example', $this->mediaArray([]), 'wp', 'Example']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelEmailLink()
+    {
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png)](user@example.com) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['emaillink', ['user@example.com', $this->mediaArray([])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelMediaParameters()
+    {
+        // Full DW parameter vocabulary works in the nested image slot.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png?200x100&right&nolink)](test:link) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['test:link', $this->mediaArray([
+                'align'   => 'right',
+                'width'   => '200',
+                'height'  => '100',
+                'linking' => 'nolink',
+            ])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelEmptyAlt()
+    {
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![](wiki:image.png)](test:link) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['test:link', $this->mediaArray(['title' => null])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testImageAsLabelBothTitlesDiscarded()
+    {
+        // Titles on both URLs parse cleanly but are dropped — neither
+        // DW's media nor link instructions have a title-attribute slot.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [![alt](wiki:image.png "img title")](test:link "link title") Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['test:link', $this->mediaArray([])]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testSortValue()
     {
         $this->assertSame(300, (new GfmLink())->getSort());
