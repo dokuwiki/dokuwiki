@@ -73,7 +73,7 @@ class ModeRegistry
         global $PARSER_MODES;
         $PARSER_MODES = [
             self::CATEGORY_CONTAINER  => ['listblock', 'table', 'quote', 'hr'],
-            self::CATEGORY_BASEONLY   => ['header'],
+            self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
             self::CATEGORY_FORMATTING => [
                 'strong', 'emphasis', 'underline', 'monospace',
                 'subscript', 'superscript', 'deleted', 'footnote',
@@ -296,6 +296,7 @@ class ModeRegistry
         $modes = [
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
             'gfm_backtick_single', 'gfm_backtick_double',
+            'gfm_header',
         ];
 
         // Underscore-based emphasis and strong only load when Markdown is

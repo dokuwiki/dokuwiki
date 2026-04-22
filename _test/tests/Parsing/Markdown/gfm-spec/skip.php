@@ -110,4 +110,22 @@ return [
     478 => 'CommonMark `*foo _bar* baz_` — overlapping different delimiters',
     479 => 'CommonMark `*foo __bar *baz bim__ bam*` — crossing delimiters',
     480 => 'CommonMark `**foo **bar baz**` — overlapping same delimiter',
+
+    // --------------------------------------------------------------------
+    // ATX heading collisions with DokuWiki-specific behavior.
+    // --------------------------------------------------------------------
+    38 => 'ATX heading with leading spaces: GFM tolerates 0-3 spaces of'
+        . ' indent before the opener; we require the `#` at column 0.'
+        . ' Indent tolerance collides with DokuWiki\'s 2-space-indent'
+        . ' preformatted block and isn\'t worth untangling',
+    39 => 'indented code block: DokuWiki uses 2-space indent for'
+        . ' preformatted; GFM 4-space indented code blocks are not'
+        . ' implemented',
+    40 => 'indented code block: 4-space indent after a paragraph is a'
+        . ' continuation in GFM but preformatted in DokuWiki — not'
+        . ' implemented',
+    41 => 'ATX heading with leading spaces: second heading is indented'
+        . ' by 2 spaces; we require the `#` at column 0',
+    49 => 'empty ATX heading: DokuWiki\'s XHTML renderer deliberately'
+        . ' skips blank headings (blank() guard in Doku_Renderer_xhtml::header)',
 ];

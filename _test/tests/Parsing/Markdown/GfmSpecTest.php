@@ -89,10 +89,29 @@ class GfmSpecTest extends \DokuWikiTest
 
     /**
      * Strip whitespace adjacent to block-level tags; leave inline tags alone.
+     *
+     * Additionally drops DokuWiki-specific heading decoration that carries no
+     * semantic meaning for GFM-conformance checks:
+     *
+     * - `<div class="levelN">` / matching `</div>` section wrappers the
+     *   renderer emits after every header call.
+     * - `class="..."` / `id="..."` attributes on h1-h6 (section-edit anchor
+     *   and header-id generation; fine to ignore, the spec output has none).
      */
     private function normalizeHtml(string $html): string
     {
         $block = 'p|div|h[1-6]|hr|ul|ol|li|blockquote|pre|table|thead|tbody|tfoot|tr|th|td';
+
+        // Drop DokuWiki's `<div class="levelN">` section wrappers and the
+        // HTML comments (`<!-- EDIT... -->`) its section-edit machinery
+        // inserts after each heading. Neither is semantically part of the
+        // heading and GFM reference output never contains them.
+        $html = preg_replace('#<div class="level[1-6]">\s*#', '', $html);
+        $html = preg_replace('#\s*</div>\s*#', '', $html);
+        $html = preg_replace('#<!--[^<]*?-->#', '', $html);
+
+        // Strip sectionedit/id decoration from headings.
+        $html = preg_replace('#<(h[1-6])(?:\s+(?:class|id)="[^"]*")+\s*>#', '<$1>', $html);
 
         // Whitespace before/after an opening block tag (including attributes)
         $html = preg_replace('#\s*<(' . $block . ')((?:\s[^>]*)?)>\s*#', '<$1$2>', $html);
