@@ -15,6 +15,23 @@
 
 return [
     // --------------------------------------------------------------------
+    // Code-span edge cases that collide with project-wide decisions
+    // (no raw HTML, no GFM angle-bracket autolinks, typography on by
+    // default) or with the single-pass lexer's limits.
+    // --------------------------------------------------------------------
+    351 => 'code span vs. emphasis: cross-positional precedence would require'
+         . ' a pre-scan pass — the single-pass lexer matches leftmost-first'
+         . ' and cannot reject an earlier emphasis opener because a later'
+         . ' backtick span would consume its closer',
+    353 => 'code span: the trailing `"` outside the span is converted to a'
+         . ' curly quote by DokuWiki typography, diverging from the spec HTML',
+    354 => 'raw HTML tag pass-through: DokuWiki does not render raw HTML by'
+         . ' default; `<html>` blocks are the opt-in',
+    356 => 'GFM angle-bracket autolink `<http://…>`: not implemented — we'
+         . ' rely on DokuWiki\'s existing bare-URL detection, which does not'
+         . ' parse `<URL>` form',
+
+    // --------------------------------------------------------------------
     // CommonMark §6.2 flanking-delimiter analysis — deliberately not
     // implemented. DokuWiki's regex lexer uses leftmost-match and cannot
     // apply CommonMark's left/right-flanking rules that distinguish
