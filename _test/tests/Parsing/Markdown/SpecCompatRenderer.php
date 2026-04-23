@@ -26,6 +26,7 @@ use Doku_Renderer_xhtml;
  */
 class SpecCompatRenderer extends Doku_Renderer_xhtml
 {
+
     public function internalmedia(
         $src,
         $title = null,
@@ -82,6 +83,39 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
     public function windowssharelink($url, $name = null, $returnonly = false)
     {
         $this->doc .= $this->specLink($url, $name);
+    }
+
+    public function code($text, $language = null, $filename = null, $options = null)
+    {
+        $this->doc .= $this->specCode($text, $language);
+    }
+
+    public function file($text, $language = null, $filename = null, $options = null)
+    {
+        $this->doc .= $this->specCode($text, $language);
+    }
+
+    public function preformatted($text)
+    {
+        // The Preformatted CallWriter rewriter collapses start/content/
+        // newline/end into one `preformatted` call. GFM expects the body
+        // to end with a newline (spec example 104); DW's internal text
+        // loses it to `trim()`, so we re-append here.
+        $this->doc .= $this->specCode($text . "\n", null);
+    }
+
+    /**
+     * GFM shape: <pre><code class="language-xxx">...</code></pre>. The
+     * production DW renderer emits <pre class="code"> with no inner
+     * <code>, which diverges byte-for-byte.
+     */
+    private function specCode($text, $language): string
+    {
+        $classAttr = '';
+        if ($language !== null && $language !== '') {
+            $classAttr = ' class="language-' . hsc((string) $language) . '"';
+        }
+        return '<pre><code' . $classAttr . '>' . hsc((string) $text) . '</code></pre>';
     }
 
     private function specImg($src, $alt, $width, $height): string

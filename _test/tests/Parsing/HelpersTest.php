@@ -6,8 +6,9 @@ use dokuwiki\Parsing\Helpers;
 
 /**
  * Tests for the pure-function helpers shared between DW and GFM modes:
- * URL classification (Internallink / GfmLink) and media-URL parameter
- * parsing (Media / GfmMedia).
+ * URL classification (Internallink / GfmLink), media-URL parameter
+ * parsing (Media / GfmMedia), and code-block attribute parsing (Code /
+ * GfmCode / GfmFile).
  */
 class HelpersTest extends \DokuWikiTest
 {
@@ -199,5 +200,128 @@ class HelpersTest extends \DokuWikiTest
         $this->assertSame('https://example.com/img?v=2', $r['src']);
         $this->assertSame('200', $r['width']);
         $this->assertSame('100', $r['height']);
+    }
+
+    // ----- parseHighlightOptions ----------------------------------------
+
+    public static function highlightOptionsProvider(): array
+    {
+        return [
+            ['', null],
+            ['something weird', null],
+            ['enable_line_numbers', ['enable_line_numbers' => true]],
+            ['enable_line_numbers=1', ['enable_line_numbers' => true]],
+            ['enable_line_numbers="1"', ['enable_line_numbers' => true]],
+            ['enable_line_numbers=0', ['enable_line_numbers' => false]],
+            ['enable_line_numbers="0"', ['enable_line_numbers' => false]],
+            ['enable_line_numbers=false', ['enable_line_numbers' => false]],
+            ['enable_line_numbers="false"', ['enable_line_numbers' => false]],
+            ['highlight_lines_extra', ['highlight_lines_extra' => [1]]],
+            ['highlight_lines_extra=17', ['highlight_lines_extra' => [17]]],
+            ['highlight_lines_extra=17,19', ['highlight_lines_extra' => [17, 19]]],
+            ['highlight_lines_extra="17,19"', ['highlight_lines_extra' => [17, 19]]],
+            ['highlight_lines_extra="17,19,17"', ['highlight_lines_extra' => [17, 19]]],
+            ['start_line_numbers_at', ['start_line_numbers_at' => 1]],
+            ['start_line_numbers_at=12', ['start_line_numbers_at' => 12]],
+            ['start_line_numbers_at="12"', ['start_line_numbers_at' => 12]],
+            ['enable_keyword_links', ['enable_keyword_links' => true]],
+            ['enable_keyword_links=1', ['enable_keyword_links' => true]],
+            ['enable_keyword_links="1"', ['enable_keyword_links' => true]],
+            ['enable_keyword_links=0', ['enable_keyword_links' => false]],
+            ['enable_keyword_links="0"', ['enable_keyword_links' => false]],
+            ['enable_keyword_links=false', ['enable_keyword_links' => false]],
+            ['enable_keyword_links="false"', ['enable_keyword_links' => false]],
+            [
+                'enable_line_numbers weird nothing highlight_lines_extra=17,19 start_line_numbers_at="12" enable_keyword_links=false',
+                [
+                    'enable_line_numbers' => true,
+                    'highlight_lines_extra' => [17, 19],
+                    'start_line_numbers_at' => 12,
+                    'enable_keyword_links' => false
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider highlightOptionsProvider
+     */
+    function testParseHighlightOptions(string $input, ?array $expect): void
+    {
+        $this->assertEquals($expect, Helpers::parseHighlightOptions($input));
+    }
+
+    // ----- parseCodeAttributes ------------------------------------------
+
+    function testParseCodeAttributesEmpty()
+    {
+        $this->assertSame([null, null, null], Helpers::parseCodeAttributes(''));
+    }
+
+    function testParseCodeAttributesLanguageOnly()
+    {
+        $this->assertSame(['php', null, null], Helpers::parseCodeAttributes('php'));
+    }
+
+    function testParseCodeAttributesLanguageAndFilename()
+    {
+        $this->assertSame(
+            ['php', 'myfile.php', null],
+            Helpers::parseCodeAttributes('php myfile.php')
+        );
+    }
+
+    function testParseCodeAttributesDashMeansNoLanguage()
+    {
+        // `-` is DokuWiki's explicit "no language" marker — lets a
+        // filename follow without a language argument first.
+        $this->assertSame(
+            [null, 'myfile.txt', null],
+            Helpers::parseCodeAttributes('- myfile.txt')
+        );
+    }
+
+    function testParseCodeAttributesHtmlAliased()
+    {
+        // GeSHi's identifier for HTML is `html4strict`; DokuWiki
+        // normalises `html` for author convenience.
+        $this->assertSame(
+            ['html4strict', null, null],
+            Helpers::parseCodeAttributes('html')
+        );
+    }
+
+    function testParseCodeAttributesOptionsOnly()
+    {
+        $this->assertSame(
+            [null, null, ['enable_line_numbers' => true]],
+            Helpers::parseCodeAttributes('[enable_line_numbers]')
+        );
+    }
+
+    function testParseCodeAttributesLanguageAndOptions()
+    {
+        $this->assertSame(
+            ['php', null, ['enable_line_numbers' => true]],
+            Helpers::parseCodeAttributes('php [enable_line_numbers]')
+        );
+    }
+
+    function testParseCodeAttributesLanguageFilenameAndOptions()
+    {
+        $this->assertSame(
+            ['php', 'myfile.php', ['enable_line_numbers' => true]],
+            Helpers::parseCodeAttributes('php myfile.php [enable_line_numbers]')
+        );
+    }
+
+    function testParseCodeAttributesUnknownOptionsReturnsNull()
+    {
+        // Unknown keys in `[...]` are filtered out; the options slot
+        // ends up null, same as if no `[...]` block had been present.
+        $this->assertSame(
+            ['C', null, null],
+            Helpers::parseCodeAttributes('C [unknown="ignored"]')
+        );
     }
 }

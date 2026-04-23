@@ -88,7 +88,7 @@ class ModeRegistry
                 'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
                 'gfm_link', 'gfm_media',
             ],
-            self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file'],
+            self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file', 'gfm_code', 'gfm_file'],
             self::CATEGORY_DISABLED   => ['unformatted'],
             self::CATEGORY_PARAGRAPHS => ['eol'],
         ];
@@ -298,6 +298,7 @@ class ModeRegistry
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
             'gfm_backtick_single', 'gfm_backtick_double',
             'gfm_header', 'gfm_link', 'gfm_media',
+            'gfm_code', 'gfm_file',
         ];
 
         // Underscore-based emphasis and strong only load when Markdown is

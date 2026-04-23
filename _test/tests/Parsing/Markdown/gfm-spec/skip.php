@@ -15,6 +15,46 @@
 
 return [
     // --------------------------------------------------------------------
+    // Fenced code blocks (GfmCode / GfmFile) — deliberate simplifications
+    // versus strict GFM. All of these are consequences of lexer constraints
+    // (no regex backreferences) or the deliberate column-0-only policy.
+    // --------------------------------------------------------------------
+    94  => 'fenced code: closing fence must be ≥ opening length — DokuWiki'
+         . ' accepts any 3+ run as a closer (no regex backreferences for'
+         . ' length pairing). Deliberate relaxation.',
+    95  => 'fenced code (tilde variant): closing fence must be ≥ opening'
+         . ' length — see example 94.',
+    96  => 'fenced code: unclosed fence — DokuWiki convention requires a'
+         . ' closer (matches DW <code> tag), so unclosed fences stay'
+         . ' literal rather than consuming to EOF. GFM spec rule depends'
+         . ' on CommonMark\'s two-pass block parser, which our single-pass'
+         . ' lexer cannot implement fully anyway (see example 98).',
+    97  => 'fenced code: unclosed fence with intervening short run — stays'
+         . ' literal, see example 96.',
+    101 => 'fenced code: opener indented 1 space — DokuWiki requires'
+         . ' column-0 fences. Indent tolerance + per-line body dedent out'
+         . ' of scope.',
+    102 => 'fenced code: opener indented 2 spaces — see example 101.',
+    103 => 'fenced code: opener indented 3 spaces — see example 101.',
+    105 => 'fenced code: closer indented 2 spaces — column-0-only policy,'
+         . ' see example 101.',
+    106 => 'fenced code: indented opener with less-indented closer —'
+         . ' column-0-only policy, see example 101.',
+    107 => 'fenced code: 4-space-indented closer — with column-0-only'
+         . ' policy there is no valid closer, so the fence stays literal'
+         . ' (see example 96).',
+    109 => 'fenced code: malformed closer `~~~ ~~` (space-broken run) —'
+         . ' with no valid closer the fence stays literal (see example 96).',
+    108 => 'fenced code: `` `` is not a valid fence; GFM falls back to an'
+         . ' inline code span of length 3. Inline spans with n≥3 not'
+         . ' implemented (GfmBacktickSingle/Double cover only n=1, n=2).',
+    111 => 'fenced code interrupting Setext heading (`foo\n---`): Setext'
+         . ' headings are deliberately not supported (SPEC.md Limits).',
+    115 => 'fenced code: `` `` backtick-fence-with-backticks-in-info-string'
+         . ' is invalid; GFM falls back to n=3 inline span — inline spans'
+         . ' with n≥3 not implemented. See example 108.',
+
+    // --------------------------------------------------------------------
     // Code-span edge cases that collide with project-wide decisions
     // (no raw HTML, no GFM angle-bracket autolinks, typography on by
     // default) or with the single-pass lexer's limits.

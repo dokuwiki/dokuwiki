@@ -182,6 +182,50 @@ class PreformattedTest extends ParserTestBase
     }
 
 
+    function testMarkdownPreferredUsesFourSpaces() {
+        // In `markdown` and `md+dw` settings the indent threshold is 4,
+        // matching GFM's indented code block rule. Lines with only 2-3
+        // leading spaces stay as paragraph text.
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n    x  \n      y  \nBar\n");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nF  oo"]],
+            ['p_close', []],
+            ['preformatted', ["x  \n  y  "]],
+            ['p_open', []],
+            ['cdata', ['Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testMarkdownPreferredRejectsTwoSpaces() {
+        // 2-space indent in MD-preferred mode does NOT trigger preformatted.
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n  x\nBar\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('preformatted', $modes,
+            '2-space indent must not trigger preformatted when Markdown is preferred');
+    }
+
+    function testMarkdownPreferredTabStillTriggers() {
+        // Tab is a trigger regardless of the space threshold.
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n\tx\nBar\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertContains('preformatted', $modes,
+            'A single tab must still trigger preformatted in MD-preferred mode');
+    }
+
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!
         $this->P->addMode('preformatted',new Preformatted());

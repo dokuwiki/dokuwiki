@@ -14,17 +14,34 @@ class Preformatted extends AbstractMode
         return 20;
     }
 
+    /**
+     * Number of leading spaces that trigger a preformatted block.
+     *
+     * DokuWiki's historical value is 2 spaces; Markdown uses 4. When
+     * `$conf['syntax']` is `markdown` or `md+dw` (Markdown preferred),
+     * we flip to 4 so indented code blocks match GFM. A single tab is
+     * always a trigger regardless of the space threshold.
+     */
+    protected function getIndentWidth(): int
+    {
+        global $conf;
+        $syntax = $conf['syntax'] ?? 'dokuwiki';
+        return in_array($syntax, ['markdown', 'md+dw'], true) ? 4 : 2;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
         $markers = ModeRegistry::getInstance()->getLineStartMarkers();
         $lookahead = $markers ? '(?![' . implode('', $markers) . '])' : '';
 
-        $this->Lexer->addEntryPattern('\n  ' . $lookahead, $mode, 'preformatted');
+        $indent = str_repeat(' ', $this->getIndentWidth());
+
+        $this->Lexer->addEntryPattern('\n' . $indent . $lookahead, $mode, 'preformatted');
         $this->Lexer->addEntryPattern('\n\t' . $lookahead, $mode, 'preformatted');
 
         // match continuation lines inside the preformatted block
-        $this->Lexer->addPattern('\n  ', 'preformatted');
+        $this->Lexer->addPattern('\n' . $indent, 'preformatted');
         $this->Lexer->addPattern('\n\t', 'preformatted');
     }
 

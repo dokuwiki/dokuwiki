@@ -116,13 +116,16 @@ class CodeTest extends ParserTestBase
     }
 
     function testCodeOptionsArray_UnknownOption() {
+        // `[unknown=...]` contains no recognised option, so the options
+        // slot stays absent — the call shape is the 3-arg default rather
+        // than a 4-arg call with a null options slot.
         $this->P->parse('Foo <code C [unknown="I will be deleted/ignored!"]>Test</code> Bar');
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
             ['cdata',["\n".'Foo ']],
             ['p_close',[]],
-            ['code',['Test','C', null, null]],
+            ['code',['Test','C', null]],
             ['p_open',[]],
             ['cdata',[' Bar']],
             ['p_close',[]],
@@ -353,52 +356,4 @@ class CodeTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    public function highlightOptionsProvider() {
-        return [
-            ['', null],
-            ['something weird', null],
-            ['enable_line_numbers', ['enable_line_numbers' => true]],
-            ['enable_line_numbers=1', ['enable_line_numbers' => true]],
-            ['enable_line_numbers="1"', ['enable_line_numbers' => true]],
-            ['enable_line_numbers=0', ['enable_line_numbers' => false]],
-            ['enable_line_numbers="0"', ['enable_line_numbers' => false]],
-            ['enable_line_numbers=false', ['enable_line_numbers' => false]],
-            ['enable_line_numbers="false"', ['enable_line_numbers' => false]],
-            ['highlight_lines_extra', ['highlight_lines_extra' => [1]]],
-            ['highlight_lines_extra=17', ['highlight_lines_extra' => [17]]],
-            ['highlight_lines_extra=17,19', ['highlight_lines_extra' => [17, 19]]],
-            ['highlight_lines_extra="17,19"', ['highlight_lines_extra' => [17, 19]]],
-            ['highlight_lines_extra="17,19,17"', ['highlight_lines_extra' => [17, 19]]],
-            ['start_line_numbers_at', ['start_line_numbers_at' => 1]],
-            ['start_line_numbers_at=12', ['start_line_numbers_at' => 12]],
-            ['start_line_numbers_at="12"', ['start_line_numbers_at' => 12]],
-            ['enable_keyword_links', ['enable_keyword_links' => true]],
-            ['enable_keyword_links=1', ['enable_keyword_links' => true]],
-            ['enable_keyword_links="1"', ['enable_keyword_links' => true]],
-            ['enable_keyword_links=0', ['enable_keyword_links' => false]],
-            ['enable_keyword_links="0"', ['enable_keyword_links' => false]],
-            ['enable_keyword_links=false', ['enable_keyword_links' => false]],
-            ['enable_keyword_links="false"', ['enable_keyword_links' => false]],
-            [
-                'enable_line_numbers weird nothing highlight_lines_extra=17,19 start_line_numbers_at="12" enable_keyword_links=false',
-                [
-                    'enable_line_numbers' => true,
-                    'highlight_lines_extra' => [17, 19],
-                    'start_line_numbers_at' => 12,
-                    'enable_keyword_links' => false
-                ]
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider highlightOptionsProvider
-     * @param string $input options to parse
-     * @param array|null $expect expected outcome
-     */
-    public function testHighlightOptionParser($input, $expect) {
-        $code = new Code();
-        $output = $this->callInaccessibleMethod($code, 'parseHighlightOptions', [$input]);
-        $this->assertEquals($expect, $output);
-    }
 }
