@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Code as CodeHelper;
 
 class Code extends AbstractMode
 {
@@ -35,7 +35,7 @@ class Code extends AbstractMode
 
         // split "language filename [options]>content" at the first >
         [$attr, $content] = sexplode('>', $match, 2, '');
-        [$language, $filename, $options] = Helpers::parseCodeAttributes($attr);
+        [$language, $filename, $options] = CodeHelper::parseAttributes($attr);
 
         $param = [$content, $language, $filename];
         if ($options !== null) $param[] = $options;

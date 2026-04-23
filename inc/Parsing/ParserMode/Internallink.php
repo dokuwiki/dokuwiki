@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Link;
 
 class Internallink extends AbstractMode
 {
@@ -34,7 +34,7 @@ class Internallink extends AbstractMode
         }
         $link[0] = trim($link[0]);
 
-        [$call, $args] = Helpers::classifyLink($link[0], $link[1]);
+        [$call, $args] = Link::classify($link[0], $link[1]);
         $handler->addCall($call, $args, $pos);
         return true;
     }

@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Media as MediaHelper;
 
 class Media extends AbstractMode
 {
@@ -70,7 +70,7 @@ class Media extends AbstractMode
         //remove aligning spaces
         $link[0] = trim($link[0]);
 
-        $p = Helpers::parseMediaParameters($link[0]);
+        $p = MediaHelper::parseParameters($link[0]);
 
         // Explicit param-derived alignment (?left/?right/?center) beats
         // the whitespace-derived one — it's unambiguous and visible, and

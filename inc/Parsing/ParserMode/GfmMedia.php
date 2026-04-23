@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Media as MediaHelper;
 
 /**
  * GFM inline image ![alt](url) with optional title ![alt](url "title").
@@ -13,7 +13,7 @@ use dokuwiki\Parsing\Helpers;
  * changes. Width, height, cache, linking, and alignment directives are
  * accepted via the same URL-parameter vocabulary as DW media
  * (?100x200&nolink&recache, ?right, ?center, etc.) through shared parsing
- * in Helpers::parseMediaParameters() — the last `?` in the URL delimits
+ * in Helpers\Media::parseParameters() — the last `?` in the URL delimits
  * the DW parameter block, so query-bearing URLs like
  * https://example.com/img?v=2?100x100&right still work. GFM has no native
  * alignment syntax, so the `?left`/`?right`/`?center` keywords are the
@@ -59,7 +59,7 @@ class GfmMedia extends AbstractMode
         $inside = trim(substr($match, $sep + 2, -1));
         $url    = substr($inside, 0, strcspn($inside, " \t\n"));
 
-        $p = Helpers::parseMediaParameters($url);
+        $p = MediaHelper::parseParameters($url);
 
         $call = (media_isexternal($p['src']) || link_isinterwiki($p['src']))
             ? 'externalmedia'

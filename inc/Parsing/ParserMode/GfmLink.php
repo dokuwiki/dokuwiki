@@ -3,7 +3,8 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Link;
+use dokuwiki\Parsing\Helpers\Media as MediaHelper;
 
 /**
  * GFM inline link [text](url) with optional title [text](url "title").
@@ -80,7 +81,7 @@ class GfmLink extends AbstractMode
             $targetUrl = $this->extractUrl(substr($match, $sep + 2, -1));
         }
 
-        [$call, $args] = Helpers::classifyLink($targetUrl, $label);
+        [$call, $args] = Link::classify($targetUrl, $label);
         $handler->addCall($call, $args, $pos);
         return true;
     }
@@ -107,7 +108,7 @@ class GfmLink extends AbstractMode
         $alt    = substr($imageMatch, 2, $sep - 2);
         $imgUrl = $this->extractUrl(substr($imageMatch, $sep + 2, -1));
 
-        $p = Helpers::parseMediaParameters($imgUrl);
+        $p = MediaHelper::parseParameters($imgUrl);
         $type = (media_isexternal($p['src']) || link_isinterwiki($p['src']))
             ? 'externalmedia'
             : 'internalmedia';

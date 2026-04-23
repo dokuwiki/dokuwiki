@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\Helpers;
+use dokuwiki\Parsing\Helpers\Code as CodeHelper;
 
 /**
  * GFM fenced code block with backtick fences: ```...```
@@ -15,7 +15,7 @@ use dokuwiki\Parsing\Helpers;
  * The info string after the opening fence accepts DokuWiki's full
  * code-tag attribute vocabulary — language, optional filename, and
  * optional [key=value,...] highlight options — parsed via
- * Helpers::parseCodeAttributes. Markdown authors pasting to GitHub
+ * Helpers\Code::parseAttributes. Markdown authors pasting to GitHub
  * will see the extras render as part of the language class; the
  * divergence is intentional, for feature parity with DokuWiki's
  * <code>...</code> blocks.
@@ -115,7 +115,7 @@ class GfmCode extends AbstractMode
         // anchor), so an explode split always has two parts.
         [$info, $body] = explode("\n", $text, 2);
 
-        [$language, $filename, $options] = Helpers::parseCodeAttributes($info);
+        [$language, $filename, $options] = CodeHelper::parseAttributes($info);
 
         $param = [$body, $language, $filename];
         if ($options !== null) $param[] = $options;
