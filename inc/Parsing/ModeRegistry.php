@@ -245,8 +245,8 @@ class ModeRegistry
         global $conf;
 
         $modes = [
-            'strong', 'monospace', 'subscript', 'superscript',
-            'footnote', 'eol', 'unformatted', 'preformatted', 'file',
+            'strong', 'subscript', 'superscript',
+            'footnote', 'eol', 'preformatted',
             'quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
         ];
@@ -272,6 +272,7 @@ class ModeRegistry
         $modes = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
             'linebreak', 'internallink', 'media', 'listblock', 'table',
+            'monospace', 'unformatted', 'file',
         ];
 
         // Underline only loads when DokuWiki is preferred. In MD-preferred

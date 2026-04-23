@@ -246,6 +246,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $dwOnly = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
             'linebreak', 'internallink', 'media', 'listblock', 'table',
+            'monospace', 'unformatted', 'file',
         ];
         foreach ($dwOnly as $mode) {
             $this->assertNotContains($mode, $modeNames, "DW mode '$mode' should not load in markdown-only mode");
@@ -263,8 +264,8 @@ class ModeRegistryTest extends \DokuWikiTest
         $modeNames = array_column($modes, 'mode');
 
         $always = [
-            'strong', 'monospace', 'subscript', 'superscript',
-            'footnote', 'eol', 'unformatted', 'preformatted', 'file',
+            'strong', 'subscript', 'superscript',
+            'footnote', 'eol', 'preformatted',
             'quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
             'smiley', 'acronym', 'entity',
@@ -280,6 +281,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $dwOnly = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
             'linebreak', 'internallink', 'media', 'listblock', 'table',
+            'monospace', 'unformatted', 'file',
         ];
 
         foreach (['dw+md', 'md+dw'] as $syntax) {
@@ -328,15 +330,23 @@ class ModeRegistryTest extends \DokuWikiTest
      * `md+dw`). Entries are expanded into one data set per (mode, syntax)
      * pair so PHPUnit reports failures with a specific label.
      *
-     * Three gating categories are represented:
+     * Five gating categories are represented:
      *
-     * - **MD-always**: loaded whenever Markdown is part of the syntax. Used
-     *   when the delimiter has no DokuWiki counterpart (e.g. `*` for
-     *   emphasis).
-     * - **MD-preferred**: loaded only when Markdown is the primary syntax.
+     * - **Always**: loaded unconditionally (no syntax-specific counterpart
+     *   or conflict). Covers core formatting, paragraphs, and data-driven
+     *   modes (smileys, acronyms, entities).
+     * - **DW-always**: loaded whenever DokuWiki is part of the syntax. Used
+     *   for features that have a Markdown counterpart but no delimiter
+     *   conflict (e.g. `**bold**` for emphasis).
+     * - **DW-preferred**: loaded only when DokuWiki is the primary syntax.
+     *   Used when the delimiter conflicts with a Markdown mode in MD-
+     *   preferred settings (e.g. `__` clashes with GFM strong).
+     * - **MD-always**: mirror — loaded whenever Markdown is part of the
+     *   syntax. Used when the delimiter has no DokuWiki counterpart (e.g.
+     *   `*` for emphasis).
+     * - **MD-preferred**: mirror — loaded only when Markdown is primary.
      *   Used when the delimiter conflicts with a DokuWiki mode in DW-
      *   preferred settings (e.g. `_`, `__`, `___` clash with Underline).
-     * - **DW-preferred**: mirror — loaded only when DokuWiki is primary.
      *
      * Add a new line to the `$rules` table to register additional mode-
      * gating rules.
@@ -347,6 +357,37 @@ class ModeRegistryTest extends \DokuWikiTest
     public static function provideModeLoadingCases(): array
     {
         $rules = [
+            // Always-loaded (unconditional — no syntax-specific counterpart)
+            'strong'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'subscript'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'superscript'                    => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'footnote'                       => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'eol'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'preformatted'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'quote'                          => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'externallink'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'emaillink'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'windowssharelink'               => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'notoc'                          => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'nocache'                        => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'rss'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'smiley'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'acronym'                        => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'entity'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            // DW-always (features with MD counterparts but no delimiter clash)
+            'emphasis'                       => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'deleted'                        => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'code'                           => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'header'                         => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'hr'                             => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'linebreak'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'internallink'                   => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'media'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'listblock'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'table'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'monospace'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'unformatted'                    => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'file'                           => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             // MD-always (`*` / `~~` have no conflicting DW counterpart)
             'gfm_emphasis'                   => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'gfm_emphasis_strong'            => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
