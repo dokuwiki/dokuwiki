@@ -10,6 +10,7 @@
 use dokuwiki\ActionRouter;
 use dokuwiki\Action\Exception\FatalException;
 use dokuwiki\Extension\PluginInterface;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Ui\Admin;
 use dokuwiki\StyleUtils;
 use dokuwiki\Menu\Item\AbstractItem;
@@ -1184,30 +1185,17 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null)
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = (int)tpl_img_getTag('File.Width');
-    $h = (int)tpl_img_getTag('File.Height');
 
-    //resize to given max values
-    $ratio = 1;
-    if ($w >= $h) {
-        if ($maxwidth && $w >= $maxwidth) {
-            $ratio = $maxwidth / $w;
-        } elseif ($maxheight && $h > $maxheight) {
-            $ratio = $maxheight / $h;
-        }
-    } elseif ($maxheight && $h >= $maxheight) {
-        $ratio = $maxheight / $h;
-    } elseif ($maxwidth && $w > $maxwidth) {
-        $ratio = $maxwidth / $w;
-    }
-    if ($ratio) {
-        $w = floor($ratio * $w);
-        $h = floor($ratio * $h);
-    }
+    // rotation-aware bbox fit; returns [0, 0] for SVG / unreadable files
+    [$w, $h] = (new MediaFile($IMG, $REV))->getDisplayDimensions($maxwidth, $maxheight, false);
 
     //prepare URLs
+    $srcParams = ['cache' => $INPUT->str('cache'), 'rev' => $REV];
+    if ($maxwidth) $srcParams['w'] = $maxwidth;
+    if ($maxheight) $srcParams['h'] = $maxheight;
+    if ($maxwidth && $maxheight) $srcParams['fit'] = 1;
     $url = ml($IMG, ['cache' => $INPUT->str('cache'), 'rev' => $REV], true, '&');
-    $src = ml($IMG, ['cache' => $INPUT->str('cache'), 'rev' => $REV, 'w' => $w, 'h' => $h], true, '&');
+    $src = ml($IMG, $srcParams, true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');

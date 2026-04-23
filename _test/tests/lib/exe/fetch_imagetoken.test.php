@@ -57,6 +57,18 @@ class fetch_imagetoken_test extends DokuWikiTest {
     }
 
     /**
+     *  fit=1 does not affect token validation; token is hashed over (id, w, h)
+     *  only, so an existing token must still pass when the request adds fit=1.
+     */
+    function test_fit_does_not_invalidate_token(){
+        $this->width = $this->height = 100; // both dims -> would normally be crop; fit=1 routes to bbox resize
+        $valid_token = 'tok='.media_get_token($this->media, $this->width, $this->height).'&fit=1&';
+        $response = $this->fetchResponse($valid_token);
+        $status_code = $response->getStatusCode();
+        $this->assertTrue(is_null($status_code) || (200 == $status_code));
+    }
+
+    /**
      *  modified image request with invalid token
      *  expect: 412 status code
      */

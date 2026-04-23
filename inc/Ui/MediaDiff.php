@@ -4,7 +4,9 @@ namespace dokuwiki\Ui;
 
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\RevisionInfo;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Form\Form;
+use dokuwiki\Ui\Media\Display;
 use InvalidArgumentException;
 use JpegMeta;
 
@@ -94,10 +96,9 @@ class MediaDiff extends Diff
 
             if ($this->is_img) {
                 $rev = $isCurrent ? '' : $RevInfo->val('date');
-                $meta = new JpegMeta(mediaFN($this->id, $rev));
-                // get image width and height for the media manager preview panel
+                // get display dimensions for the media manager preview panel
                 $RevInfo->append([
-                    'previewSize' => media_image_preview_size($this->id, $rev, $meta)
+                    'previewSize' => (new MediaFile($this->id, $rev))->getDisplayDimensions(500, 500, false)
                 ]);
             }
         }
@@ -203,8 +204,8 @@ class MediaDiff extends Diff
             }
         }
 
-        $rev1Src = ml($this->id, ['rev' => $rev1, 'h' => $rev1Size[1], 'w' => $rev1Size[0]]);
-        $rev2Src = ml($this->id, ['rev' => $rev2, 'h' => $rev1Size[1], 'w' => $rev1Size[0]]);
+        $rev1Src = ml($this->id, ['rev' => $rev1, 'h' => $rev1Size[1], 'w' => $rev1Size[0], 'fit' => 1]);
+        $rev2Src = ml($this->id, ['rev' => $rev2, 'h' => $rev1Size[1], 'w' => $rev1Size[0], 'fit' => 1]);
 
         // slider
         echo '<div class="slider" style="max-width: ' . ($rev1Size[0] - 20) . 'px;" ></div>';
@@ -258,17 +259,17 @@ class MediaDiff extends Diff
 
         echo '<tr class="image">';
         echo '<td>';
-        media_preview($this->id, $auth, $rev1, $rev1Meta); // $auth not used in media_preview()?
+        echo (new Display(new MediaFile($this->id, $rev1)))->getDetailHtml();
         echo '</td>';
 
         echo '<td>';
-        media_preview($this->id, $auth, $rev2, $rev2Meta);
+        echo (new Display(new MediaFile($this->id, $rev2)))->getDetailHtml();
         echo '</td>';
         echo '</tr>';
 
         echo '<tr class="actions">';
         echo '<td>';
-        media_preview_buttons($this->id, $auth, $rev1); // $auth used in media_preview_buttons()
+        media_preview_buttons($this->id, $auth, $rev1);
         echo '</td>';
 
         echo '<td>';

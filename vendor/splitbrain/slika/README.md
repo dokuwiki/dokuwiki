@@ -94,6 +94,34 @@ Rotates the image according to the EXIF rotation tag if found.
 Slika::run('input.jpg')->autorotate()->save('output.png', 'png');
 ```
 
+## Inspecting images without processing them
+
+Sometimes you need to know what dimensions an image *would* have after a chain of operations without actually decoding pixels or calling ImageMagick — for example, to emit `<img width="…" height="…">` attributes on a page that references a resize URL.
+
+`\splitbrain\slika\ImageInfo` mirrors the Adapter's fluent API at the dimension level. It reads only `getimagesize()` and the EXIF orientation tag, never touching the pixel data.
+
+```php
+use \splitbrain\slika\ImageInfo;
+
+$info = new ImageInfo('input.jpg');
+
+// on-disk state (stable regardless of chain operations)
+$info->getRawWidth();       // e.g. 4000
+$info->getRawHeight();      // e.g. 3000
+$info->getExtension();      // 'jpeg'
+$info->getOrientation();    // EXIF orientation 1..8
+
+// the fluent chain simulates autorotate/rotate/resize/crop
+// and returns the final tracked dimensions
+list($w, $h) = (new ImageInfo('input.jpg'))
+    ->autorotate()
+    ->resize(500, 500)
+    ->getDimensions();
+```
+
+This lets you predict the output of `Slika::run(...)->autorotate()->resize(500,500)`
+without doing any actual image work.
+
 ## Options
 
 Options can be passed as associatiave array as the second parameter in `Slika::run`.

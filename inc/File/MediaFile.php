@@ -2,7 +2,9 @@
 
 namespace dokuwiki\File;
 
+use Exception;
 use JpegMeta;
+use splitbrain\slika\ImageInfo;
 
 class MediaFile
 {
@@ -152,6 +154,27 @@ class MediaFile
     {
         if ($this->height === null) $this->initSizes();
         return $this->height;
+    }
+
+    /**
+     * Returns the final display dimensions a fetch.php URL with the given
+     * parameters would produce, including EXIF auto-rotation
+     *
+     * @param int $w requested width (0 = no constraint)
+     * @param int $h requested height (0 = no constraint)
+     * @param bool $crop true for center-crop, false for bounding-box fit
+     * @return array [width, height]; [0, 0] for non-images/unreadable files
+     */
+    public function getDisplayDimensions($w = 0, $h = 0, $crop = false)
+    {
+        try {
+            $info = (new ImageInfo($this->path))->autorotate();
+        } catch (Exception $e) {
+            return [0, 0];
+        }
+        if ($w === 0 && $h === 0) return $info->getDimensions();
+        if ($crop) return $info->crop($w, $h)->getDimensions();
+        return $info->resize($w, $h)->getDimensions();
     }
 
     /**
