@@ -2,12 +2,9 @@
 
 namespace dokuwiki\File;
 
-use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
 use dokuwiki\Input\Input;
-use dokuwiki\Logger;
-use RuntimeException;
 
 /**
  * Class PageFile : handles wiki text file and its change management for specific page
@@ -145,9 +142,15 @@ class PageFile
         clearstatcache();
         $fileRev = @filemtime($pagefile);
         if ($fileRev === $currentRevision) {
-            // pagefile has not touched by plugin's event handler
-            // add a potential external edit entry to changelog and store it into attic
-            $this->detectExternalEdit();
+            // pagefile has not been touched by plugin's event handler — trigger external-edit
+            // detection. ChangeLog persists the synthesized entry (and copies to attic for
+            // non-deletes) on first observation, so this also covers the "external edit
+            // happens just before save" case.
+            $revInfo = $this->changelog->getCurrentRevisionInfo();
+            // ensure the upcoming save timestamp is at least 1 sec after a persisted external entry
+            if (is_array($revInfo) && isset($revInfo['date']) && $revInfo['date'] == time()) {
+                sleep(1);
+            }
             $filesize_old = $currentSize;
         } else {
             // pagefile has modified by plugin's event handler, confirm sizechange
@@ -213,51 +216,6 @@ class PageFile
         io_saveFile($conf['cachedir'] . '/purgefile', time());
 
         return $data;
-    }
-
-    /**
-     * Checks if the current page version is newer than the last entry in the page's changelog.
-     * If so, we assume it has been an external edit and we create an attic copy and add a proper
-     * changelog line.
-     *
-     * This check is only executed when the page is about to be saved again from the wiki,
-     * triggered in @see saveWikiText()
-     */
-    public function detectExternalEdit()
-    {
-        $revInfo = $this->changelog->getCurrentRevisionInfo();
-
-        // only interested in external revision
-        if (empty($revInfo) || !array_key_exists('timestamp', $revInfo)) return;
-
-        if ($revInfo['type'] != DOKU_CHANGE_TYPE_DELETE && !$revInfo['timestamp']) {
-            // file is older than last revision, that is erroneous/incorrect occurence.
-            // try to change file modification time
-            $fileLastMod = $this->getPath();
-            $wrong_timestamp = filemtime($fileLastMod);
-            if (touch($fileLastMod, $revInfo['date'])) {
-                clearstatcache();
-                $msg = "PageFile($this->id)::detectExternalEdit(): timestamp successfully modified";
-                $details = '(' . $wrong_timestamp . ' -> ' . $revInfo['date'] . ')';
-                Logger::error($msg, $details, $fileLastMod);
-            } else {
-                // runtime error
-                $msg = "PageFile($this->id)::detectExternalEdit(): page file should be newer than last revision "
-                      . '(' . filemtime($fileLastMod) . ' < ' . $this->changelog->lastRevision() . ')';
-                throw new RuntimeException($msg);
-            }
-        }
-
-        // keep at least 1 sec before new page save
-        if ($revInfo['date'] == time()) sleep(1); // wait a tick
-
-        // store externally edited file to the attic folder
-        $this->saveOldRevision();
-        // add a changelog entry for externally edited file
-        $this->changelog->addLogEntry($revInfo);
-        // remove soon to be stale instructions
-        $cache = new CacheInstructions($this->id, $this->getPath());
-        $cache->removeCache();
     }
 
     /**
