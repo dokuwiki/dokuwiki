@@ -53,6 +53,13 @@ abstract class ChangeLog
     abstract protected function getMode();
 
     /**
+     * Returns path to the global changelog file (the cross-page recent-changes feed)
+     *
+     * @return string path to file
+     */
+    abstract protected function getGlobalChangelogFilename();
+
+    /**
      * Check whether given revision is the current page
      *
      * @param int $rev timestamp of current page
@@ -588,12 +595,11 @@ abstract class ChangeLog
      * Otherwise, the change information since the last revision caused outside DokuWiki
      * should be returned, which is referred as "external revision".
      *
-     * The change date of the file can be determined by timestamp as far as the file exists,
-     * however this is not possible when the file has already deleted outside of DokuWiki.
-     * In such case we assign 1 sec before current time() for the external deletion.
-     * As a result, the value of current revision identifier may change each time because:
-     *   1) the file has again modified outside of DokuWiki, or
-     *   2) the value is essentially volatile for deleted but once existed files.
+     * External revisions are persisted to the changelog (and, for non-delete cases, copied
+     * to the attic) on first detection so subsequent reads see one canonical entry instead
+     * of recomputing a synthesized one. If persistence fails (e.g. the data dir is not
+     * writable in the current process context), the in-memory synthesized entry is still
+     * returned so the read path keeps working.
      *
      * @return bool|array false when page had never existed or array with entries:
      *      - date:  revision identifier (timestamp or last revision +1)
@@ -641,7 +647,7 @@ abstract class ChangeLog
 
             // externally deleted, set revision date as late as possible
             $revInfo = [
-                'date' => max($lastRev + 1, time() - 1), // 1 sec before now or new page save
+                'date' => max($lastRev + 1, time() - 1), // 1 sec before now or last revision +1
                 'ip'   => '127.0.0.1',
                 'type' => DOKU_CHANGE_TYPE_DELETE,
                 'id'   => $this->id,
@@ -693,11 +699,139 @@ abstract class ChangeLog
             ];
         }
 
+        // persist the synthesized entry so subsequent reads see it as a real changelog entry
+        $this->persistCurrentRevisionInfo($revInfo);
+
         // cache current revision information of external edition
         $this->currentRevision = $revInfo['date'];
         $this->cache[$this->id][$this->currentRevision] = $revInfo;
         return $this->getRevisionInfo($this->currentRevision);
     }
+
+    /**
+     * Adds an entry to the changelog
+     *
+     * Locks the local changelog file for the duration of the write so concurrent writers
+     * serialize through the same key. Subclasses provide the actual append logic via
+     * writeLogEntry() so persistCurrentRevisionInfo() can append while already holding
+     * the lock without re-entering it.
+     *
+     * Best-effort: if writeLogEntry() throws, surfaces the error via msg() and still
+     * returns the info dict so existing callers (saveWikiText etc.) keep working.
+     *
+     * @param array $info    Revision info structure of a page or media file
+     * @param int $timestamp log line date (optional)
+     * @return array revision info of added log line
+     */
+    public function addLogEntry(array $info, $timestamp = null)
+    {
+        $logfile = $this->getChangelogFilename();
+        io_lock($logfile);
+        try {
+            return $this->writeLogEntry($info, $timestamp);
+        } catch (\RuntimeException $e) {
+            msg($e->getMessage(), -1);
+            $info['mode'] = $this->getMode();
+            return $info;
+        } finally {
+            io_unlock($logfile);
+        }
+    }
+
+    /**
+     * Append a log entry to the changelog files and update the in-memory cache.
+     *
+     * The caller MUST hold io_lock() on the local changelog file. The global changelog
+     * is a different file with its own lock (acquired briefly here). This is what
+     * addLogEntry() runs under its lock, and what persistCurrentRevisionInfo() calls
+     * directly while it's holding the same lock for the detect-and-write critical section.
+     *
+     * @param array $info    Revision info structure
+     * @param int $timestamp log line date (optional)
+     * @return array revision info of added log line
+     * @throws \RuntimeException if the local changelog write fails
+     */
+    protected function writeLogEntry(array $info, $timestamp = null)
+    {
+        global $conf;
+
+        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+
+        $logline = static::buildLogLine($info, $timestamp);
+
+        // append to local changelog without re-locking (caller holds the lock)
+        $localFile = $this->getChangelogFilename();
+        io_makeFileDir($localFile);
+        $fileexists = file_exists($localFile);
+        $fh = @fopen($localFile, 'ab');
+        if (!$fh || @fwrite($fh, $logline) === false) {
+            if ($fh) @fclose($fh);
+            throw new \RuntimeException("Writing $localFile failed");
+        }
+        fclose($fh);
+        if (!$fileexists && !empty($conf['fperm'])) chmod($localFile, $conf['fperm']);
+
+        // global changelog has its own lock and msg() reporting via io_saveFile()
+        io_saveFile($this->getGlobalChangelogFilename(), $logline, true);
+
+        $this->currentRevision = $info['date'];
+        $info['mode'] = $this->getMode();
+        $this->cache[$this->id][$this->currentRevision] = $info;
+        return $info;
+    }
+
+    /**
+     * Persist a synthesized external-revision entry to the changelog
+     *
+     * Holds the local changelog lock around the entire detect-and-write critical section
+     * (idempotency check, attic copy, log append) so it serializes against any other
+     * writer that goes through addLogEntry(). The append uses writeLogEntry() to avoid
+     * re-entering the lock we already hold.
+     *
+     * Returns false (without raising) when the attic write fails or another request
+     * already persisted the entry. The caller falls back to the in-memory synthesized
+     * entry.
+     *
+     * @param array $revInfo synthesized revision info
+     * @return bool true if newly persisted, false otherwise
+     */
+    protected function persistCurrentRevisionInfo(array $revInfo)
+    {
+        // only the synthesized branches carry the 'timestamp' key
+        if (!array_key_exists('timestamp', $revInfo)) return false;
+
+        $logfile = $this->getChangelogFilename();
+        io_lock($logfile);
+        try {
+            // re-read lastRev under the lock — another request may have just persisted
+            $lastRev = $this->lastRevision();
+            if ($lastRev !== false && $lastRev >= $revInfo['date']) {
+                return false;
+            }
+
+            if ($revInfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+                if (!$this->saveExternalAttic($revInfo)) return false;
+            }
+
+            $this->writeLogEntry($revInfo);
+            return true;
+        } catch (\RuntimeException $e) {
+            // silent fallback to in-memory synthesis
+            return false;
+        } finally {
+            io_unlock($logfile);
+        }
+    }
+
+    /**
+     * Save the externally-modified file to the attic before the synthesized log entry is
+     * persisted. For deletions there is no file to copy and implementations should return
+     * true (the persist flow skips this call for the delete branch).
+     *
+     * @param array $revInfo synthesized revision info with 'date' set
+     * @return bool true on success or no-op, false to abort persistence
+     */
+    abstract protected function saveExternalAttic(array $revInfo);
 
     /**
      * Mechanism to trace no-actual external current revision

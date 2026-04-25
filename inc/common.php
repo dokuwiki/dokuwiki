@@ -1234,23 +1234,6 @@ function con($pre, $text, $suf, $pretty = false)
 }
 
 /**
- * Checks if the current page version is newer than the last entry in the page's
- * changelog. If so, we assume it has been an external edit and we create an
- * attic copy and add a proper changelog line.
- *
- * This check is only executed when the page is about to be saved again from the
- * wiki, triggered in @param string $id the page ID
- * @see saveWikiText()
- *
- * @deprecated 2021-11-28
- */
-function detectExternalEdit($id)
-{
-    dbg_deprecated(PageFile::class . '::detectExternalEdit()');
-    (new PageFile($id))->detectExternalEdit();
-}
-
-/**
  * Saves a wikitext by calling io_writeWikiPage.
  * Also directs changelog and attic updates.
  *

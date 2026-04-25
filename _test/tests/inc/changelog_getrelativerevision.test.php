@@ -15,12 +15,29 @@ class changelog_getrelativerevision_test extends DokuWikiTest {
     private $logline = "1362525899	127.0.0.1	E	mailinglist	pubcie	[Data entry] 	\n";
     private $pageid = 'mailinglist';
 
+    /** @var string original fixture content of the changelog, restored before each test */
+    private static $originalChangelog;
+
+    public static function setUpBeforeClass() : void {
+        parent::setUpBeforeClass();
+        self::$originalChangelog = file_get_contents(metaFN('mailinglist', '.changes'));
+    }
+
     function setup() : void {
         parent::setup();
         global $cache_revinfo;
         $cache =& $cache_revinfo;
         unset($cache['nonexist']);
         unset($cache['mailinglist']);
+        // Restore fixture state per test. Two tests in this class explicitly touch the
+        // page file forward (test_startatexactcurrentrev / test_iscurrentpagerevision /
+        // test_isnotcurrentpagerevision), and getCurrentRevisionInfo now persists the
+        // synthesized external-edit entry on first observation. Without restoring, the
+        // first such test mutates the changelog and subsequent tests trigger another
+        // round of "rescue" persistence (file mtime older than last log entry).
+        file_put_contents(metaFN('mailinglist', '.changes'), self::$originalChangelog);
+        @touch(wikiFN($this->pageid), 1374261194);
+        clearstatcache(false, wikiFN($this->pageid));
     }
 
     /**
