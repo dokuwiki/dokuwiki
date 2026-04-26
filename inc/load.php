@@ -53,7 +53,6 @@ return new class {
         'FeedParser' => 'FeedParser.php',
         'SafeFN' => 'SafeFN.class.php',
         'Mailer' => 'Mailer.class.php',
-        'Doku_Handler' => 'parser/handler.php',
         'Doku_Renderer' => 'parser/renderer.php',
         'Doku_Renderer_xhtml' => 'parser/xhtml.php',
         'Doku_Renderer_code' => 'parser/code.php',

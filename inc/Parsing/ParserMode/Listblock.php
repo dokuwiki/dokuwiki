@@ -2,6 +2,10 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Handler\Lists;
+use dokuwiki\Parsing\ModeRegistry;
+
 class Listblock extends AbstractMode
 {
     /**
@@ -9,14 +13,26 @@ class Listblock extends AbstractMode
      */
     public function __construct()
     {
-        global $PARSER_MODES;
+        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_DISABLED,
+            ModeRegistry::CATEGORY_PROTECTED,
+        ]);
+    }
 
-        $this->allowedModes = array_merge(
-            $PARSER_MODES['formatting'],
-            $PARSER_MODES['substition'],
-            $PARSER_MODES['disabled'],
-            $PARSER_MODES['protected']
-        );
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 10;
+    }
+
+    /** @inheritdoc */
+    public function preConnect()
+    {
+        $registry = ModeRegistry::getInstance();
+        $registry->registerBlockEolMode('listblock');
+        $registry->registerLineStartMarkers('listblock', ['\\*', '\\-']);
     }
 
     /** @inheritdoc */
@@ -36,8 +52,26 @@ class Listblock extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 10;
+        switch ($state) {
+            case DOKU_LEXER_ENTER:
+                $handler->setCallWriter(new Lists($handler->getCallWriter()));
+                $handler->addCall('list_open', [$match], $pos);
+                break;
+            case DOKU_LEXER_EXIT:
+                $handler->addCall('list_close', [], $pos);
+                /** @var Lists $reWriter */
+                $reWriter = $handler->getCallWriter();
+                $handler->setCallWriter($reWriter->process());
+                break;
+            case DOKU_LEXER_MATCHED:
+                $handler->addCall('list_item', [$match], $pos);
+                break;
+            case DOKU_LEXER_UNMATCHED:
+                $handler->addCall('cdata', [$match], $pos);
+                break;
+        }
+        return true;
     }
 }

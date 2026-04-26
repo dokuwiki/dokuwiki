@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
 
 class Entity extends AbstractMode
@@ -18,6 +19,11 @@ class Entity extends AbstractMode
         $this->entities = $entities;
     }
 
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 260;
+    }
 
     /** @inheritdoc */
     public function preConnect()
@@ -42,8 +48,9 @@ class Entity extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 260;
+        $handler->addCall('entity', [$match], $pos);
+        return true;
     }
 }

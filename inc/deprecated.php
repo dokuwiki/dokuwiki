@@ -160,6 +160,34 @@ class IXR_Value extends \IXR\DataType\Value
 }
 
 /**
+ * returns all available parser syntax modes in correct order
+ *
+ * @return array[] with for each plugin the array('sort' => sortnumber, 'mode' => mode string, 'obj'  => plugin object)
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated 2026-04-16 use \dokuwiki\Parsing\ModeRegistry::getModes() instead
+ */
+function p_get_parsermodes()
+{
+    DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ModeRegistry::class . '::getModes()');
+    return \dokuwiki\Parsing\ModeRegistry::getInstance()->getModes();
+}
+
+/**
+ * Callback function for usort
+ *
+ * @param array $a
+ * @param array $b
+ * @return int $a is lower/equal/higher than $b
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @deprecated 2026-04-16 use \dokuwiki\Parsing\ModeRegistry::sortModes() instead
+ */
+function p_sort_modes($a, $b)
+{
+    DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ModeRegistry::class . '::sortModes()');
+    return \dokuwiki\Parsing\ModeRegistry::sortModes($a, $b);
+}
+
+/**
  * print a newline terminated string
  *
  * You can give an indention as optional parameter
@@ -174,4 +202,13 @@ function ptln($string, $indent = 0)
 {
     DebugHelper::dbgDeprecatedFunction('echo');
     echo str_repeat(' ', $indent) . "$string\n";
+}
+
+/**
+ * @deprecated 2026-04-16 use \dokuwiki\Parsing\ParserMode\Media::parseMedia() instead
+ */
+function Doku_Handler_Parse_Media($match)
+{
+    DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ParserMode\Media::class . '::parseMedia()');
+    return \dokuwiki\Parsing\ParserMode\Media::parseMedia($match);
 }

@@ -2,10 +2,18 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Externallink extends AbstractMode
 {
     protected $schemes = [];
     protected $patterns = [];
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 330;
+    }
 
     /** @inheritdoc */
     public function preConnect()
@@ -39,9 +47,23 @@ class Externallink extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 330;
+        $url = $match;
+        $title = null;
+
+        // add protocol on simple short URLs
+        if (str_starts_with($url, 'ftp') && !str_starts_with($url, 'ftp://')) {
+            $title = $url;
+            $url = 'ftp://' . $url;
+        }
+        if (str_starts_with($url, 'www')) {
+            $title = $url;
+            $url = 'http://' . $url;
+        }
+
+        $handler->addCall('externallink', [$url, $title], $pos);
+        return true;
     }
 
     /**

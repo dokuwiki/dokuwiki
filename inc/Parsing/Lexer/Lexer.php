@@ -10,6 +10,8 @@
 
 namespace dokuwiki\Parsing\Lexer;
 
+use dokuwiki\Parsing\Handler;
+
 /**
  * Accepts text and breaks it into tokens.
  *
@@ -18,9 +20,14 @@ namespace dokuwiki\Parsing\Lexer;
  */
 class Lexer
 {
+    /** Signal for leaving a mode */
+    public const MODE_EXIT = '__exit';
+    /** Prefix marking special (enter-and-exit) patterns */
+    public const MODE_SPECIAL_PREFIX = '_';
+
     /** @var ParallelRegex[] */
     protected $regexes = [];
-    /** @var \Doku_Handler */
+    /** @var Handler */
     protected $handler;
     /** @var StateStack */
     protected $modeStack;
@@ -32,7 +39,7 @@ class Lexer
     /**
      * Sets up the lexer in case insensitive matching by default.
      *
-     * @param \Doku_Handler $handler  Handling strategy by reference.
+     * @param Handler $handler  Handling strategy by reference.
      * @param string $start            Starting handler.
      * @param boolean $case            True for case sensitive.
      */
@@ -90,7 +97,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "__exit");
+        $this->regexes[$mode]->addPattern($pattern, self::MODE_EXIT);
     }
 
     /**
@@ -108,7 +115,7 @@ class Lexer
         if (! isset($this->regexes[$mode])) {
             $this->regexes[$mode] = new ParallelRegex($this->case);
         }
-        $this->regexes[$mode]->addPattern($pattern, "_$special");
+        $this->regexes[$mode]->addPattern($pattern, self::MODE_SPECIAL_PREFIX . $special);
     }
 
     /**
@@ -214,7 +221,7 @@ class Lexer
      */
     protected function isModeEnd($mode)
     {
-        return ($mode === "__exit");
+        return ($mode === self::MODE_EXIT);
     }
 
     /**
@@ -226,7 +233,7 @@ class Lexer
      */
     protected function isSpecialMode($mode)
     {
-        return str_starts_with($mode, '_');
+        return str_starts_with($mode, self::MODE_SPECIAL_PREFIX);
     }
 
     /**
@@ -237,13 +244,14 @@ class Lexer
      */
     protected function decodeSpecial($mode)
     {
-        return substr($mode, 1);
+        return substr($mode, strlen(self::MODE_SPECIAL_PREFIX));
     }
 
     /**
-     * Calls the parser method named after the current mode.
+     * Dispatches a token to the handler.
      *
-     * Empty content will be ignored. The lexer has a parser handler for each mode in the lexer.
+     * Resolves mode name aliases (e.g. unformattedalt → unformatted) and
+     * delegates all dispatch logic to Handler::handleToken().
      *
      * @param string $content Text parsed.
      * @param boolean $is_match Token is recognised rather
@@ -257,19 +265,10 @@ class Lexer
         if (($content === "") || ($content === false)) {
             return true;
         }
-        $handler = $this->modeStack->getCurrent();
-        if (isset($this->mode_handlers[$handler])) {
-            $handler = $this->mode_handlers[$handler];
-        }
+        $originalName = $this->modeStack->getCurrent();
+        $modeName = $this->mode_handlers[$originalName] ?? $originalName;
 
-        // modes starting with plugin_ are all handled by the same
-        // handler but with an additional parameter
-        if (str_starts_with($handler, 'plugin_')) {
-            [$handler, $plugin] = sexplode('_', $handler, 2, '');
-            return $this->handler->$handler($content, $is_match, $pos, $plugin);
-        }
-
-        return $this->handler->$handler($content, $is_match, $pos);
+        return $this->handler->handleToken($modeName, $content, $is_match, $pos, $originalName);
     }
 
     /**

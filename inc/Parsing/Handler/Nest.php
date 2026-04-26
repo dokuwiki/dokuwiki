@@ -38,14 +38,9 @@ class Nest extends AbstractRewriter
     }
 
     /** @inheritdoc */
-    public function finalise()
+    protected function getClosingCall(): string
     {
-        $last_call = end($this->calls);
-        $this->writeCall([$this->closingInstruction, [], $last_call[2]]);
-
-        $this->process();
-        $this->callWriter->finalise();
-        unset($this->callWriter);
+        return $this->closingInstruction;
     }
 
     /** @inheritdoc */

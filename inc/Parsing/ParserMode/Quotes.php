@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Quotes extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 280;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -43,8 +51,33 @@ class Quotes extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function postConnect()
     {
-        return 280;
+        // Map all sub-mode names back to 'quotes' so the Handler
+        // dispatches them to this mode object
+        $this->Lexer->mapHandler('singlequoteopening', 'quotes');
+        $this->Lexer->mapHandler('singlequoteclosing', 'quotes');
+        $this->Lexer->mapHandler('apostrophe', 'quotes');
+        $this->Lexer->mapHandler('doublequoteopening', 'quotes');
+        $this->Lexer->mapHandler('doublequoteclosing', 'quotes');
+    }
+
+    /** @inheritdoc */
+    public function handle($match, $state, $pos, Handler $handler)
+    {
+        $call = $handler->getModeName();
+
+        if ($call === 'doublequoteclosing' && $handler->getStatus('doublequote') <= 0) {
+            $call = 'doublequoteopening';
+        }
+
+        if ($call === 'doublequoteopening') {
+            $handler->setStatus('doublequote', $handler->getStatus('doublequote') + 1);
+        } elseif ($call === 'doublequoteclosing') {
+            $handler->setStatus('doublequote', max(0, $handler->getStatus('doublequote') - 1));
+        }
+
+        $handler->addCall($call, [], $pos);
+        return true;
     }
 }

@@ -36,4 +36,20 @@ abstract class AbstractRewriter implements ReWriterInterface
     {
         return $this->callWriter;
     }
+
+    /**
+     * Return the instruction name for this block's closing call.
+     */
+    abstract protected function getClosingCall(): string;
+
+    /** @inheritdoc */
+    public function finalise()
+    {
+        $last_call = end($this->calls);
+        $this->writeCall([$this->getClosingCall(), [], $last_call[2]]);
+
+        $this->process();
+        $this->callWriter->finalise();
+        unset($this->callWriter);
+    }
 }

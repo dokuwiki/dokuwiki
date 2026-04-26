@@ -2,9 +2,17 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Filelink extends AbstractMode
 {
     protected $pattern;
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 360;
+    }
 
     /** @inheritdoc */
     public function preConnect()
@@ -30,8 +38,9 @@ class Filelink extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 360;
+        $handler->addCall('filelink', [$match, null], $pos);
+        return true;
     }
 }

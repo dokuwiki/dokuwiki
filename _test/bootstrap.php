@@ -117,7 +117,7 @@ if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
 // load dw
 require_once(DOKU_INC.'inc/init.php');
 
-// load the parser so $PARSER_MODES is defined before the tests start
+// ensure ModeRegistry is initialized (populates $PARSER_MODES global)
 // otherwise PHPUnit unsets $PARSER_MODES in some cases which breaks p_get_parsermodes()
-require_once(DOKU_INC.'inc/parser/parser.php');
+\dokuwiki\Parsing\ModeRegistry::getInstance();
 

@@ -15,14 +15,9 @@ class Table extends AbstractRewriter
     protected $countTableHeadRows = 0;
 
     /** @inheritdoc */
-    public function finalise()
+    protected function getClosingCall(): string
     {
-        $last_call = end($this->calls);
-        $this->writeCall(['table_end', [], $last_call[2]]);
-
-        $this->process();
-        $this->callWriter->finalise();
-        unset($this->callWriter);
+        return 'table_end';
     }
 
     /** @inheritdoc */
