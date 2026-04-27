@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Handler\Preformatted as PreformattedHandler;
-use dokuwiki\Parsing\ModeRegistry;
 
 class Preformatted extends AbstractMode
 {
@@ -32,13 +31,10 @@ class Preformatted extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $markers = ModeRegistry::getInstance()->getLineStartMarkers();
-        $lookahead = $markers ? '(?![' . implode('', $markers) . '])' : '';
-
         $indent = str_repeat(' ', $this->getIndentWidth());
 
-        $this->Lexer->addEntryPattern('\n' . $indent . $lookahead, $mode, 'preformatted');
-        $this->Lexer->addEntryPattern('\n\t' . $lookahead, $mode, 'preformatted');
+        $this->Lexer->addEntryPattern('\n' . $indent, $mode, 'preformatted');
+        $this->Lexer->addEntryPattern('\n\t', $mode, 'preformatted');
 
         // match continuation lines inside the preformatted block
         $this->Lexer->addPattern('\n' . $indent, 'preformatted');

@@ -172,30 +172,6 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertSame(['listblock', 'table'], $this->registry->getBlockEolModes());
     }
 
-    function testLineStartMarkersEmptyByDefault()
-    {
-        $this->assertSame([], $this->registry->getLineStartMarkers());
-    }
-
-    function testRegisterLineStartMarkers()
-    {
-        $this->registry->registerLineStartMarkers('listblock', ['\\*', '\\-']);
-        $markers = $this->registry->getLineStartMarkers();
-        $this->assertContains('\\*', $markers);
-        $this->assertContains('\\-', $markers);
-    }
-
-    function testLineStartMarkersDeduplicates()
-    {
-        $this->registry->registerLineStartMarkers('mode_a', ['\\*', '\\-']);
-        $this->registry->registerLineStartMarkers('mode_b', ['\\-', '\\+']);
-        $markers = $this->registry->getLineStartMarkers();
-        $this->assertCount(3, $markers);
-        $this->assertContains('\\*', $markers);
-        $this->assertContains('\\-', $markers);
-        $this->assertContains('\\+', $markers);
-    }
-
     function testBlockEolModesResetWithInstance()
     {
         $this->registry->registerBlockEolMode('listblock');

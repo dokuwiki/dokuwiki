@@ -150,8 +150,13 @@ class PreformattedTest extends ParserTestBase
     }
 
     function testPreformattedList() {
-        $this->P->addMode('preformatted',new Preformatted());
+        // Listblock (sort 10) must be added before Preformatted (sort 20) so
+        // the resulting PCRE alternation matches the canonical mode order.
+        // PCRE picks the first alternative that matches at a given position,
+        // and an indented bullet line like "  - x" matches both modes at the
+        // same offset; Listblock has to come first to win the tie.
         $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("  - x \n  * y \nF  oo\n  x  \n    y  \n  -X\n  *Y\nBar\n");
         $calls = [
             ['document_start',[]],
