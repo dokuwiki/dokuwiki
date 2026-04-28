@@ -16,14 +16,14 @@ class Block
     // Blocks these should not be inside paragraphs
     protected $blockOpen = [
         'header', 'listu_open', 'listo_open', 'listitem_open', 'listcontent_open', 'table_open', 'tablerow_open',
-        'tablecell_open', 'tableheader_open', 'tablethead_open', 'quote_open', 'code', 'file', 'hr', 'preformatted',
-        'rss', 'footnote_open'
+        'tablecell_open', 'tableheader_open', 'tablethead_open', 'tabletbody_open', 'tabletfoot_open', 'quote_open',
+        'code', 'file', 'hr', 'preformatted', 'rss', 'footnote_open'
     ];
 
     protected $blockClose = [
         'header', 'listu_close', 'listo_close', 'listitem_close', 'listcontent_close', 'table_close',
-        'tablerow_close', 'tablecell_close', 'tableheader_close', 'tablethead_close', 'quote_close', 'code', 'file',
-        'hr', 'preformatted', 'rss', 'footnote_close'
+        'tablerow_close', 'tablecell_close', 'tableheader_close', 'tablethead_close', 'tabletbody_close',
+        'tabletfoot_close', 'quote_close', 'code', 'file', 'hr', 'preformatted', 'rss', 'footnote_close'
     ];
 
     // Stacks can contain paragraphs

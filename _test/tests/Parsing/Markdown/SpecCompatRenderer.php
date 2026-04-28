@@ -26,6 +26,42 @@ use Doku_Renderer_xhtml;
  */
 class SpecCompatRenderer extends Doku_Renderer_xhtml
 {
+    public function table_open($maxcols = null, $numrows = null, $pos = null, $classes = null)
+    {
+        // Production DW wraps `<table>` in `<div class="table"><table class="inline">`;
+        // the spec expects bare `<table>`.
+        $this->doc .= "<table>\n";
+    }
+
+    public function table_close($pos = null)
+    {
+        // Drop the matching `</div>` from the production wrapper.
+        $this->doc .= "</table>";
+    }
+
+    public function tablerow_open($classes = null)
+    {
+        // Strip DW's `class="rowN"` row counter — spec rows have no class.
+        $this->doc .= "<tr>\n";
+    }
+
+    public function tableheader_open($colspan = 1, $align = null, $rowspan = 1, $classes = null)
+    {
+        // Production DW emits alignment as `class="...align"`; the spec uses
+        // an `align="..."` attribute. Drop the `class="colN"` counter too.
+        $this->doc .= '<th' . $this->alignAttr($align) . '>';
+    }
+
+    public function tablecell_open($colspan = 1, $align = null, $rowspan = 1, $classes = null)
+    {
+        $this->doc .= '<td' . $this->alignAttr($align) . '>';
+    }
+
+    private function alignAttr(?string $align): string
+    {
+        if ($align === null) return '';
+        return ' align="' . $align . '"';
+    }
 
     public function internalmedia(
         $src,
