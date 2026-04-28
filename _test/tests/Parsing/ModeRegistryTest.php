@@ -274,6 +274,91 @@ class ModeRegistryTest extends \DokuWikiTest
         }
     }
 
+    function testGetSubParserReturnsParser()
+    {
+        $parser = $this->registry->getSubParser();
+        $this->assertInstanceOf(\dokuwiki\Parsing\Parser::class, $parser);
+    }
+
+    function testGetSubParserCachesAcrossCalls()
+    {
+        $first = $this->registry->getSubParser();
+        $second = $this->registry->getSubParser();
+        $this->assertSame($first, $second);
+    }
+
+    function testGetSubParserExcludesBaseonlyByDefault()
+    {
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        ModeRegistry::reset();
+        $registry = ModeRegistry::getInstance();
+
+        $parser = $registry->getSubParser();
+        $parser->parse("# A header\n");
+        // gfm_header would emit `header` and `section_open`; both absent here
+        $names = array_column($parser->getHandler()->calls, 0);
+        $this->assertNotContains('header', $names);
+        $this->assertNotContains('section_open', $names);
+    }
+
+    function testGetSubParserHonoursCustomExclusions()
+    {
+        global $conf;
+        $conf['syntax'] = 'markdown';
+        ModeRegistry::reset();
+        $registry = ModeRegistry::getInstance();
+
+        // With FORMATTING also excluded, gfm_emphasis is gone and `*foo*` stays literal
+        $parser = $registry->getSubParser([
+            ModeRegistry::CATEGORY_BASEONLY,
+            ModeRegistry::CATEGORY_FORMATTING,
+        ]);
+        $parser->parse("*foo*\n");
+        $names = array_column($parser->getHandler()->calls, 0);
+        $this->assertNotContains('emphasis_open', $names);
+    }
+
+    function testGetSubParserResetsWithRegistry()
+    {
+        $first = $this->registry->getSubParser();
+        ModeRegistry::reset();
+        $second = ModeRegistry::getInstance()->getSubParser();
+        $this->assertNotSame($first, $second);
+    }
+
+    function testGetSubParserDoesNotClobberMainParserModes()
+    {
+        // Wire the main parser up the way real callers do: addMode() sets
+        // each mode's $Lexer to the main parser's lexer. The sub-parser must
+        // then clone these modes so its own addMode() does not overwrite
+        // those references and break the main parse.
+        $main = $this->registry->getModes();
+        $mainParser = new \dokuwiki\Parsing\Parser(new \dokuwiki\Parsing\Handler());
+        foreach ($main as $m) {
+            $mainParser->addMode($m['mode'], $m['obj']);
+        }
+
+        $mainLexers = [];
+        foreach ($main as $m) {
+            $this->assertNotNull(
+                $m['obj']->Lexer ?? null,
+                "precondition: main mode '{$m['mode']}' must have a Lexer attached"
+            );
+            $mainLexers[$m['mode']] = $m['obj']->Lexer;
+        }
+
+        $this->registry->getSubParser();
+
+        foreach ($main as $m) {
+            $this->assertSame(
+                $mainLexers[$m['mode']],
+                $m['obj']->Lexer ?? null,
+                "sub-parser must not clobber main mode '{$m['mode']}'->Lexer"
+            );
+        }
+    }
+
     /**
      * Verifies that each mode is loaded in the expected combinations of
      * `$conf['syntax']`. One data set per (mode, syntax) pair.

@@ -9,6 +9,8 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
 use dokuwiki\Parsing\ParserMode\Camelcaselink;
 use dokuwiki\Parsing\ParserMode\Entity;
 use dokuwiki\Parsing\ParserMode\Smiley;
+use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Parser;
 
 /**
  * Central registry for parser mode categories and mode instantiation.
@@ -31,6 +33,9 @@ class ModeRegistry
 
     /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
     private ?array $modes = null;
+
+    /** @var array<string, Parser> Cached sub-parsers keyed by exclusion-set identifier */
+    private array $subParsers = [];
 
     /** @var string[] Modes that handle their own line endings (skip EOL connection) */
     private array $blockEolModes = [];
@@ -186,6 +191,52 @@ class ModeRegistry
 
         usort($this->modes, self::sortModes(...));
         return $this->modes;
+    }
+
+    /**
+     * Return a cached Parser preconfigured with every active mode except the
+     * ones excluded.
+     *
+     * Built lazily on first call and reused thereafter. Mode objects are cloned
+     * before being attached to the sub-parser so that connectTo()'s assignment
+     * to $Lexer does not clobber the main parser's mode references.
+     *
+     * The returned Parser must not be re-entered: each call should reset the
+     * Handler (via $parser->getHandler()->reset()) before invoking parse().
+     * Callers that need to sub-parse during their own handle() must ensure
+     * they are not already inside a sub-parse on the same exclusion set —
+     * one common case is excluding the calling mode itself from the sub-parser
+     * to rule out re-entry.
+     *
+     * @param string[] $excludeCategories CATEGORY_* constants whose modes should be excluded
+     * @param string[] $excludeModes specific mode names to exclude in addition to category-based exclusions
+     * @return Parser
+     */
+    public function getSubParser(
+        array $excludeCategories = [self::CATEGORY_BASEONLY],
+        array $excludeModes = []
+    ): Parser {
+        $key = implode(',', $excludeCategories) . '|' . implode(',', $excludeModes);
+        if (isset($this->subParsers[$key])) return $this->subParsers[$key];
+
+        $categories = $this->getCategories();
+        $excluded = $excludeModes;
+        foreach ($excludeCategories as $cat) {
+            $excluded = array_merge($excluded, $categories[$cat] ?? []);
+        }
+
+        $parser = new Parser(new Handler());
+        foreach ($this->getModes() as $m) {
+            if (in_array($m['mode'], $excluded, true)) continue;
+            // Mode objects expose a single $Lexer slot which Parser::addMode()
+            // overwrites at registration time. The objects in $this->modes are
+            // already attached to the main parser's lexer; reusing them here
+            // would clobber that reference and break the main parse. Clone so
+            // the sub-parser gets its own copy with its own $Lexer slot.
+            $parser->addMode($m['mode'], clone $m['obj']);
+        }
+
+        return $this->subParsers[$key] = $parser;
     }
 
     /**

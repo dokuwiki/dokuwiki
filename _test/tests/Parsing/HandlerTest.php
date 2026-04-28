@@ -51,4 +51,40 @@ class HandlerTest extends \DokuWikiTest
 
         $this->assertSame('mymode', $mode->receivedModeName);
     }
+
+    function testResetClearsCallsAndStatusAndCurrentMode()
+    {
+        $handler = new Handler();
+
+        // dirty the handler: append a call, mutate status, and prime
+        // currentModeName via a token dispatch.
+        $handler->calls[] = ['cdata', ['x'], 0];
+
+        self::setInaccessibleProperty($handler, 'status', [
+            'section' => true, 'doublequote' => 3, 'footnote' => true,
+        ]);
+
+        $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
+            public function getSort() { return 0; }
+            public function handle($match, $state, $pos, Handler $handler) { return true; }
+        };
+        $handler->registerModeObject('m', $mode);
+        $handler->handleToken('m', 'x', DOKU_LEXER_SPECIAL, 0, 'm');
+        $this->assertSame('m', $handler->getModeName());
+
+        $writerBefore = self::getInaccessibleProperty($handler, 'callWriter');
+
+        $handler->reset();
+
+        $this->assertSame([], $handler->calls);
+        $this->assertSame('', $handler->getModeName());
+        $this->assertSame(
+            ['section' => false, 'doublequote' => 0, 'footnote' => false],
+            self::getInaccessibleProperty($handler, 'status')
+        );
+        // reset reinstalls a fresh CallWriter — must be a new instance
+        $writerAfter = self::getInaccessibleProperty($handler, 'callWriter');
+        $this->assertNotSame($writerBefore, $writerAfter);
+        $this->assertInstanceOf(\dokuwiki\Parsing\Handler\CallWriter::class, $writerAfter);
+    }
 }
