@@ -74,7 +74,7 @@ class ModeRegistry
     {
         global $PARSER_MODES;
         $PARSER_MODES = [
-            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'quote', 'hr'],
+            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'quote', 'hr', 'gfm_listblock'],
             self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
             self::CATEGORY_FORMATTING => [
                 'strong', 'emphasis', 'underline', 'monospace',
@@ -295,15 +295,21 @@ class ModeRegistry
 
         $modes = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
-            'linebreak', 'internallink', 'media', 'listblock', 'table',
+            'linebreak', 'internallink', 'media', 'table',
             'monospace', 'unformatted', 'file',
         ];
 
         // Underline only loads when DokuWiki is preferred. In MD-preferred
         // modes, `__` means strong (via gfm_strong_underscore) and loading
         // Underline here would conflict.
+        //
+        // Listblock only loads when DokuWiki is preferred. In MD-preferred
+        // modes, GfmListblock owns the `-`/`*`/`+` markers and zero-indent
+        // top-level items, which conflicts with DokuWiki's required-2-space-
+        // indent list model.
         if ($dwPreferred) {
             $modes[] = 'underline';
+            $modes[] = 'listblock';
         }
 
         $this->instantiateModes($modes);
@@ -329,10 +335,15 @@ class ModeRegistry
         // Underscore-based emphasis and strong only load when Markdown is
         // preferred. In DW-preferred modes, `__` means underline and loading
         // these would conflict.
+        //
+        // GfmListblock only loads when Markdown is preferred. In DW-preferred
+        // modes, the DokuWiki Listblock owns the `-`/`*` markers (with the
+        // 2-space indent rule); the two list models cannot co-exist.
         if ($mdPreferred) {
             $modes[] = 'gfm_emphasis_underscore';
             $modes[] = 'gfm_strong_underscore';
             $modes[] = 'gfm_emphasis_strong_underscore';
+            $modes[] = 'gfm_listblock';
         }
 
         $this->instantiateModes($modes);

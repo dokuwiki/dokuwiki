@@ -145,7 +145,8 @@ class GfmEmphasisTest extends ParserTestBase
     function testUnderscoreIsNotEmphasised()
     {
         // GfmEmphasis handles `*` only — `_` is reserved to avoid the
-        // `__underline__` conflict. See SPEC.md.
+        // `__underline__` conflict with DokuWiki's underline syntax;
+        // GfmEmphasisUnderscore handles `_` separately when MD-preferred.
         $this->P->addMode('gfm_emphasis', new GfmEmphasis());
         $this->P->parse('foo _bar_ baz');
         $calls = [

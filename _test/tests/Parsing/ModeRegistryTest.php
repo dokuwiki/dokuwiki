@@ -251,12 +251,14 @@ class ModeRegistryTest extends \DokuWikiTest
         }
     }
 
-    /** In mixed modes, DW modes must still load */
+    /** In mixed modes, DW modes must still load (except those that are
+     * preference-gated — see provideModeLoadingCases for the per-mode rules) */
     function testGetModesMixedModesLoadDwModes()
     {
-        $dwOnly = [
+        // DW modes that load in both dw+md and md+dw (no MD-side conflict)
+        $dwAlways = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
-            'linebreak', 'internallink', 'media', 'listblock', 'table',
+            'linebreak', 'internallink', 'media', 'table',
             'monospace', 'unformatted', 'file',
         ];
 
@@ -268,7 +270,7 @@ class ModeRegistryTest extends \DokuWikiTest
             $modes = $registry->getModes();
             $modeNames = array_column($modes, 'mode');
 
-            foreach ($dwOnly as $mode) {
+            foreach ($dwAlways as $mode) {
                 $this->assertContains($mode, $modeNames, "DW mode '$mode' missing in '$syntax' syntax setting");
             }
         }
@@ -444,7 +446,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'linebreak'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'internallink'                   => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'media'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'listblock'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'listblock'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
             'table'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'monospace'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'unformatted'                    => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
@@ -464,6 +466,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'gfm_emphasis_underscore'        => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
             'gfm_strong_underscore'          => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
             'gfm_emphasis_strong_underscore' => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_listblock'                  => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
             // DW-preferred (Underline's `__` clashes with GFM strong)
             'underline'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
         ];

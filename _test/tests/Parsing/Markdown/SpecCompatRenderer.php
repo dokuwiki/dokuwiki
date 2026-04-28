@@ -90,6 +90,52 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
         $this->doc .= $this->specCode($text, $language);
     }
 
+    public function listu_open($classes = null)
+    {
+        $this->doc .= "<ul>\n";
+    }
+
+    public function listu_close()
+    {
+        $this->doc .= "</ul>\n";
+    }
+
+    public function listo_open($classes = null, $start = 1)
+    {
+        if ((int) $start !== 1) {
+            $this->doc .= '<ol start="' . (int) $start . "\">\n";
+        } else {
+            $this->doc .= "<ol>\n";
+        }
+    }
+
+    public function listo_close()
+    {
+        $this->doc .= "</ol>\n";
+    }
+
+    public function listitem_open($level, $node = false)
+    {
+        $this->doc .= '<li>';
+    }
+
+    public function listitem_close()
+    {
+        $this->doc .= "</li>\n";
+    }
+
+    public function listcontent_open()
+    {
+        // GFM has no per-item content wrapper - tight items put text directly
+        // inside <li>, loose items wrap it in <p>. The handler emits/strips
+        // p_open / p_close to drive that distinction; the wrapper itself
+        // produces no output here.
+    }
+
+    public function listcontent_close()
+    {
+    }
+
     public function file($text, $language = null, $filename = null, $options = null)
     {
         $this->doc .= $this->specCode($text, $language);

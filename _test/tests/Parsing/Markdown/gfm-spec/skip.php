@@ -49,7 +49,9 @@ return [
          . ' inline code span of length 3. Inline spans with n≥3 not'
          . ' implemented (GfmBacktickSingle/Double cover only n=1, n=2).',
     111 => 'fenced code interrupting Setext heading (`foo\n---`): Setext'
-         . ' headings are deliberately not supported (SPEC.md Limits).',
+         . ' headings are deliberately not supported — the `---` underline'
+         . ' collides with DokuWiki\'s horizontal rule and `===` would'
+         . ' collide with DokuWiki heading syntax.',
     115 => 'fenced code: `` `` backtick-fence-with-backticks-in-info-string'
          . ' is invalid; GFM falls back to n=3 inline span — inline spans'
          . ' with n≥3 not implemented. See example 108.',
@@ -276,8 +278,6 @@ return [
     597 => 'shortcut reference-style image with emphasis: forward-reference definitions not supported',
     598 => 'image with unescaped nested brackets `![[foo]]`: literal-fallback behavior not supported',
     599 => 'shortcut reference-style image (case-insensitive): forward-reference definitions not supported',
-    600 => 'escape in image syntax `!\[foo]`: depends on GfmEscape (pending)',
-    601 => 'backslash-escape of `!` before link: depends on GfmEscape (pending)',
 
     // --------------------------------------------------------------------
     // ATX heading collisions with DokuWiki-specific behavior.
@@ -296,4 +296,68 @@ return [
         . ' by 2 spaces; we require the `#` at column 0',
     49 => 'empty ATX heading: DokuWiki\'s XHTML renderer deliberately'
         . ' skips blank headings (blank() guard in Doku_Renderer_xhtml::header)',
+
+    // --------------------------------------------------------------------
+    // List items / Lists — list features GfmListblock deliberately does
+    // not implement. The simplifications are by design: indentation uses
+    // a fixed 2-space-multiple step starting at 0, lazy continuation is
+    // not supported, and the rewriter groups items by 'u'/'o' type only.
+    // The buckets are:
+    //
+    //  A. Extra spaces after the marker. CommonMark rolls them (up to
+    //     4) into the content column; we dedent at `marker_width + 1`,
+    //     collapsing the extras.
+    //  B. 1- or 3-space indent for nesting (we round down to nearest 2).
+    //  C. Lazy continuation (column-0 paragraph wrap inside an item).
+    //  D. Strict CommonMark loose/tight classification (every blank line
+    //     between items / inside items reclassifies; we use a simpler
+    //     single-paragraph-tight, multi-paragraph-loose rule).
+    //  E. Marker-character-change splits ordered lists ('.' vs ')') or
+    //     unordered ('-' vs '+' vs '*'). Our rewriter groups by 'u' / 'o'
+    //     type only, not by marker character.
+    //  F. List interrupting a paragraph without a blank line — requires a
+    //     multi-pass block parser to revisit prior text.
+    //
+    // Examples that depend on a pending mode (GfmQuote, GfmEscape, …) are
+    // intentionally NOT skipped — they remain visible failing tests until
+    // the mode lands.
+    // --------------------------------------------------------------------
+    232 => 'list items: marker-width content-column alignment (A)',
+    235 => 'list items: marker-width content-column alignment (A)',
+    249 => 'list items: marker-width-driven content-column alignment for `10. foo` (A)',
+    254 => 'list items: marker-width content-column alignment edge case (A)',
+    258 => 'list items: marker-width content-column for `1.  foo` (A)',
+    263 => 'list items: indent ambiguity at column 0/1/2 (B)',
+    264 => 'list items: 1-space-indent variation (B)',
+    265 => 'list items: marker-width with multi-line continuation (A)',
+    266 => 'list items: marker-width with multi-line continuation (A)',
+    267 => 'list items: lazy continuation (C)',
+    268 => 'list items: lazy continuation (C)',
+    270 => 'list items: lazy continuation across blank line (C+D)',
+    273 => 'list items: list interrupting a paragraph without blank line (F)',
+    275 => 'list items: 3-space indent rounds to 2 — sub-list under previous item (B)',
+    276 => 'list items: marker-width content-column with mixed types (A+E)',
+    277 => 'list items: nested markers on a single line (A)',
+    278 => 'list items: marker-character switch splits the list (E)',
+    281 => 'lists: marker-character change splits unordered list `-` -> `+` (E)',
+    282 => 'lists: ordered delimiter switch splits list `.` -> `)` (E)',
+    284 => 'lists: list interrupting paragraph without blank line (F)',
+    286 => 'lists: marker-width content-column alignment for ordered list (A)',
+    287 => 'lists: triple blank line + indented continuation in deeply nested item (D)',
+    288 => 'lists: marker-character change at deeper level (E)',
+    289 => 'lists: marker-character change with type switch (E)',
+    290 => 'lists: 1-space-indent variations of items, all stay top-level (B)',
+    291 => 'lists: 1-space-indent variations on ordered list (B)',
+    292 => 'lists: marker-character change splits inside nested list (E)',
+    293 => 'lists: marker-character change with mixed indent (E+B)',
+    294 => 'lists: lazy continuation across types (C+E)',
+    295 => 'lists: lazy continuation in nested list (C)',
+    296 => 'lists: lazy continuation across blank line (C+D)',
+    297 => 'lists: blank-line classification for loose/tight in nested list (D)',
+    298 => 'lists: blank-line classification (D)',
+    300 => 'lists: blank-line classification with marker change (D+E)',
+    301 => 'lists: blank-line classification + marker-width alignment (D+A)',
+    304 => 'lists: blank line between sub-list items affects loose/tight (D)',
+    305 => 'lists: blank line between deeply nested items (D)',
+    306 => 'lists: blank line at the end of a loose list affects classification (D)',
 ];
