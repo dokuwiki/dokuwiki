@@ -289,6 +289,36 @@ class GfmCodeTest extends ParserTestBase
         $this->assertSame(['enable_line_numbers' => true], $codeCalls[0][1][3]);
     }
 
+    function testInfoStringBackslashEscapeIsResolved()
+    {
+        // GFM §6.1 (spec example 322): backslash-escaped punctuation in
+        // the info string is unescaped before parseAttributes splits it
+        // into language / filename / options.
+        $this->addModes();
+        $this->P->parse("```c\\#\nx\n```");
+        $codeCalls = array_values(array_filter(
+            $this->H->calls,
+            static fn($c) => $c[0] === 'code'
+        ));
+        $this->assertCount(1, $codeCalls);
+        $this->assertSame('c#', $codeCalls[0][1][1]);
+    }
+
+    function testCodeBodyKeepsBackslashEscapes()
+    {
+        // The body of a fenced code block is captured verbatim — escapes
+        // inside it must NOT collapse (spec: escapes don't fire in code
+        // blocks). Only the info string is touched by Escape::unescape.
+        $this->addModes();
+        $this->P->parse("```\nfoo \\* bar\n```");
+        $codeCalls = array_values(array_filter(
+            $this->H->calls,
+            static fn($c) => $c[0] === 'code'
+        ));
+        $this->assertCount(1, $codeCalls);
+        $this->assertSame("foo \\* bar\n", $codeCalls[0][1][0]);
+    }
+
     function testSortValue()
     {
         $this->assertSame(200, (new GfmCode())->getSort());

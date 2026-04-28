@@ -3,6 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Helpers\Escape;
 use dokuwiki\Parsing\Helpers\Link;
 use dokuwiki\Parsing\Helpers\Media as MediaHelper;
 
@@ -77,11 +78,17 @@ class GfmLink extends AbstractMode
             // Plain text label can't contain `]`, so the first `](` is
             // the label/target separator.
             $sep       = strpos($match, '](');
-            $label     = substr($match, 1, $sep - 1);
+            $label     = Escape::unescapeBackslashes(substr($match, 1, $sep - 1));
             $targetUrl = $this->extractUrl(substr($match, $sep + 2, -1));
         }
 
+        // Classify on the raw URL so windowssharelink detection sees the
+        // literal `\\host\path` runs intact — GFM's `\\` → `\` collapse
+        // would otherwise destroy the share prefix.
         [$call, $args] = Link::classify($targetUrl, $label);
+        if ($call !== 'windowssharelink') {
+            $args[0] = Escape::unescapeBackslashes($args[0]);
+        }
         $handler->addCall($call, $args, $pos);
         return true;
     }
@@ -105,8 +112,8 @@ class GfmLink extends AbstractMode
     private function parseImageDescriptor(string $imageMatch): array
     {
         $sep    = strpos($imageMatch, '](');
-        $alt    = substr($imageMatch, 2, $sep - 2);
-        $imgUrl = $this->extractUrl(substr($imageMatch, $sep + 2, -1));
+        $alt    = Escape::unescapeBackslashes(substr($imageMatch, 2, $sep - 2));
+        $imgUrl = Escape::unescapeBackslashes($this->extractUrl(substr($imageMatch, $sep + 2, -1)));
 
         $p = MediaHelper::parseParameters($imgUrl);
         $type = (media_isexternal($p['src']) || link_isinterwiki($p['src']))

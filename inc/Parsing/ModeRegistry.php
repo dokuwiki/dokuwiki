@@ -88,7 +88,7 @@ class ModeRegistry
                 'camelcaselink', 'internallink', 'media', 'externallink',
                 'linebreak', 'emaillink', 'windowssharelink', 'filelink',
                 'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
-                'gfm_link', 'gfm_media',
+                'gfm_link', 'gfm_media', 'gfm_escape',
             ],
             self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file', 'gfm_code', 'gfm_file'],
             self::CATEGORY_DISABLED   => ['unformatted'],
@@ -326,6 +326,7 @@ class ModeRegistry
         $mdPreferred = in_array($syntax, ['markdown', 'md+dw'], true);
 
         $modes = [
+            'gfm_escape',
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
             'gfm_backtick_single', 'gfm_backtick_double',
             'gfm_header', 'gfm_link', 'gfm_media',

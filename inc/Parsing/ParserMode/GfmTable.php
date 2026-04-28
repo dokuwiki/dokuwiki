@@ -27,9 +27,10 @@ use dokuwiki\Parsing\ModeRegistry;
  * The internal patterns recognise:
  *   - `\|` as a cell separator, with a `(?<!\\)` lookbehind so a backslash-
  *     prefixed pipe is left as raw input — the cell-splitting concern. The
- *     unescape itself (turning `\|` into a literal `|`) is GfmEscape's
- *     concern, not this mode's; until that mode lands, `\|` survives in
- *     cell content as the literal two-char sequence.
+ *     unescape (turning `\|` into a literal `|`) is handled downstream:
+ *     GfmEscape consumes `\|` in normal cell text, and Handler\GfmTable's
+ *     unescapePipes() applies the tables-extension rewrite inside code
+ *     spans, where standard §6.1 escapes don't fire.
  *   - `\n` followed by a non-newline, non-`>` character as a row separator;
  *   - any other `\n` exits the mode (blank line, blockquote start, EOF).
  *
@@ -99,12 +100,14 @@ class GfmTable extends AbstractMode
         // Cell separator. The `(?<!\\)` lookbehind keeps `\|` from being
         // treated as a separator so backslash-escaped pipes don't split
         // cells. The unescape — turning `\|` into a literal `|` in cell
-        // content — is GfmEscape's responsibility; we just need the cells
-        // to come out the right shape. Edge: `\\|` (escaped backslash,
-        // then a real separator pipe) is technically wrong here — the
-        // lookbehind sees the second `\` and refuses to split — but
-        // GfmEscape will fix it for free by consuming `\\` first, leaving
-        // a clean `|` at separator position.
+        // content — is handled downstream: GfmEscape consumes `\|` in
+        // normal text, and Handler\GfmTable::unescapePipes() applies the
+        // tables-extension rewrite inside code spans. We just need the
+        // cells to come out the right shape. Edge: `\\|` (escaped
+        // backslash, then a real separator pipe) is technically wrong
+        // here — the lookbehind sees the second `\` and refuses to split
+        // — but GfmEscape consumes `\\` first, leaving a clean `|` at
+        // separator position.
         $this->Lexer->addPattern('(?<!\\\\)\|', 'gfm_table');
         // Row separator: a newline followed by a non-newline, non-`>` char.
         // Excluding `>` lets a blockquote terminate the table (spec 201);

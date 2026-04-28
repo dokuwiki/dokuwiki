@@ -444,6 +444,65 @@ class GfmLinkTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    // ----- backslash-escape interaction (GFM §6.1) -----
+
+    function testBackslashEscapesInLabel()
+    {
+        // Plain-text label gets §6.1 unescape applied before it reaches
+        // the link handler — `\*` collapses to a literal `*`.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [te\\*xt](page) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['page', 'te*xt']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testBackslashEscapesInUrl()
+    {
+        // §6.1 unescape fires on the URL after classify() picks the
+        // handler — it lets users put a literal punctuation char in a
+        // URL slot that would otherwise carry markup meaning.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [text](http://example.com/pa\\!ge) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['externallink', ['http://example.com/pa!ge', 'text']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testWindowsShareUrlSkipsBackslashUnescape()
+    {
+        // Carve-out: a `\\host\path` URL must survive classify() and
+        // stay intact as a windowssharelink. Applying §6.1 unescape
+        // would collapse the leading `\\` to `\` and destroy the share
+        // marker, so the unescape pass is skipped for this classifier.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [share](\\\\server\\share\\sub) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['windowssharelink', ['\\\\server\\share\\sub', 'share']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testSortValue()
     {
         $this->assertSame(300, (new GfmLink())->getSort());

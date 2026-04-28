@@ -92,24 +92,25 @@ class GfmTableTest extends ParserTestBase
     }
 
     /** Spec example 200 (partial): a backslash-escaped pipe must not split
-     *  the cell. The unescape itself — turning `\|` into a literal `|` in
-     *  the cell content — is GfmEscape's job and is not yet implemented;
-     *  here we only assert the cell-splitting contract that GfmTable owns. */
+     *  the cell, and per the GFM tables extension `\|` unescapes to `|`
+     *  in the rendered cell — even when no general escape mode is active.
+     *  This test exercises GfmTable in isolation (no gfm_escape registered)
+     *  so the rewriter's own per-cell `\|`→`|` pass is what produces the
+     *  unescape. */
     public function testEscapedPipeDoesNotSplitCell()
     {
         $this->P->addMode('gfm_table', new GfmTable());
         $this->P->parse("| f\\|oo |\n| ---- |");
 
-        // One cell, content `f\|oo` literal (escape preserved). When
-        // GfmEscape lands the same input will collapse to `f|oo` without
-        // any change here.
+        // One cell, content `f|oo`: the `\|` is unescaped by GfmTable's
+        // tables-extension pipe rewrite.
         $expected = [
             ['document_start', []],
             ['table_open', [1, 1, 1]],
             ['tablethead_open', []],
             ['tablerow_open', []],
             ['tableheader_open', [1, null, 1]],
-            ['cdata', ['f\\|oo']],
+            ['cdata', ['f|oo']],
             ['tableheader_close', []],
             ['tablerow_close', []],
             ['tablethead_close', []],

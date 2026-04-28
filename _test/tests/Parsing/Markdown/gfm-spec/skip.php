@@ -360,4 +360,25 @@ return [
     304 => 'lists: blank line between sub-list items affects loose/tight (D)',
     305 => 'lists: blank line between deeply nested items (D)',
     306 => 'lists: blank line at the end of a loose list affects classification (D)',
+
+    // --------------------------------------------------------------------
+    // Backslash-escape examples (§6.1) that fail for reasons unrelated to
+    // GfmEscape itself: renderer divergences, typography conversion, and
+    // already-skipped GFM features (autolinks, raw HTML, reference links,
+    // discarded link titles). The escape mechanic itself works.
+    // --------------------------------------------------------------------
+    308 => 'backslash escapes: apostrophe is rendered as `&#039;` by DW while'
+         . ' the spec expects a literal `\'` — renderer policy difference,'
+         . ' not an escape bug',
+    310 => 'backslash escapes: DW typography converts straight `"..."` to curly'
+         . ' quotes when $conf[typography] is on, diverging from spec output',
+    316 => 'backslash escapes inside angle-bracket autolinks: GFM autolink'
+         . ' `<URL>` form not implemented (see example 356)',
+    317 => 'backslash escapes inside raw HTML: raw HTML pass-through is not'
+         . ' supported by default (see example 354)',
+    318 => 'backslash escapes in link title: title attribute is discarded — DW'
+         . ' link instructions have no title slot (see SPEC.md GfmLink)',
+    319 => 'backslash escapes in reference-link definition: link reference'
+         . ' definitions not supported (single-pass lexer cannot resolve'
+         . ' forward references)',
 ];

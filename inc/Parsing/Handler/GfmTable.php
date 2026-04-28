@@ -36,11 +36,13 @@ namespace dokuwiki\Parsing\Handler;
  *      `<tbody>` entirely. Activating them here is what frees the test
  *      renderer from having to track tbody state.
  *
- * Backslash-escaped pipes (`\|`) are not unescaped here — that is
- * GfmEscape's responsibility and applies project-wide. Until that mode
- * lands, the literal `\|` survives in cell content. The lexer's cell-
- * separator lookbehind ensures the escape at least keeps cells from
- * being split on the protected pipe (spec 200, partially).
+ * Backslash-escaped pipes outside protected regions are consumed by
+ * GfmEscape before the cell content reaches this rewriter. Inside
+ * code spans (and any other whole-span PROTECTED capture) the `\|`
+ * survives as literal text — and the GFM tables extension demands
+ * that `\|` unescape to `|` even there, overriding §6.1's
+ * "escapes don't work in code spans" rule. unescapePipes() applies
+ * that rewrite per cell to every text-bearing call.
  */
 class GfmTable extends AbstractRewriter
 {
@@ -68,9 +70,9 @@ class GfmTable extends AbstractRewriter
             return $this->callWriter;
         }
 
-        $headerRow = $this->trimCellEdges($rows[0]);
+        $headerRow = $this->unescapePipes($this->trimCellEdges($rows[0]));
         $bodyRows = array_map(
-            fn($row) => $this->trimCellEdges($this->padOrTruncate($row, $cols)),
+            fn($row) => $this->unescapePipes($this->trimCellEdges($this->padOrTruncate($row, $cols))),
             array_slice($rows, 2)
         );
 
@@ -243,6 +245,35 @@ class GfmTable extends AbstractRewriter
             $cell,
             fn($c) => $c[0] !== 'cdata' || $c[1][0] !== ''
         ));
+    }
+
+    /**
+     * Apply the GFM tables-extension rule that `\|` always unescapes to
+     * `|` inside table cells — including the bodies of code spans and
+     * other whole-span PROTECTED captures, where standard §6.1 escape
+     * rules don't fire. Walks every text-bearing call (cdata,
+     * unformatted, entity, plugin substitutions, …) and str_replace's
+     * the literal two-char sequence on its first arg. Other escapes
+     * inside code spans are left alone — only `\|` gets the special
+     * table treatment.
+     *
+     * In normal cell text, GfmEscape has already consumed `\|` upstream,
+     * so this pass is a no-op there; its job is to catch the codespan
+     * case that bypasses the lexer.
+     *
+     * @param array $row a row as a list of cells
+     * @return array the row with `\|` rewritten to `|` in every cell
+     */
+    protected function unescapePipes(array $row): array
+    {
+        foreach ($row as &$cell) {
+            foreach ($cell as &$call) {
+                if (isset($call[1][0]) && is_string($call[1][0])) {
+                    $call[1][0] = str_replace('\\|', '|', $call[1][0]);
+                }
+            }
+        }
+        return $row;
     }
 
     /**
