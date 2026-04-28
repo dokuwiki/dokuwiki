@@ -261,8 +261,11 @@ class Doku_Renderer_metadata extends Doku_Renderer
 
     /**
      * Open an ordered list
+     *
+     * @param string|string[]|null $classes Optional CSS classes (ignored by metadata)
+     * @param int $start Starting number (ignored by metadata)
      */
-    public function listo_open()
+    public function listo_open($classes = null, $start = 1)
     {
         $this->cdata(DOKU_LF);
     }

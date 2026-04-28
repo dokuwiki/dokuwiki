@@ -523,15 +523,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      * Open an ordered list
      *
      * @param string|string[] $classes css classes - have to be valid, do not pass unfiltered user input
+     * @param int $start Starting number; emitted as a `start="N"` attribute when not 1
      */
-    public function listo_open($classes = null)
+    public function listo_open($classes = null, $start = 1)
     {
-        $class = '';
-        if ($classes !== null) {
-            if (is_array($classes)) $classes = implode(' ', $classes);
-            $class = " class=\"$classes\"";
-        }
-        $this->doc .= "<ol$class>" . DOKU_LF;
+        $attrs = [];
+        if ($classes !== null) $attrs['class'] = implode(' ', (array)$classes);
+        if ((int)$start !== 1) $attrs['start'] = (int)$start;
+        $this->doc .= '<ol' . ($attrs ? ' ' . buildAttributes($attrs) : '') . '>' . DOKU_LF;
     }
 
     /**

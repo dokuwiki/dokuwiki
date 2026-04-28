@@ -382,8 +382,11 @@ abstract class Doku_Renderer extends Plugin
 
     /**
      * Open an ordered list
+     *
+     * @param string|string[]|null $classes Optional CSS classes
+     * @param int $start Starting number for the list (default 1)
      */
-    public function listo_open()
+    public function listo_open($classes = null, $start = 1)
     {
     }
 
