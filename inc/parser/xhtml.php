@@ -138,6 +138,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function document_end()
     {
+        global $lang;
+
         // Finish open section edits.
         while ($this->sectionedits !== []) {
             if ($this->sectionedits[count($this->sectionedits) - 1]['start'] <= 1) {
@@ -150,31 +152,33 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         if ($this->footnotes !== []) {
-            $this->doc .= '<div class="footnotes">' . DOKU_LF;
+            $this->doc .= '<section id="section__footnotes" class="footnotes">' . DOKU_LF;
+            $this->doc .= '<h2 class="a11y">' . $lang['footnotes_headline'] . '</h2>' . DOKU_LF;
+            $this->doc .= '<ol>' . DOKU_LF;
 
             foreach ($this->footnotes as $id => $footnote) {
                 // check its not a placeholder that indicates actual footnote text is elsewhere
                 if (!str_starts_with($footnote, "@@FNT")) {
                     // open the footnote and set the anchor and backlink
-                    $this->doc .= '<div class="fn">';
-                    $this->doc .= '<sup><a href="#fnt__' . $id . '" id="fn__' . $id . '" class="fn_bot">';
-                    $this->doc .= $id . ')</a></sup> ' . DOKU_LF;
+                    $this->doc .= '<li class="fn" id="fn__' . $id . '">';
+                    $this->doc .= "<a href=\"#fnt__{$id}\"  class=\"fn_bot\" data-value=\"{$id}\" aria-label=\"";
+                    $this->doc .= sprintf($lang['footnote_title'], $id) . "\"><span>{$id}</span></a>";
 
                     // get any other footnotes that use the same markup
                     $alt = array_keys($this->footnotes, "@@FNT$id");
 
                     foreach ($alt as $ref) {
                         // set anchor and backlink for the other footnotes
-                        $this->doc .= ', <sup><a href="#fnt__' . ($ref) . '" id="fn__' . ($ref) . '" class="fn_bot">';
-                        $this->doc .= ($ref) . ')</a></sup> ' . DOKU_LF;
+                        $this->doc .= ", <a href=\"#fnt__'{$ref}\" id=\"fn__{$ref}\" ";
+                        $this->doc .= "class=\"fn_bot\" data-value=\"{$id}\"><span>{$ref}</span></a>";
                     }
 
                     // add footnote markup and close this footnote
-                    $this->doc .= '<div class="content">' . $footnote . '</div>';
-                    $this->doc .= '</div>' . DOKU_LF;
+                    $this->doc .= '<span class="content">' . $footnote . '</span>';
+                    $this->doc .= '</li>' . DOKU_LF;
                 }
             }
-            $this->doc .= '</div>' . DOKU_LF;
+            $this->doc .= '</ol>' . DOKU_LF . '</section>' . DOKU_LF;
         }
 
         // Prepare the TOC
@@ -466,6 +470,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function footnote_close()
     {
+        global $lang;
+
         /** @var $fnid int takes track of seen footnotes, assures they are unique even across multiple docs FS#2841 */
         static $fnid = 0;
         // assign new footnote id (we start at 1)
@@ -489,9 +495,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output the footnote reference and link
         $this->doc .= sprintf(
-            '<sup><a href="#fn__%d" id="fnt__%d" class="fn_top">%d)</a></sup>',
+            '<a href="#fn__%d" id="fnt__%d" class="fn_top" data-value="%d" aria-label="%s"><span>%d</span></a>',
             $fnid,
             $fnid,
+            $fnid,
+            sprintf($lang['footnote_title'], $fnid),
             $fnid
         );
     }
