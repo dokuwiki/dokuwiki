@@ -292,12 +292,6 @@ function tpl_metaheaders($alt = true)
                 'title' => $lang['btn_recent'],
                 'href' => DOKU_BASE . 'feed.php'
             ];
-            $head['link'][] = [
-                'rel' => 'alternate',
-                'type' => 'application/rss+xml',
-                'title' => $lang['currentns'],
-                'href' => DOKU_BASE . 'feed.php?mode=list&ns=' . (isset($INFO) ? $INFO['namespace'] : '')
-            ];
         }
         if (($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
             $head['link'][] = [
