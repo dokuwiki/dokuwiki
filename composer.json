@@ -21,7 +21,7 @@
         "aziraphale/email-address-validator": "^2",
         "splitbrain/lesserphp": "^0.10",
         "splitbrain/php-cli": "^1.1",
-        "splitbrain/slika": "^1.0",
+        "splitbrain/slika": "^1.1",
         "kissifrot/php-ixr": "dev-dokuwiki",
         "splitbrain/php-jsstrip": "^1.0",
         "php81_bc/strftime": "dev-fallback-intl"

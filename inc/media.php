@@ -13,10 +13,12 @@ use splitbrain\slika\Exception;
 use dokuwiki\PassHash;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Form\Form;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Ui\Media\Display;
 use dokuwiki\Ui\Media\DisplayRow;
 use dokuwiki\Ui\Media\DisplayTile;
 use dokuwiki\Ui\MediaDiff;
@@ -1012,10 +1014,10 @@ function media_tab_view($image, $ns, $auth = null, $rev = '')
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     if ($image && $auth >= AUTH_READ) {
-        $meta = new JpegMeta(mediaFN($image, $rev));
-        media_preview($image, $auth, $rev, $meta);
+        $mf = new MediaFile($image, $rev);
+        echo (new Display($mf))->getDetailHtml();
         media_preview_buttons($image, $auth, $rev);
-        media_details($image, $auth, $rev, $meta);
+        media_details($image, $auth, $rev, $mf->getMeta());
     } else {
         echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     }
@@ -1066,45 +1068,6 @@ function media_tab_history($image, $ns, $auth = null)
         }
     } else {
         echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
-    }
-}
-
-/**
- * Prints mediafile details
- *
- * @param string         $image media id
- * @param int            $auth permission level
- * @param int|string     $rev revision timestamp or empty string
- * @param JpegMeta|bool  $meta
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- */
-function media_preview($image, $auth, $rev = '', $meta = false)
-{
-
-    $size = media_image_preview_size($image, $rev, $meta);
-
-    if ($size) {
-        global $lang;
-        echo '<div class="image">';
-
-        $more = [];
-        if ($rev) {
-            $more['rev'] = $rev;
-        } else {
-            $t = @filemtime(mediaFN($image));
-            $more['t'] = $t;
-        }
-
-        $more['w'] = $size[0];
-        $more['h'] = $size[1];
-        $src = ml($image, $more);
-
-        echo '<a href="' . $src . '" target="_blank" title="' . $lang['mediaview'] . '">';
-        echo '<img src="' . $src . '" alt="" style="max-width: ' . $size[0] . 'px;" />';
-        echo '</a>';
-
-        echo '</div>';
     }
 }
 
@@ -1169,35 +1132,6 @@ function media_preview_buttons($image, $auth, $rev = '')
     }
 
     echo '</ul>';
-}
-
-/**
- * Returns image width and height for mediamanager preview panel
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string         $image
- * @param int|string     $rev
- * @param JpegMeta|bool  $meta
- * @param int            $size
- * @return array
- */
-function media_image_preview_size($image, $rev, $meta = false, $size = 500)
-{
-    if (
-        !preg_match("/\.(jpe?g|gif|png|webp)$/", $image)
-        || !file_exists($filename = mediaFN($image, $rev))
-    ) return [];
-
-    $info = getimagesize($filename);
-    $w = $info[0];
-    $h = $info[1];
-
-    if ($meta && ($w > $size || $h > $size)) {
-        $ratio = $meta->getResizeRatio($size, $size);
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-    }
-    return [$w, $h];
 }
 
 /**

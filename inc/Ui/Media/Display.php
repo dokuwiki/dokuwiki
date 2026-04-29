@@ -50,6 +50,54 @@ class Display
     }
 
     /**
+     * Get the HTML for the large detail-view preview
+     *
+     * Produces the <div class="image"><a><img/></a></div> block shown on the
+     * mediamanager "View" tab and in the media diff view. Unlike the thumbnail
+     * in {@see getPreviewHtml()}, this uses bounding-box fit so the full image
+     * is visible with correct aspect ratio, including EXIF-rotated JPEGs.
+     *
+     * @param int $w bounding box width
+     * @param int $h bounding box height
+     * @return string empty string for non-images or unreadable files
+     */
+    public function getDetailHtml($w = 500, $h = 500)
+    {
+        global $lang;
+
+        if (!$this->mediaFile->isImage()) return '';
+
+        [$dw, $dh] = $this->mediaFile->getDisplayDimensions($w, $h, false);
+        if ($dw <= 0) return '';
+
+        $id = $this->mediaFile->getId();
+        $rev = $this->mediaFile->getRev();
+        $cacheBust = $rev
+            ? ['rev' => $rev]
+            : ['t' => filemtime($this->mediaFile->getPath())];
+
+        // pass raw '&' separator so buildAttributes' hsc() encodes exactly once
+        $imgAttr = [
+            'src' => ml($id, ['w' => $w, 'h' => $h, 'fit' => 1, ...$cacheBust], true, '&'),
+            'alt' => $this->mediaFile->getDisplayName(),
+            'width' => $dw,
+            'height' => $dh,
+            'style' => 'max-width: ' . $dw . 'px;',
+        ];
+        $linkAttr = [
+            'href' => ml($id, $cacheBust, true, '&'),
+            'target' => '_blank',
+            'title' => $lang['mediaview'],
+        ];
+
+        return '<div class="image">'
+            . '<a ' . buildAttributes($linkAttr) . '>'
+            . '<img ' . buildAttributes($imgAttr) . ' />'
+            . '</a>'
+            . '</div>';
+    }
+
+    /**
      * Return the URL to the icon for this file
      *
      * @return string
