@@ -74,7 +74,7 @@ class ModeRegistry
     {
         global $PARSER_MODES;
         $PARSER_MODES = [
-            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'hr', 'gfm_listblock', 'gfm_table', 'gfm_quote'],
+            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'gfm_listblock', 'gfm_table', 'gfm_quote', 'gfm_hr'],
             self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
             self::CATEGORY_FORMATTING => [
                 'strong', 'emphasis', 'underline', 'monospace',
@@ -394,7 +394,7 @@ class ModeRegistry
         $modes = [
             'strong', 'subscript', 'superscript',
             'footnote', 'eol', 'preformatted',
-            'gfm_quote', 'externallink', 'emaillink', 'windowssharelink',
+            'gfm_quote', 'gfm_hr', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
         ];
 
@@ -413,7 +413,7 @@ class ModeRegistry
     protected function loadDokuWikiModes(): void
     {
         $modes = [
-            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'emphasis', 'deleted', 'code', 'header',
             'linebreak', 'internallink', 'media', 'table',
             'monospace', 'unformatted', 'file',
         ];

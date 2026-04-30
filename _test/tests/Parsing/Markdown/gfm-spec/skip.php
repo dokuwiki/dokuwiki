@@ -15,6 +15,34 @@
 
 return [
     // --------------------------------------------------------------------
+    // Thematic breaks (GfmHr) — strict-only HR is intentional. The
+    // delimiter run must be bare: no leading, trailing, or internal
+    // whitespace in either DW or GFM flavor. The list-precedence cases
+    // additionally need a GfmListblock guard that is out of scope.
+    // --------------------------------------------------------------------
+    17 => 'thematic break: 0-3 spaces of leading indent. Strict policy:'
+        . ' opener must be at column 0 in either flavor.',
+    21 => 'thematic break: spaces between delimiter chars (`- - -`).'
+        . ' Strict policy: bare run only.',
+    22 => 'thematic break: spaces between delimiter chars (`** * **`).'
+        . ' Strict policy: bare run only.',
+    23 => 'thematic break: spaces between delimiter chars (`-     -`).'
+        . ' Strict policy: bare run only.',
+    24 => 'thematic break: trailing spaces after the run. Strict policy:'
+        . ' bare run only.',
+    29 => 'thematic break: Setext heading underline `Foo\n---` should'
+        . ' render as `<h2>`. Setext headings are deliberately not'
+        . ' supported — `---` collides with DokuWiki HR and `===` would'
+        . ' collide with DokuWiki heading syntax.',
+    30 => 'thematic break vs. list-item precedence (`* * *` between list'
+        . ' items): requires internal-space HR support and a GfmListblock'
+        . ' guard so the list refuses to absorb the HR-shaped line. Both'
+        . ' out of scope; the line stays a list-item body.',
+    31 => 'thematic break inside list with different bullet (`- * * *`):'
+        . ' depends on internal-space HR support inside the sub-parsed'
+        . ' item body. See example 30.',
+
+    // --------------------------------------------------------------------
     // Fenced code blocks (GfmCode / GfmFile) — deliberate simplifications
     // versus strict GFM. All of these are consequences of lexer constraints
     // (no regex backreferences) or the deliberate column-0-only policy.

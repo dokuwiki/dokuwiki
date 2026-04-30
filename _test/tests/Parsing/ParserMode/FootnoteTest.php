@@ -7,7 +7,7 @@ use dokuwiki\Parsing\ParserMode\Code;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\Footnote;
 use dokuwiki\Parsing\ParserMode\Strong;
-use dokuwiki\Parsing\ParserMode\Hr;
+use dokuwiki\Parsing\ParserMode\GfmHr;
 use dokuwiki\Parsing\ParserMode\Listblock;
 use dokuwiki\Parsing\ParserMode\GfmQuote;
 use dokuwiki\Parsing\ParserMode\Preformatted;
@@ -132,17 +132,16 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteHr() {
-        $this->P->addMode('hr',new Hr());
-        $this->P->parse("Foo (( \n ---- \n )) Bar");
+        $this->P->addMode('gfm_hr',new GfmHr());
+        $this->P->parse("Foo ((\n----\n)) Bar");
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
             ['cdata',["\n".'Foo ']],
             ['nest', [ [
               ['footnote_open',[]],
-              ['cdata',[' ']],
               ['hr',[]],
-              ['cdata',["\n "]],
+              ['cdata',["\n"]],
               ['footnote_close',[]],
             ]]],
             ['cdata',[' Bar']],

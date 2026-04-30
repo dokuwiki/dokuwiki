@@ -64,7 +64,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertContains('listblock', $modes);
         $this->assertContains('table', $modes);
         $this->assertContains('gfm_quote', $modes);
-        $this->assertContains('hr', $modes);
+        $this->assertContains('gfm_hr', $modes);
     }
 
     function testGetModesForMultipleCategories()
@@ -194,12 +194,12 @@ class ModeRegistryTest extends \DokuWikiTest
         $modeNames = array_column($modes, 'mode');
 
         // All original built-in modes must be present (with `quote`
-        // replaced by the unified `gfm_quote` that covers both DW and
-        // GFM blockquote syntax).
+        // and `hr` replaced by the unified `gfm_quote` and `gfm_hr`
+        // that cover both DW and GFM dialects).
         $expected = [
             'listblock', 'preformatted', 'notoc', 'nocache',
             'header', 'table', 'linebreak', 'footnote',
-            'hr', 'unformatted', 'code', 'file', 'gfm_quote',
+            'gfm_hr', 'unformatted', 'code', 'file', 'gfm_quote',
             'internallink', 'rss', 'media', 'externallink',
             'emaillink', 'windowssharelink', 'eol',
             'strong', 'emphasis', 'underline', 'monospace',
@@ -222,7 +222,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $modeNames = array_column($modes, 'mode');
 
         $dwOnly = [
-            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'emphasis', 'deleted', 'code', 'header',
             'linebreak', 'internallink', 'media', 'listblock', 'table',
             'monospace', 'unformatted', 'file',
         ];
@@ -244,7 +244,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $always = [
             'strong', 'subscript', 'superscript',
             'footnote', 'eol', 'preformatted',
-            'gfm_quote', 'externallink', 'emaillink', 'windowssharelink',
+            'gfm_quote', 'gfm_hr', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
             'smiley', 'acronym', 'entity',
         ];
@@ -259,7 +259,7 @@ class ModeRegistryTest extends \DokuWikiTest
     {
         // DW modes that load in both dw+md and md+dw (no MD-side conflict)
         $dwAlways = [
-            'emphasis', 'deleted', 'code', 'header', 'hr',
+            'emphasis', 'deleted', 'code', 'header',
             'linebreak', 'internallink', 'media', 'table',
             'monospace', 'unformatted', 'file',
         ];
@@ -481,6 +481,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'eol'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'preformatted'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'gfm_quote'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_hr'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'externallink'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'emaillink'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'windowssharelink'               => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
@@ -495,7 +496,6 @@ class ModeRegistryTest extends \DokuWikiTest
             'deleted'                        => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'code'                           => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'header'                         => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'hr'                             => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'linebreak'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'internallink'                   => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
             'media'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
