@@ -382,12 +382,25 @@ abstract class Doku_Renderer extends Plugin
 
     /**
      * Open an ordered list
-     *
-     * @param string|string[]|null $classes Optional CSS classes
-     * @param int $start Starting number for the list (default 1)
      */
-    public function listo_open($classes = null, $start = 1)
+    public function listo_open()
     {
+    }
+
+    /**
+     * Open an ordered list with a non-default starting number
+     *
+     * Sibling of listo_open for ordered lists whose first item is numbered
+     * other than 1 (e.g. GFM "5. foo" -> start at 5). The default delegates
+     * to listo_open so renderers that don't care about the starting number
+     * still produce a valid list. Renderers that DO care (xhtml emits
+     * start="N") override this method.
+     *
+     * @param int $start Starting number for the list
+     */
+    public function listo_open_start($start = 1)
+    {
+        $this->listo_open();
     }
 
     /**

@@ -106,22 +106,29 @@ class GfmListblockTest extends ParserTestBase
         $this->P->addMode('gfm_listblock', new GfmListblock());
         $this->P->parse("5. A\n6. B\n");
 
-        $opens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open');
-        $this->assertCount(1, $opens);
+        $opens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open_start');
+        $this->assertCount(1, $opens, 'non-default start emits listo_open_start, not listo_open');
         $open = array_values($opens)[0];
-        $this->assertSame([null, 5], $open[1], 'listo_open must carry the first item start number');
+        $this->assertSame([5], $open[1], 'listo_open_start must carry the first item start number');
+
+        $plainOpens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open');
+        $this->assertCount(0, $plainOpens, 'plain listo_open is not emitted when start != 1');
     }
 
     public function testOrderedDefaultStartNotEmittedSpecially()
     {
-        // For start=1 the rewriter omits the start argument entirely (the
-        // renderer would suppress it anyway). The wire shape is bare [].
+        // For start=1 the rewriter emits the plain listo_open instruction so
+        // unmodified plugin renderers (which only override listo_open) keep
+        // working. The wire shape is bare [].
         $this->P->addMode('gfm_listblock', new GfmListblock());
         $this->P->parse("1. A\n2. B\n");
 
         $opens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open');
         $open = array_values($opens)[0];
         $this->assertSame([], $open[1]);
+
+        $startOpens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open_start');
+        $this->assertCount(0, $startOpens, 'start=1 must not emit listo_open_start');
     }
 
     public function testNestedTwoLevels()

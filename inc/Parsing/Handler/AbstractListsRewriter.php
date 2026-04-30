@@ -154,14 +154,22 @@ abstract class AbstractListsRewriter extends AbstractRewriter
     /**
      * Open a new list and its first item; push a new stack frame.
      *
-     * @param string $type list type — 'u' (unordered) or 'o' (ordered)
-     * @param int $start ordered-list start number; 1 means default (no `start` attribute)
+     * Ordered lists with a non-default start number are emitted as the
+     * sibling instruction listo_open_start to keep the listo_open signature
+     * unchanged for plugin renderers that override it.
+     *
+     * @param string $type list type - 'u' (unordered) or 'o' (ordered)
+     * @param int $start ordered-list start number; 1 means default
      * @param int $depth absolute nesting depth of the new list
      * @param int $pos byte position to attach to the emitted calls
      */
     protected function emitOpenList(string $type, int $start, int $depth, int $pos): void
     {
-        $this->listCalls[] = ['list' . $type . '_open', $this->listOpenArgs($type, $start), $pos];
+        if ($type === 'o' && $start !== 1) {
+            $this->listCalls[] = ['listo_open_start', [$start], $pos];
+        } else {
+            $this->listCalls[] = ['list' . $type . '_open', [], $pos];
+        }
         $this->listCalls[] = ['listitem_open', $this->levelArgs($depth), $pos];
         $this->listCalls[] = ['listcontent_open', [], $pos];
         $this->listStack[] = [$type, $depth, count($this->listCalls) - 2];
@@ -239,23 +247,6 @@ abstract class AbstractListsRewriter extends AbstractRewriter
     protected function levelArgs(int $depth): array
     {
         return [max(1, $depth - $this->initialDepth + 1)];
-    }
-
-    /**
-     * Build the argument array for a list_*_open call. Ordered lists with a
-     * non-default start number get the start as the second argument; everything
-     * else uses an empty array so renderer defaults take effect (1 / no
-     * `start` attribute on the rendered <ol>).
-     *
-     * @param string $type 'u' or 'o'
-     * @param int $start start number (1 means default; no attribute emitted)
-     */
-    protected function listOpenArgs(string $type, int $start): array
-    {
-        if ($type === 'o' && $start !== 1) {
-            return [null, $start];
-        }
-        return [];
     }
 
     /**

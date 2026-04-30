@@ -136,13 +136,19 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
         $this->doc .= "</ul>\n";
     }
 
-    public function listo_open($classes = null, $start = 1)
+    public function listo_open($classes = null)
     {
-        if ((int) $start !== 1) {
-            $this->doc .= '<ol start="' . (int) $start . "\">\n";
-        } else {
-            $this->doc .= "<ol>\n";
+        $this->doc .= "<ol>\n";
+    }
+
+    public function listo_open_start($start = 1)
+    {
+        $start = (int) $start;
+        if ($start === 1) {
+            $this->listo_open();
+            return;
         }
+        $this->doc .= '<ol start="' . $start . "\">\n";
     }
 
     public function listo_close()

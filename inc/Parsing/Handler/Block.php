@@ -15,9 +15,9 @@ class Block
 
     // Blocks these should not be inside paragraphs
     protected $blockOpen = [
-        'header', 'listu_open', 'listo_open', 'listitem_open', 'listcontent_open', 'table_open', 'tablerow_open',
-        'tablecell_open', 'tableheader_open', 'tablethead_open', 'tabletbody_open', 'tabletfoot_open', 'quote_open',
-        'code', 'file', 'hr', 'preformatted', 'rss', 'footnote_open'
+        'header', 'listu_open', 'listo_open', 'listo_open_start', 'listitem_open', 'listcontent_open',
+        'table_open', 'tablerow_open', 'tablecell_open', 'tableheader_open', 'tablethead_open', 'tabletbody_open',
+        'tabletfoot_open', 'quote_open', 'code', 'file', 'hr', 'preformatted', 'rss', 'footnote_open'
     ];
 
     protected $blockClose = [
