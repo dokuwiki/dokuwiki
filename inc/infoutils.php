@@ -92,7 +92,7 @@ function getVersionData()
         // First try to get date and commit hash by calling Git
         if (function_exists('shell_exec')) {
             $args = ['git', 'log', '-1', '--pretty=format:%h %cd', '--date=short'];
-            $commitInfo = shell_exec(implode(' ', array_map('escapeshellarg', $args)));
+            $commitInfo = shell_exec(implode(' ', array_map(escapeshellarg(...), $args)));
             if ($commitInfo) {
                 [$version['sha'], $date] = explode(' ', $commitInfo);
                 $version['date'] = hsc($date);
