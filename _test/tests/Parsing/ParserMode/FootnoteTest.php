@@ -9,8 +9,8 @@ use dokuwiki\Parsing\ParserMode\Footnote;
 use dokuwiki\Parsing\ParserMode\Strong;
 use dokuwiki\Parsing\ParserMode\Hr;
 use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\GfmQuote;
 use dokuwiki\Parsing\ParserMode\Preformatted;
-use dokuwiki\Parsing\ParserMode\Quote;
 use dokuwiki\Parsing\ParserMode\Table;
 use dokuwiki\Parsing\ParserMode\Unformatted;
 
@@ -346,7 +346,12 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteQuote() {
-        $this->P->addMode('quote',new Quote());
+        // GfmQuote is the unified quote mode (replaces DW Quote). Under
+        // the test's default DW-preferred syntax the post-pass flattens
+        // sub-parsed paragraph wrapping into linebreak-separated cdata,
+        // and nested `>>` produces a nested `quote_open` pair. The body
+        // sub-parsed call list is wrapped in a `nest` instruction.
+        $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("Foo ((
 > def
 >>ghi
@@ -358,12 +363,12 @@ class FootnoteTest extends ParserTestBase
             ['nest', [ [
               ['footnote_open',[]],
               ['quote_open',[]],
-              ['cdata',[" def"]],
+              ['nest', [ [ ['cdata', ['def']] ] ]],
               ['quote_open',[]],
-              ['cdata',["ghi"]],
+              ['nest', [ [ ['cdata', ['ghi']] ] ]],
               ['quote_close',[]],
               ['quote_close',[]],
-              ['cdata',[' ']],
+              ['cdata',["\n "]],
               ['footnote_close',[]],
             ]]],
             ['cdata',[' Bar']],

@@ -10,9 +10,10 @@ use dokuwiki\Parsing\ParserMode\GfmListblock;
  * Tests for GFM list blocks.
  *
  * GfmListblock captures the entire list block via addSpecialPattern then
- * sub-parses each item's body through ModeRegistry::getSubParser(), so the
- * outer parser only needs gfm_listblock added; inline modes (emphasis,
- * strong, etc.) and block modes (gfm_code) are picked up by the sub-parser.
+ * sub-parses each item's body through a sub-parser acquired from
+ * ModeRegistry's pool, so the outer parser only needs gfm_listblock added;
+ * inline modes (emphasis, strong, etc.) and block modes (gfm_code) are
+ * picked up by the sub-parser.
  */
 class GfmListblockTest extends ParserTestBase
 {

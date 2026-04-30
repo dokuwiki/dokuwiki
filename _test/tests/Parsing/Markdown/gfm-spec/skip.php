@@ -322,6 +322,54 @@ return [
     // intentionally NOT skipped — they remain visible failing tests until
     // the mode lands.
     // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+    // Block quotes — deliberate scope reductions vs. strict GFM. The
+    // unified GfmQuote mode (replacing DW Quote) covers `>` blockquotes
+    // for both DW and MD pages, but several CommonMark blockquote rules
+    // are out of scope:
+    //
+    // - 1-3 space indent before `>` (column-0-only policy, consistent
+    //   with GfmCode / GfmFile / GfmHeader).
+    // - Lazy continuation (paragraph text without `>` on continuation
+    //   lines). Same policy as GfmListblock — markers required on
+    //   every line.
+    // - Headers inside quotes — sub-parser excludes BASEONLY so header
+    //   instructions don't drive TOC/section-edit anchors that don't
+    //   compose with `<blockquote>`. Same rationale as GfmListblock's
+    //   header exclusion inside list items.
+    // - Setext-style block constructs (the `---` underline collides
+    //   with DW's HR rule).
+    //
+    // Examples that depend on still-pending modes (GfmHr) are
+    // intentionally NOT skipped — they stay visible until those modes
+    // land.
+    // --------------------------------------------------------------------
+    206 => 'block quotes: header inside quote — sub-parser excludes'
+         . ' BASEONLY (TOC / section-edit anchors do not compose with'
+         . ' `<blockquote>`). Same policy as GfmListblock for `<li>`.',
+    207 => 'block quotes: header inside quote with no space after `>` —'
+         . ' see #206 for the BASEONLY exclusion rationale.',
+    208 => 'block quotes: leading-space `>` (1-3 spaces of indent) —'
+         . ' column-0-only policy, consistent with GfmCode / GfmFile.',
+    210 => 'block quotes: lazy continuation `> # Foo\n> bar\nbaz` —'
+         . ' every quote line must begin with `>` at column 0. Same'
+         . ' policy as GfmListblock.',
+    211 => 'block quotes: lazy continuation `> bar\nbaz\n> foo` —'
+         . ' see #210.',
+    212 => 'block quotes: Setext heading underline `---` after `> foo`'
+         . ' — no Setext headings (the `---` collides with DW HR syntax).',
+    215 => 'block quotes: fenced code block split across blockquote'
+         . ' boundary — fence inside quote followed by non-`>` lines'
+         . ' depends on the same lazy-continuation rule we do not'
+         . ' implement (see #210).',
+    216 => 'block quotes: lazy continuation `> foo\n    - bar` — see #210.',
+    225 => 'block quotes: lazy continuation `> bar\nbaz` — see #210.',
+    227 => 'block quotes: lazy continuation `> bar\n>\nbaz` — see #210.',
+    228 => 'block quotes: lazy continuation in nested quote'
+         . ' `> > > foo\nbar` — see #210.',
+    229 => 'block quotes: lazy continuation across nested levels'
+         . ' `>>> foo\n> bar\n>>baz` — see #210.',
+
     232 => 'list items: marker-width content-column alignment (A)',
     235 => 'list items: marker-width content-column alignment (A)',
     249 => 'list items: marker-width-driven content-column alignment for `10. foo` (A)',
@@ -377,7 +425,7 @@ return [
     317 => 'backslash escapes inside raw HTML: raw HTML pass-through is not'
          . ' supported by default (see example 354)',
     318 => 'backslash escapes in link title: title attribute is discarded — DW'
-         . ' link instructions have no title slot (see SPEC.md GfmLink)',
+         . ' link instructions have no title slot',
     319 => 'backslash escapes in reference-link definition: link reference'
          . ' definitions not supported (single-pass lexer cannot resolve'
          . ' forward references)',

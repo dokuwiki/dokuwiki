@@ -42,8 +42,9 @@ class Handler
      * Reset the handler to a fresh state.
      *
      * Clears the call buffer, status flags, and reinstalls a plain CallWriter.
-     * Used by reusable sub-parsers (see ModeRegistry::getSubParser) so the same
-     * Handler instance can be parsed against repeatedly without state bleed.
+     * Used by pooled sub-parsers (see ModeRegistry::acquireSubParser) so the
+     * same Handler instance can be parsed against repeatedly without state
+     * bleed.
      * Also called by the constructor to populate initial state.
      */
     public function reset()

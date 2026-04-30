@@ -11,11 +11,14 @@ use dokuwiki\Parsing\ModeRegistry;
  * GFM list block.
  *
  * Captures an entire list block atomically (one addSpecialPattern match) and
- * walks the captured text in handle(), grouping lines into items. Each item's
- * body is dedented to its content column and parsed by a cached sub-parser
- * (ModeRegistry::getSubParser) so block content - paragraphs, fenced code,
- * blockquotes, plugin blocks - work inside items uniformly without depending
- * on column-0 anchoring of nested mode patterns.
+ * walks the captured text in handle(), grouping lines into items. The per-item
+ * loop runs inside a ModeRegistry::withSubParser() callback so each item's
+ * body is dedented to its content column and parsed by a pooled sub-parser,
+ * and block content - paragraphs, fenced code, blockquotes, plugin blocks -
+ * works inside items uniformly without depending on column-0 anchoring of
+ * nested mode patterns. If any nested mode requests a sub-parser with the
+ * same exclusion key while ours is in use, the registry's pool hands them a
+ * different slot so their reset() does not corrupt our state.
  *
  * Sub-parser mode set: every active mode except CATEGORY_BASEONLY (i.e. no
  * Header inside list items, since `<h1>`-`<h6>` inside `<li>` is never
@@ -125,8 +128,10 @@ class GfmListblock extends AbstractMode
         $handler->setCallWriter(new GfmLists($handler->getCallWriter()));
         $handler->addCall('list_open', [$items[0]['markerMatch']], $pos);
 
-        $subParser = ModeRegistry::getInstance()
-            ->getSubParser([ModeRegistry::CATEGORY_BASEONLY], ['gfm_listblock']);
+        $registry = ModeRegistry::getInstance();
+        $excludeCats = [ModeRegistry::CATEGORY_BASEONLY];
+        $excludeModes = ['gfm_listblock'];
+        $subParser = $registry->acquireSubParser($excludeCats, $excludeModes);
         $subHandler = $subParser->getHandler();
 
         foreach ($items as $i => $item) {
@@ -154,6 +159,8 @@ class GfmListblock extends AbstractMode
             }
             $handler->setCallWriter($nest->process());
         }
+
+        $registry->releaseSubParser($excludeCats, $excludeModes);
 
         $handler->addCall('list_close', [], $pos + strlen($match));
         $reWriter = $handler->getCallWriter();

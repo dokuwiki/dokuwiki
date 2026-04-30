@@ -63,7 +63,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $modes = $this->registry->getModesForCategories([ModeRegistry::CATEGORY_CONTAINER]);
         $this->assertContains('listblock', $modes);
         $this->assertContains('table', $modes);
-        $this->assertContains('quote', $modes);
+        $this->assertContains('gfm_quote', $modes);
         $this->assertContains('hr', $modes);
     }
 
@@ -193,11 +193,13 @@ class ModeRegistryTest extends \DokuWikiTest
         $modes = $registry->getModes();
         $modeNames = array_column($modes, 'mode');
 
-        // All original built-in modes must be present
+        // All original built-in modes must be present (with `quote`
+        // replaced by the unified `gfm_quote` that covers both DW and
+        // GFM blockquote syntax).
         $expected = [
             'listblock', 'preformatted', 'notoc', 'nocache',
             'header', 'table', 'linebreak', 'footnote',
-            'hr', 'unformatted', 'code', 'file', 'quote',
+            'hr', 'unformatted', 'code', 'file', 'gfm_quote',
             'internallink', 'rss', 'media', 'externallink',
             'emaillink', 'windowssharelink', 'eol',
             'strong', 'emphasis', 'underline', 'monospace',
@@ -242,7 +244,7 @@ class ModeRegistryTest extends \DokuWikiTest
         $always = [
             'strong', 'subscript', 'superscript',
             'footnote', 'eol', 'preformatted',
-            'quote', 'externallink', 'emaillink', 'windowssharelink',
+            'gfm_quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
             'smiley', 'acronym', 'entity',
         ];
@@ -276,35 +278,78 @@ class ModeRegistryTest extends \DokuWikiTest
         }
     }
 
-    function testGetSubParserReturnsParser()
+    function testAcquireSubParserReturnsParser()
     {
-        $parser = $this->registry->getSubParser();
+        $parser = $this->registry->acquireSubParser();
         $this->assertInstanceOf(\dokuwiki\Parsing\Parser::class, $parser);
+        $this->registry->releaseSubParser();
     }
 
-    function testGetSubParserCachesAcrossCalls()
+    function testAcquireReleaseAcquireReturnsSameInstance()
     {
-        $first = $this->registry->getSubParser();
-        $second = $this->registry->getSubParser();
+        // Sequential acquire/release pairs on the same key reuse the
+        // pool slot — the second acquire gets the same instance because
+        // it is no longer in use.
+        $first = $this->registry->acquireSubParser();
+        $this->registry->releaseSubParser();
+        $second = $this->registry->acquireSubParser();
+        $this->registry->releaseSubParser();
         $this->assertSame($first, $second);
     }
 
-    function testGetSubParserExcludesBaseonlyByDefault()
+    function testNestedAcquireReturnsDifferentInstance()
+    {
+        // While one parser is checked out for a given exclusion key, a
+        // second acquire on the same key must hand back a different
+        // instance — the pool grows on demand to support re-entrancy.
+        $outer = $this->registry->acquireSubParser();
+        $inner = $this->registry->acquireSubParser();
+        try {
+            $this->assertNotSame($outer, $inner);
+        } finally {
+            $this->registry->releaseSubParser();
+            $this->registry->releaseSubParser();
+        }
+    }
+
+    function testWithSubParserReleasesEvenOnException()
+    {
+        try {
+            $this->registry->withSubParser([], [], static function () {
+                throw new \RuntimeException('boom');
+            });
+        } catch (\RuntimeException) {
+            // expected
+        }
+        // After the throw, a fresh acquire on the same key must reuse
+        // the pool slot — proving the release ran in the finally clause.
+        $first = $this->registry->acquireSubParser([], []);
+        $this->registry->releaseSubParser([], []);
+        $second = $this->registry->acquireSubParser([], []);
+        $this->registry->releaseSubParser([], []);
+        $this->assertSame($first, $second);
+    }
+
+    function testAcquireSubParserExcludesBaseonlyByDefault()
     {
         global $conf;
         $conf['syntax'] = 'markdown';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
 
-        $parser = $registry->getSubParser();
-        $parser->parse("# A header\n");
-        // gfm_header would emit `header` and `section_open`; both absent here
-        $names = array_column($parser->getHandler()->calls, 0);
-        $this->assertNotContains('header', $names);
-        $this->assertNotContains('section_open', $names);
+        $parser = $registry->acquireSubParser();
+        try {
+            $parser->parse("# A header\n");
+            // gfm_header would emit `header` and `section_open`; both absent here
+            $names = array_column($parser->getHandler()->calls, 0);
+            $this->assertNotContains('header', $names);
+            $this->assertNotContains('section_open', $names);
+        } finally {
+            $registry->releaseSubParser();
+        }
     }
 
-    function testGetSubParserHonoursCustomExclusions()
+    function testAcquireSubParserHonoursCustomExclusions()
     {
         global $conf;
         $conf['syntax'] = 'markdown';
@@ -312,24 +357,31 @@ class ModeRegistryTest extends \DokuWikiTest
         $registry = ModeRegistry::getInstance();
 
         // With FORMATTING also excluded, gfm_emphasis is gone and `*foo*` stays literal
-        $parser = $registry->getSubParser([
+        $excludes = [
             ModeRegistry::CATEGORY_BASEONLY,
             ModeRegistry::CATEGORY_FORMATTING,
-        ]);
-        $parser->parse("*foo*\n");
-        $names = array_column($parser->getHandler()->calls, 0);
-        $this->assertNotContains('emphasis_open', $names);
+        ];
+        $parser = $registry->acquireSubParser($excludes);
+        try {
+            $parser->parse("*foo*\n");
+            $names = array_column($parser->getHandler()->calls, 0);
+            $this->assertNotContains('emphasis_open', $names);
+        } finally {
+            $registry->releaseSubParser($excludes);
+        }
     }
 
-    function testGetSubParserResetsWithRegistry()
+    function testSubParserPoolResetsWithRegistry()
     {
-        $first = $this->registry->getSubParser();
+        $first = $this->registry->acquireSubParser();
+        $this->registry->releaseSubParser();
         ModeRegistry::reset();
-        $second = ModeRegistry::getInstance()->getSubParser();
+        $second = ModeRegistry::getInstance()->acquireSubParser();
+        ModeRegistry::getInstance()->releaseSubParser();
         $this->assertNotSame($first, $second);
     }
 
-    function testGetSubParserDoesNotClobberMainParserModes()
+    function testAcquireSubParserDoesNotClobberMainParserModes()
     {
         // Wire the main parser up the way real callers do: addMode() sets
         // each mode's $Lexer to the main parser's lexer. The sub-parser must
@@ -350,7 +402,8 @@ class ModeRegistryTest extends \DokuWikiTest
             $mainLexers[$m['mode']] = $m['obj']->Lexer;
         }
 
-        $this->registry->getSubParser();
+        $this->registry->acquireSubParser();
+        $this->registry->releaseSubParser();
 
         foreach ($main as $m) {
             $this->assertSame(
@@ -427,7 +480,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'footnote'                       => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'eol'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'preformatted'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'quote'                          => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_quote'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'externallink'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'emaillink'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'windowssharelink'               => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],

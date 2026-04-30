@@ -32,15 +32,15 @@ class ModeRegistry
     public const CATEGORY_PARAGRAPHS  = 'paragraphs';
 
     /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
-    private ?array $modes = null;
+    protected ?array $modes = null;
 
-    /** @var array<string, Parser> Cached sub-parsers keyed by exclusion-set identifier */
-    private array $subParsers = [];
+    /** @var array<string, array{parsers: Parser[], inUse: int}> Pool of sub-parsers per exclusion-set identifier. */
+    protected array $subParsers = [];
 
     /** @var string[] Modes that handle their own line endings (skip EOL connection) */
-    private array $blockEolModes = [];
+    protected array $blockEolModes = [];
 
-    private static ?self $instance = null;
+    protected static ?self $instance = null;
 
     /**
      * Get the singleton instance of the ModeRegistry.
@@ -70,11 +70,11 @@ class ModeRegistry
     /**
      * Constructor. Initializes the global $PARSER_MODES array with the default mode categories.
      */
-    private function __construct()
+    protected function __construct()
     {
         global $PARSER_MODES;
         $PARSER_MODES = [
-            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'quote', 'hr', 'gfm_listblock', 'gfm_table'],
+            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'hr', 'gfm_listblock', 'gfm_table', 'gfm_quote'],
             self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
             self::CATEGORY_FORMATTING => [
                 'strong', 'emphasis', 'underline', 'monospace',
@@ -162,6 +162,29 @@ class ModeRegistry
     }
 
     /**
+     * Whether DokuWiki is the preferred syntax (`dokuwiki` or `dw+md`).
+     *
+     * Modes that have to choose between DW-flavored and MD-flavored
+     * behavior at runtime read this flag. Compare with isMdPreferred()
+     * — exactly one of the two is true for any valid `$conf['syntax']`
+     * setting.
+     */
+    public function isDwPreferred(): bool
+    {
+        global $conf;
+        return in_array($conf['syntax'], ['dokuwiki', 'dw+md'], true);
+    }
+
+    /**
+     * Whether Markdown is the preferred syntax (`markdown` or `md+dw`).
+     */
+    public function isMdPreferred(): bool
+    {
+        global $conf;
+        return in_array($conf['syntax'], ['markdown', 'md+dw'], true);
+    }
+
+    /**
      * Get all parser modes, fully instantiated and sorted by priority.
      *
      * This includes syntax plugins, built-in modes, formatting modes, and
@@ -179,9 +202,8 @@ class ModeRegistry
         }
 
         $this->modes = [];
-        $syntax = $conf['syntax'] ?? 'dokuwiki';
-        $loadDw = in_array($syntax, ['dokuwiki', 'dw+md', 'md+dw']);
-        $loadMd = in_array($syntax, ['markdown', 'dw+md', 'md+dw']);
+        $loadDw = in_array($conf['syntax'], ['dokuwiki', 'dw+md', 'md+dw']);
+        $loadMd = in_array($conf['syntax'], ['markdown', 'dw+md', 'md+dw']);
 
         $this->loadPluginModes();
         $this->loadAlwaysModes();
@@ -193,32 +215,122 @@ class ModeRegistry
         return $this->modes;
     }
 
+    //region Sub-parser pool
+
     /**
-     * Return a cached Parser preconfigured with every active mode except the
-     * ones excluded.
+     * Acquire a sub-parser for the given exclusion set.
      *
-     * Built lazily on first call and reused thereafter. Mode objects are cloned
-     * before being attached to the sub-parser so that connectTo()'s assignment
-     * to $Lexer does not clobber the main parser's mode references.
+     * The registry maintains a pool of sub-parsers per exclusion key.
+     * Each acquire returns the next free instance from that pool;
+     * releaseSubParser must be called (with the same exclusion set)
+     * once the caller is done. If all instances in a pool are already
+     * checked out — re-entrancy on the same key — a fresh instance is
+     * built and appended to the pool. Real-world nesting for any one
+     * mode tops out at a handful of levels, so pool growth is bounded.
      *
-     * The returned Parser must not be re-entered: each call should reset the
-     * Handler (via $parser->getHandler()->reset()) before invoking parse().
-     * Callers that need to sub-parse during their own handle() must ensure
-     * they are not already inside a sub-parse on the same exclusion set —
-     * one common case is excluding the calling mode itself from the sub-parser
-     * to rule out re-entry.
+     * Use this primitive when the caller wants to hold the parser
+     * across multiple parse() calls (e.g. iterating over list items).
+     * For single-shot use, prefer {@see withSubParser} so release is
+     * automatic.
+     *
+     * The returned Parser is shared infrastructure: callers must call
+     * `$parser->getHandler()->reset()` before each parse() to avoid
+     * inheriting state from a previous use.
      *
      * @param string[] $excludeCategories CATEGORY_* constants whose modes should be excluded
      * @param string[] $excludeModes specific mode names to exclude in addition to category-based exclusions
-     * @return Parser
      */
-    public function getSubParser(
+    public function acquireSubParser(
         array $excludeCategories = [self::CATEGORY_BASEONLY],
         array $excludeModes = []
     ): Parser {
-        $key = implode(',', $excludeCategories) . '|' . implode(',', $excludeModes);
-        if (isset($this->subParsers[$key])) return $this->subParsers[$key];
+        $key = $this->subParserKey($excludeCategories, $excludeModes);
+        $entry = $this->subParsers[$key] ?? ['parsers' => [], 'inUse' => 0];
 
+        if ($entry['inUse'] >= count($entry['parsers'])) {
+            $entry['parsers'][] = $this->buildSubParser($excludeCategories, $excludeModes);
+        }
+        $parser = $entry['parsers'][$entry['inUse']];
+        $entry['inUse']++;
+        $this->subParsers[$key] = $entry;
+        return $parser;
+    }
+
+    /**
+     * Release a previously-acquired sub-parser back to its pool.
+     *
+     * Should be paired with a prior {@see acquireSubParser} call for
+     * the same exclusion set. Callers must release in LIFO order with
+     * respect to other acquires on the same key — the implementation
+     * does not enforce LIFO, but out-of-order release would silently
+     * hand the same parser to two callers, so the caller is responsible
+     * for the discipline. Wrapping each acquire/release pair in a
+     * single try/finally (or using {@see withSubParser}) makes the
+     * ordering correct by construction.
+     *
+     * Throws if no acquire is outstanding for the given key — that
+     * indicates an acquire/release imbalance bug in the caller.
+     *
+     * @param string[] $excludeCategories
+     * @param string[] $excludeModes
+     * @throws \RuntimeException on release without a matching acquire
+     */
+    public function releaseSubParser(
+        array $excludeCategories = [self::CATEGORY_BASEONLY],
+        array $excludeModes = []
+    ): void {
+        $key = $this->subParserKey($excludeCategories, $excludeModes);
+        if (!isset($this->subParsers[$key]) || $this->subParsers[$key]['inUse'] <= 0) {
+            throw new \RuntimeException(
+                "releaseSubParser called without matching acquireSubParser for key '$key'"
+            );
+        }
+        $this->subParsers[$key]['inUse']--;
+    }
+
+    /**
+     * Run a callback with an exclusively-held sub-parser.
+     *
+     * Convenience wrapper around acquire/release. The parser is checked
+     * out for the duration of the callback, then released even if the
+     * callback throws. Preferred shape for single-shot sub-parses
+     * (one parse() call per acquire); use the explicit pair for cases
+     * where the parser is held across a loop or other longer scope.
+     *
+     * @template T
+     * @param string[] $excludeCategories
+     * @param string[] $excludeModes
+     * @param callable(Parser): T $fn
+     * @return T
+     */
+    public function withSubParser(
+        array $excludeCategories,
+        array $excludeModes,
+        callable $fn
+    ) {
+        $parser = $this->acquireSubParser($excludeCategories, $excludeModes);
+        try {
+            return $fn($parser);
+        } finally {
+            $this->releaseSubParser($excludeCategories, $excludeModes);
+        }
+    }
+
+    /**
+     * Build a fresh Parser preconfigured with every active mode except
+     * the ones excluded.
+     *
+     * Mode objects are cloned before being attached so that
+     * Parser::addMode()'s assignment to $Lexer does not clobber the
+     * main parser's mode references.
+     *
+     * @param string[] $excludeCategories
+     * @param string[] $excludeModes
+     */
+    protected function buildSubParser(
+        array $excludeCategories,
+        array $excludeModes
+    ): Parser {
         $categories = $this->getCategories();
         $excluded = $excludeModes;
         foreach ($excludeCategories as $cat) {
@@ -235,9 +347,20 @@ class ModeRegistry
             // the sub-parser gets its own copy with its own $Lexer slot.
             $parser->addMode($m['mode'], clone $m['obj']);
         }
-
-        return $this->subParsers[$key] = $parser;
+        return $parser;
     }
+
+    /**
+     * Build the cache key used to identify a sub-parser exclusion set.
+     */
+    protected function subParserKey(array $excludeCategories, array $excludeModes): string
+    {
+        return implode(',', $excludeCategories) . '|' . implode(',', $excludeModes);
+    }
+
+    //endregion
+
+    //region Mode loading
 
     /**
      * Load syntax plugin modes and register them in their categories.
@@ -271,7 +394,7 @@ class ModeRegistry
         $modes = [
             'strong', 'subscript', 'superscript',
             'footnote', 'eol', 'preformatted',
-            'quote', 'externallink', 'emaillink', 'windowssharelink',
+            'gfm_quote', 'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
         ];
 
@@ -289,10 +412,6 @@ class ModeRegistry
      */
     protected function loadDokuWikiModes(): void
     {
-        global $conf;
-        $syntax = $conf['syntax'] ?? 'dokuwiki';
-        $dwPreferred = in_array($syntax, ['dokuwiki', 'dw+md'], true);
-
         $modes = [
             'emphasis', 'deleted', 'code', 'header', 'hr',
             'linebreak', 'internallink', 'media', 'table',
@@ -307,7 +426,7 @@ class ModeRegistry
         // modes, GfmListblock owns the `-`/`*`/`+` markers and zero-indent
         // top-level items, which conflicts with DokuWiki's required-2-space-
         // indent list model.
-        if ($dwPreferred) {
+        if ($this->isDwPreferred()) {
             $modes[] = 'underline';
             $modes[] = 'listblock';
         }
@@ -321,10 +440,6 @@ class ModeRegistry
      */
     protected function loadMarkdownModes(): void
     {
-        global $conf;
-        $syntax = $conf['syntax'] ?? 'dokuwiki';
-        $mdPreferred = in_array($syntax, ['markdown', 'md+dw'], true);
-
         $modes = [
             'gfm_escape',
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
@@ -340,7 +455,7 @@ class ModeRegistry
         // GfmListblock only loads when Markdown is preferred. In DW-preferred
         // modes, the DokuWiki Listblock owns the `-`/`*` markers (with the
         // 2-space indent rule); the two list models cannot co-exist.
-        if ($mdPreferred) {
+        if ($this->isMdPreferred()) {
             $modes[] = 'gfm_emphasis_underscore';
             $modes[] = 'gfm_strong_underscore';
             $modes[] = 'gfm_emphasis_strong_underscore';
@@ -395,6 +510,8 @@ class ModeRegistry
             ];
         }
     }
+
+    //endregion
 
     /**
      * Callback function for usort

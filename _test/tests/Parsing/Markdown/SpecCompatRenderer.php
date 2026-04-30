@@ -126,6 +126,18 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
         $this->doc .= $this->specCode($text, $language);
     }
 
+    public function quote_open()
+    {
+        // Production DW wraps blockquote content in `<div class="no">`;
+        // the spec expects bare `<blockquote>...</blockquote>`.
+        $this->doc .= "<blockquote>\n";
+    }
+
+    public function quote_close()
+    {
+        $this->doc .= "</blockquote>\n";
+    }
+
     public function listu_open($classes = null)
     {
         $this->doc .= "<ul>\n";
