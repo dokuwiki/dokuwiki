@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kerem ATA <contact@zoda-service.web.tr>
  * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
@@ -121,6 +122,9 @@ $lang['js']['media_done_btn']  = 'Bitti';
 $lang['js']['media_drop']      = 'Yüklemek istediğiniz dosyaları buraya bırakın';
 $lang['js']['media_cancel']    = 'kaldır';
 $lang['js']['media_overwrt']   = 'Var olan dosyaların üzerine yaz';
+$lang['js']['clipboard_button'] = 'Kopyala';
+$lang['js']['clipboard_success'] = 'Kopyalandı!';
+$lang['js']['clipboard_error'] = 'Kopyalama başarısız';
 $lang['search_exact_match']    = 'Tam eşleşme';
 $lang['search_starts_with']    = 'Bununla başlar';
 $lang['search_ends_with']      = 'Bununla biter';
