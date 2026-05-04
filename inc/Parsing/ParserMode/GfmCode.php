@@ -5,6 +5,7 @@ namespace dokuwiki\Parsing\ParserMode;
 use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Helpers\Code as CodeHelper;
 use dokuwiki\Parsing\Helpers\Escape;
+use dokuwiki\Parsing\Helpers\HtmlEntity;
 
 /**
  * GFM fenced code block with backtick fences: ```...```
@@ -116,7 +117,9 @@ class GfmCode extends AbstractMode
         // anchor), so an explode split always has two parts.
         [$info, $body] = explode("\n", $text, 2);
 
-        [$language, $filename, $options] = CodeHelper::parseAttributes(Escape::unescapeBackslashes($info));
+        [$language, $filename, $options] = CodeHelper::parseAttributes(
+            Escape::unescapeBackslashes(HtmlEntity::decode($info))
+        );
 
         $param = [$body, $language, $filename];
         if ($options !== null) $param[] = $options;

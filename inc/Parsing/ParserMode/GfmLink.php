@@ -4,6 +4,7 @@ namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Helpers\Escape;
+use dokuwiki\Parsing\Helpers\HtmlEntity;
 use dokuwiki\Parsing\Helpers\Link;
 use dokuwiki\Parsing\Helpers\Media as MediaHelper;
 
@@ -40,11 +41,18 @@ use dokuwiki\Parsing\Helpers\Media as MediaHelper;
  */
 class GfmLink extends AbstractMode
 {
+    // URL slot character set: any non-paren / non-newline char, OR a
+    // backslash-escape sequence so an escaped `\)` doesn't terminate the
+    // URL early (spec examples 504/506/508). Backslash-unescape is
+    // applied post-extraction; the pattern only needs to keep escaped
+    // close-parens from prematurely ending the match.
+    private const URL_CHAR = '(?:\\\\.|[^)\n])';
+
     // Image sub-pattern reused for both the label alternative in the main
     // pattern and the image-as-label detector in handle(). No capture
     // groups here — the lexer wraps user patterns in a capture and
     // additional captures would renumber unpredictably.
-    private const IMAGE_SUB = '!\[[^\[\]\n]*\]\([^)\n]+\)';
+    private const IMAGE_SUB = '!\[[^\[\]\n]*\]\(' . self::URL_CHAR . '+\)';
 
     /** @inheritdoc */
     public function getSort()
@@ -60,7 +68,7 @@ class GfmLink extends AbstractMode
         // inline image. URL slot is permissive (`[^)\n]+`) — handle() does
         // URL / title splitting post-entry, mirroring how DW Internallink
         // parses inside `[[...]]`.
-        $pattern = '\[(?!\[)(?:[^\[\]\n]+|' . self::IMAGE_SUB . ')\]\([^)\n]+\)';
+        $pattern = '\[(?!\[)(?:[^\[\]\n]+|' . self::IMAGE_SUB . ')\]\(' . self::URL_CHAR . '+\)';
         $this->Lexer->addSpecialPattern($pattern, $mode, 'gfm_link');
     }
 
@@ -71,7 +79,7 @@ class GfmLink extends AbstractMode
         // Internallink's `^{{…}}$` check — when the label is exactly an
         // inline image, parse it into a media descriptor; otherwise
         // treat the label as plain text.
-        if (preg_match('/^\[(' . self::IMAGE_SUB . ')\]\(([^)\n]+)\)$/', $match, $m)) {
+        if (preg_match('/^\[(' . self::IMAGE_SUB . ')\]\((' . self::URL_CHAR . '+)\)$/', $match, $m)) {
             $label     = $this->parseImageDescriptor($m[1]);
             $targetUrl = $this->extractUrl($m[2]);
         } else {
@@ -95,13 +103,17 @@ class GfmLink extends AbstractMode
 
     /**
      * Extract the URL from a parenthesized payload: trim surrounding
-     * whitespace, then take the first whitespace-delimited token. Any
-     * trailing title is discarded (no renderer slot for it).
+     * whitespace, take the first whitespace-delimited token, then
+     * apply GFM's URL-slot transformations (entity decoding;
+     * backslash-unescape happens later, after Link::classify, because
+     * windowssharelink detection needs the raw `\\` runs intact).
+     * Any trailing title is discarded (no renderer slot for it).
      */
     private function extractUrl(string $inside): string
     {
         $inside = trim($inside);
-        return substr($inside, 0, strcspn($inside, " \t\n"));
+        $url    = substr($inside, 0, strcspn($inside, " \t\n")); // remove optional title
+        return HtmlEntity::decode($url);
     }
 
     /**

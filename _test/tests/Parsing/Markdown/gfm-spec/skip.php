@@ -368,6 +368,9 @@ return [
     // the URL). Parses cleanly but is discarded: DokuWiki's link handler
     // instructions have no title-attribute slot, and plumbing one through
     // every renderer is out of scope for GfmLink.
+    328 => 'link with entity-decoded URL and title: URL side decodes correctly,'
+         . ' but the title attribute is discarded — DokuWiki link instructions'
+         . ' have no title slot.',
     493 => 'link title attribute: GfmLink parses but discards — DokuWiki link instructions have no title slot',
     513 => 'link title attribute (three quoting styles): discarded by GfmLink',
     515 => 'link title separated by non-breaking space: title slot not supported',

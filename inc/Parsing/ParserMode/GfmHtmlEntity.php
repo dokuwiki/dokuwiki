@@ -3,7 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Utf8\Unicode;
+use dokuwiki\Parsing\Helpers\HtmlEntity;
 
 /**
  * GFM HTML entity references: numeric (`&#nnn;` and `&#xhhh;`) and
@@ -16,11 +16,11 @@ use dokuwiki\Utf8\Unicode;
  * HTML5 / Unicode specs - so decoding happens at parse time and the
  * renderer needs no changes.
  *
- * Per CommonMark, codepoint 0, codepoints above U+10FFFF, and the
- * surrogate range U+D800..U+DFFF all map to U+FFFD (REPLACEMENT
- * CHARACTER) for numeric references. Unknown named references stay
- * literal: the original `&xxx;` is emitted as cdata and the renderer's
- * &-escaping turns it into `&amp;xxx;` on output.
+ * Decoding semantics live in {@see HtmlEntity}; this mode is a thin
+ * wrapper that exposes them to the inline lexer. Whole-span PROTECTED
+ * modes (GfmCode, GfmLink, ...) capture their body in one regex shot
+ * and bypass this mode, so they call HtmlEntity::decode() directly on
+ * the captured slice.
  *
  * Category SUBSTITION so the mode is reachable in every container
  * that allows substitutions (paragraphs, formatting, list items,
@@ -38,8 +38,6 @@ use dokuwiki\Utf8\Unicode;
  */
 class GfmHtmlEntity extends AbstractMode
 {
-    protected const REPLACEMENT = "\u{FFFD}";
-
     public function __construct()
     {
         $this->allowedModes = [];
@@ -54,49 +52,13 @@ class GfmHtmlEntity extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $this->Lexer->addSpecialPattern(
-            '&(?:#(?:[0-9]{1,7}|[xX][0-9a-fA-F]{1,6})|[a-zA-Z][a-zA-Z0-9]{0,30});',
-            $mode,
-            'gfm_html_entity'
-        );
+        $this->Lexer->addSpecialPattern(HtmlEntity::PATTERN, $mode, 'gfm_html_entity');
     }
 
     /** @inheritdoc */
     public function handle($match, $state, $pos, Handler $handler)
     {
-        if ($match[1] === '#') {
-            // Numeric refs are decoded explicitly rather than via
-            // html_entity_decode: PHP returns the input unchanged for
-            // U+0000, surrogates, and codepoints it considers unsafe
-            // (including U+10FFFF and BMP noncharacters), where
-            // CommonMark requires U+FFFD or the literal codepoint.
-            $char = $this->decodeNumeric(substr($match, 2, -1));
-        } else {
-            // Unknown names round-trip unchanged; the renderer's &-escape
-            // turns them back into &xxx; on output.
-            $char = html_entity_decode($match, ENT_HTML5 | ENT_QUOTES, 'UTF-8');
-        }
-
-        $handler->addCall('cdata', [$char], $pos);
+        $handler->addCall('cdata', [HtmlEntity::decodeOne($match)], $pos);
         return true;
-    }
-
-    protected function decodeNumeric(string $body): string
-    {
-        if ($body[0] === 'x' || $body[0] === 'X') {
-            $cp = hexdec(substr($body, 1));
-        } else {
-            $cp = (int) $body;
-        }
-
-        if ($cp === 0 || $cp > 0x10FFFF || ($cp >= 0xD800 && $cp <= 0xDFFF)) {
-            return self::REPLACEMENT;
-        }
-
-        $char = Unicode::toUtf8([$cp]);
-        if ($char === false || $char === '') {
-            return self::REPLACEMENT;
-        }
-        return $char;
     }
 }
