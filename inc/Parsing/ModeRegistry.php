@@ -89,6 +89,7 @@ class ModeRegistry
                 'linebreak', 'emaillink', 'windowssharelink', 'filelink',
                 'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
                 'gfm_link', 'gfm_media', 'gfm_escape', 'gfm_linebreak',
+                'gfm_numeric_entity',
             ],
             self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file', 'gfm_code', 'gfm_file'],
             self::CATEGORY_DISABLED   => ['unformatted'],
@@ -441,7 +442,7 @@ class ModeRegistry
     protected function loadMarkdownModes(): void
     {
         $modes = [
-            'gfm_escape', 'gfm_linebreak',
+            'gfm_escape', 'gfm_linebreak', 'gfm_numeric_entity',
             'gfm_emphasis', 'gfm_emphasis_strong', 'gfm_deleted',
             'gfm_backtick_single', 'gfm_backtick_double',
             'gfm_header', 'gfm_link', 'gfm_media',
