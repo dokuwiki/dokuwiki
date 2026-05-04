@@ -43,6 +43,77 @@ return [
         . ' item body. See example 30.',
 
     // --------------------------------------------------------------------
+    // Setext headings (§4.3) — deliberately not supported across the
+    // whole section. The `---` underline collides with DokuWiki\'s HR
+    // syntax and `===` would collide with DokuWiki\'s heading delimiter.
+    // Same rationale as #29 (thematic break vs. Setext underline),
+    // #111 (fence after Setext), and #212 (Setext after blockquote).
+    //
+    // Examples #62, #64, #67, #68, #69, #71, #74 are NOT listed: those
+    // are cases where Setext is deliberately NOT triggered (blockquote /
+    // list / paragraph wins, or blank lines disambiguate), so the spec
+    // output matches DokuWiki\'s no-Setext rendering and they pass
+    // naturally.
+    //
+    // #58 and #75 also depend on DokuWiki\'s strict-bare-run HR rule
+    // (`--- -` and `* * *` need internal-space HR, see #21-23) — they
+    // sit in the Setext section because the spec uses them to
+    // illustrate Setext-underline edge cases.
+    // --------------------------------------------------------------------
+    50 => 'Setext heading (`Foo *bar*\n=====` / `\n-----`): Setext'
+        . ' headings deliberately not supported — `---`/`===` underlines'
+        . ' collide with DokuWiki HR / heading syntax.',
+    51 => 'Setext heading with multi-line content: Setext headings'
+        . ' deliberately not supported (see #50).',
+    52 => 'Setext heading with indented multi-line content: Setext'
+        . ' headings deliberately not supported (see #50).',
+    53 => 'Setext heading with any-length underline: Setext headings'
+        . ' deliberately not supported (see #50).',
+    54 => 'Setext heading with 3-space-indented content / underline:'
+        . ' Setext headings deliberately not supported (see #50).',
+    55 => 'Setext heading: 4-space-indented content forms code block,'
+        . ' then `---` HR. Setext headings deliberately not supported'
+        . ' (see #50).',
+    56 => 'Setext heading: underline indented up to 3 spaces with'
+        . ' trailing spaces. Setext headings deliberately not'
+        . ' supported (see #50).',
+    57 => 'Setext heading vs. 4-space-indented underline (paragraph'
+        . ' wins). Setext headings deliberately not supported (see #50).',
+    58 => 'Setext heading: underline cannot contain internal spaces'
+        . ' (`= =` / `--- -`). Setext headings deliberately not supported'
+        . ' (see #50); also depends on internal-space HR support DokuWiki'
+        . ' lacks (see #21-23).',
+    59 => 'Setext heading: trailing spaces in content do not cause a'
+        . ' line break. Setext headings deliberately not supported (see'
+        . ' #50).',
+    60 => 'Setext heading: trailing backslash in content. Setext'
+        . ' headings deliberately not supported (see #50).',
+    61 => 'Setext heading: block-structure precedence over inline.'
+        . ' Setext headings deliberately not supported (see #50).',
+    63 => 'Setext heading: underline cannot be a lazy continuation in'
+        . ' a blockquote. Setext headings deliberately not supported'
+        . ' (see #50).',
+    65 => 'Setext heading: preceding paragraph becomes part of heading'
+        . ' content. Setext headings deliberately not supported (see #50).',
+    66 => 'Setext heading: no blank line required before/after. Setext'
+        . ' headings deliberately not supported (see #50).',
+    70 => 'Setext heading: 4-space-indented content forms code block,'
+        . ' then `---` HR. Setext headings deliberately not supported'
+        . ' (see #50).',
+    72 => 'Setext heading with backslash-escaped marker `\\> foo`.'
+        . ' Setext headings deliberately not supported (see #50).',
+    73 => 'Setext heading: blank-line-separated paragraph + heading +'
+        . ' paragraph. Setext headings deliberately not supported (see'
+        . ' #50).',
+    75 => 'Setext heading boundary: `* * *` should be HR (cannot count'
+        . ' as Setext underline). Setext headings deliberately not'
+        . ' supported (see #50); also depends on internal-space HR'
+        . ' support DokuWiki lacks (see #21-23).',
+    76 => 'Setext heading: backslash-escaped underline `\\---` keeps'
+        . ' content as paragraph. Setext headings deliberately not'
+        . ' supported (see #50).',
+
+    // --------------------------------------------------------------------
     // Fenced code blocks (GfmCode / GfmFile) — deliberate simplifications
     // versus strict GFM. All of these are consequences of lexer constraints
     // (no regex backreferences) or the deliberate column-0-only policy.
@@ -54,11 +125,17 @@ return [
          . ' length — see example 94.',
     96  => 'fenced code: unclosed fence — DokuWiki convention requires a'
          . ' closer (matches DW <code> tag), so unclosed fences stay'
-         . ' literal rather than consuming to EOF. GFM spec rule depends'
-         . ' on CommonMark\'s two-pass block parser, which our single-pass'
-         . ' lexer cannot implement fully anyway (see example 98).',
+         . ' literal rather than consuming to EOF. GFM\'s "close at end"'
+         . ' rule is really "close at any container boundary" in'
+         . ' CommonMark\'s two-pass block parser, which our single-pass'
+         . ' lexer cannot implement.',
     97  => 'fenced code: unclosed fence with intervening short run — stays'
          . ' literal, see example 96.',
+    98  => 'fenced code inside blockquote: GFM closes the fence at the'
+         . ' blockquote\'s end, but DokuWiki requires an explicit closing'
+         . ' fence and the single-pass lexer has no notion of container'
+         . ' boundaries to close at. Same root cause as example 96 —'
+         . ' unclosed fences stay literal.',
     101 => 'fenced code: opener indented 1 space — DokuWiki requires'
          . ' column-0 fences. Indent tolerance + per-line body dedent out'
          . ' of scope.',
@@ -85,6 +162,91 @@ return [
          . ' with n≥3 not implemented. See example 108.',
 
     // --------------------------------------------------------------------
+    // HTML blocks (§4.6) — raw HTML pass-through is not supported
+    // --------------------------------------------------------------------
+    118 => 'raw HTML block (script/pre/style/textarea group): raw HTML pass-through not supported — DokuWiki escapes `<` as `&lt;`',
+    119 => 'raw HTML block: raw HTML pass-through not supported',
+    120 => 'raw HTML block: raw HTML pass-through not supported',
+    121 => 'raw HTML block: raw HTML pass-through not supported',
+    122 => 'raw HTML block (comment): raw HTML pass-through not supported',
+    123 => 'raw HTML block (processing instruction): raw HTML pass-through not supported',
+    124 => 'raw HTML block (declaration): raw HTML pass-through not supported',
+    125 => 'raw HTML block (CDATA): raw HTML pass-through not supported',
+    126 => 'raw HTML block (block-level tag group): raw HTML pass-through not supported',
+    127 => 'raw HTML block: raw HTML pass-through not supported',
+    128 => 'raw HTML block: raw HTML pass-through not supported',
+    129 => 'raw HTML block: raw HTML pass-through not supported',
+    130 => 'raw HTML block: raw HTML pass-through not supported',
+    131 => 'raw HTML block: raw HTML pass-through not supported',
+    132 => 'raw HTML block: raw HTML pass-through not supported',
+    133 => 'raw HTML block: raw HTML pass-through not supported',
+    134 => 'raw HTML block: raw HTML pass-through not supported',
+    135 => 'raw HTML block: raw HTML pass-through not supported',
+    136 => 'raw HTML block (any-tag group): raw HTML pass-through not supported',
+    137 => 'raw HTML block: raw HTML pass-through not supported',
+    138 => 'raw HTML block: raw HTML pass-through not supported',
+    139 => 'raw HTML block: raw HTML pass-through not supported',
+    140 => 'raw HTML block: raw HTML pass-through not supported',
+    141 => 'raw HTML block: raw HTML pass-through not supported',
+    142 => 'raw HTML block: raw HTML pass-through not supported',
+    143 => 'raw HTML block: raw HTML pass-through not supported',
+    144 => 'raw HTML block: raw HTML pass-through not supported',
+    145 => 'raw HTML block: raw HTML pass-through not supported',
+    146 => 'raw HTML block: raw HTML pass-through not supported',
+    147 => 'raw HTML block: raw HTML pass-through not supported',
+    148 => 'raw HTML block: raw HTML pass-through not supported',
+    149 => 'raw HTML block: raw HTML pass-through not supported',
+    150 => 'raw HTML block: raw HTML pass-through not supported',
+    151 => 'raw HTML block: raw HTML pass-through not supported',
+    152 => 'raw HTML block: raw HTML pass-through not supported',
+    153 => 'raw HTML block: raw HTML pass-through not supported',
+    154 => 'raw HTML block: raw HTML pass-through not supported',
+    155 => 'raw HTML block: raw HTML pass-through not supported',
+    156 => 'raw HTML block: raw HTML pass-through not supported',
+    157 => 'raw HTML block: raw HTML pass-through not supported',
+    158 => 'raw HTML block: raw HTML pass-through not supported',
+    159 => 'raw HTML block: raw HTML pass-through not supported',
+    160 => 'raw HTML block: raw HTML pass-through not supported',
+
+    // --------------------------------------------------------------------
+    // Link reference definitions (§4.7) — single-pass lexer cannot resolve
+    // forward references, so the `[foo]: /url` definition lines are not
+    // recognised and the matching `[foo]` references stay literal. Same
+    // rationale as the reference-link entries at #535-579.
+    // Examples #168, #180-182 are NOT listed: their definitions are
+    // invalid (empty URL / inside indented code / inside fenced code /
+    // attached to a paragraph), so the spec also expects literal output
+    // for the `[foo]` reference, and DW agrees.
+    // --------------------------------------------------------------------
+    161 => 'link reference definition: forward-reference definitions not supported (single-pass lexer)',
+    162 => 'link reference definition: forward-reference definitions not supported (single-pass lexer)',
+    163 => 'link reference definition (multi-line title): forward-reference definitions not supported (single-pass lexer)',
+    164 => 'link reference definition (case-insensitive label): forward-reference definitions not supported (single-pass lexer)',
+    165 => 'link reference definition (Unicode case folding): forward-reference definitions not supported (single-pass lexer)',
+    166 => 'link reference definition (whitespace-collapsed label): forward-reference definitions not supported (single-pass lexer)',
+    167 => 'link reference definition (no link text used): forward-reference definitions not supported (single-pass lexer)',
+    169 => 'link reference definition (pointy-bracket destination): forward-reference definitions not supported (single-pass lexer)',
+    170 => 'link reference definition (no title, blank line in between): forward-reference definitions not supported (single-pass lexer)',
+    171 => 'link reference definition (title only, no destination): forward-reference definitions not supported (single-pass lexer)',
+    172 => 'link reference definition (multiple definitions): forward-reference definitions not supported (single-pass lexer)',
+    173 => 'link reference definition (first wins on duplicate label): forward-reference definitions not supported (single-pass lexer)',
+    174 => 'link reference definition (label case-insensitive): forward-reference definitions not supported (single-pass lexer)',
+    175 => 'link reference definition (used as paragraph delimiter): forward-reference definitions not supported (single-pass lexer)',
+    176 => 'link reference definition (no body following): forward-reference definitions not supported (single-pass lexer)',
+    177 => 'link reference definition (label with surrounding whitespace): forward-reference definitions not supported (single-pass lexer)',
+    178 => 'link reference definition (indented up to 3 spaces): forward-reference definitions not supported (single-pass lexer)',
+    179 => 'link reference definition (multi-line definition with title): forward-reference definitions not supported (single-pass lexer)',
+    183 => 'link reference definition (does not interrupt paragraph): forward-reference definitions not supported (single-pass lexer)',
+    184 => 'link reference definition (between blockquote and paragraph): forward-reference definitions not supported (single-pass lexer)',
+    185 => 'link reference definition (lone definition emits nothing): forward-reference definitions not supported (single-pass lexer)',
+    186 => 'link reference definition (definition then HR): forward-reference definitions not supported (single-pass lexer)',
+    187 => 'link reference definition (multiple defs in a row): forward-reference definitions not supported (single-pass lexer)',
+    188 => 'link reference definition (def inside blockquote): forward-reference definitions not supported (single-pass lexer)',
+    329 => 'reference link with entity-decoded URL in definition: depends on'
+         . ' link reference definitions, which forward-reference definitions'
+         . ' are not supported (single-pass lexer)',
+
+    // --------------------------------------------------------------------
     // Code-span edge cases that collide with project-wide decisions
     // (no raw HTML, no GFM angle-bracket autolinks, typography on by
     // default) or with the single-pass lexer's limits.
@@ -93,10 +255,14 @@ return [
          . ' a pre-scan pass — the single-pass lexer matches leftmost-first'
          . ' and cannot reject an earlier emphasis opener because a later'
          . ' backtick span would consume its closer',
+    352 => 'code span vs. link `[not a `link](/foo`)`: the link opener is'
+         . ' leftmost but a backtick span inside its label should consume'
+         . ' the closing `]` and `)` — single-pass lexer matches'
+         . ' leftmost-first and cannot reorder spans (see #351).',
     353 => 'code span: the trailing `"` outside the span is converted to a'
          . ' curly quote by DokuWiki typography, diverging from the spec HTML',
-    354 => 'raw HTML tag pass-through: DokuWiki does not render raw HTML by'
-         . ' default; `<html>` blocks are the opt-in',
+    327 => 'raw HTML tag with entity in attribute: raw HTML pass-through not supported',
+    354 => 'raw HTML tag pass-through: raw HTML pass-through not supported',
     356 => 'GFM angle-bracket autolink `<http://…>`: not implemented — we'
          . ' rely on DokuWiki\'s existing bare-URL detection, which does not'
          . ' parse `<URL>` form',
@@ -181,6 +347,16 @@ return [
     479 => 'CommonMark `*foo __bar *baz bim__ bam*` — crossing delimiters',
     480 => 'CommonMark `**foo **bar baz**` — overlapping same delimiter',
 
+    // Emphasis vs. angle-bracket autolink: same root cause as #351 (the
+    // single-pass lexer matches leftmost-first and cannot reject an
+    // earlier `**`/`__` opener because a later `<URL>` autolink would
+    // consume its closer).
+    489 => 'emphasis vs. angle-bracket autolink `**a<http://...?q=**>`:'
+         . ' leftmost-match cannot reorder spans — see #351 for the'
+         . ' single-pass-lexer rationale.',
+    490 => 'emphasis vs. angle-bracket autolink `__a<http://...?q=__>`:'
+         . ' leftmost-match cannot reorder spans — see #351.',
+
     // --------------------------------------------------------------------
     // Inline link `[text](url)` — features GfmLink deliberately does not
     // implement. Either rarely-used syntax paid for with disproportionate
@@ -217,6 +393,10 @@ return [
     510 => 'backslash in URL destination: URL-encoding differs from spec',
     511 => 'HTML entity / percent-encoding in URL: renderer normalization differs',
     512 => 'link destination that parses as a title: edge case not supported',
+    337 => 'entity-decoded `&quot;` inside link URL slot: spec rejects the'
+         . ' link because the decoded `"` would split URL from title, but'
+         . ' GfmLink uses a permissive `[^)\n]+` URL slot and accepts the'
+         . ' whole run as the URL — strict GFM URL rejection not implemented',
 
     // Inherent single-pass-lexer limits for link text containing nested
     // structures. These cannot be resolved inside one mode.
@@ -306,6 +486,8 @@ return [
     597 => 'shortcut reference-style image with emphasis: forward-reference definitions not supported',
     598 => 'image with unescaped nested brackets `![[foo]]`: literal-fallback behavior not supported',
     599 => 'shortcut reference-style image (case-insensitive): forward-reference definitions not supported',
+    600 => 'image-via-reference fallback `!\[foo]` with `[foo]: /url`: forward-reference definitions not supported (single-pass lexer)',
+    601 => 'image-via-reference fallback `\![foo]` with `[foo]: /url`: forward-reference definitions not supported (single-pass lexer)',
 
     // --------------------------------------------------------------------
     // ATX heading collisions with DokuWiki-specific behavior.
@@ -459,15 +641,39 @@ return [
          . ' forward references)',
 
     // --------------------------------------------------------------------
+    // Raw HTML (§6.6) — inline raw HTML pass-through. Same project-wide
+    // decision as HTML blocks (#118-160): DokuWiki escapes `<` as `&lt;`
+    // by default; the `<html>` block is the opt-in. Examples #637 and
+    // #640 are intentionally NOT listed — the spec there expects literal
+    // `&lt;...&gt;` escaping for malformed tags, which DW also produces,
+    // so they pass naturally.
+    // --------------------------------------------------------------------
+    632 => 'raw HTML inline (open tag): raw HTML pass-through not supported',
+    633 => 'raw HTML inline (closing tag): raw HTML pass-through not supported',
+    634 => 'raw HTML inline (multi-line attributes): raw HTML pass-through not supported',
+    635 => 'raw HTML inline (line breaks in attributes): raw HTML pass-through not supported',
+    636 => 'raw HTML inline (custom tags / attribute syntax): raw HTML pass-through not supported',
+    638 => 'raw HTML inline (illegal attribute names): raw HTML pass-through not supported',
+    639 => 'raw HTML inline (illegal attribute values): raw HTML pass-through not supported',
+    641 => 'raw HTML inline (open and closing tags): raw HTML pass-through not supported',
+    642 => 'raw HTML inline (HTML comment): raw HTML pass-through not supported',
+    643 => 'raw HTML inline (invalid comment): raw HTML pass-through not supported',
+    644 => 'raw HTML inline (processing instruction): raw HTML pass-through not supported',
+    645 => 'raw HTML inline (declaration): raw HTML pass-through not supported',
+    646 => 'raw HTML inline (declaration single-letter name): raw HTML pass-through not supported',
+    647 => 'raw HTML inline (declaration EMPTY): raw HTML pass-through not supported',
+    648 => 'raw HTML inline (CDATA section): raw HTML pass-through not supported',
+    649 => 'raw HTML inline (entity reference inside attribute): raw HTML pass-through not supported',
+    650 => 'raw HTML inline (backslash escape inside attribute): raw HTML pass-through not supported',
+    651 => 'raw HTML inline (entity-escaped quote inside attribute): raw HTML pass-through not supported',
+
+    // --------------------------------------------------------------------
     // Hard line breaks (GfmLinebreak) — both delimiter forms (two trailing
     // spaces and `\` before newline) work in paragraphs, emphasis, and
     // other inline containers. The skipped cases sit inside raw HTML tags,
     // which DokuWiki does not pass through by default.
     // --------------------------------------------------------------------
-    662 => 'hard line break inside a raw HTML tag (`<a href="foo  \nbar">`):'
-         . ' raw HTML pass-through is not supported by default — DokuWiki'
-         . ' has never allowed raw HTML, so the tag bytes are treated as'
-         . ' cdata and the break fires where the spec wants it literal.',
+    662 => 'hard line break inside a raw HTML tag: raw HTML pass-through not supported',
     663 => 'hard line break (backslash form) inside a raw HTML tag — see'
          . ' #662. Raw HTML out of scope.',
 ];
