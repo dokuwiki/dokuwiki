@@ -29,10 +29,16 @@ class GfmSpecTest extends \DokuWikiTest
         $reader = new SpecReader(self::FIXTURE_DIR . 'spec.txt');
         $skip   = require self::FIXTURE_DIR . 'skip.php';
 
+        // Spec convention (spec.txt §"About this document"): the `→`
+        // character in examples represents a literal tab. Restore the
+        // tab in both input and expected output so the corpus exercises
+        // real tab-handling behavior, not arrow-character handling.
         foreach ($reader->examples() as $ex) {
             $reason = $skip[$ex['number']] ?? null;
             $label  = sprintf('#%d %s', $ex['number'], $ex['section']);
-            yield $label => [$ex['markdown'], $ex['html'], $reason];
+            $md     = strtr($ex['markdown'], ["\u{2192}" => "\t"]);
+            $html   = strtr($ex['html'], ["\u{2192}" => "\t"]);
+            yield $label => [$md, $html, $reason];
         }
     }
 
