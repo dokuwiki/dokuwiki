@@ -393,8 +393,6 @@ return [
 
     // Other URL-level edges.
     495 => 'empty URL destination `[link]()`: pattern requires non-empty URL',
-    510 => 'backslash in URL destination: URL-encoding differs from spec',
-    511 => 'HTML entity / percent-encoding in URL: renderer normalization differs',
     512 => 'link destination that parses as a title: edge case not supported',
     337 => 'entity-decoded `&quot;` inside link URL slot: spec rejects the'
          . ' link because the decoded `"` would split URL from title, but'

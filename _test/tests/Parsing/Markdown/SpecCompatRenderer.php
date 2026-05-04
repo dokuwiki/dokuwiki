@@ -243,6 +243,7 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
      */
     private function specLink($href, $label): string
     {
+        $href = $this->specEncodeUrl((string) $href);
         if (is_array($label) && isset($label['type'])) {
             $img = $this->specImg(
                 $label['src'],
@@ -250,9 +251,25 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
                 $label['width'] ?? null,
                 $label['height'] ?? null
             );
-            return '<a href="' . hsc((string) $href) . '">' . $img . '</a>';
+            return '<a href="' . hsc($href) . '">' . $img . '</a>';
         }
         $text = ($label === null || $label === '') ? $href : $label;
-        return '<a href="' . hsc((string) $href) . '">' . hsc((string) $text) . '</a>';
+        return '<a href="' . hsc($href) . '">' . hsc((string) $text) . '</a>';
+    }
+
+    /**
+     * Percent-encode characters not in CommonMark's URL-safe set,
+     * preserving existing %XX sequences. Matches what cmark-gfm's
+     * reference renderer does for the spec corpus: UTF-8 bytes and
+     * non-URL-safe ASCII (e.g. `\`, space) become %XX; alphanumerics,
+     * RFC 3986 unreserved/reserved, and `%` itself pass through.
+     */
+    private function specEncodeUrl(string $url): string
+    {
+        return preg_replace_callback(
+            "/[^A-Za-z0-9\\-._~:\\/?#\\[\\]@!$&'()*+,;=%]/",
+            static fn($m) => '%' . strtoupper(bin2hex($m[0])),
+            $url
+        );
     }
 }
