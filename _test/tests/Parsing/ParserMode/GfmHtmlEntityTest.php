@@ -2,20 +2,20 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ParserMode\GfmNumericEntity;
+use dokuwiki\Parsing\ParserMode\GfmHtmlEntity;
 use dokuwiki\Utf8\Unicode;
 
 /**
  * Consecutive cdata calls are coalesced by Handler\Block::addCall during
  * finalize(), so a successful match shows up as a single cdata containing
  * the decoded character spliced into the surrounding text. Non-matching
- * inputs leave the literal `&#…;` bytes in the cdata.
+ * inputs leave the literal `&...;` bytes in the cdata.
  */
-class GfmNumericEntityTest extends ParserTestBase
+class GfmHtmlEntityTest extends ParserTestBase
 {
     private function assertParsedCdata(string $input, string $expectedCdata): void
     {
-        $this->P->addMode('gfm_numeric_entity', new GfmNumericEntity());
+        $this->P->addMode('gfm_html_entity', new GfmHtmlEntity());
         $this->P->parse($input);
         $this->assertCalls([
             ['document_start', []],
@@ -86,7 +86,7 @@ class GfmNumericEntityTest extends ParserTestBase
         $this->assertParsedCdata('a&#35 b', "\na&#35 b");
     }
 
-    public function testMultipleEntitiesInSequence()
+    public function testMultipleNumericEntitiesInSequence()
     {
         $this->assertParsedCdata('&#35;&#1234;&#xcab;', "\n#\u{04D2}\u{0CAB}");
     }
@@ -99,5 +99,47 @@ class GfmNumericEntityTest extends ParserTestBase
     public function testNewlineDecodes()
     {
         $this->assertParsedCdata('foo&#10;&#10;bar', "\nfoo\n\nbar");
+    }
+
+    public function testNamedAmp()
+    {
+        // &amp; decodes to '&', renderer re-escapes on output
+        $this->assertParsedCdata('a&amp;b', "\na&b");
+    }
+
+    public function testNamedCopy()
+    {
+        $this->assertParsedCdata('a&copy;b', "\na\u{00A9}b");
+    }
+
+    public function testNamedAElig()
+    {
+        $this->assertParsedCdata('a&AElig;b', "\na\u{00C6}b");
+    }
+
+    public function testNamedNbsp()
+    {
+        $this->assertParsedCdata('a&nbsp;b', "\na\u{00A0}b");
+    }
+
+    public function testNamedMultiCodepoint()
+    {
+        // &ngE; -> U+2267 + U+0338 (combining solidus)
+        $this->assertParsedCdata('a&ngE;b', "\na\u{2267}\u{0338}b");
+    }
+
+    public function testNamedUnknownStaysLiteral()
+    {
+        $this->assertParsedCdata('a&MadeUpEntity;b', "\na&MadeUpEntity;b");
+    }
+
+    public function testNamedNoSemicolonStaysLiteral()
+    {
+        $this->assertParsedCdata('a&copy b', "\na&copy b");
+    }
+
+    public function testMixedNumericAndNamed()
+    {
+        $this->assertParsedCdata('&#35;&copy;&#x22;', "\n#\u{00A9}\"");
     }
 }
