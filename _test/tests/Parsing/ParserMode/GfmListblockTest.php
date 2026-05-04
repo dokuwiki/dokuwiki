@@ -339,4 +339,118 @@ class GfmListblockTest extends ParserTestBase
         $opens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_open');
         $this->assertCount(1, $opens, 'blank lines between items must stay inside the list');
     }
+
+    public function testSingleBlankBetweenSiblingsKeepsOneList()
+    {
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("- one\n\n- two\n");
+
+        $opens  = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_open');
+        $closes = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_close');
+        $items  = array_filter($this->H->calls, static fn($c) => $c[0] === 'listitem_open');
+        $this->assertCount(1, $opens, 'single blank between siblings must not split the list');
+        $this->assertCount(1, $closes);
+        $this->assertCount(2, $items, 'both items must end up in the same list');
+    }
+
+    /**
+     * A blank line between items does not interact with the list-type-switch
+     * rule: `- one\n\n1. two\n` still produces two separate lists, the same
+     * as without the blank (cf. testOrderedToUnorderedSplits).
+     */
+    public function testSingleBlankAcrossTypeSwitchStillSplits()
+    {
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("- one\n\n1. two\n");
+
+        $uOpens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_open');
+        $oOpens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listo_open');
+        $this->assertCount(1, $uOpens);
+        $this->assertCount(1, $oOpens);
+    }
+
+    /**
+     * Spec example 79 shape (`1.  foo\n\n    - bar\n`): a blank line followed
+     * by a deeper-indented marker nests the inner list inside the first item
+     * rather than starting a sibling. Renderer-shape differences (the GFM
+     * `<p>foo</p>` wrapper) are out of scope; we only pin the structural
+     * call sequence here.
+     */
+    public function testSingleBlankBeforeIndentedMarkerNests()
+    {
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("1.  foo\n\n    - bar\n");
+
+        $names = array_column($this->H->calls, 0);
+        $oOpenIdx  = array_search('listo_open',  $names, true);
+        $uOpenIdx  = array_search('listu_open',  $names, true);
+        $uCloseIdx = array_search('listu_close', $names, true);
+        $oCloseIdx = array_search('listo_close', $names, true);
+
+        $this->assertNotFalse($oOpenIdx,  'outer ordered list must open');
+        $this->assertNotFalse($uOpenIdx,  'inner unordered list must open');
+        $this->assertNotFalse($uCloseIdx, 'inner unordered list must close');
+        $this->assertNotFalse($oCloseIdx, 'outer ordered list must close');
+
+        $this->assertLessThan($uOpenIdx,  $oOpenIdx,  'inner list must open after outer list');
+        $this->assertLessThan($uCloseIdx, $uOpenIdx,  'inner list must close before reopening');
+        $this->assertLessThan($oCloseIdx, $uCloseIdx, 'outer list must close after inner list');
+
+        $this->assertSame(1, count(array_filter($names, static fn($n) => $n === 'listo_open')));
+        $this->assertSame(1, count(array_filter($names, static fn($n) => $n === 'listu_open')));
+    }
+
+    /**
+     * Negative bound: the blank-line tolerance only spans blanks that are
+     * followed by another marker or by indented continuation. Blank lines
+     * followed by column-0 non-list content terminate the list.
+     */
+    public function testBlanksFollowedByNonMarkerTerminate()
+    {
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("- one\n\n\n\nunrelated\n");
+
+        $opens  = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_open');
+        $closes = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_close');
+        $this->assertCount(1, $opens);
+        $this->assertCount(1, $closes);
+
+        // The trailing column-0 line must reach the main handler as content
+        // outside the list, not be absorbed into an item body.
+        $names = array_column($this->H->calls, 0);
+        $closeIdx = array_search('listu_close', $names, true);
+        $tail = array_slice($this->H->calls, $closeIdx + 1);
+        $tailText = '';
+        foreach ($tail as $call) {
+            if ($call[0] === 'cdata') {
+                $tailText .= $call[1][0];
+            }
+        }
+        $this->assertStringContainsString('unrelated', $tailText,
+            'content after a terminated list lands in top-level cdata');
+    }
+
+    /**
+     * Boundary between "blank between items" (handled here) and "blank
+     * inside an item body" (handled by the sub-parser's Block rewriter).
+     * Item one's body has an internal blank with an indented continuation;
+     * item two is a sibling at the same level. We must end up with one list
+     * containing two items, with the loose body of item one preserved as
+     * separate paragraphs in its sub-parsed nest.
+     */
+    public function testBlankInsideItemBodyDoesNotBreakSibling()
+    {
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("- one\n\n  cont\n- two\n");
+
+        $opens = array_filter($this->H->calls, static fn($c) => $c[0] === 'listu_open');
+        $items = array_filter($this->H->calls, static fn($c) => $c[0] === 'listitem_open');
+        $this->assertCount(1, $opens);
+        $this->assertCount(2, $items, 'first item must not swallow the second marker');
+
+        $flat = $this->flatNames($this->H->calls);
+        $pOpens = array_filter($flat, static fn($n) => $n === 'p_open');
+        $this->assertGreaterThanOrEqual(2, count($pOpens),
+            'multi-paragraph item one keeps its sub-parsed paragraph breaks');
+    }
 }
