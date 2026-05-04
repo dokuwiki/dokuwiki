@@ -15,6 +15,45 @@
 
 return [
     // --------------------------------------------------------------------
+    // Tabs (§2.2) — DokuWiki's tab handling is binary: a leading tab
+    // (matching `\n\t` directly after the newline) is the indented-code
+    // trigger; otherwise tabs are ordinary characters. CommonMark
+    // instead advances each tab to the next 4-column stop and uses the
+    // resulting column count to drive list-continuation, list-nesting,
+    // blockquote-interior, and 4-column indented-code decisions. The
+    // column arithmetic is what's missing.
+    //
+    // Examples #1, #3, #8, #10 are not listed: they happen to render
+    // correctly because a leading tab matches `\n\t`, four leading
+    // spaces match the `md`-mode 4-space code trigger, and GfmHeader
+    // accepts a tab as the post-`#` separator.
+    // --------------------------------------------------------------------
+    2 => 'tab indented-code: 2 spaces then tab. The 4-space trigger needs'
+        . ' 4 spaces; the `\n\t` trigger needs the tab directly after the'
+        . ' newline. Neither fires. CommonMark counts the tab as advancing'
+        . ' to column 4 → code block; DokuWiki does no such arithmetic.',
+    4 => 'tab as 4-column lazy-continuation indent inside a list item.'
+        . ' DokuWiki treats a leading tab as the indented-code trigger,'
+        . ' not as list continuation. Resolving requires column arithmetic'
+        . ' against the list\'s content column.',
+    5 => 'two tabs (8 columns) inside a list item → code block inside list.'
+        . ' Requires column arithmetic to subtract the list\'s content'
+        . ' column from the indent and route the residue into a nested'
+        . ' code block.',
+    6 => 'tabs after blockquote marker → indented code inside blockquote.'
+        . ' Requires column arithmetic for the blockquote interior;'
+        . ' DokuWiki treats the tab as a top-level code trigger instead.',
+    7 => 'tabs after list marker → indented code inside list item.'
+        . ' Requires column arithmetic for the list interior; DokuWiki'
+        . ' treats the tab as a top-level code trigger instead.',
+    9 => 'tab as 4-column indent for list nesting. DokuWiki treats a'
+        . ' leading tab as the indented-code trigger, never as list'
+        . ' nesting indent.',
+    11 => '`*\t*\t*\t` thematic break with tab separators. Strict-bare-run'
+        . ' HR policy rejects internal whitespace (same family as #21-23);'
+        . ' the tab form is the same case.',
+
+    // --------------------------------------------------------------------
     // Thematic breaks (GfmHr) — strict-only HR is intentional. The
     // delimiter run must be bare: no leading, trailing, or internal
     // whitespace in either DW or GFM flavor. The list-precedence cases
@@ -373,6 +412,7 @@ return [
          . ' have no title slot.',
     493 => 'link title attribute: GfmLink parses but discards — DokuWiki link instructions have no title slot',
     513 => 'link title attribute (three quoting styles): discarded by GfmLink',
+    514 => 'link title with HTML-entity escape `"title \\"&quot;"`: title slot not supported (see #493)',
     515 => 'link title separated by non-breaking space: title slot not supported',
     516 => 'link title with nested balanced quotes: Markdown.pl quirk, not supported',
     517 => 'link title with different quote type for inner quotes: title slot not supported',
@@ -398,14 +438,39 @@ return [
          . ' link because the decoded `"` would split URL from title, but'
          . ' GfmLink uses a permissive `[^)\n]+` URL slot and accepts the'
          . ' whole run as the URL — strict GFM URL rejection not implemented',
+    497 => 'unquoted whitespace in URL slot `[link](/my uri)`: GfmLink truncates'
+         . ' at the first space and discards the remainder as a (would-be)'
+         . ' title; spec rejects the whole construct and emits literal text —'
+         . ' strict GFM URL rejection not implemented',
 
     // Inherent single-pass-lexer limits for link text containing nested
     // structures. These cannot be resolved inside one mode.
+    520 => 'link label with literal nested brackets `[link [foo [bar]]](/uri)`:'
+         . ' GfmLink label class forbids `[`/`]`, so the outer match fails —'
+         . ' same family as #522/#526',
     522 => 'nested bracket forms inner link, outer falls back to literal',
+    523 => 'link label with backslash-escaped bracket `[link \\[bar](/uri)`:'
+         . ' GfmLink label class forbids `[` even when escaped — same family'
+         . ' as #522/#526',
+    524 => 'inline formatting inside link label `[link *foo **bar** `#`*](/uri)`:'
+         . ' GfmLink takes the label as a flat string and does not re-tokenize'
+         . ' inline spans — same family as #428/#442',
     526 => 'nested links: inner is a link, outer falls back to literal',
     527 => 'nested links inside emphasis: not supported',
     529 => 'link text grouping vs. emphasis: leftmost-match cannot override',
     530 => 'emphasis/bracket crossing: leftmost-match cannot override',
+    482 => 'emphasis/bracket crossing `*[bar*](/url)`: opener `*` precedes the'
+         . ' link, closer `*` falls inside the link label — GFM flanking'
+         . ' rejects the pair; DW takes the leftmost `*` as an emphasis'
+         . ' opener and never finds a closer (same family as #529/#530)',
+    483 => 'emphasis/bracket crossing `_foo [bar_](/url)`: closer `_` falls'
+         . ' inside link label — same family as #482/#529/#530',
+    428 => 'emphasis inside link label `*foo [*bar*](/url)*`: GfmLink takes'
+         . ' the label as a flat string (DW link instructions have no'
+         . ' re-parsed-inline label slot), so inner `*bar*` stays literal',
+    442 => 'emphasis inside link label `**foo [*bar*](/url)**`: same as #428'
+         . ' — link label is a flat string and inner `*bar*` is not'
+         . ' re-tokenized as emphasis',
     532 => 'raw HTML inside link text: project-wide "no raw HTML" limit',
     533 => 'code span inside link text: requires pre-scan pass (see #351)',
     534 => 'autolink inside link text: raw `<URL>` autolinks not supported (see #356)',
@@ -467,6 +532,10 @@ return [
     // brackets, and escape-dependent cases.
     // --------------------------------------------------------------------
 
+    528 => 'image-as-alt with nested link `![[[foo](uri1)](uri2)](uri3)`: alt'
+         . ' class forbids brackets so the outer image match fails; the inner'
+         . ' `[foo](uri1)` matches as a regular link and the outer falls back'
+         . ' to literal — same family as #582/#583/#598',
     580 => 'image with title attribute: GfmMedia discards titles (no DW slot)',
     581 => 'reference-style image: forward-reference definitions not supported (single-pass lexer)',
     582 => 'nested image-in-image `![foo ![bar](x)](y)`: alt class forbids brackets;'
@@ -583,8 +652,23 @@ return [
 
     232 => 'list items: marker-width content-column alignment (A)',
     235 => 'list items: marker-width content-column alignment (A)',
+    237 => 'list items: ordered list nested in `>>` with 3-space leading'
+         . ' indent and marker-width content column (B+A; see #208 for'
+         . ' the leading-`>` indent policy).',
+    238 => 'list items: bullet inside `>>` followed by leading-space'
+         . ' `  >  > two` continuation — column-0-only `>` policy plus'
+         . ' interior space inside the nested quote (B; see #208).',
+    241 => 'list items: marker-width content column for `1.  foo` with'
+         . ' fenced code, paragraph and blockquote at content column 4'
+         . ' (A; sub-blocks would also need to open at non-zero column).',
+    242 => 'list items: marker-width content column + indented code must'
+         . ' span multiple internal blank lines (A; the multi-blank'
+         . ' indented-code rule is a separate gap).',
     249 => 'list items: marker-width-driven content-column alignment for `10. foo` (A)',
     254 => 'list items: marker-width content-column alignment edge case (A)',
+    257 => 'list items: empty bullet line then content on the next line —'
+         . ' content column derived from next non-blank line\'s indent'
+         . ' (A sub-case).',
     258 => 'list items: marker-width content-column for `1.  foo` (A)',
     263 => 'list items: indent ambiguity at column 0/1/2 (B)',
     264 => 'list items: 1-space-indent variation (B)',
@@ -593,7 +677,14 @@ return [
     267 => 'list items: lazy continuation (C)',
     268 => 'list items: lazy continuation (C)',
     270 => 'list items: lazy continuation across blank line (C+D)',
+    271 => 'list items: lazy continuation in nested quote-list-quote'
+         . ' (`> 1. > Blockquote` then `> continued here.`) (C; see #210).',
     273 => 'list items: list interrupting a paragraph without blank line (F)',
+    376 => 'lone `*` on the line after `*foo bar` is taken as an empty list'
+         . ' marker by GfmListblock, breaking the paragraph; GFM keeps the'
+         . ' whole input as one paragraph because the trailing `*` does not'
+         . ' pair as emphasis. List-interrupts-paragraph (F), same family'
+         . ' as #273 / #284.',
     275 => 'list items: 3-space indent rounds to 2 — sub-list under previous item (B)',
     276 => 'list items: marker-width content-column with mixed types (A+E)',
     277 => 'list items: nested markers on a single line (A)',
@@ -667,6 +758,9 @@ return [
     649 => 'raw HTML inline (entity reference inside attribute): raw HTML pass-through not supported',
     650 => 'raw HTML inline (backslash escape inside attribute): raw HTML pass-through not supported',
     651 => 'raw HTML inline (entity-escaped quote inside attribute): raw HTML pass-through not supported',
+    484 => 'raw HTML inline `<img …/>` adjacent to `*`: raw HTML pass-through not supported',
+    485 => 'raw HTML inline `<a href="**">` adjacent to `**`: raw HTML pass-through not supported',
+    486 => 'raw HTML inline `<a href="__">` adjacent to `__`: raw HTML pass-through not supported',
 
     // --------------------------------------------------------------------
     // Hard line breaks (GfmLinebreak) — both delimiter forms (two trailing
