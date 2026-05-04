@@ -14,7 +14,7 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
     {
         parent::setUp();
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
     }
 

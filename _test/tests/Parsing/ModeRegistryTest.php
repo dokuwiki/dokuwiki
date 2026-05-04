@@ -187,7 +187,7 @@ class ModeRegistryTest extends \DokuWikiTest
     function testGetModesDefaultSyntaxMatchesLegacy()
     {
         global $conf;
-        $conf['syntax'] = 'dokuwiki';
+        $conf['syntax'] = 'dw';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
         $modes = $registry->getModes();
@@ -207,15 +207,15 @@ class ModeRegistryTest extends \DokuWikiTest
             'smiley', 'acronym', 'entity',
         ];
         foreach ($expected as $mode) {
-            $this->assertContains($mode, $modeNames, "Mode '$mode' missing in dokuwiki syntax setting");
+            $this->assertContains($mode, $modeNames, "Mode '$mode' missing in dw syntax setting");
         }
     }
 
-    /** DW-only modes must be absent when syntax is 'markdown' */
+    /** DW-only modes must be absent when syntax is 'md' */
     function testGetModesDwModesSkippedInMarkdownOnly()
     {
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
         $modes = $registry->getModes();
@@ -227,15 +227,15 @@ class ModeRegistryTest extends \DokuWikiTest
             'monospace', 'unformatted', 'file',
         ];
         foreach ($dwOnly as $mode) {
-            $this->assertNotContains($mode, $modeNames, "DW mode '$mode' should not load in markdown-only mode");
+            $this->assertNotContains($mode, $modeNames, "DW mode '$mode' should not load in md-only mode");
         }
     }
 
-    /** Always-loaded modes must still be present in markdown-only mode */
+    /** Always-loaded modes must still be present in md-only mode */
     function testGetModesAlwaysModesPresentInMarkdownOnly()
     {
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
         $modes = $registry->getModes();
@@ -249,7 +249,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'smiley', 'acronym', 'entity',
         ];
         foreach ($always as $mode) {
-            $this->assertContains($mode, $modeNames, "Always-loaded mode '$mode' missing in markdown syntax setting");
+            $this->assertContains($mode, $modeNames, "Always-loaded mode '$mode' missing in md syntax setting");
         }
     }
 
@@ -333,7 +333,7 @@ class ModeRegistryTest extends \DokuWikiTest
     function testAcquireSubParserExcludesBaseonlyByDefault()
     {
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
 
@@ -352,7 +352,7 @@ class ModeRegistryTest extends \DokuWikiTest
     function testAcquireSubParserHonoursCustomExclusions()
     {
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
         $registry = ModeRegistry::getInstance();
 
@@ -442,9 +442,9 @@ class ModeRegistryTest extends \DokuWikiTest
      * Data provider for {@see testModeLoadingBySyntax}.
      *
      * Declares, per parser mode, whether it should be loaded in each of the
-     * four `$conf['syntax']` settings (`dokuwiki`, `markdown`, `dw+md`,
-     * `md+dw`). Entries are expanded into one data set per (mode, syntax)
-     * pair so PHPUnit reports failures with a specific label.
+     * four `$conf['syntax']` settings (`dw`, `md`, `dw+md`, `md+dw`).
+     * Entries are expanded into one data set per (mode, syntax) pair so
+     * PHPUnit reports failures with a specific label.
      *
      * Five gating categories are represented:
      *
@@ -474,57 +474,57 @@ class ModeRegistryTest extends \DokuWikiTest
     {
         $rules = [
             // Always-loaded (unconditional — no syntax-specific counterpart)
-            'strong'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'subscript'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'superscript'                    => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'footnote'                       => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'eol'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'preformatted'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_quote'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_hr'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'externallink'                   => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'emaillink'                      => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'windowssharelink'               => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'notoc'                          => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'nocache'                        => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'rss'                            => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'smiley'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'acronym'                        => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'entity'                         => ['dokuwiki' => true,  'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'strong'                         => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'subscript'                      => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'superscript'                    => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'footnote'                       => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'eol'                            => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'preformatted'                   => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_quote'                      => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_hr'                         => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'externallink'                   => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'emaillink'                      => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'windowssharelink'               => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'notoc'                          => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'nocache'                        => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'rss'                            => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'smiley'                         => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'acronym'                        => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'entity'                         => ['dw' => true,  'md' => true,  'dw+md' => true,  'md+dw' => true ],
             // DW-always (features with MD counterparts but no delimiter clash)
-            'emphasis'                       => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'deleted'                        => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'code'                           => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'header'                         => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'linebreak'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'internallink'                   => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'media'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'listblock'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
-            'table'                          => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'monospace'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'unformatted'                    => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
-            'file'                           => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => true ],
+            'emphasis'                       => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'deleted'                        => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'code'                           => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'header'                         => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'linebreak'                      => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'internallink'                   => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'media'                          => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'listblock'                      => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => false],
+            'table'                          => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'monospace'                      => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'unformatted'                    => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
+            'file'                           => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => true ],
             // MD-always (`*` / `~~` have no conflicting DW counterpart)
-            'gfm_emphasis'                   => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_emphasis_strong'            => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_deleted'                    => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_backtick_single'            => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_backtick_double'            => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_header'                     => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_link'                       => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_media'                      => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_code'                       => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_file'                       => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_table'                      => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_escape'                     => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
-            'gfm_linebreak'                  => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_emphasis'                   => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_emphasis_strong'            => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_deleted'                    => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_backtick_single'            => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_backtick_double'            => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_header'                     => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_link'                       => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_media'                      => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_code'                       => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_file'                       => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_table'                      => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_escape'                     => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_linebreak'                  => ['dw' => false, 'md' => true,  'dw+md' => true,  'md+dw' => true ],
             // MD-preferred (`_`, `__`, `___` clash with Underline in DW)
-            'gfm_emphasis_underscore'        => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
-            'gfm_strong_underscore'          => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
-            'gfm_emphasis_strong_underscore' => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
-            'gfm_listblock'                  => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_emphasis_underscore'        => ['dw' => false, 'md' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_strong_underscore'          => ['dw' => false, 'md' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_emphasis_strong_underscore' => ['dw' => false, 'md' => true,  'dw+md' => false, 'md+dw' => true ],
+            'gfm_listblock'                  => ['dw' => false, 'md' => true,  'dw+md' => false, 'md+dw' => true ],
             // DW-preferred (Underline's `__` clashes with GFM strong)
-            'underline'                      => ['dokuwiki' => true,  'markdown' => false, 'dw+md' => true,  'md+dw' => false],
+            'underline'                      => ['dw' => true,  'md' => false, 'dw+md' => true,  'md+dw' => false],
         ];
 
         $cases = [];

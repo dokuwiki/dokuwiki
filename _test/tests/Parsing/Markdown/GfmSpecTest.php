@@ -56,7 +56,7 @@ class GfmSpecTest extends \DokuWikiTest
 
     /**
      * Render markdown text through DokuWiki's full parser pipeline under
-     * the `markdown` syntax setting, using {@see SpecCompatRenderer} —
+     * the `md` syntax setting, using {@see SpecCompatRenderer} —
      * an XHTML renderer subclass that emits the minimal link/media HTML
      * shape the GFM spec expects. Production rendering is unchanged;
      * this override exists so spec output can be compared byte-for-byte.
@@ -64,7 +64,7 @@ class GfmSpecTest extends \DokuWikiTest
     private function renderMarkdown(string $text): string
     {
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         ModeRegistry::reset();
 
         $instructions = p_get_instructions($text);

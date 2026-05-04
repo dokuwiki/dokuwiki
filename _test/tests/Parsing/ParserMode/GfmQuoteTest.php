@@ -63,7 +63,7 @@ class GfmQuoteTest extends ParserTestBase
 
     public function testDwSingleLine()
     {
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n");
 
@@ -82,7 +82,7 @@ class GfmQuoteTest extends ParserTestBase
         // GFM allows omitting the space after `>`; DW always did. Strip
         // logic removes one optional space after the `>`, so `>foo` and
         // `> foo` both produce cdata "foo".
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse(">foo\n");
 
@@ -96,7 +96,7 @@ class GfmQuoteTest extends ParserTestBase
         // The DW-preferred post-pass converts the sub-parser's paragraph
         // wrapping into a linebreak between the two cdata calls, matching
         // the historical `<blockquote>foo<br/>bar</blockquote>` shape.
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n> bar\n");
 
@@ -120,7 +120,7 @@ class GfmQuoteTest extends ParserTestBase
         // The DW post-pass replaces each p_open and each p_close with a
         // linebreak, producing two adjacent linebreak calls between the
         // two content cdata — matches the historical DW two-`<br/>` shape.
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n>\n> bar\n");
 
@@ -141,7 +141,7 @@ class GfmQuoteTest extends ParserTestBase
 
     public function testDwNested()
     {
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> > foo\n");
 
@@ -162,7 +162,7 @@ class GfmQuoteTest extends ParserTestBase
         // line must begin with `>`. `bar` without a `>` prefix terminates
         // the quote, so it ends up as a separate paragraph — matching
         // today's DW behavior.
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\nbar\n");
 
@@ -185,7 +185,7 @@ class GfmQuoteTest extends ParserTestBase
     {
         // A truly blank line ends the quote. The next `>` starts a new
         // quote, producing two distinct quote_open / quote_close pairs.
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n\n> bar\n");
 
@@ -201,7 +201,7 @@ class GfmQuoteTest extends ParserTestBase
         // instructions drive section-edit anchors and TOC entries that
         // do not compose with `<blockquote>`. `# Foo` therefore stays
         // as plain cdata text.
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> # Foo\n");
 
@@ -215,7 +215,7 @@ class GfmQuoteTest extends ParserTestBase
 
     public function testMdSingleParagraph()
     {
-        $this->setSyntax('markdown');
+        $this->setSyntax('md');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n> bar\n");
 
@@ -241,7 +241,7 @@ class GfmQuoteTest extends ParserTestBase
         // `>` alone between content lines creates two paragraphs in one
         // blockquote — under MD-preferred the post-pass does not run, so
         // the sub-parser's `p_open` / `p_close` pairs survive intact.
-        $this->setSyntax('markdown');
+        $this->setSyntax('md');
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("> foo\n>\n> bar\n");
 
@@ -257,7 +257,7 @@ class GfmQuoteTest extends ParserTestBase
         // GfmListblock is loaded under MD-preferred syntax, so a list
         // inside a quote parses as a real list. The sub-parser's list
         // calls land inside the outer `nest` wrapper.
-        $this->setSyntax('markdown');
+        $this->setSyntax('md');
         ModeRegistry::reset();
         // Add the registry's full mode set so gfm_listblock is reachable
         // via the sub-parser (the sub-parser uses ModeRegistry::getModes,

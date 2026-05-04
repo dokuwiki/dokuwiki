@@ -35,7 +35,7 @@ class GfmHr extends AbstractMode
     {
         global $conf;
 
-        $pattern = $conf['syntax'] === 'dokuwiki'
+        $pattern = $conf['syntax'] === 'dw'
             ? '\n-{4,}(?=\n)'
             : '\n(?:-{3,}|\*{3,}|_{3,})(?=\n)';
 

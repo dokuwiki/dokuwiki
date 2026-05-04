@@ -162,7 +162,7 @@ class ModeRegistry
     }
 
     /**
-     * Whether DokuWiki is the preferred syntax (`dokuwiki` or `dw+md`).
+     * Whether DokuWiki is the preferred syntax (`dw` or `dw+md`).
      *
      * Modes that have to choose between DW-flavored and MD-flavored
      * behavior at runtime read this flag. Compare with isMdPreferred()
@@ -172,16 +172,16 @@ class ModeRegistry
     public function isDwPreferred(): bool
     {
         global $conf;
-        return in_array($conf['syntax'], ['dokuwiki', 'dw+md'], true);
+        return in_array($conf['syntax'], ['dw', 'dw+md'], true);
     }
 
     /**
-     * Whether Markdown is the preferred syntax (`markdown` or `md+dw`).
+     * Whether Markdown is the preferred syntax (`md` or `md+dw`).
      */
     public function isMdPreferred(): bool
     {
         global $conf;
-        return in_array($conf['syntax'], ['markdown', 'md+dw'], true);
+        return in_array($conf['syntax'], ['md', 'md+dw'], true);
     }
 
     /**
@@ -202,8 +202,8 @@ class ModeRegistry
         }
 
         $this->modes = [];
-        $loadDw = in_array($conf['syntax'], ['dokuwiki', 'dw+md', 'md+dw']);
-        $loadMd = in_array($conf['syntax'], ['markdown', 'dw+md', 'md+dw']);
+        $loadDw = in_array($conf['syntax'], ['dw', 'dw+md', 'md+dw']);
+        $loadMd = in_array($conf['syntax'], ['md', 'dw+md', 'md+dw']);
 
         $this->loadPluginModes();
         $this->loadAlwaysModes();
@@ -408,7 +408,7 @@ class ModeRegistry
 
     /**
      * Load DokuWiki-specific modes for features that also exist in Markdown.
-     * Skipped when syntax is 'markdown'.
+     * Skipped when syntax is 'md'.
      */
     protected function loadDokuWikiModes(): void
     {
@@ -436,7 +436,7 @@ class ModeRegistry
 
     /**
      * Load Markdown-specific modes for features that also exist in DokuWiki.
-     * Skipped when syntax is 'dokuwiki'.
+     * Skipped when syntax is 'dw'.
      */
     protected function loadMarkdownModes(): void
     {

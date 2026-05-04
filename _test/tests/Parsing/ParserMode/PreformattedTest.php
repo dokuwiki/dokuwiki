@@ -188,11 +188,11 @@ class PreformattedTest extends ParserTestBase
 
 
     function testMarkdownPreferredUsesFourSpaces() {
-        // In `markdown` and `md+dw` settings the indent threshold is 4,
+        // In `md` and `md+dw` settings the indent threshold is 4,
         // matching GFM's indented code block rule. Lines with only 2-3
         // leading spaces stay as paragraph text.
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n    x  \n      y  \nBar\n");
         $calls = [
@@ -212,7 +212,7 @@ class PreformattedTest extends ParserTestBase
     function testMarkdownPreferredRejectsTwoSpaces() {
         // 2-space indent in MD-preferred mode does NOT trigger preformatted.
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n  x\nBar\n");
         $modes = array_column($this->H->calls, 0);
@@ -223,7 +223,7 @@ class PreformattedTest extends ParserTestBase
     function testMarkdownPreferredTabStillTriggers() {
         // Tab is a trigger regardless of the space threshold.
         global $conf;
-        $conf['syntax'] = 'markdown';
+        $conf['syntax'] = 'md';
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n\tx\nBar\n");
         $modes = array_column($this->H->calls, 0);

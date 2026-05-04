@@ -9,8 +9,8 @@ use dokuwiki\Parsing\ParserMode\GfmHr;
 /**
  * Tests for the unified horizontal-rule mode.
  *
- * Covers both pattern flavors: pure `dokuwiki` (4-or-more dashes only)
- * and the wider GFM flavor that loads in `markdown`, `dw+md`, `md+dw`
+ * Covers both pattern flavors: pure `dw` (4-or-more dashes only)
+ * and the wider GFM flavor that loads in `md`, `dw+md`, `md+dw`
  * (3-or-more of `-` / `*` / `_`). No leading, trailing, or internal
  * whitespace tolerance in either flavor.
  */
@@ -49,49 +49,49 @@ class GfmHrTest extends ParserTestBase
     }
 
     // ------------------------------------------------------------------
-    // DW flavor (`$conf['syntax'] = 'dokuwiki'`)
+    // DW flavor (`$conf['syntax'] = 'dw'`)
     // ------------------------------------------------------------------
 
     public function testDwFourDashes()
     {
-        $this->assertSame(1, $this->countHrCalls('dokuwiki', "\n----\n"));
+        $this->assertSame(1, $this->countHrCalls('dw', "\n----\n"));
     }
 
     public function testDwManyDashes()
     {
-        $this->assertSame(1, $this->countHrCalls('dokuwiki', "\n--------\n"));
+        $this->assertSame(1, $this->countHrCalls('dw', "\n--------\n"));
     }
 
     public function testDwThreeDashesNotHr()
     {
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n---\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n---\n"));
     }
 
     public function testDwAsterisksNotHr()
     {
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n***\n"));
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n********\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n***\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n********\n"));
     }
 
     public function testDwUnderscoresNotHr()
     {
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n___\n"));
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n_____\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n___\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n_____\n"));
     }
 
     public function testDwLeadingSpaceNotHr()
     {
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n ----\n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n ----\n"));
     }
 
     public function testDwTrailingSpaceNotHr()
     {
-        $this->assertSame(0, $this->countHrCalls('dokuwiki', "\n---- \n"));
+        $this->assertSame(0, $this->countHrCalls('dw', "\n---- \n"));
     }
 
     public function testDwInterruptsParagraph()
     {
-        $this->setSyntax('dokuwiki');
+        $this->setSyntax('dw');
         $this->P->addMode('gfm_hr', new GfmHr());
         $this->P->parse("Foo\n----\nBar");
         $calls = [
@@ -109,12 +109,12 @@ class GfmHrTest extends ParserTestBase
     }
 
     // ------------------------------------------------------------------
-    // GFM flavor (any non-`dokuwiki` syntax setting)
+    // GFM flavor (any non-`dw` syntax setting)
     // ------------------------------------------------------------------
 
     public function testMdDashes()
     {
-        foreach (['markdown', 'dw+md', 'md+dw'] as $syntax) {
+        foreach (['md', 'dw+md', 'md+dw'] as $syntax) {
             $this->assertSame(1, $this->countHrCalls($syntax, "\n---\n"),
                 "syntax=$syntax: bare `---` must produce hr");
         }
@@ -122,7 +122,7 @@ class GfmHrTest extends ParserTestBase
 
     public function testMdAsterisks()
     {
-        foreach (['markdown', 'dw+md', 'md+dw'] as $syntax) {
+        foreach (['md', 'dw+md', 'md+dw'] as $syntax) {
             $this->assertSame(1, $this->countHrCalls($syntax, "\n***\n"),
                 "syntax=$syntax: bare `***` must produce hr");
         }
@@ -130,7 +130,7 @@ class GfmHrTest extends ParserTestBase
 
     public function testMdUnderscores()
     {
-        foreach (['markdown', 'dw+md', 'md+dw'] as $syntax) {
+        foreach (['md', 'dw+md', 'md+dw'] as $syntax) {
             $this->assertSame(1, $this->countHrCalls($syntax, "\n___\n"),
                 "syntax=$syntax: bare `___` must produce hr");
         }
@@ -138,52 +138,52 @@ class GfmHrTest extends ParserTestBase
 
     public function testMdManyChars()
     {
-        $this->assertSame(1, $this->countHrCalls('markdown', "\n--------\n"));
-        $this->assertSame(1, $this->countHrCalls('markdown', "\n********\n"));
-        $this->assertSame(1, $this->countHrCalls('markdown', "\n________\n"));
+        $this->assertSame(1, $this->countHrCalls('md', "\n--------\n"));
+        $this->assertSame(1, $this->countHrCalls('md', "\n********\n"));
+        $this->assertSame(1, $this->countHrCalls('md', "\n________\n"));
     }
 
     public function testMdTooFew()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n--\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n**\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n__\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n--\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n**\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n__\n"));
     }
 
     public function testMdInternalSpacesNotSupported()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n- - -\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n* * *\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n_ _ _\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n- - -\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n* * *\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n_ _ _\n"));
     }
 
     public function testMdLeadingSpaceNotSupported()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n ***\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n   ---\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n ***\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n   ---\n"));
     }
 
     public function testMdTrailingSpaceNotSupported()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n--- \n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n--- \n"));
     }
 
     public function testMdMixedChars()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n-*-\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n***---\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n-*-\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n***---\n"));
     }
 
     public function testMdLetterMixed()
     {
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n---a\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\na---\n"));
-        $this->assertSame(0, $this->countHrCalls('markdown', "\n---a---\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n---a\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\na---\n"));
+        $this->assertSame(0, $this->countHrCalls('md', "\n---a---\n"));
     }
 
     public function testMdInterruptsParagraph()
     {
-        $this->setSyntax('markdown');
+        $this->setSyntax('md');
         $this->P->addMode('gfm_hr', new GfmHr());
         $this->P->addMode('eol', new Eol());
         $this->P->parse("Foo\n***\nbar");

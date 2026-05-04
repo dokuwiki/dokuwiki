@@ -38,9 +38,9 @@ use dokuwiki\Parsing\ModeRegistry;
  * but the parser stays single-pass and predictable.
  *
  * Rendering shape depends on syntax preference. Under MD-preferred
- * (`markdown`, `md+dw`) the sub-parser's paragraph wrapping survives:
+ * (`md`, `md+dw`) the sub-parser's paragraph wrapping survives:
  * a quote with one paragraph emits `<blockquote><p>...</p></blockquote>`.
- * Under DW-preferred (`dokuwiki`, `dw+md`) a post-pass flattens
+ * Under DW-preferred (`dw`, `dw+md`) a post-pass flattens
  * paragraph wrapping into explicit `linebreak` calls so existing DW
  * pages keep their `<blockquote>...line1<br/>line2...</blockquote>`
  * rendering. Same `quote_open` / `quote_close` instructions in both
