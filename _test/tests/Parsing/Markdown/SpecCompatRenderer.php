@@ -126,6 +126,13 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
         $this->doc .= $this->specCode($text, $language);
     }
 
+    public function linebreak()
+    {
+        // Production DW emits `<br/>` (no space); the spec expects the
+        // XHTML-classic `<br />` (space before the slash).
+        $this->doc .= '<br />' . DOKU_LF;
+    }
+
     public function quote_open()
     {
         // Production DW wraps blockquote content in `<div class="no">`;

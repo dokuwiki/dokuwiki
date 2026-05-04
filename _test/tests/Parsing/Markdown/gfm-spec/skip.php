@@ -457,4 +457,17 @@ return [
     319 => 'backslash escapes in reference-link definition: link reference'
          . ' definitions not supported (single-pass lexer cannot resolve'
          . ' forward references)',
+
+    // --------------------------------------------------------------------
+    // Hard line breaks (GfmLinebreak) — both delimiter forms (two trailing
+    // spaces and `\` before newline) work in paragraphs, emphasis, and
+    // other inline containers. The skipped cases sit inside raw HTML tags,
+    // which DokuWiki does not pass through by default.
+    // --------------------------------------------------------------------
+    662 => 'hard line break inside a raw HTML tag (`<a href="foo  \nbar">`):'
+         . ' raw HTML pass-through is not supported by default — DokuWiki'
+         . ' has never allowed raw HTML, so the tag bytes are treated as'
+         . ' cdata and the break fires where the spec wants it literal.',
+    663 => 'hard line break (backslash form) inside a raw HTML tag — see'
+         . ' #662. Raw HTML out of scope.',
 ];

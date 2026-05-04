@@ -517,6 +517,7 @@ class ModeRegistryTest extends \DokuWikiTest
             'gfm_file'                       => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'gfm_table'                      => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             'gfm_escape'                     => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
+            'gfm_linebreak'                  => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => true,  'md+dw' => true ],
             // MD-preferred (`_`, `__`, `___` clash with Underline in DW)
             'gfm_emphasis_underscore'        => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
             'gfm_strong_underscore'          => ['dokuwiki' => false, 'markdown' => true,  'dw+md' => false, 'md+dw' => true ],
