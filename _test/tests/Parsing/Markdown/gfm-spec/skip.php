@@ -153,6 +153,48 @@ return [
         . ' supported (see #50).',
 
     // --------------------------------------------------------------------
+    // Indented code blocks (§4.4) vs. paragraph continuation — the
+    // single-pass lexer cannot carry paragraph-open state across modes,
+    // so DokuWiki\'s `Preformatted` triggers on every `\n    ` and exits
+    // on every `\n`. Two CommonMark rules consequently cannot be
+    // expressed:
+    //
+    //   - The 4-space indent must NOT open a code block on a
+    //     paragraph-continuation line — GFM treats it as lazy paragraph
+    //     text. We have no `paragraph-open` flag to consult.
+    //   - An indented code block MAY span blank lines as long as the
+    //     next non-blank line is still 4-space indented. Our exit-on-any-
+    //     blank-line behavior splits the block.
+    //
+    // List-interior indented code (#79, #80, #193) additionally needs the
+    // column arithmetic that the §2.2 tabs family already documents as
+    // out of scope (see #4-9).
+    // --------------------------------------------------------------------
+    19 => 'thematic break preceded by paragraph: `Foo\n    ***` should be'
+        . ' a paragraph continuation followed by an HR — DokuWiki\'s'
+        . ' `Preformatted` mode triggers on the 4-space indent regardless'
+        . ' of paragraph-open state. Single-pass lexer cannot carry block'
+        . ' context across modes.',
+    79 => 'list item containing indented code: requires column arithmetic'
+        . ' for list interior plus paragraph-context-aware indent trigger'
+        . ' (see #4-9 for the column-arithmetic rationale).',
+    80 => 'list item with indented code after content: same as #79 — list'
+        . ' interior column arithmetic plus paragraph-context-aware indent'
+        . ' trigger.',
+    81 => 'indented code block spanning blank lines: GFM keeps the run open'
+        . ' as long as the next non-blank line is also 4-space indented;'
+        . ' DokuWiki\'s `Preformatted` exits on any `\n`. Same single-pass'
+        . ' lexer limit as #19.',
+    83 => 'indented code trigger mid-paragraph: 4-space indent on a'
+        . ' paragraph-continuation line should be lazy paragraph text in'
+        . ' GFM, not a code block. Same root cause as #19.',
+    85 => 'indented code trigger mid-paragraph (variant): see #83 / #19.',
+    87 => 'indented code block spanning blank lines (variant): see #81.',
+    193 => 'list item with indented code: same family as #79 / #80 — list'
+         . ' interior column arithmetic plus paragraph-context-aware'
+         . ' indent trigger.',
+
+    // --------------------------------------------------------------------
     // Fenced code blocks (GfmCode / GfmFile) — deliberate simplifications
     // versus strict GFM. All of these are consequences of lexer constraints
     // (no regex backreferences) or the deliberate column-0-only policy.
@@ -759,6 +801,9 @@ return [
     649 => 'raw HTML inline (entity reference inside attribute): raw HTML pass-through not supported',
     650 => 'raw HTML inline (backslash escape inside attribute): raw HTML pass-through not supported',
     651 => 'raw HTML inline (entity-escaped quote inside attribute): raw HTML pass-through not supported',
+    652 => 'Disallowed Raw HTML (extension) is a filter on top of raw HTML'
+         . ' pass-through; DokuWiki escapes raw HTML by policy (see #118-160),'
+         . ' so the filter has no input to operate on.',
     484 => 'raw HTML inline `<img …/>` adjacent to `*`: raw HTML pass-through not supported',
     485 => 'raw HTML inline `<a href="**">` adjacent to `**`: raw HTML pass-through not supported',
     486 => 'raw HTML inline `<a href="__">` adjacent to `__`: raw HTML pass-through not supported',
