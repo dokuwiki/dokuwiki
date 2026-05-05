@@ -464,6 +464,43 @@ class GfmLinkTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    function testBackslashEscapedBracketInLabel()
+    {
+        // Spec example #523: an escaped `[` inside the label is allowed
+        // and unescapes to a literal bracket. The label class accepts
+        // `\[` / `\]` so the outer match still finds its `]` close.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [link \\[bar](page) Baz');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['page', 'link [bar']],
+            ['cdata', [' Baz']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testBackslashEscapedClosingBracketInLabel()
+    {
+        // The `\]` form is symmetric with `\[`. Both must be accepted by
+        // the label class without ending the outer match early.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse('Foo [a\\]b](page) Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo "]],
+            ['internallink', ['page', 'a]b']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testBackslashEscapesInUrl()
     {
         // §6.1 unescape fires on the URL after classify() picks the

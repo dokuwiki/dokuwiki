@@ -48,11 +48,17 @@ class GfmLink extends AbstractMode
     // close-parens from prematurely ending the match.
     private const URL_CHAR = '(?:\\\\.|[^)\n])';
 
+    // Label character set: forbids unescaped `[` / `]` so the outer
+    // bracket pair stays balanced, but allows `\[` / `\]` so an escaped
+    // bracket can appear inside the label (spec example 523). The same
+    // backslash-escape trick the URL slot already uses.
+    private const LABEL_CHAR = '(?:\\\\.|[^\[\]\n])';
+
     // Image sub-pattern reused for both the label alternative in the main
     // pattern and the image-as-label detector in handle(). No capture
     // groups here — the lexer wraps user patterns in a capture and
     // additional captures would renumber unpredictably.
-    private const IMAGE_SUB = '!\[[^\[\]\n]*\]\(' . self::URL_CHAR . '+\)';
+    private const IMAGE_SUB = '!\[' . self::LABEL_CHAR . '*\]\(' . self::URL_CHAR . '+\)';
 
     /** @inheritdoc */
     public function getSort()
@@ -63,12 +69,12 @@ class GfmLink extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        // Outer shape: `[text-or-image](url)`. Text class forbids brackets
-        // and newlines; the image alternative explicitly matches one
-        // inline image. URL slot is permissive (`[^)\n]+`) — handle() does
-        // URL / title splitting post-entry, mirroring how DW Internallink
-        // parses inside `[[...]]`.
-        $pattern = '\[(?!\[)(?:[^\[\]\n]+|' . self::IMAGE_SUB . ')\]\(' . self::URL_CHAR . '+\)';
+        // Outer shape: `[text-or-image](url)`. Text class forbids
+        // unescaped brackets and newlines but allows `\[` / `\]`; the
+        // image alternative explicitly matches one inline image. URL
+        // slot is permissive — handle() does URL / title splitting
+        // post-entry, mirroring how DW Internallink parses inside `[[...]]`.
+        $pattern = '\[(?!\[)(?:' . self::LABEL_CHAR . '+|' . self::IMAGE_SUB . ')\]\(' . self::URL_CHAR . '+\)';
         $this->Lexer->addSpecialPattern($pattern, $mode, 'gfm_link');
     }
 
