@@ -26,7 +26,7 @@ class CodeTest extends ParserTestBase
             ['p_close',[]],
             ['code',['Test',null,null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -42,7 +42,7 @@ class CodeTest extends ParserTestBase
             ['p_close',[]],
             ['code',['Test','bash',null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -58,7 +58,7 @@ class CodeTest extends ParserTestBase
             ['p_close',[]],
             ['code',['Test','bash','script.sh']],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -89,7 +89,7 @@ class CodeTest extends ParserTestBase
                                ['enable_line_numbers' => 1]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -108,7 +108,7 @@ class CodeTest extends ParserTestBase
                                      'highlight_lines_extra' => [3]
                                ]]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -127,7 +127,7 @@ class CodeTest extends ParserTestBase
             ['p_close',[]],
             ['code',['Test','C', null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -145,7 +145,7 @@ class CodeTest extends ParserTestBase
                                ['enable_line_numbers' => true]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -163,7 +163,7 @@ class CodeTest extends ParserTestBase
                                ['enable_line_numbers' => true]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -181,7 +181,7 @@ class CodeTest extends ParserTestBase
                                ['enable_line_numbers' => false]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -199,7 +199,7 @@ class CodeTest extends ParserTestBase
                                ['enable_line_numbers' => true]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -218,7 +218,7 @@ class CodeTest extends ParserTestBase
                                      'highlight_lines_extra' => [42, 123, 456, 789]
                                ]]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -237,7 +237,7 @@ class CodeTest extends ParserTestBase
                                      'highlight_lines_extra' => [1]]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -256,7 +256,7 @@ class CodeTest extends ParserTestBase
                                      'highlight_lines_extra' => [1]]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -275,7 +275,7 @@ class CodeTest extends ParserTestBase
                                      'start_line_numbers_at' => 42]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -294,7 +294,7 @@ class CodeTest extends ParserTestBase
                                      'start_line_numbers_at' => 1]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -313,7 +313,7 @@ class CodeTest extends ParserTestBase
                                      'start_line_numbers_at' => 1]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -331,7 +331,7 @@ class CodeTest extends ParserTestBase
                                ['enable_keyword_links' => false]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -349,7 +349,7 @@ class CodeTest extends ParserTestBase
                                ['enable_keyword_links' => true]
                                ]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];

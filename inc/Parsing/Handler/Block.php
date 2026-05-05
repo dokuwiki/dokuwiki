@@ -13,6 +13,13 @@ class Block
     protected $skipEol = false;
     protected $inParagraph = false;
 
+    /**
+     * Strip leading [ \t]+ from the next cdata that lands in a paragraph.
+     * Set when a paragraph opens (drops indent on the first line) and after
+     * a soft-break joiner is emitted (drops indent on continuation lines).
+     */
+    protected $trimNextCdataLeft = false;
+
     // Blocks these should not be inside paragraphs
     protected $blockOpen = [
         'header', 'listu_open', 'listo_open', 'listo_open_start', 'listitem_open', 'listcontent_open',
@@ -61,6 +68,7 @@ class Block
         $this->calls[] = ['p_open', [], $pos];
         $this->inParagraph = true;
         $this->skipEol = true;
+        $this->trimNextCdataLeft = true;
     }
 
     /**
@@ -98,20 +106,28 @@ class Block
             ) array_pop($this->calls);
         } else {
             // remove ending linebreaks in the paragraph
-            $i = count($this->calls) - 1;
-            if ($this->calls[$i][0] == 'cdata') $this->calls[$i][1][0] = rtrim($this->calls[$i][1][0], "\n");
+            $last = array_key_last($this->calls);
+            if ($this->calls[$last][0] == 'cdata') {
+                $this->calls[$last][1][0] = rtrim($this->calls[$last][1][0], "\n");
+            }
             $this->calls[] = ['p_close', [], $pos];
         }
 
         $this->inParagraph = false;
         $this->skipEol = true;
+        $this->trimNextCdataLeft = false;
     }
 
     protected function addCall($call)
     {
-        $key = count($this->calls);
-        if ($key && $call[0] == 'cdata' && $this->calls[$key - 1][0] == 'cdata') {
-            $this->calls[$key - 1][1][0] .= $call[1][0];
+        if ($call[0] == 'cdata' && $this->trimNextCdataLeft) {
+            $call[1][0] = ltrim($call[1][0], " \t");
+        }
+        $this->trimNextCdataLeft = false;
+
+        $last = array_key_last($this->calls);
+        if ($call[0] == 'cdata' && $this->calls[$last][0] == 'cdata') {
+            $this->calls[$last][1][0] .= $call[1][0];
         } else {
             $this->calls[] = $call;
         }
@@ -183,8 +199,16 @@ class Block
                         $this->closeParagraph($call[2]);
                         $this->openParagraph($call[2]);
                     } else {
-                        //if this is just a single eol make a space from it
+                        // single eol → soft break inside a paragraph.
+                        // Strip [ \t]+ from the previous cdata's tail and mark
+                        // the next cdata to be left-trimmed, so paragraph wrap
+                        // collapses [ \t]*\n[ \t]* to a single \n.
+                        $last = array_key_last($this->calls);
+                        if ($this->calls[$last][0] == 'cdata') {
+                            $this->calls[$last][1][0] = rtrim($this->calls[$last][1][0], " \t");
+                        }
                         $this->addCall(['cdata', ["\n"], $call[2]]);
+                        $this->trimNextCdataLeft = true;
                     }
                 }
                 continue;

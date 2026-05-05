@@ -95,13 +95,13 @@ class FootnoteTest extends ParserTestBase
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
-            ['cdata',['Foo '."\n".'X']],
+            ['cdata',['Foo'."\n".'X']],
             ['nest', [ [
               ['footnote_open',[]],
               ['cdata',[" test\ning "]],
               ['footnote_close',[]],
             ]]],
-            ['cdata',['Y'."\n".' Bar']],
+            ['cdata',['Y'."\n".'Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];

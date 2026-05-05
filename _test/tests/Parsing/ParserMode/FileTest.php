@@ -21,7 +21,7 @@ class FileTest extends ParserTestBase
             ['p_close',[]],
             ['file',['Test',null,null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -37,7 +37,7 @@ class FileTest extends ParserTestBase
             ['p_close',[]],
             ['file',['Test','txt','test.txt']],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];

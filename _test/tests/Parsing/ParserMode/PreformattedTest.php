@@ -22,7 +22,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['file',['testing',null,null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -40,7 +40,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', null, null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -57,7 +57,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', null, null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -74,7 +74,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', 'php', null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
