@@ -66,11 +66,20 @@ class GfmSpecTest extends \DokuWikiTest
      * an XHTML renderer subclass that emits the minimal link/media HTML
      * shape the GFM spec expects. Production rendering is unchanged;
      * this override exists so spec output can be compared byte-for-byte.
+     *
+     * Typography is forced off for the spec run: $conf[typography] = 0
+     * keeps the Quotes and MultiplyEntity modes (curly quote pairing,
+     * apostrophe to numeric entity) out of the mode list. Both are
+     * correct for production wiki prose but diverge byte-for-byte from
+     * spec output. SpecCompatRenderer additionally neutralizes the
+     * Entity-table substitutions (--, ---, ->, (c), ...) at render time;
+     * see SpecCompatRenderer::entity().
      */
     private function renderMarkdown(string $text): string
     {
         global $conf;
         $conf['syntax'] = 'md';
+        $conf['typography'] = 0;
         ModeRegistry::reset();
 
         $instructions = p_get_instructions($text);

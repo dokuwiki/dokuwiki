@@ -298,8 +298,6 @@ return [
          . ' leftmost but a backtick span inside its label should consume'
          . ' the closing `]` and `)` — single-pass lexer matches'
          . ' leftmost-first and cannot reorder spans (see #351).',
-    353 => 'code span: the trailing `"` outside the span is converted to a'
-         . ' curly quote by DokuWiki typography, diverging from the spec HTML',
     327 => 'raw HTML tag with entity in attribute: raw HTML pass-through not supported',
     354 => 'raw HTML tag pass-through: raw HTML pass-through not supported',
     356 => 'GFM angle-bracket autolink `<http://…>`: not implemented — we'
@@ -717,11 +715,6 @@ return [
     // already-skipped GFM features (autolinks, raw HTML, reference links,
     // discarded link titles). The escape mechanic itself works.
     // --------------------------------------------------------------------
-    308 => 'backslash escapes: apostrophe is rendered as `&#039;` by DW while'
-         . ' the spec expects a literal `\'` — renderer policy difference,'
-         . ' not an escape bug',
-    310 => 'backslash escapes: DW typography converts straight `"..."` to curly'
-         . ' quotes when $conf[typography] is on, diverging from spec output',
     316 => 'backslash escapes inside angle-bracket autolinks: GFM autolink'
          . ' `<URL>` form not implemented (see example 356)',
     317 => 'backslash escapes inside raw HTML: raw HTML pass-through is not'

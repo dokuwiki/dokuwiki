@@ -133,6 +133,32 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
         $this->doc .= '<br />' . DOKU_LF;
     }
 
+    public function entity($entity)
+    {
+        // The Entity mode rewrites --, ---, ->, (c), ... and other prose
+        // abbreviations into typographic glyphs via conf/entities.conf.
+        // Correct for live wiki pages, diverges byte-for-byte from the
+        // GFM spec corpus which expects those bytes preserved literally.
+        // Emit the original match unchanged.
+        $this->doc .= $this->_xmlEntities((string) $entity);
+    }
+
+    public function _xmlEntities($string)
+    {
+        // Production hsc() escapes both `"` and `'` (ENT_QUOTES) so cdata
+        // is safe to splice into any HTML attribute as well as body text.
+        // CommonMark / GFM spec output uses a narrower body-text policy:
+        // `"` is escaped to `&quot;` (e.g. example #323) but `'` is left
+        // literal (e.g. example #670). ENT_COMPAT matches that exactly.
+        // Attribute values rendered by SpecCompatRenderer (href, src, alt)
+        // still go through hsc() in specLink / specImg, which escapes both.
+        return htmlspecialchars(
+            (string) $string,
+            ENT_COMPAT | ENT_SUBSTITUTE | ENT_HTML401,
+            'UTF-8'
+        );
+    }
+
     public function quote_open()
     {
         // Production DW wraps blockquote content in `<div class="no">`;
