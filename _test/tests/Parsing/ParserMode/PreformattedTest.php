@@ -231,6 +231,36 @@ class PreformattedTest extends ParserTestBase
             'A single tab must still trigger preformatted in MD-preferred mode');
     }
 
+    function testStripsLeadingAndTrailingBlankIndentedLines() {
+        // GFM example #87: leading and trailing blank-but-indented lines
+        // should not appear in the preformatted body. The lexer's
+        // continuation pattern eats their indents, leaving padding `\n`
+        // runs in the rewriter buffer; the rewriter trims them so the
+        // emitted text starts and ends on a non-blank line.
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("\n    \n    foo\n    \n\n");
+        $calls = [
+            ['document_start', []],
+            ['preformatted', ['foo']],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testWhitespaceOnlyBlockIsSkipped() {
+        // A run of only blank-but-indented lines must not emit a
+        // preformatted call at all - the body would be pure whitespace
+        // and visually meaningless.
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("\n    \n    \n\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('preformatted', $modes);
+    }
+
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!
         $this->P->addMode('preformatted',new Preformatted());

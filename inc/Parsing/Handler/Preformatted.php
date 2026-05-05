@@ -28,8 +28,11 @@ class Preformatted extends AbstractRewriter
                     $this->text .= $call[1][0];
                     break;
                 case 'preformatted_end':
+                    // Skip blocks whose only content is whitespace. For
+                    // the rest, strip leading/trailing newline runs
                     if (trim($this->text)) {
-                        $this->callWriter->writeCall(['preformatted', [$this->text], $this->pos]);
+                        $text = trim($this->text, "\n");
+                        $this->callWriter->writeCall(['preformatted', [$text], $this->pos]);
                     }
                     // see FS#1699 & FS#1652, add 'eol' instructions to ensure proper triggering of following p_open
                     $this->callWriter->writeCall(['eol', [], $this->pos]);
