@@ -737,6 +737,11 @@ return [
     276 => 'list items: marker-width content-column with mixed types (A+E)',
     277 => 'list items: nested markers on a single line (A)',
     278 => 'list items: marker-character switch splits the list (E)',
+    279 => 'task list items (extension): `- [ ] foo` checkbox markers are not'
+         . ' implemented — the literal `[ ]` / `[x]` stays as the first content'
+         . ' of the list item.',
+    280 => 'task list items (extension): nested checkbox markers are not'
+         . ' implemented — see #279.',
     281 => 'lists: marker-character change splits unordered list `-` -> `+` (E)',
     282 => 'lists: ordered delimiter switch splits list `.` -> `)` (E)',
     284 => 'lists: list interrupting paragraph without blank line (F)',
