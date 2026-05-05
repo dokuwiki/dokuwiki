@@ -300,9 +300,17 @@ return [
          . ' leftmost-first and cannot reorder spans (see #351).',
     327 => 'raw HTML tag with entity in attribute: raw HTML pass-through not supported',
     354 => 'raw HTML tag pass-through: raw HTML pass-through not supported',
-    356 => 'GFM angle-bracket autolink `<http://…>`: not implemented — we'
-         . ' rely on DokuWiki\'s existing bare-URL detection, which does not'
-         . ' parse `<URL>` form',
+    605 => 'angle-bracket autolink with `MAILTO:` scheme: Externallink'
+         . ' builds one regex per scheme listed in `conf/scheme.conf`, and'
+         . ' `mailto` is not in the default allow-list. The brackets fall'
+         . ' through to default escaping and the URL is emitted as literal'
+         . ' text — same security policy as DokuWiki\'s bare-URL detection.',
+    606 => 'angle-bracket autolink with `a+b+c` scheme: scheme is not in'
+         . ' DokuWiki\'s `conf/scheme.conf` allow-list (see #605).',
+    607 => 'angle-bracket autolink with `made-up-scheme`: scheme is not in'
+         . ' DokuWiki\'s `conf/scheme.conf` allow-list (see #605).',
+    609 => 'angle-bracket autolink with `localhost:5001/foo`: `localhost` is'
+         . ' not in DokuWiki\'s `conf/scheme.conf` allow-list (see #605).',
 
     // --------------------------------------------------------------------
     // CommonMark §6.2 flanking-delimiter analysis — deliberately not

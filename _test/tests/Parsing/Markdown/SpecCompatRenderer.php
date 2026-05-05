@@ -284,16 +284,17 @@ class SpecCompatRenderer extends Doku_Renderer_xhtml
     }
 
     /**
-     * Percent-encode characters not in CommonMark's URL-safe set,
-     * preserving existing %XX sequences. Matches what cmark-gfm's
-     * reference renderer does for the spec corpus: UTF-8 bytes and
-     * non-URL-safe ASCII (e.g. `\`, space) become %XX; alphanumerics,
-     * RFC 3986 unreserved/reserved, and `%` itself pass through.
+     * Percent-encode characters not in cmark-gfm's URL-safe set,
+     * preserving existing %XX sequences. cmark-gfm's HREF_SAFE table
+     * (houdini_href_e.c) excludes square brackets, backslash, caret,
+     * backtick, and braces from the safe set even though RFC 3986
+     * lists `[]` as reserved gen-delims; matching that table is what
+     * lets the spec corpus round-trip byte-for-byte.
      */
     private function specEncodeUrl(string $url): string
     {
         return preg_replace_callback(
-            "/[^A-Za-z0-9\\-._~:\\/?#\\[\\]@!$&'()*+,;=%]/",
+            "/[^A-Za-z0-9\\-._~:\\/?#@!$&'()*+,;=%]/",
             static fn($m) => '%' . strtoupper(bin2hex($m[0])),
             $url
         );

@@ -395,7 +395,8 @@ class ModeRegistry
         $modes = [
             'strong', 'subscript', 'superscript',
             'footnote', 'eol', 'preformatted',
-            'gfm_quote', 'gfm_hr', 'externallink', 'emaillink', 'windowssharelink',
+            'gfm_quote', 'gfm_hr',
+            'externallink', 'emaillink', 'windowssharelink',
             'notoc', 'nocache', 'rss',
         ];
 

@@ -256,6 +256,95 @@ class LinksTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    function testExternalLinkAngleBracketAutolink() {
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('externallink', new Externallink());
+        $this->P->parse("Foo <http://www.google.com> Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n".'Foo ']],
+            ['externallink', ['http://www.google.com', 'http://www.google.com']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalLinkAngleBracketDisqualifiedByInternalWhitespace() {
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('externallink', new Externallink());
+        $this->P->parse("Foo <http://www.google.com bim> Bar");
+        // Internal whitespace disqualifies the autolink. The whole envelope
+        // is consumed as cdata so the bare-URL detector cannot pick up
+        // http://www.google.com inside and leave dangling brackets.
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo <http://www.google.com bim> Bar"]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalLinkAngleBracketDisqualifiedByLeadingWhitespace() {
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('externallink', new Externallink());
+        $this->P->parse("Foo < http://www.google.com > Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo < http://www.google.com > Bar"]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalLinkAngleBracketUnregisteredScheme() {
+        global $conf;
+        $conf['syntax'] = 'md';
+        $this->P->addMode('externallink', new Externallink());
+        // mailto is not in the default conf/scheme.conf allow-list, so no
+        // per-scheme angle pattern is built for it. The brackets fall
+        // through to cdata, matching DokuWiki's bare-URL scheme policy.
+        $this->P->parse("Foo <mailto:foo@example.com> Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nFoo <mailto:foo@example.com> Bar"]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalLinkAngleBracketInactiveInDwMode() {
+        global $conf;
+        $conf['syntax'] = 'dw';
+        $this->P->addMode('externallink', new Externallink());
+        // In DW-only syntax, angle-bracket processing is intentionally
+        // not active. The bare-URL pattern still picks up the URL inside
+        // and the angle brackets fall through as literal text — matches
+        // the pre-merge behavior of DokuWiki's Externallink mode.
+        $this->P->parse("Foo <http://www.google.com> Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n".'Foo <']],
+            ['externallink', ['http://www.google.com', null]],
+            ['cdata', ['> Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testEmail() {
         $this->P->addMode('emaillink',new Emaillink());
         $this->P->parse("Foo <bugs@php.net> Bar");
