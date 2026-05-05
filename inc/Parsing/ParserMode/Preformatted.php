@@ -43,6 +43,14 @@ class Preformatted extends AbstractMode
     /** @inheritdoc */
     public function postConnect()
     {
+        // Two exits: a zero-width lookahead when the next line starts with
+        // non-whitespace content (so the boundary \n stays in the stream
+        // and downstream block-level modes like GfmHr or GfmHeader can
+        // anchor on it), and a consuming \n fall-through for blank lines
+        // and end-of-input. The lookahead-only branch is registered first
+        // so PCRE's leftmost-first alternation prefers it whenever it
+        // applies; the consuming branch handles the cases where it cannot.
+        $this->Lexer->addExitPattern('(?=\n[^ \t\n])', 'preformatted');
         $this->Lexer->addExitPattern('\n', 'preformatted');
     }
 

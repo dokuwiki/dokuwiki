@@ -91,7 +91,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  "]],
             ['p_open',[]],
-            ['cdata',['Bar']],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -108,7 +108,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  "]],
             ['p_open',[]],
-            ['cdata',['Bar']],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -125,7 +125,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x\t\n\ty\t"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -142,7 +142,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x\t\n\ty\t"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -179,7 +179,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  \n-X\n*Y"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -202,7 +202,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close', []],
             ['preformatted', ["x  \n  y  "]],
             ['p_open', []],
-            ['cdata', ['Bar']],
+            ['cdata', ["\nBar"]],
             ['p_close', []],
             ['document_end', []],
         ];
