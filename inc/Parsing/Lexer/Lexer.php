@@ -251,21 +251,30 @@ class Lexer
      * delegates all dispatch logic to Handler::handleToken().
      *
      * @param string $content Text parsed.
-     * @param boolean $is_match Token is recognised rather
-     *                               than unparsed data.
+     * @param int $state One of the DOKU_LEXER_* constants identifying the
+     *                   lexer event (ENTER / MATCHED / UNMATCHED / EXIT /
+     *                   SPECIAL).
      * @param int $pos Current byte index location in raw doc
      *                             thats being parsed
      * @return bool
      */
-    protected function invokeHandler($content, $is_match, $pos)
+    protected function invokeHandler($content, $state, $pos)
     {
-        if (($content === "") || ($content === false)) {
+        if ($content === false) {
+            return true;
+        }
+        // Empty content is a no-op for every state EXCEPT EXIT: a zero-width
+        // exit pattern (lookahead-only) must still fire the mode's exit
+        // handler so cleanup like restoring a buffered call writer happens.
+        // Skipping it would pop the mode stack but leave the handler-side
+        // state stale.
+        if ($content === '' && $state !== DOKU_LEXER_EXIT) {
             return true;
         }
         $originalName = $this->modeStack->getCurrent();
         $modeName = $this->mode_handlers[$originalName] ?? $originalName;
 
-        return $this->handler->handleToken($modeName, $content, $is_match, $pos, $originalName);
+        return $this->handler->handleToken($modeName, $content, $state, $pos, $originalName);
     }
 
     /**
