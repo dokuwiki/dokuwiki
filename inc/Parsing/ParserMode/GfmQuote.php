@@ -68,11 +68,24 @@ class GfmQuote extends AbstractMode
      * with no body is valid — it represents an empty paragraph break
      * inside the quote (spec 240) or an empty quote (spec 239).
      *
+     * The first line uses (?:^|\n)> rather than \n> so the blockquote
+     * can take over when a preceding block mode (a table or a list)
+     * consumed the boundary \n on its way out. Those modes' exit
+     * patterns are \n by structural necessity: at the boundary there
+     * is no leading unmatched content for a zero-width lookahead exit
+     * to attach to, and a pure-lookahead exit would trip the lexer's
+     * no-advance safety check. Accepting either a literal \n or a line
+     * start (^ in PCRE multiline mode, which also matches the position
+     * immediately after a consumed \n) lets the blockquote start
+     * regardless. Subsequent quote lines still anchor on \n> because
+     * the previous line consumed up to but not including the \n, so
+     * it is always available for them.
+     *
      * @param string $mode the lexer state name to wire the pattern into
      */
     public function connectTo($mode)
     {
-        $this->Lexer->addSpecialPattern('\n>[^\n]*(?:\n>[^\n]*)*', $mode, 'gfm_quote');
+        $this->Lexer->addSpecialPattern('(?:^|\n)>[^\n]*(?:\n>[^\n]*)*', $mode, 'gfm_quote');
     }
 
     /** @inheritdoc */

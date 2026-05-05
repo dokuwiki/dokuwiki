@@ -4,6 +4,9 @@ namespace dokuwiki\test\Parsing\ParserMode;
 
 use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\GfmQuote;
+use dokuwiki\Parsing\ParserMode\GfmTable;
+use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\Table;
 
 /**
  * Tests for GFM-style block quotes.
@@ -250,6 +253,80 @@ class GfmQuoteTest extends ParserTestBase
         $pCloses = array_filter($names, static fn($n) => $n === 'p_close');
         $this->assertCount(2, $pOpens, 'two paragraphs inside one blockquote');
         $this->assertCount(2, $pCloses);
+    }
+
+    // ----- Handoff from preceding block modes ----------------------------
+    //
+    // GfmTable, DW Table, and DW Listblock all consume the boundary \n on
+    // their way out (their exit pattern is \n by structural necessity: at
+    // the boundary there is no leading unmatched content for a zero-width
+    // lookahead exit to attach to). The pattern (?:^|\n)>... lets GfmQuote
+    // open at the line that starts the blockquote regardless of whether
+    // the preceding mode left the \n in the stream.
+
+    public function testHandoffFromGfmTable()
+    {
+        // Spec example 201: a `>` line immediately following a GFM table
+        // ends the table and opens a blockquote. GfmTable's exit consumes
+        // the boundary \n, so GfmQuote relies on the line-start (^)
+        // alternative to fire here.
+        $this->setSyntax('md');
+        $this->P->addMode('gfm_table', new GfmTable());
+        $this->P->addMode('gfm_quote', new GfmQuote());
+        $this->P->parse("| abc | def |\n| --- | --- |\n| bar | baz |\n> bar");
+
+        $names = array_map(static fn($c) => $c[0], $this->H->calls);
+        $this->assertContains('table_open', $names);
+        $this->assertContains('table_close', $names);
+        $this->assertContains('quote_open', $names);
+        $this->assertContains('quote_close', $names);
+
+        // Order: the quote must open after the table closes.
+        $tableCloseIdx = array_search('table_close', $names, true);
+        $quoteOpenIdx  = array_search('quote_open', $names, true);
+        $this->assertGreaterThan($tableCloseIdx, $quoteOpenIdx);
+    }
+
+    public function testHandoffFromDwTable()
+    {
+        // Same as the GFM-table case for a DW-style table. DW Table's
+        // exit also consumes \n, so the line-start (^) alternative is
+        // what lets the blockquote open.
+        $this->setSyntax('dw');
+        $this->P->addMode('table', new Table());
+        $this->P->addMode('gfm_quote', new GfmQuote());
+        $this->P->parse("| foo | bar |\n> baz");
+
+        $names = array_map(static fn($c) => $c[0], $this->H->calls);
+        $this->assertContains('table_open', $names);
+        $this->assertContains('table_close', $names);
+        $this->assertContains('quote_open', $names);
+        $this->assertContains('quote_close', $names);
+
+        $tableCloseIdx = array_search('table_close', $names, true);
+        $quoteOpenIdx  = array_search('quote_open', $names, true);
+        $this->assertGreaterThan($tableCloseIdx, $quoteOpenIdx);
+    }
+
+    public function testHandoffFromDwListblock()
+    {
+        // DW Listblock also exits on \n, consuming the boundary. The
+        // line-start alternative lets a `>` line right after the list
+        // open a blockquote without an intervening blank line.
+        $this->setSyntax('dw');
+        $this->P->addMode('listblock', new Listblock());
+        $this->P->addMode('gfm_quote', new GfmQuote());
+        $this->P->parse("  * foo\n  * bar\n> baz");
+
+        $names = array_map(static fn($c) => $c[0], $this->H->calls);
+        $this->assertContains('listu_open', $names);
+        $this->assertContains('listu_close', $names);
+        $this->assertContains('quote_open', $names);
+        $this->assertContains('quote_close', $names);
+
+        $listCloseIdx  = array_search('listu_close', $names, true);
+        $quoteOpenIdx  = array_search('quote_open', $names, true);
+        $this->assertGreaterThan($listCloseIdx, $quoteOpenIdx);
     }
 
     public function testMdListInsideQuote()
