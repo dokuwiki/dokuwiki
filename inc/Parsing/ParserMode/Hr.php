@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Hr extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 160;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -11,8 +19,9 @@ class Hr extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 160;
+        $handler->addCall('hr', [], $pos);
+        return true;
     }
 }

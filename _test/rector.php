@@ -186,11 +186,13 @@ return static function (RectorConfig $rectorConfig): void {
         'DokuWiki_Plugin' => 'dokuwiki\Extension\Plugin',
         'DokuWiki_Remote_Plugin' => 'dokuwiki\Extension\RemotePlugin',
         'DokuWiki_Syntax_Plugin' => 'dokuwiki\Extension\SyntaxPlugin',
+        'Doku_Handler' => 'dokuwiki\Parsing\Handler',
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
         // see inc/deprecated.php
         'Doku_Lexer_Escape' => 'dokuwiki\Parsing\Lexer\Lexer::escape',
+        'Doku_Handler_Parse_Media' => 'dokuwiki\Parsing\ParserMode\Media::parseMedia',
 
         // see inc/utf8.php
         'utf8_isASCII' => 'dokuwiki\Utf8\Clean::isASCII',

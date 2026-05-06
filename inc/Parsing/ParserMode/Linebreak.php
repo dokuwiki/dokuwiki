@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Linebreak extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 140;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -11,8 +19,9 @@ class Linebreak extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 140;
+        $handler->addCall('linebreak', [], $pos);
+        return true;
     }
 }

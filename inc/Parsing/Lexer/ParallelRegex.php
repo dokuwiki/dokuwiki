@@ -57,35 +57,6 @@ class ParallelRegex
     }
 
     /**
-     * Attempts to match all patterns at once against a string.
-     *
-     * @param string $subject      String to match against.
-     * @param string $match        First matched portion of
-     *                             subject.
-     * @return bool|string         False if no match found, label if label exists, true if not
-     */
-    public function apply($subject, &$match)
-    {
-        if (count($this->patterns) == 0) {
-            return false;
-        }
-        if (! preg_match($this->getCompoundedRegex(), $subject, $matches)) {
-            $match = "";
-            return false;
-        }
-
-        $match = $matches[0];
-        $size = count($matches);
-        // FIXME this could be made faster by storing the labels as keys in a hashmap
-        for ($i = 1; $i < $size; $i++) {
-            if ($matches[$i] && isset($this->labels[$i - 1])) {
-                return $this->labels[$i - 1];
-            }
-        }
-        return true;
-    }
-
-    /**
      * Attempts to split the string against all patterns at once
      *
      * @param string $subject      String to match against.

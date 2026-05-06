@@ -29,9 +29,6 @@
     <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
     <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
 
-    <!-- deprecated files to be removed soon -->
-    <exclude-pattern>*/inc/parser/parser.php</exclude-pattern>
-
     <!-- rules on top of PSR-12 -->
     <rule ref="PSR12">
         <!-- This rule breaks the single line guard pattern that we prefer to keep using -->

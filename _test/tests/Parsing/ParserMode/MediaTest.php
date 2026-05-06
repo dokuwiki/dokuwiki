@@ -1,5 +1,8 @@
 <?php
-require_once 'parser.inc.php';
+
+namespace dokuwiki\test\Parsing\ParserMode;
+
+use Doku_Renderer_xhtml;
 
 /**
  * Tests for the implementation of audio and video files
@@ -7,31 +10,32 @@ require_once 'parser.inc.php';
  * @group parser_media
  * @author  Michael Große <grosse@cosmocode.de>
 */
-class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
+class MediaTest extends ParserTestBase
+{
 
     function testVideoOGVExternal() {
         $file = 'http://some.where.far/away.ogv';
         $parser_response = p_get_instructions('{{' . $file . '}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('externalmedia',array($file,null,null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['externalmedia',[$file,null,null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
 
         $Renderer = new Doku_Renderer_xhtml();
         $url = $Renderer->externalmedia($file,null,null,null,null,'cache','details',true);
         //print_r("url: " . $url);
         $video = '<video class="media" width="320" height="240" controls="controls">';
-        $this->assertEquals(substr($url,0,66),$video);
+        $this->assertEquals($video, substr($url,0,66));
         $source = '<source src="http://some.where.far/away.ogv" type="video/ogg" />';
-        $this->assertEquals(substr($url,67,64),$source);
+        $this->assertEquals($source, substr($url,67,64));
         // work around random token
-        $a_first_part = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?tok=';
+        $a_first_part = '<a href="' . \DOKU_BASE . 'lib/exe/fetch.php?tok=';
         $a_second_part = '&amp;media=http%3A%2F%2Fsome.where.far%2Faway.ogv" class="media mediafile mf_ogv" title="http://some.where.far/away.ogv">';
 
         $substr_start = 132;
@@ -55,20 +59,20 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $file = 'http://some.where.far/away.vid';
         $parser_response = p_get_instructions('{{' . $file . '}}');
 
-        $calls = array(
-            array('document_start', array()),
-            array('p_open', array()),
-            array('externalmedia', array($file, null, null, null, null, 'cache', 'details')),
-            array('cdata', array(null)),
-            array('p_close', array()),
-            array('document_end', array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex', $parser_response), $calls);
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['externalmedia', [$file, null, null, null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
 
         $Renderer = new Doku_Renderer_xhtml();
         $url = $Renderer->externalmedia($file, null, null, null, null, 'cache', 'details', true);
         // work around random token
-        $a_first_part = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?tok=';
+        $a_first_part = '<a href="' . \DOKU_BASE . 'lib/exe/fetch.php?tok=';
         $a_second_part = '&amp;media=http%3A%2F%2Fsome.where.far%2Faway.vid" class="media mediafile mf_vid" title="http://some.where.far/away.vid">';
 
         $substr_start = 0;
@@ -90,41 +94,41 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $file = 'wiki:kind_zu_katze.ogv';
         $parser_response = p_get_instructions('{{' . $file . '}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('internalmedia',array($file,null,null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['internalmedia',[$file,null,null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
 
         $Renderer = new Doku_Renderer_xhtml();
         $url = $Renderer->externalmedia($file,null,null,null,null,'cache','details',true);
 
-        $video = '<video class="media" width="320" height="240" controls="controls" poster="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.png">';
+        $video = '<video class="media" width="320" height="240" controls="controls" poster="' . \DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.png">';
         $substr_start = 0;
         $substr_len = strlen($video);
         $this->assertEquals($video, substr($url, $substr_start, $substr_len));
 
         // find $source_webm in $url
-        $source_webm = '<source src="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.webm" type="video/webm" />';
+        $source_webm = '<source src="' . \DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.webm" type="video/webm" />';
         $substr_start = strpos($url, $source_webm, $substr_start + $substr_len);
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $source_ogv in $url
-        $source_ogv = '<source src="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" type="video/ogg" />';
+        $source_ogv = '<source src="' . \DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" type="video/ogg" />';
         $substr_start = strpos($url, $source_ogv, $substr_start + strlen($source_webm));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_webm = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
+        $a_webm = '<a href="' . \DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.webm" class="media mediafile mf_webm" title="wiki:kind_zu_katze.webm (99.1'."\xC2\xA0".'KB)">kind_zu_katze.webm</a>';
         $substr_start = strpos($url, $a_webm, $substr_start + strlen($source_ogv));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
         // find $a_webm in $url
-        $a_ogv = '<a href="' . DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
+        $a_ogv = '<a href="' . \DOKU_BASE . 'lib/exe/fetch.php?media=wiki:kind_zu_katze.ogv" class="media mediafile mf_ogv" title="wiki:kind_zu_katze.ogv (44.8'."\xC2\xA0".'KB)">kind_zu_katze.ogv</a>';
         $substr_start = strpos($url, $a_ogv, $substr_start + strlen($a_webm));
         $this->assertNotSame(false, $substr_start, 'Substring not found.');
 
@@ -148,59 +152,59 @@ class TestOfDoku_Parser_Media extends TestOfDoku_Parser {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|This is a simple text.}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('internalmedia',array($file,'This is a simple text.',null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['internalmedia',[$file,'This is a simple text.',null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
     }
 
     function testLinkTextWithWavedBrackets_1() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|We got a { here.}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('internalmedia',array($file,'We got a { here.',null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['internalmedia',[$file,'We got a { here.',null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
     }
 
     function testLinkTextWithWavedBrackets_2() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|We got a } here.}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('internalmedia',array($file,'We got a } here.',null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['internalmedia',[$file,'We got a } here.',null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
     }
 
     function testLinkTextWithWavedBrackets_3() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|We got a { and a } here.}}');
 
-        $calls = array (
-            array('document_start',array()),
-            array('p_open',array()),
-            array('internalmedia',array($file,'We got a { and a } here.',null,null,null,'cache','details')),
-            array('cdata',array(null)),
-            array('p_close',array()),
-            array('document_end',array()),
-        );
-        $this->assertEquals(array_map('stripbyteindex',$parser_response),$calls);
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['internalmedia',[$file,'We got a { and a } here.',null,null,null,'cache','details']],
+            ['cdata',[null]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
 
 /**
@@ -19,6 +20,12 @@ class Wordblock extends AbstractMode
     public function __construct($badwords)
     {
         $this->badwords = $badwords;
+    }
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 250;
     }
 
     /** @inheritdoc */
@@ -45,8 +52,9 @@ class Wordblock extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 250;
+        $handler->addCall('wordblock', [$match], $pos);
+        return true;
     }
 }
