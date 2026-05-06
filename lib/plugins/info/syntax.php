@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Parsing\ModeRegistry;
 
 /**
  * Info Plugin: Displays information about various DokuWiki internals
@@ -17,7 +18,7 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     public function getType()
     {
-        return 'substition';
+        return ModeRegistry::CATEGORY_SUBSTITUTION;
     }
 
     /**
