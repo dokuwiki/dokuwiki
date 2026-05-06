@@ -538,9 +538,13 @@ function io_createNamespace($id, $ns_type = 'pages')
     // verify ns_type
     $types = ['pages' => 'wikiFN', 'media' => 'mediaFN'];
     if (!isset($types[$ns_type])) {
-        trigger_error('Bad $ns_type parameter for io_createNamespace().');
-        return;
+        throw new RuntimeException('Bad $ns_type parameter for io_createNamespace().');
     }
+    // refuse to create excessively deep hierarchies #4613
+    if (substr_count($id, ':') >= 128) {
+        throw new RuntimeException('Refusing to create nested namespace hierarchy deeper than 128 levels');
+    }
+
     // make event list
     $missing = [];
     $ns_stack = explode(':', $id);
