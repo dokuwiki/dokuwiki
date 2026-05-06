@@ -2,6 +2,13 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-05-06
+inc/Parsing/ParserMode/Formatting.php
+inc/fulltext.php
+inc/indexer.php
+inc/parser/handler.php
+inc/parser/parser.php
+
 # removed on 2026-04-12
 lib/images/larger.gif
 lib/images/smaller.gif
