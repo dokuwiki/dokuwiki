@@ -38,31 +38,42 @@ class MediaChangeLog extends ChangeLog
         return RevisionInfo::MODE_MEDIA;
     }
 
+    /**
+     * Returns path to the global media-changelog file
+     *
+     * @return string path to file
+     */
+    protected function getGlobalChangelogFilename()
+    {
+        global $conf;
+        return $conf['media_changelog'];
+    }
 
     /**
-     * Adds an entry to the changelog
+     * Copy the externally-modified media file to the attic at the synthesized revision date.
+     * If the file mtime is older than the last known revision (broken chronology),
+     * touch the file forward so future reads see a consistent state.
      *
-     * @param array $info    Revision info structure of a media file
-     * @param int $timestamp log line date (optional)
-     * @return array revision info of added log line
-     *
-     * @see also addMediaLogEntry() in inc/changelog.php file
+     * @param array $revInfo synthesized revision info
+     * @return bool true on success (or nothing to copy), false if the attic copy failed
      */
-    public function addLogEntry(array $info, $timestamp = null)
+    protected function saveExternalAttic(array $revInfo)
     {
         global $conf;
 
-        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+        $file = $this->getFilename();
+        if (!file_exists($file)) return true;
 
-        // add changelog lines
-        $logline = static::buildLogLine($info, $timestamp);
-        io_saveFile(mediaMetaFN($this->id, '.changes'), $logline, $append = true);
-        io_saveFile($conf['media_changelog'], $logline, $append = true); //global changelog cache
+        // rescue: file mtime older than last revision — touch forward to the synthesized date
+        if (empty($revInfo['timestamp'])) {
+            if (!@touch($file, $revInfo['date'])) return false;
+            clearstatcache(false, $file);
+        }
 
-        // update cache
-        $this->currentRevision = $info['date'];
-        $info['mode'] = $this->getMode();
-        $this->cache[$this->id][$this->currentRevision] = $info;
-        return $info;
+        $atticfile = $this->getFilename($revInfo['date']);
+        io_makeFileDir($atticfile);
+        if (!@copy($file, $atticfile)) return false;
+        if (!empty($conf['fmode'])) @chmod($atticfile, $conf['fmode']);
+        return true;
     }
 }
