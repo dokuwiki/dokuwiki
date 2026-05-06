@@ -29,7 +29,7 @@ class Backlinks extends Ui
 
         $data = (new MetadataSearch())->backlinks($ID);
 
-        if (!empty($data)) {
+        if ($data !== []) {
             echo '<ul class="idx">';
             foreach ($data as $blink) {
                 echo '<li><div class="li">';
@@ -41,5 +41,4 @@ class Backlinks extends Ui
             echo '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
         }
     }
-
 }

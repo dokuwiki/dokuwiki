@@ -119,7 +119,7 @@ class SearchState
             'target' => $conf['target']['wiki'],
         ];
 
-        $newQuery = (new QueryParser)->revert(
+        $newQuery = (new QueryParser())->revert(
             $parsedQuery['and'],
             $parsedQuery['not'],
             $parsedQuery['phrases'],

@@ -376,7 +376,7 @@ function check()
                 isn\'t used or the wiki is actually empty this is normal.'
             );
         }
-    } catch (IndexIntegrityException $e) {
+    } catch (IndexIntegrityException) {
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See

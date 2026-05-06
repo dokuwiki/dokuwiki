@@ -133,7 +133,8 @@ class FulltextSearch
     public function snippet(string $id, array $highlight): mixed
     {
         $text = rawWiki($id);
-        $text = str_replace("\xC2\xAD", '', $text); // remove soft-hyphens
+        $text = str_replace("\xC2\xAD", '', $text);
+         // remove soft-hyphens
         $evdata = [
             'id' => $id,
             'text' => &$text,
@@ -274,7 +275,7 @@ class FulltextSearch
             $term .= $BR;
         }
 
-        if (in_array($term, [$BL, $BR, $BL . $BR])) {
+        if (in_array($term, [$BL, $BR, $BL . $BR], true)) {
             $term = '';
         }
         return $term;

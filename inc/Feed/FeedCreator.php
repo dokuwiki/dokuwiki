@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Feed;
 
+use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Extension\Event;
 
 class FeedCreator
@@ -148,7 +149,7 @@ class FeedCreator
         if (!$this->options->get('search_query')) return [];
 
         $poswords = [];
-        $data = (new \dokuwiki\Search\FulltextSearch())->pageSearch($this->options->get('search_query'), $poswords);
+        $data = (new FulltextSearch())->pageSearch($this->options->get('search_query'), $poswords);
         return array_keys($data);
     }
 

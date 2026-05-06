@@ -703,7 +703,7 @@ class ApiCore
         // run the indexer if page wasn't indexed yet
         try {
             (new Indexer())->addPage($page);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // indexing failure is non-fatal, the page was saved successfully
         }
 
@@ -919,7 +919,7 @@ class ApiCore
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
-        return (new \dokuwiki\Search\MetadataSearch())->mediause($media);
+        return (new MetadataSearch())->mediause($media);
     }
 
     /**

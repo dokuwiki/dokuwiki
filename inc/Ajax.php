@@ -55,7 +55,7 @@ class Ajax
         if (empty($query)) return;
 
         $query = urldecode($query);
-        $data = (new MetadataSearch)->pageLookup($query, true, useHeading('navigation'));
+        $data = (new MetadataSearch())->pageLookup($query, true, useHeading('navigation'));
 
         if ($data === []) return;
 
@@ -98,7 +98,7 @@ class Ajax
         if (empty($query)) $query = cleanID($INPUT->get->str('q'));
         if (empty($query)) return;
 
-        $data = (new MetadataSearch)->pageLookup($query);
+        $data = (new MetadataSearch())->pageLookup($query);
         if ($data === []) return;
         $data = array_keys($data);
 
@@ -356,6 +356,7 @@ class Ajax
         $ns = getNS($q);
 
         $ns = cleanID($ns);
+
         $id = cleanID($id);
 
         $nsd = utf8_encodeFN(str_replace(':', '/', $ns));
@@ -363,12 +364,12 @@ class Ajax
         $data = [];
         if ($q !== '' && $ns === '') {
             // use index to lookup matching pages
-            $pages = (new MetadataSearch)->pageLookup($id, true);
+            $pages = (new MetadataSearch())->pageLookup($id, true);
 
             // If 'useheading' option is 'always' or 'content',
             // search page titles with original query as well.
             if ($conf['useheading'] == '1' || $conf['useheading'] == 'content') {
-                $pages = array_merge($pages, (new MetadataSearch)->pageLookup($q, true, true));
+                $pages = array_merge($pages, (new MetadataSearch())->pageLookup($q, true, true));
                 asort($pages, SORT_STRING);
             }
 

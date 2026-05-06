@@ -2,6 +2,7 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Extension\Event;
 use dokuwiki\Logger;
 use dokuwiki\Search\Indexer;
@@ -206,15 +207,17 @@ class TaskRunner
 
         // do the work
         try {
-            $indexer = (new Indexer())->setLogger(function ($msg) { echo $msg . NL; });
+            $indexer = (new Indexer())->setLogger(function ($msg) {
+                echo $msg . NL;
+            });
             if (!page_exists($ID)) {
                 $indexer->deletePage($ID, true);
             } else {
                 $indexer->addPage($ID, true);
             }
             return true;
-        } catch (Search\Exception\SearchException $e) {
-            $msg = get_class($e) .' : '. $e->getMessage();
+        } catch (SearchException $e) {
+            $msg = $e::class . ' : ' . $e->getMessage();
             echo $msg;
             Logger::debug($msg);
             return false;
