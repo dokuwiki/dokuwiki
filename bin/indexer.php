@@ -106,7 +106,7 @@ class IndexerCLI extends CLI
     protected function clearindex()
     {
         $this->notice('Clearing index...');
-        (new Indexer)->clear();
+        (new Indexer())->clear();
         $this->success('Index cleared.');
     }
 }

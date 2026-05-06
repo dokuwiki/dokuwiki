@@ -815,7 +815,7 @@ abstract class ChangeLog
 
             $this->writeLogEntry($revInfo);
             return true;
-        } catch (\RuntimeException $e) {
+        } catch (\RuntimeException) {
             // silent fallback to in-memory synthesis
             return false;
         } finally {

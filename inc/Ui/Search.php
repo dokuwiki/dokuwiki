@@ -9,8 +9,6 @@ use dokuwiki\Search\Query\QueryParser;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
-
-
 class Search extends Ui
 {
     protected $query;
@@ -32,7 +30,7 @@ class Search extends Ui
         global $QUERY;
 
         $this->query = $QUERY;
-        $this->parsedQuery = (new QueryParser)->convert($QUERY ?? '');
+        $this->parsedQuery = (new QueryParser())->convert($QUERY ?? '');
         $this->searchState = new SearchState($this->parsedQuery);
 
         $this->pageLookupResults = $pageLookupResults;

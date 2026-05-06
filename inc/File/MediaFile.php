@@ -169,7 +169,7 @@ class MediaFile
     {
         try {
             $info = (new ImageInfo($this->path))->autorotate();
-        } catch (Exception $e) {
+        } catch (Exception) {
             return [0, 0];
         }
         if ($w === 0 && $h === 0) return $info->getDimensions();
