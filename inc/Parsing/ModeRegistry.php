@@ -21,13 +21,13 @@ use dokuwiki\Parsing\ParserMode\Smiley;
 class ModeRegistry
 {
     // Category constants (preserving the historical 'substition' typo)
-    public const CATEGORY_CONTAINER   = 'container';
-    public const CATEGORY_BASEONLY    = 'baseonly';
-    public const CATEGORY_FORMATTING  = 'formatting';
-    public const CATEGORY_SUBSTITION  = 'substition';
-    public const CATEGORY_PROTECTED   = 'protected';
-    public const CATEGORY_DISABLED    = 'disabled';
-    public const CATEGORY_PARAGRAPHS  = 'paragraphs';
+    public const CATEGORY_CONTAINER    = 'container';
+    public const CATEGORY_BASEONLY     = 'baseonly';
+    public const CATEGORY_FORMATTING   = 'formatting';
+    public const CATEGORY_SUBSTITUTION = 'substition';
+    public const CATEGORY_PROTECTED    = 'protected';
+    public const CATEGORY_DISABLED     = 'disabled';
+    public const CATEGORY_PARAGRAPHS   = 'paragraphs';
 
     /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
     private ?array $modes = null;
@@ -78,7 +78,7 @@ class ModeRegistry
                 'strong', 'emphasis', 'underline', 'monospace',
                 'subscript', 'superscript', 'deleted', 'footnote',
             ],
-            self::CATEGORY_SUBSTITION => [
+            self::CATEGORY_SUBSTITUTION => [
                 'acronym', 'smiley', 'wordblock', 'entity',
                 'camelcaselink', 'internallink', 'media', 'externallink',
                 'linebreak', 'emaillink', 'windowssharelink', 'filelink',

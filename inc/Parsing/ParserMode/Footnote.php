@@ -16,7 +16,7 @@ class Footnote extends AbstractMode
         $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
             ModeRegistry::CATEGORY_CONTAINER,
             ModeRegistry::CATEGORY_FORMATTING,
-            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_PROTECTED,
             ModeRegistry::CATEGORY_DISABLED,
         ]);
