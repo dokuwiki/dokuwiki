@@ -1,0 +1,104 @@
+<?php
+
+namespace dokuwiki\test\Search\Index;
+
+use dokuwiki\Search\Index\AbstractIndex;
+
+abstract class AbstractIndexTestCase extends \DokuWikiTest
+{
+
+    /**
+     * Return a new writable index
+     * 
+     * @return AbstractIndex
+     */
+    abstract protected function getIndex();
+
+    public function testGetRowID()
+    {
+        $index = $this->getIndex();
+        $result = $index->getRowID('foo');
+        $index->save();
+        $this->assertEquals(0, $result);
+
+        $result = $index->getRowID('bar');
+        $index->save();
+        $this->assertEquals(1, $result);
+
+        $result = $index->getRowID('foo');
+        $index->save();
+        $this->assertEquals(0, $result);
+    }
+
+    public function testGetRowIDs()
+    {
+        $index = $this->getIndex();
+        $result = $index->getRowIDs(['foo', 'bar', 'baz']);
+        $index->save();
+        $this->assertEquals(['foo' => 0, 'bar' => 1, 'baz' => 2], $result);
+
+        $result = $index->getRowIDs(['foo', 'bang', 'baz']);
+        $index->save();
+        $this->assertEquals(['foo' => 0, 'baz' => 2, 'bang' => 3], $result);
+    }
+
+    public function testRetrieve()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']); // add data
+        $index->save();
+
+        $this->assertEquals('bar', $index->retrieveRow(1));
+        $this->assertEquals('', $index->retrieveRow(5)); // non existent
+        $index->save();
+
+        // only rows 0-2 exist (from getRowIDs), 4 and 7 do not and are ignored
+        $this->assertEquals([0 => 'foo', 2 => 'baz'], $index->retrieveRows([0, 2, 4, 7]));
+        $index->save();
+    }
+
+    public function testSearch()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz', 'bazzel']);
+        $index->save();
+
+        $result = $index->search('/^ba.$/');
+        $this->assertEquals(
+            [1 => 'bar', 2 => 'baz'],
+            $result
+        );
+    }
+
+    public function testIterable()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']);
+        $index->save();
+
+        $result = iterator_to_array($index);
+        $this->assertEquals([0 => 'foo', 1 => 'bar', 2 => 'baz'], $result);
+    }
+
+    public function testCountEmpty()
+    {
+        $index = $this->getIndex();
+        $this->assertEquals(0, count($index));
+    }
+
+    public function testCountWithData()
+    {
+        $index = $this->getIndex();
+        $index->getRowIDs(['foo', 'bar', 'baz']);
+        $index->save();
+        $this->assertEquals(3, count($index));
+    }
+
+    public function testCountWithGaps()
+    {
+        $index = $this->getIndex();
+        $index->changeRow(5, 'test');
+        $index->save();
+        $this->assertEquals(6, count($index)); // lines 0-5
+    }
+}

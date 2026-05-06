@@ -147,7 +147,8 @@ class FeedCreator
         if (!actionOK('search')) throw new \RuntimeException('search is disabled');
         if (!$this->options->get('search_query')) return [];
 
-        $data = ft_pageSearch($this->options->get('search_query'), $poswords);
+        $poswords = [];
+        $data = (new \dokuwiki\Search\FulltextSearch())->pageSearch($this->options->get('search_query'), $poswords);
         return array_keys($data);
     }
 

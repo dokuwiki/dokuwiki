@@ -17,6 +17,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\FulltextSearch;
 
 if (!defined('DOKU_INC')) define('DOKU_INC', __DIR__ . '/');
 require_once(DOKU_INC . 'inc/init.php');

@@ -192,7 +192,6 @@ function search_namespaces(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_media(&$data, $base, $file, $type, $lvl, $opts)
 {
-
     //we do nothing with directories
     if ($type == 'd') {
         if (empty($opts['depth'])) return true; // recurse forever
@@ -311,7 +310,7 @@ function search_list(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return false;
     //only search txt files
-    if (str_ends_with($file, '.txt')) {
+    if (str_ends_with($file,  '.txt') ) {
         //check ACL
         $id = pathID($file);
         if (auth_quickaclcheck($id) < AUTH_READ) {
@@ -343,7 +342,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
     //we do nothing with directories
     if ($type == 'd') return true;
     //only search txt files
-    if (!str_ends_with($file, '.txt')) return true;
+    if (!str_ends_with($file,  '.txt')) return true;
 
     //simple stringmatching
     if (!empty($opts['query'])) {
@@ -395,7 +394,7 @@ function search_allpages(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //only search txt files
-    if (!str_ends_with($file, '.txt')) return true;
+    if (!str_ends_with($file,  '.txt')) return true;
 
     $item = [];
     $item['id']   = pathID($file);
@@ -550,15 +549,15 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
         if (empty($opts['listdirs'])) return $return;
         //neither list nor recurse forbidden items:
         if (empty($opts['skipacl']) && !empty($opts['sneakyacl']) && $item['perm'] < AUTH_READ) return false;
-        if (!empty($opts['dirmatch']) && !preg_match('/' . $opts['dirmatch'] . '/', $file)) return $return;
-        if (!empty($opts['nsmatch']) && !preg_match('/' . $opts['nsmatch'] . '/', $item['ns'])) return $return;
+        if (!empty($opts['dirmatch']) && !preg_match('/'.$opts['dirmatch'].'/', $file)) return $return;
+        if (!empty($opts['nsmatch']) && !preg_match('/'.$opts['nsmatch'].'/', $item['ns'])) return $return;
     } else {
         if (empty($opts['listfiles'])) return $return;
         if (empty($opts['skipacl']) && $item['perm'] < AUTH_READ) return $return;
-        if (!empty($opts['pagesonly']) && !str_ends_with($file, '.txt')) return $return;
+        if (!empty($opts['pagesonly']) && !str_ends_with($file,  '.txt')) return $return;
         if (empty($opts['showhidden']) && isHiddenPage($item['id'])) return $return;
-        if (!empty($opts['filematch']) && !preg_match('/' . $opts['filematch'] . '/', $file)) return $return;
-        if (!empty($opts['idmatch']) && !preg_match('/' . $opts['idmatch'] . '/', $item['id'])) return $return;
+        if (!empty($opts['filematch']) && !preg_match('/'.$opts['filematch'].'/', $file)) return $return;
+        if (!empty($opts['idmatch']) && !preg_match('/'.$opts['idmatch'].'/', $item['id'])) return $return;
     }
 
     // still here? prepare the item
@@ -577,7 +576,9 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
 
     if ($type == 'f') {
         if (!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base . '/' . $file, false));
-        if (!empty($opts['firsthead'])) $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        if (!empty($opts['firsthead'])) {
+            $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        }
     }
 
     // finally add the item

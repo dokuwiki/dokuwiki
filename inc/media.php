@@ -19,6 +19,7 @@ use dokuwiki\Logger;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
 use dokuwiki\Ui\Media\DisplayRow;
 use dokuwiki\Ui\Media\DisplayTile;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Ui\MediaDiff;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
@@ -229,7 +230,7 @@ function media_inuse($id)
     global $conf;
 
     if ($conf['refcheck']) {
-        $mediareferences = ft_mediause($id, true);
+        $mediareferences = (new MetadataSearch())->mediause($id, true);
         if ($mediareferences === []) {
             return false;
         } else {
@@ -1272,15 +1273,18 @@ function media_details($image, $auth, $rev = '', $meta = false)
         if ($tag['value']) {
             $value = cleanText($tag['value']);
             echo '<dt>' . $lang[$tag['tag'][1]] . '</dt><dd>';
-            if ($tag['tag'][2] == 'date') echo dformat($value);
-            else echo hsc($value);
+            if ($tag['tag'][2] == 'date') {
+                echo dformat($value);
+            } else {
+                echo hsc($value);
+            }
             echo '</dd>' . NL;
         }
     }
     echo '</dl>' . NL;
     echo '<dl>' . NL;
     echo '<dt>' . $lang['reference'] . ':</dt>';
-    $media_usage = ft_mediause($image, true);
+    $media_usage = (new MetadataSearch())->mediause($image, true);
     if ($media_usage !== []) {
         foreach ($media_usage as $path) {
             echo '<dd>' . html_wikilink($path) . '</dd>';

@@ -4,6 +4,7 @@
 use dokuwiki\Logger;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
+use dokuwiki\Search\Indexer;
 
 if (!defined('DOKU_INC')) define('DOKU_INC', realpath(__DIR__ . '/../') . '/');
 define('NOSESSION', 1);
@@ -90,11 +91,8 @@ class IndexerCLI extends CLI
     {
         $this->notice("$id indexing...");
         try {
-            if (idx_addPage($id, isset($this->loglevel['info']), $this->clear)) {
-                $this->success("$id indexed.");
-            } else {
-                $this->info("$id index not updated.");
-            }
+            (new Indexer())->addPage($id, $this->clear);
+            $this->success("$id indexed.");
         } catch (Throwable $e) {
             $this->error("$id indexing error: " . $e->getMessage());
             $this->debug($e->getTraceAsString());
@@ -108,7 +106,7 @@ class IndexerCLI extends CLI
     protected function clearindex()
     {
         $this->notice('Clearing index...');
-        idx_get_indexer()->clear();
+        (new Indexer)->clear();
         $this->success('Index cleared.');
     }
 }
