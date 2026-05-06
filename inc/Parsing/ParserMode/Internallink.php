@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\MailUtils;
 use dokuwiki\Parsing\Handler;
 
 class Internallink extends AbstractMode
@@ -57,8 +58,8 @@ class Internallink extends AbstractMode
                 [$link[0], $link[1]],
                 $pos
             );
-        } elseif (preg_match('<' . PREG_PATTERN_VALID_EMAIL . '>', $link[0])) {
-            // E-Mail (pattern above is defined in inc/mail.php)
+        } elseif (preg_match('<' . MailUtils::PREG_PATTERN_VALID_EMAIL . '>', $link[0])) {
+            // E-Mail
             $handler->addCall(
                 'emaillink',
                 [$link[0], $link[1]],

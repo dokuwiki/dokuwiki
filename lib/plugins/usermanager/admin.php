@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\AdminPlugin;
 use dokuwiki\Extension\AuthPlugin;
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\Conversion;
 
@@ -1164,7 +1165,7 @@ class admin_plugin_usermanager extends AdminPlugin
         }
 
         if ($this->auth->canDo('modMail')) {
-            if (empty($mail) || !mail_isvalid($mail)) {
+            if (empty($mail) || !MailUtils::isValid($mail)) {
                 $error = $this->lang['import_error_badmail'];
                 return false;
             }
