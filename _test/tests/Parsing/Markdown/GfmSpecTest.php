@@ -12,10 +12,6 @@ use dokuwiki\Parsing\ModeRegistry;
  * renderer) and the result is compared to the expected HTML from the spec,
  * tolerating whitespace differences around block-level tags.
  *
- * Most examples are expected to FAIL until the relevant GFM parser modes
- * are implemented — they are the branch's living TODO list for GFM parity.
- * Do not mark such failures incomplete or skipped.
- *
  * `gfm-spec/skip.php` lists examples that are deliberately out of scope
  * for DokuWiki (e.g. CommonMark flanking-delimiter edge cases). Those are
  * reported as skipped with a reason.
