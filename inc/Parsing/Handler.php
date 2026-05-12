@@ -107,15 +107,16 @@ class Handler
     {
         $this->currentModeName = $originalModeName ?: $modeName;
 
-        // core modes: dispatch through the mode object's handle() method
-        if (isset($this->modeObjects[$modeName])) {
-            return $this->modeObjects[$modeName]->handle($match, $state, $pos, $this);
-        }
-
-        // plugin modes: extract plugin name and call plugin()
+        // check plugin modes first: they must go through plugin() so addPluginCall() emits an instruction.
+        // SyntaxPlugin::handle() only returns data but in contrast to core modes, it does not write to the call list.
         if (str_starts_with($modeName, 'plugin_')) {
             [, $plugin] = sexplode('_', $modeName, 2, '');
             return $this->plugin($match, $state, $pos, $plugin);
+        }
+
+        // core modes: dispatch through the mode object's handle() method
+        if (isset($this->modeObjects[$modeName])) {
+            return $this->modeObjects[$modeName]->handle($match, $state, $pos, $this);
         }
 
         // should not be reached — all modes should have registered objects
