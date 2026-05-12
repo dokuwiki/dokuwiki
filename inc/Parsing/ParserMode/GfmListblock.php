@@ -280,9 +280,11 @@ class GfmListblock extends AbstractMode
             if ($c[0] === 'p_open') $pCount++;
         }
 
-        if ($pCount === 1
+        if (
+            $pCount === 1
             && $calls[0][0] === 'p_open'
-            && end($calls)[0] === 'p_close') {
+            && end($calls)[0] === 'p_close'
+        ) {
             array_shift($calls);
             array_pop($calls);
         }

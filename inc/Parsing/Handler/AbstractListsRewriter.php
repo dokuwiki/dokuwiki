@@ -137,7 +137,7 @@ abstract class AbstractListsRewriter extends AbstractRewriter
     protected function handleListClose($call)
     {
         $first = true;
-        while (!empty($this->listStack)) {
+        while ($this->listStack !== []) {
             if ($first) {
                 $this->listCalls[] = ['listcontent_close', [], $call[2]];
                 $first = false;

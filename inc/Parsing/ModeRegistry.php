@@ -502,7 +502,7 @@ class ModeRegistry
     protected function instantiateModes(array $modeNames): void
     {
         foreach ($modeNames as $mode) {
-            $class = implode('', array_map('ucfirst', explode('_', $mode))); // snake_case to PascalCase
+            $class = implode('', array_map(ucfirst(...), explode('_', $mode))); // snake_case to PascalCase
             $class = 'dokuwiki\\Parsing\\ParserMode\\' . $class; // prepend namespace
             $obj = new $class();
             $this->modes[] = [

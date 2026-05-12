@@ -37,8 +37,8 @@ class Media
             $out = $src;
             $param = '';
         }
-
-        $w = $h = null;
+        $w = null;
+        $h = null;
         if (preg_match('#(\d+)(x(\d+))?#i', $param, $size)) {
             $w = empty($size[1]) ? null : $size[1];
             $h = empty($size[3]) ? null : $size[3];

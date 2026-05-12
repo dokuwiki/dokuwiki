@@ -121,7 +121,8 @@ class GfmBacktickSingle extends AbstractMode
     protected function normalizeBody(string $body): string
     {
         $body = str_replace(["\r\n", "\r", "\n"], ' ', $body);
-        if (strlen($body) >= 2
+        if (
+            strlen($body) >= 2
             && $body[0] === ' '
             && $body[-1] === ' '
             && trim($body) !== ''
