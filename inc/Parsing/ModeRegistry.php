@@ -23,13 +23,13 @@ use dokuwiki\Parsing\Parser;
 class ModeRegistry
 {
     // Category constants (preserving the historical 'substition' typo)
-    public const CATEGORY_CONTAINER   = 'container';
-    public const CATEGORY_BASEONLY    = 'baseonly';
-    public const CATEGORY_FORMATTING  = 'formatting';
-    public const CATEGORY_SUBSTITION  = 'substition';
-    public const CATEGORY_PROTECTED   = 'protected';
-    public const CATEGORY_DISABLED    = 'disabled';
-    public const CATEGORY_PARAGRAPHS  = 'paragraphs';
+    public const CATEGORY_CONTAINER    = 'container';
+    public const CATEGORY_BASEONLY     = 'baseonly';
+    public const CATEGORY_FORMATTING   = 'formatting';
+    public const CATEGORY_SUBSTITUTION = 'substition';
+    public const CATEGORY_PROTECTED    = 'protected';
+    public const CATEGORY_DISABLED     = 'disabled';
+    public const CATEGORY_PARAGRAPHS   = 'paragraphs';
 
     /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
     protected ?array $modes = null;
@@ -83,7 +83,7 @@ class ModeRegistry
                 'gfm_emphasis_strong', 'gfm_emphasis_strong_underscore',
                 'gfm_deleted', 'gfm_backtick_single', 'gfm_backtick_double',
             ],
-            self::CATEGORY_SUBSTITION => [
+            self::CATEGORY_SUBSTITUTION => [
                 'acronym', 'smiley', 'wordblock', 'entity',
                 'camelcaselink', 'internallink', 'media', 'externallink',
                 'linebreak', 'emaillink', 'windowssharelink', 'filelink',

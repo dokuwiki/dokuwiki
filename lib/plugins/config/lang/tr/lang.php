@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kerem ATA <contact@zoda-service.web.tr>
  * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
@@ -73,14 +74,20 @@ $lang['autopasswd']            = 'Parolaları otamatikmen üret';
 $lang['authtype']              = 'Kimlik denetleme arka uç';
 $lang['passcrypt']             = 'Parola şifreleme metodu';
 $lang['defaultgroup']          = 'Varsayılan grup';
+$lang['profileconfirm']        = 'Profil değişikliklerini şifre ile onayla';
+$lang['rememberme']            = 'Sonsuz oturum çerezlerine izin ver (beni hatırla)';
 $lang['disableactions']        = 'DokuWiki eylemlerini etkisiz kıl';
 $lang['disableactions_check']  = 'Kontrol et';
 $lang['disableactions_subscription'] = 'Abone ol/Abonelikten vazgeç';
+$lang['disableactions_profile_delete'] = 'Hesabı Sil';
+$lang['disableactions_other']  = 'Diğer aksiyonlar (virgül ile ayrılmalı)';
+$lang['auth_security_timeout'] = 'Yetkilendirme Güvenliği Zamanaşımı (saniye)';
 $lang['usewordblock']          = 'Wordlistesine göre spam engelle';
 $lang['relnofollow']           = 'Dışsal linkler rel="nofollow" kullan';
 $lang['indexdelay']            = 'Indekslemeden evvel zaman gecikmesi (saniye)';
 $lang['mailguard']             = 'Email adreslerini karart';
 $lang['iexssprotect']          = 'Yüklenmiş dosyaları muhtemel kötu niyetli JavaScript veya HTML koduna kontrol et';
+$lang['cachetime']             = 'Önbellek için maksimum yaş (saniye)';
 $lang['refcheck']              = 'Araç kaynak denetimi';
 $lang['gdlib']                 = 'GD Lib sürümü';
 $lang['jpg_quality']           = 'JPG sıkıştırma kalitesi [0-100]';
@@ -89,9 +96,17 @@ $lang['sitemap']               = 'Google site haritası oluştur (gün)';
 $lang['rss_content']           = 'XML beslemesinde ne gösterilsin?';
 $lang['rss_update']            = 'XML beslemesini güncelleme aralığı';
 $lang['rss_show_summary']      = 'XML beslemesinde özeti başlıkta göster';
+$lang['rss_media_o_both']      = 'ikisi';
+$lang['rss_media_o_pages']     = 'sayfalar';
+$lang['rss_media_o_media']     = 'medya';
 $lang['canonical']             = 'Tamolarak kurallara uygun URL\'leri kullan';
 $lang['renderer__core']        = '%s (dokuwiki çekirdeği)';
 $lang['renderer__plugin']      = '%s (eklenti)';
+$lang['search_fragment_o_exact'] = 'aynı';
+$lang['search_fragment_o_starts_with'] = 'ile başlar';
+$lang['search_fragment_o_ends_with'] = 'ile biter';
+$lang['search_fragment_o_contains'] = 'içerir';
+$lang['jquerycdn_o_0']         = 'CDN kullanma, yerel olarak teslim et';
 $lang['proxy____host']         = 'Proxy sunucu adı';
 $lang['proxy____user']         = 'Proxy kullanıcı adı';
 $lang['proxy____pass']         = 'Proxy şifresi';

@@ -384,17 +384,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.51",
-            "version_normalized": "3.0.51.0",
+            "version": "3.0.52",
+            "version_normalized": "3.0.52.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "d59c94077f9c9915abb51ddb52ce85188ece1748"
+                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d59c94077f9c9915abb51ddb52ce85188ece1748",
-                "reference": "d59c94077f9c9915abb51ddb52ce85188ece1748",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2adaefc83df2ec548558307690f376dd7d4f4fce",
+                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce",
                 "shasum": ""
             },
             "require": {
@@ -412,7 +412,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2026-04-10T01:33:53+00:00",
+            "time": "2026-04-27T07:02:15+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -477,7 +477,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.51"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.52"
             },
             "funding": [
                 {
@@ -825,17 +825,17 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.8",
-            "version_normalized": "1.0.8.0",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "487ead381d7863be652048258f8c0b0d812b29ac"
+                "reference": "f60438c113b6b5714efcc0bab6994d1d9f90ebf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/487ead381d7863be652048258f8c0b0d812b29ac",
-                "reference": "487ead381d7863be652048258f8c0b0d812b29ac",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/f60438c113b6b5714efcc0bab6994d1d9f90ebf3",
+                "reference": "f60438c113b6b5714efcc0bab6994d1d9f90ebf3",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +847,7 @@
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2026-03-07T17:16:48+00:00",
+            "time": "2026-04-19T19:26:29+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -869,7 +869,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.0.8"
+                "source": "https://github.com/splitbrain/slika/tree/1.1.0"
             },
             "install-path": "../splitbrain/slika"
         }

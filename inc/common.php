@@ -21,6 +21,7 @@ use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ip;
+use dokuwiki\Search\MetadataSearch;
 
 use function PHP81_BC\strftime;
 
@@ -775,12 +776,12 @@ function checkwordblock($text = '')
  *
  * The IP is sourced from, in order of preference:
  *
- *   - The X-Real-IP header if $conf[realip] is true.
+ *   - The custom IP header if $conf[client_ip_header] is set.
  *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
  *   - The TCP/IP connection remote address.
  *   - 0.0.0.0 if all else fails.
  *
- * The 'realip' config value should only be set to true if the X-Real-IP header
+ * The 'client_ip_header' config value should only be set if the header
  * is being added by the web server, otherwise it may be spoofed by the client.
  *
  * The 'trustedproxies' setting must not allow any IP, otherwise the X-Forwarded-For
@@ -1234,23 +1235,6 @@ function con($pre, $text, $suf, $pretty = false)
 }
 
 /**
- * Checks if the current page version is newer than the last entry in the page's
- * changelog. If so, we assume it has been an external edit and we create an
- * attic copy and add a proper changelog line.
- *
- * This check is only executed when the page is about to be saved again from the
- * wiki, triggered in @param string $id the page ID
- * @see saveWikiText()
- *
- * @deprecated 2021-11-28
- */
-function detectExternalEdit($id)
-{
-    dbg_deprecated(PageFile::class . '::detectExternalEdit()');
-    (new PageFile($id))->detectExternalEdit();
-}
-
-/**
  * Saves a wikitext by calling io_writeWikiPage.
  * Also directs changelog and attic updates.
  *
@@ -1276,7 +1260,7 @@ function saveWikiText($id, $text, $summary, $minor = false)
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
-        $pages = ft_backlinks($id, true);
+        $pages = (new MetadataSearch())->backlinks($id, true);
         foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();

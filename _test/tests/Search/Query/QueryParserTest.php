@@ -1,25 +1,21 @@
 <?php
 
-// must be run within Dokuwiki
-if (!defined('DOKU_INC')) {
-    die();
-}
+namespace dokuwiki\test\Search\Query;
+
+use dokuwiki\Search\Query\QueryParser;
 
 /**
- * Test cases for the link index
+ * Test cases for the QueryParser
  *
  * @author Michael Große <grosse@cosmocode.de>
- *
- * @group  fulltext
  */
-class fulltext_query_test extends DokuWikiTest
+class QueryParserTest extends \DokuWikiTest
 {
-    public function test_parse_query()
+    public function testConvert()
     {
-        $Indexer = idx_get_indexer();
         $inputQuery = 'test -baz "foo bar" @abc ^def';
 
-        $actualParsedQuery = ft_queryParser($Indexer, $inputQuery);
+        $actualParsedQuery = (new QueryParser)->convert($inputQuery);
 
         $expectedParsedQuery = [
             'query' => 'test -baz "foo bar" @abc ^def',
@@ -70,35 +66,16 @@ class fulltext_query_test extends DokuWikiTest
         $this->assertEquals($expectedParsedQuery, $actualParsedQuery);
     }
 
-    public function test_unparse_query()
+    public function testRevert()
     {
-        $input = [
-            'and' => [
-                'test',
-            ],
-            'not' => [
-                'baz'
-            ],
-            'phrases' => [
-                'foo bar',
-            ],
-            'ns' => [
-                'abc',
-            ],
-            'notns' => [
-                'def'
-            ],
-        ];
-
-        $actualQuery = ft_queryUnparser_simple(
-            $input['and'],
-            $input['not'],
-            $input['phrases'],
-            $input['ns'],
-            $input['notns']
+        $actualQuery = (new QueryParser)->revert(
+            ['test'],
+            ['baz'],
+            ['foo bar'],
+            ['abc'],
+            ['def']
         );
 
-        $expectedQuery = 'test -baz "foo bar" @abc ^def';
-        $this->assertEquals($expectedQuery, $actualQuery);
+        $this->assertEquals('test -baz "foo bar" @abc ^def', $actualQuery);
     }
 }

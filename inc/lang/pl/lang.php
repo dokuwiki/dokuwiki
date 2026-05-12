@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Szymon Olewniczak <szyolewn@pg.edu.pl>
  * @author Marek Adamski <fevbew@wp.pl>
+ * @author Szymon Olewniczak <szyolewn@pg.edu.pl>
  * @author Michał <kamykowsky@gmail.com>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
@@ -134,6 +134,9 @@ $lang['js']['media_drop']      = 'Upuść tutaj pliki do przesłania';
 $lang['js']['media_cancel']    = 'usuń';
 $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
 $lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalog z danymi nie jest odpowiednio zabezpieczony. Proszę przeczytaj <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['js']['size_larger']     = 'Zwiększ rozmiar pola wprowadzania danych';
+$lang['js']['size_smaller']    = 'Zmniejsz rozmiar pola wprowadzania danych';
+$lang['js']['size_wrap']       = 'Przełącz zawijanie wierszy';
 $lang['js']['clipboard_button'] = 'Skopiuj';
 $lang['js']['clipboard_success'] = 'Skopiowano!';
 $lang['js']['clipboard_error'] = 'Błąd';

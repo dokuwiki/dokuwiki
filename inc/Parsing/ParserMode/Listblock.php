@@ -15,7 +15,7 @@ class Listblock extends AbstractMode
     {
         $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
             ModeRegistry::CATEGORY_FORMATTING,
-            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_DISABLED,
             ModeRegistry::CATEGORY_PROTECTED,
         ]);

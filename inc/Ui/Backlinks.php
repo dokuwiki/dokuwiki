@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Ui;
 
+use dokuwiki\Search\MetadataSearch;
+
 /**
  * DokuWiki Backlinks Interface
  *
@@ -25,9 +27,9 @@ class Backlinks extends Ui
         // print intro
         echo p_locale_xhtml('backlinks');
 
-        $data = ft_backlinks($ID);
+        $data = (new MetadataSearch())->backlinks($ID);
 
-        if (!empty($data)) {
+        if ($data !== []) {
             echo '<ul class="idx">';
             foreach ($data as $blink) {
                 echo '<li><div class="li">';

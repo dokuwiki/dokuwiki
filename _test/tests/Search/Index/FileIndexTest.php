@@ -1,0 +1,53 @@
+<?php
+
+namespace dokuwiki\test\Search\Index;
+
+use dokuwiki\Search\Index\FileIndex;
+use dokuwiki\Search\Index\Lock;
+
+class FileIndexTest extends AbstractIndexTestCase
+{
+    protected function getIndex()
+    {
+        static $count = 0;
+        return new FileIndex('index', $count++, true);
+    }
+
+    public function tearDown(): void
+    {
+        Lock::releaseAll();
+        parent::tearDown();
+    }
+
+    public function testChangeRow()
+    {
+        $index = $this->getIndex();
+
+        $index->changeRow(5, 'test');
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(6, count($full));
+
+        $index->changeRow(3, 'foo');
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(6, count($full));
+
+        $index->changeRow(5, 'bar');
+        $index->changeRow(7, 'bang');
+
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(['', '', '', 'foo', '', 'bar', '', 'bang'], $full);
+    }
+
+    public function testRetrieveRow()
+    {
+        $index = $this->getIndex();
+        $index->changeRow(5, 'test');
+        $this->assertEquals('test', $index->retrieveRow(5));
+
+        // out of bounds line should be empty and not modify the file
+        $this->assertEquals('', $index->retrieveRow(10));
+        $full = file($index->getFilename(), FILE_IGNORE_NEW_LINES);
+        $this->assertEquals(6, count($full));
+    }
+
+}

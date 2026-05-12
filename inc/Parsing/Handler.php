@@ -2,6 +2,10 @@
 
 namespace dokuwiki\Parsing;
 
+use dokuwiki\Parsing\ParserMode\Base;
+use dokuwiki\Parsing\ParserMode\Header;
+use dokuwiki\Parsing\ParserMode\Internallink;
+use dokuwiki\Parsing\ParserMode\Media;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Parsing\Handler\Block;
@@ -259,7 +263,7 @@ class Handler
      */
     public function base($match, $state, $pos)
     {
-        dbg_deprecated(ParserMode\Base::class . '::handle()');
+        dbg_deprecated(Base::class . '::handle()');
         return $this->modeObjects['base']->handle($match, $state, $pos, $this);
     }
 
@@ -268,7 +272,7 @@ class Handler
      */
     public function header($match, $state, $pos)
     {
-        dbg_deprecated(ParserMode\Header::class . '::handle()');
+        dbg_deprecated(Header::class . '::handle()');
         return $this->modeObjects['header']->handle($match, $state, $pos, $this);
     }
 
@@ -277,7 +281,7 @@ class Handler
      */
     public function internallink($match, $state, $pos)
     {
-        dbg_deprecated(ParserMode\Internallink::class . '::handle()');
+        dbg_deprecated(Internallink::class . '::handle()');
         return $this->modeObjects['internallink']->handle($match, $state, $pos, $this);
     }
 
@@ -286,7 +290,7 @@ class Handler
      */
     public function media($match, $state, $pos)
     {
-        dbg_deprecated(ParserMode\Media::class . '::handle()');
+        dbg_deprecated(Media::class . '::handle()');
         return $this->modeObjects['media']->handle($match, $state, $pos, $this);
     }
 
