@@ -22,10 +22,10 @@ use dokuwiki\Parsing\Helpers\HtmlEntity;
  * and bypass this mode, so they call HtmlEntity::decode() directly on
  * the captured slice.
  *
- * Category SUBSTITION so the mode is reachable in every container
+ * Category SUBSTITUTION so the mode is reachable in every container
  * that allows substitutions (paragraphs, formatting, list items,
  * table cells, headers). Code spans and code blocks live in
- * CATEGORY_PROTECTED and reject SUBSTITION, so entities stay literal
+ * CATEGORY_PROTECTED and reject SUBSTITUTION, so entities stay literal
  * there - matching CommonMark's rule that entities are not recognized
  * in code.
  *

@@ -20,10 +20,10 @@ use dokuwiki\Parsing\Helpers\Escape;
  * delimiter (emphasis `*`, heading `#`, link `[`, …) can match the
  * unescaped char.
  *
- * Category SUBSTITION (alongside Smiley and Entity) so the mode is
+ * Category SUBSTITUTION (alongside Smiley and Entity) so the mode is
  * reachable everywhere those run: inside paragraphs, formatting
  * modes (emphasis, strong, deleted), list items, table cells, headers
- * — every container whose allowedModes include SUBSTITION. Whole-span
+ * — every container whose allowedModes include SUBSTITUTION. Whole-span
  * code modes (GfmCode, GfmFile, GfmBacktickSingle, GfmBacktickDouble)
  * capture their entire body in one regex shot and therefore bypass
  * GfmEscape on their content — matching GFM's rule that escapes don't

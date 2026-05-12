@@ -17,7 +17,7 @@ use dokuwiki\Parsing\Handler;
  *
  * Bypass inside code spans and fenced blocks falls out for free:
  * those are whole-span PROTECTED / FORMATTING modes that capture
- * their body in one regex match, so SUBSTITION patterns never see
+ * their body in one regex match, so SUBSTITUTION patterns never see
  * the inner text — same mechanism that exempts GfmEscape from
  * code spans.
  *

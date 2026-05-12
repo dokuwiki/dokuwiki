@@ -114,7 +114,7 @@ class GfmLinebreakTest extends ParserTestBase
     function testWorksInsideEmphasis()
     {
         // Spec example 658: hard breaks fire inside inline containers.
-        // GfmLinebreak is SUBSTITION, GfmEmphasis allows SUBSTITION via
+        // GfmLinebreak is SUBSTITUTION, GfmEmphasis allows SUBSTITUTION via
         // its allowedModes — so the break appears between the open and
         // close emphasis calls.
         $this->P->addMode('gfm_emphasis', new GfmEmphasis());

@@ -16,7 +16,7 @@ use dokuwiki\Parsing\ModeRegistry;
  *
  * Cells are inline-only per spec ("Block-level elements cannot be inserted
  * in a table"). Allowed nested categories therefore mirror DW Table:
- * FORMATTING, SUBSTITION, PROTECTED, DISABLED.
+ * FORMATTING, SUBSTITUTION, PROTECTED, DISABLED.
  *
  * Entry-pattern strategy: a single zero-width lookahead asserts the table
  * shape (header line containing a pipe, followed by a delimiter row whose
@@ -48,7 +48,7 @@ class GfmTable extends AbstractMode
     {
         $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
             ModeRegistry::CATEGORY_FORMATTING,
-            ModeRegistry::CATEGORY_SUBSTITION,
+            ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_PROTECTED,
             ModeRegistry::CATEGORY_DISABLED,
         ]);
