@@ -61,6 +61,17 @@ return [
     49  => 'ATX headings (§4.2): empty heading - XHTML renderer skips blank headings via blank() guard',
 
     // -----------------------------------------------------------------------------------------------------------------
+    // ATX headings - inline formatting in heading content (§4.2)
+    //
+    // Heading content is currently treated as plain text - inline modes (emphasis, code spans, links, backslash
+    // escapes, etc.) are not processed inside heading text. Implementing this requires reworking how the existing
+    // header instruction and downstream renderers handle heading content, which is deferred for now.
+    // -----------------------------------------------------------------------------------------------------------------
+
+    36  => 'ATX headings (§4.2): inline emphasis and backslash escapes in heading - inline modes not run in headings',
+    46  => 'ATX headings (§4.2): backslash-escaped # in heading content - inline modes not run in headings',
+
+    // -----------------------------------------------------------------------------------------------------------------
     // Setext (§4.3)
     //
     // Setext headings are not supported. They are hard to pass and nobody uses them anymore.
@@ -543,6 +554,10 @@ return [
     606 => 'Autolinks (§6.8): angle-bracket autolink with a+b+c scheme - scheme not in conf/scheme.conf allow-list',
     607 => 'Autolinks (§6.8): angle-bracket autolink with made-up scheme - scheme not in conf/scheme.conf allow-list',
     609 => 'Autolinks (§6.8): angle-bracket with localhost:5001 - localhost not in conf/scheme.conf allow-list',
+    619 => 'Autolinks (§6.8): bare URL stays plain text - DW autolinks bare URLs as a feature',
+    629 => 'Autolinks ext (§6.9): bare email autolink - extension not implemented',
+    630 => 'Autolinks ext (§6.9): bare email with + in local part - extension not implemented',
+    631 => 'Autolinks ext (§6.9): bare email edge cases (trailing punctuation) - extension not implemented',
 
     // -----------------------------------------------------------------------------------------------------------------
     // Raw HTML (§6.10)
