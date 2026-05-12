@@ -74,6 +74,10 @@ class GfmSpecTest extends \DokuWikiTest
      * spec output. SpecCompatRenderer additionally neutralizes the
      * Entity-table substitutions (--, ---, ->, (c), ...) at render time;
      * see SpecCompatRenderer::entity().
+     *
+     * The renderer's acronym table is left empty so the parser-emitted
+     * acronym() calls (e.g. for "FTP") fall through to literal text
+     * instead of wrapping in <abbr>, which the spec output never has.
      */
     private function renderMarkdown(string $text): string
     {
@@ -88,7 +92,7 @@ class GfmSpecTest extends \DokuWikiTest
         $renderer->reset();
         $renderer->smileys   = getSmileys();
         $renderer->entities  = getEntities();
-        $renderer->acronyms  = getAcronyms();
+        $renderer->acronyms  = [];
         $renderer->interwiki = getInterwiki();
 
         foreach ($instructions as $instruction) {
