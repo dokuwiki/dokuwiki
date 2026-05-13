@@ -65,8 +65,15 @@ class HandlerTest extends \DokuWikiTest
         ]);
 
         $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
-            public function getSort() { return 0; }
-            public function handle($match, $state, $pos, Handler $handler) { return true; }
+            public function getSort()
+            {
+                return 0;
+            }
+
+            public function handle($match, $state, $pos, Handler $handler)
+            {
+                return true;
+            }
         };
         $handler->registerModeObject('m', $mode);
         $handler->handleToken('m', 'x', DOKU_LEXER_SPECIAL, 0, 'm');
@@ -86,5 +93,38 @@ class HandlerTest extends \DokuWikiTest
         $writerAfter = self::getInaccessibleProperty($handler, 'callWriter');
         $this->assertNotSame($writerBefore, $writerAfter);
         $this->assertInstanceOf(\dokuwiki\Parsing\Handler\CallWriter::class, $writerAfter);
+    }
+
+    /**
+     * Regression test for #4637
+     *
+     * handleToken() must route plugin_* modes through plugin() even when
+     * the same name is also registered as a mode object.
+     *
+     * Before the fix, modeObjects was consulted first, which called
+     * SyntaxPlugin::handle() directly. That returns data but never
+     * emits an instruction via addPluginCall(), so the plugin's rendered
+     * output silently disappeared.
+     */
+    function testPluginModeIsRoutedThroughPluginHandler()
+    {
+        $handler = new Handler();
+
+        // Plugins register themselves as mode objects under their plugin_* name.
+        // This reproduces the conflict the bug depended on.
+        $info = plugin_load('syntax', 'info');
+        $this->assertNotNull($info, 'info plugin must be available for this test');
+        $handler->registerModeObject('plugin_info', $info);
+
+        $handler->handleToken('plugin_info', '~~INFO:datetime~~', DOKU_LEXER_SPECIAL, 0);
+
+        // After the fix, plugin() runs and emits a plugin instruction.
+        // With the bug, modeObjects['plugin_info']->handle() ran and emitted nothing.
+        $this->assertCount(1, $handler->calls, 'plugin mode must emit exactly one instruction');
+        [$name, $args] = $handler->calls[0];
+        $this->assertSame('plugin', $name);
+        $this->assertSame('info', $args[0]);
+        $this->assertSame(['datetime'], $args[1]);
+        $this->assertSame('~~INFO:datetime~~', $args[3]);
     }
 }
