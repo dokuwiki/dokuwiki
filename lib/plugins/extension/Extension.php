@@ -897,7 +897,7 @@ class Extension implements \Stringable
                 while (
                     isset($tokens[$j]) &&
                     is_array($tokens[$j]) &&
-                    in_array($tokens[$j][0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT])
+                    in_array($tokens[$j][0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)
                 ) {
                     $j++;
                 }

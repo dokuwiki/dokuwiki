@@ -106,7 +106,7 @@ class common_clientIP_test extends DokuWikiTest {
         $_SERVER['REMOTE_ADDR']          = str_replace(array_keys($addresses), array_values($addresses), $remoteAddr);
         $_SERVER['HTTP_X_REAL_IP']       = str_replace(array_keys($addresses), array_values($addresses), $realIp);
         $_SERVER['HTTP_X_FORWARDED_FOR'] = str_replace(array_keys($addresses), array_values($addresses), $forwardedFor);
-        $conf['realip'] = $useRealIp;
+        $conf['client_ip_header'] = $useRealIp ? 'X_REAL_IP' : '';
 
         foreach ($this->configs as $config) {
             $conf['trustedproxies'] = $config;
@@ -142,7 +142,7 @@ class common_clientIP_test extends DokuWikiTest {
         $_SERVER['REMOTE_ADDR']          = str_replace(array_keys($addresses), array_values($addresses), $remoteAddr);
         $_SERVER['HTTP_X_REAL_IP']       = str_replace(array_keys($addresses), array_values($addresses), $realIp);
         $_SERVER['HTTP_X_FORWARDED_FOR'] = str_replace(array_keys($addresses), array_values($addresses), $forwardedFor);
-        $conf['realip'] = $useRealIp;
+        $conf['client_ip_header'] = $useRealIp ? 'X_REAL_IP' : '';
 
         foreach ($this->configs as $config) {
             $conf['trustedproxies'] = $config;

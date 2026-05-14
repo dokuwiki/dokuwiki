@@ -28,8 +28,14 @@ use phpseclib3\Crypt\Common\AsymmetricKey;
 use phpseclib3\Crypt\DH\Parameters;
 use phpseclib3\Crypt\DH\PrivateKey;
 use phpseclib3\Crypt\DH\PublicKey;
+use phpseclib3\Crypt\EC\Curves\Curve25519;
+use phpseclib3\Crypt\EC\Curves\Curve448;
+use phpseclib3\Crypt\EC\Formats\Keys\PKCS1;
+use phpseclib3\Exception\BadConfigurationException;
 use phpseclib3\Exception\NoKeyLoadedException;
 use phpseclib3\Exception\UnsupportedOperationException;
+use phpseclib3\File\ASN1;
+use phpseclib3\File\ASN1\Maps;
 use phpseclib3\Math\BigInteger;
 
 /**
@@ -295,21 +301,51 @@ abstract class DH extends AsymmetricKey
         }
 
         if ($private instanceof EC\PrivateKey) {
+            $privateCurve = $private->getCurve();
             switch (true) {
                 case $public instanceof EC\PublicKey:
+                    if ($privateCurve !== $public->getCurve()) {
+                        throw new \InvalidArgumentException("The public key curve (" . $public->getCurve() . ") and private key curve ($privateCurve) need to match");
+                    }
+                    $orig = $public;
                     $public = $public->getEncodedCoordinates();
                     // fall-through
                 case is_string($public):
-                    $point = $private->multiply($public);
-                    switch ($private->getCurve()) {
-                        case 'Curve25519':
-                        case 'Curve448':
-                            $secret = $point;
-                            break;
-                        default:
-                            // according to https://www.secg.org/sec1-v2.pdf#page=33 only X is returned
-                            $secret = substr($point, 1, (strlen($point) - 1) >> 1);
+                    $forcedEngine = EC::getForcedEngine();
+                    if ($forcedEngine === 'libsodium' && $privateCurve !== 'Curve25519') {
+                        throw new BadConfigurationException('Engine libsodium is forced but can only used with Curve25519 for ECDH');
                     }
+                    if (!isset($forcedEngine) || $forcedEngine === 'OpenSSL') {
+                        // PHP 7.3.0 introduced the openssl_pkey_derive() function
+                        // openssl_dh_computee_key() has been around since PHP 5.3.0+ BUT it did not support ECDH
+                        // until PHP 8.1.0 / OpenSSL 3.0.0
+                        if ($forcedEngine === 'OpenSSL' && !function_exists('openssl_pkey_derive')) {
+                            throw new BadConfigurationException('Engine OpenSSL is forced but unsupported for ECDH');
+                        }
+                        if (function_exists('openssl_pkey_derive')) {
+                            $privateStr = (string) $private->withPassword();
+                            $publicStr = (string) (isset($orig) ? $orig : EC::convertPointToPublicKey($private->getCurve(), $public));
+                            $result = openssl_pkey_derive($publicStr, $privateStr);
+                            if ($result) {
+                                return $result;
+                            }
+                            if ($forcedEngine === 'OpenSSL') {
+                                // i suppose we _could_ try openssl_dh_compute_key() at this point
+                                // quoting https://www.php.net/openssl-dh-compute-key "ECDH is only supported as of PHP 8.1.0 and OpenSSL 3.0.0". ie.
+                                // PHP_VERSION_ID >= 80100 && OPENSSL_VERSION_NUMBER >= 0x3000000f
+                                // but i think that's overkill. if openssl_pkey_derive() doesn't work it seems doubtful to me that openssl_dh_compute_key() would
+                                throw new BadConfigurationException('Engine OpenSSL is forced but was unable to perform ECDH because of ' . openssl_error_string());
+                            }
+                        }
+                    }
+                    $curveName = $private->getCurve();
+                    $isMontgomeryCurve = $curveName == 'Curve25519' || $curveName == 'Curve448';
+                    if (!$isMontgomeryCurve) {
+                        $public = EC::convertPointToPublicKey($curveName, $public, false);
+                    }
+                    $point = $private->multiply($public);
+                    // according to https://www.secg.org/sec1-v2.pdf#page=33 only X is returned
+                    $secret = $isMontgomeryCurve ? $point : substr($point, 1, (strlen($point) - 1) >> 1);
                     /*
                     if (($secret[0] & "\x80") === "\x80") {
                         $secret = "\0$secret";

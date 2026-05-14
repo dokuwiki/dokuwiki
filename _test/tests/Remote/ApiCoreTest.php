@@ -6,6 +6,8 @@ use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\Api;
 use dokuwiki\Remote\ApiCore;
 use dokuwiki\Remote\RemoteException;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\test\mock\AuthPlugin;
 
 
@@ -162,8 +164,9 @@ class ApiCoreTest extends \DokuWikiTest
     public function testlistPagesAll()
     {
         // all pages depends on index
-        idx_addPage('wiki:syntax');
-        idx_addPage('wiki:dokuwiki');
+        $indexer = new Indexer();
+        $indexer->addPage('wiki:syntax');
+        $indexer->addPage('wiki:dokuwiki');
 
         $file1 = wikiFN('wiki:syntax');
         $file2 = wikiFN('wiki:dokuwiki');
@@ -250,7 +253,7 @@ class ApiCoreTest extends \DokuWikiTest
         $id = 'wiki:syntax';
         $file = wikiFN($id);
 
-        idx_addPage($id); //full text search depends on index
+        (new Indexer())->addPage($id); //full text search depends on index
         $expected = [
             [
                 'id' => $id,
@@ -600,12 +603,13 @@ You can use up to five different levels of',
     {
         saveWikiText('linky', '[[wiki:syntax]]', 'test');
         // backlinks need index
-        idx_addPage('wiki:syntax');
-        idx_addPage('linky');
+        $indexer = new Indexer();
+        $indexer->addPage('wiki:syntax');
+        $indexer->addPage('linky');
 
         $result = $this->remote->call('core.getPageBackLinks', ['page' => 'wiki:syntax']);
         $this->assertTrue(count($result) > 0);
-        $this->assertEqualResult(ft_backlinks('wiki:syntax'), $result);
+        $this->assertEqualResult((new MetadataSearch())->backlinks('wiki:syntax'), $result);
 
         $this->assertEquals([], $this->remote->call('core.getPageBackLinks', ['page' => 'foobar']));
     }

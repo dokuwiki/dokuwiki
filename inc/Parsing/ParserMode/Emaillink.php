@@ -2,8 +2,16 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Emaillink extends AbstractMode
 {
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 340;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -12,8 +20,10 @@ class Emaillink extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 340;
+        $email = preg_replace(['/^</', '/>$/'], '', $match);
+        $handler->addCall('emaillink', [$email, null], $pos);
+        return true;
     }
 }

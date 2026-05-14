@@ -192,7 +192,6 @@ function search_namespaces(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_media(&$data, $base, $file, $type, $lvl, $opts)
 {
-
     //we do nothing with directories
     if ($type == 'd') {
         if (empty($opts['depth'])) return true; // recurse forever
@@ -577,7 +576,9 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
 
     if ($type == 'f') {
         if (!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base . '/' . $file, false));
-        if (!empty($opts['firsthead'])) $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        if (!empty($opts['firsthead'])) {
+            $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        }
     }
 
     // finally add the item

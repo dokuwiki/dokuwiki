@@ -12,14 +12,9 @@ class Lists extends AbstractRewriter
     public const NODE = 1;
 
     /** @inheritdoc */
-    public function finalise()
+    protected function getClosingCall(): string
     {
-        $last_call = end($this->calls);
-        $this->writeCall(['list_close', [], $last_call[2]]);
-
-        $this->process();
-        $this->callWriter->finalise();
-        unset($this->callWriter);
+        return 'list_close';
     }
 
     /** @inheritdoc */

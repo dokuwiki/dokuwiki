@@ -8,14 +8,9 @@ class Preformatted extends AbstractRewriter
     protected $text = '';
 
     /** @inheritdoc */
-    public function finalise()
+    protected function getClosingCall(): string
     {
-        $last_call = end($this->calls);
-        $this->writeCall(['preformatted_end', [], $last_call[2]]);
-
-        $this->process();
-        $this->callWriter->finalise();
-        unset($this->callWriter);
+        return 'preformatted_end';
     }
 
     /** @inheritdoc */

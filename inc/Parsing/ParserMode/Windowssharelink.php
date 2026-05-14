@@ -2,9 +2,17 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Windowssharelink extends AbstractMode
 {
     protected $pattern;
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 350;
+    }
 
     /** @inheritdoc */
     public function preConnect()
@@ -23,8 +31,9 @@ class Windowssharelink extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 350;
+        $handler->addCall('windowssharelink', [$match, null], $pos);
+        return true;
     }
 }

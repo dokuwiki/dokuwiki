@@ -29,6 +29,7 @@ $MEDIA = stripctl(getID('media', false)); // no cleaning except control chars - 
 $CACHE = calc_cache($INPUT->str('cache'));
 $WIDTH = $INPUT->int('w');
 $HEIGHT = $INPUT->int('h');
+$FIT = $INPUT->bool('fit');
 $REV = &$INPUT->ref('rev');
 //sanitize revision
 $REV = preg_replace('/[^0-9]/', '', $REV);
@@ -54,6 +55,7 @@ $data = [
     'ext' => $EXT,
     'width' => $WIDTH,
     'height' => $HEIGHT,
+    'fit' => $FIT,
     'status' => $STATUS,
     'statusmessage' => $STATUSMESSAGE,
     'ispublic' => media_ispublic($MEDIA),
@@ -98,7 +100,7 @@ if ($evt->advise_before()) {
         str_starts_with($MIME, 'image') &&
         ($WIDTH || $HEIGHT)
     ) {
-        if ($HEIGHT && $WIDTH) {
+        if ($HEIGHT && $WIDTH && !$FIT) {
             $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
         } else {
             $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);

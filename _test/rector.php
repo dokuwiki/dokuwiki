@@ -46,6 +46,7 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\DeadCode\Rector\If_\ReduceAlwaysFalseIfOrRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
@@ -139,6 +140,10 @@ return static function (RectorConfig $rectorConfig): void {
         ReplaceBlockToItsStmtsRector::class, // blocks sometimes help readability
         Utf8DecodeEncodeToMbConvertEncodingRector::class, // we probably want our own mapping to the UTF8/* functions
         RemoveDeadIfBlockRector::class, // creates harder to read statements
+
+        // we're not ready for full type safety. though this rule is probably safe I am not comfortable to add it yet
+        // https://getrector.com/blog/introducing-safe-and-progressive-strict-type-adoption-rule
+        SafeDeclareStrictTypesRector::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
@@ -181,11 +186,13 @@ return static function (RectorConfig $rectorConfig): void {
         'DokuWiki_Plugin' => 'dokuwiki\Extension\Plugin',
         'DokuWiki_Remote_Plugin' => 'dokuwiki\Extension\RemotePlugin',
         'DokuWiki_Syntax_Plugin' => 'dokuwiki\Extension\SyntaxPlugin',
+        'Doku_Handler' => 'dokuwiki\Parsing\Handler',
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
         // see inc/deprecated.php
         'Doku_Lexer_Escape' => 'dokuwiki\Parsing\Lexer\Lexer::escape',
+        'Doku_Handler_Parse_Media' => 'dokuwiki\Parsing\ParserMode\Media::parseMedia',
 
         // see inc/utf8.php
         'utf8_isASCII' => 'dokuwiki\Utf8\Clean::isASCII',

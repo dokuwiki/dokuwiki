@@ -334,7 +334,7 @@ class PassHash
         $add     = 7;
         $charArr = preg_split("//", $clear);
         foreach ($charArr as $char) {
-            if (in_array($char, ['', ' ', '\t'])) continue;
+            if (in_array($char, ['', ' ', '\t'], true)) continue;
             $charVal = ord($char);
             $nr ^= ((($nr & 63) + $add) * $charVal) + ($nr << 8);
             $nr2 += ($nr2 << 8) ^ $nr;

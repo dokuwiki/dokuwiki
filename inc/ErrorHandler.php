@@ -109,7 +109,8 @@ EOT;
                     E_ERROR,
                     E_CORE_ERROR,
                     E_COMPILE_ERROR,
-                ]
+                ],
+                true
             )
         ) {
             self::fatalException(

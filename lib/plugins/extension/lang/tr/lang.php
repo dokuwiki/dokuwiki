@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kerem ATA <contact@zoda-service.web.tr>
  * @author İlker R. Kapaç <irifat@gmail.com>
  * @author Mete Cuma <mcumax@gmail.com>
  */
@@ -12,9 +13,6 @@ $lang['tab_templates']         = 'Kurulmuş Şablonlar';
 $lang['tab_search']            = 'Ara ve Kur';
 $lang['tab_install']           = 'Elle Kurulum';
 $lang['notimplemented']        = 'Bu özellik henüz uygulamaya geçmemiştir';
-$lang['notinstalled']          = 'Bu genişletme yüklü değildir';
-$lang['alreadyenabled']        = 'Bu genişletme zaten etkinleştirilmiştir.';
-$lang['alreadydisabled']       = 'Bu genişletme zaten pasifleştirilmiştir';
 $lang['pluginlistsaveerror']   = 'Eklenti listesini kaydederken bir hata oluştu.';
 $lang['unknownauthor']         = 'Bilinmeyen yazar';
 $lang['unknownversion']        = 'Bilinmeyen sürüm';
@@ -26,6 +24,9 @@ $lang['btn_disable']           = 'Pasifleştir';
 $lang['btn_install']           = 'Kur';
 $lang['btn_reinstall']         = 'Yeniden kur';
 $lang['js']['reallydel']       = 'Genişletme gerçekten kaldırılsın mı?';
+$lang['js']['display_enabled'] = 'aktif';
+$lang['js']['display_disabled'] = 'devre dışı';
+$lang['js']['close']           = 'Kapatmak için tıkla';
 $lang['search_for']            = 'Genişletme Ara:';
 $lang['search']                = 'Ara';
 $lang['extensionby']           = '<strong>%s</strong> tarafından %s';
@@ -59,3 +60,4 @@ $lang['status_disabled']       = 'hizmet dışı';
 $lang['status_unmodifiable']   = 'değiştirilemez';
 $lang['status_plugin']         = 'eklenti';
 $lang['status_template']       = 'şablon';
+$lang['msg_disabled']          = 'Plugin %s devre dışı';

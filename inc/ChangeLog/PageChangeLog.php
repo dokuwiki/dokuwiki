@@ -38,31 +38,37 @@ class PageChangeLog extends ChangeLog
         return RevisionInfo::MODE_PAGE;
     }
 
-
     /**
-     * Adds an entry to the changelog
+     * Returns path to the global page-changelog file
      *
-     * @param array $info    Revision info structure of a page
-     * @param int $timestamp log line date (optional)
-     * @return array revision info of added log line
-     *
-     * @see also addLogEntry() in inc/changelog.php file
+     * @return string path to file
      */
-    public function addLogEntry(array $info, $timestamp = null)
+    protected function getGlobalChangelogFilename()
     {
         global $conf;
+        return $conf['changelog'];
+    }
 
-        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+    /**
+     * Copy the externally-edited page to the attic at the synthesized revision date.
+     * If the file mtime is older than the last known revision (broken chronology),
+     * touch the file forward so future reads see a consistent state.
+     *
+     * @param array $revInfo synthesized revision info
+     * @return bool true on success (or nothing to copy), false if the attic write failed
+     */
+    protected function saveExternalAttic(array $revInfo)
+    {
+        $file = $this->getFilename();
+        if (!file_exists($file)) return true;
 
-        // add changelog lines
-        $logline = static::buildLogLine($info, $timestamp);
-        io_saveFile(metaFN($this->id, '.changes'), $logline, true);
-        io_saveFile($conf['changelog'], $logline, true); //global changelog cache
+        // rescue: file mtime older than last revision — touch forward to the synthesized date
+        if (empty($revInfo['timestamp'])) {
+            if (!@touch($file, $revInfo['date'])) return false;
+            clearstatcache(false, $file);
+        }
 
-        // update cache
-        $this->currentRevision = $info['date'];
-        $info['mode'] = $this->getMode();
-        $this->cache[$this->id][$this->currentRevision] = $info;
-        return $info;
+        $atticfile = $this->getFilename($revInfo['date']);
+        return io_writeWikiPage($atticfile, io_readWikiPage($file, $this->id, ''), $this->id, $revInfo['date']);
     }
 }

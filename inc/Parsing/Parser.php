@@ -3,7 +3,6 @@
 namespace dokuwiki\Parsing;
 
 use dokuwiki\Debug\DebugHelper;
-use Doku_Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
 use dokuwiki\Parsing\ParserMode\Base;
 use dokuwiki\Parsing\ParserMode\ModeInterface;
@@ -14,7 +13,7 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
  */
 class Parser
 {
-    /** @var Doku_Handler */
+    /** @var Handler */
     protected $handler;
 
     /** @var Lexer $lexer */
@@ -29,9 +28,9 @@ class Parser
     /**
      * dokuwiki\Parsing\Doku_Parser constructor.
      *
-     * @param Doku_Handler $handler
+     * @param Handler $handler
      */
-    public function __construct(Doku_Handler $handler)
+    public function __construct(Handler $handler)
     {
         $this->handler = $handler;
     }
@@ -48,6 +47,7 @@ class Parser
             $this->lexer = new Lexer($this->handler, 'base', true);
         }
         $this->modes['base']->Lexer = $this->lexer;
+        $this->handler->registerModeObject('base', $BaseMode);
     }
 
     /**
@@ -66,6 +66,7 @@ class Parser
         }
         $Mode->Lexer = $this->lexer; // FIXME should be done by setter
         $this->modes[$name] = $Mode;
+        $this->handler->registerModeObject($name, $Mode);
     }
 
     /**
@@ -80,12 +81,15 @@ class Parser
             return;
         }
 
+        // Run all preConnect() first so modes can register shared
+        // metadata (e.g. line start markers) before any patterns are built
         foreach (array_keys($this->modes) as $mode) {
-            // Base isn't connected to anything
-            if ($mode == 'base') {
-                continue;
-            }
+            if ($mode == 'base') continue;
             $this->modes[$mode]->preConnect();
+        }
+
+        foreach (array_keys($this->modes) as $mode) {
+            if ($mode == 'base') continue;
 
             foreach (array_keys($this->modes) as $cm) {
                 if ($this->modes[$cm]->accepts($mode)) {

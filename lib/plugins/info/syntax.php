@@ -1,7 +1,9 @@
 <?php
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Parsing\ModeRegistry;
 
 /**
  * Info Plugin: Displays information about various DokuWiki internals
@@ -17,7 +19,7 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     public function getType()
     {
-        return 'substition';
+        return ModeRegistry::CATEGORY_SUBSTITUTION;
     }
 
     /**
@@ -50,10 +52,10 @@ class syntax_plugin_info extends SyntaxPlugin
      * @param string $match The text matched by the patterns
      * @param int $state The lexer state for the match
      * @param int $pos The character position of the matched text
-     * @param Doku_Handler $handler The Doku_Handler object
+     * @param Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
-    public function handle($match, $state, $pos, Doku_Handler $handler)
+    public function handle($match, $state, $pos, Handler $handler)
     {
         $match = substr($match, 7, -2); //strip ~~INFO: from start and ~~ from end
         return [strtolower($match)];

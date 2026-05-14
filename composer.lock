@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2bba7b35668ef78571a4c06e416dd0",
+    "content-hash": "dc72008dadca92a7cc351422b28f8030",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -100,16 +100,16 @@
         },
         {
             "name": "kissifrot/php-ixr",
-            "version": "1.8.5",
+            "version": "dev-dokuwiki",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kissifrot/php-ixr.git",
-                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753"
+                "url": "https://github.com/dokudeps/php-ixr.git",
+                "reference": "2b4dfcd97d39969f6a1468badec854778abe160c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/17c5bc99f42fa086620a0ad2a593366ff6798753",
-                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753",
+                "url": "https://api.github.com/repos/dokudeps/php-ixr/zipball/2b4dfcd97d39969f6a1468badec854778abe160c",
+                "reference": "2b4dfcd97d39969f6a1468badec854778abe160c",
                 "shasum": ""
             },
             "require": {
@@ -122,11 +122,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "IXR\\": "src/",
-                    "IXR\\tests\\": "tests/"
+                    "IXR\\tests\\": "tests/",
+                    "IXR\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -145,10 +144,9 @@
                 "xmlrpc"
             ],
             "support": {
-                "issues": "https://github.com/kissifrot/php-ixr/issues",
-                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.5"
+                "source": "https://github.com/dokudeps/php-ixr/tree/dokuwiki"
             },
-            "time": "2025-04-22T07:42:43+00:00"
+            "time": "2026-04-10T16:32:59+00:00"
         },
         {
             "name": "openpsa/universalfeedcreator",
@@ -375,16 +373,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.50",
+            "version": "3.0.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "aa6ad8321ed103dc3624fb600a25b66ebf78ec7b"
+                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/aa6ad8321ed103dc3624fb600a25b66ebf78ec7b",
-                "reference": "aa6ad8321ed103dc3624fb600a25b66ebf78ec7b",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2adaefc83df2ec548558307690f376dd7d4f4fce",
+                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce",
                 "shasum": ""
             },
             "require": {
@@ -465,7 +463,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.50"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.52"
             },
             "funding": [
                 {
@@ -481,7 +479,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-19T02:57:58+00:00"
+            "time": "2026-04-27T07:02:15+00:00"
         },
         {
             "name": "simplepie/simplepie",
@@ -798,16 +796,16 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.8",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "487ead381d7863be652048258f8c0b0d812b29ac"
+                "reference": "f60438c113b6b5714efcc0bab6994d1d9f90ebf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/487ead381d7863be652048258f8c0b0d812b29ac",
-                "reference": "487ead381d7863be652048258f8c0b0d812b29ac",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/f60438c113b6b5714efcc0bab6994d1d9f90ebf3",
+                "reference": "f60438c113b6b5714efcc0bab6994d1d9f90ebf3",
                 "shasum": ""
             },
             "require": {
@@ -839,9 +837,9 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.0.8"
+                "source": "https://github.com/splitbrain/slika/tree/1.1.0"
             },
-            "time": "2026-03-07T17:16:48+00:00"
+            "time": "2026-04-19T19:26:29+00:00"
         }
     ],
     "packages-dev": [],
@@ -856,6 +854,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "geshi/geshi": 20,
+        "kissifrot/php-ixr": 20,
         "php81_bc/strftime": 20
     },
     "prefer-stable": true,

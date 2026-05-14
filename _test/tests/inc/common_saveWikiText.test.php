@@ -42,7 +42,6 @@ class common_saveWikiText_test extends DokuWikiTest {
         // second to last revision (optional), intended to check logline of previous external edits
         if ($expected2ndLastEntry && count($revisions) > 1) {
             $prevRevInfo = $pagelog->getRevisionInfo($revisions[1]);
-            unset($expected2ndLastEntry['timestamp']); // drop timestamp key
             $this->assertEquals($expected2ndLastEntry, $prevRevInfo);
         }
     }
@@ -75,9 +74,14 @@ class common_saveWikiText_test extends DokuWikiTest {
             $this->assertEquals($expectedCurrentEntry, $currentRevInfo);
 
         }
-        // attic
+        // attic — external edits/creates are now copied at first detection;
+        // deletes have no file to attic
         $attic = wikiFN($currentRevInfo['id'], $currentRevInfo['date']);
-        $this->assertFileDoesNotExist($attic, 'page does not yet exist in attic');
+        if ($currentRevInfo['type'] === DOKU_CHANGE_TYPE_DELETE) {
+            $this->assertFileDoesNotExist($attic, 'no attic for external delete');
+        } else {
+            $this->assertFileExists($attic, 'persisted external edit should have attic');
+        }
     }
 
 
@@ -424,18 +428,20 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         $this->waitForTick(true); // wait for new revision ID
 
-        // 3.2 external edit (repeated, still no changelog exists)
+        // 3.2 external edit (3.1 was already persisted on first detection,
+        // so this is now an EDIT on top of the prior external CREATE)
+        $expect = $expectExternal; // last revision is the 3.1 persisted entry
         file_put_contents($file, 'teststring external edit');
         clearstatcache(false, $file);
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
-        $expectedRevs = 0; // external edit is not yet in changelog
+        $expectedRevs = 1;
         $expectExternal = array(
             'date' => $lastmod,
-            'type' => DOKU_CHANGE_TYPE_CREATE,  // not DOKU_CHANGE_TYPE_EDIT
-            'sum'  => 'created - external edit',
-            'sizechange' => 24,
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'sum'  => 'external edit',
+            'sizechange' => 14,
         );
 
         $pagelog = new PageChangeLog($page);
@@ -449,7 +455,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $newmod = filemtime($file);
         $this->assertNotEquals($lastmod, $newmod);
         $lastmod = $newmod;
-        $expectedRevs = 2; // two more revisions now!
+        $expectedRevs = 3;
         $expect = array(
             'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_EDIT,
@@ -464,7 +470,7 @@ class common_saveWikiText_test extends DokuWikiTest {
 
         // 3.4 externally delete the page
         unlink($file);
-        $expectedRevs = 2;
+        $expectedRevs = 3;
         $expectExternal = array(
           //'date' => $lastmod,
             'type' => DOKU_CHANGE_TYPE_DELETE,

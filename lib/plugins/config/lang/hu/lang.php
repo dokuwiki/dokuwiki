@@ -159,7 +159,6 @@ $lang['_feature_flags']        = 'Funkció kapcsolók';
 $lang['hidewarnings']          = 'Ne jelenjenek meg a PHP figyelmezetései. Ez megkönnyítheti a PHP8+ verziókra való átállást. A figyelmeztetések továbbra is bekerülnek a hibanaplóba, és továbbra is érdemes jelenteni őket.';
 $lang['dnslookups']            = 'A DokuWiki megpróbál hosztneveket keresni a távoli IP-címekhez. Amennyiben lassú, vagy nem működő DNS-szervered van vagy csak nem szeretnéd ezt a funkciót, tiltsd le ezt az opciót!';
 $lang['jquerycdn']             = 'A jQuery és a jQuery UI szkriptek CDN-en keresztül töltődjenek be? Ez további HTTP lekérdezéseket jelent, de lehetséges, hogy a fájlok gyorsabban töltődnek be azon felhasználóknál, akiknél már gyorsítótárazva vannak.';
-$lang['realip']                = 'Bízzunk meg az X-Real-IP fejlécben. Csak akkor engedélyezd, ha a saját szervered küldi ezt a fejlécet, ellenkező esetben meghamisíthatják azt.';
 $lang['jquerycdn_o_0']         = 'Nincs CDN, csak helyi kiszolgálás';
 $lang['jquerycdn_o_jquery']    = 'CDN itt: code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN itt: cdnjs.com';

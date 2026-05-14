@@ -10,6 +10,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Input\Input;
+use dokuwiki\Ip32;
 use Exception;
 
 class Ip
@@ -51,16 +52,28 @@ class Ip
             throw new Exception('Invalid IP range mask: ' . $haystack);
         }
 
-        $maskLengthUpper = min($maskLength, 64);
-        $maskLengthLower = max(0, $maskLength - 64);
-
-        $maskUpper = ~0 << intval(64 - $maskLengthUpper);
-        $maskLower = ~0 << intval(64 - $maskLengthLower);
 
         $needle = Ip::ipToNumber($needle);
 
-        return ($needle['upper'] & $maskUpper) === ($networkIp['upper'] & $maskUpper) &&
-            ($needle['lower'] & $maskLower) === ($networkIp['lower'] & $maskLower);
+        $maskLengthUpper = min($maskLength, 64);
+        $maskLengthLower = max(0, $maskLength - 64);
+
+        if (PHP_INT_SIZE == 4) {
+            $needle_up = Ip32::bitmask64On32($needle['upper'], $maskLengthUpper);
+            $net_up    = Ip32::bitmask64On32($networkIp['upper'], $maskLengthUpper);
+            $needle_lo = Ip32::bitmask64On32($needle['lower'], $maskLengthLower);
+            $net_lo    = Ip32::bitmask64On32($networkIp['lower'], $maskLengthLower);
+        } else {
+            $maskUpper = ~0 << intval(64 - $maskLengthUpper);
+            $maskLower = ~0 << intval(64 - $maskLengthLower);
+
+            $needle_up = $needle['upper'] & $maskUpper;
+            $net_up    = $networkIp['upper'] & $maskUpper;
+            $needle_lo = $needle['lower'] & $maskLower;
+            $net_lo    = $networkIp['lower'] & $maskLower;
+        }
+
+        return $needle_up === $net_up && $needle_lo === $net_lo;
     }
 
     /**
@@ -93,14 +106,23 @@ class Ip
 
         if (strlen($binary) === 4) {
             // IPv4.
+            $ipNum = unpack('Nip', $binary)['ip'];
+            if (PHP_INT_SIZE == 4) {
+                // integer overlfow on 32bit: negative even though 'N'=unsigned
+                $ipNum = ($ipNum < 0) ? bcadd($ipNum, Ip32::$b32) : (string)$ipNum;
+            }
             return [
                 'version' => 4,
                 'upper' => 0,
-                'lower' => unpack('Nip', $binary)['ip'],
+                'lower' => $ipNum,
             ];
         } else {
-            // IPv6.
-            $result = unpack('Jupper/Jlower', $binary);
+            // IPv6. strlen==16
+            if (PHP_INT_SIZE == 4) { // 32-bit
+                $result = Ip32::ipv6UpperLowerOn32($binary);
+            } else { // 64-bit arch
+                $result = unpack('Jupper/Jlower', $binary);
+            }
             $result['version'] = 6;
             return $result;
         }
@@ -218,12 +240,12 @@ class Ip
      *
      * The IP is sourced from, in order of preference:
      *
-     *   - The X-Real-IP header if $conf[realip] is true.
+     *   - The custom IP header if $conf[client_ip_header] is set.
      *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxy].
      *   - The TCP/IP connection remote address.
      *   - 0.0.0.0 if all else fails.
      *
-     * The 'realip' config value should only be set to true if the X-Real-IP header
+     * The 'client_ip_header' config value should only be set if the header
      * is being added by the web server, otherwise it may be spoofed by the client.
      *
      * The 'trustedproxy' setting must not allow any IP, otherwise the X-Forwarded-For
@@ -241,7 +263,7 @@ class Ip
      *
      * The IPs are sourced from, in order of preference:
      *
-     *   - The X-Real-IP header if $conf[realip] is true.
+     *   - The custom IP header if $conf[client_ip_header] is set.
      *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
      *   - The TCP/IP connection remote address.
      *   - 0.0.0.0 if all else fails.
@@ -256,9 +278,9 @@ class Ip
         // IPs in order of most to least preferred.
         $ips = [];
 
-        // Use the X-Real-IP header if it is enabled by the configuration.
-        if (!empty($conf['realip']) && $INPUT->server->str('HTTP_X_REAL_IP')) {
-            $ips[] = $INPUT->server->str('HTTP_X_REAL_IP');
+        // Use a custom IP header (e.g. CDN) if it is set by the configuration.
+        if (!empty($conf['client_ip_header']) && $INPUT->server->str('HTTP_' . $conf['client_ip_header'])) {
+            $ips[] = $INPUT->server->str('HTTP_' . $conf['client_ip_header']);
         }
 
         // Add the X-Forwarded-For addresses if all proxies are trusted.
