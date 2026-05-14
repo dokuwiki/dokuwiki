@@ -1,0 +1,3 @@
+author=Wizardry and Steamworks <office [at] was [dot] fm>
+url=http://was.fm/
+description=Wizardry and Steamworks <office@was.fm>

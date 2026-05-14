@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
+ * @author Tor Härnqvist <tor@harnqvist.se>
+ */
+$lang['menu']                  = 'Verktyg för Indexmeny';
+$lang['fetch']                 = 'Visa';
+$lang['install']               = 'Installera';
+$lang['delete']                = 'Ta bort';
+$lang['check']                 = 'Kontrollera';
+$lang['no_repos']              = 'Ingen sökväg konfigurerad för templatsamling.';
+$lang['disabled']              = 'Avaktiverad';
+$lang['conn_err']              = 'Uppkopplingsfel';
+$lang['dir_err']               = 'Kunde inte skapa temporär katalog för att hämta templat';
+$lang['down_err']              = 'Kunde inte hämta templat';
+$lang['zip_err']               = 'Fel vis skapande eller extraktion av Zip';
+$lang['install_ok']            = 'templat installerades framgångsrikt. Det nya templatet är tillgängligt i verktygen på redigera sida eller med <code>js#theme_name option</code>.';
+$lang['install_no']            = 'Uppkopplingsfel. Du kan emellertid försöka <a href="http://samuele.netsons.org/dokuwiki/lib/plugins/indexmenu/upload/">ladda upp dit templat manuellt</a>.';
+$lang['delete_ok']             = 'Templatet togs bort framgångsrikt.';
+$lang['delete_no']             = 'Ett fel inträffade när templatet togs bort';
+$lang['upload']                = 'Dela';
+$lang['checkupdates']          = 'Pluginuppdateringar';
+$lang['noupdates']             = 'Indexmeny behöver ej uppdateras. Du har redan den senaste utgåvan:';
+$lang['showsort']              = 'Indexmeny sorteringsnummer:';
+$lang['donation_text']         = 'Indexmeny-pluginet är inte sponsrad av någon utan jag utvecklar och stödjer det på min fritid. Överväg att ge ett bidrag om du har nytta av pluginet eller om du vill stödja dess utveckling.';
+$lang['js']['indexmenuwizard'] = 'Indexmeny-guiden';
+$lang['js']['index']           = 'Index';
+$lang['js']['options']         = 'Alternativ';
+$lang['js']['navigation']      = 'Navigering';
+$lang['js']['sort']            = 'Sortera';
+$lang['js']['filter']          = 'Filter';
+$lang['js']['performance']     = 'Prestanda';
+$lang['js']['namespace']       = 'Namnrymd';
+$lang['js']['nsdepth']         = 'Djup';
+$lang['js']['js']              = 'Träd renderat av Javascript, du kan definiera ditt eget templat';
+$lang['js']['theme']           = 'Templat';
+$lang['js']['nocookie']        = 'Kom inte ihåg öppna/stängda noder vid användarnavigation';
+$lang['js']['noscroll']        = 'Förhindra rullning i trädet när detta inte får plats inom dess container-bredd';
+$lang['js']['notoc']           = 'Avaktivera förhandlsgranskningsfunktions av innehållsförteckning';
+$lang['js']['tsort']           = 'Efter rubrik';
+$lang['js']['dsort']           = 'Efter datum';
+$lang['js']['msort']           = 'Efter metatag';
+$lang['js']['nsort']           = 'Sortera också namnrymder';
+$lang['js']['rsort']           = 'Reversera sorteringsordning';
+$lang['js']['nons']            = 'Visa bara sidor';
+$lang['js']['nopg']            = 'Visa bara namnrymder';
+$lang['js']['maxjs']           = 'Antalet nivåer att rendera i klientens webbläsare när en nod är öppen';
+$lang['js']['id']              = 'Självdefinierad kak-id för denna indexmeny';
+$lang['js']['insert']          = 'Infoga indexmeny';
+$lang['js']['metanum']         = 'Metanummer för sortering';
+$lang['js']['insertmetanum']   = 'Infoga metanummer';
+$lang['js']['page']            = 'Sida';
+$lang['js']['revs']            = 'Revisioner';
+$lang['js']['tocpreview']      = 'Förhandsvisning av innehållsförteckning';
+$lang['js']['editmode']        = 'Redigeringsläge';
+$lang['js']['insertdwlink']    = 'Infoga som DWlink';
+$lang['js']['insertdwlinktooltip'] = 'Infoga sökvägen för denna sida i textföltet vid muspekarens position';
+$lang['js']['ns']              = 'Namnrymd';
+$lang['js']['search']          = 'Sök...';
+$lang['js']['searchtooltip']   = 'Sök efter sidor inom denna namnrymd';
+$lang['js']['create']          = 'Skapa';
+$lang['js']['more']            = 'Mer';
+$lang['js']['headpage']        = 'Huvudsida';
+$lang['js']['headpagetooltip'] = 'Skapa en ny huvudsida under denna sida';
+$lang['js']['startpage']       = 'Startsida';
+$lang['js']['startpagetooltip'] = 'Skapa en ny startsida under denna sida';
+$lang['js']['custompage']      = 'Valfri sida...';
+$lang['js']['custompagetooltip'] = 'Skapa en ny sida (fyll i titel via popup) under denna sida';
+$lang['js']['acls']            = 'Acls';
+$lang['js']['purgecache']      = 'Rensa cache';
+$lang['js']['exporthtml']      = 'Exportera som HTML';
+$lang['js']['exporttext']      = 'Exportera som text';
+$lang['js']['headpagehere']    = 'Huvudsida återfinns här';
+$lang['js']['headpageheretooltip'] = 'Skapa en ny huvudsida i denna namnrymd';
+$lang['js']['newpage']         = 'Ny sida...';
+$lang['js']['newpagetooltip']  = 'Skapa en ny sida (fyll i titel via popup) i denna namnrymd';
+$lang['js']['newpagehere']     = 'Ny sida här';
+$lang['js']['insertkeywords']  = 'Fyll i nyckelord att söka efter in denna namnrymd';
+$lang['js']['insertpagename']  = 'Fyll i sidnamn att skapa';
+$lang['js']['edit']            = 'Redigera';
+$lang['js']['loading']         = 'Laddar...';

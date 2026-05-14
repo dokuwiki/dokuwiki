@@ -1,0 +1,311 @@
+/*--------------------------------------------------|
+| dTree 2.05 | www.destroydrop.com/javascript/tree/ |
+|---------------------------------------------------|
+| Copyright (c) 2002-2003 Geir Landro               |
+|--------------------------------------------------*/
+/*
+ a.nodeFdUrl	        Namespace with url link (headpage)	        js
+ a.node 	        Namespace without url link        	        js
+ a.nodeUrl	        Page	                                        js
+ a.nodeSel 	        Last visited page            	                js
+ a.navSel 	        Current page            	                js
+ a.indexmenu_idx_head	link style of a namespace with url (headpage)	nojs
+ a.indexmenu_idx	link style of a namespace without url	        nojs
+ */
+
+/* dtree properties. No need to change*/
+
+.dtree {
+    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: __text__;
+    white-space: nowrap !important;
+    word-wrap: normal !important;
+    line-height: normal;
+}
+
+.dtree img {
+    border: 0;
+    vertical-align: top;
+}
+
+/*Properties that can be edit*/
+
+/*Link properties*/
+.dokuwiki .dtree a,
+.dokuwiki .aside .dtree a,
+.dokuwiki .dtree a:visited,
+.dokuwiki .aside .dtree a:visited,
+.dokuwiki .dtree a:link,
+.dokuwiki .aside .dtree a:link {
+    color: __existing__;
+    text-decoration: none;
+}
+
+/*Link properties*/
+.dtree a.node, .dtree a.nodeSel a.navSel {
+    white-space: nowrap;
+    padding: 1px 2px 1px 2px;
+}
+
+/* Last visited page highlighting*/
+.dtree a.nodeSel {
+    background-color: __background_alt__;
+}
+
+/* Current page highlighting*/
+.dokuwiki .dtree a.navSel,
+.dokuwiki .aside .dtree a.navSel {
+    background-color: __highlight__;
+}
+
+/*
+.dtree .clip {
+}
+*/
+
+/*Namespace without page link in nojs mode. !important has to be used*/
+div.li a.indexmenu_idx {
+    color: __missing__ !important;
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+/*Namespace with page link (headpage) in nojs mode. !important has to be used*/
+
+div.li a.indexmenu_idx_head {
+    font-weight: bold;
+}
+
+/*Style for admin panel interface*/
+div.dokuwiki div.indexmenu_list_themes {
+    clear: both;
+    border-top: 2px solid __border__;
+    padding-left: 1em;
+}
+
+/*Mouseover property*/
+.dokuwiki .dtree a.nodeFdUrl:hover,
+.dokuwiki .dtree a.nodeSel:hover,
+.dokuwiki a.navSel:hover,
+.dokuwiki .dtree a.nodeUrl:hover {
+    color: __existing__;
+    text-decoration: underline;
+    background-color: __background_alt__;
+}
+
+/*Mouseover property*/
+.dtree a.node:hover {
+    text-decoration: none;
+}
+
+/*tocbullet property*/
+.dtree .indexmenu_tocbullet {
+    position: absolute;
+    background: transparent url(images/toc_bullet.gif) no-repeat scroll;
+    vertical-align: middle;
+    width: 11px;
+    height: 11px;
+}
+
+/*scrolling arrow property*/
+.dtree .indexmenu_larrow {
+    position: absolute;
+    opacity: .60;
+    background: transparent url(images/larrow.gif) repeat-y scroll;
+    padding-left: 22px;
+    z-index: 100;
+}
+
+/*toc property*/
+.indexmenu_toc {
+    font-size: 80%;
+    line-height: 1.2em;
+    white-space: normal;
+    overflow: hidden;
+    width: 200px !important;
+    z-index: 100 !important;
+    word-wrap: break-word;
+}
+
+/*
+ * Temporary fix for vector template
+ * .toc is style for tabel of ToC in mediawiki styles, included in vector, but of no use in DokuWiki
+ */
+.indexmenu_toc ul.toc {
+    border: 0 none;
+}
+.indexmenu_toc .tocheader {
+    background-color: __background_alt__;
+    padding: 2px 0;
+}
+
+.indexmenu_toc .indexmenu_toc_inside {
+    border: 1px solid __border__;
+    background-color: __background__;
+    text-align: left;
+    padding: 0.5em 0 0.7em 0;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.dtree .indexmenu_rarrow {
+    position: absolute;
+    background: white url(images/rarrow.gif) no-repeat scroll;
+    width: 11px;
+    height: 15px;
+}
+
+.indexmenu_rmenuhead {
+    background-color: #CCFFCC;
+    margin: 0;
+    text-align: center;
+    padding: 1px 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 100px;
+}
+.indexmenu_rmenu ul {
+    margin: 0;
+}
+.indexmenu_rmenu, .indexmenu_rmenu li ul {
+    position: absolute;
+    z-index: 100;
+    background-color: #fff;
+    border: 1px solid black;
+    font-size: 80%;
+    line-height: 120%;
+    padding-bottom: 5px;
+    width: 110px;
+}
+.indexmenu_rmenu li a,
+.indexmenu_rmenu li span.indexmenu_submenu {
+    padding: 1px 0;
+    display: block;
+}
+.indexmenu_rmenu ul, .indexmenu_rmenu li {
+    list-style-type: none !important;
+    list-style-image: none !important;
+    color: #000 !important;
+    padding: 0;
+    text-align: center;
+    position: relative;
+}
+
+.indexmenu_rmenu a:hover, .indexmenu_rmenu .indexmenu_submenu:hover {
+    background-color: #E6E6E6 !important;
+    display: block;
+}
+
+.indexmenu_opts {
+    font-size: 80%;
+}
+
+.dtree .emptynode {
+    background: transparent url(images/empty.gif) no-repeat scroll;
+    display: inline;
+    padding: 1px 8px;
+    width: 16px;
+    height: 16px;
+    vertical-align: top;
+    /* needed by ie7 */
+    zoom: 1;
+}
+
+.indexmenu_rmenu li {
+    margin: 0;
+}
+.indexmenu_rmenu li ul {
+    display: none;
+    /*.indexmenu_rmenu width-1*/
+    left: 109px;
+    font-size: 100%;
+    top: 0;
+}
+
+/*nojs tree div*/
+.indexmenu_rmenu li:hover ul, .indexmenu_nojs, .indexmenu_titlemenu {
+    display: block;
+}
+
+.indexmenu_titlemenu {
+    background-color: #ccc;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+/***************************************
+ *          indexmenu wizard           *
+ ***************************************/
+#indexmenu__wiz {
+    width: 451px;
+}
+
+#indexmenu__wiz fieldset {
+    width: 401px;
+    text-align: left;
+}
+
+#indexmenu__wiz input {
+    margin: 0 0.1em 0 0;
+}
+
+#indexmenu__wiz input#namespace {
+    margin: 0 0.6em;
+    width: 270px;
+}
+
+#indexmenu__wiz .number input {
+    width: 30px;
+}
+
+#indexmenu__wiz strong {
+    line-height: 1.5em;
+}
+
+#indexmenu__wiz label {
+    margin: 0 0.6em;
+}
+
+#indexmenu__wiz fieldset.indexmenu_options label.number {
+    margin: 0 0.6em 0 -0.3em;
+}
+
+#indexmenu__wiz input#indexmenu__insert {
+    margin: 0.5em 3px 1em 3px;
+}
+
+#indexmenu__wiz fieldset.indexmenu_metanumber input[type=text] {
+    width: 50px;
+    margin: 5px;
+}
+
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton {
+    border-radius: 4px;
+    margin: 0 3px 3px 0;
+    border-left-width: 1px;
+}
+
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton div {
+    width: 16px;
+    height: 16px;
+    opacity: .70;
+}
+
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton div:hover,
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton div:active,
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton.selected div {
+    opacity: 1;
+}
+
+.dokuwiki #indexmenu__wiz div.toolbar button.toolbutton.selected {
+    border-color: #333;
+    /* copied from tpl/dokuwiki/css/basic.css */
+    background-color: #ddd;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc2NzAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiNGNEY0RjQiIG9mZnNldD0iMC4zIi8+PHN0b3Agc3RvcC1jb2xvcj0iI0RERERERCIgb2Zmc2V0PSIwLjk5Ii8+PHN0b3Agc3RvcC1jb2xvcj0iI0JCQkJCQiIgb2Zmc2V0PSIuOTkiLz4KPC9saW5lYXJHcmFkaWVudD4KPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNnNjcwKSIgLz4KPC9zdmc+);
+    /*background: -moz-linear-gradient(   top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #cccccc 99%); see FS#2447*/
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background: -o-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background: -ms-linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+    background: linear-gradient(top, #ffffff 0%, #f4f4f4 30%, #dddddd 99%, #bbbbbb 99%);
+}

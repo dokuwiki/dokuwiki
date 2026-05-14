@@ -1,0 +1,44 @@
+//The data-uri() links in skin-common.less break. Needs to be replaced by url(), DokuWiki can inline if needed
+
+//moved from skin-common.less to here to prevent wrong prefixing and renamed from spin to spin-fancytree
+@keyframes spin-fancytree {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(359deg);
+    }
+}
+
+
+
+//Mixins
+//  note: import of skin-common.less in the imported file below works only if skin-common.less is copied to EACH skin
+//  folder and referred from its ui.fancytree.less respectively.
+.importSkin(@skin-foldername) {
+    &.@{skin-foldername} {
+        @import "scripts/fancytree/@{skin-foldername}/ui.fancytree.less";
+        //overwrite default variable: @fancy-image-prefix: "./skin-win8/"; the current less compressor does not update paths
+        //relative to lib/exe/(css.php), workaround DOKU_BASE not available in css
+        @fancy-image-prefix: "../plugins/indexmenu/scripts/fancytree/@{skin-foldername}/";
+    }
+}
+
+//wrap everything by plugin class to ensure its dominates default dokuwiki paddings etc.
+.indexmenu_js2 {
+    //workaround needed for LESS processor of DokuWiki
+    .setBgImageUrl(@url) when not (@fancy-use-sprites) {}
+    .useSprite(@x, @y) when not(@fancy-use-sprites) {}
+
+    .importSkin(skin-awesome);
+    .importSkin(skin-bootstrap);
+    .importSkin(skin-bootstrap-n);
+    .importSkin(skin-lion);
+    .importSkin(skin-material);
+    .importSkin(skin-mdi);
+    .importSkin(skin-vista);
+    .importSkin(skin-win7);
+    .importSkin(skin-win8);
+    .importSkin(skin-xp);
+    .importSkin(skin-typicons);
+}

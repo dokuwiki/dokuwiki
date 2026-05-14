@@ -1,0 +1,7 @@
+base   titlesanchorlink
+author Dric
+email  cedric@driczone.net
+date   2021-21-23
+name   Titles Anchor Link plugin
+desc   Displays Anchors links when hovering Dokuwiki Sections titles, in a similar way to Github.
+url    https://www.dokuwiki.org/plugin:titlesanchorlink

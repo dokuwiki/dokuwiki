@@ -1,0 +1,70 @@
+/**
+ * Right Context Menu local configuration -- RENAME THIS FILE TO contextmenu.local.js --
+ * How to change:
+ *  - Rename this file to contextmenu.local.js
+ *  - Make in this file your modifications
+ *  - and go to the Configuration Manager and save the config again (this clears the cached javascript)
+ *
+ * See for information about available variables, menu structure, override and adding menu entries in the scripts/contextmenu.js
+ */
+
+/**
+ * Right Context Menu configuration for all users:
+ */
+if (!indexmenu_contextmenu['all']['pg']) indexmenu_contextmenu['all']['pg'] = {'view': [] };
+if (!indexmenu_contextmenu['all']['ns']) indexmenu_contextmenu['all']['ns'] = {'view': [] };
+
+
+// Override title of page menu
+//indexmenu_contextmenu['all']['pg']['view'][0] = ['Custom Title'];
+
+// add option to page menu
+//indexmenu_contextmenu['all']['pg']['view'].splice(1, 0, ['Input new page', '"javascript: IndexmenuContextmenu.reqpage(\'"+index.config.urlbase+"\',\'"+index.config.sepchar+"\',\'"+node.dokuid+"\');"']);
+
+
+if (JSINFO && JSINFO.isadmin) {
+    if (!indexmenu_contextmenu['pg']) indexmenu_contextmenu['pg'] = {'view': []};
+    if (!indexmenu_contextmenu['ns']) indexmenu_contextmenu['ns'] = {'view': []};
+    /**
+     * Right Context Menu configuration for admin users:
+     */
+
+    //override or add here the menu entries for admin, see for examples above
+
+
+} else if (JSINFO && JSINFO.isauth) {
+    if (!indexmenu_contextmenu['pg']) indexmenu_contextmenu['pg'] = {'view': []};
+    if (!indexmenu_contextmenu['ns']) indexmenu_contextmenu['ns'] = {'view': []};
+    /**
+     * Right Context Menu configuration for authenticated users:
+     */
+
+    //override or add here the menu entries for authenticated users, see for examples above
+
+}
+
+/**
+ * Common available functions:
+ *
+ * Some common functions are added by [indexmenu plugin folder]/scripts/contextmenu.js
+ *  - IndexmenuContextmenu.srchpage(urlbase, sepchar, isdir, dokuid)
+ *  - IndexmenuContextmenu.getid(urlbase, dokuid)
+ *  - IndexmenuContextmenu.reqpage(urlbase, sepchar, dokuid, pagename)
+ *  - IndexmenuContextmenu.insertTags(dokuid, sepchar)
+ *
+ * Insert your custom functions (available for all users) at the bottom of this file.
+ */
+
+/**
+ * Random Example function do something
+ *
+ * @param {string}   id
+ * @param {Boolean}  isdir
+ * @return {*} ...
+ */
+/*
+function indexmenu_custom_dosomething(a, isdir) {
+   //do something
+   return false;
+}
+*/

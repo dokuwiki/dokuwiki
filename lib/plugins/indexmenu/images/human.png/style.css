@@ -1,0 +1,35 @@
+/*--------------------------------------------------|
+| dTree 2.05 | www.destroydrop.com/javascript/tree/ |
+|---------------------------------------------------|
+| Copyright (c) 2002-2003 Geir Landro               |
+|--------------------------------------------------*/
+/*
+ a.nodeFdUrl	        Namespace with url link (headpage)	        js
+ a.node 	        Namespace without url link        	        js
+ a.nodeUrl	        Page	                                        js
+ a.nodeSel 	        Last visited page            	                js
+ a.navSel 	        Current page            	                js
+ a.indexmenu_idx_head	link style of a namespace with url (headpage)	nojs
+ a.indexmenu_idx	link style of a namespace without url	        nojs
+ */ 
+
+.dtree .human\.png a.nodeFdUrl:hover, .dtree a.nodeSel:hover, .dtree .human\.png a.navSel:hover, .dtree .human\.png a.nodeUrl:hover {
+background-color: #e5f8cb;
+color: #000;
+}
+
+.dtree .human\.png a.navSel {
+  background-color: #8ae80b;
+  color: #fff
+}
+
+.human\.png .indexmenu_rmenuhead {
+  background: #f69d4a url(../../images/close.gif) no-repeat scroll;
+  border-bottom: 1px solid #000000;
+  color: #000;
+}
+
+.human\.png ul a:hover {
+  background-color: #e5f8cb !important;
+  color: #000 !important;
+}

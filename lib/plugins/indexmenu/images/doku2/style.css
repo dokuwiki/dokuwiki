@@ -1,0 +1,19 @@
+
+
+/*Link properties*/
+.dokuwiki .aside .dtree a,
+.dokuwiki .dtree a:visited,
+.dokuwiki .aside .dtree a:visited,
+.dokuwiki .dtree a:link,
+.dokuwiki .aside .dtree a:link {
+    text-decoration: none;
+    color: #2B73B7; 
+}
+
+
+/* Current page not highlighting*/
+.dokuwiki .aside .dtree a.navSel {
+ /*   background-color: transparent; */
+    background-color: __highlight__;
+}
+

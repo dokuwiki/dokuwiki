@@ -1,0 +1,64 @@
+Thanks to:
+
+Geir Landro:
+	Dtree Javascript code.
+
+Roland Hellebart:
+	The Dtree idea.
+
+Chris Beetle:
+	The root namespace index.
+
+Gleb:
+	The nons e headpage option suggestion.
+
+Malyfred:
+	Resolved incorrect namespaces levels bug.
+
+Raymond Elferink:
+	Resolved incorrect ACLs bug.
+
+Ilya Lebedev:
+	Skip index option.
+
+Franck Baron:
+	Js id option.
+
+Jon B:
+	Skip file option.
+
+Neosky:
+	Javascript toolbar bug.
+
+Paul Grove:
+	Css dynamic properties and suggestion of js theme with differents image formats
+
+Anja Vag:
+        Great help in testing and finding bugs.
+
+Blaz:
+	Current page highliting suggestion.
+
+Adrien CLERC:
+        Start page bug.
+
+Ryan Jake and Fullindex plugin:
+        Sort by metada suggestion.
+
+Herman Huitema:
+        Context menu search function and great help in testing patches.
+
+Thomas Binder:
+        Fixed a bug with msort/nsort that did not manage empty arrays.
+
+Fabian Pfannes:
+        German language
+
+Urban:
+	Context menu patch and other suggestions
+
+Gerrit Uitslag (Klap-in):
+        Rewrite of indexmenu to add new dokuwiki compatibility
+        Added a new toolbar wizard
+        add ''hsort'' for sorting [[config:startpage]] pages to top of listing
+        many others improvements

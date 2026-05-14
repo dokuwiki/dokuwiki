@@ -1,0 +1,2 @@
+author=Anonymous
+description=Same kde.png theme, but in gif format.
