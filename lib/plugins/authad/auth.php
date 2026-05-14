@@ -635,11 +635,8 @@ class auth_plugin_authad extends AuthPlugin
      */
     protected function initAdLdap($domain)
     {
-        if (is_null($domain) && is_array($this->opts)) {
-            $domain = $this->opts['domain'];
-        }
-
-        $this->opts = $this->loadServerConfig((string) $domain);
+        $domain = (string) ($domain ?? $this->opts['domain'] ?? '');
+        $this->opts = $this->loadServerConfig($domain);
         if (isset($this->adldap[$domain])) return $this->adldap[$domain];
 
         // connect
