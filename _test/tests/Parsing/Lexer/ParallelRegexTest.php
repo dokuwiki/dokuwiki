@@ -147,4 +147,34 @@ class ParallelRegexTest extends \DokuWikiTest
         $this->assertEquals("abc", $split[1]);
         $this->assertEquals("yyy", $split[2]);
     }
+
+    function testSplitWithOffsetSeesLookbehindBeforeOffset()
+    {
+        // Regression: inline-formatting closers like `(?<=[^\s])\*\*` must
+        // see the preceding non-whitespace character even when it was part
+        // of a previously matched token (e.g. the `]` of a `[[link]]`).
+        // With `$offset`, the full subject is passed to PCRE and the
+        // lookbehind works against bytes before the offset.
+        $regex = new ParallelRegex(true);
+        $regex->addPattern('(?<=[^\s])\*\*');
+
+        // Without offset: subject starts with `**`, lookbehind fails.
+        $this->assertFalse((bool) $regex->split("** bar", $split));
+
+        // With offset: full subject passed, lookbehind at offset 10 sees `]`.
+        $this->assertTrue((bool) $regex->split("**[[link]]** bar", $split, 10));
+        $this->assertEquals("", $split[0]);
+        $this->assertEquals("**", $split[1]);
+    }
+
+    function testSplitWithOffsetPreIsBetweenOffsetAndMatch()
+    {
+        $regex = new ParallelRegex(true);
+        $regex->addPattern("abc");
+        // Match at position 6, offset at 3 — pre is "yyy" (bytes 3..5).
+        $this->assertTrue((bool) $regex->split("xxxyyyabczzz", $split, 3));
+        $this->assertEquals("yyy", $split[0]);
+        $this->assertEquals("abc", $split[1]);
+        $this->assertEquals("zzz", $split[2]);
+    }
 }

@@ -224,8 +224,9 @@ Bar');
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    // This is really a failing test - formatting able to spread across list items
-    // Problem is fixing it would mean a major rewrite of lists
+    // Bold must not spread across list items. Each item's `**` opener has
+    // to find its own closer within the item (flanking rules: non-whitespace
+    // before the closing `**`); otherwise the `**` stays literal.
     function testUnorderedListStrong() {
         $this->P->addMode('listblock',new Listblock());
         $this->P->addMode('strong',new Strong());
@@ -246,12 +247,15 @@ Bar');
             ['listu_open',[]],
             ['listitem_open',[2]],
             ['listcontent_open',[]],
-            ['strong_open',[]],
-            ['cdata',[" B\n  * C"]],
-            ['strong_close',[]],
+            ['cdata',["** B"]],
             ['listcontent_close',[]],
             ['listitem_close',[]],
             ['listu_close',[]],
+            ['listitem_close',[]],
+            ['listitem_open',[1]],
+            ['listcontent_open',[]],
+            ['cdata',[" C**"]],
+            ['listcontent_close',[]],
             ['listitem_close',[]],
             ['listu_close',[]],
             ['document_end',[]],

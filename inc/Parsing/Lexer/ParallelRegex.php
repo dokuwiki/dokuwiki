@@ -57,21 +57,29 @@ class ParallelRegex
     }
 
     /**
-     * Attempts to split the string against all patterns at once
+     * Attempts to split the string against all patterns at once.
+     *
+     * When `$offset` is non-zero, the match begins at that byte position in
+     * `$subject`, but the full subject is still passed to PCRE so any
+     * lookbehinds in the patterns can see characters before the offset.
+     * This is essential for inline-formatting closers like
+     * `(?<=[^\s])\*\*`, whose preceding non-whitespace character may have
+     * been consumed as part of a previous token (e.g. a `[[link]]`).
      *
      * @param string $subject      String to match against.
      * @param array $split         The split result: array containing, pre-match, match & post-match strings
+     * @param int $offset          Byte offset into `$subject` at which to start matching.
      * @return boolean             True on success.
      *
      * @author Christopher Smith <chris@jalakai.co.uk>
      */
-    public function split($subject, &$split)
+    public function split($subject, &$split, $offset = 0)
     {
         if (count($this->patterns) == 0) {
             return false;
         }
 
-        if (! preg_match($this->getCompoundedRegex(), $subject, $matches)) {
+        if (! preg_match($this->getCompoundedRegex(), $subject, $matches, PREG_OFFSET_CAPTURE, $offset)) {
             if (function_exists('preg_last_error')) {
                 $err = preg_last_error();
                 switch ($err) {
@@ -90,13 +98,18 @@ class ParallelRegex
                 }
             }
 
-            $split = [$subject, "", ""];
+            $split = [substr($subject, $offset), "", ""];
             return false;
         }
 
         $idx = count($matches) - 2;
-        [$pre, $post] = preg_split($this->patterns[$idx] . $this->getPerlMatchingFlags(), $subject, 2);
-        $split = [$pre, $matches[0], $post];
+        $matchText = (string) $matches[0][0];
+        // Byte offset from PREG_OFFSET_CAPTURE; cast makes the int type
+        // obvious to static analysers that don't model the flag.
+        $matchStart = (int) $matches[0][1];
+        $pre = substr($subject, $offset, $matchStart - $offset);
+        $post = substr($subject, $matchStart + strlen($matchText));
+        $split = [$pre, $matchText, $post];
 
         return $this->labels[$idx] ?? true;
     }

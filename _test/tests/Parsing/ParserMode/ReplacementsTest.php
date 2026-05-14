@@ -4,7 +4,6 @@ namespace dokuwiki\test\Parsing\ParserMode;
 
 use dokuwiki\Parsing\ParserMode\Acronym;
 use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Hr;
 use dokuwiki\Parsing\ParserMode\Multiplyentity;
 use dokuwiki\Parsing\ParserMode\Smiley;
 use dokuwiki\Parsing\ParserMode\Wordblock;
@@ -307,37 +306,4 @@ class ReplacementsTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testHR() {
-        $this->P->addMode('hr',new Hr());
-        $this->P->parse("Foo \n ---- \n Bar");
-        $calls = [
-            ['document_start',[]],
-            ['p_open',[]],
-            ['cdata',["\n".'Foo ']],
-            ['p_close',[]],
-            ['hr',[]],
-            ['p_open',[]],
-            ['cdata',["\n Bar"]],
-            ['p_close',[]],
-            ['document_end',[]],
-        ];
-        $this->assertCalls($calls, $this->H->calls);
-    }
-
-    function testHREol() {
-        $this->P->addMode('hr',new Hr());
-        $this->P->parse("Foo \n----\n Bar");
-        $calls = [
-            ['document_start',[]],
-            ['p_open',[]],
-            ['cdata',["\n".'Foo ']],
-            ['p_close',[]],
-            ['hr',[]],
-            ['p_open',[]],
-            ['cdata',["\n Bar"]],
-            ['p_close',[]],
-            ['document_end',[]],
-        ];
-        $this->assertCalls($calls, $this->H->calls);
-    }
 }

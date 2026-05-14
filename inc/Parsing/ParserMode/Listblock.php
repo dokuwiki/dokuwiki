@@ -30,9 +30,7 @@ class Listblock extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        $registry = ModeRegistry::getInstance();
-        $registry->registerBlockEolMode('listblock');
-        $registry->registerLineStartMarkers('listblock', ['\\*', '\\-']);
+        ModeRegistry::getInstance()->registerBlockEolMode('listblock');
     }
 
     /** @inheritdoc */

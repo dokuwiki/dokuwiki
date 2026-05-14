@@ -30,7 +30,7 @@ class RssTest extends ParserTestBase
                 'refresh' => 14400,
             ]]],
             ['p_open', []],
-            ['cdata', [' Bar']],
+            ['cdata', ['Bar']],
             ['p_close', []],
             ['document_end', []],
         ];

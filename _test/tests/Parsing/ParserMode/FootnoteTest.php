@@ -7,10 +7,10 @@ use dokuwiki\Parsing\ParserMode\Code;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\Footnote;
 use dokuwiki\Parsing\ParserMode\Strong;
-use dokuwiki\Parsing\ParserMode\Hr;
+use dokuwiki\Parsing\ParserMode\GfmHr;
 use dokuwiki\Parsing\ParserMode\Listblock;
+use dokuwiki\Parsing\ParserMode\GfmQuote;
 use dokuwiki\Parsing\ParserMode\Preformatted;
-use dokuwiki\Parsing\ParserMode\Quote;
 use dokuwiki\Parsing\ParserMode\Table;
 use dokuwiki\Parsing\ParserMode\Unformatted;
 
@@ -95,13 +95,13 @@ class FootnoteTest extends ParserTestBase
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
-            ['cdata',['Foo '."\n".'X']],
+            ['cdata',['Foo'."\n".'X']],
             ['nest', [ [
               ['footnote_open',[]],
               ['cdata',[" test\ning "]],
               ['footnote_close',[]],
             ]]],
-            ['cdata',['Y'."\n".' Bar']],
+            ['cdata',['Y'."\n".'Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -132,17 +132,16 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteHr() {
-        $this->P->addMode('hr',new Hr());
-        $this->P->parse("Foo (( \n ---- \n )) Bar");
+        $this->P->addMode('gfm_hr',new GfmHr());
+        $this->P->parse("Foo ((\n----\n)) Bar");
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
             ['cdata',["\n".'Foo ']],
             ['nest', [ [
               ['footnote_open',[]],
-              ['cdata',[' ']],
               ['hr',[]],
-              ['cdata',["\n "]],
+              ['cdata',["\n"]],
               ['footnote_close',[]],
             ]]],
             ['cdata',[' Bar']],
@@ -346,7 +345,12 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteQuote() {
-        $this->P->addMode('quote',new Quote());
+        // GfmQuote is the unified quote mode (replaces DW Quote). Under
+        // the test's default DW-preferred syntax the post-pass flattens
+        // sub-parsed paragraph wrapping into linebreak-separated cdata,
+        // and nested `>>` produces a nested `quote_open` pair. The body
+        // sub-parsed call list is wrapped in a `nest` instruction.
+        $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("Foo ((
 > def
 >>ghi
@@ -358,12 +362,12 @@ class FootnoteTest extends ParserTestBase
             ['nest', [ [
               ['footnote_open',[]],
               ['quote_open',[]],
-              ['cdata',[" def"]],
+              ['nest', [ [ ['cdata', ['def']] ] ]],
               ['quote_open',[]],
-              ['cdata',["ghi"]],
+              ['nest', [ [ ['cdata', ['ghi']] ] ]],
               ['quote_close',[]],
               ['quote_close',[]],
-              ['cdata',[' ']],
+              ['cdata',["\n "]],
               ['footnote_close',[]],
             ]]],
             ['cdata',[' Bar']],
@@ -374,7 +378,37 @@ class FootnoteTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    /**
+     * Footnotes are block-level containers (they can hold tables, lists,
+     * blockquotes, etc.), so unlike inline formatting they are allowed to
+     * span paragraph breaks. Pins this behavior down so future refactors
+     * of the inline-formatting paragraph guard don't accidentally restrict
+     * footnotes.
+     */
+    function testFootnoteSpansParagraphBoundary() {
+        $this->P->addMode('eol', new Eol());
+        $this->P->parse("Foo (( para one\n\npara two )) Bar");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ['Foo ']],
+            ['nest', [[
+                ['footnote_open', []],
+                ['cdata', [" para one\n\npara two "]],
+                ['footnote_close', []],
+            ]]],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
     function testFootnoteNesting() {
+        // Strong no longer opens where its inner `**` is adjacent to spaces
+        // (flanking rule). So `** (( b ` inside the footnote stays literal,
+        // and the footnote closes at the first `))`. The trailing `** c ))`
+        // outside has `**` adjacent to space too — also literal.
         $this->P->addMode('strong',new Strong());
         $this->P->parse("(( a ** (( b )) ** c ))");
 
@@ -384,14 +418,10 @@ class FootnoteTest extends ParserTestBase
             ['cdata',["\n"]],
             ['nest', [ [
               ['footnote_open',[]],
-              ['cdata',[' a ']],
-              ['strong_open',[]],
-              ['cdata',[' (( b ']],
+              ['cdata',[' a ** (( b ']],
               ['footnote_close',[]],
             ]]],
-            ['cdata',[" "]],
-            ['strong_close',[]],
-            ['cdata',[" c ))"]],
+            ['cdata',[" ** c ))"]],
             ['p_close',[]],
             ['document_end',[]],
         ];

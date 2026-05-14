@@ -26,11 +26,7 @@ class Handler
     public $calls = [];
 
     /** @var array internal status holders for some modes */
-    protected $status = [
-        'section' => false,
-        'doublequote' => 0,
-        'footnote' => false,
-    ];
+    protected $status = [];
 
     /** @var array<string, ModeInterface> mode name → mode object for dispatch */
     protected $modeObjects = [];
@@ -43,7 +39,28 @@ class Handler
      */
     public function __construct()
     {
+        $this->reset();
+    }
+
+    /**
+     * Reset the handler to a fresh state.
+     *
+     * Clears the call buffer, status flags, and reinstalls a plain CallWriter.
+     * Used by pooled sub-parsers (see ModeRegistry::acquireSubParser) so the
+     * same Handler instance can be parsed against repeatedly without state
+     * bleed.
+     * Also called by the constructor to populate initial state.
+     */
+    public function reset()
+    {
+        $this->calls = [];
+        $this->status = [
+            'section' => false,
+            'doublequote' => 0,
+            'footnote' => false,
+        ];
         $this->callWriter = new CallWriter($this);
+        $this->currentModeName = '';
     }
 
     /**

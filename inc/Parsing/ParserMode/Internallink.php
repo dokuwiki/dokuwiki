@@ -3,6 +3,7 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\Helpers\Link;
 
 class Internallink extends AbstractMode
 {
@@ -33,53 +34,8 @@ class Internallink extends AbstractMode
         }
         $link[0] = trim($link[0]);
 
-        //decide which kind of link it is
-
-        if (link_isinterwiki($link[0])) {
-            // Interwiki
-            $interwiki = sexplode('>', $link[0], 2, '');
-            $handler->addCall(
-                'interwikilink',
-                [$link[0], $link[1], strtolower($interwiki[0]), $interwiki[1]],
-                $pos
-            );
-        } elseif (preg_match('/^\\\\\\\\[^\\\\]+?\\\\/u', $link[0])) {
-            // Windows Share
-            $handler->addCall(
-                'windowssharelink',
-                [$link[0], $link[1]],
-                $pos
-            );
-        } elseif (preg_match('#^([a-z0-9\-\.+]+?)://#i', $link[0])) {
-            // external link (accepts all protocols)
-            $handler->addCall(
-                'externallink',
-                [$link[0], $link[1]],
-                $pos
-            );
-        } elseif (preg_match('<' . PREG_PATTERN_VALID_EMAIL . '>', $link[0])) {
-            // E-Mail (pattern above is defined in inc/mail.php)
-            $handler->addCall(
-                'emaillink',
-                [$link[0], $link[1]],
-                $pos
-            );
-        } elseif (preg_match('!^#.+!', $link[0])) {
-            // local link
-            $handler->addCall(
-                'locallink',
-                [substr($link[0], 1), $link[1]],
-                $pos
-            );
-        } else {
-            // internal link
-            $handler->addCall(
-                'internallink',
-                [$link[0], $link[1]],
-                $pos
-            );
-        }
-
+        [$call, $args] = Link::classify($link[0], $link[1]);
+        $handler->addCall($call, $args, $pos);
         return true;
     }
 }

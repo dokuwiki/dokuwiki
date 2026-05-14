@@ -61,6 +61,18 @@ abstract class AbstractFormatting extends AbstractMode
      */
     abstract protected function getModeName(): string;
 
+    /**
+     * @return string The name used for emitted open/close handler instructions
+     *
+     * Defaults to the mode name. Override in subclasses where the emitted
+     * instruction should differ from the lexer mode name (e.g. Gfm modes
+     * that share instructions with a DW counterpart).
+     */
+    protected function getInstructionName(): string
+    {
+        return $this->getModeName();
+    }
+
     /** @inheritdoc */
     public function postConnect()
     {
@@ -73,7 +85,7 @@ abstract class AbstractFormatting extends AbstractMode
     /** @inheritdoc */
     public function handle($match, $state, $pos, Handler $handler)
     {
-        $name = $this->getModeName();
+        $name = $this->getInstructionName();
         match ($state) {
             DOKU_LEXER_ENTER => $handler->addCall($name . '_open', [], $pos),
             DOKU_LEXER_EXIT => $handler->addCall($name . '_close', [], $pos),

@@ -36,6 +36,16 @@ class Parser
     }
 
     /**
+     * Accessor for the Handler instance.
+     *
+     * @return Handler
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
      * Adds the base mode and initialized the lexer
      *
      * @param Base $BaseMode
