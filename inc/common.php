@@ -1830,35 +1830,6 @@ function send_redirect($url)
 }
 
 /**
- * Validate a value using a set of valid values
- *
- * This function checks whether a specified value is set and in the array
- * $valid_values. If not, the function returns a default value or, if no
- * default is specified, throws an exception.
- *
- * @param string $param The name of the parameter
- * @param array $valid_values A set of valid values; Optionally a default may
- *                             be marked by the key “default”.
- * @param array $array The array containing the value (typically $_POST
- *                             or $_GET)
- * @param string $exc The text of the raised exception
- *
- * @return mixed
- * @throws Exception
- * @author Adrian Lang <lang@cosmocode.de>
- */
-function valid_input_set($param, $valid_values, $array, $exc = '')
-{
-    if (isset($array[$param]) && in_array($array[$param], $valid_values)) {
-        return $array[$param];
-    } elseif (isset($valid_values['default'])) {
-        return $valid_values['default'];
-    } else {
-        throw new Exception($exc);
-    }
-}
-
-/**
  * Read a preference from the DokuWiki cookie
  *
  * Consider using PrefCookie directly
