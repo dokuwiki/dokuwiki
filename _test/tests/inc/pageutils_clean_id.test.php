@@ -74,21 +74,21 @@ class init_clean_id_test extends DokuWikiTest
             ['pagĖ', 'page', ['deaccent' => 2]],
             ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 2]],
             ['ښ', 'ښ', ['deaccent' => 2]],
-            ['ښ侧化并곦ঝഈ', 'ښ侧化并곦ঝഈ', ['deaccent' => 2]],
+            ['ښ侧化并곦ঝഈ', 'ښ侧化并gonঝഈ', ['deaccent' => 2]],
 
             // deaccent and force ascii
             ['pàge', 'page', ['deaccent' => 1, 'ascii' => true]],
             ['pagĖ', 'page', ['deaccent' => 1, 'ascii' => true]],
             ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 1, 'ascii' => true]],
             ['ښ', '', ['deaccent' => 1, 'ascii' => true]],
-            ['ښ侧化并곦ঝഈ', '', ['deaccent' => 1, 'ascii' => true]],
+            ['ښ侧化并곦ঝഈ', 'gon', ['deaccent' => 1, 'ascii' => true]],
 
             // romanize and force ascii
             ['pàge', 'page', ['deaccent' => 2, 'ascii' => true]],
             ['pagĖ', 'page', ['deaccent' => 2, 'ascii' => true]],
             ['pagĒēĔĕĖėĘęĚě', 'pageeeeeeeeee', ['deaccent' => 2, 'ascii' => true]],
             ['ښ', '', ['deaccent' => 2, 'ascii' => true]],
-            ['ښ侧化并곦ঝഈ', '', ['deaccent' => 2, 'ascii' => true]],
+            ['ښ侧化并곦ঝഈ', 'gon', ['deaccent' => 2, 'ascii' => true]],
         ];
 
         foreach ($tests as $test) {
