@@ -1656,6 +1656,49 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     }
 
     /**
+     * Returns effective image width and height based on the specified desired
+     * width/height, if any, and the meta data loaded from the image file.
+     * Including the effective image sizes in the HTML increases the stability
+     * of content, i.e. results in a better Cumulative Layout Shift (CLS) score:
+     * https://web.dev/cls/
+     * https://web.dev/optimize-cls/#images-without-dimensions
+     *
+     * @author Michael Stapelberg
+     * @param  int      $desiredWidth     specified width or null
+     * @param  int      $desiredHeight    specified height or null
+     * @param  JpegMeta $jpeg             meta data loaded from the image
+     * @return array of int               effective width and height
+     */
+    private function _image_sizes($desiredWidth, $desiredHeight, $jpeg) {
+        if($jpeg === false) {
+            return array($desiredWidth, $desiredHeight);
+        }
+
+        // If no dimensions are specified, return none: the browser will figure
+        // out a size. If we specified sizes here, layouts would change!
+        if(is_null($desiredWidth) && is_null($desiredHeight)) {
+            return array(null, null);
+        }
+
+        if(is_null($desiredWidth) && !is_null($desiredHeight)) {
+            // height specified, calculate effective width:
+            $ratio = $desiredHeight / $jpeg->getHeight();
+            $width = floor($jpeg->getWidth() * $ratio);
+            return array($width, $desiredHeight);
+        }
+
+        if(!is_null($desiredWidth) && is_null($desiredHeight)) {
+            // width specified, calculate effective height:
+            $ratio = $desiredWidth / $jpeg->getWidth();
+            $height = floor($jpeg->getHeight() * $ratio);
+            return array($desiredWidth, $height);
+        }
+
+        // Both dimensions fully specified:
+        return array($desiredWidth, $desiredHeight);
+    }
+
+    /**
      * Renders internal and external media
      *
      * @param string $src media ID
@@ -1682,14 +1725,27 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         [$ext, $mime] = mimetype($src);
         if (str_starts_with($mime, 'image')) {
+            $jpeg = false;
+
+            if(($ext == 'jpg' || $ext == 'jpeg') &&
+               (is_null($width) || is_null($height))) {
+                require_once(DOKU_INC . 'inc/JpegMeta.php');
+                $jpeg = new JpegMeta(mediaFN($src));
+                [$width, $height] = $this->_image_sizes($width, $height, $jpeg);
+            }
+
             // first get the $title
             if (!is_null($title)) {
                 $title = $this->_xmlEntities($title);
             } elseif ($ext == 'jpg' || $ext == 'jpeg') {
                 //try to use the caption from IPTC/EXIF
-                require_once(DOKU_INC . 'inc/JpegMeta.php');
-                $jpeg = new JpegMeta(mediaFN($src));
-                $cap = $jpeg->getTitle();
+                if($jpeg === false) {
+                    require_once(DOKU_INC . 'inc/JpegMeta.php');
+                    $jpeg = new JpegMeta(mediaFN($src));
+                }
+                if($jpeg !== false) {
+                    $cap = $jpeg->getTitle();
+                }
                 if (!empty($cap)) {
                     $title = $this->_xmlEntities($cap);
                 }
