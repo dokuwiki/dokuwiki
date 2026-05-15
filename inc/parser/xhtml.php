@@ -4,6 +4,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Feed\FeedParser;
 use dokuwiki\File\MediaResolver;
 use dokuwiki\File\PageResolver;
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use SimplePie\Author;
 
@@ -1130,7 +1131,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function emaillink($address, $name = null, $returnonly = false)
     {
-        global $conf;
         //simple setup
         $link = [];
         $link['target'] = '';
@@ -1146,18 +1146,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $link['class'] = 'media';
         }
 
-        $address = $this->_xmlEntities($address);
-        $address = obfuscate($address);
+        $display = MailUtils::obfuscate($address);
+        $href = MailUtils::obfuscateUrl($address);
 
-        $title = $address;
+        $title = $display;
 
         if (empty($name)) {
-            $name = $address;
+            $name = $display;
         }
 
-        if ($conf['mailguard'] == 'visible') $address = rawurlencode($address);
-
-        $link['url'] = 'mailto:' . $address;
+        $link['url'] = 'mailto:' . $href;
         $link['name'] = $name;
         $link['title'] = $title;
 

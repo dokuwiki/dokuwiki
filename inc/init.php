@@ -247,7 +247,7 @@ if (!defined('NOSESSION')) {
 }
 
 // setup mail system
-mail_setup();
+Mailer::configInit();
 
 $nil = null;
 Event::createAndTrigger('DOKUWIKI_INIT_DONE', $nil, null, false);

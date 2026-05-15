@@ -5,6 +5,8 @@
  * @group plugin_styling
  * @group plugins
  */
+use dokuwiki\MailUtils;
+
 class general_plugin_styling_test extends DokuWikiTest {
 
     /**
@@ -26,7 +28,7 @@ class general_plugin_styling_test extends DokuWikiTest {
 
         $this->assertEquals('styling', $info['base']);
         $this->assertMatchesRegularExpression('/^https?:\/\//', $info['url']);
-        $this->assertTrue(mail_isvalid($info['email']));
+        $this->assertTrue(MailUtils::isValid($info['email']));
         $this->assertMatchesRegularExpression('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);
         $this->assertTrue(false !== strtotime($info['date']));
     }
