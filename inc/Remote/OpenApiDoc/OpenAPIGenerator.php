@@ -349,6 +349,46 @@ class OpenAPIGenerator
      */
     public function typeToSchema(Type $type)
     {
+        // Union types — `T|null` becomes a nullable schema (OpenAPI 3.1 array-of-types form),
+        // wider unions become `oneOf`. We do this before falling into the scalar path because
+        // `getOpenApiType()` returns `object` for any raw union string.
+        if ($type->isUnion()) {
+            $nonNull = $type->getNonNullMembers();
+            if (count($nonNull) === 1) {
+                $schema = $this->typeToSchema($nonNull[0]);
+                // Wrap the single concrete type with null. If something upstream already
+                // emitted an array-typed `type` (shouldn't currently happen), append.
+                $existing = $schema['type'] ?? null;
+                if (is_array($existing)) {
+                    if (!in_array('null', $existing, true)) {
+                        $existing[] = 'null';
+                    }
+                    $schema['type'] = $existing;
+                } elseif (is_string($existing)) {
+                    $schema['type'] = [$existing, 'null'];
+                }
+                return $schema;
+            }
+            $oneOf = [];
+            foreach ($nonNull as $member) {
+                $oneOf[] = $this->typeToSchema($member);
+            }
+            if ($type->isNullable()) {
+                $oneOf[] = ['type' => 'null'];
+            }
+            return ['oneOf' => $oneOf];
+        }
+
+        // Typed associative array — `array<K, V>` becomes an object with typed
+        // additionalProperties. JSON Schema only models string-keyed maps, so the
+        // key type is captured in the model but not emitted to the spec.
+        if ($type->isMap()) {
+            return [
+                'type' => 'object',
+                'additionalProperties' => $this->typeToSchema($type->getMapValueType()),
+            ];
+        }
+
         $schema = [
             'type' => $type->getOpenApiType(),
         ];

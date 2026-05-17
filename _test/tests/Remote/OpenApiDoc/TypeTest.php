@@ -101,4 +101,68 @@ class TypeTest extends \DokuWikiTest
         $this->assertEquals($expected, $result);
     }
 
+    public function provideUnionTypes()
+    {
+        return [
+            // [hint, isUnion, isNullable, nonNullMembersAsStrings]
+            ['int|bool', true, false, ['int', 'bool']],
+            ['string|null', true, true, ['string']],
+            ['null|string', true, true, ['string']],
+            ['Page|null', true, true, ['Page']],
+            ['int|bool|string', true, false, ['int', 'bool', 'string']],
+            ['int|bool|null', true, true, ['int', 'bool']],
+            // Malformed inputs degrade to non-union without throwing
+            ['int|', false, false, ['int|']],
+            ['|int', false, false, ['|int']],
+            // Non-union types remain non-union
+            ['int', false, false, ['int']],
+            ['Foo[]', false, false, ['Foo[]']],
+        ];
+    }
+
+    /**
+     * @dataProvider provideUnionTypes
+     */
+    public function testUnionTypes($typehint, $isUnion, $isNullable, $expectedNonNull)
+    {
+        $type = new Type($typehint);
+        $this->assertSame($isUnion, $type->isUnion(), 'isUnion');
+        $this->assertSame($isNullable, $type->isNullable(), 'isNullable');
+        $nonNull = array_map(fn(Type $t) => (string) $t, $type->getNonNullMembers());
+        $this->assertEquals($expectedNonNull, $nonNull, 'non-null members');
+    }
+
+    public function provideMapTypes()
+    {
+        return [
+            // [hint, isMap, expectedKey, expectedValue]
+            ['array<string, Page>', true, 'string', 'Page'],
+            ['array<int, string>', true, 'int', 'string'],
+            ['array<string, int[]>', true, 'string', 'int[]'],
+            ['array<string, array<int, Page>>', true, 'string', 'array<int, Page>'],
+            // Non-maps
+            ['array', false, null, null],
+            ['array<>', false, null, null],
+            ['array<int>', false, null, null],
+            ['int[]', false, null, null],
+            ['Page', false, null, null],
+        ];
+    }
+
+    /**
+     * @dataProvider provideMapTypes
+     */
+    public function testMapTypes($typehint, $isMap, $expectedKey, $expectedValue)
+    {
+        $type = new Type($typehint);
+        $this->assertSame($isMap, $type->isMap(), 'isMap');
+        if ($isMap) {
+            $this->assertEquals($expectedKey, (string) $type->getMapKeyType());
+            $this->assertEquals($expectedValue, (string) $type->getMapValueType());
+        } else {
+            $this->assertNull($type->getMapKeyType());
+            $this->assertNull($type->getMapValueType());
+        }
+    }
+
 }
