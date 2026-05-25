@@ -7,6 +7,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\File\PageResolver;
 use dokuwiki\Remote\Response\Link;
 use dokuwiki\Remote\Response\Media;
 use dokuwiki\Remote\Response\MediaChange;
@@ -26,7 +27,7 @@ use dokuwiki\Utf8\Sort;
 class ApiCore
 {
     /** @var int Increased whenever the API is changed */
-    public const API_VERSION = 14;
+    public const API_VERSION = 15;
 
     /**
      * Returns details about the core methods
@@ -514,7 +515,7 @@ class ApiCore
      *
      * This returns a list of links found in the given page. This includes internal, external and interwiki links
      *
-     * If a link occurs multiple times on the page, it will be returned multiple times.
+     * If a link occurs multiple times on the page, it will be returned only once.
      *
      * Read access for the given page is needed and page has to exist.
      *
@@ -522,9 +523,6 @@ class ApiCore
      * @return Link[] A list of links found on the given page
      * @throws AccessDeniedException
      * @throws RemoteException
-     * @todo returning link titles would be a nice addition
-     * @todo hash handling seems not to be correct
-     * @todo maybe return the same link only once?
      * @author Michael Klier <chi@chimeric.de>
      */
     public function getPageLinks($page)
@@ -543,19 +541,83 @@ class ApiCore
         foreach ($ins as $in) {
             switch ($in[0]) {
                 case 'internallink':
-                    $links[] = new Link('local', $in[1][0], wl($in[1][0]));
+                    $link = $this->makeInternalLink($page, $Renderer, $in[1][0], $in[1][1] ?? null);
+                    $links[$link->href] ??= $link;
                     break;
                 case 'externallink':
-                    $links[] = new Link('extern', $in[1][0], $in[1][0]);
+                    $link = new Link(
+                        'extern',
+                        $in[1][0],
+                        $in[1][0],
+                        $this->getLinkTitle($in[1][1] ?? null, '<' . $in[1][0] . '>')
+                    );
+                    $links[$link->href] ??= $link;
                     break;
                 case 'interwikilink':
                     $url = $Renderer->_resolveInterWiki($in[1][2], $in[1][3]);
-                    $links[] = new Link('interwiki', $in[1][0], $url);
+                    $link = new Link(
+                        'interwiki',
+                        $in[1][0],
+                        $url,
+                        $this->getLinkTitle($in[1][1] ?? null, $in[1][3])
+                    );
+                    $links[$link->href] ??= $link;
                     break;
             }
         }
 
-        return ($links);
+        return array_values($links);
+    }
+
+    /**
+     * Create a link response for an internal link, matching the XHTML renderer's page and hash resolution
+     *
+     * @param string $contextPage The page the link was found on
+     * @param Doku_Renderer_xhtml $renderer Renderer helper for title and hash handling
+     * @param string $id Raw link target from parser instructions
+     * @param string|array|null $name Raw link title from parser instructions
+     * @return Link
+     */
+    private function makeInternalLink($contextPage, Doku_Renderer_xhtml $renderer, $id, $name)
+    {
+        $linkPage = $id;
+        $params = '';
+        $parts = explode('?', $id, 2);
+        if (count($parts) === 2) {
+            $id = $parts[0];
+            $params = $parts[1];
+        }
+
+        $default = $renderer->_simpleTitle($id);
+        $resolvedId = (new PageResolver($contextPage))->resolveId($id, '', true);
+        [$pageId, $hash] = sexplode('#', $resolvedId, 2);
+
+        $href = wl($pageId, $params);
+        if ($hash) {
+            $href .= '#' . $renderer->_headerToLink($hash);
+        }
+
+        return new Link('local', $linkPage, $href, $this->getLinkTitle($name, $default));
+    }
+
+    /**
+     * Return a text title for a link instruction
+     *
+     * @param string|array|null $title Parsed link title
+     * @param string $default Default title
+     * @return string
+     */
+    private function getLinkTitle($title, $default)
+    {
+        if (is_array($title)) {
+            return $title['title'] ?? $title['src'] ?? $default;
+        }
+
+        if ($title === null || trim($title) === '') {
+            return $default;
+        }
+
+        return $title;
     }
 
     /**

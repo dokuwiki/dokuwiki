@@ -566,27 +566,29 @@ You can use up to five different levels of',
         $localdoku = [
             'type' => 'local',
             'page' => 'DokuWiki',
-            'href' => DOKU_BASE . DOKU_SCRIPT . '?id=DokuWiki'
+            'href' => DOKU_BASE . DOKU_SCRIPT . '?id=dokuwiki',
+            'title' => 'DokuWiki'
         ];
         $expected = [
             $localdoku,
             [
                 'type' => 'extern',
                 'page' => 'http://www.freelists.org',
-                'href' => 'http://www.freelists.org'
+                'href' => 'http://www.freelists.org',
+                'title' => 'freelists.org'
             ],
             [
                 'type' => 'interwiki',
                 'page' => 'rfc>1855',
-                'href' => 'https://tools.ietf.org/html/rfc1855'
+                'href' => 'https://tools.ietf.org/html/rfc1855',
+                'title' => 'RFC 1855 - Netiquette Guidelines'
             ],
             [
                 'type' => 'extern',
                 'page' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
-                'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html'
-            ],
-            $localdoku,
-            $localdoku
+                'href' => 'http://www.catb.org/~esr/faqs/smart-questions.html',
+                'title' => 'How To Ask Questions The Smart Way'
+            ]
         ];
 
         $this->assertEqualResult(
@@ -596,6 +598,47 @@ You can use up to five different levels of',
 
         $this->expectExceptionCode(121);
         $this->remote->call('core.getPageLinks', ['page' => 'foobar']);
+    }
+
+    public function testGetPageLinksWithHashesTitlesAndDuplicates()
+    {
+        saveWikiText(
+            'api:links',
+            implode("\n", [
+                '[[api:target#Target Heading|Internal Hash]]',
+                '[[api:target#Target Heading|Internal Hash Duplicate]]',
+                '[[api:target#Other Heading|Other Internal Hash]]',
+                '[[rfc>1855#3.1.1|RFC Section]]',
+                '[[rfc>1855#3.1.1|RFC Section Duplicate]]',
+            ]),
+            'test'
+        );
+
+        $expected = [
+            [
+                'type' => 'local',
+                'page' => 'api:target#Target Heading',
+                'href' => DOKU_BASE . DOKU_SCRIPT . '?id=api:target#target_heading',
+                'title' => 'Internal Hash'
+            ],
+            [
+                'type' => 'local',
+                'page' => 'api:target#Other Heading',
+                'href' => DOKU_BASE . DOKU_SCRIPT . '?id=api:target#other_heading',
+                'title' => 'Other Internal Hash'
+            ],
+            [
+                'type' => 'interwiki',
+                'page' => 'rfc>1855#3.1.1',
+                'href' => 'https://tools.ietf.org/html/rfc1855#3.1.1',
+                'title' => 'RFC Section'
+            ],
+        ];
+
+        $this->assertEqualResult(
+            $expected,
+            $this->remote->call('core.getPageLinks', ['page' => 'api:links'])
+        );
     }
 
     //core.getPageBackLinks
