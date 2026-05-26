@@ -540,6 +540,36 @@ class GfmLinkTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    function testSoftLineBreakInLabel()
+    {
+        // CommonMark allows a soft line break inside link text. The `\n`
+        // is preserved in the label string and rendered as a space by
+        // HTML; the link still resolves to a single externallink call.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse("A [link with\na newline](http://example.org)?");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nA "]],
+            ['externallink', ['http://example.org', "link with\na newline"]],
+            ['cdata', ['?']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testBlankLineEndsLabel()
+    {
+        // A blank line is not allowed inside link text — the regex
+        // declines to cross it, so the bracket sequence stays literal.
+        $this->P->addMode('gfm_link', new GfmLink());
+        $this->P->parse("[link with\n\nblank line](http://example.org)");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('externallink', $modes);
+        $this->assertNotContains('internallink', $modes);
+    }
+
     function testSortValue()
     {
         $this->assertSame(300, (new GfmLink())->getSort());

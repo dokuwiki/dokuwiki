@@ -51,8 +51,11 @@ class GfmLink extends AbstractMode
     // Label character set: forbids unescaped `[` / `]` so the outer
     // bracket pair stays balanced, but allows `\[` / `\]` so an escaped
     // bracket can appear inside the label (spec example 523). The same
-    // backslash-escape trick the URL slot already uses.
-    private const LABEL_CHAR = '(?:\\\\.|[^\[\]\n])';
+    // backslash-escape trick the URL slot already uses. A bare `\n` is
+    // permitted as long as it is not followed by a blank line — soft
+    // line breaks inside link text are allowed by the spec, blank lines
+    // are not (and they would also tie up `\n#`-anchored block modes).
+    private const LABEL_CHAR = '(?:\\\\.|[^\[\]\n]|\n(?![ \t]*\n))';
 
     // Image sub-pattern reused for both the label alternative in the main
     // pattern and the image-as-label detector in handle(). No capture
