@@ -33,6 +33,17 @@ use dokuwiki\Parsing\Helpers\Escape;
  * post-hoc (link URL/label, fence info string) call
  * {@see \dokuwiki\Parsing\Helpers\Escape::unescapeBackslashes()} from
  * their handle() — same character class.
+ *
+ * Collision with DokuWiki's Linebreak mode (`\\` before a space, tab,
+ * or newline): both patterns can claim the two backslashes at the same
+ * position. GfmEscape's sort 5 beats Linebreak's sort 140 on tie, which
+ * would silently swallow every DW forced linebreak in mixed-syntax
+ * settings. To avoid that, when DW syntax is loaded the pattern carries
+ * a negative lookahead that declines `\\` followed by `[ \t\n]` —
+ * deferring those bytes to Linebreak. Mid-line `\\` (e.g. UNC paths
+ * like `\\\\host\\share`) still escapes normally; only the EOL-adjacent
+ * form is handed off. In pure `md` mode no DW Linebreak is loaded and
+ * the lookahead is omitted so GFM-spec behavior is preserved.
  */
 class GfmEscape extends AbstractMode
 {
@@ -50,8 +61,11 @@ class GfmEscape extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
+        global $conf;
+        // PHP `\\\\\\\\` → regex `\\\\` → matches two literal backslashes.
+        $lookahead = $conf['syntax'] === 'md' ? '' : '(?!\\\\\\\\[ \t\n])';
         $this->Lexer->addSpecialPattern(
-            '\\\\' . Escape::PUNCTUATION_CHAR_CLASS,
+            $lookahead . '\\\\' . Escape::PUNCTUATION_CHAR_CLASS,
             $mode,
             'gfm_escape'
         );

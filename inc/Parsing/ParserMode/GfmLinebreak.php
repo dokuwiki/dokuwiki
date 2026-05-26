@@ -21,13 +21,10 @@ use dokuwiki\Parsing\Handler;
  * the inner text — same mechanism that exempts GfmEscape from
  * code spans.
  *
- * No collision with the existing DokuWiki Linebreak mode (also at
- * sort 140): DW's pattern is a literal double backslash `\\`,
- * unrelated to either GFM delimiter form. In mixed syntax settings
- * both modes can load and the leftmost match wins position-by-
- * position. GfmEscape (sort 5) does not steal the backslash form
- * either: its pattern requires the next char to be ASCII
- * punctuation, and `\n` is not punctuation.
+ * Coexists with DokuWiki's Linebreak mode (also at sort 140). The two
+ * delimiter shapes are disjoint: GfmLinebreak takes a single `\` (or
+ * two+ spaces) before a non-final newline, DW Linebreak takes `\\`
+ * before a space, tab, or newline.
  */
 class GfmLinebreak extends AbstractMode
 {
