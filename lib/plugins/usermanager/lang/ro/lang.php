@@ -3,39 +3,40 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tzipirigu <tzipirigu.radu25683@gmail.com>
  * @author Sergiu Baltariu <s_baltariu@yahoo.com>
  * @author Emanuel-Emeric Andrasi <n30@mandrivausers.ro>
  * @author Emanuel-Emeric Andraşi <em.andrasi@mandrivausers.ro>
  * @author Marius OLAR <olarmariusalex@gmail.com>
  */
-$lang['menu']                  = 'Manager Utilizatori';
+$lang['menu']                  = 'Manager utilizatori';
 $lang['noauth']                = '(autentificarea utilizatorilor nu este disponibilă)';
-$lang['nosupport']             = '(menegementul utilizatorilor nu e suportat)';
+$lang['nosupport']             = '(gestionarea utilizatorilor nu e suportată)';
 $lang['badauth']               = 'mecanism de autentificare invalid';
 $lang['user_id']               = 'Utilizator';
 $lang['user_pass']             = 'Parolă';
-$lang['user_name']             = 'Nume Real';
+$lang['user_name']             = 'Nume real';
 $lang['user_mail']             = 'Email';
 $lang['user_groups']           = 'Grupuri';
 $lang['field']                 = 'Câmp';
 $lang['value']                 = 'Valoare';
 $lang['add']                   = 'Adaugă';
-$lang['delete']                = 'Şterge';
-$lang['delete_selected']       = 'Şterge selecţia';
+$lang['delete']                = 'Șterge';
+$lang['delete_selected']       = 'Șterge selecția';
 $lang['edit']                  = 'Editează';
 $lang['edit_prompt']           = 'Editează acest utilizator';
-$lang['modify']                = 'Salvează Modificările';
+$lang['modify']                = 'Salvează modificările';
 $lang['search']                = 'Caută';
 $lang['search_prompt']         = 'Se caută';
-$lang['clear']                 = 'Resetează Filtrul de Căutare';
+$lang['clear']                 = 'Resetează filtrul de căutare';
 $lang['filter']                = 'Filtru';
-$lang['summary']               = 'Afişarea utilizatorilor %1$d-%2$d din %3$d găsită. %4$d utilizatori în total.';
+$lang['summary']               = 'Afișarea utilizatorilor %1$d-%2$d din %3$d găsită. %4$d utilizatori în total.';
 $lang['nonefound']             = 'Nici un utilizator nu a fost găsit. %d utilizatori în total.';
-$lang['delete_ok']             = '%d utilizatori şterşi';
-$lang['delete_fail']           = '%d eşuat la ştergere.';
+$lang['delete_ok']             = '%d utilizatori șterși';
+$lang['delete_fail']           = '%d eșuat la ștergere.';
 $lang['update_ok']             = 'Utilizatorul a fost actualizat cu succes';
-$lang['update_fail']           = 'Actualizarea utilizatorului a eşuat';
-$lang['update_exists']         = 'Modificarea numelui de utilizator a eşuat. Numele de utilizator specificat (%s) există deja (orice altă modificare se va aplica)';
+$lang['update_fail']           = 'Actualizarea utilizatorului a eșuat';
+$lang['update_exists']         = 'Modificarea numelui de utilizator a eșuat. Numele de utilizator specificat (%s) există deja (orice altă modificare se va aplica)';
 $lang['start']                 = 'început';
 $lang['prev']                  = 'anterior';
 $lang['next']                  = 'urmator';

@@ -1,13 +1,14 @@
-Salutare, @FULLNAME@!
+O pagină din DokuWiki-ul tău a fost adăugată sau modificată. Aici sunt detaliile:
 
-A fost adăugată sau modificată o pagină. Aici sunt detaliile:
-
-Dată        : @DATE@
 Browser   : @BROWSER@
 Adresă IP   : @IPADDRESS@
 Hostname  : @HOSTNAME@
 Versiune anterioară : @OLDPAGE@
 Versiune curentă  : @NEWPAGE@
-Sumar editare: @SUMMARY@
+Data noii revizuiri: @DATE@
+Rezumat editări: @SUMMARY@
+Utilizator           : @USER@
+
+Este posibil să existe schimbări mai recente după această revizuire. Dacă se întâmplă acest lucru, un mesaj va fi afișat în partea de sus a paginii de revizuire.
 
 @DIFF@
