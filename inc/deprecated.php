@@ -205,7 +205,6 @@ function ptln($string, $indent = 0)
 }
 
 /**
-<<<<<<< HEAD
  * Adds/updates the search index for the given page
  *
  * Locking is handled internally.
@@ -231,14 +230,18 @@ function idx_addPage($page, $verbose = false, $force = false)
 /**
  * Create an instance of the indexer.
  *
- * @return dokuwiki\Search\Indexer
+ * Returns a {@see dokuwiki\Search\LegacyIndexer} that preserves the legacy
+ * Doku_Indexer return contract (true|string on success/failure for the four
+ * mutating methods) so existing plugins keep working without try/catch.
+ *
+ * @return dokuwiki\Search\LegacyIndexer
  *
  * @deprecated 2026-04-07 use dokuwiki\Search\Indexer directly
  */
 function idx_get_indexer()
 {
     DebugHelper::dbgDeprecatedFunction(dokuwiki\Search\Indexer::class);
-    return new dokuwiki\Search\Indexer();
+    return new dokuwiki\Search\LegacyIndexer();
 }
 
 /**
@@ -270,7 +273,7 @@ function idx_getIndex($idx, $suffix)
 function idx_lookup(&$words)
 {
     DebugHelper::dbgDeprecatedFunction(dokuwiki\Search\Collection\CollectionSearch::class);
-    return (new dokuwiki\Search\Indexer())->lookup($words);
+    return (new dokuwiki\Search\LegacyIndexer())->lookup($words);
 }
 
 /**
