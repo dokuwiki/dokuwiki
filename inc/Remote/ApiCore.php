@@ -838,7 +838,7 @@ class ApiCore
     public function getMedia($media, $rev = 0)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
@@ -875,7 +875,7 @@ class ApiCore
     public function getMediaInfo($media, $rev = 0, $author = false, $hash = false)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
@@ -912,7 +912,7 @@ class ApiCore
     public function getMediaUsage($media)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media)) {
@@ -944,7 +944,7 @@ class ApiCore
 
         $media = cleanID($media);
         // check that this media exists
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media, 0)) {
@@ -994,7 +994,7 @@ class ApiCore
     public function saveMedia($media, $base64, $overwrite = false)
     {
         $media = cleanID($media);
-        $auth = auth_quickaclcheck(getNS($media) . ':*');
+        $auth = auth_quickaclcheck(mediaAclPath($media));
 
         if ($media === '') {
             throw new RemoteException('Empty or invalid media ID given', 231);
@@ -1047,7 +1047,7 @@ class ApiCore
     {
         $media = cleanID($media);
 
-        $auth = auth_quickaclcheck($media);
+        $auth = auth_quickaclcheck(mediaAclPath($media));
         $res = media_delete($media, $auth);
         if ($res & DOKU_MEDIA_DELETED) {
             return true;

@@ -702,6 +702,21 @@ function auth_quickaclcheck($id)
 }
 
 /**
+ * Build the ACL path for a media file.
+ *
+ * Media files do not have per-file ACLs; permissions are always evaluated against the namespace
+ * they live in. This returns the namespace wildcard path (e.g. "wiki:*" or "*" for root-namespace
+ * media) suitable for passing to auth_quickaclcheck() or auth_aclcheck().
+ *
+ * @param string $id media ID (needs to be resolved and cleaned)
+ * @return string the ACL path to check
+ */
+function mediaAclPath($id)
+{
+    return ltrim(getNS($id) . ':*', ':');
+}
+
+/**
  * Returns the maximum rights a user has for the given ID or its namespace
  *
  * @author  Andreas Gohr <andi@splitbrain.org>

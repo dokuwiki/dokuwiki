@@ -209,7 +209,7 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($info['id']) . ':*');
+    $info['perm'] = auth_quickaclcheck(mediaAclPath($info['id']));
     if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }
@@ -276,7 +276,7 @@ function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($id) . ':*');
+    $info['perm'] = auth_quickaclcheck(mediaAclPath($id));
     if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }

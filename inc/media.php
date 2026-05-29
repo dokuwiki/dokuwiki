@@ -138,7 +138,7 @@ function media_ispublic($id)
 {
     if (media_isexternal($id)) return true;
     $id = cleanID($id);
-    if (auth_aclcheck(getNS($id) . ':*', '', []) >= AUTH_READ) return true;
+    if (auth_aclcheck(mediaAclPath($id), '', []) >= AUTH_READ) return true;
     return false;
 }
 
@@ -261,7 +261,7 @@ function media_inuse($id)
 function media_delete($id, $auth)
 {
     global $lang;
-    $auth = auth_quickaclcheck(ltrim(getNS($id) . ':*', ':'));
+    $auth = auth_quickaclcheck(mediaAclPath($id));
     if ($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if (media_inuse($id)) return DOKU_MEDIA_INUSE;
 
