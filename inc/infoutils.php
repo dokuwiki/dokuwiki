@@ -219,7 +219,11 @@ function getOsRelease()
         $osRelease['VERSION_ID'] = $synoVersion['productversion'] ?? '';
         $osRelease['VERSION'] = $synoVersion['productversion'] ?? '';
         $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'] ?? '';
-        $osRelease['PRETTY_NAME'] = trim(implode(' ', [$osRelease['NAME'], $osRelease['VERSION'], $osRelease['SYNO_MODEL']]));
+        $osRelease['PRETTY_NAME'] = trim(implode(' ', [
+            $osRelease['NAME'],
+            $osRelease['VERSION'],
+            $osRelease['SYNO_MODEL']
+        ]));
     }
     return $osRelease;
 }
