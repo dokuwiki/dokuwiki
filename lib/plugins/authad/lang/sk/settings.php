@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wizzard <wizzardsk@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  */
 $lang['account_suffix']        = 'Prípona používateľského účtu. Napr. <code>@my.domain.org</code>';
@@ -20,3 +21,5 @@ $lang['expirywarn']            = 'Počet dní pred uplynutím platnosti hesla, p
 $lang['additional']            = 'Zoznam dodatočných AD atribútov oddelených čiarkou získaných z údajov používateľa. Používané niektorými pluginmi.';
 $lang['update_name']           = 'Povoliť používateľom zmenu ich zobrazovaného mena v AD?';
 $lang['update_mail']           = 'Povoliť používateľom zmenu ich emailovej adresy?';
+$lang['update_pass']           = 'Povoliť používateľom aktualizovať svoje heslo? Vyžaduje SSL alebo TLS vyššie.';
+$lang['recursive_groups']      = 'Rozlíšiť vnorené skupiny na ich príslušných členov (pomalšie).';

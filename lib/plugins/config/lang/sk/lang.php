@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wizzard <wizzardsk@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Tibor Repček <tiborepcek@gmail.com>
@@ -36,6 +37,7 @@ $lang['_advanced']             = 'Rozšírené nastavenia';
 $lang['_network']              = 'Nastavenia siete';
 $lang['_msg_setting_undefined'] = 'Nenastavené metadata.';
 $lang['_msg_setting_no_class'] = 'Nenastavená trieda.';
+$lang['_msg_setting_no_known_class'] = 'Trieda nastavenia nie je dostupná.';
 $lang['_msg_setting_no_default'] = 'Žiadna predvolená hodnota.';
 $lang['title']                 = 'Názov wiki';
 $lang['start']                 = 'Názov štartovacej stránky';
@@ -87,8 +89,10 @@ $lang['disableactions_other']  = 'Iné akcie (oddelené čiarkou)';
 $lang['disableactions_rss']    = 'RSS';
 $lang['auth_security_timeout'] = 'Časový limit pri prihlasovaní (v sekundách)';
 $lang['securecookie']          = 'Mal by prehliadač posielať cookies nastavené cez HTTPS posielať iba cez HTTPS (bezpečné) pripojenie? Vypnite túto voľbu iba v prípade, ak je prihlasovanie do Vašej wiki zabezpečené SSL, ale prezeranie wiki je nezabezpečené.';
+$lang['samesitecookie']        = 'Atribút cookie samesite, ktorý sa má použiť. Ak ho necháte prázdny, o zásade samesite rozhodne prehliadač.';
 $lang['remote']                = 'Povolenie vzdialeného API. Umožnuje iným aplikáciám pristupovať k wiki cez XML-RPC alebo iným spôsobom.';
 $lang['remoteuser']            = 'Obmedzenie použitia vzdialeného API skupinám alebo používateľom oddelených čiarkami. Prázdne pole poskytuje prístup pre každého používateľa.';
+$lang['remotecors']            = 'Povoliť Cross-Origin Resource Sharing (CORS) pre vzdialené rozhrania. Hviezdička (*) povolí všetky pôvody. Nechajte prázdne na zakázanie CORS.';
 $lang['usewordblock']          = 'Blokovať spam na základe zoznamu známych slov';
 $lang['relnofollow']           = 'Používať rel="nofollow" pre externé odkazy';
 $lang['indexdelay']            = 'Časové oneskorenie pred indexovaním (sek)';
@@ -113,14 +117,18 @@ $lang['subscribe_time']        = 'Časový inteval, po uplynutí ktorého sú za
 $lang['notify']                = 'Posielať upozornenia na zmeny na túto e-mailovú adresu';
 $lang['registernotify']        = 'Posielať informáciu o nových užívateľoch na túto e-mailovú adresu';
 $lang['mailfrom']              = 'E-mailová adresa na automatické e-maily';
+$lang['mailreturnpath']        = 'E-mailová adresa príjemcu pre upozornenia o nedoručení';
 $lang['mailprefix']            = 'Prefix predmetu emailovej spravy zasielanej automaticky';
 $lang['htmlmail']              = 'Posielanie lepšie vyzerajúceho ale objemnejšieho HTML mailu. Deaktivovaním sa budú posielať iba textové maily.';
+$lang['dontlog']               = 'Zakázať protokolovanie pre tieto typy protokolov.';
+$lang['logretain']             = 'Koľko dní protokolov sa má uchovávať.';
 $lang['sitemap']               = 'Generovať Google sitemap (dni)';
 $lang['rss_type']              = 'Typ XML feedu';
 $lang['rss_linkto']            = 'XML zdroj odkazuje na';
 $lang['rss_content']           = 'Čo zobrazovať v XML feede?';
 $lang['rss_update']            = 'Časový interval obnovy XML feedu (sek.)';
 $lang['rss_show_summary']      = 'XML zdroj ukáže prehľad v názve';
+$lang['rss_show_deleted']      = 'XML kanál Zobraziť odstránené záznamy';
 $lang['rss_media']             = 'Aký typ zmien by mal byť zobrazený v XML feede?';
 $lang['rss_media_o_both']      = 'oboje';
 $lang['rss_media_o_pages']     = 'strany';
@@ -143,13 +151,18 @@ $lang['renderer_xhtml']        = 'Používané vykresľovacie jadro pre hlavný 
 $lang['renderer__core']        = '%s (dokuwiki jadro)';
 $lang['renderer__plugin']      = '%s (plugin)';
 $lang['search_nslimit']        = 'Obmedzte vyhľadávanie na aktuálnych X menných priestorov. Ak je vyhľadávanie vyvolané zo stránky v hlbšom mennom priestore, prvých X menných priestorov bude pridaných ako filter';
+$lang['search_fragment']       = 'Určiť predvolené správanie vyhľadávania fragmentov';
 $lang['search_fragment_o_exact'] = 'presne';
 $lang['search_fragment_o_starts_with'] = 'začína s';
 $lang['search_fragment_o_ends_with'] = 'končí na';
 $lang['search_fragment_o_contains'] = 'obsahuje';
+$lang['_feature_flags']        = 'Príznaky funkcií';
 $lang['defer_js']              = 'Odložiť vykonanie javascriptu po spracovaní HTML stránky. Zlepší sa vnímanie rýchlosti stránky, ale môže znefunkčniť niektoré pluginy.';
+$lang['hidewarnings']          = 'Nezobrazovať žiadne varovania vydané jazykom PHP. To môže uľahčiť prechod na PHP8+. Varovania sa budú naďalej zaznamenávať do chybového protokolu a mali by sa nahlasovať.';
 $lang['dnslookups']            = 'DokuWiki hľadá mená vzdialených IP adries používateľov editujúcich stránky. Ak máte pomalý alebo nefunkčný DNS server alebo nechcete túto možnosť, deaktivujte túto voľbu';
 $lang['jquerycdn']             = 'Mali by byť jQuery a jQuery UI skripty načítané z CDN? Voľba zvýši počet dodatočných HTTP požiadaviek, ale súbory sa môžu načítať rýchlejšie a používatelia ich už môžu mať vo vyrovnávacej pamäti.';
+$lang['trustedproxies']        = 'Zoznam dôveryhodných proxy serverov oddelený čiarkami, z ktorých sa má čítať hlavička X-Forwarded-For. Každá položka v poli môže byť buď adresa IPv4 alebo IPv6, alebo rozsah CIDR pre IPv4 či IPv6 (napr. 10.0.0.0/8). Nechajte prázdne, ak nemá byť dôveryhodný žiadny proxy.';
+$lang['client_ip_header']      = 'Vyhodnocovať vlastnú hlavičku namiesto remote-ip (napr. X_REAL_IP). Túto možnosť povoľte iba vtedy, ak váš server túto hlavičku zapisuje, inak môže byť sfalšovaná.';
 $lang['jquerycdn_o_0']         = 'Nepoužívať CDN, iba lokálne súbory';
 $lang['jquerycdn_o_jquery']    = 'CDN code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN cdnjs.com';
