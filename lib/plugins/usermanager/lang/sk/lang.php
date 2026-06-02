@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Wizzard <wizzardsk@gmail.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Végh <ov@vsieti.sk>
@@ -39,6 +40,7 @@ $lang['summary']               = 'Zobrazenie užívateľov %1$d-%2$d z %3$d náj
 $lang['nonefound']             = 'Žiadni užívatelia nenájdení. %d užívateľov celkom.';
 $lang['delete_ok']             = '%d užívateľov zmazaných';
 $lang['delete_fail']           = '%d chýb vymazania.';
+$lang['delete_fail_self']      = 'Nemôžete odstrániť sami seba';
 $lang['update_ok']             = 'Užívateľ úspešne zmenený';
 $lang['update_fail']           = 'Chyba zmeny užívateľa';
 $lang['update_exists']         = 'Chyba zmeny mena používateľa, používateľské meno (%s) už existuje (iné zmeny budú zaznamenané).';
