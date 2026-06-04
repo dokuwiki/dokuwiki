@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use IXR\DataType\Base64;
 use IXR\DataType\Date;
@@ -354,7 +355,7 @@ class LegacyApiCore extends ApiCore
 
         if ($user === '') throw new RemoteException('empty or invalid user', 401);
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if (!MailUtils::isValid($mail)) throw new RemoteException('empty or invalid mail address', 403);
 
         if ((string)$password === '') {
             $password = auth_pwgen($user);

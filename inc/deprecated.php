@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Debug\DebugHelper;
+use dokuwiki\MailUtils;
 
 /**
  * @deprecated since 2021-11-11 use \dokuwiki\Remote\IXR\Client instead!
@@ -463,4 +464,36 @@ function Doku_Handler_Parse_Media($match)
 {
     DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ParserMode\Media::class . '::parseMedia()');
     return \dokuwiki\Parsing\ParserMode\Media::parseMedia($match);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::PREG_PATTERN_VALID_EMAIL instead!
+ */
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', MailUtils::PREG_PATTERN_VALID_EMAIL);
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::obfuscate() instead!
+ */
+function obfuscate($email)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::obfuscate');
+    return MailUtils::obfuscate($email);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::isValid() instead!
+ */
+function mail_isvalid($email)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::isValid');
+    return MailUtils::isValid($email);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::quotedPrintableEncode() instead!
+ */
+function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit = true)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::quotedPrintableEncode');
+    return MailUtils::quotedPrintableEncode($sText, $maxlen, $bEmulate_imap_8bit);
 }

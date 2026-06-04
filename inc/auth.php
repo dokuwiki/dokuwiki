@@ -13,6 +13,7 @@
 use dokuwiki\Ip;
 use dokuwiki\ErrorHandler;
 use dokuwiki\JWT;
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
@@ -1041,7 +1042,7 @@ function register()
     }
 
     //check mail
-    if (!mail_isvalid($email)) {
+    if (!MailUtils::isValid($email)) {
         msg($lang['regbadmail'], -1);
         return false;
     }
@@ -1119,7 +1120,7 @@ function updateprofile()
         msg($lang['profnoempty'], -1);
         return false;
     }
-    if (!mail_isvalid($changes['mail']) && $auth->canDo('modMail')) {
+    if (!MailUtils::isValid($changes['mail']) && $auth->canDo('modMail')) {
         msg($lang['regbadmail'], -1);
         return false;
     }

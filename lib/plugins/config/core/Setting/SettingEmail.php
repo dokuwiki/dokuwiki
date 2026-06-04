@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\config\core\Setting;
 
+use dokuwiki\MailUtils;
+
 /**
  * Class setting_email
  */
@@ -47,7 +49,7 @@ class SettingEmail extends SettingString
                 $addr = $mail;
             }
 
-            if (!mail_isvalid($addr)) {
+            if (!MailUtils::isValid($addr)) {
                 $this->error = true;
                 $this->input = $input;
                 return false;
