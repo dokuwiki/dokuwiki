@@ -121,7 +121,9 @@ function p_locale_xhtml($id)
 
     $event = new Event('PARSER_LOCALE_XHTML', $data);
     if ($event->advise_before()) {
-        $data['html'] = p_cached_output(localeFN($data['id']));
+        // locale files are core assets authored in DokuWiki syntax; render
+        // them as 'dw' regardless of the configured wiki syntax preference
+        $data['html'] = p_cached_output(localeFN($data['id']), 'xhtml', '', 'dw');
     }
     $event->advise_after();
 

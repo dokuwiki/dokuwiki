@@ -122,7 +122,9 @@ trait PluginTrait
      */
     public function locale_xhtml($id)
     {
-        return p_cached_output($this->localFN($id));
+        // plugin-bundled locale files are authored in DokuWiki syntax; render
+        // them as 'dw' regardless of the configured wiki syntax preference
+        return p_cached_output($this->localFN($id), 'xhtml', '', 'dw');
     }
 
     /**
@@ -271,9 +273,9 @@ trait PluginTrait
     /**
      * @see PluginInterface::render_text()
      */
-    public function render_text($text, $format = 'xhtml')
+    public function render_text($text, $format = 'xhtml', $syntax = 'dw')
     {
-        return p_render($format, p_get_instructions($text), $info);
+        return p_render($format, p_get_instructions($text, $syntax), $info);
     }
 
     // endregion
