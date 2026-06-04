@@ -30,7 +30,13 @@ class GfmHeader extends AbstractMode
     public function connectTo($mode)
     {
         // Entry pattern breakdown:
-        //   \n                   — line start (Parser prepends a newline)
+        //   (?<=\n)              — line start (Parser prepends a newline);
+        //                          a lookbehind, so the newline is NOT part
+        //                          of the match and the reported position
+        //                          lands on the first `#`. Consuming it
+        //                          instead would push the section-edit start
+        //                          onto the blank line above the heading and
+        //                          eat it on save.
         //   #{1,6}(?!#)          — 1-6 `#` characters; the lookahead
         //                          rejects 7+ so `####### foo` stays as
         //                          paragraph text
@@ -41,7 +47,7 @@ class GfmHeader extends AbstractMode
         //                          whole line is just the hashes
         //   (?=\n)               — must end the line
         $this->Lexer->addSpecialPattern(
-            '\n#{1,6}(?!#)(?:[ \t][^\n]*)?(?=\n)',
+            '(?<=\n)#{1,6}(?!#)(?:[ \t][^\n]*)?(?=\n)',
             $mode,
             'gfm_header'
         );
@@ -50,9 +56,8 @@ class GfmHeader extends AbstractMode
     /** @inheritdoc */
     public function handle($match, $state, $pos, Handler $handler)
     {
-        $line = ltrim($match, "\n");
-        $level = strspn($line, '#');
-        $title = trim(substr($line, $level));
+        $level = strspn($match, '#');
+        $title = trim(substr($match, $level));
 
         // Optional closing `#` run. The sequence must be preceded by
         // whitespace; a `#` touching the body (`# foo#`) is content.

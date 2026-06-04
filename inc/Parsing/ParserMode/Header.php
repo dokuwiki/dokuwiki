@@ -15,9 +15,16 @@ class Header extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        //we're not picky about the closing ones, two are enough
+        // The leading (?<=\n) anchors the heading to the start of a line (the
+        // Parser prepends a newline, so the first line matches too). It is a
+        // lookbehind, so the newline stays out of the match and the reported
+        // position lands on the heading's first character — keeping any blank
+        // line above it in the previous section. The heading must occupy its
+        // own line: only whitespace may surround the `=…=` run, so a
+        // `== foo ==` sequence that follows other text mid-line stays plain
+        // text. We're not picky about the closing `=`, two are enough.
         $this->Lexer->addSpecialPattern(
-            '[ \t]*={2,}[^\n]+={2,}[ \t]*(?=\n)',
+            '(?<=\n)[ \t]*={2,}[^\n]+={2,}[ \t]*(?=\n)',
             $mode,
             'header'
         );

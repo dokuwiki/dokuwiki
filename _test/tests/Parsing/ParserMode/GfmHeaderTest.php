@@ -25,7 +25,9 @@ class GfmHeaderTest extends ParserTestBase
             ['p_open', []],
             ['cdata', ["\nabc"]],
             ['p_close', []],
-            ['header', ['Header', 1, 4]],
+            // pos points at the `#` (index 5), not the newline before it
+            // that the entry pattern's lookbehind matches; see testPosPointsAtHash
+            ['header', ['Header', 1, 5]],
             ['section_open', [1]],
             ['p_open', []],
             ['cdata', ["\ndef"]],
@@ -192,5 +194,35 @@ class GfmHeaderTest extends ParserTestBase
     {
         $mode = new GfmHeader();
         $this->assertSame(50, $mode->getSort());
+    }
+
+    /**
+     * The entry pattern anchors the hashes to column 0 with a lookbehind on
+     * the preceding newline, so the reported position points at the first `#`
+     * rather than the newline. This keeps the blank line above the heading in
+     * the previous section instead of eating it on section edit. See PR #4636.
+     */
+    function testPosPointsAtHash()
+    {
+        // parse() prepends a newline, so with a blank line above the heading
+        // the doc is "\n# top\n\n## sub\n". The `#` of "## sub" sits at index 8.
+        $this->P->addMode('gfm_header', new GfmHeader());
+        $this->P->parse("# top\n\n## sub\n");
+
+        $headers = array_values(array_filter(
+            $this->H->calls,
+            static fn($c) => $c[0] === 'header'
+        ));
+        $this->assertCount(2, $headers);
+
+        // first heading: the leading `#` follows only the prepended newline
+        $this->assertSame('top', $headers[0][1][0]);
+        $this->assertSame(1, $headers[0][2], 'pos must point at the first `#`');
+
+        // second heading: pos must skip both the line break and the blank
+        // line, landing on the `#` rather than the blank line's newline
+        $this->assertSame('sub', $headers[1][1][0]);
+        $this->assertSame(8, $headers[1][2],
+            'pos must point at the `#`, not the blank line above it');
     }
 }
