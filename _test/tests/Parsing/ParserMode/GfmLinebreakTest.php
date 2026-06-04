@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\GfmEmphasis;
 use dokuwiki\Parsing\ParserMode\GfmLinebreak;
 
@@ -14,15 +13,7 @@ class GfmLinebreakTest extends ParserTestBase
     public function setUp(): void
     {
         parent::setUp();
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
+        $this->setSyntax('md');
     }
 
     function testTwoTrailingSpacesProduceLinebreak()

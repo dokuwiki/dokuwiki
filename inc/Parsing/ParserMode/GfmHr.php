@@ -33,9 +33,7 @@ class GfmHr extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        global $conf;
-
-        $pattern = $conf['syntax'] === 'dw'
+        $pattern = $this->registry->getSyntax() === 'dw'
             ? '\n-{4,}(?=\n)'
             : '\n(?:-{3,}|\*{3,}|_{3,})(?=\n)';
 

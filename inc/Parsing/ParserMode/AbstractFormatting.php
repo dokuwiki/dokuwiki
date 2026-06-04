@@ -13,22 +13,28 @@ use dokuwiki\Parsing\ModeRegistry;
 abstract class AbstractFormatting extends AbstractMode
 {
     /**
-     * Constructor. Sets up allowed modes for this formatting type.
+     * Formatting modes accept other formatting, substitutions, and disabled modes.
      *
-     * Formatting modes accept other formatting, substitutions, and disabled modes,
-     * but exclude themselves to prevent self-nesting (e.g. bold inside bold).
+     * @inheritdoc
      */
-    public function __construct()
+    protected function allowedCategories(): array
+    {
+        return [
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITUTION,
+            ModeRegistry::CATEGORY_DISABLED,
+        ];
+    }
+
+    /**
+     * Exclude self to prevent self-nesting (e.g. bold inside bold).
+     *
+     * @inheritdoc
+     */
+    protected function filterAllowedModes(array $modes): array
     {
         $self = $this->getModeName();
-        $this->allowedModes = array_filter(
-            ModeRegistry::getInstance()->getModesForCategories([
-                ModeRegistry::CATEGORY_FORMATTING,
-                ModeRegistry::CATEGORY_SUBSTITUTION,
-                ModeRegistry::CATEGORY_DISABLED,
-            ]),
-            static fn($mode) => $mode !== $self
-        );
+        return array_values(array_filter($modes, static fn($mode) => $mode !== $self));
     }
 
     /** @inheritdoc */

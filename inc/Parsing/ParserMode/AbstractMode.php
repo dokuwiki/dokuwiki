@@ -2,19 +2,51 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\ModeRegistry;
 
 /**
- * This class and all the subclasses below are used to reduce the effort required to register
- * modes with the Lexer.
+ * Base class for every parser mode (syntax component) in the Parser.
+ *
+ * Besides reducing the effort required to register modes with the Lexer, this
+ * class defines the mode contract the engine relies on: getSort() and handle()
+ * are abstract and must be implemented by every mode; preConnect(), connectTo(),
+ * postConnect() and accepts() carry default implementations subclasses override
+ * as needed. Parser, Handler and ModeRegistry type-hint this class directly.
  *
  * @author Harry Fuecks <hfuecks@gmail.com>
  */
-abstract class AbstractMode implements ModeInterface
+abstract class AbstractMode
 {
-    /** @var Lexer $Lexer will be injected on loading FIXME this should be done by setter */
-    public $Lexer;
+    /**
+     * @var Lexer the lexer this mode registers its patterns with.
+     *
+     * Injected via setLexer() by Parser::addMode() / addBaseMode() before any
+     * connect callback runs, so every core mode and plugin reads it as
+     * $this->Lexer from connectTo(). External code reads it via getLexer().
+     */
+    protected Lexer $Lexer;
+
+    /**
+     * @var ModeRegistry the registry of the parse this mode belongs to.
+     * Injected by Parser::addMode() before any connect/handle callback runs,
+     * so subclasses may read $this->registry unconditionally from preConnect(),
+     * connectTo(), postConnect(), handle() and accepts().
+     */
+    protected ModeRegistry $registry;
+
+    /**
+     * @var string[] mode names accepted as nested content inside this mode.
+     *
+     * Resolved once in setModeRegistry(): allowedCategories() mapped to concrete
+     * mode names via the registry, then passed through filterAllowedModes(). A
+     * subclass that does not use categories may instead assign this list
+     * directly, in which case it is used as-is.
+     */
     protected $allowedModes = [];
+
+    //region Pattern building blocks
 
     /**
      * Zero-width assertion: not at the start of a paragraph break.
@@ -69,27 +101,154 @@ abstract class AbstractMode implements ModeInterface
      */
     protected const NO_WORD_AFTER = '(?:\z|(?=' . self::NON_WORD_CHAR . '))';
 
-    /** @inheritdoc */
+    //endregion
+
+    //region Lexer connection
+
+    /**
+     * Returns a number used to determine in which order modes are added.
+     *
+     * @return int
+     */
     abstract public function getSort();
 
-    /** @inheritdoc */
+    /**
+     * Handle a matched token from the lexer.
+     *
+     * @param string $match The matched text
+     * @param int $state The lexer state (DOKU_LEXER_ENTER, _EXIT, _MATCHED, etc.)
+     * @param int $pos Byte position in the source
+     * @param Handler $handler The handler (for addCall, status, etc.)
+     * @return bool
+     */
+    abstract public function handle($match, $state, $pos, Handler $handler);
+
+    /**
+     * Called before any calls to connectTo.
+     *
+     * @return void
+     */
     public function preConnect()
     {
     }
 
-    /** @inheritdoc */
+    /**
+     * Connects the mode.
+     *
+     * @param string $mode
+     * @return void
+     */
     public function connectTo($mode)
     {
     }
 
-    /** @inheritdoc */
+    /**
+     * Called after all calls to connectTo.
+     *
+     * @return void
+     */
     public function postConnect()
     {
     }
 
-    /** @inheritdoc */
+    //endregion
+
+    //region Dependency injection
+
+    /**
+     * Attach the registry of the parse this mode is taking part in and resolve
+     * the set of modes this mode accepts as nested content.
+     *
+     * Called by Parser::addMode() / addBaseMode() as the mode joins the parser.
+     * This is the earliest point the per-parse registry is available, so the
+     * accepted-mode list is resolved here, once: allowedCategories() mapped to
+     * concrete mode names via the registry taxonomy (complete by now, plugin
+     * modes included), then passed through filterAllowedModes(). A subclass that
+     * does not use categories has its directly-assigned $allowedModes used as-is.
+     *
+     * @param ModeRegistry $registry
+     * @return void
+     */
+    public function setModeRegistry(ModeRegistry $registry): void
+    {
+        $this->registry = $registry;
+
+        $categories = $this->allowedCategories();
+        $modes = $categories
+            ? $registry->getModesForCategories($categories)
+            : (array) $this->allowedModes;
+        $this->allowedModes = $this->filterAllowedModes($modes);
+    }
+
+    /**
+     * Attach the lexer this mode registers its patterns with.
+     *
+     * Called by Parser::addMode() / addBaseMode() as the mode joins the parser,
+     * before any connect callback runs.
+     *
+     * @param Lexer $lexer
+     * @return void
+     */
+    public function setLexer(Lexer $lexer): void
+    {
+        $this->Lexer = $lexer;
+    }
+
+    /**
+     * The lexer this mode registers its patterns with.
+     *
+     * @return Lexer
+     */
+    public function getLexer(): Lexer
+    {
+        return $this->Lexer;
+    }
+
+    //endregion
+
+    //region Nested mode resolution
+
+    /**
+     * CATEGORY_* constants whose modes may nest inside this mode.
+     *
+     * Override to declare the categories this mode accepts; accepts() resolves
+     * them to concrete mode names lazily (once the registry is attached) via
+     * the parse's taxonomy. Returning [] means "use $this->allowedModes as-is"
+     * (the default, empty unless a subclass sets it).
+     *
+     * @return string[]
+     */
+    protected function allowedCategories(): array
+    {
+        return [];
+    }
+
+    /**
+     * Post-process the resolved allowedModes list.
+     *
+     * Override to remove entries (e.g. a mode excluding itself to prevent
+     * self-nesting). Applied once, after allowedCategories() is resolved.
+     *
+     * @param string[] $modes
+     * @return string[]
+     */
+    protected function filterAllowedModes(array $modes): array
+    {
+        return $modes;
+    }
+
+    /**
+     * Check if the given mode is accepted inside this mode.
+     *
+     * The accepted-mode list is resolved once in setModeRegistry(); see there.
+     *
+     * @param string $mode
+     * @return bool
+     */
     public function accepts($mode)
     {
-        return in_array($mode, (array) $this->allowedModes);
+        return in_array($mode, $this->allowedModes, true);
     }
+
+    //endregion
 }

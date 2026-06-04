@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\GfmQuote;
 use dokuwiki\Parsing\ParserMode\GfmTable;
 use dokuwiki\Parsing\ParserMode\Listblock;
@@ -26,19 +25,6 @@ use dokuwiki\Parsing\ParserMode\Table;
  */
 class GfmQuoteTest extends ParserTestBase
 {
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
-    }
-
-    private function setSyntax(string $syntax): void
-    {
-        global $conf;
-        $conf['syntax'] = $syntax;
-        ModeRegistry::reset();
-    }
-
     /**
      * Recursively flatten call lists, descending into `nest` content.
      * Useful for tests that just check whether an instruction appears
@@ -335,11 +321,10 @@ class GfmQuoteTest extends ParserTestBase
         // inside a quote parses as a real list. The sub-parser's list
         // calls land inside the outer `nest` wrapper.
         $this->setSyntax('md');
-        ModeRegistry::reset();
         // Add the registry's full mode set so gfm_listblock is reachable
-        // via the sub-parser (the sub-parser uses ModeRegistry::getModes,
-        // which honors $conf['syntax']).
-        foreach (ModeRegistry::getInstance()->getModes() as $m) {
+        // via the sub-parser (the sub-parser inherits this registry, whose
+        // syntax determines which modes load).
+        foreach ($this->registry->getModes() as $m) {
             $this->P->addMode($m['mode'], $m['obj']);
         }
 

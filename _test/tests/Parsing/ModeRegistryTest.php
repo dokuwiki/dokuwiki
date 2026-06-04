@@ -2,8 +2,10 @@
 
 namespace dokuwiki\test\Parsing;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ModeRegistry;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use dokuwiki\Parsing\Parser;
+use dokuwiki\Parsing\ParserMode\AbstractMode;
 
 class ModeRegistryTest extends \DokuWikiTest
 {
@@ -13,35 +15,15 @@ class ModeRegistryTest extends \DokuWikiTest
     function setUp(): void
     {
         parent::setUp();
-        ModeRegistry::reset();
-        $this->registry = ModeRegistry::getInstance();
+        global $conf;
+        $this->registry = new ModeRegistry($conf['syntax']);
     }
 
-    function tearDown(): void
+    function testGetModesPublishesGlobalMirror()
     {
-        ModeRegistry::reset();
-        parent::tearDown();
-    }
-
-    function testSingleton()
-    {
-        $this->assertSame(
-            ModeRegistry::getInstance(),
-            ModeRegistry::getInstance()
-        );
-    }
-
-    function testResetCreatesFreshInstance()
-    {
-        $first = ModeRegistry::getInstance();
-        ModeRegistry::reset();
-        $second = ModeRegistry::getInstance();
-        $this->assertNotSame($first, $second);
-    }
-
-    function testConstructorPopulatesGlobal()
-    {
+        // The deprecated global mirror is published when the mode list is built.
         global $PARSER_MODES;
+        (new ModeRegistry('dw'))->getModes();
         $this->assertIsArray($PARSER_MODES);
         $this->assertArrayHasKey('container', $PARSER_MODES);
         $this->assertArrayHasKey('formatting', $PARSER_MODES);
@@ -52,10 +34,27 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertArrayHasKey('baseonly', $PARSER_MODES);
     }
 
+    function testGlobalMirrorMatchesInstanceTaxonomy()
+    {
+        // After the mode list is built, the global mirror equals the instance's
+        // taxonomy (defaults + plugin modes).
+        global $PARSER_MODES;
+        $registry = new ModeRegistry('dw');
+        $registry->getModes();
+        $this->assertSame($registry->getCategories(), $PARSER_MODES);
+    }
+
+    function testGetSyntaxReturnsConstructorArgument()
+    {
+        $this->assertSame('md+dw', (new ModeRegistry('md+dw'))->getSyntax());
+    }
+
     function testGetCategories()
     {
-        global $PARSER_MODES;
-        $this->assertSame($PARSER_MODES, $this->registry->getCategories());
+        $cats = $this->registry->getCategories();
+        $this->assertArrayHasKey('container', $cats);
+        $this->assertArrayHasKey('formatting', $cats);
+        $this->assertArrayHasKey('baseonly', $cats);
     }
 
     function testGetModesForSingleCategory()
@@ -97,21 +96,22 @@ class ModeRegistryTest extends \DokuWikiTest
 
     function testRegisterMode()
     {
-        global $PARSER_MODES;
         $this->registry->registerMode(ModeRegistry::CATEGORY_CONTAINER, 'testmode');
-        $this->assertContains('testmode', $PARSER_MODES[ModeRegistry::CATEGORY_CONTAINER]);
         $this->assertContains(
             'testmode',
             $this->registry->getModesForCategories([ModeRegistry::CATEGORY_CONTAINER])
         );
     }
 
-    function testGlobalModificationsAreVisible()
+    function testRegisterModeIsPerInstance()
     {
-        global $PARSER_MODES;
-        $PARSER_MODES[ModeRegistry::CATEGORY_FORMATTING][] = 'custom_format';
-        $modes = $this->registry->getModesForCategories([ModeRegistry::CATEGORY_FORMATTING]);
-        $this->assertContains('custom_format', $modes);
+        // Registering on one registry must not leak into another.
+        $this->registry->registerMode(ModeRegistry::CATEGORY_CONTAINER, 'leaktest');
+        $other = new ModeRegistry('dw');
+        $this->assertNotContains(
+            'leaktest',
+            $other->getModesForCategories([ModeRegistry::CATEGORY_CONTAINER])
+        );
     }
 
     function testGetModesReturnsSortedArray()
@@ -134,13 +134,13 @@ class ModeRegistryTest extends \DokuWikiTest
             $this->assertArrayHasKey('obj', $entry);
             $this->assertIsInt($entry['sort']);
             $this->assertIsString($entry['mode']);
-            $this->assertInstanceOf(ModeInterface::class, $entry['obj']);
+            $this->assertInstanceOf(AbstractMode::class, $entry['obj']);
         }
     }
 
     function testGetModesContainsBuiltinModes()
     {
-        $modes = $this->registry->getModes();
+        $modes = (new ModeRegistry('dw'))->getModes();
         $modeNames = array_column($modes, 'mode');
         $this->assertContains('strong', $modeNames);
         $this->assertContains('header', $modeNames);
@@ -172,11 +172,10 @@ class ModeRegistryTest extends \DokuWikiTest
         $this->assertSame(['listblock', 'table'], $this->registry->getBlockEolModes());
     }
 
-    function testBlockEolModesResetWithInstance()
+    function testBlockEolModesArePerRegistry()
     {
         $this->registry->registerBlockEolMode('listblock');
-        ModeRegistry::reset();
-        $fresh = ModeRegistry::getInstance();
+        $fresh = new ModeRegistry('dw');
         $this->assertSame([], $fresh->getBlockEolModes());
     }
 
@@ -186,11 +185,7 @@ class ModeRegistryTest extends \DokuWikiTest
      */
     function testGetModesDefaultSyntaxMatchesLegacy()
     {
-        global $conf;
-        $conf['syntax'] = 'dw';
-        ModeRegistry::reset();
-        $registry = ModeRegistry::getInstance();
-        $modes = $registry->getModes();
+        $modes = (new ModeRegistry('dw'))->getModes();
         $modeNames = array_column($modes, 'mode');
 
         // All original built-in modes must be present (with `quote`
@@ -214,11 +209,7 @@ class ModeRegistryTest extends \DokuWikiTest
     /** DW-only modes must be absent when syntax is 'md' */
     function testGetModesDwModesSkippedInMarkdownOnly()
     {
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-        $registry = ModeRegistry::getInstance();
-        $modes = $registry->getModes();
+        $modes = (new ModeRegistry('md'))->getModes();
         $modeNames = array_column($modes, 'mode');
 
         $dwOnly = [
@@ -234,11 +225,7 @@ class ModeRegistryTest extends \DokuWikiTest
     /** Always-loaded modes must still be present in md-only mode */
     function testGetModesAlwaysModesPresentInMarkdownOnly()
     {
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-        $registry = ModeRegistry::getInstance();
-        $modes = $registry->getModes();
+        $modes = (new ModeRegistry('md'))->getModes();
         $modeNames = array_column($modes, 'mode');
 
         $always = [
@@ -265,11 +252,7 @@ class ModeRegistryTest extends \DokuWikiTest
         ];
 
         foreach (['dw+md', 'md+dw'] as $syntax) {
-            global $conf;
-            $conf['syntax'] = $syntax;
-            ModeRegistry::reset();
-            $registry = ModeRegistry::getInstance();
-            $modes = $registry->getModes();
+            $modes = (new ModeRegistry($syntax))->getModes();
             $modeNames = array_column($modes, 'mode');
 
             foreach ($dwAlways as $mode) {
@@ -278,10 +261,26 @@ class ModeRegistryTest extends \DokuWikiTest
         }
     }
 
+    /**
+     * Two registries built with different syntaxes in the same request must
+     * produce different mode lists — the guarantee that the registry is a
+     * per-parse value, not shared global state.
+     */
+    function testRegistriesWithDifferentSyntaxesDiffer()
+    {
+        $dw = array_column((new ModeRegistry('dw'))->getModes(), 'mode');
+        $md = array_column((new ModeRegistry('md'))->getModes(), 'mode');
+
+        $this->assertContains('internallink', $dw);
+        $this->assertNotContains('internallink', $md);
+        $this->assertContains('gfm_emphasis', $md);
+        $this->assertNotContains('gfm_emphasis', $dw);
+    }
+
     function testAcquireSubParserReturnsParser()
     {
         $parser = $this->registry->acquireSubParser();
-        $this->assertInstanceOf(\dokuwiki\Parsing\Parser::class, $parser);
+        $this->assertInstanceOf(Parser::class, $parser);
         $this->registry->releaseSubParser();
     }
 
@@ -332,10 +331,7 @@ class ModeRegistryTest extends \DokuWikiTest
 
     function testAcquireSubParserExcludesBaseonlyByDefault()
     {
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-        $registry = ModeRegistry::getInstance();
+        $registry = new ModeRegistry('md');
 
         $parser = $registry->acquireSubParser();
         try {
@@ -351,10 +347,7 @@ class ModeRegistryTest extends \DokuWikiTest
 
     function testAcquireSubParserHonoursCustomExclusions()
     {
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-        $registry = ModeRegistry::getInstance();
+        $registry = new ModeRegistry('md');
 
         // With FORMATTING also excluded, gfm_emphasis is gone and `*foo*` stays literal
         $excludes = [
@@ -371,24 +364,24 @@ class ModeRegistryTest extends \DokuWikiTest
         }
     }
 
-    function testSubParserPoolResetsWithRegistry()
+    function testSubParserPoolIsPerRegistry()
     {
         $first = $this->registry->acquireSubParser();
         $this->registry->releaseSubParser();
-        ModeRegistry::reset();
-        $second = ModeRegistry::getInstance()->acquireSubParser();
-        ModeRegistry::getInstance()->releaseSubParser();
+        $other = new ModeRegistry('dw');
+        $second = $other->acquireSubParser();
+        $other->releaseSubParser();
         $this->assertNotSame($first, $second);
     }
 
     function testAcquireSubParserDoesNotClobberMainParserModes()
     {
-        // Wire the main parser up the way real callers do: addMode() sets
-        // each mode's $Lexer to the main parser's lexer. The sub-parser must
-        // then clone these modes so its own addMode() does not overwrite
-        // those references and break the main parse.
+        // Wire the main parser up the way real callers do: addMode() attaches
+        // the main parser's lexer to each mode. The sub-parser must then clone
+        // these modes so its own addMode() does not overwrite those references
+        // and break the main parse.
         $main = $this->registry->getModes();
-        $mainParser = new \dokuwiki\Parsing\Parser(new \dokuwiki\Parsing\Handler());
+        $mainParser = new Parser(new Handler($this->registry), $this->registry);
         foreach ($main as $m) {
             $mainParser->addMode($m['mode'], $m['obj']);
         }
@@ -396,10 +389,10 @@ class ModeRegistryTest extends \DokuWikiTest
         $mainLexers = [];
         foreach ($main as $m) {
             $this->assertNotNull(
-                $m['obj']->Lexer ?? null,
+                $m['obj']->getLexer(),
                 "precondition: main mode '{$m['mode']}' must have a Lexer attached"
             );
-            $mainLexers[$m['mode']] = $m['obj']->Lexer;
+            $mainLexers[$m['mode']] = $m['obj']->getLexer();
         }
 
         $this->registry->acquireSubParser();
@@ -408,7 +401,7 @@ class ModeRegistryTest extends \DokuWikiTest
         foreach ($main as $m) {
             $this->assertSame(
                 $mainLexers[$m['mode']],
-                $m['obj']->Lexer ?? null,
+                $m['obj']->getLexer(),
                 "sub-parser must not clobber main mode '{$m['mode']}'->Lexer"
             );
         }
@@ -426,10 +419,7 @@ class ModeRegistryTest extends \DokuWikiTest
      */
     function testModeLoadingBySyntax(string $mode, string $syntax, bool $shouldLoad): void
     {
-        global $conf;
-        $conf['syntax'] = $syntax;
-        ModeRegistry::reset();
-        $modeNames = array_column(ModeRegistry::getInstance()->getModes(), 'mode');
+        $modeNames = array_column((new ModeRegistry($syntax))->getModes(), 'mode');
 
         if ($shouldLoad) {
             $this->assertContains($mode, $modeNames, "$mode must load in '$syntax'");
@@ -535,5 +525,4 @@ class ModeRegistryTest extends \DokuWikiTest
         }
         return $cases;
     }
-
 }

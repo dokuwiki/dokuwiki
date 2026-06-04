@@ -38,11 +38,6 @@ use dokuwiki\Parsing\Helpers\HtmlEntity;
  */
 class GfmHtmlEntity extends AbstractMode
 {
-    public function __construct()
-    {
-        $this->allowedModes = [];
-    }
-
     /** @inheritdoc */
     public function getSort()
     {

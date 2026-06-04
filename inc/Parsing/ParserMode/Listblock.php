@@ -8,17 +8,15 @@ use dokuwiki\Parsing\ModeRegistry;
 
 class Listblock extends AbstractMode
 {
-    /**
-     * Listblock constructor.
-     */
-    public function __construct()
+    /** @inheritdoc */
+    protected function allowedCategories(): array
     {
-        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+        return [
             ModeRegistry::CATEGORY_FORMATTING,
             ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_DISABLED,
             ModeRegistry::CATEGORY_PROTECTED,
-        ]);
+        ];
     }
 
     /** @inheritdoc */
@@ -30,7 +28,7 @@ class Listblock extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        ModeRegistry::getInstance()->registerBlockEolMode('listblock');
+        $this->registry->registerBlockEolMode('listblock');
     }
 
     /** @inheritdoc */

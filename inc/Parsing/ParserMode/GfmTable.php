@@ -43,15 +43,17 @@ class GfmTable extends AbstractMode
 {
     /**
      * GFM table cells parse only inline content.
+     *
+     * @inheritdoc
      */
-    public function __construct()
+    protected function allowedCategories(): array
     {
-        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+        return [
             ModeRegistry::CATEGORY_FORMATTING,
             ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_PROTECTED,
             ModeRegistry::CATEGORY_DISABLED,
-        ]);
+        ];
     }
 
     /** @inheritdoc */
@@ -63,7 +65,7 @@ class GfmTable extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        ModeRegistry::getInstance()->registerBlockEolMode('gfm_table');
+        $this->registry->registerBlockEolMode('gfm_table');
     }
 
     /**

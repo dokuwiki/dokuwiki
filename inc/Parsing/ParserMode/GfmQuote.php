@@ -57,7 +57,7 @@ class GfmQuote extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        ModeRegistry::getInstance()->registerBlockEolMode('gfm_quote');
+        $this->registry->registerBlockEolMode('gfm_quote');
     }
 
     /**
@@ -196,7 +196,7 @@ class GfmQuote extends AbstractMode
      */
     protected function emitBody(Handler $handler, int $segmentStart, string $body): void
     {
-        $registry = ModeRegistry::getInstance();
+        $registry = $this->registry;
         $calls = $registry->withSubParser(
             [ModeRegistry::CATEGORY_BASEONLY],
             ['gfm_quote'],

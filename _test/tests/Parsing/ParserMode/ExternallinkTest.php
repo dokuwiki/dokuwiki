@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\Externallink;
 use dokuwiki\Parsing\ParserMode\Internallink;
 
@@ -20,15 +19,7 @@ class ExternallinkTest extends ParserTestBase
     public function setUp(): void
     {
         parent::setUp();
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
+        $this->setSyntax('md');
     }
 
     // ----- basic bare-URL autolink -----
@@ -334,8 +325,7 @@ class ExternallinkTest extends ParserTestBase
     }
 
     function testAngleBracketInactiveInDwMode() {
-        global $conf;
-        $conf['syntax'] = 'dw';
+        $this->setSyntax('dw');
         $this->P->addMode('externallink', new Externallink());
         // In DW-only syntax, angle-bracket processing is intentionally not active. The bare-URL pattern still
         // picks up the URL inside and the angle brackets fall through as literal text — matches the pre-merge

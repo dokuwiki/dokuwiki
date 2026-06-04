@@ -3,13 +3,13 @@
 namespace dokuwiki\test\Parsing;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use dokuwiki\Parsing\ModeRegistry;
 
 class HandlerTest extends \DokuWikiTest
 {
     function testGetModeNameReturnsOriginalName()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         // create a simple mode that records what getModeName() returns
         $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
@@ -32,7 +32,7 @@ class HandlerTest extends \DokuWikiTest
 
     function testGetModeNameFallsBackToModeName()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
             public $receivedModeName = '';
@@ -54,7 +54,7 @@ class HandlerTest extends \DokuWikiTest
 
     function testResetClearsCallsAndStatusAndCurrentMode()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         // dirty the handler: append a call, mutate status, and prime
         // currentModeName via a token dispatch.
@@ -108,7 +108,7 @@ class HandlerTest extends \DokuWikiTest
      */
     function testPluginModeIsRoutedThroughPluginHandler()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         // Plugins register themselves as mode objects under their plugin_* name.
         // This reproduces the conflict the bug depended on.

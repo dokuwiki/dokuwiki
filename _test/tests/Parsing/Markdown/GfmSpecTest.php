@@ -2,8 +2,6 @@
 
 namespace dokuwiki\test\Parsing\Markdown;
 
-use dokuwiki\Parsing\ModeRegistry;
-
 /**
  * Roundtrip tests driven by GFM's spec.txt.
  *
@@ -50,12 +48,6 @@ class GfmSpecTest extends \DokuWikiTest
         $this->assertHtmlEquals($expected, $actual);
     }
 
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
-    }
-
     /**
      * Render markdown text through DokuWiki's full parser pipeline under
      * the `md` syntax setting, using {@see SpecCompatRenderer} —
@@ -80,7 +72,6 @@ class GfmSpecTest extends \DokuWikiTest
         global $conf;
         $conf['syntax'] = 'md';
         $conf['typography'] = 0;
-        ModeRegistry::reset();
 
         $instructions = p_get_instructions($text);
 

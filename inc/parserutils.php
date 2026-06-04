@@ -205,6 +205,10 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 /**
  * turns a page into a list of instructions
  *
+ * This is the one place in the parser pipeline where the configured wiki
+ * syntax preference ($conf['syntax']) is read. From here on the syntax is
+ * a parameter carried by the ModeRegistry, never a global lookup.
+ *
  * @param string $text raw wiki syntax text
  * @return array a list of instruction arrays
  * @author Harry Fuecks <hfuecks@gmail.com>
@@ -213,14 +217,16 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
  */
 function p_get_instructions($text)
 {
+    global $conf;
 
-    $modes = ModeRegistry::getInstance()->getModes();
+    $registry = new ModeRegistry($conf['syntax']);
 
     // Create the parser and handler
-    $Parser = new Parser(new Handler());
+    $Handler = new Handler($registry);
+    $Parser = new Parser($Handler, $registry);
 
     //add modes to parser
-    foreach ($modes as $mode) {
+    foreach ($registry->getModes() as $mode) {
         $Parser->addMode($mode['mode'], $mode['obj']);
     }
 

@@ -7,12 +7,10 @@ use dokuwiki\Parsing\ModeRegistry;
 
 class Base extends AbstractMode
 {
-    /**
-     * Base constructor.
-     */
-    public function __construct()
+    /** @inheritdoc */
+    protected function allowedCategories(): array
     {
-        $this->allowedModes = ModeRegistry::getInstance()->getModesForCategories([
+        return [
             ModeRegistry::CATEGORY_CONTAINER,
             ModeRegistry::CATEGORY_BASEONLY,
             ModeRegistry::CATEGORY_PARAGRAPHS,
@@ -20,7 +18,7 @@ class Base extends AbstractMode
             ModeRegistry::CATEGORY_SUBSTITUTION,
             ModeRegistry::CATEGORY_PROTECTED,
             ModeRegistry::CATEGORY_DISABLED,
-        ]);
+        ];
     }
 
     /** @inheritdoc */

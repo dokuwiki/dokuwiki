@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\GfmLink;
 use dokuwiki\Parsing\ParserMode\Internallink;
 
@@ -16,15 +15,7 @@ class GfmLinkTest extends ParserTestBase
     public function setUp(): void
     {
         parent::setUp();
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
+        $this->setSyntax('md');
     }
 
     function testInternalPage()

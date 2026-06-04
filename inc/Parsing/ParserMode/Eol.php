@@ -3,7 +3,6 @@
 namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\ModeRegistry;
 
 class Eol extends AbstractMode
 {
@@ -16,7 +15,7 @@ class Eol extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        if (in_array($mode, ModeRegistry::getInstance()->getBlockEolModes())) {
+        if (in_array($mode, $this->registry->getBlockEolModes())) {
             return;
         }
         // see FS#1652, pattern extended to swallow preceding whitespace to avoid

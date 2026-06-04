@@ -4,7 +4,6 @@ namespace dokuwiki\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Helpers\HtmlEntity;
-use dokuwiki\Parsing\ModeRegistry;
 
 /**
  * Parser mode for external links (URLs).
@@ -39,7 +38,7 @@ class Externallink extends AbstractMode
         //   - A trailing entity-reference-like sequence (e.g. `&copy;`, `&hl;`) is consumed by the URL regex
         //     and then stripped in handle(); decodeOne() expands valid named/numeric refs to their Unicode
         //     character (`&copy;` -> `©`) while unknown names round-trip as literal text.
-        if (ModeRegistry::getInstance()->isMdPreferred()) {
+        if ($this->registry->isMdPreferred()) {
             $gunk .= '()';
             $tail = '(?:' . HtmlEntity::PATTERN . ')?';
         }
@@ -64,7 +63,7 @@ class Externallink extends AbstractMode
         // envelope; handle() decides at match time whether to emit a link or literal cdata based on whether the content
         // contains whitespace (which disqualifies the autolink).
         // Angle brackets with white space are basically a simple way to write a URL without triggering autolinking
-        if (ModeRegistry::getInstance()->isMdPreferred()) {
+        if ($this->registry->isMdPreferred()) {
             foreach ($this->schemes as $scheme) {
                 $this->patterns[] = '<[ \t]*(?i)' . $scheme . '(?-i)://[^<>\n]*>';
             }
@@ -118,7 +117,7 @@ class Externallink extends AbstractMode
         $url = $match;
         $trailing = '';
 
-        if (ModeRegistry::getInstance()->isMdPreferred()) {
+        if ($this->registry->isMdPreferred()) {
             $trailing = $this->peelGfmTail($url);
         }
 

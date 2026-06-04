@@ -5,7 +5,7 @@ namespace dokuwiki\Parsing;
 use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use dokuwiki\Parsing\ParserMode\AbstractMode;
 use dokuwiki\Parsing\ParserMode\Camelcaselink;
 use dokuwiki\Parsing\ParserMode\Entity;
 use dokuwiki\Parsing\ParserMode\Smiley;
@@ -13,12 +13,39 @@ use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Parser;
 
 /**
- * Central registry for parser mode categories and mode instantiation.
+ * The set of parser modes for a single parse, plus the mode taxonomy.
  *
- * The underlying data is kept in the global $PARSER_MODES array because
- * third-party plugins read and write it directly at runtime (e.g. to register
- * their mode in a category). All methods in this class operate on that global
- * so changes are visible to both old and new code.
+ * A ModeRegistry is built once per parse (see p_get_instructions) and
+ * carries the parse-specific state: the active syntax flavour, the
+ * block-EOL bookkeeping, and the sub-parser pool. It is a short-lived
+ * value, not a singleton — two parses in the same request (e.g. a plugin
+ * rendering bundled DW text inside an otherwise-Markdown page) get two
+ * independent registries.
+ *
+ * Three distinct concepts meet here; keep them apart:
+ *
+ *   1. The user's configured syntax PREFERENCE is a setting. Its source
+ *      of truth is $conf['syntax']. Read it only in UI code (editor
+ *      toolbar, admin settings, syntax-preference plugins) — never from
+ *      inside the parser. $conf['syntax'] enters the parser exactly once,
+ *      at the top-level entry point, as this registry's constructor
+ *      argument.
+ *
+ *   2. The active parse's syntax is a PARAMETER of this registry
+ *      (getSyntax / isDwPreferred / isMdPreferred). Every mode descends from
+ *      AbstractMode, which Parser::addMode() injects this registry into, so a
+ *      mode reads it via $this->registry; a plugin handle()/render() reads
+ *      $handler->getModeRegistry(). No code inside inc/Parsing/ reads
+ *      $conf['syntax'] directly.
+ *
+ *   3. The mode TAXONOMY — which mode names belong to which category — is
+ *      owned by this registry instance ($this->categories), seeded from the
+ *      immutable DEFAULT_CATEGORIES and extended with plugin_* entries during
+ *      loadPluginModes(). Core reads it through the instance accessors
+ *      (getModesForCategories / getCategories). The legacy global
+ *      $PARSER_MODES is kept only as a deprecated mirror, published during
+ *      loadPluginModes() for third-party plugins that read the array directly
+ *      and for the bundled info plugin — no core code reads it.
  */
 class ModeRegistry
 {
@@ -31,7 +58,38 @@ class ModeRegistry
     public const CATEGORY_DISABLED     = 'disabled';
     public const CATEGORY_PARAGRAPHS   = 'paragraphs';
 
-    /** @var array{sort: int, mode: string, obj: ModeInterface}[]|null */
+    /**
+     * The built-in mode taxonomy: category => list of mode names.
+     *
+     * Immutable defaults. Each registry starts from a copy of this in
+     * $this->categories; loadPluginModes() then merges plugin_* entries into
+     * that copy. Being a const, it is never mutated and so needs no resetting
+     * between parses or tests.
+     */
+    protected const DEFAULT_CATEGORIES = [
+        self::CATEGORY_CONTAINER  => ['listblock', 'table', 'gfm_listblock', 'gfm_table', 'gfm_quote', 'gfm_hr'],
+        self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
+        self::CATEGORY_FORMATTING => [
+            'strong', 'emphasis', 'underline', 'monospace',
+            'subscript', 'superscript', 'deleted', 'footnote',
+            'gfm_emphasis', 'gfm_emphasis_underscore', 'gfm_strong_underscore',
+            'gfm_emphasis_strong', 'gfm_emphasis_strong_underscore',
+            'gfm_deleted', 'gfm_backtick_single', 'gfm_backtick_double',
+        ],
+        self::CATEGORY_SUBSTITUTION => [
+            'acronym', 'smiley', 'wordblock', 'entity',
+            'camelcaselink', 'internallink', 'media', 'externallink',
+            'linebreak', 'emaillink', 'windowssharelink', 'filelink',
+            'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
+            'gfm_link', 'gfm_media', 'gfm_escape', 'gfm_linebreak',
+            'gfm_html_entity',
+        ],
+        self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file', 'gfm_code', 'gfm_file'],
+        self::CATEGORY_DISABLED   => ['unformatted'],
+        self::CATEGORY_PARAGRAPHS => ['eol'],
+    ];
+
+    /** @var array{sort: int, mode: string, obj: AbstractMode}[]|null */
     protected ?array $modes = null;
 
     /** @var array<string, array{parsers: Parser[], inUse: int}> Pool of sub-parsers per exclusion-set identifier. */
@@ -40,94 +98,62 @@ class ModeRegistry
     /** @var string[] Modes that handle their own line endings (skip EOL connection) */
     protected array $blockEolModes = [];
 
-    protected static ?self $instance = null;
+    /** @var string the syntax flavour this parse runs under (dw, md, dw+md, md+dw) */
+    protected string $syntax;
+
+    /** @var array<string, string[]> this parse's mode taxonomy (defaults + plugin modes) */
+    protected array $categories;
 
     /**
-     * Get the singleton instance of the ModeRegistry.
-     *
-     * @return self
+     * @param string $syntax the syntax flavour for this parse: one of
+     *     'dw', 'md', 'dw+md', 'md+dw'. This is the active-parse parameter,
+     *     not the user preference — see the class docblock.
      */
-    public static function getInstance(): self
+    public function __construct(string $syntax)
     {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+        $this->syntax = $syntax;
+        $this->categories = self::DEFAULT_CATEGORIES;
     }
 
     /**
-     * Reset the singleton instance.
+     * The syntax flavour of this parse.
      *
-     * This is mainly useful for testing to force re-initialization.
-     *
-     * @return void
+     * @return string one of 'dw', 'md', 'dw+md', 'md+dw'
      */
-    public static function reset(): void
+    public function getSyntax(): string
     {
-        self::$instance = null;
+        return $this->syntax;
     }
 
     /**
-     * Constructor. Initializes the global $PARSER_MODES array with the default mode categories.
-     */
-    protected function __construct()
-    {
-        global $PARSER_MODES;
-        $PARSER_MODES = [
-            self::CATEGORY_CONTAINER  => ['listblock', 'table', 'gfm_listblock', 'gfm_table', 'gfm_quote', 'gfm_hr'],
-            self::CATEGORY_BASEONLY   => ['header', 'gfm_header'],
-            self::CATEGORY_FORMATTING => [
-                'strong', 'emphasis', 'underline', 'monospace',
-                'subscript', 'superscript', 'deleted', 'footnote',
-                'gfm_emphasis', 'gfm_emphasis_underscore', 'gfm_strong_underscore',
-                'gfm_emphasis_strong', 'gfm_emphasis_strong_underscore',
-                'gfm_deleted', 'gfm_backtick_single', 'gfm_backtick_double',
-            ],
-            self::CATEGORY_SUBSTITUTION => [
-                'acronym', 'smiley', 'wordblock', 'entity',
-                'camelcaselink', 'internallink', 'media', 'externallink',
-                'linebreak', 'emaillink', 'windowssharelink', 'filelink',
-                'notoc', 'nocache', 'multiplyentity', 'quotes', 'rss',
-                'gfm_link', 'gfm_media', 'gfm_escape', 'gfm_linebreak',
-                'gfm_html_entity',
-            ],
-            self::CATEGORY_PROTECTED  => ['preformatted', 'code', 'file', 'gfm_code', 'gfm_file'],
-            self::CATEGORY_DISABLED   => ['unformatted'],
-            self::CATEGORY_PARAGRAPHS => ['eol'],
-        ];
-    }
-
-    /**
-     * Get all mode names in the given categories.
+     * Get all mode names in the given categories of this parse's taxonomy.
      *
      * @param string[] $categories One or more CATEGORY_* constants
      * @return string[] Unique list of mode names
      */
     public function getModesForCategories(array $categories): array
     {
-        global $PARSER_MODES;
         $modes = [];
         foreach ($categories as $cat) {
-            if (isset($PARSER_MODES[$cat])) {
-                $modes = array_merge($modes, $PARSER_MODES[$cat]);
+            if (isset($this->categories[$cat])) {
+                $modes = array_merge($modes, $this->categories[$cat]);
             }
         }
         return array_unique($modes);
     }
 
     /**
-     * Get the raw categories array.
+     * Get this parse's raw category map.
      *
      * @return array<string, string[]> Category name => list of mode names
      */
     public function getCategories(): array
     {
-        global $PARSER_MODES;
-        return $PARSER_MODES;
+        return $this->categories;
     }
 
     /**
-     * Register a mode in a category.
+     * Register a mode in a category of this parse's taxonomy.
      *
      * @param string $category One of the CATEGORY_* constants
      * @param string $modeName The mode name to register
@@ -135,9 +161,7 @@ class ModeRegistry
      */
     public function registerMode(string $category, string $modeName): void
     {
-        global $PARSER_MODES;
-        $PARSER_MODES[$category][] = $modeName;
-        $this->modes = null; // invalidate cached mode list
+        $this->categories[$category][] = $modeName;
     }
 
     /**
@@ -172,8 +196,7 @@ class ModeRegistry
      */
     public function isDwPreferred(): bool
     {
-        global $conf;
-        return in_array($conf['syntax'], ['dw', 'dw+md'], true);
+        return in_array($this->syntax, ['dw', 'dw+md'], true);
     }
 
     /**
@@ -181,30 +204,27 @@ class ModeRegistry
      */
     public function isMdPreferred(): bool
     {
-        global $conf;
-        return in_array($conf['syntax'], ['md', 'md+dw'], true);
+        return in_array($this->syntax, ['md', 'md+dw'], true);
     }
 
     /**
      * Get all parser modes, fully instantiated and sorted by priority.
      *
      * This includes syntax plugins, built-in modes, formatting modes, and
-     * data-driven modes (smileys, acronyms, entities). Results are cached
-     * unless running in a test environment.
+     * data-driven modes (smileys, acronyms, entities). Built once per
+     * registry and memoised for that registry's (short) lifetime.
      *
-     * @return array[] Each entry is ['sort' => int, 'mode' => string, 'obj' => ModeInterface]
+     * @return array[] Each entry is ['sort' => int, 'mode' => string, 'obj' => AbstractMode]
      */
     public function getModes(): array
     {
-        global $conf;
-
-        if ($this->modes !== null && !defined('DOKU_UNITTEST')) {
+        if ($this->modes !== null) {
             return $this->modes;
         }
 
         $this->modes = [];
-        $loadDw = in_array($conf['syntax'], ['dw', 'dw+md', 'md+dw']);
-        $loadMd = in_array($conf['syntax'], ['md', 'dw+md', 'md+dw']);
+        $loadDw = in_array($this->syntax, ['dw', 'dw+md', 'md+dw']);
+        $loadMd = in_array($this->syntax, ['md', 'dw+md', 'md+dw']);
 
         $this->loadPluginModes();
         $this->loadAlwaysModes();
@@ -322,8 +342,8 @@ class ModeRegistry
      * the ones excluded.
      *
      * Mode objects are cloned before being attached so that
-     * Parser::addMode()'s assignment to $Lexer does not clobber the
-     * main parser's mode references.
+     * Parser::addMode() pointing each mode at the sub-parser's lexer does not
+     * clobber the main parser's mode references.
      *
      * @param string[] $excludeCategories
      * @param string[] $excludeModes
@@ -338,7 +358,7 @@ class ModeRegistry
             $excluded = array_merge($excluded, $categories[$cat] ?? []);
         }
 
-        $parser = new Parser(new Handler());
+        $parser = new Parser(new Handler($this), $this);
         foreach ($this->getModes() as $m) {
             if (in_array($m['mode'], $excluded, true)) continue;
             // Mode objects expose a single $Lexer slot which Parser::addMode()
@@ -370,10 +390,20 @@ class ModeRegistry
     {
         global $PARSER_MODES;
 
+        // Publish this parse's taxonomy into the deprecated global mirror right
+        // before plugins load — third-party plugins read $PARSER_MODES directly
+        // (often from their constructor) and the info plugin reads it at render.
+        // Core never reads the mirror; it reads $this->categories. The mirror is
+        // kept in sync incrementally below so a plugin loaded later sees the
+        // modes registered by plugins loaded before it (historical behaviour).
+        // @deprecated reading $PARSER_MODES directly — use the ModeRegistry API.
+        $PARSER_MODES = $this->categories;
+
         $plugins = plugin_list('syntax');
         foreach ($plugins as $p) {
             $obj = plugin_load('syntax', $p);
             if (!$obj instanceof PluginInterface) continue;
+            $this->categories[$obj->getType()][] = "plugin_$p";
             $PARSER_MODES[$obj->getType()][] = "plugin_$p";
             $this->modes[] = [
                 'sort' => $obj->getSort(),

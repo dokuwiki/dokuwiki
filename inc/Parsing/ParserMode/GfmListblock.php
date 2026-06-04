@@ -62,7 +62,7 @@ class GfmListblock extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        ModeRegistry::getInstance()->registerBlockEolMode('gfm_listblock');
+        $this->registry->registerBlockEolMode('gfm_listblock');
     }
 
     /**
@@ -128,7 +128,7 @@ class GfmListblock extends AbstractMode
         $handler->setCallWriter(new GfmLists($handler->getCallWriter()));
         $handler->addCall('list_open', [$items[0]['markerMatch']], $pos);
 
-        $registry = ModeRegistry::getInstance();
+        $registry = $this->registry;
         $excludeCats = [ModeRegistry::CATEGORY_BASEONLY];
         $excludeModes = ['gfm_listblock'];
         $subParser = $registry->acquireSubParser($excludeCats, $excludeModes);

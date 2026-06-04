@@ -63,11 +63,6 @@ class GfmCode extends AbstractMode
      */
     protected $infoClass = '[^\n`]*';
 
-    public function __construct()
-    {
-        $this->allowedModes = [];
-    }
-
     /** @inheritdoc */
     public function getSort()
     {

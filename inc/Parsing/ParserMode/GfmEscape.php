@@ -47,11 +47,6 @@ use dokuwiki\Parsing\Helpers\Escape;
  */
 class GfmEscape extends AbstractMode
 {
-    public function __construct()
-    {
-        $this->allowedModes = [];
-    }
-
     /** @inheritdoc */
     public function getSort()
     {
@@ -61,9 +56,8 @@ class GfmEscape extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        global $conf;
         // PHP `\\\\\\\\` → regex `\\\\` → matches two literal backslashes.
-        $lookahead = $conf['syntax'] === 'md' ? '' : '(?!\\\\\\\\[ \t\n])';
+        $lookahead = $this->registry->getSyntax() === 'md' ? '' : '(?!\\\\\\\\[ \t\n])';
         $this->Lexer->addSpecialPattern(
             $lookahead . '\\\\' . Escape::PUNCTUATION_CHAR_CLASS,
             $mode,

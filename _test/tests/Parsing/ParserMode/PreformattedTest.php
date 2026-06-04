@@ -191,8 +191,7 @@ class PreformattedTest extends ParserTestBase
         // In `md` and `md+dw` settings the indent threshold is 4,
         // matching GFM's indented code block rule. Lines with only 2-3
         // leading spaces stay as paragraph text.
-        global $conf;
-        $conf['syntax'] = 'md';
+        $this->setSyntax('md');
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n    x  \n      y  \nBar\n");
         $calls = [
@@ -211,8 +210,7 @@ class PreformattedTest extends ParserTestBase
 
     function testMarkdownPreferredRejectsTwoSpaces() {
         // 2-space indent in MD-preferred mode does NOT trigger preformatted.
-        global $conf;
-        $conf['syntax'] = 'md';
+        $this->setSyntax('md');
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n  x\nBar\n");
         $modes = array_column($this->H->calls, 0);
@@ -222,8 +220,7 @@ class PreformattedTest extends ParserTestBase
 
     function testMarkdownPreferredTabStillTriggers() {
         // Tab is a trigger regardless of the space threshold.
-        global $conf;
-        $conf['syntax'] = 'md';
+        $this->setSyntax('md');
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("F  oo\n\tx\nBar\n");
         $modes = array_column($this->H->calls, 0);
@@ -237,8 +234,7 @@ class PreformattedTest extends ParserTestBase
         // continuation pattern eats their indents, leaving padding `\n`
         // runs in the rewriter buffer; the rewriter trims them so the
         // emitted text starts and ends on a non-blank line.
-        global $conf;
-        $conf['syntax'] = 'md';
+        $this->setSyntax('md');
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("\n    \n    foo\n    \n\n");
         $calls = [
@@ -253,8 +249,7 @@ class PreformattedTest extends ParserTestBase
         // A run of only blank-but-indented lines must not emit a
         // preformatted call at all - the body would be pure whitespace
         // and visually meaningless.
-        global $conf;
-        $conf['syntax'] = 'md';
+        $this->setSyntax('md');
         $this->P->addMode('preformatted', new Preformatted());
         $this->P->parse("\n    \n    \n\n");
         $modes = array_column($this->H->calls, 0);

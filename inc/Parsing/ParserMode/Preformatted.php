@@ -16,15 +16,14 @@ class Preformatted extends AbstractMode
     /**
      * Number of leading spaces that trigger a preformatted block.
      *
-     * DokuWiki's historical value is 2 spaces; Markdown uses 4. When
-     * `$conf['syntax']` is `md` or `md+dw` (Markdown preferred),
-     * we flip to 4 so indented code blocks match GFM. A single tab is
-     * always a trigger regardless of the space threshold.
+     * DokuWiki's historical value is 2 spaces; Markdown uses 4. When the
+     * active parse prefers Markdown (md or md+dw) we flip to 4 so indented
+     * code blocks match GFM. A single tab is always a trigger regardless
+     * of the space threshold.
      */
     protected function getIndentWidth(): int
     {
-        global $conf;
-        return in_array($conf['syntax'], ['md', 'md+dw'], true) ? 4 : 2;
+        return $this->registry->isMdPreferred() ? 4 : 2;
     }
 
     /** @inheritdoc */

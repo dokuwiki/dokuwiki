@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\GfmFile;
 
@@ -14,15 +13,7 @@ class GfmFileTest extends ParserTestBase
     public function setUp(): void
     {
         parent::setUp();
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
+        $this->setSyntax('md');
     }
 
     private function addModes(): void

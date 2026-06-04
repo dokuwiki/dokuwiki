@@ -41,12 +41,6 @@ use dokuwiki\Parsing\Handler;
  */
 class GfmBacktickSingle extends AbstractMode
 {
-    public function __construct()
-    {
-        // Content is literal — no nested inline parsing.
-        $this->allowedModes = [];
-    }
-
     /** @inheritdoc */
     public function getSort()
     {

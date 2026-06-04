@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\GfmBacktickSingle;
 use dokuwiki\Parsing\ParserMode\GfmEmphasis;
 use dokuwiki\Parsing\ParserMode\GfmEscape;
@@ -17,15 +16,7 @@ class GfmEscapeTest extends ParserTestBase
     public function setUp(): void
     {
         parent::setUp();
-        global $conf;
-        $conf['syntax'] = 'md';
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
+        $this->setSyntax('md');
     }
 
     /**
@@ -188,8 +179,7 @@ class GfmEscapeTest extends ParserTestBase
      */
     function testDoubleBackslashBeforeNewlineDefersToLinebreakWhenDwLoaded(string $syntax)
     {
-        global $conf;
-        $conf['syntax'] = $syntax;
+        $this->setSyntax($syntax);
 
         $this->P->addMode('gfm_escape', new GfmEscape());
         $this->P->addMode('linebreak', new Linebreak());
@@ -208,8 +198,7 @@ class GfmEscapeTest extends ParserTestBase
      */
     function testDoubleBackslashBeforeSpaceDefersToLinebreakWhenDwLoaded(string $syntax)
     {
-        global $conf;
-        $conf['syntax'] = $syntax;
+        $this->setSyntax($syntax);
 
         $this->P->addMode('gfm_escape', new GfmEscape());
         $this->P->addMode('linebreak', new Linebreak());
@@ -231,8 +220,7 @@ class GfmEscapeTest extends ParserTestBase
      */
     function testMidLineDoubleBackslashStillEscapesWhenDwLoaded(string $syntax)
     {
-        global $conf;
-        $conf['syntax'] = $syntax;
+        $this->setSyntax($syntax);
 
         $this->P->addMode('gfm_escape', new GfmEscape());
         $this->P->addMode('linebreak', new Linebreak());

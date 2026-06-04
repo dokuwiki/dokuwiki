@@ -117,7 +117,8 @@ if (!defined('UTF8_NOMBSTRING')) define('UTF8_NOMBSTRING', 1);
 // load dw
 require_once(DOKU_INC.'inc/init.php');
 
-// ensure ModeRegistry is initialized (populates $PARSER_MODES global)
-// otherwise PHPUnit unsets $PARSER_MODES in some cases which breaks p_get_parsermodes()
-\dokuwiki\Parsing\ModeRegistry::getInstance();
+// publish the $PARSER_MODES global (the deprecated taxonomy mirror) so tests
+// and the info plugin see it before any parse runs; building a registry's mode
+// list is what publishes the mirror, so trigger it once here
+(new \dokuwiki\Parsing\ModeRegistry($GLOBALS['conf']['syntax']))->getModes();
 

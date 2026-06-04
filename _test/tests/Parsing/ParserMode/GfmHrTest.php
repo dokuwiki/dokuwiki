@@ -2,7 +2,6 @@
 
 namespace dokuwiki\test\Parsing\ParserMode;
 
-use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\GfmHr;
 
@@ -16,24 +15,6 @@ use dokuwiki\Parsing\ParserMode\GfmHr;
  */
 class GfmHrTest extends ParserTestBase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-        ModeRegistry::reset();
-    }
-
-    public function tearDown(): void
-    {
-        ModeRegistry::reset();
-        parent::tearDown();
-    }
-
-    protected function setSyntax(string $syntax): void
-    {
-        global $conf;
-        $conf['syntax'] = $syntax;
-    }
-
     /**
      * Whether at least one `hr` call was emitted for the given input
      * under the given syntax. Returns the call count for richer

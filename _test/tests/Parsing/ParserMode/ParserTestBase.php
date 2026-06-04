@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Parsing\ParserMode;
 
 use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\Parser;
 
 /**
@@ -17,13 +18,40 @@ abstract class ParserTestBase extends \DokuWikiTest
     protected Parser $P;
     /** @var Handler handler instance that records calls made by the parser */
     protected Handler $H;
+    /** @var ModeRegistry registry attached to $P, injected into modes on addMode() */
+    protected ModeRegistry $registry;
 
     /** @inheritdoc */
     public function setUp(): void
     {
         parent::setUp();
-        $this->H = new Handler();
-        $this->P = new Parser($this->H);
+        $this->buildParser();
+    }
+
+    /**
+     * (Re)build $P/$H/$registry for the current $conf['syntax'].
+     *
+     * Modes a test adds via $this->P->addMode() are injected with this
+     * registry, so its syntax must already be the one under test — use
+     * setSyntax() to switch.
+     */
+    protected function buildParser(): void
+    {
+        global $conf;
+        $this->registry = new ModeRegistry($conf['syntax']);
+        $this->H = new Handler($this->registry);
+        $this->P = new Parser($this->H, $this->registry);
+    }
+
+    /**
+     * Switch the syntax flavour under test and rebuild the parser so a
+     * fresh registry carries it. Call before adding modes.
+     */
+    protected function setSyntax(string $syntax): void
+    {
+        global $conf;
+        $conf['syntax'] = $syntax;
+        $this->buildParser();
     }
 
     /** @inheritdoc */
