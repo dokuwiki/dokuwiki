@@ -10,10 +10,12 @@ class CacheInstructions extends CacheParser
     /**
      * @param string $id page id
      * @param string $file source file for cache
+     * @param string|null $syntax syntax flavour the file is parsed under;
+     *     see CacheParser::__construct()
      */
-    public function __construct($id, $file)
+    public function __construct($id, $file, $syntax = null)
     {
-        parent::__construct($id, $file, 'i');
+        parent::__construct($id, $file, 'i', $syntax);
     }
 
     /**

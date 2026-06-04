@@ -134,23 +134,27 @@ function p_locale_xhtml($id)
  * @param string $file filename, path to file
  * @param string $format
  * @param string $id page id
+ * @param string|null $syntax syntax flavour to parse under; null uses the
+ *     configured $conf['syntax']. When passed explicitly it also enters the
+ *     cache key so the same file rendered under two syntaxes never collides.
+ *     See p_get_instructions().
  * @return null|string
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
  *
  */
-function p_cached_output($file, $format = 'xhtml', $id = '')
+function p_cached_output($file, $format = 'xhtml', $id = '', $syntax = null)
 {
     global $conf;
 
-    $cache = new CacheRenderer($id, $file, $format);
+    $cache = new CacheRenderer($id, $file, $format, $syntax);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
         if ($conf['allowdebug'] && $format == 'xhtml') {
             $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
         }
     } else {
-        $parsed = p_render($format, p_cached_instructions($file, false, $id), $info);
+        $parsed = p_render($format, p_cached_instructions($file, false, $id, $syntax), $info);
 
         if (!empty($info['cache']) && $cache->storeCache($parsed)) { // storeCache() attempts to save cachefile
             if ($conf['allowdebug'] && $format == 'xhtml') {
@@ -175,24 +179,31 @@ function p_cached_output($file, $format = 'xhtml', $id = '')
  * @param string $file filename, path to file
  * @param bool $cacheonly
  * @param string $id page id
+ * @param string|null $syntax syntax flavour to parse under; null uses the
+ *     configured $conf['syntax']. See p_get_instructions().
  * @return array|null
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  */
-function p_cached_instructions($file, $cacheonly = false, $id = '')
+function p_cached_instructions($file, $cacheonly = false, $id = '', $syntax = null)
 {
     static $run = null;
     if (is_null($run)) $run = [];
 
-    $cache = new CacheInstructions($id, $file);
+    // The in-request memo and the on-disk cache are both keyed on $syntax so
+    // the same file rendered under two syntaxes in one request (e.g. a plugin
+    // forcing 'dw' on a doc whose configured syntax is 'md') does not collide.
+    $runKey = $file . '|' . ($syntax ?? '');
 
-    if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
+    $cache = new CacheInstructions($id, $file, $syntax);
+
+    if ($cacheonly || $cache->useCache() || (isset($run[$runKey]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
     } elseif (file_exists($file)) {
         // no cache - do some work
-        $ins = p_get_instructions(io_readWikiPage($file, $id));
+        $ins = p_get_instructions(io_readWikiPage($file, $id), $syntax);
         if ($cache->storeCache($ins)) {
-            $run[$file] = true; // we won't rebuild these instructions in the same run again
+            $run[$runKey] = true; // we won't rebuild these instructions in the same run again
         } else {
             msg('Unable to save cache file. Hint: disk full; file permissions; safe_mode setting.', -1);
         }
@@ -210,16 +221,20 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
  * a parameter carried by the ModeRegistry, never a global lookup.
  *
  * @param string $text raw wiki syntax text
+ * @param string|null $syntax syntax flavour to parse under: 'dw', 'md',
+ *     'dw+md' or 'md+dw'. null (the default) means "use the configured
+ *     $conf['syntax']" — appropriate for user content. Locale/bundled
+ *     callers pass 'dw' explicitly.
  * @return array a list of instruction arrays
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  */
-function p_get_instructions($text)
+function p_get_instructions($text, $syntax = null)
 {
     global $conf;
 
-    $registry = new ModeRegistry($conf['syntax']);
+    $registry = new ModeRegistry($syntax ?? $conf['syntax']);
 
     // Create the parser and handler
     $Handler = new Handler($registry);
