@@ -477,7 +477,7 @@ class LegacyApiCore extends ApiCore
                 'lastModified' => $this->toDate($recent->revision),
                 'author' => $recent->author,
                 'version' => $recent->revision,
-                'perms' => auth_quickaclcheck($recent->id),
+                'perms' => auth_quickaclcheck(mediaAclPath($recent->id)),
                 'size' => @filesize(mediaFN($recent->id)),
             ];
         }
