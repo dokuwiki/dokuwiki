@@ -155,6 +155,7 @@ class admin_plugin_acl extends AdminPlugin
                             $who = $auth->cleanUser($who);
                         }
                         $who = auth_nameencode($who, true);
+                        $perm = (int)$perm;
                         $lines[] = "$where\t$who\t$perm\n";
                     }
                 }
