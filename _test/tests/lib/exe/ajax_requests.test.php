@@ -45,6 +45,27 @@ class ajax_requests_test extends DokuWikiTest {
         }
     }
 
+    /**
+     * callMediaupload must normalize the namespace with cleanID() before it is used.
+     *
+     * regression test for XSS reflection and passing unclened data to the ACL check
+     */
+    public function test_mediaupload_reflects_cleaned_namespace() {
+        $request = new TestRequest();
+        $response = $request->post(
+            ['call' => 'mediaupload', 'ns' => 'Foo"><script>x</script>'],
+            '/lib/exe/ajax.php'
+        );
+
+        $result = json_decode($response->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertSame(
+            'foo_script_x_script',
+            $result['ns'],
+            'the raw namespace must be cleaned before it is used'
+        );
+    }
+
     public function test_CallNotProvided() {
         $request = new TestRequest();
         $response = $request->post([], '/lib/exe/ajax.php');

@@ -280,7 +280,7 @@ class Ajax
 
         $id = cleanID($id);
 
-        $NS = $INPUT->str('ns');
+        $NS = $INPUT->filter('cleanID')->str('ns');
         $ns = $NS . ':' . getNS($id);
 
         $AUTH = auth_quickaclcheck("$ns:*");
