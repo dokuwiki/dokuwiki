@@ -66,6 +66,135 @@ class ajax_requests_test extends DokuWikiTest {
         );
     }
 
+    /**
+     * Compute a security token for the given user, matching what same-process code (the
+     * request) computes for the same user and the shared test session, without leaking the
+     * temporary REMOTE_USER into the global state other tests rely on.
+     *
+     * @param string $user
+     * @return string
+     */
+    protected function validTokenFor($user) {
+        global $INPUT;
+        $oldServer = $_SERVER;
+        $oldInput = $INPUT;
+        $_SERVER['REMOTE_USER'] = $user;
+        $INPUT = new \dokuwiki\Input\Input();
+        $token = getSecurityToken();
+        $_SERVER = $oldServer;
+        $INPUT = $oldInput;
+        return $token;
+    }
+
+    /**
+     * The happy path: a logged in user with a valid token takes the page lock and the
+     * posted text is stored as a retrievable draft.
+     *
+     * Doubles as the "valid token is accepted" case: if the CSRF gate wrongly rejected a
+     * valid token the lock would stay '0' and this test would fail.
+     */
+    public function test_lock_takesLockAndSavesDraft() {
+        $id = 'lock:happy';
+        $text = 'some draft text';
+
+        $request = new TestRequest();
+        $request->setServer('REMOTE_USER', 'testuser');
+        $response = $request->post(
+            ['call' => 'lock', 'id' => $id, 'sectok' => $this->validTokenFor('testuser'), 'wikitext' => $text],
+            '/lib/exe/ajax.php'
+        );
+
+        $result = json_decode($response->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertSame([], $result['errors']);
+        $this->assertEquals('1', $result['lock'], 'the lock must be taken');
+        $this->assertNotEmpty($result['draft'], 'a draft-saved message must be returned');
+
+        // the lock is actually held on disk by the user
+        $this->assertFileExists(wikiLockFN($id));
+        $this->assertEquals('testuser', io_readFile(wikiLockFN($id)));
+
+        // the draft is retrievable and round-trips the posted text
+        $draft = new \dokuwiki\Draft($id, 'testuser');
+        $this->assertTrue($draft->isDraftAvailable());
+        $this->assertStringContainsString($text, $draft->getDraftText());
+    }
+
+    /**
+     * The lock call takes a page lock and writes a draft, so for a logged in user it
+     * must be protected against CSRF. A request carrying an invalid security token must
+     * be rejected before any lock is taken.
+     */
+    public function test_lock_rejectsInvalidSecurityToken() {
+        $id = 'lock:reject';
+
+        $request = new TestRequest();
+        $request->setServer('REMOTE_USER', 'testuser');
+        $response = $request->post(
+            ['call' => 'lock', 'id' => $id, 'sectok' => 'not-the-real-token', 'wikitext' => 'x'],
+            '/lib/exe/ajax.php'
+        );
+
+        $result = json_decode($response->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result['errors'], 'an invalid security token must be rejected');
+        $this->assertEquals('0', $result['lock'], 'no lock may be taken on a rejected request');
+        $this->assertFileDoesNotExist(wikiLockFN($id), 'no lock file may be written on a rejected request');
+    }
+
+    /**
+     * When the user lacks write permission the call refuses to lock or save a draft.
+     */
+    public function test_lock_deniedWhenNotWritable() {
+        global $conf, $AUTH_ACL;
+        $id = 'lock:denied';
+
+        $oldAcl = $AUTH_ACL;
+        $conf['useacl'] = 1;
+        $AUTH_ACL = ['*                  @ALL           0']; // deny everyone
+
+        try {
+            // anonymous: no security token needed, the write ACL is what must block this
+            $request = new TestRequest();
+            $response = $request->post(
+                ['call' => 'lock', 'id' => $id, 'wikitext' => 'x'],
+                '/lib/exe/ajax.php'
+            );
+
+            $result = json_decode($response->getContent(), true);
+            $this->assertIsArray($result);
+            $this->assertNotEmpty($result['errors'], 'a denied write must be reported');
+            $this->assertEquals('0', $result['lock']);
+            $this->assertSame('', $result['draft'], 'no draft may be saved when not writable');
+            $this->assertFileDoesNotExist(wikiLockFN($id));
+        } finally {
+            $AUTH_ACL = $oldAcl;
+        }
+    }
+
+    /**
+     * A lock already held by someone else must not be reported as freshly taken and must
+     * be left untouched.
+     */
+    public function test_lock_doesNotStealForeignLock() {
+        $id = 'lock:foreign';
+
+        // someone else already holds the lock
+        io_saveFile(wikiLockFN($id), 'someoneelse');
+
+        $request = new TestRequest();
+        $request->setServer('REMOTE_USER', 'testuser');
+        $response = $request->post(
+            ['call' => 'lock', 'id' => $id, 'sectok' => $this->validTokenFor('testuser')],
+            '/lib/exe/ajax.php'
+        );
+
+        $result = json_decode($response->getContent(), true);
+        $this->assertIsArray($result);
+        $this->assertEquals('0', $result['lock'], 'a foreign lock must not be reported as freshly taken');
+        $this->assertEquals('someoneelse', io_readFile(wikiLockFN($id)), 'the foreign lock must be left untouched');
+    }
+
     public function test_CallNotProvided() {
         $request = new TestRequest();
         $response = $request->post([], '/lib/exe/ajax.php');
