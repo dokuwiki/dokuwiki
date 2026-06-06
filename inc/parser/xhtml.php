@@ -667,10 +667,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
             $class = 'mediafile mf_' . $class;
 
-            $offset = 0;
-            if ($INPUT->has('codeblockOffset')) {
-                $offset = $INPUT->str('codeblockOffset');
-            }
+            $offset = $INPUT->int('codeblockOffset');
             $this->doc .= '<dl class="' . $type . '">' . DOKU_LF;
             $this->doc .= '<dt><a href="' .
                 exportlink(
