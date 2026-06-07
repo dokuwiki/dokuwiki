@@ -135,10 +135,9 @@ class MailUtils
      */
     public static function quotedPrintableEncode(
         string $sText,
-        int    $maxlen = 74,
-        bool   $bEmulate_imap_8bit = true
-    ): string
-    {
+        int $maxlen = 74,
+        bool $bEmulate_imap_8bit = true
+    ): string {
         // split text into lines
         $aLines = preg_split("/(?:\r\n|\r|\n)/", $sText);
         $cnt = count($aLines);
