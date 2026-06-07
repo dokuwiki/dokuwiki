@@ -752,19 +752,25 @@ abstract class ChangeLog
     }
 
     /**
-     * Append a log entry to the changelog files and update the in-memory cache.
+     * Append a log entry to the local and global changelog and update the in-memory cache.
      *
-     * The caller MUST hold io_lock() on the local changelog file. The global changelog
-     * is a different file with its own lock (acquired briefly here). This is what
-     * addLogEntry() runs under its lock, and what persistCurrentRevisionInfo() calls
-     * directly while it's holding the same lock for the detect-and-write critical section.
+     * Locking is the caller's responsibility: this method appends to the local changelog
+     * directly and assumes the caller already holds io_lock() on it.
+     *
+     * This method is currently used by addLogEntry() for normal edits and by persistCurrentRevisionInfo()
+     * for detected external edits, both of which hold the local changelog lock around the call.
+     *
+     * Writing the global changelog is triggered from here via writeGlobalLogEntry(); being a separate
+     * file it has its own locking, which is handled by io_saveFile() rather than by the
+     * local lock above.
      *
      * @param array $info    Revision info structure
      * @param int $timestamp log line date (optional)
+     * @param bool $external entry is a detected external edit (kept out of the global feed when out of order)
      * @return array revision info of added log line
      * @throws \RuntimeException if the local changelog write fails
      */
-    protected function writeLogEntry(array $info, $timestamp = null)
+    protected function writeLogEntry(array $info, $timestamp = null, $external = false)
     {
         global $conf;
 
@@ -784,13 +790,43 @@ abstract class ChangeLog
         fclose($fh);
         if (!$fileexists && !empty($conf['fperm'])) chmod($localFile, $conf['fperm']);
 
-        // global changelog has its own lock and msg() reporting via io_saveFile()
-        io_saveFile($this->getGlobalChangelogFilename(), $logline, true);
+        $this->writeGlobalLogEntry($logline, $info['date'], $external);
 
         $this->currentRevision = $info['date'];
         $info['mode'] = $this->getMode();
         $this->cache[$this->id][$this->currentRevision] = $info;
         return $info;
+    }
+
+    /**
+     * Append a log line to the global changelog (the cross-page recent-changes feed).
+     *
+     * The write goes through io_saveFile(), which locks the global changelog and reports
+     * errors via msg(). That locking is independent of the local changelog lock the caller
+     * holds, as the global changelog is a separate file.
+     *
+     * A detected external edit ($external) is skipped here when its date is older than the
+     * feed's most recent change: appending it would place it at the top of recent changes
+     * with an old date (issue #4634). Skipping does not lose the entry — writeLogEntry() has
+     * already recorded it in the page's own changelog; it is only kept out of the cross-page
+     * feed. Normal edits are always appended.
+     *
+     * @param string $logline the changelog line to append
+     * @param int $date revision date of the entry, compared against the feed's last change
+     * @param bool $external entry is a detected external edit
+     */
+    protected function writeGlobalLogEntry($logline, $date, $external)
+    {
+        $globalFile = $this->getGlobalChangelogFilename();
+
+        // skip an out-of-order external edit
+        if ($external) {
+            clearstatcache(false, $globalFile);
+            $globalMtime = @filemtime($globalFile);
+            if ($globalMtime !== false && $date < $globalMtime) return;
+        }
+
+        io_saveFile($globalFile, $logline, true);
     }
 
     /**
@@ -826,7 +862,7 @@ abstract class ChangeLog
                 if (!$this->saveExternalAttic($revInfo)) return false;
             }
 
-            $this->writeLogEntry($revInfo);
+            $this->writeLogEntry($revInfo, null, true);
             return true;
         } catch (\RuntimeException) {
             // silent fallback to in-memory synthesis
