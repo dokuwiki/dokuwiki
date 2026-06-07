@@ -664,6 +664,19 @@ abstract class ChangeLog
                     $fileRev > $lastRev &&
                     $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
             );
+
+            // A current revision's file modification time can change without its content
+            // changing, e.g. when the file is touched or rewritten in place by an external
+            // process (a backup restore, a git checkout, ...). If the content is identical
+            // to the last recorded revision, no external edit actually happened: reset the
+            // file mtime to the recorded revision date and treat that as the current one.
+            if (!$isJustCreated && $this->currentContentMatchesRevision($lastRev)) {
+                @touch($fileLastMod, $lastRev);
+                clearstatcache(false, $fileLastMod);
+                $this->currentRevision = $lastRev;
+                return $this->getRevisionInfo($lastRev);
+            }
+
             $filesize_new = filesize($this->getFilename());
             $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
             $sizechange = $filesize_new - $filesize_old;
@@ -832,6 +845,19 @@ abstract class ChangeLog
      * @return bool true on success or no-op, false to abort persistence
      */
     abstract protected function saveExternalAttic(array $revInfo);
+
+    /**
+     * Whether the current item file's content is byte-identical to the stored content
+     * of the given revision.
+     *
+     * Used to tell a real external edit apart from a mere mtime bump: when the content
+     * is unchanged the file was only touched, not edited. Returns false when either file
+     * is missing so detection falls back to treating the change as external.
+     *
+     * @param int $rev revision timestamp to compare the current file against
+     * @return bool true if the content is identical
+     */
+    abstract protected function currentContentMatchesRevision($rev);
 
     /**
      * Mechanism to trace no-actual external current revision

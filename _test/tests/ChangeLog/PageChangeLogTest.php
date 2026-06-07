@@ -77,4 +77,34 @@ class PageChangeLogTest extends \DokuWikiTest
             'the revision before the external deletion should be the last edit'
         );
     }
+
+    /**
+     * A current revision's file can have its modification time bumped without any content
+     * change (a backup restore, a git checkout, ...). That must not be recorded as an
+     * external edit: the content is compared against the last revision and, when identical,
+     * the file mtime is reset to the recorded revision date instead (issue #4634).
+     */
+    public function testTouchedFileWithUnchangedContentIsNotExternalEdit()
+    {
+        $page = 'changelog_touched';
+        saveWikiText($page, 'first content', 'create', false);
+
+        $changelog = new PageChangeLog($page);
+        $lastRev = $changelog->currentRevision();
+
+        // bump the file mtime forward without changing the content
+        touch(wikiFN($page), $lastRev + 1000);
+        clearstatcache();
+
+        $changelog = new PageChangeLog($page);
+        $currentRev = $changelog->currentRevision();
+        $currentInfo = $changelog->getRevisionInfo($currentRev);
+
+        $this->assertEquals($lastRev, $currentRev, 'unchanged content must not create an external revision');
+        $this->assertArrayNotHasKey('timestamp', $currentInfo, 'should not be a synthesized external edit');
+        $this->assertCount(1, $changelog->getRevisions(-1, 200), 'no external edit entry should be added');
+
+        clearstatcache();
+        $this->assertEquals($lastRev, filemtime(wikiFN($page)), 'file mtime should be reset to the changelog date');
+    }
 }
