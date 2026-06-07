@@ -117,10 +117,15 @@ abstract class Diff extends Ui
         if (!isset($this->rev1, $this->rev2)) {
             $rev2 = $this->changelog->currentRevision();
             if ($rev2 > $this->changelog->lastRevision()) {
+                // current is an as-yet-unrecorded external edit, compare with last recorded revision
                 $rev1 = $this->changelog->lastRevision();
             } else {
-                $revs = $this->changelog->getRevisions(0, 1);
-                $rev1 = count($revs) ? $revs[0] : false;
+                // current revision is recorded as the last changelog entry; the older side is the
+                // entry immediately before it. getRelativeRevision() is used rather than
+                // getRevisions(0, 1) because the latter only skips the current revision when the item
+                // file still exists, so for a deleted page it would return the deletion entry itself
+                // and the view would end up comparing the current revision with itself.
+                $rev1 = $this->changelog->getRelativeRevision($rev2, -1);
             }
             $this->rev1 = $rev1;
             $this->rev2 = $rev2;
