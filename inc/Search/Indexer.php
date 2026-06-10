@@ -234,8 +234,17 @@ class Indexer
     /**
      * Rename a page in the search index
      *
-     * The page must already have been moved on disk before calling this.
-     * Clears the old page's data and re-indexes under the new name.
+     * This renames the page's entity entry in place: its entity ID (the row in the
+     * page index) is kept and only its name is changed. Because every collection
+     * (title, fulltext and all metadata keys such as relation_references) is keyed by
+     * that entity ID, all token, frequency and reverse associations are preserved and
+     * transparently belong to the new name afterwards.
+     *
+     * In particular this keeps the renamed page's *outgoing* references intact. That is
+     * essential during multi-step operations such as namespace moves: a page renamed
+     * early on must still be discoverable as a backlink source for pages that are moved
+     * later. Re-indexing from disk instead would lose this, because the destination page
+     * has usually not been written to disk yet when this method is called.
      *
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
@@ -246,8 +255,41 @@ class Indexer
      */
     public function renamePage(string $oldpage, string $newpage): void
     {
-        $this->deletePage($oldpage, true);
-        $this->addPage($newpage, true);
+        if ($oldpage === $newpage) return;
+
+        $pageIndex = new FileIndex('page', '', true);
+
+        // locate the existing entity rows; stop as soon as both are known
+        $oldId = null;
+        $newId = null;
+        foreach ($pageIndex as $rid => $value) {
+            if ($value === $oldpage) $oldId = $rid;
+            if ($value === $newpage) $newId = $rid;
+            if ($oldId !== null && $newId !== null) break;
+        }
+
+        // nothing to rename if the old page was never indexed
+        if ($oldId === null) {
+            $pageIndex->unlock();
+            $this->log("Indexer: $oldpage is not in the index, nothing to rename");
+            return;
+        }
+
+        // If the new name already has its own entity, drop its indexed data first.
+        // deletePage() intentionally keeps the entity row in page.idx, so we additionally
+        // blank that row - an empty entry is the index's "removed" marker (see getAllPages()).
+        // Otherwise two rows would carry the new name and a lookup could resolve to the
+        // now-empty one instead of the renamed entity that holds the data.
+        if ($newId !== null) {
+            $this->deletePage($newpage, true);
+            $pageIndex->changeRow($newId, '');
+        }
+
+        // rename in place — keeps the entity ID and thus all index associations
+        $pageIndex->changeRow($oldId, $newpage);
+
+        $pageIndex->unlock();
+        $this->log("Indexer: renamed $oldpage to $newpage in index");
     }
 
     /**
