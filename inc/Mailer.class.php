@@ -10,6 +10,7 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Input\Input;
 use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Clean;
@@ -89,7 +90,7 @@ class Mailer
     {
         global $conf;
         global $USERINFO;
-        /** @var \dokuwiki\Input\Input $INPUT */
+        /** @var Input $INPUT */
         global $INPUT;
 
         // auto constructed address
