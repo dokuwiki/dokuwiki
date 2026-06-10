@@ -228,6 +228,11 @@ return static function (RectorConfig $rectorConfig): void {
         'utf16be_to_utf8' => 'dokuwiki\Utf8\Conversion::fromUtf16be',
         'utf8_bad_replace' => 'dokuwiki\Utf8\Clean::replaceBadBytes',
         'utf8_correctIdx' => 'dokuwiki\Utf8\Clean::correctIdx',
+
+        // see inc/deprecated.php
+        'obfuscate' => 'dokuwiki\MailUtils::obfuscate',
+        'mail_isvalid' => 'dokuwiki\MailUtils::isValid',
+        'mail_quotedprintable_encode' => 'dokuwiki\MailUtils::quotedPrintableEncode',
     ]);
 
     $rectorConfig->rule(DokuWikiPtlnRector::class);

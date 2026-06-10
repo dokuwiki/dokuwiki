@@ -1,7 +1,7 @@
 ====== Manager Configurare ======
 
-Folosiţi această pagină pentru a controla setările instalării DokuWiki. Pentru ajutor la probleme punctuale, consultaţi [[doku>config]]. Pentru mai multe detalii privind acest plugin, consultaţi [[doku>plugin:config]].
+Folosiți această pagină pentru a controla setările instalării DokuWiki. Pentru ajutor la probleme punctuale, consultați [[doku>config]]. Pentru mai multe detalii privind acest plugin, consultați [[doku>plugin:config]].
 
-Setările pe un fond roşu-deschis sunt protejate şi nu pot fi modificate cu acest plugin. Setările pe un fond albastru sunt valori implicite iar cele pe fond alb au fost setate local pentru această instalare individualizată. Setările pe fond albastru şi alb pot fi modificate.
+Setările pe un fond roșu-deschis sunt protejate și nu pot fi modificate cu această extensie. Setările pe un fond albastru sunt valori implicite, iar cele pe fond alb au fost setate local pentru această instalare particulară. Setările pe fond albastru și alb pot fi modificate.
 
-Nu uitaţi să apăsaţi butonul **SALVEAZĂ** înainte de a părăsi această pagină; altfel, modificările aduse se vor pierde.
+Nu uitați să apăsați butonul **SALVEAZĂ** înainte de a părăsi această pagină; altfel, modificările aduse se vor pierde.

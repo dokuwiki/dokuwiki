@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\Helpers;
 
+use dokuwiki\MailUtils;
+
 /**
  * Pure helper for classifying link targets.
  *
@@ -37,7 +39,7 @@ class Link
         if (preg_match('#^([a-z0-9\-\.+]+?)://#i', $url)) {
             return ['externallink', [$url, $label]];
         }
-        if (preg_match('<' . PREG_PATTERN_VALID_EMAIL . '>', $url)) {
+        if (preg_match('<' . MailUtils::PREG_PATTERN_VALID_EMAIL . '>', $url)) {
             return ['emaillink', [$url, $label]];
         }
         if (preg_match('!^#.+!', $url)) {

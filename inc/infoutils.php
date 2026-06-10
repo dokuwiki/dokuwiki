@@ -203,7 +203,7 @@ function getRuntimeVersions()
  */
 function getOsRelease()
 {
-    $reader = fn($file) => @parse_ini_string(preg_replace('/#.*$/m', '', file_get_contents($file)));
+    $reader = fn($file) => @parse_ini_string(preg_replace('/^\s*#.*$/m', '', file_get_contents($file))) ?: [];
 
     $osRelease = [];
     if (@file_exists('/etc/os-release')) {
@@ -216,10 +216,14 @@ function getOsRelease()
         $osRelease['NAME'] = 'Synology DSM';
         $osRelease['ID'] = 'synology';
         $osRelease['ID_LIKE'] = 'linux';
-        $osRelease['VERSION_ID'] = $synoVersion['productversion'];
-        $osRelease['VERSION'] = $synoVersion['productversion'];
-        $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'];
-        $osRelease['PRETTY_NAME'] = implode(' ', [$osRelease['NAME'], $osRelease['VERSION'], $osRelease['SYNO_MODEL']]);
+        $osRelease['VERSION_ID'] = $synoVersion['productversion'] ?? '';
+        $osRelease['VERSION'] = $synoVersion['productversion'] ?? '';
+        $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'] ?? '';
+        $osRelease['PRETTY_NAME'] = trim(implode(' ', [
+            $osRelease['NAME'],
+            $osRelease['VERSION'],
+            $osRelease['SYNO_MODEL']
+        ]));
     }
     return $osRelease;
 }

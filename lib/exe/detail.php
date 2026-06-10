@@ -26,7 +26,7 @@ session_write_close();
 
 $ERROR = false;
 // check image permissions
-$AUTH = auth_quickaclcheck($IMG);
+$AUTH = auth_quickaclcheck(mediaAclPath($IMG));
 if ($AUTH >= AUTH_READ) {
     // check if image exists
     $SRC = mediaFN($IMG, $REV);

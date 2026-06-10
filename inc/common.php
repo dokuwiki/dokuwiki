@@ -21,6 +21,7 @@ use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ip;
+use dokuwiki\MailUtils;
 use dokuwiki\Search\MetadataSearch;
 
 use function PHP81_BC\strftime;
@@ -1475,33 +1476,6 @@ function date_iso8601($int_date)
 }
 
 /**
- * return an obfuscated email address in line with $conf['mailguard'] setting
- *
- * @param string $email email address
- * @return string
- * @author Harry Fuecks <hfuecks@gmail.com>
- * @author Christopher Smith <chris@jalakai.co.uk>
- *
- */
-function obfuscate($email)
-{
-    global $conf;
-
-    switch ($conf['mailguard']) {
-        case 'visible':
-            $obfuscate = ['@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] '];
-            return strtr($email, $obfuscate);
-
-        case 'hex':
-            return Conversion::toHtml($email, true);
-
-        case 'none':
-        default:
-            return $email;
-    }
-}
-
-/**
  * Removes quoting backslashes
  *
  * @param string $string
@@ -1650,7 +1624,7 @@ function userlink($username = null, $textonly = false)
                         break;
                     case 'email':
                     case 'email_link':
-                        $data['name'] = obfuscate($info['mail']);
+                        $data['name'] = MailUtils::obfuscate($info['mail']);
                         break;
                 }
             } else {
@@ -1668,7 +1642,7 @@ function userlink($username = null, $textonly = false)
                 }
                 if (isset($info) && $info) {
                     if ($conf['showuseras'] == 'email_link') {
-                        $data['link']['url'] = 'mailto:' . obfuscate($info['mail']);
+                        $data['link']['url'] = 'mailto:' . MailUtils::obfuscateUrl($info['mail']);
                     } else {
                         if (is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
@@ -1827,35 +1801,6 @@ function send_redirect($url)
     }
 
     exit;
-}
-
-/**
- * Validate a value using a set of valid values
- *
- * This function checks whether a specified value is set and in the array
- * $valid_values. If not, the function returns a default value or, if no
- * default is specified, throws an exception.
- *
- * @param string $param The name of the parameter
- * @param array $valid_values A set of valid values; Optionally a default may
- *                             be marked by the key “default”.
- * @param array $array The array containing the value (typically $_POST
- *                             or $_GET)
- * @param string $exc The text of the raised exception
- *
- * @return mixed
- * @throws Exception
- * @author Adrian Lang <lang@cosmocode.de>
- */
-function valid_input_set($param, $valid_values, $array, $exc = '')
-{
-    if (isset($array[$param]) && in_array($array[$param], $valid_values)) {
-        return $array[$param];
-    } elseif (isset($valid_values['default'])) {
-        return $valid_values['default'];
-    } else {
-        throw new Exception($exc);
-    }
 }
 
 /**

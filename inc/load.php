@@ -24,7 +24,6 @@ return new class {
         'httputils.php',
         'infoutils.php',
         'io.php',
-        'mail.php',
         'media.php',
         'pageutils.php',
         'parserutils.php',

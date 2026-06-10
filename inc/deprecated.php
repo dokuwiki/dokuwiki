@@ -7,6 +7,7 @@
  */
 
 use dokuwiki\Debug\DebugHelper;
+use dokuwiki\MailUtils;
 
 /**
  * @deprecated since 2021-11-11 use \dokuwiki\Remote\IXR\Client instead!
@@ -206,7 +207,6 @@ function ptln($string, $indent = 0)
 }
 
 /**
-<<<<<<< HEAD
  * Adds/updates the search index for the given page
  *
  * Locking is handled internally.
@@ -232,14 +232,18 @@ function idx_addPage($page, $verbose = false, $force = false)
 /**
  * Create an instance of the indexer.
  *
- * @return dokuwiki\Search\Indexer
+ * Returns a {@see dokuwiki\Search\LegacyIndexer} that preserves the legacy
+ * Doku_Indexer return contract (true|string on success/failure for the four
+ * mutating methods) so existing plugins keep working without try/catch.
+ *
+ * @return dokuwiki\Search\LegacyIndexer
  *
  * @deprecated 2026-04-07 use dokuwiki\Search\Indexer directly
  */
 function idx_get_indexer()
 {
     DebugHelper::dbgDeprecatedFunction(dokuwiki\Search\Indexer::class);
-    return new dokuwiki\Search\Indexer();
+    return new dokuwiki\Search\LegacyIndexer();
 }
 
 /**
@@ -271,7 +275,7 @@ function idx_getIndex($idx, $suffix)
 function idx_lookup(&$words)
 {
     DebugHelper::dbgDeprecatedFunction(dokuwiki\Search\Collection\CollectionSearch::class);
-    return (new dokuwiki\Search\Indexer())->lookup($words);
+    return (new dokuwiki\Search\LegacyIndexer())->lookup($words);
 }
 
 /**
@@ -461,4 +465,36 @@ function Doku_Handler_Parse_Media($match)
 {
     DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ParserMode\Media::class . '::parseMedia()');
     return \dokuwiki\Parsing\ParserMode\Media::parseMedia($match);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::PREG_PATTERN_VALID_EMAIL instead!
+ */
+if (!defined('PREG_PATTERN_VALID_EMAIL')) define('PREG_PATTERN_VALID_EMAIL', MailUtils::PREG_PATTERN_VALID_EMAIL);
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::obfuscate() instead!
+ */
+function obfuscate($email)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::obfuscate');
+    return MailUtils::obfuscate($email);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::isValid() instead!
+ */
+function mail_isvalid($email)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::isValid');
+    return MailUtils::isValid($email);
+}
+
+/**
+ * @deprecated 2026-05-06 use \dokuwiki\MailUtils::quotedPrintableEncode() instead!
+ */
+function mail_quotedprintable_encode($sText, $maxlen = 74, $bEmulate_imap_8bit = true)
+{
+    DebugHelper::dbgDeprecatedFunction(MailUtils::class . '::quotedPrintableEncode');
+    return MailUtils::quotedPrintableEncode($sText, $maxlen, $bEmulate_imap_8bit);
 }

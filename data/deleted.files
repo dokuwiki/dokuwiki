@@ -2,6 +2,9 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-06-07
+inc/mail.php
+
 # removed on 2026-05-06
 inc/Parsing/ParserMode/Formatting.php
 inc/fulltext.php

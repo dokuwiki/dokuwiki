@@ -3,6 +3,7 @@
 namespace dokuwiki\Extension;
 
 use dokuwiki\Logger;
+use dokuwiki\MailUtils;
 
 /**
  * Provides standard DokuWiki plugin behaviour
@@ -245,10 +246,11 @@ trait PluginTrait
     public function email($email, $name = '', $class = '', $more = '')
     {
         if (!$email) return $name;
-        $email = obfuscate($email);
-        if (!$name) $name = $email;
+        $display = MailUtils::obfuscate($email);
+        $href = MailUtils::obfuscateUrl($email);
+        if (!$name) $name = $display;
         $class = "class='" . ($class ?: 'mail') . "'";
-        return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
+        return "<a href='mailto:$href' $class title='$display' $more>$name</a>";
     }
 
     /**

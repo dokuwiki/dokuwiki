@@ -356,7 +356,7 @@ function _handleRecentLogLine($line, $ns, $flags, &$seen)
 
     // check ACL
     if ($flags & RECENTS_MEDIA_CHANGES) {
-        $recent['perms'] = auth_quickaclcheck(getNS($recent['id']) . ':*');
+        $recent['perms'] = auth_quickaclcheck(mediaAclPath($recent['id']));
     } else {
         $recent['perms'] = auth_quickaclcheck($recent['id']);
     }
