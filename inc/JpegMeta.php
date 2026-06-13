@@ -664,6 +664,7 @@ class JpegMeta {
             $dates['ExifDateTime'] = $this->_info['exif']['DateTime'];
 
             $aux = $this->_info['exif']['DateTime'];
+            if (is_array($aux)) $aux = reset($aux);
             $aux[4] = "-";
             $aux[7] = "-";
             $t = strtotime($aux);
@@ -683,6 +684,7 @@ class JpegMeta {
             $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTimeOriginal'];
 
             $aux = $this->_info['exif']['DateTimeOriginal'];
+            if (is_array($aux)) $aux = reset($aux);
             $aux[4] = "-";
             $aux[7] = "-";
             $t = strtotime($aux);
@@ -702,6 +704,7 @@ class JpegMeta {
             $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTimeDigitized'];
 
             $aux = $this->_info['exif']['DateTimeDigitized'];
+            if (is_array($aux)) $aux = reset($aux);
             $aux[4] = "-";
             $aux[7] = "-";
             $t = strtotime($aux);
