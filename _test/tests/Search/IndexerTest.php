@@ -54,16 +54,12 @@ class IndexerTest extends \DokuWikiTest
         saveWikiText('old_name', 'Old page content words.', 'Test initialization');
         $indexer->addPage('old_name');
 
-        // move the page on disk
-        io_rename(wikiFN('old_name'), wikiFN('new_name'));
-        saveWikiText('new_name', 'Old page content words.', 'Renamed');
-
         $indexer->renamePage('old_name', 'new_name');
 
-        // new page should be indexed
+        // the entity is renamed in place: new name present, old name gone
         $pageIndex = new FileIndex('page');
-        $result = $pageIndex->search('/^new_name$/');
-        $this->assertNotEmpty($result, 'new_name not found in page.idx after rename');
+        $this->assertNotEmpty($pageIndex->search('/^new_name$/'), 'new_name not found in page.idx after rename');
+        $this->assertEmpty($pageIndex->search('/^old_name$/'), 'old_name should be gone from page.idx after rename');
     }
 
     /**
@@ -161,9 +157,8 @@ class IndexerTest extends \DokuWikiTest
     public function testGetVersion()
     {
         $indexer = new Indexer();
-        $version = $indexer->getVersion();
-        $this->assertNotEmpty($version);
-        $this->assertIsString((string)$version);
+        // with no version-modifying plugins active the raw INDEXER_VERSION is returned
+        $this->assertSame(\dokuwiki\Search\INDEXER_VERSION, $indexer->getVersion());
     }
 
     /**
@@ -174,13 +169,66 @@ class IndexerTest extends \DokuWikiTest
         $indexer = new Indexer();
 
         saveWikiText('needsidx', 'Some content.', 'Test initialization');
+        // a brand-new page has no .indexed tag yet, so it always needs indexing
         $this->assertTrue($indexer->needsIndexing('needsidx'));
 
+        // once indexed it is up to date, even when saved and indexed in the same second
         $indexer->addPage('needsidx');
-        // ensure the .indexed tag is strictly newer than the wiki file
-        touch(metaFN('needsidx', '.indexed'), time() + 1);
         $this->assertFalse($indexer->needsIndexing('needsidx'));
         $this->assertTrue($indexer->needsIndexing('needsidx', true)); // force
+    }
+
+    /**
+     * addPage returns true when it indexed the page and false when there was nothing to do
+     */
+    public function testAddPageReturn()
+    {
+        $indexer = new Indexer();
+
+        saveWikiText('retadd', 'Some content to index.', 'Test initialization');
+        $this->assertTrue($indexer->addPage('retadd'), 'addPage should report work done');
+
+        // already up to date: nothing to do
+        $this->assertFalse($indexer->addPage('retadd'), 'addPage should report nothing to do when up to date');
+
+        // forcing reindexing always reports work done
+        $this->assertTrue($indexer->addPage('retadd', true), 'forced addPage should report work done');
+    }
+
+    /**
+     * deletePage returns true when it removed the page and false when there was nothing to do
+     */
+    public function testDeletePageReturn()
+    {
+        $indexer = new Indexer();
+
+        // never indexed and not forced: nothing to do
+        $this->assertFalse($indexer->deletePage('retdel'), 'deletePage should report nothing to do for an unknown page');
+
+        saveWikiText('retdel', 'Delete me content.', 'Test initialization');
+        $indexer->addPage('retdel');
+        $this->assertTrue($indexer->deletePage('retdel'), 'deletePage should report work done');
+
+        // the delete removed the .indexed tag, so a second unforced call has nothing to do
+        $this->assertFalse($indexer->deletePage('retdel'), 'deletePage should report nothing to do once removed');
+    }
+
+    /**
+     * renamePage returns true when it renamed the page and false for the no-op cases
+     */
+    public function testRenamePageReturn()
+    {
+        $indexer = new Indexer();
+
+        // identical names: nothing to do
+        $this->assertFalse($indexer->renamePage('retrename', 'retrename'), 'renamePage should report nothing to do for identical names');
+
+        // old page not in the index: nothing to do
+        $this->assertFalse($indexer->renamePage('retrename', 'retrenamed'), 'renamePage should report nothing to do for an unindexed page');
+
+        saveWikiText('retrename', 'Rename me content.', 'Test initialization');
+        $indexer->addPage('retrename');
+        $this->assertTrue($indexer->renamePage('retrename', 'retrenamed'), 'renamePage should report work done');
     }
 
     /**
@@ -196,9 +244,7 @@ class IndexerTest extends \DokuWikiTest
         saveWikiText('logpage', 'Log test content.', 'Test initialization');
         $indexer->addPage('logpage');
 
-        // ensure the .indexed tag is strictly newer so second call detects "up to date"
-        touch(metaFN('logpage', '.indexed'), time() + 1);
-
+        // second call detects the page is already up to date
         $indexer->addPage('logpage');
         $this->assertNotEmpty($messages);
         $this->assertStringContainsString('up to date', end($messages));

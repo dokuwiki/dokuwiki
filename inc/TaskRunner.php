@@ -211,11 +211,10 @@ class TaskRunner
                 echo $msg . NL;
             });
             if (!page_exists($ID)) {
-                $indexer->deletePage($ID, true);
+                return $indexer->deletePage($ID);
             } else {
-                $indexer->addPage($ID, true);
+                return $indexer->addPage($ID);
             }
-            return true;
         } catch (SearchException $e) {
             $msg = $e::class . ' : ' . $e->getMessage();
             echo $msg;

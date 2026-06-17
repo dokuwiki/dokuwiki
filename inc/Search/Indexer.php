@@ -115,8 +115,11 @@ class Indexer
 
         if (trim(io_readFile($idxtag)) != $this->getVersion()) return true;
 
+        // the index tag is written when the page is indexed; the page only needs
+        // (re-)indexing if it was changed *after* that - an equal mtime means it was
+        // saved and indexed within the same second and is therefore up to date
         $last = @filemtime($idxtag);
-        return $last <= @filemtime(wikiFN($page));
+        return $last < @filemtime(wikiFN($page));
     }
 
     /**
@@ -127,15 +130,16 @@ class Indexer
      * @param string $page The page to index
      * @param bool $force force reindexing even when the index is up to date
      *
+     * @return bool true if the page was indexed, false if there was nothing to do
      * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      */
-    public function addPage(string $page, bool $force = false): void
+    public function addPage(string $page, bool $force = false): bool
     {
         if (!$this->needsIndexing($page, $force)) {
             $this->log("Indexer: index for $page up to date");
-            return;
+            return false;
         }
 
         // create shared writable page index early so we can resolve the PID for plugins
@@ -196,6 +200,7 @@ class Indexer
         // update index tag file
         io_saveFile(metaFN($data['page'], '.indexed'), $this->getVersion());
         $this->log("Indexer: finished indexing {$data['page']}");
+        return true;
     }
 
     /**
@@ -206,16 +211,17 @@ class Indexer
      * @param string $page The page to remove
      * @param bool $force force deletion even when no .indexed tag exists
      *
+     * @return bool true if the page was removed, false if there was nothing to do
      * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      */
-    public function deletePage(string $page, bool $force = false): void
+    public function deletePage(string $page, bool $force = false): bool
     {
         $idxtag = metaFN($page, '.indexed');
         if (!$force && !file_exists($idxtag)) {
             $this->log("Indexer: $page.indexed file does not exist, ignoring");
-            return;
+            return false;
         }
 
         $pageIndex = new FileIndex('page', '', true);
@@ -229,6 +235,7 @@ class Indexer
 
         $this->log("Indexer: deleted $page from index");
         @unlink($idxtag);
+        return true;
     }
 
     /**
@@ -249,13 +256,14 @@ class Indexer
      * @param string $oldpage The old page name
      * @param string $newpage The new page name
      *
+     * @return bool true if the page was renamed, false if there was nothing to do
      * @throws IndexAccessException
      * @throws IndexLockException
      * @throws IndexWriteException
      */
-    public function renamePage(string $oldpage, string $newpage): void
+    public function renamePage(string $oldpage, string $newpage): bool
     {
-        if ($oldpage === $newpage) return;
+        if ($oldpage === $newpage) return false;
 
         $pageIndex = new FileIndex('page', '', true);
 
@@ -272,7 +280,7 @@ class Indexer
         if ($oldId === null) {
             $pageIndex->unlock();
             $this->log("Indexer: $oldpage is not in the index, nothing to rename");
-            return;
+            return false;
         }
 
         // If the new name already has its own entity, drop its indexed data first.
@@ -290,6 +298,7 @@ class Indexer
 
         $pageIndex->unlock();
         $this->log("Indexer: renamed $oldpage to $newpage in index");
+        return true;
     }
 
     /**

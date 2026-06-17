@@ -62,7 +62,8 @@ class LegacyIndexer
     }
 
     /**
-     * @return true|string true on success, error message on failure
+     * @return bool|string true if work was done, false if there was nothing to do,
+     *                     error message string on failure
      *
      * @deprecated 2026-04-07 use {@see Indexer::addPage()} with try/catch instead
      */
@@ -70,15 +71,15 @@ class LegacyIndexer
     {
         DebugHelper::dbgDeprecatedFunction(Indexer::class . '::addPage()');
         try {
-            $this->indexer->addPage($page, $force);
-            return true;
+            return $this->indexer->addPage($page, $force);
         } catch (SearchException $e) {
             return $e->getMessage();
         }
     }
 
     /**
-     * @return true|string true on success, error message on failure
+     * @return bool|string true if work was done, false if there was nothing to do,
+     *                     error message string on failure
      *
      * @deprecated 2026-04-07 use {@see Indexer::deletePage()} with try/catch instead
      */
@@ -86,15 +87,15 @@ class LegacyIndexer
     {
         DebugHelper::dbgDeprecatedFunction(Indexer::class . '::deletePage()');
         try {
-            $this->indexer->deletePage($page, $force);
-            return true;
+            return $this->indexer->deletePage($page, $force);
         } catch (SearchException $e) {
             return $e->getMessage();
         }
     }
 
     /**
-     * @return true|string true on success, error message on failure
+     * @return bool|string true if work was done, false if there was nothing to do,
+     *                     error message string on failure
      *
      * @deprecated 2026-04-07 use {@see Indexer::renamePage()} with try/catch instead
      */
@@ -102,8 +103,13 @@ class LegacyIndexer
     {
         DebugHelper::dbgDeprecatedFunction(Indexer::class . '::renamePage()');
         try {
-            $this->indexer->renamePage($oldpage, $newpage);
-            return true;
+            $result = $this->indexer->renamePage($oldpage, $newpage);
+            // a false result for differing names means the old page was not in the
+            // index; restore the legacy error message that callers expect here
+            if ($result === false && $oldpage !== $newpage) {
+                return 'page is not in index';
+            }
+            return $result;
         } catch (SearchException $e) {
             return $e->getMessage();
         }
