@@ -74,17 +74,17 @@ class BacklinksTest extends \DokuWikiTest
 
     public function testLinksInDeletedPages()
     {
-        saveWikiText('test:internallinks', '[[internallink]] [[..:internal link]]', 'Test initialization');
-        (new Indexer())->addPage('test:internallinks');
+        saveWikiText('test:deletedlinks', '[[deletedtarget]] [[..:deleted target]]', 'Test initialization');
+        (new Indexer())->addPage('test:deletedlinks');
         $search = new MetadataSearch();
 
-        $this->assertEquals(array('test:internallinks'), $search->backlinks('test:internallink'));
-        $this->assertEquals(array('test:internallinks'), $search->backlinks('internal_link'));
+        $this->assertEquals(array('test:deletedlinks'), $search->backlinks('test:deletedtarget'));
+        $this->assertEquals(array('test:deletedlinks'), $search->backlinks('deleted_target'));
 
-        saveWikiText('test:internallinks', '', 'Deleted');
+        saveWikiText('test:deletedlinks', '', 'Deleted');
 
-        $this->assertEquals(array(), $search->backlinks('test:internallink'));
-        $this->assertEquals(array(), $search->backlinks('internal_link'));
+        $this->assertEquals(array(), $search->backlinks('test:deletedtarget'));
+        $this->assertEquals(array(), $search->backlinks('deleted_target'));
     }
 
     public function testParameters()
