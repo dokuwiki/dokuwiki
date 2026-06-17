@@ -174,11 +174,11 @@ class IndexerTest extends \DokuWikiTest
         $indexer = new Indexer();
 
         saveWikiText('needsidx', 'Some content.', 'Test initialization');
+        // a brand-new page has no .indexed tag yet, so it always needs indexing
         $this->assertTrue($indexer->needsIndexing('needsidx'));
 
+        // once indexed it is up to date, even when saved and indexed in the same second
         $indexer->addPage('needsidx');
-        // ensure the .indexed tag is strictly newer than the wiki file
-        touch(metaFN('needsidx', '.indexed'), time() + 1);
         $this->assertFalse($indexer->needsIndexing('needsidx'));
         $this->assertTrue($indexer->needsIndexing('needsidx', true)); // force
     }
@@ -196,9 +196,7 @@ class IndexerTest extends \DokuWikiTest
         saveWikiText('logpage', 'Log test content.', 'Test initialization');
         $indexer->addPage('logpage');
 
-        // ensure the .indexed tag is strictly newer so second call detects "up to date"
-        touch(metaFN('logpage', '.indexed'), time() + 1);
-
+        // second call detects the page is already up to date
         $indexer->addPage('logpage');
         $this->assertNotEmpty($messages);
         $this->assertStringContainsString('up to date', end($messages));

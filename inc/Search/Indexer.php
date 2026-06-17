@@ -115,8 +115,11 @@ class Indexer
 
         if (trim(io_readFile($idxtag)) != $this->getVersion()) return true;
 
+        // the index tag is written when the page is indexed; the page only needs
+        // (re-)indexing if it was changed *after* that - an equal mtime means it was
+        // saved and indexed within the same second and is therefore up to date
         $last = @filemtime($idxtag);
-        return $last <= @filemtime(wikiFN($page));
+        return $last < @filemtime(wikiFN($page));
     }
 
     /**
