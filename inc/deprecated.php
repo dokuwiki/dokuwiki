@@ -210,10 +210,10 @@ function ptln($string, $indent = 0)
  *
  * Locking is handled internally.
  *
- * @param string        $page   name of the page to index
- * @param boolean       $verbose    print status messages
- * @param boolean       $force  force reindexing even when the index is up to date
- * @return string|boolean  the function completed successfully
+ * @param string $page   name of the page to index
+ * @param boolean $verbose    ignored; status messages are no longer printed
+ * @param boolean $force  force reindexing even when the index is up to date
+ * @return boolean true if the page was indexed, false if there was nothing to do or an error occurred
  *
  * @deprecated 2026-04-07 use Indexer class instead
  */
@@ -221,8 +221,7 @@ function idx_addPage($page, $verbose = false, $force = false)
 {
     DebugHelper::dbgDeprecatedFunction('dokuwiki\Search\Indexer::addPage()');
     try {
-        (new dokuwiki\Search\Indexer())->addPage($page, $force);
-        return true;
+        return (new dokuwiki\Search\Indexer())->addPage($page, $force);
     } catch (\dokuwiki\Search\Exception\SearchException $e) {
         return false;
     }
