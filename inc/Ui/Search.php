@@ -549,46 +549,28 @@ class Search extends Ui
         $html .= '<h2>' . $lang['search_fullresults'] . ':</h2>';
 
         $html .= '<dl class="search_results">';
-        $num = 0;
         $position = 0;
-        $FulltextSearch = new FulltextSearch();
+        $snippetsLeft = (new FulltextSearch())->getMaxSnippets() + 1;
 
         foreach ($data as $id => $cnt) {
             ++$position;
-            $resultLink = html_wikilink(':' . $id, null, $highlight);
-
-            $resultHeader = [$resultLink];
-
-
-            $restrictQueryToNSLink = $this->restrictQueryToNSLink(getNS($id));
-            if ($restrictQueryToNSLink) {
-                $resultHeader[] = $restrictQueryToNSLink;
-            }
-
-            $resultBody = [];
-            $mtime = filemtime(wikiFN($id));
-            $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
-            $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="' . dformat($mtime) . '">' .
-                dformat($mtime, '%f') .
-                '</time>';
-            $resultBody['meta'] = $lastMod;
-            if ($cnt !== 0) {
-                $num++;
-                $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
-                $resultBody['meta'] = $hits . $resultBody['meta'];
-                if ($num <= $FulltextSearch->getMaxSnippets()) {
-                    $resultBody['snippet'] = $FulltextSearch->snippet($id, $highlight);
-                }
-            }
+            --$snippetsLeft;
 
             $eventData = [
-                'resultHeader' => $resultHeader,
-                'resultBody' => $resultBody,
+                'resultHeader' => [],
+                'resultBody' => [],
                 'page' => $id,
+                'score' => $cnt,
+                'highlight' => $highlight,
                 'position' => $position,
+                'showsnippet' => $snippetsLeft > 0,
+                'class' => '',
             ];
-            Event::createAndTrigger('SEARCH_RESULT_FULLPAGE', $eventData);
-            $html .= '<div class="search_fullpage_result">';
+
+            Event::createAndTrigger('SEARCH_RESULT_FULLPAGE', $eventData, $this->buildPageResultRow(...));
+
+            $wrapperClass = $eventData['class'] !== '' ? ' ' . hsc($eventData['class']) : '';
+            $html .= '<div class="search_fullpage_result' . $wrapperClass . '">';
             $html .= '<dt>' . implode(' ', $eventData['resultHeader']) . '</dt>';
             foreach ($eventData['resultBody'] as $class => $htmlContent) {
                 $html .= "<dd class=\"$class\">$htmlContent</dd>";
@@ -596,10 +578,55 @@ class Search extends Ui
             $html .= '</div>';
         }
         $html .= '</dl>';
-
         $html .= '</div>';
 
         return $html;
+    }
+
+    /**
+     * Build a standard wiki-page result row
+     *
+     * This is the default action of the SEARCH_RESULT_FULLPAGE event: it fills the
+     * event's resultHeader and resultBody for a wiki page. Plugins that render other result
+     * types (e.g. media documents) prevent this default action and provide their own row,
+     * so none of the page-specific logic below (wikilink, page mtime, page snippet) runs for
+     * their ids.
+     *
+     * @param array $eventData event data of SEARCH_RESULT_FULLPAGE (modified by reference)
+     * @return void
+     */
+    protected function buildPageResultRow(array &$eventData)
+    {
+        global $lang;
+
+        $id = $eventData['page'];
+        $cnt = $eventData['score'];
+        $highlight = $eventData['highlight'];
+
+        $resultHeader = [html_wikilink(':' . $id, null, $highlight)];
+
+        $restrictQueryToNSLink = $this->restrictQueryToNSLink(getNS($id));
+        if ($restrictQueryToNSLink) {
+            $resultHeader[] = $restrictQueryToNSLink;
+        }
+
+        $resultBody = [];
+        $mtime = filemtime(wikiFN($id));
+        $lastMod = '<span class="lastmod">' . $lang['lastmod'] . '</span> ';
+        $lastMod .= '<time datetime="' . date_iso8601($mtime) . '" title="' . dformat($mtime) . '">' .
+            dformat($mtime, '%f') .
+            '</time>';
+        $resultBody['meta'] = $lastMod;
+        if ($cnt !== 0) {
+            $hits = '<span class="hits">' . $cnt . ' ' . $lang['hits'] . '</span>, ';
+            $resultBody['meta'] = $hits . $resultBody['meta'];
+            if ($eventData['showsnippet']) {
+                $resultBody['snippet'] = (new FulltextSearch())->snippet($id, $highlight);
+            }
+        }
+
+        $eventData['resultHeader'] = $resultHeader;
+        $eventData['resultBody'] = $resultBody;
     }
 
     /**
