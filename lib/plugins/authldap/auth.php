@@ -153,6 +153,7 @@ class auth_plugin_authldap extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        $user = strtolower($user);
         return $this->fetchUserData($user);
     }
 
