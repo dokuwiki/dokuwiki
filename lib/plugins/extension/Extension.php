@@ -81,7 +81,7 @@ class Extension implements \Stringable
     {
         [$type, $base] = $this->idToTypeBase($id);
         $this->type = $type;
-        $this->base = $base;
+        $this->setBase($base);
         $this->readLocalInfo();
     }
 
@@ -125,11 +125,11 @@ class Extension implements \Stringable
         $this->readLocalInfo();
 
         if ($base !== null) {
-            $this->base = $base;
+            $this->setBase($base);
         } elseif (isset($this->localInfo['base'])) {
-            $this->base = $this->localInfo['base'];
+            $this->setBase($this->localInfo['base']);
         } else {
-            $this->base = $this->getBaseFromClass($dir) ?: basename($dir);
+            $this->setBase($this->getBaseFromClass($dir) ?: basename($dir));
         }
     }
 
@@ -153,7 +153,7 @@ class Extension implements \Stringable
         [$type, $base] = $this->idToTypeBase($data['plugin']);
         $this->remoteInfo = $data;
         $this->type = $type;
-        $this->base = $base;
+        $this->setBase($base);
 
         if ($this->isInstalled()) {
             $this->currentDir = $this->getInstallDir();
@@ -857,6 +857,22 @@ class Extension implements \Stringable
     // endregion
 
     // region utilities
+
+    /**
+     * Set the base name of this extension
+     *
+     * Validates the base name to be a bare extension name (alphanumeric, underscores, hyphens, and dots)
+     *
+     * @param string $base
+     * @throws RuntimeException if the base name is not a bare extension name
+     */
+    protected function setBase($base)
+    {
+        if (!preg_match('/^[a-z0-9][a-z0-9._-]*$/i', (string)$base)) {
+            throw new RuntimeException('Invalid extension base name: ' . $base);
+        }
+        $this->base = $base;
+    }
 
     /**
      * Convert an extension id to a type and base
