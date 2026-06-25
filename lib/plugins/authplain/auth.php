@@ -93,6 +93,7 @@ class auth_plugin_authplain extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        if (!is_string($user)) return false;
         if ($this->users === null) $this->loadUserData();
         return $this->users[$user] ?? false;
     }
