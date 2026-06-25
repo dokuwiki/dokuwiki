@@ -2,6 +2,12 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-06-25
+inc/Parsing/Handler/Quote.php
+inc/Parsing/ParserMode/Hr.php
+inc/Parsing/ParserMode/ModeInterface.php
+inc/Parsing/ParserMode/Quote.php
+
 # removed on 2026-06-07
 inc/mail.php
 
