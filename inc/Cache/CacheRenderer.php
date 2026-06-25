@@ -55,6 +55,23 @@ class CacheRenderer extends CacheParser
         return true;
     }
 
+    /**
+     * Adds the wiki base URL to the cache key for rendered output
+     *
+     * Rendered output contains internal links and media sources built from
+     * DOKU_BASE, so cache entries must not be shared between requests served
+     * under a different base URL.
+     *
+     * @return string
+     */
+    protected function getEnvironmentKey()
+    {
+        if ($this->mode === 'metadata') {
+            return '';
+        }
+        return DOKU_BASE;
+    }
+
     protected function addDependencies()
     {
         global $conf;

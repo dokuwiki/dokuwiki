@@ -84,8 +84,7 @@ function js_out()
     // Let plugins decide to either put more scripts here or to remove some
     Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
-    // The generated script depends on some dynamic options
-    $cache = new Cache('scripts' . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'] . md5(serialize($files)), '.js');
+    $cache = new Cache('scripts' . DOKU_BASE . Ip::isSsl() . md5(serialize($files)), '.js');
     $cache->setEvent('JS_CACHE_USE');
 
     $cache_files = array_merge($files, getConfigFiles('main'));
