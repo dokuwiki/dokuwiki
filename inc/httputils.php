@@ -78,12 +78,60 @@ function http_sendfile($file)
         ob_end_clean();
         exit;
     } elseif ($conf['xsendfile'] == 3) {
-        // FS#2388 nginx just needs the relative path.
-        $file = DOKU_REL . substr($file, strlen(fullpath(DOKU_INC)) + 1);
-        header("X-Accel-Redirect: $file");
+        // FS#2388, #2895 nginx needs an internal redirect URL, not a file path.
+        header("X-Accel-Redirect: " . http_xaccel_url($file));
         ob_end_clean();
         exit;
     }
+}
+
+/**
+ * Build the internal redirect URL for nginx's X-Accel-Redirect header
+ *
+ * Construct a request path from a given file path that nginx can resolve to the file through an `internal` location.
+ * A. Files inside the DokuWiki installation are returned as relative paths.
+ * B. Standard data directory paths are returned as /data/* paths regardless of their actual location (reconfigured
+ *    savedir or mediadir).
+ * C. Paths outside the DokuWiki installation are returned with a /_x_accel_redirect/ prefix
+ *
+ * Nginx admins need to configure appropriate internal location mappings.
+ *
+ * @param string $file absolute path of the file to send
+ * @return string the relative URL for the X-Accel-Redirect header
+ */
+function http_xaccel_url($file)
+{
+    global $conf;
+
+    $file = fullpath($file);
+
+    if (str_starts_with($file, DOKU_INC)) {
+        // A. files inside the DokuWiki directory: keep their path relative to the root
+        $path = substr($file, strlen(DOKU_INC));
+    } else {
+        // C. files outside DokuWiki and its data dirs: add prefix (overridden below if a root matches)
+        $path = '_x_accel_redirect/' . ltrim($file, '/');
+
+        // B. files in a relocated data directory: map back to their default URL below data/
+        $roots = [
+            $conf['mediadir']    => 'data/media/',
+            $conf['mediaolddir'] => 'data/media_attic/',
+            $conf['cachedir']    => 'data/cache/',
+            $conf['savedir']     => 'data/',
+        ];
+        // match the most specific (longest) root first so nested directories win
+        uksort($roots, fn($a, $b) => strlen($b) - strlen($a));
+
+        foreach ($roots as $root => $logical) {
+            if (str_starts_with($file, $root . '/')) {
+                $path = $logical . substr($file, strlen($root) + 1);
+                break;
+            }
+        }
+    }
+
+    // URL-encode each segment (nginx URL-decodes the redirect target before resolving it)
+    return DOKU_REL . implode('/', array_map('rawurlencode', explode('/', $path)));
 }
 
 /**
