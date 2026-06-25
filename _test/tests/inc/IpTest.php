@@ -125,6 +125,41 @@ class IpTest extends \DokuWikiTest {
     }
 
     /**
+     * The data provider for test_ip_in_range_invalid_mask().
+     *
+     * @return string[][] Returns an array of [ip, range] with an invalid mask.
+     */
+    public function ip_in_range_invalid_mask_provider(): array
+    {
+        return [
+            // Non-numeric mask: would throw a TypeError on the "+= 96" IPv4 path.
+            ['127.0.0.1', '10.0.0.0/abc'],
+            // Empty mask.
+            ['127.0.0.1', '10.0.0.0/'],
+            // Negative mask: would pass the "> 128" check and match every IPv4.
+            ['1.2.3.4', '10.0.0.0/-1'],
+            ['1.2.3.4', '10.0.0.0/-5'],
+        ];
+    }
+
+    /**
+     * Test that ipInRange() rejects an invalid mask with an Exception rather
+     * than a TypeError or an over-broad match.
+     *
+     * @dataProvider ip_in_range_invalid_mask_provider
+     *
+     * @param string $ip    The IP to test.
+     * @param string $range The IP range with the invalid mask.
+     *
+     * @return void
+     */
+    public function test_ip_in_range_invalid_mask(string $ip, string $range): void
+    {
+        $this->expectException(\Exception::class);
+        Ip::ipInRange($ip, $range);
+    }
+
+    /**
      * Data provider for test_ip_matches().
      *
      * @return mixed[][] Returns an array of test cases.
@@ -147,8 +182,17 @@ class IpTest extends \DokuWikiTest {
             ['::ffff:127.0.0.1', '::0:ffff:127.0.0.1', true],
         ];
 
+        // Invalid masks must degrade to "no match" instead of a fatal error
+        // (non-numeric mask) or an over-broad match (negative mask).
+        $invalidMaskTests = [
+            ['127.0.0.1', '10.0.0.0/abc', false],
+            ['127.0.0.1', '10.0.0.0/', false],
+            ['1.2.3.4', '10.0.0.0/-1', false],
+            ['1.2.3.4', '10.0.0.0/-5', false],
+        ];
 
-        return array_merge($rangeTests, $exactTests);
+
+        return array_merge($rangeTests, $exactTests, $invalidMaskTests);
     }
 
     /**

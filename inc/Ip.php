@@ -41,7 +41,12 @@ class Ip
     {
         $range = explode('/', $haystack);
         $networkIp = Ip::ipToNumber($range[0]);
-        $maskLength = $range[1];
+
+        // The mask length must be a non-negative integer.
+        if (!isset($range[1]) || !ctype_digit($range[1])) {
+            throw new Exception('Invalid IP range mask: ' . $haystack);
+        }
+        $maskLength = (int) $range[1];
 
         // For an IPv4 address the top 96 bits must be zero.
         if ($networkIp['version'] === 4) {
@@ -148,8 +153,8 @@ class Ip
             }
 
             return Ip::ipInRange($ip, $ipOrRange);
-        } catch (Exception) {
-            // The IP address was invalid.
+        } catch (\Throwable) {
+            // The IP address or range was invalid.
             return false;
         }
     }
