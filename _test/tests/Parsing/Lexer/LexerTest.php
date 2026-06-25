@@ -284,6 +284,39 @@ class LexerTest extends \DokuWikiTest
     }
 
     /**
+     * Exit-pattern lookbehind must see characters that were already consumed
+     * by a preceding token in the same mode.
+     *
+     * Regression: the Lexer used to hand PCRE a shrinking tail of the subject
+     * — once a match was consumed, the bytes before the new cursor were gone
+     * and `(?<=X)` assertions silently failed. The Lexer now tracks an offset
+     * and passes the full subject to ParallelRegex, so lookbehinds work
+     * across token boundaries.
+     *
+     * Here the exit pattern `(?<=\/>)</x>` requires the `/>` of a self-closing
+     * `<a/>` that was consumed as a SPECIAL token on the previous step. Before
+     * the fix, `</x>` would fall out as UNMATCHED instead of EXIT.
+     */
+    function testIndexLookbehindAcrossConsumedToken()
+    {
+        $doc = "<x><a/></x>";
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore');
+        $lexer->addEntryPattern('<x>', 'ignore', 'caught');
+        $lexer->addSpecialPattern('<a\/>', 'caught', 'selfclose');
+        $lexer->mapHandler('selfclose', 'caught');
+        $lexer->addExitPattern('(?<=\/>)<\/x>', 'caught');
+        $this->assertTrue($lexer->parse($doc));
+
+        $caught = array_values(array_filter($handler->recorded, fn($c) => $c[0] === 'caught'));
+        $this->assertSame([
+            ['caught', '<x>',   \DOKU_LEXER_ENTER,   strpos($doc, '<x>')],
+            ['caught', '<a/>',  \DOKU_LEXER_SPECIAL, strpos($doc, '<a/>')],
+            ['caught', '</x>',  \DOKU_LEXER_EXIT,    strpos($doc, '</x>')],
+        ], $caught);
+    }
+
+    /**
      * This test is primarily to ensure the correct match is chosen
      * when there are non-captured elements in the pattern.
      */

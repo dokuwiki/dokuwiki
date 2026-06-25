@@ -22,7 +22,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['file',['testing',null,null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -40,7 +40,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', null, null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -57,7 +57,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', null, null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -74,7 +74,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['code',['testing', 'php', null]],
             ['p_open',[]],
-            ['cdata',[' Bar']],
+            ['cdata',['Bar']],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -91,7 +91,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  "]],
             ['p_open',[]],
-            ['cdata',['Bar']],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -108,7 +108,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  "]],
             ['p_open',[]],
-            ['cdata',['Bar']],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -125,7 +125,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x\t\n\ty\t"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -142,7 +142,7 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x\t\n\ty\t"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
@@ -150,8 +150,13 @@ class PreformattedTest extends ParserTestBase
     }
 
     function testPreformattedList() {
-        $this->P->addMode('preformatted',new Preformatted());
+        // Listblock (sort 10) must be added before Preformatted (sort 20) so
+        // the resulting PCRE alternation matches the canonical mode order.
+        // PCRE picks the first alternative that matches at a given position,
+        // and an indented bullet line like "  - x" matches both modes at the
+        // same offset; Listblock has to come first to win the tie.
         $this->P->addMode('listblock',new Listblock());
+        $this->P->addMode('preformatted',new Preformatted());
         $this->P->parse("  - x \n  * y \nF  oo\n  x  \n    y  \n  -X\n  *Y\nBar\n");
         $calls = [
             ['document_start',[]],
@@ -174,13 +179,82 @@ class PreformattedTest extends ParserTestBase
             ['p_close',[]],
             ['preformatted',["x  \n  y  \n-X\n*Y"]],
             ['p_open',[]],
-            ['cdata',["Bar"]],
+            ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
         ];
         $this->assertCalls($calls, $this->H->calls);
     }
 
+
+    function testMarkdownPreferredUsesFourSpaces() {
+        // In `md` and `md+dw` settings the indent threshold is 4,
+        // matching GFM's indented code block rule. Lines with only 2-3
+        // leading spaces stay as paragraph text.
+        $this->setSyntax('md');
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n    x  \n      y  \nBar\n");
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\nF  oo"]],
+            ['p_close', []],
+            ['preformatted', ["x  \n  y  "]],
+            ['p_open', []],
+            ['cdata', ["\nBar"]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testMarkdownPreferredRejectsTwoSpaces() {
+        // 2-space indent in MD-preferred mode does NOT trigger preformatted.
+        $this->setSyntax('md');
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n  x\nBar\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('preformatted', $modes,
+            '2-space indent must not trigger preformatted when Markdown is preferred');
+    }
+
+    function testMarkdownPreferredTabStillTriggers() {
+        // Tab is a trigger regardless of the space threshold.
+        $this->setSyntax('md');
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("F  oo\n\tx\nBar\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertContains('preformatted', $modes,
+            'A single tab must still trigger preformatted in MD-preferred mode');
+    }
+
+    function testStripsLeadingAndTrailingBlankIndentedLines() {
+        // GFM example #87: leading and trailing blank-but-indented lines
+        // should not appear in the preformatted body. The lexer's
+        // continuation pattern eats their indents, leaving padding `\n`
+        // runs in the rewriter buffer; the rewriter trims them so the
+        // emitted text starts and ends on a non-blank line.
+        $this->setSyntax('md');
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("\n    \n    foo\n    \n\n");
+        $calls = [
+            ['document_start', []],
+            ['preformatted', ['foo']],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testWhitespaceOnlyBlockIsSkipped() {
+        // A run of only blank-but-indented lines must not emit a
+        // preformatted call at all - the body would be pure whitespace
+        // and visually meaningless.
+        $this->setSyntax('md');
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->parse("\n    \n    \n\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('preformatted', $modes);
+    }
 
     function testPreformattedPlusHeaderAndEol() {
         // Note that EOL must come after preformatted!

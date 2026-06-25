@@ -16,8 +16,12 @@ class CacheParser extends Cache
      * @param string $id page id
      * @param string $file source file for cache
      * @param string $mode input mode
+     * @param string|null $syntax syntax flavour the file is parsed under;
+     *     when non-null it enters the cache key so the same file rendered
+     *     under two syntaxes in one request does not collide. null leaves
+     *     the key unchanged.
      */
-    public function __construct($id, $file, $mode)
+    public function __construct($id, $file, $mode, $syntax = null)
     {
         global $INPUT;
 
@@ -28,7 +32,10 @@ class CacheParser extends Cache
         $this->mode = $mode;
 
         $this->setEvent('PARSER_CACHE_USE');
-        parent::__construct($file . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT'), '.' . $mode);
+        parent::__construct(
+            $file . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT') . ($syntax ?? ''),
+            '.' . $mode
+        );
     }
 
     /**

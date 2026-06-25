@@ -11,7 +11,7 @@ use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Parsing\Handler\Block;
 use dokuwiki\Parsing\Handler\CallWriter;
 use dokuwiki\Parsing\Handler\CallWriterInterface;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use dokuwiki\Parsing\ParserMode\AbstractMode;
 
 /**
  * The Handler receives token events from the Lexer and turns them into
@@ -26,24 +26,61 @@ class Handler
     public $calls = [];
 
     /** @var array internal status holders for some modes */
-    protected $status = [
-        'section' => false,
-        'doublequote' => 0,
-        'footnote' => false,
-    ];
+    protected $status = [];
 
-    /** @var array<string, ModeInterface> mode name → mode object for dispatch */
+    /** @var array<string, AbstractMode> mode name → mode object for dispatch */
     protected $modeObjects = [];
 
     /** @var string the original (pre-remap) mode name for the current token */
     protected $currentModeName = '';
 
+    /** @var ModeRegistry the registry of the parse this handler belongs to */
+    protected ModeRegistry $registry;
+
     /**
-     * Handler constructor.
+     * @param ModeRegistry $registry the registry of the parse, so handler
+     *     methods and plugin handle()/render() can ask for the active syntax
      */
-    public function __construct()
+    public function __construct(ModeRegistry $registry)
     {
+        $this->registry = $registry;
+        $this->reset();
+    }
+
+    /**
+     * The registry of the parse this handler belongs to.
+     *
+     * Lets a plugin's handle()/render() learn the active parse's syntax
+     * (e.g. $handler->getModeRegistry()->getSyntax()) without reaching for
+     * a global. This is the active-parse parameter, not the user's
+     * configured $conf['syntax'] preference — see ModeRegistry.
+     *
+     * @return ModeRegistry
+     */
+    public function getModeRegistry(): ModeRegistry
+    {
+        return $this->registry;
+    }
+
+    /**
+     * Reset the handler to a fresh state.
+     *
+     * Clears the call buffer, status flags, and reinstalls a plain CallWriter.
+     * Used by pooled sub-parsers (see ModeRegistry::acquireSubParser) so the
+     * same Handler instance can be parsed against repeatedly without state
+     * bleed.
+     * Also called by the constructor to populate initial state.
+     */
+    public function reset()
+    {
+        $this->calls = [];
+        $this->status = [
+            'section' => false,
+            'doublequote' => 0,
+            'footnote' => false,
+        ];
         $this->callWriter = new CallWriter($this);
+        $this->currentModeName = '';
     }
 
     /**
@@ -52,9 +89,9 @@ class Handler
      * Called by the Parser when modes are added.
      *
      * @param string $name Mode name
-     * @param ModeInterface $obj The mode object
+     * @param AbstractMode $obj The mode object
      */
-    public function registerModeObject($name, ModeInterface $obj)
+    public function registerModeObject($name, AbstractMode $obj)
     {
         $this->modeObjects[$name] = $obj;
     }

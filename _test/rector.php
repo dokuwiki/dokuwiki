@@ -26,6 +26,7 @@ use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Block\ReplaceBlockToItsStmtsRector;
+use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
@@ -140,6 +141,12 @@ return static function (RectorConfig $rectorConfig): void {
         ReplaceBlockToItsStmtsRector::class, // blocks sometimes help readability
         Utf8DecodeEncodeToMbConvertEncodingRector::class, // we probably want our own mapping to the UTF8/* functions
         RemoveDeadIfBlockRector::class, // creates harder to read statements
+
+        // keep explicit (int)/(string) casts that document PREG_OFFSET_CAPTURE
+        // result types for static analysers
+        RecastingRemovalRector::class => [
+            __DIR__ . '/../inc/Parsing/Lexer/ParallelRegex.php',
+        ],
 
         // we're not ready for full type safety. though this rule is probably safe I am not comfortable to add it yet
         // https://getrector.com/blog/introducing-safe-and-progressive-strict-type-adoption-rule

@@ -86,6 +86,7 @@ $meta['title'] = ['string'];
 $meta['start'] = ['string', '_caution' => 'warning', '_pattern' => '!^[^:;/]+$!']; // don't accept namespaces
 $meta['lang'] = ['dirchoice', '_dir' => DOKU_INC . 'inc/lang/'];
 $meta['template'] = ['dirchoice', '_dir' => DOKU_INC . 'lib/tpl/', '_pattern' => '/^[\w-]+$/'];
+$meta['syntax'] = ['multichoice', '_choices' => ['dw', 'md', 'dw+md', 'md+dw'], '_caution' => 'warning'];
 $meta['tagline'] = ['string'];
 $meta['sidebar'] = ['string'];
 $meta['license'] = ['license'];

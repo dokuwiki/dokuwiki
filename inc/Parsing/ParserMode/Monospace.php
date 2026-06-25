@@ -19,12 +19,12 @@ class Monospace extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '\x27\x27(?=.*\x27\x27)';
+        return '\x27\x27(?=[^\s\x27])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]\x27\x27)';
     }
 
     /** @inheritdoc */
     protected function getExitPattern(): string
     {
-        return '\x27\x27';
+        return '(?<=[^\s])\x27\x27';
     }
 }

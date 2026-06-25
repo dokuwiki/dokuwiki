@@ -3,13 +3,13 @@
 namespace dokuwiki\test\Parsing;
 
 use dokuwiki\Parsing\Handler;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
+use dokuwiki\Parsing\ModeRegistry;
 
 class HandlerTest extends \DokuWikiTest
 {
     function testGetModeNameReturnsOriginalName()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         // create a simple mode that records what getModeName() returns
         $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
@@ -32,7 +32,7 @@ class HandlerTest extends \DokuWikiTest
 
     function testGetModeNameFallsBackToModeName()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
             public $receivedModeName = '';
@@ -52,6 +52,49 @@ class HandlerTest extends \DokuWikiTest
         $this->assertSame('mymode', $mode->receivedModeName);
     }
 
+    function testResetClearsCallsAndStatusAndCurrentMode()
+    {
+        $handler = new Handler(new ModeRegistry('dw'));
+
+        // dirty the handler: append a call, mutate status, and prime
+        // currentModeName via a token dispatch.
+        $handler->calls[] = ['cdata', ['x'], 0];
+
+        self::setInaccessibleProperty($handler, 'status', [
+            'section' => true, 'doublequote' => 3, 'footnote' => true,
+        ]);
+
+        $mode = new class extends \dokuwiki\Parsing\ParserMode\AbstractMode {
+            public function getSort()
+            {
+                return 0;
+            }
+
+            public function handle($match, $state, $pos, Handler $handler)
+            {
+                return true;
+            }
+        };
+        $handler->registerModeObject('m', $mode);
+        $handler->handleToken('m', 'x', DOKU_LEXER_SPECIAL, 0, 'm');
+        $this->assertSame('m', $handler->getModeName());
+
+        $writerBefore = self::getInaccessibleProperty($handler, 'callWriter');
+
+        $handler->reset();
+
+        $this->assertSame([], $handler->calls);
+        $this->assertSame('', $handler->getModeName());
+        $this->assertSame(
+            ['section' => false, 'doublequote' => 0, 'footnote' => false],
+            self::getInaccessibleProperty($handler, 'status')
+        );
+        // reset reinstalls a fresh CallWriter — must be a new instance
+        $writerAfter = self::getInaccessibleProperty($handler, 'callWriter');
+        $this->assertNotSame($writerBefore, $writerAfter);
+        $this->assertInstanceOf(\dokuwiki\Parsing\Handler\CallWriter::class, $writerAfter);
+    }
+
     /**
      * Regression test for #4637
      *
@@ -65,7 +108,7 @@ class HandlerTest extends \DokuWikiTest
      */
     function testPluginModeIsRoutedThroughPluginHandler()
     {
-        $handler = new Handler();
+        $handler = new Handler(new ModeRegistry('dw'));
 
         // Plugins register themselves as mode objects under their plugin_* name.
         // This reproduces the conflict the bug depended on.

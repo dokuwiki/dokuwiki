@@ -2,172 +2,21 @@
 
 namespace dokuwiki\Parsing\Handler;
 
-class Lists extends AbstractRewriter
+/**
+ * CallWriter rewriter for DokuWiki lists.
+ *
+ * DokuWiki's list syntax requires 2 spaces of indent per nesting level and
+ * uses `*` for unordered, `-` for ordered. Ordered lists do not carry a
+ * start number. The state machine lives in {@see AbstractListsRewriter};
+ * this class supplies only the marker parser.
+ */
+class Lists extends AbstractListsRewriter
 {
-    protected $listCalls = [];
-    protected $listStack = [];
-
-    protected $initialDepth = 0;
-
-    public const NODE = 1;
-
     /** @inheritdoc */
-    protected function getClosingCall(): string
+    protected function interpretSyntax(string $match): array
     {
-        return 'list_close';
-    }
-
-    /** @inheritdoc */
-    public function process()
-    {
-
-        foreach ($this->calls as $call) {
-            match ($call[0]) {
-                'list_item' => $this->listOpen($call),
-                'list_open' => $this->listStart($call),
-                'list_close' => $this->listEnd($call),
-                default => $this->listContent($call),
-            };
-        }
-
-        $this->callWriter->writeCalls($this->listCalls);
-        return $this->callWriter;
-    }
-
-    protected function listStart($call)
-    {
-        $depth = $this->interpretSyntax($call[1][0], $listType);
-
-        $this->initialDepth = $depth;
-        //                   array(list type, current depth, index of current listitem_open)
-        $this->listStack[] = [$listType, $depth, 1];
-
-        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
-        $this->listCalls[] = ['listitem_open', [1], $call[2]];
-        $this->listCalls[] = ['listcontent_open', [], $call[2]];
-    }
-
-
-    protected function listEnd($call)
-    {
-        $closeContent = true;
-
-        while ($list = array_pop($this->listStack)) {
-            if ($closeContent) {
-                $this->listCalls[] = ['listcontent_close', [], $call[2]];
-                $closeContent = false;
-            }
-            $this->listCalls[] = ['listitem_close', [], $call[2]];
-            $this->listCalls[] = ['list' . $list[0] . '_close', [], $call[2]];
-        }
-    }
-
-    protected function listOpen($call)
-    {
-        $depth = $this->interpretSyntax($call[1][0], $listType);
-        $end = end($this->listStack);
-        $key = key($this->listStack);
-
-        // Not allowed to be shallower than initialDepth
-        if ($depth < $this->initialDepth) {
-            $depth = $this->initialDepth;
-        }
-
-        if ($depth == $end[1]) {
-            // Just another item in the list...
-            if ($listType == $end[0]) {
-                $this->listCalls[] = ['listcontent_close', [], $call[2]];
-                $this->listCalls[] = ['listitem_close', [], $call[2]];
-                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
-                $this->listCalls[] = ['listcontent_open', [], $call[2]];
-
-                // new list item, update list stack's index into current listitem_open
-                $this->listStack[$key][2] = count($this->listCalls) - 2;
-
-                // Switched list type...
-            } else {
-                $this->listCalls[] = ['listcontent_close', [], $call[2]];
-                $this->listCalls[] = ['listitem_close', [], $call[2]];
-                $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
-                $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
-                $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
-                $this->listCalls[] = ['listcontent_open', [], $call[2]];
-
-                array_pop($this->listStack);
-                $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
-            }
-        } elseif ($depth > $end[1]) { // Getting deeper...
-            $this->listCalls[] = ['listcontent_close', [], $call[2]];
-            $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
-            $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
-            $this->listCalls[] = ['listcontent_open', [], $call[2]];
-
-            // set the node/leaf state of this item's parent listitem_open to NODE
-            $this->listCalls[$this->listStack[$key][2]][1][1] = self::NODE;
-
-            $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
-        } else { // Getting shallower ( $depth < $end[1] )
-            $this->listCalls[] = ['listcontent_close', [], $call[2]];
-            $this->listCalls[] = ['listitem_close', [], $call[2]];
-            $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
-
-            // Throw away the end - done
-            array_pop($this->listStack);
-
-            while (1) {
-                $end = end($this->listStack);
-                $key = key($this->listStack);
-
-                if ($end[1] <= $depth) {
-                    // Normalize depths
-                    $depth = $end[1];
-
-                    $this->listCalls[] = ['listitem_close', [], $call[2]];
-
-                    if ($end[0] == $listType) {
-                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
-                        $this->listCalls[] = ['listcontent_open', [], $call[2]];
-
-                        // new list item, update list stack's index into current listitem_open
-                        $this->listStack[$key][2] = count($this->listCalls) - 2;
-                    } else {
-                        // Switching list type...
-                        $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
-                        $this->listCalls[] = ['list' . $listType . '_open', [], $call[2]];
-                        $this->listCalls[] = ['listitem_open', [$depth - 1], $call[2]];
-                        $this->listCalls[] = ['listcontent_open', [], $call[2]];
-
-                        array_pop($this->listStack);
-                        $this->listStack[] = [$listType, $depth, count($this->listCalls) - 2];
-                    }
-
-                    break;
-
-                    // Haven't dropped down far enough yet.... ( $end[1] > $depth )
-                } else {
-                    $this->listCalls[] = ['listitem_close', [], $call[2]];
-                    $this->listCalls[] = ['list' . $end[0] . '_close', [], $call[2]];
-
-                    array_pop($this->listStack);
-                }
-            }
-        }
-    }
-
-    protected function listContent($call)
-    {
-        $this->listCalls[] = $call;
-    }
-
-    protected function interpretSyntax($match, &$type)
-    {
-        if (str_ends_with($match, '*')) {
-            $type = 'u';
-        } else {
-            $type = 'o';
-        }
-        // Is the +1 needed? It used to be count(explode(...))
-        // but I don't think the number is seen outside this handler
-        return substr_count(str_replace("\t", '  ', $match), '  ') + 1;
+        $type = str_ends_with($match, '*') ? 'u' : 'o';
+        $depth = substr_count(str_replace("\t", '  ', $match), '  ') + 1;
+        return ['depth' => $depth, 'type' => $type];
     }
 }

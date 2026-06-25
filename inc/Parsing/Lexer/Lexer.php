@@ -143,26 +143,23 @@ class Lexer
         if (! isset($this->handler)) {
             return false;
         }
-        $initialLength = strlen($raw);
-        $length = $initialLength;
-        $pos = 0;
-        while (is_array($parsed = $this->reduce($raw))) {
+        $offset = 0;
+        while (is_array($parsed = $this->reduce($raw, $offset))) {
             [$unmatched, $matched, $mode] = $parsed;
-            $currentLength = strlen($raw);
-            $matchPos = $initialLength - $currentLength - strlen($matched);
-            if (! $this->dispatchTokens($unmatched, $matched, $mode, $pos, $matchPos)) {
+            $matchPos = $offset + strlen($unmatched);
+            if (! $this->dispatchTokens($unmatched, $matched, $mode, $offset, $matchPos)) {
                 return false;
             }
-            if ($currentLength === $length) {
+            $newOffset = $matchPos + strlen($matched);
+            if ($newOffset === $offset) {
                 return false;
             }
-            $length = $currentLength;
-            $pos = $initialLength - $currentLength;
+            $offset = $newOffset;
         }
         if (!$parsed) {
             return false;
         }
-        return $this->invokeHandler($raw, DOKU_LEXER_UNMATCHED, $pos);
+        return $this->invokeHandler(substr($raw, $offset), DOKU_LEXER_UNMATCHED, $offset);
     }
 
     /**
@@ -254,42 +251,56 @@ class Lexer
      * delegates all dispatch logic to Handler::handleToken().
      *
      * @param string $content Text parsed.
-     * @param boolean $is_match Token is recognised rather
-     *                               than unparsed data.
+     * @param int $state One of the DOKU_LEXER_* constants identifying the
+     *                   lexer event (ENTER / MATCHED / UNMATCHED / EXIT /
+     *                   SPECIAL).
      * @param int $pos Current byte index location in raw doc
      *                             thats being parsed
      * @return bool
      */
-    protected function invokeHandler($content, $is_match, $pos)
+    protected function invokeHandler($content, $state, $pos)
     {
-        if (($content === "") || ($content === false)) {
+        if ($content === false) {
+            return true;
+        }
+        // Empty content is a no-op for every state EXCEPT EXIT: a zero-width
+        // exit pattern (lookahead-only) must still fire the mode's exit
+        // handler so cleanup like restoring a buffered call writer happens.
+        // Skipping it would pop the mode stack but leave the handler-side
+        // state stale.
+        if ($content === '' && $state !== DOKU_LEXER_EXIT) {
             return true;
         }
         $originalName = $this->modeStack->getCurrent();
         $modeName = $this->mode_handlers[$originalName] ?? $originalName;
 
-        return $this->handler->handleToken($modeName, $content, $is_match, $pos, $originalName);
+        return $this->handler->handleToken($modeName, $content, $state, $pos, $originalName);
     }
 
     /**
-     * Tries to match a chunk of text and if successful removes the recognised chunk and any leading
-     * unparsed data. Empty strings will not be matched.
+     * Tries to match the next token starting at `$offset` in `$raw`.
      *
-     * @param string $raw         The subject to parse. This is the content that will be eaten.
-     * @return array|bool         Three item list of unparsed content followed by the
-     *                            recognised token and finally the action the parser is to take.
-     *                            True if no match, false if there is a parsing error.
+     * The full subject is passed to the regex engine (rather than a
+     * truncated tail) so that lookbehind assertions in the registered
+     * patterns can see characters before the current offset. Empty
+     * subjects (offset past end) will not be matched.
+     *
+     * @param string $raw     The full subject to parse.
+     * @param int    $offset  Byte offset at which to resume matching.
+     * @return array|bool     Three item list of unparsed content followed by the
+     *                        recognised token and finally the action the parser is to take.
+     *                        True if no match, false if there is a parsing error.
      */
-    protected function reduce(&$raw)
+    protected function reduce($raw, $offset)
     {
         if (! isset($this->regexes[$this->modeStack->getCurrent()])) {
             return false;
         }
-        if ($raw === "") {
+        if ($offset >= strlen($raw)) {
             return true;
         }
-        if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split)) {
-            [$unparsed, $match, $raw] = $split;
+        if ($action = $this->regexes[$this->modeStack->getCurrent()]->split($raw, $split, $offset)) {
+            [$unparsed, $match] = $split;
             return [$unparsed, $match, $action];
         }
         return true;

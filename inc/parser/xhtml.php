@@ -34,7 +34,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     /** @var int current section level */
     protected $lastlevel = 0;
     /** @var array section node tracker */
-    protected $node = [0, 0, 0, 0, 0];
+    protected $node = [0, 0, 0, 0, 0, 0];
 
     /** @var string temporary $doc store */
     protected $store = '';
@@ -533,6 +533,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class = " class=\"$classes\"";
         }
         $this->doc .= "<ol$class>" . DOKU_LF;
+    }
+
+    /**
+     * Open an ordered list with a non-default starting number
+     *
+     * @param int $start Starting number; emitted as a start="N" attribute
+     */
+    public function listo_open_start($start = 1)
+    {
+        $start = (int)$start;
+        if ($start === 1) {
+            $this->listo_open();
+            return;
+        }
+        $this->doc .= '<ol start="' . $start . '">' . DOKU_LF;
     }
 
     /**

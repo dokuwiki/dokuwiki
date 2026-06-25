@@ -4,8 +4,8 @@ namespace dokuwiki\Parsing;
 
 use dokuwiki\Debug\DebugHelper;
 use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\ParserMode\AbstractMode;
 use dokuwiki\Parsing\ParserMode\Base;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
 
 /**
  * Sets up the Lexer with modes and points it to the Handler
@@ -16,23 +16,37 @@ class Parser
     /** @var Handler */
     protected $handler;
 
+    /** @var ModeRegistry the registry of the parse this parser belongs to */
+    protected ModeRegistry $registry;
+
     /** @var Lexer $lexer */
     protected $lexer;
 
-    /** @var ModeInterface[] $modes */
+    /** @var AbstractMode[] $modes */
     protected $modes = [];
 
     /** @var bool mode connections may only be set up once */
     protected $connected = false;
 
     /**
-     * dokuwiki\Parsing\Doku_Parser constructor.
-     *
      * @param Handler $handler
+     * @param ModeRegistry $registry the registry of the parse, injected into
+     *     every mode (all descend from AbstractMode) as it is added
      */
-    public function __construct(Handler $handler)
+    public function __construct(Handler $handler, ModeRegistry $registry)
     {
         $this->handler = $handler;
+        $this->registry = $registry;
+    }
+
+    /**
+     * Accessor for the Handler instance.
+     *
+     * @return Handler
+     */
+    public function getHandler()
+    {
+        return $this->handler;
     }
 
     /**
@@ -46,8 +60,22 @@ class Parser
         if (!$this->lexer) {
             $this->lexer = new Lexer($this->handler, 'base', true);
         }
-        $this->modes['base']->Lexer = $this->lexer;
+        $this->injectDependencies($BaseMode);
         $this->handler->registerModeObject('base', $BaseMode);
+    }
+
+    /**
+     * Give a mode the shared objects of this parse: its registry and lexer.
+     *
+     * Called as the mode joins the parser, before any connect/handle callback
+     * runs. Every mode descends from AbstractMode, which carries the setters.
+     *
+     * @param AbstractMode $Mode
+     */
+    protected function injectDependencies(AbstractMode $Mode)
+    {
+        $Mode->setModeRegistry($this->registry);
+        $Mode->setLexer($this->lexer);
     }
 
     /**
@@ -57,14 +85,14 @@ class Parser
      * Mode sequence is important
      *
      * @param string $name
-     * @param ModeInterface $Mode
+     * @param AbstractMode $Mode
      */
-    public function addMode($name, ModeInterface $Mode)
+    public function addMode($name, AbstractMode $Mode)
     {
         if (!isset($this->modes['base'])) {
             $this->addBaseMode(new Base());
         }
-        $Mode->Lexer = $this->lexer; // FIXME should be done by setter
+        $this->injectDependencies($Mode);
         $this->modes[$name] = $Mode;
         $this->handler->registerModeObject($name, $Mode);
     }

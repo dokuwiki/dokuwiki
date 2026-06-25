@@ -169,8 +169,9 @@ class IXR_Value extends \IXR\DataType\Value
  */
 function p_get_parsermodes()
 {
+    global $conf;
     DebugHelper::dbgDeprecatedFunction(\dokuwiki\Parsing\ModeRegistry::class . '::getModes()');
-    return \dokuwiki\Parsing\ModeRegistry::getInstance()->getModes();
+    return (new \dokuwiki\Parsing\ModeRegistry($conf['syntax']))->getModes();
 }
 
 /**

@@ -238,18 +238,42 @@ class HeadersTest extends ParserTestBase
         $calls = [
             ['document_start',[]],
             ['p_open',[]],
-            ['cdata',['abc ']],
+            ['cdata',['abc']],
             ['p_close',[]],
             ['header',['Header',1, 6]],
             ['section_open',[1]],
             ['p_open',[]],
-            ['cdata',[' def']],
+            ['cdata',['def']],
             ['p_close',[]],
             ['section_close',[]],
             ['document_end',[]],
         ];
         $this->assertCalls($calls, $this->H->calls);
 
+    }
+
+    function testNoMidLineHeader() {
+        // a `== .. ==` run that follows other text on the line is plain text;
+        // a heading must start the line (only whitespace may precede it)
+        $this->P->addMode('header',new Header());
+        $this->P->parse("a foo ====== bar ======\n");
+        $modes = array_column($this->H->calls, 0);
+        $this->assertNotContains('header', $modes,
+            'a heading must occupy its own line, not follow text mid-line');
+    }
+
+    function testSurroundingWhitespaceStillMatches() {
+        // leading/trailing whitespace around the `=` run is allowed: the
+        // heading still occupies its own line
+        $this->P->addMode('header',new Header());
+        $this->P->parse("abc\n \t ====== Header ======  \ndef");
+        $headers = array_values(array_filter(
+            $this->H->calls,
+            static fn($c) => $c[0] === 'header'
+        ));
+        $this->assertCount(1, $headers, 'whitespace around the heading is allowed');
+        $this->assertSame('Header', $headers[0][1][0]);
+        $this->assertSame(1, $headers[0][1][1]);
     }
 
     function testHeaderMulti2() {

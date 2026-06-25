@@ -13,22 +13,28 @@ use dokuwiki\Parsing\ModeRegistry;
 abstract class AbstractFormatting extends AbstractMode
 {
     /**
-     * Constructor. Sets up allowed modes for this formatting type.
+     * Formatting modes accept other formatting, substitutions, and disabled modes.
      *
-     * Formatting modes accept other formatting, substitutions, and disabled modes,
-     * but exclude themselves to prevent self-nesting (e.g. bold inside bold).
+     * @inheritdoc
      */
-    public function __construct()
+    protected function allowedCategories(): array
+    {
+        return [
+            ModeRegistry::CATEGORY_FORMATTING,
+            ModeRegistry::CATEGORY_SUBSTITUTION,
+            ModeRegistry::CATEGORY_DISABLED,
+        ];
+    }
+
+    /**
+     * Exclude self to prevent self-nesting (e.g. bold inside bold).
+     *
+     * @inheritdoc
+     */
+    protected function filterAllowedModes(array $modes): array
     {
         $self = $this->getModeName();
-        $this->allowedModes = array_filter(
-            ModeRegistry::getInstance()->getModesForCategories([
-                ModeRegistry::CATEGORY_FORMATTING,
-                ModeRegistry::CATEGORY_SUBSTITUTION,
-                ModeRegistry::CATEGORY_DISABLED,
-            ]),
-            static fn($mode) => $mode !== $self
-        );
+        return array_values(array_filter($modes, static fn($mode) => $mode !== $self));
     }
 
     /** @inheritdoc */
@@ -61,6 +67,18 @@ abstract class AbstractFormatting extends AbstractMode
      */
     abstract protected function getModeName(): string;
 
+    /**
+     * @return string The name used for emitted open/close handler instructions
+     *
+     * Defaults to the mode name. Override in subclasses where the emitted
+     * instruction should differ from the lexer mode name (e.g. Gfm modes
+     * that share instructions with a DW counterpart).
+     */
+    protected function getInstructionName(): string
+    {
+        return $this->getModeName();
+    }
+
     /** @inheritdoc */
     public function postConnect()
     {
@@ -73,7 +91,7 @@ abstract class AbstractFormatting extends AbstractMode
     /** @inheritdoc */
     public function handle($match, $state, $pos, Handler $handler)
     {
-        $name = $this->getModeName();
+        $name = $this->getInstructionName();
         match ($state) {
             DOKU_LEXER_ENTER => $handler->addCall($name . '_open', [], $pos),
             DOKU_LEXER_EXIT => $handler->addCall($name . '_close', [], $pos),

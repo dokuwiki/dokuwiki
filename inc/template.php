@@ -1354,7 +1354,9 @@ function tpl_getLang($id)
  */
 function tpl_locale_xhtml($id)
 {
-    return p_cached_output(tpl_localeFN($id));
+    // template locale files are assets authored in DokuWiki syntax; render
+    // them as 'dw' regardless of the configured wiki syntax preference
+    return p_cached_output(tpl_localeFN($id), 'xhtml', '', 'dw');
 }
 
 /**

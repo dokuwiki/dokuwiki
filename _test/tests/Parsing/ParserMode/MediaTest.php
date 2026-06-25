@@ -3,15 +3,202 @@
 namespace dokuwiki\test\Parsing\ParserMode;
 
 use Doku_Renderer_xhtml;
+use dokuwiki\Parsing\ParserMode\Media;
 
 /**
- * Tests for the implementation of audio and video files
+ * Tests for the {@see Media} parser mode: `{{...}}` media embeds.
+ *
+ * Covers the parser-level dispatch (internalmedia/externalmedia calls with the right argument tuple),
+ * audio/video rendering through the XHTML renderer, and various title / alignment / cache flag cases.
  *
  * @group parser_media
  * @author  Michael Große <grosse@cosmocode.de>
 */
 class MediaTest extends ParserTestBase
 {
+    function testInternal() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, null, null, null, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalLinkOnly() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif?linkonly}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, null, null, null, 'cache', 'linkonly']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testNotImage() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{foo.txt?10x10|Some File}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['foo.txt', 'Some File', null, 10, 10, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalLAlign() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif }} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, 'left', null, null, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalRAlign() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{ img.gif}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, 'right', null, null, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalCenter() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{ img.gif }} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, 'center', null, null, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalParams() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif?50x100nocache}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', null, null, '50', '100', 'nocache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testInternalTitle() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif?50x100|Some Image}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia', ['img.gif', 'Some Image', null, '50', '100', 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternal() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{http://www.google.com/img.gif}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['externalmedia', ['http://www.google.com/img.gif', null, null, null, null, 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalParams() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{http://www.google.com/img.gif?50x100nocache}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['externalmedia',
+                ['http://www.google.com/img.gif', null, null, '50', '100', 'nocache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testExternalTitle() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{http://www.google.com/img.gif?50x100|Some Image}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['externalmedia',
+                ['http://www.google.com/img.gif', 'Some Image', null, '50', '100', 'cache', 'details']],
+            ['cdata', [' Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testNested() {
+        $this->P->addMode('media', new Media());
+        $this->P->parse('Foo {{img.gif|{{foo.gif|{{bar.gif|Bar}}}}}} Bar');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['cdata', ["\n" . 'Foo ']],
+            ['internalmedia',
+                ['img.gif', '{{foo.gif|{{bar.gif|Bar', null, null, null, 'cache', 'details']],
+            ['cdata', ['}}}} Bar']],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
 
     function testVideoOGVExternal() {
         $file = 'http://some.where.far/away.ogv';
@@ -189,6 +376,50 @@ class MediaTest extends ParserTestBase
             ['cdata',[null]],
             ['p_close',[]],
             ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
+    function testAlignFromWhitespace() {
+        // DW's historical whitespace-inside-braces alignment still works.
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{ ' . $file . '}}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'right', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
+    function testAlignFromParameter() {
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{' . $file . '?left}}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'left', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
+    function testAlignParameterBeatsWhitespace() {
+        // Explicit ?center wins over whitespace-derived 'left' (trailing space).
+        $file = 'wiki:image.png';
+        $parser_response = p_get_instructions('{{' . $file . '?center }}');
+        $calls = [
+            ['document_start', []],
+            ['p_open', []],
+            ['internalmedia', [$file, null, 'center', null, null, 'cache', 'details']],
+            ['cdata', [null]],
+            ['p_close', []],
+            ['document_end', []],
         ];
         $this->assertCalls($calls, $parser_response);
     }
