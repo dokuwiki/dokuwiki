@@ -14,7 +14,7 @@ class SettingImConvert extends SettingString
 
         $input = trim($input);
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         if ($input && !file_exists($input)) {

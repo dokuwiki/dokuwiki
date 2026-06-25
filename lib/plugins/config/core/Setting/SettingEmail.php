@@ -18,7 +18,7 @@ class SettingEmail extends SettingString
         if (is_null($input)) return false;
         if ($this->isProtected()) return false;
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
         if ($input === '') {
             $this->local = $input;
