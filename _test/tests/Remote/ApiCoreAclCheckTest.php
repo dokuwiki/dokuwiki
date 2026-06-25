@@ -2,6 +2,7 @@
 
 namespace dokuwiki\test\Remote;
 
+use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\Api;
 
 /**
@@ -60,11 +61,12 @@ class ApiCoreAclCheckTest extends \DokuWikiTest {
         copy($name . ".orig", $name);
     }
 
-    public function testCheckacl() {
+    /**
+     * A regular (non-admin) user may check their own permissions.
+     */
+    public function testCheckaclSelf() {
         global $conf;
         global $AUTH_ACL, $USERINFO;
-        /** @var auth_plugin_authplain $auth */
-        global $auth;
 
         $conf['useacl'] = 1;
         $_SERVER['REMOTE_USER'] = 'john';
@@ -72,12 +74,58 @@ class ApiCoreAclCheckTest extends \DokuWikiTest {
         $AUTH_ACL = [
             '*                  @ALL           0', //none
             '*                  @user          2', //edit
+        ];
+
+        // no user given -> current user is used
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', ['nice_page']));
+
+        // naming yourself explicitly is allowed too
+        $params = [
+            'nice_page',
+            'john',
+            ['user']
+        ];
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
+    }
+
+    /**
+     * Checking another user's permissions is restricted to superusers and must
+     * be denied for a regular user.
+     */
+    public function testCheckaclOtherUserDeniedForNonAdmin() {
+        global $conf;
+        global $AUTH_ACL, $USERINFO;
+
+        $conf['useacl'] = 1;
+        $_SERVER['REMOTE_USER'] = 'john';
+        $USERINFO['grps'] = ['user'];
+        $AUTH_ACL = [
+            '*                  @ALL           0', //none
+            '*                  @user          2', //edit
+        ];
+
+        $this->expectException(AccessDeniedException::class);
+        $this->remote->call('core.aclCheck', ['nice_page', 'someoneelse', ['user']]);
+    }
+
+    /**
+     * A superuser may check the permissions of arbitrary users and groups.
+     */
+    public function testCheckaclOtherUsersAsAdmin() {
+        global $conf;
+        global $AUTH_ACL, $USERINFO;
+        /** @var auth_plugin_authplain $auth */
+        global $auth;
+
+        $conf['useacl'] = 1;
+        $_SERVER['REMOTE_USER'] = 'testuser'; // configured superuser, see _test/conf/local.php
+        $USERINFO['grps'] = ['user'];
+        $AUTH_ACL = [
+            '*                  @ALL           0', //none
+            '*                  @user          2', //edit
             '*                  @more          4', //create
             'nice_page          user2          8'  //upload
         ];
-
-        $params = ['nice_page'];
-        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
 
         $auth->createUser("user1", "54321", "a User", "you@example.com");
         $auth->createUser("user2", "543210", "You", "he@example.com");

@@ -200,6 +200,8 @@ class ApiCore
      * This call allows to check the permissions for a given page/media and user/group combination.
      * If no user/group is given, the current user is used.
      *
+     * Checking the permissions of another user is restricted to superusers.
+     *
      * Read the link below to learn more about the permission levels.
      *
      * @link https://www.dokuwiki.org/acl#background_info
@@ -207,18 +209,24 @@ class ApiCore
      * @param string $user username
      * @param string[] $groups array of groups
      * @return int permission level
+     * @throws AccessDeniedException
      * @throws RemoteException
      */
     public function aclCheck($page, $user = '', $groups = [])
     {
         /** @var AuthPlugin $auth */
         global $auth;
+        global $INPUT;
 
         $page = $this->checkPage($page, 0, false, AUTH_NONE);
 
         if ($user === '') {
             return auth_quickaclcheck($page);
         } else {
+            // checking another user's permissions discloses their ACL posture, restrict to superusers
+            if ($user !== $INPUT->server->str('REMOTE_USER') && !auth_isadmin()) {
+                throw new AccessDeniedException('Only admins are allowed to check ACL for other users', 114);
+            }
             if ($groups === []) {
                 $userinfo = $auth->getUserData($user);
                 if ($userinfo === false) {
