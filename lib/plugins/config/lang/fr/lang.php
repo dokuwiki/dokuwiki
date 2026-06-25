@@ -66,6 +66,7 @@ $lang['title']                 = 'Titre du wiki (nom du wiki)';
 $lang['start']                 = 'Nom de la page d\'accueil à utiliser pour toutes les catégories';
 $lang['lang']                  = 'Langue de l\'interface';
 $lang['template']              = 'Thème (rendu visuel du wiki)';
+$lang['syntax']                = 'saveur de syntaxe wiki';
 $lang['tagline']               = 'Descriptif du site (si le thème utilise cette fonctionnalité)';
 $lang['sidebar']               = 'Nom du panneau latéral (si le thème utilise cette fonctionnalité). Laisser le champ vide désactive le panneau latéral.';
 $lang['license']               = 'Sous quelle licence doit-être placé le contenu ?';
