@@ -1,6 +1,7 @@
 <?php
 
 use dokuwiki\Extension\AdminPlugin;
+use dokuwiki\Form\Form;
 
 /**
  * Popularity Feedback Plugin
@@ -58,6 +59,7 @@ class admin_plugin_popularity extends AdminPlugin
 
         //Send the data
         if ($INPUT->has('data')) {
+            if (!checkSecurityToken()) return;
             $this->sentStatus = $this->helper->sendData($INPUT->str('data'));
             if ($this->sentStatus === '') {
                 //Update the last time we sent the data
@@ -129,25 +131,30 @@ class admin_plugin_popularity extends AdminPlugin
             $data = $this->helper->gatherAsString();
         }
 
-        $form = '<form method="post" action="' . $url  . '" accept-charset="utf-8">'
-            . '<fieldset style="width: 60%;">'
-            . '<textarea class="edit" rows="10" cols="80" readonly="readonly" name="data">'
-            . $data
-            . '</textarea><br />';
+        // The browser-submission form posts to an external server, so it must not carry
+        // our CSRF token; the server-submission form posts back to the wiki and gets one.
+        $form = new Form(['action' => $url], $submissionMode === 'browser');
+        $form->addFieldsetOpen()->attr('style', 'width: 60%;');
 
-        //If we submit via the server, we give the opportunity to suscribe to the autosubmission option
+        $form->addTextarea('data')
+            ->val($data)
+            ->useInput(false)
+            ->attrs(['readonly' => 'readonly', 'rows' => 10, 'cols' => 80])
+            ->addClass('edit');
+
+        //If we submit via the server, we give the opportunity to subscribe to the autosubmission option
         if ($submissionMode !== 'browser') {
-            $form .= '<label for="autosubmit">'
-                . '<input type="checkbox" name="autosubmit" id="autosubmit" '
-                . ($this->helper->isAutosubmitEnabled() ? 'checked' : '' )
-                . '/> ' . $this->getLang('autosubmit') . '<br />'
-                . '</label>'
-                . '<input type="hidden" name="do" value="admin" />'
-                . '<input type="hidden" name="page" value="popularity" />';
+            $autosubmit = $form->addCheckbox('autosubmit', $this->getLang('autosubmit'))->useInput(false);
+            if ($this->helper->isAutosubmitEnabled()) {
+                $autosubmit->attr('checked', 'checked');
+            }
+            $form->setHiddenField('do', 'admin');
+            $form->setHiddenField('page', 'popularity');
         }
-        $form .= '<button type="submit">' . $this->getLang('submit') . '</button>'
-            . '</fieldset>'
-            . '</form>';
-        return $form;
+
+        $form->addButton('submit', $this->getLang('submit'))->attr('type', 'submit');
+        $form->addFieldsetClose();
+
+        return $form->toHTML();
     }
 }

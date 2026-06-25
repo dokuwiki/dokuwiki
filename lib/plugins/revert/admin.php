@@ -90,6 +90,16 @@ class admin_plugin_revert extends AdminPlugin
         foreach ($revert as $id) {
             global $REV;
 
+            // Managers can reach this tool without holding edit rights on every
+            // namespace. Normalize the submitted id and enforce per-page edit
+            // permission so pages the user is denied cannot be reverted or blanked.
+            // The listing only offers editable pages, so this guard is reached
+            // only by a hand-crafted request; such ids are silently skipped.
+            $id = cleanID($id);
+            if (auth_quickaclcheck($id) < AUTH_EDIT) {
+                continue;
+            }
+
             // find the last non-spammy revision
             $data = '';
             $pagelog = new PageChangeLog($id);
@@ -133,6 +143,9 @@ class admin_plugin_revert extends AdminPlugin
 
         $cnt = 0;
         foreach ($recents as $recent) {
+            // only offer pages the user may actually revert; getRecents() already
+            // filtered to read permission, this narrows it to edit permission
+            if ($recent['perms'] < AUTH_EDIT) continue;
             if ($filter) {
                 if (!str_contains(rawWiki($recent['id']), (string) $filter)) continue;
             }

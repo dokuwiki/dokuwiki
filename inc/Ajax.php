@@ -135,13 +135,20 @@ class Ajax
         $ID = cleanID($INPUT->post->str('id'));
         if (empty($ID)) return;
 
-        $INFO = pageinfo();
-
         $response = [
             'errors' => [],
             'lock' => '0',
             'draft' => '',
         ];
+
+        if (!checkSecurityToken()) {
+            $response['errors'][] = 'Security token did not match. Please reload the page and try again.';
+            echo json_encode($response, JSON_THROW_ON_ERROR);
+            return;
+        }
+
+        $INFO = pageinfo();
+
         if (!$INFO['writable']) {
             $response['errors'][] = 'Permission to write this page has been denied.';
             echo json_encode($response);
@@ -280,7 +287,7 @@ class Ajax
 
         $id = cleanID($id);
 
-        $NS = $INPUT->str('ns');
+        $NS = $INPUT->filter('cleanID')->str('ns');
         $ns = $NS . ':' . getNS($id);
 
         $AUTH = auth_quickaclcheck("$ns:*");
