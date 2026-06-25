@@ -80,7 +80,7 @@ class Setting
         if ($this->isProtected()) return false;
         $input = $this->cleanValue($input);
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         // validate new value
@@ -204,7 +204,7 @@ class Setting
         } elseif ($echo && $this->error) {
             $value = $this->input;
         } else {
-            $value = is_null($this->local) ? $this->default : $this->local;
+            $value = $this->local ?? $this->default;
         }
 
         $key = htmlspecialchars($this->key);

@@ -110,7 +110,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if (!is_null($hid)) {
             $data['hid'] .= $hid;
         }
-        $data['range'] = $data['start'] . '-' . (is_null($end) ? '' : $end);
+        $data['range'] = $data['start'] . '-' . ($end ?? '');
         unset($data['start']);
         $this->doc .= '<!-- EDIT' . hsc(json_encode($data, JSON_THROW_ON_ERROR)) . ' -->';
     }

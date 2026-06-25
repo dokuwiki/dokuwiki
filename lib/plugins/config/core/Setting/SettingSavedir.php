@@ -12,7 +12,7 @@ class SettingSavedir extends SettingString
     {
         if ($this->isProtected()) return false;
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         if (!init_path($input)) {
