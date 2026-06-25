@@ -1681,6 +1681,7 @@ class SFTP extends SSH2
      * @param bool $recursive
      * @throws \UnexpectedValueException on receipt of unexpected packets
      * @return mixed
+     * @changed in phpseclib 4.0.0
      */
     public function chmod($mode, $filename, $recursive = false)
     {
@@ -3466,6 +3467,7 @@ class SFTP extends SSH2
      * Returns all errors on the SFTP layer
      *
      * @return array
+     * @removed in phpseclib 4.0.0
      */
     public function getSFTPErrors()
     {
@@ -3476,6 +3478,7 @@ class SFTP extends SSH2
      * Returns the last error on the SFTP layer
      *
      * @return string
+     * @removed in phpseclib 4.0.0
      */
     public function getLastSFTPError()
     {
@@ -3785,5 +3788,51 @@ class SFTP extends SSH2
             ['bsize', 'frsize', 'blocks', 'bfree', 'bavail', 'files', 'ffree', 'favail', 'fsid', 'flag', 'namemax'],
             Strings::unpackSSH2('QQQQQQQQQQQ', $response)
         );
+    }
+
+    public function hardlink($oldpath, $newpath)
+    {
+        if (!$this->precheck()) {
+            return false;
+        }
+
+        if (!isset($this->extensions['hardlink@openssh.com']) || $this->extensions['hardlink@openssh.com'] !== '1') {
+            throw new \RuntimeException(
+                "Extension 'hardlink@openssh.com' is not supported by the server. " .
+                "Call getSupportedVersions() to see a list of supported extension"
+            );
+        }
+
+        $oldpath = $this->realpath($oldpath);
+        $newpath = $this->realpath($newpath);
+        if ($oldpath === false || $newpath === false) {
+            return false;
+        }
+
+        $packet = Strings::packSSH2('sss', 'hardlink@openssh.com', $oldpath, $newpath);
+        $this->send_sftp_packet(NET_SFTP_EXTENDED, $packet);
+
+        $response = $this->get_sftp_packet();
+        if ($this->packet_type !== NET_SFTP_STATUS) {
+            throw new \UnexpectedValueException('Expected NET_SFTP_STATUS. '
+                . 'Got packet type: ' . $this->packet_type);
+        }
+
+        // if $status isn't SSH_FX_OK it's probably SSH_FX_NO_SUCH_FILE or SSH_FX_PERMISSION_DENIED
+        list($status) = Strings::unpackSSH2('N', $response);
+        if ($status !== NET_SFTP_STATUS_OK) {
+            $this->logError($response, $status);
+            return false;
+        }
+
+        // this operation will change the ctime and link-count attributes
+        // which could be cached depending on sftp version
+        $this->remove_from_stat_cache($oldpath);
+
+        // hardlink creation should fail if $newpath exists;
+        // removing it from the cache anyway, just to be sure
+        $this->remove_from_stat_cache($newpath);
+
+        return true;
     }
 }

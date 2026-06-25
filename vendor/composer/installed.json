@@ -384,17 +384,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.52",
-            "version_normalized": "3.0.52.0",
+            "version": "3.0.55",
+            "version_normalized": "3.0.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce"
+                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/2adaefc83df2ec548558307690f376dd7d4f4fce",
-                "reference": "2adaefc83df2ec548558307690f376dd7d4f4fce",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db9744e6d47e742b1f974e965ad49bdd041105af",
+                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af",
                 "shasum": ""
             },
             "require": {
@@ -412,7 +412,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2026-04-27T07:02:15+00:00",
+            "time": "2026-06-14T23:24:10+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -477,7 +477,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.52"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.55"
             },
             "funding": [
                 {
@@ -645,17 +645,17 @@
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.4.1",
-            "version_normalized": "1.4.1.0",
+            "version": "1.4.2",
+            "version_normalized": "1.4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "e45d0d9247742490ea87afc6c026f211424999c8"
+                "reference": "8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/e45d0d9247742490ea87afc6c026f211424999c8",
-                "reference": "e45d0d9247742490ea87afc6c026f211424999c8",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60",
+                "reference": "8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60",
                 "shasum": ""
             },
             "require": {
@@ -673,7 +673,7 @@
                 "ext-mbstring": "Can be used alternatively for handling filename encoding",
                 "ext-zlib": "For zlib compression"
             },
-            "time": "2025-08-01T08:09:37+00:00",
+            "time": "2026-05-13T09:06:51+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -702,7 +702,7 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-archive/issues",
-                "source": "https://github.com/splitbrain/php-archive/tree/1.4.1"
+                "source": "https://github.com/splitbrain/php-archive/tree/1.4.2"
             },
             "funding": [
                 {
