@@ -102,7 +102,7 @@ class ModeRegistry
     protected string $syntax;
 
     /** @var array<string, string[]> this parse's mode taxonomy (defaults + plugin modes) */
-    protected array $categories;
+    protected array $categories = self::DEFAULT_CATEGORIES;
 
     /**
      * @param string $syntax the syntax flavour for this parse: one of
@@ -112,7 +112,6 @@ class ModeRegistry
     public function __construct(string $syntax)
     {
         $this->syntax = $syntax;
-        $this->categories = self::DEFAULT_CATEGORIES;
     }
 
     /**
@@ -223,8 +222,8 @@ class ModeRegistry
         }
 
         $this->modes = [];
-        $loadDw = in_array($this->syntax, ['dw', 'dw+md', 'md+dw']);
-        $loadMd = in_array($this->syntax, ['md', 'dw+md', 'md+dw']);
+        $loadDw = in_array($this->syntax, ['dw', 'dw+md', 'md+dw'], true);
+        $loadMd = in_array($this->syntax, ['md', 'dw+md', 'md+dw'], true);
 
         $this->loadPluginModes();
         $this->loadAlwaysModes();
