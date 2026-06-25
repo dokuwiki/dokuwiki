@@ -131,7 +131,7 @@ function http_xaccel_url($file)
     }
 
     // URL-encode each segment (nginx URL-decodes the redirect target before resolving it)
-    return DOKU_REL . implode('/', array_map('rawurlencode', explode('/', $path)));
+    return DOKU_REL . implode('/', array_map(rawurlencode(...), explode('/', $path)));
 }
 
 /**
