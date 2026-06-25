@@ -76,4 +76,24 @@ class MediaChangeLog extends ChangeLog
         if (!empty($conf['fmode'])) @chmod($atticfile, $conf['fmode']);
         return true;
     }
+
+    /**
+     * Compare the current media file against the attic copy of a revision.
+     *
+     * Media revisions are stored as raw copies. The (potentially large, binary) files are
+     * not loaded into memory: a differing size rules out a match immediately, otherwise the
+     * contents are hashed in a streaming fashion via md5_file().
+     *
+     * @param int $rev revision timestamp to compare the current file against
+     * @return bool true if the content is identical
+     */
+    protected function currentContentMatchesRevision($rev)
+    {
+        $current = $this->getFilename();
+        $attic = $this->getFilename($rev);
+        if (!file_exists($current) || !file_exists($attic)) return false;
+        if (filesize($current) !== filesize($attic)) return false;
+
+        return md5_file($current) === md5_file($attic);
+    }
 }
