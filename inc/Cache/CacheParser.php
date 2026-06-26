@@ -23,8 +23,6 @@ class CacheParser extends Cache
      */
     public function __construct($id, $file, $mode, $syntax = null)
     {
-        global $INPUT;
-
         if ($id) {
             $this->page = $id;
         }
@@ -33,9 +31,22 @@ class CacheParser extends Cache
 
         $this->setEvent('PARSER_CACHE_USE');
         parent::__construct(
-            $file . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT') . ($syntax ?? ''),
+            $file . ($syntax ?? '') . $this->getEnvironmentKey(),
             '.' . $mode
         );
+    }
+
+    /**
+     * Environment-dependent fragment to append to the cache key
+     *
+     * Return a possibly dynamic cache key fragment that is appended to the cache key in the constructor.
+     * Childreden classes can use this to include environment-dependent information like DOKU_BASE.
+     *
+     * @return string
+     */
+    protected function getEnvironmentKey()
+    {
+        return '';
     }
 
     /**
