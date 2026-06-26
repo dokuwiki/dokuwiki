@@ -114,6 +114,12 @@ abstract class AuthPlugin extends Plugin
      * deleteUsers directly. The event handlers can prevent the modification, for
      * example for enforcing a user name schema.
      *
+     * The triggered AUTH_USER_CHANGE event carries the modification type and the
+     * parameters in its data. Note that params[0] differs by type: for 'create' and
+     * 'modify' it is a single user name (string), but for 'delete' it is the list of
+     * user names to remove (string[]). Event handlers calling getUserData() on
+     * params[0] need to account for this.
+     *
      * @author Gabriel Birke <birke@d-scribe.de>
      * @param string $type Modification type ('create', 'modify', 'delete')
      * @param array $params Parameters for the createUser, modifyUser or deleteUsers method.

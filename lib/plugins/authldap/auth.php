@@ -142,7 +142,7 @@ class auth_plugin_authldap extends AuthPlugin
      *
      * @param string $user
      * @param bool $requireGroups (optional) - ignored, groups are always supplied by this plugin
-     * @return  array containing user data or false
+     * @return  array|bool containing user data or false
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
      * @author  Steffen Schoch <schoch@dsb.net>
@@ -153,6 +153,7 @@ class auth_plugin_authldap extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        if (!is_string($user) || $user == '') return false;
         return $this->fetchUserData($user);
     }
 

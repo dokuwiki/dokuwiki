@@ -164,6 +164,7 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        if (!is_string($user)) return false;
         $data = $this->selectUser($user);
         if ($data == false) return false;
 

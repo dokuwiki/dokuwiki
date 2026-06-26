@@ -207,9 +207,9 @@ class auth_plugin_authad extends AuthPlugin
         global $lang;
         global $ID;
         global $INPUT;
+        if (!is_string($user) || $user == '') return false;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
         if (!$adldap) return false;
-        if ($user == '') return false;
 
         $fields = ['mail', 'displayname', 'samaccountname', 'lastpwd', 'pwdlastset', 'useraccountcontrol'];
 
