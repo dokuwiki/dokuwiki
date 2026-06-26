@@ -69,9 +69,7 @@ class FeedParserFile extends File
      */
     protected function normalizeHeaders($headers)
     {
-        return array_map(static function ($value) {
-            return array_map('trim', explode(',', (string)$value));
-        }, $headers);
+        return array_map(static fn($value) => array_map(trim(...), explode(',', (string)$value)), $headers);
     }
 
     // the following methods implement SimplePie's Response interface and have to keep its naming
