@@ -4,55 +4,126 @@ namespace dokuwiki\Feed;
 
 use dokuwiki\HTTP\DokuHTTPClient;
 use SimplePie\File;
-use SimplePie\SimplePie;
 
 /**
  * Fetch an URL using our own HTTPClient
  *
- * Replaces SimplePie's own class
+ * Replaces SimplePie's own File class.
  */
 class FeedParserFile extends File
 {
+    /** @var DokuHTTPClient */
     protected $http;
+
+    /** @var string the requested URL */
+    protected $requestUrl;
+    /** @var int the HTTP status code of the response */
+    protected $responseStatus;
+    /** @var array<string, string[]> response headers in SimplePie's representation */
+    protected $responseHeaders = [];
+    /** @var string the response body */
+    protected $responseBody = '';
+
     /** @noinspection PhpMissingParentConstructorInspection */
 
     /**
-     * Inititializes the HTTPClient
+     * Fetches the given URL through DokuHTTPClient
      *
-     * We ignore all given parameters - they are set in DokuHTTPClient
+     * SimplePie creates this object through its registry and reads the response via the
+     * get_*() methods below, so the fetch has to happen here in the constructor.
      *
      * @inheritdoc
      */
-    public function __construct(
-        $url
-    ) {
-        $this->http = new DokuHTTPClient();
+    public function __construct($url)
+    {
+        $this->http = $this->initHTTPClient();
         $this->success = $this->http->sendRequest($url);
 
-        $this->headers = $this->http->resp_headers;
-        $this->body = $this->http->resp_body;
-        $this->error = $this->http->error;
+        $this->requestUrl = $url;
+        $this->responseStatus = (int)$this->http->status;
+        $this->responseBody = (string)$this->http->resp_body;
+        $this->responseHeaders = $this->normalizeHeaders($this->http->resp_headers);
+        // DokuHTTPClient uses an empty string for "no error", but SimplePie's FileClient
+        // treats any non-null error combined with a zero status code as a failed request
+        $this->error = $this->http->error ?: null;
+    }
 
-        $this->method = SimplePie::FILE_SOURCE_REMOTE | SimplePie::FILE_SOURCE_FSOCKOPEN;
+    /**
+     * Creates the HTTP client used to fetch the feed
+     *
+     * Separated out so tests can inject a client with a canned response
+     *
+     * @return DokuHTTPClient
+     */
+    protected function initHTTPClient()
+    {
+        return new DokuHTTPClient();
+    }
 
-        return $this->success;
+    /**
+     * Converts DokuHTTPClient's "name => value" headers into SimplePie's
+     * "name => [values]" representation
+     *
+     * @param array<string, string> $headers
+     * @return array<string, string[]>
+     */
+    protected function normalizeHeaders($headers)
+    {
+        return array_map(static function ($value) {
+            return array_map('trim', explode(',', (string)$value));
+        }, $headers);
+    }
+
+    // the following methods implement SimplePie's Response interface and have to keep its naming
+    // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+
+    /** @inheritdoc */
+    public function get_final_requested_uri(): string
+    {
+        return (string)$this->requestUrl;
     }
 
     /** @inheritdoc */
-    public function headers()
+    public function get_permanent_uri(): string
     {
-        return $this->headers;
+        return (string)$this->requestUrl;
     }
 
     /** @inheritdoc */
-    public function body()
+    public function get_status_code(): int
     {
-        return $this->body;
+        return $this->responseStatus;
     }
 
     /** @inheritdoc */
-    public function close()
+    public function get_headers(): array
     {
-        return true;
+        return $this->responseHeaders;
     }
+
+    /** @inheritdoc */
+    public function has_header(string $name): bool
+    {
+        return isset($this->responseHeaders[strtolower($name)]);
+    }
+
+    /** @inheritdoc */
+    public function get_header(string $name): array
+    {
+        return $this->responseHeaders[strtolower($name)] ?? [];
+    }
+
+    /** @inheritdoc */
+    public function get_header_line(string $name): string
+    {
+        return implode(', ', $this->get_header($name));
+    }
+
+    /** @inheritdoc */
+    public function get_body_content(): string
+    {
+        return $this->responseBody;
+    }
+
+    // phpcs:enable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 }
