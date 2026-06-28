@@ -78,6 +78,16 @@ class Doku_Renderer_metadata extends Doku_Renderer
         if (!isset($this->persistent['creator'])) {
             $this->persistent['creator'] = '';
         }
+
+        // The table of contents is always rebuilt from the page's headings during rendering and
+        // must never be part of the persistent metadata. Buggy plugin versions and callers of
+        // p_set_metadata() could leak it into the persistent data, which then caused the TOC to be
+        // appended again on every render, resulting in a permanently duplicated TOC (see #3179).
+        // Dropping it here lets such corrupted metadata heal itself on the next render.
+        if (isset($this->persistent['description']['tableofcontents'])) {
+            unset($this->persistent['description']['tableofcontents']);
+        }
+
         // reset metadata to persistent values
         $this->meta = $this->persistent;
     }
