@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Martin Růžička <martinr@post.cz>
+ * @author Petr Kajzar <petr.kajzar@centrum.cz>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Robert Surý <rsurycz@seznam.cz>
  * @author Martin Hořínek <hev@hev.cz>
@@ -58,6 +58,11 @@ $lang['title']                 = 'Název celé wiki';
 $lang['start']                 = 'Název úvodní stránky';
 $lang['lang']                  = 'Jazyk';
 $lang['template']              = 'Šablona';
+$lang['syntax']                = 'Varianta wiki syntaxe';
+$lang['syntax_o_dw']           = 'Pouze DokuWiki';
+$lang['syntax_o_md']           = 'Pouze Markdown';
+$lang['syntax_o_dw+md']        = 'Obojí (preferováno DokuWiki)';
+$lang['syntax_o_md+dw']        = 'Obojí (preferován Markdown)';
 $lang['tagline']               = 'Slogan (pokud ho šablona podporuje)';
 $lang['sidebar']               = 'Jméno stránky s obsahem postranní lišty (pokud ho šablona podporuje). Prázdné pole postranní lištu deaktivuje.';
 $lang['license']               = 'Pod jakou licencí má být tento obsah publikován?';
@@ -183,6 +188,7 @@ $lang['dnslookups']            = 'DokuWiki zjišťuje DNS jména pro vzdálené 
 $lang['jquerycdn']             = 'Mají být skripty jQuery a jQuery UI načítány z CDN?
 Vzniknou tím další HTTP dotazy, ale soubory se mohou načíst rychleji a uživatelé je už mohou mít ve vyrovnávací paměti.';
 $lang['trustedproxies']        = 'Čárkou oddělený seznam důvěryhodných proxy serverů, ze kterých se načítá hlavička X-Forwarded-For. Každá položka v poli může být buď adresa IPv4 nebo IPv6, nebo rozsah IPv4 nebo IPv6 CIDR (např. 10.0.0.0/8). Pokud nechcete důvěřovat žádnému proxy serveru, ponechte prázdné pole.';
+$lang['client_ip_header']      = 'Použít vlastní hlavičku místo remote-ip (např. X_REAL_IP). Povolte pouze tehdy, pokud tuto hlavičku zapisuje váš server, jinak může být zfalšována.';
 $lang['jquerycdn_o_0']         = 'Bez CDN, pouze lokální doručení';
 $lang['jquerycdn_o_jquery']    = 'CDN na code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN na cdnjs.com';

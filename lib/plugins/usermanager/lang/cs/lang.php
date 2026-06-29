@@ -48,6 +48,7 @@ $lang['summary']               = 'Zobrazuji uživatele %1$d-%2$d z %3$d nalezen�
 $lang['nonefound']             = 'Žádný uživatel nebyl nalezen. Celkem %d uživatelů.';
 $lang['delete_ok']             = '%d uživatelů smazáno';
 $lang['delete_fail']           = '%d uživatelů nelze smazat.';
+$lang['delete_fail_self']      = 'Nemůžete smazat sami sebe';
 $lang['update_ok']             = 'Uživatel upraven';
 $lang['update_fail']           = 'Úprava uživatele selhala';
 $lang['update_exists']         = 'Jméno nelze změnit, jelikož zadané uživatelské jméno (%s) již existuje (ostatní změny ale budou provedeny).';
