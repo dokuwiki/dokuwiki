@@ -113,8 +113,6 @@ function css_out()
     // The generated script depends on some dynamic options
     $cache = new Cache(
         'styles' .
-        $_SERVER['HTTP_HOST'] .
-        $_SERVER['SERVER_PORT'] .
         $INPUT->bool('preview') .
         DOKU_BASE .
         $tpl .
