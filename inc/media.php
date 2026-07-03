@@ -1576,13 +1576,23 @@ function media_getuploadsize()
 function media_searchform($ns, $query = '', $fullscreen = false)
 {
     global $lang;
+    global $INPUT;
+
+    // In popup mode the search reloads the whole page, so the parameters the
+    // opening editor or plugin relies on (edid, onselect - see media.js) have to
+    // be carried over in the action URL or they would be lost after a search.
+    $action = DOKU_BASE . 'lib/exe/mediamanager.php';
+    $keep = array_filter(['edid' => $INPUT->str('edid'), 'onselect' => $INPUT->str('onselect')]);
+    if ($keep) {
+        $action .= '?' . buildURLparams($keep, '&');
+    }
 
     // The default HTML search form
     $form = new Form([
         'id'     => 'dw__mediasearch',
         'action' => ($fullscreen)
                     ? media_managerURL([], '&')
-                    : DOKU_BASE . 'lib/exe/mediamanager.php',
+                    : $action,
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', $ns);
