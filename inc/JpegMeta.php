@@ -1430,7 +1430,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE0) {
+                if ($this->_markers[$i]['marker'] == 0xE0
+                    && strlen($this->_markers[$i]['data']) >= 4) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 4);
                     if ($signature == 'JFIF') {
                         $data =& $this->_markers[$i]['data'];
@@ -1569,7 +1570,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE1) {
+                if ($this->_markers[$i]['marker'] == 0xE1
+                    && strlen($this->_markers[$i]['data']) >= 29) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
                     if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
                         $data = substr($this->_markers[$i]['data'], 29);
@@ -1676,7 +1678,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE1) {
+                if ($this->_markers[$i]['marker'] == 0xE1
+                    && strlen($this->_markers[$i]['data']) >= 6) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
                     if ($signature == "Exif\0\0") {
                         $data =& $this->_markers[$i]['data'];
@@ -1957,7 +1960,8 @@ class JpegMeta {
         $data = null;
         $count = count($this->_markers);
         for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xE1) {
+            if ($this->_markers[$i]['marker'] == 0xE1
+                && strlen($this->_markers[$i]['data']) >= 6) {
                 $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
                 if ($signature == "Exif\0\0") {
                     $data =& $this->_markers[$i]['data'];
@@ -2419,7 +2423,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xED) {
+                if ($this->_markers[$i]['marker'] == 0xED
+                    && strlen($this->_markers[$i]['data']) >= 14) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 14);
                     if ($signature == "Photoshop 3.0\0") {
                         $data =& $this->_markers[$i]['data'];
