@@ -135,6 +135,26 @@ class DirectCollectionTest extends \DokuWikiTest
     }
 
     /**
+     * histogram() counts how many entities share each token value; empty
+     * tokens are excluded
+     */
+    public function testHistogram()
+    {
+        $index = new MockDirectCollection('hist_entity', 'hist_token');
+        $index->lock();
+        $index->addEntity('p:a', ['Hello World']);
+        $index->addEntity('p:b', ['Hello World']);
+        $index->addEntity('p:c', ['Other Title']);
+        $index->addEntity('p:d', []); // no title -> empty token, must not appear
+        $index->unlock();
+
+        $this->assertSame(['Hello World' => 2, 'Other Title' => 1], $index->histogram(1, 0, 3));
+        $this->assertSame(['Hello World' => 2], $index->histogram(2, 0, 3), 'min filter');
+
+        $this->assertSame([], (new MockDirectCollection('histe_entity', 'histe_token'))->histogram());
+    }
+
+    /**
      * checkIntegrity passes on a healthy DirectCollection
      */
     public function testCheckIntegrityHealthy()

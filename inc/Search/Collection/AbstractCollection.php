@@ -252,6 +252,68 @@ abstract class AbstractCollection
     }
 
     /**
+     * Frequency histogram of the tokens in this collection
+     *
+     * Sums, for every token, how often it occurs across all entities and
+     * returns the tokens together with those totals, ordered by frequency
+     * (highest first). This is the primitive used to build tag clouds and
+     * word-frequency lists.
+     *
+     * @param int $min minimum frequency a token must reach to be included
+     * @param int $max maximum frequency to include, 0 for no upper limit
+     * @param int $minlen minimum token length to include
+     * @return array<string, int> token => frequency, ordered by frequency descending
+     * @throws IndexLockException
+     */
+    public function histogram(int $min = 1, int $max = 0, int $minlen = 3): array
+    {
+        if ($min < 1) $min = 1;
+        if ($max < $min) $max = 0;
+        if ($minlen < 1) $minlen = 1;
+
+        // For length-split collections the group number is the token length, so
+        // only groups of at least $minlen can contribute; build the range to
+        // start there. Non-split collections keep everything in group 0 and
+        // enforce $minlen through the token-length filter below.
+        if ($this->splitByLength) {
+            $maxGroup = $this->getTokenIndexMaximum();
+            $groups = $maxGroup >= $minlen ? range($minlen, $maxGroup) : [];
+        } else {
+            $groups = [0];
+        }
+
+        $result = [];
+        foreach ($groups as $group) {
+            $freqIndex = $this->getFrequencyIndex($group);
+            if (!$freqIndex->exists()) continue;
+
+            // collect token RIDs whose summed frequency falls within [min, max]
+            $freqs = [];
+            foreach ($freqIndex as $rid => $line) {
+                if ($line === '') continue;
+                $freq = TupleOps::aggregateTupleCounts($line);
+                if ($freq >= $min && (!$max || $freq <= $max)) {
+                    $freqs[$rid] = $freq;
+                }
+            }
+            if ($freqs === []) continue;
+
+            // resolve the RIDs to token strings in one batch and apply the
+            // length filter (this is where $minlen is enforced when not split)
+            $tokens = $this->getTokenIndex($group)->retrieveRows(array_keys($freqs));
+            foreach ($freqs as $rid => $freq) {
+                $token = $tokens[$rid] ?? '';
+                if (strlen($token) >= $minlen) {
+                    $result[$token] = $freq;
+                }
+            }
+        }
+
+        arsort($result);
+        return $result;
+    }
+
+    /**
      * Maximum suffix for the token indexes (eg. max word length currently stored)
      *
      * @return int

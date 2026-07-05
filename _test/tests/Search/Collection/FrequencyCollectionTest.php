@@ -189,6 +189,28 @@ class FrequencyCollectionTest extends \DokuWikiTest
     }
 
     /**
+     * histogram() sums per-entity occurrence counts; the length-split group
+     * range starts at minlen so short words are excluded
+     */
+    public function testHistogram()
+    {
+        $index = new MockFrequencyCollection('hist_page', 'hist_w', 'hist_i', 'hist_pw');
+        $index->lock();
+        $index->addEntity('p:a', ['apple', 'apple', 'apple', 'kiwi', 'kiwi', 'fig', 'xy']);
+        $index->addEntity('p:b', ['apple', 'kiwi']);
+        $index->unlock();
+
+        // apple 3+1, kiwi 2+1, fig 1; "xy" (len 2) excluded at minlen 3
+        $this->assertSame(['apple' => 4, 'kiwi' => 3, 'fig' => 1], $index->histogram(1, 0, 3));
+        $this->assertSame(['apple' => 4, 'kiwi' => 3], $index->histogram(1, 0, 4), 'minlen excludes fig');
+        $this->assertSame(['apple' => 4, 'kiwi' => 3], $index->histogram(2, 0, 3), 'min filter');
+        $this->assertSame(['kiwi' => 3, 'fig' => 1], $index->histogram(1, 3, 3), 'max excludes apple');
+
+        $empty = new MockFrequencyCollection('histe_page', 'histe_w', 'histe_i', 'histe_pw');
+        $this->assertSame([], $empty->histogram());
+    }
+
+    /**
      * checkIntegrity on an empty split collection does not throw
      */
     public function testCheckIntegrityEmpty()

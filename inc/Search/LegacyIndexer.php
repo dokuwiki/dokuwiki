@@ -3,6 +3,7 @@
 namespace dokuwiki\Search;
 
 use dokuwiki\Debug\DebugHelper;
+use dokuwiki\Search\Collection\AbstractCollection;
 use dokuwiki\Search\Collection\CollectionSearch;
 use dokuwiki\Search\Collection\PageFulltextCollection;
 use dokuwiki\Search\Collection\PageMetaCollection;
@@ -293,5 +294,30 @@ class LegacyIndexer
             $result[$word] = $filtered;
         }
         return $result;
+    }
+
+    /**
+     * Build a frequency histogram of index terms (tag clouds, word lists)
+     *
+     * @param int $min minimum frequency
+     * @param int $max maximum frequency, 0 for no upper limit
+     * @param int $minlen minimum term length
+     * @param string|null $key null for the fulltext word index, 'title' for the
+     *     page title index, or a metadata key name for that metadata index
+     * @return array<string, int> term => frequency, ordered by frequency descending
+     *
+     * @deprecated 2026-04-07 call histogram() on the matching Collection instead
+     */
+    public function histogram($min = 1, $max = 0, $minlen = 3, $key = null)
+    {
+        DebugHelper::dbgDeprecatedFunction(AbstractCollection::class . '::histogram()');
+        if ($key === 'title') {
+            $collection = new PageTitleCollection();
+        } elseif ($key !== null) {
+            $collection = new PageMetaCollection($key);
+        } else {
+            $collection = new PageFulltextCollection();
+        }
+        return $collection->histogram((int)$min, (int)$max, (int)$minlen);
     }
 }

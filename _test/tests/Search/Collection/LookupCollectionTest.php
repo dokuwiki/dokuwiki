@@ -290,6 +290,28 @@ class LookupCollectionTest extends \DokuWikiTest
     }
 
     /**
+     * histogram() returns each token with the number of entities carrying it,
+     * ordered by frequency and filtered by min/max/minlen
+     */
+    public function testHistogram()
+    {
+        $index = new MockLookupCollection('hist_entity', 'hist_token', 'hist_freq', 'hist_reverse');
+        $index->lock();
+        $index->addEntity('p:a', ['news', 'wiki', 'ab']);
+        $index->addEntity('p:b', ['news']);
+        $index->addEntity('p:c', ['news', 'tech']);
+        $index->unlock();
+
+        $this->assertSame(['news' => 3, 'wiki' => 1, 'tech' => 1], $index->histogram(1, 0, 3));
+        $this->assertSame(['news' => 3], $index->histogram(2, 0, 3), 'min filter');
+        $this->assertSame(['wiki' => 1, 'tech' => 1], $index->histogram(1, 2, 3), 'max filter');
+        $this->assertArrayHasKey('ab', $index->histogram(1, 0, 2), 'minlen 2 keeps short token');
+
+        $empty = new MockLookupCollection('histe_entity', 'histe_token', 'histe_freq', 'histe_reverse');
+        $this->assertSame([], $empty->histogram());
+    }
+
+    /**
      * resolveTokenFrequencies returns entity frequencies for given token IDs
      */
     public function testResolveTokenFrequencies()

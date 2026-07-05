@@ -114,6 +114,43 @@ abstract class DirectCollection extends AbstractCollection
     }
 
     /**
+     * Frequency histogram of the tokens in this collection
+     *
+     * Each entity holds exactly one token, so this counts how many entities
+     * share each token value.
+     *
+     * @param int $min minimum frequency a token must reach to be included
+     * @param int $max maximum frequency to include, 0 for no upper limit
+     * @param int $minlen minimum token length to include
+     * @return array<string, int> token => frequency, ordered by frequency descending
+     * @throws IndexLockException
+     */
+    public function histogram(int $min = 1, int $max = 0, int $minlen = 3): array
+    {
+        if ($min < 1) $min = 1;
+        if ($max < $min) $max = 0;
+        if ($minlen < 1) $minlen = 1;
+
+        $tokenIndex = $this->getTokenIndex();
+        if (!$tokenIndex->exists()) return [];
+
+        // an empty token is shorter than $minlen (>= 1) and so is filtered here
+        $counts = [];
+        foreach ($tokenIndex as $token) {
+            if (strlen($token) < $minlen) continue;
+            $counts[$token] = ($counts[$token] ?? 0) + 1;
+        }
+
+        $result = array_filter(
+            $counts,
+            static fn($freq) => $freq >= $min && (!$max || $freq <= $max)
+        );
+
+        arsort($result);
+        return $result;
+    }
+
+    /**
      * Not actually used, because we override addEntity() to directly write the token.
      * @inheritdoc
      */
