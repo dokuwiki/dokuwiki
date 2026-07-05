@@ -78,4 +78,33 @@ class MemoryIndexTest extends AbstractIndexTestCase
         $this->assertFalse($index->isDirty());
     }
 
+    public function testMaxReturnsFullNumericSuffix()
+    {
+        foreach ([9, 10, 12] as $suffix) {
+            $index = new MemoryIndex('indexmax', (string)$suffix, true);
+            $index->changeRow(0, 'test');
+            $index->save();
+            $index->unlock();
+        }
+
+        $index = new MemoryIndex('indexmax');
+        $this->assertEquals(12, $index->max());
+    }
+
+    public function testMaxIgnoresOtherIndexesWithSamePrefix()
+    {
+        $index = new MemoryIndex('w', '10', true);
+        $index->changeRow(0, 'test');
+        $index->save();
+        $index->unlock();
+
+        $other = new MemoryIndex('wiki', '2', true);
+        $other->changeRow(0, 'test');
+        $other->save();
+        $other->unlock();
+
+        $index = new MemoryIndex('w');
+        $this->assertEquals(10, $index->max());
+    }
+
 }

@@ -120,8 +120,9 @@ abstract class AbstractIndex implements \IteratorAggregate, \Countable
         global $conf;
         $result = 0;
         $files = glob($conf['indexdir'] . '/' . $this->idx . '*.idx');
+        $pattern = '/^' . preg_quote($this->idx, '/') . '(\d+)\.idx$/';
         foreach ($files as $file) {
-            if (preg_match('/(\d)+\.idx$/', $file, $match)) {
+            if (preg_match($pattern, basename($file), $match)) {
                 $num = (int)$match[1];
                 if ($num > $result) $result = $num;
             }

@@ -73,6 +73,24 @@ class CollectionSearchTest extends \DokuWikiTest
         $this->assertEquals(['page1' => 3, 'page2' => 1], $bothWild->getEntityFrequencies());
     }
 
+    public function testWildcardSearchAcrossMultiDigitLengthGroups()
+    {
+        $collection = new MockFrequencyCollection('wc10_page', 'wc10_w', 'wc10_i', 'wc10_pageword');
+        $collection->lock();
+        $collection->addEntity('page1', ['encyclopedia', 'encyclopedic', 'short']);
+        $collection->addEntity('page2', ['encyclopedia', 'different']);
+        $collection->unlock();
+
+        $search = new CollectionSearch($collection);
+        $term = $search->addTerm('encyclo*');
+        $search->execute();
+
+        $tokens = $term->getTokens();
+        sort($tokens);
+        $this->assertEquals(['encyclopedia', 'encyclopedic'], $tokens);
+        $this->assertEquals(['page1' => 2, 'page2' => 1], $term->getEntityFrequencies());
+    }
+
     /**
      * Index a real text file via the Tokenizer and search it
      */
