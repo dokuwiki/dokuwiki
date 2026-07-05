@@ -12,6 +12,7 @@ use dokuwiki\Parsing\Handler\Block;
 use dokuwiki\Parsing\Handler\CallWriter;
 use dokuwiki\Parsing\Handler\CallWriterInterface;
 use dokuwiki\Parsing\ParserMode\AbstractMode;
+use dokuwiki\Debug\DebugHelper;
 
 /**
  * The Handler receives token events from the Lexer and turns them into
@@ -38,11 +39,23 @@ class Handler
     protected ModeRegistry $registry;
 
     /**
-     * @param ModeRegistry $registry the registry of the parse, so handler
-     *     methods and plugin handle()/render() can ask for the active syntax
+     * @param ModeRegistry|null $registry the registry of the parse, so handler
+     *     methods and plugin handle()/render() can ask for the active syntax.
+     *     Null is a deprecated backward-compatibility path for the legacy
+     *     manual sub-parsing pattern (new Doku_Handler() with no argument): a
+     *     registry for the configured syntax is built in that case.
      */
-    public function __construct(ModeRegistry $registry)
+    public function __construct(?ModeRegistry $registry = null)
     {
+        if ($registry === null) {
+            global $conf;
+            DebugHelper::dbgDeprecatedFunction(
+                'p_get_instructions()',
+                1,
+                static::class . '::__construct() without a ModeRegistry'
+            );
+            $registry = new ModeRegistry($conf['syntax']);
+        }
         $this->registry = $registry;
         $this->reset();
     }

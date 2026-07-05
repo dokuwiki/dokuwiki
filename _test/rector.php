@@ -194,6 +194,7 @@ return static function (RectorConfig $rectorConfig): void {
         'DokuWiki_Remote_Plugin' => 'dokuwiki\Extension\RemotePlugin',
         'DokuWiki_Syntax_Plugin' => 'dokuwiki\Extension\SyntaxPlugin',
         'Doku_Handler' => 'dokuwiki\Parsing\Handler',
+        'Doku_Parser' => 'dokuwiki\Parsing\Parser',
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [

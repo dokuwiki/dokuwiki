@@ -30,13 +30,15 @@ class Parser
 
     /**
      * @param Handler $handler
-     * @param ModeRegistry $registry the registry of the parse, injected into
-     *     every mode (all descend from AbstractMode) as it is added
+     * @param ModeRegistry|null $registry the registry of the parse, injected
+     *     into every mode (all descend from AbstractMode) as it is added. Null
+     *     is a backward-compatibility path for the legacy new Parser($handler)
+     *     signature: the registry is taken from the handler in that case.
      */
-    public function __construct(Handler $handler, ModeRegistry $registry)
+    public function __construct(Handler $handler, ?ModeRegistry $registry = null)
     {
         $this->handler = $handler;
-        $this->registry = $registry;
+        $this->registry = $registry ?? $handler->getModeRegistry();
     }
 
     /**
