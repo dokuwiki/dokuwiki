@@ -19,18 +19,18 @@ class LockTest extends \DokuWikiTest
 
         // lock directory should exist
         global $conf;
-        $this->assertDirectoryExists($conf['lockdir'] . 'test_lock.index');
+        $this->assertDirectoryExists($conf['lockdir'] . '/test_lock.index');
 
         Lock::release('test_lock');
 
         // lock directory should be removed
-        $this->assertDirectoryDoesNotExist($conf['lockdir'] . 'test_lock.index');
+        $this->assertDirectoryDoesNotExist($conf['lockdir'] . '/test_lock.index');
     }
 
     public function testReferenceCounting()
     {
         global $conf;
-        $dir = $conf['lockdir'] . 'refcount.index';
+        $dir = $conf['lockdir'] . '/refcount.index';
 
         Lock::acquire('refcount');
         Lock::acquire('refcount');
@@ -55,7 +55,7 @@ class LockTest extends \DokuWikiTest
     public function testAcquireFailsWhenAlreadyLockedByAnotherProcess()
     {
         global $conf;
-        $dir = $conf['lockdir'] . 'foreign.index';
+        $dir = $conf['lockdir'] . '/foreign.index';
 
         // simulate a foreign lock by creating the directory directly
         mkdir($dir);
@@ -69,7 +69,7 @@ class LockTest extends \DokuWikiTest
     public function testStaleLockIsOverridden()
     {
         global $conf;
-        $dir = $conf['lockdir'] . 'stale.index';
+        $dir = $conf['lockdir'] . '/stale.index';
 
         // simulate a stale lock (older than 5 minutes)
         mkdir($dir);
@@ -92,8 +92,8 @@ class LockTest extends \DokuWikiTest
 
         Lock::releaseAll();
 
-        $this->assertDirectoryDoesNotExist($conf['lockdir'] . 'all_a.index');
-        $this->assertDirectoryDoesNotExist($conf['lockdir'] . 'all_b.index');
+        $this->assertDirectoryDoesNotExist($conf['lockdir'] . '/all_a.index');
+        $this->assertDirectoryDoesNotExist($conf['lockdir'] . '/all_b.index');
 
         // releasing after releaseAll should be safe
         Lock::release('all_a');
@@ -106,14 +106,29 @@ class LockTest extends \DokuWikiTest
         Lock::acquire('ind_a');
         Lock::acquire('ind_b');
 
-        $this->assertDirectoryExists($conf['lockdir'] . 'ind_a.index');
-        $this->assertDirectoryExists($conf['lockdir'] . 'ind_b.index');
+        $this->assertDirectoryExists($conf['lockdir'] . '/ind_a.index');
+        $this->assertDirectoryExists($conf['lockdir'] . '/ind_b.index');
 
         Lock::release('ind_a');
-        $this->assertDirectoryDoesNotExist($conf['lockdir'] . 'ind_a.index');
-        $this->assertDirectoryExists($conf['lockdir'] . 'ind_b.index');
+        $this->assertDirectoryDoesNotExist($conf['lockdir'] . '/ind_a.index');
+        $this->assertDirectoryExists($conf['lockdir'] . '/ind_b.index');
 
         Lock::release('ind_b');
-        $this->assertDirectoryDoesNotExist($conf['lockdir'] . 'ind_b.index');
+        $this->assertDirectoryDoesNotExist($conf['lockdir'] . '/ind_b.index');
+    }
+
+    public function testAcquireCreatesLockInsideConfiguredLockDirectory()
+    {
+        global $conf;
+
+        $dir = $conf['lockdir'] . '/page.index';
+        $wrongDir = dirname($conf['lockdir']) . '/page.index';
+
+        Lock::acquire('page');
+
+        $this->assertDirectoryExists($dir);
+        $this->assertDirectoryDoesNotExist($wrongDir);
+
+        Lock::release('page');
     }
 }

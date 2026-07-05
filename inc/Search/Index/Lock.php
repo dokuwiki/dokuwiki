@@ -90,6 +90,6 @@ class Lock
     protected static function lockDir(string $name): string
     {
         global $conf;
-        return $conf['lockdir'] . $name . '.index';
+        return $conf['lockdir'] . '/' . $name . '.index';
     }
 }
