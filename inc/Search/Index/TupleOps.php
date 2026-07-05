@@ -23,7 +23,7 @@ class TupleOps
     {
         if ($record != '') {
             // remove any current version of the tuple (with or without explicit count)
-            $record = preg_replace('/(^|:)' . preg_quote($key, '/') . '(\*\d+)?/', '', $record);
+            $record = preg_replace('/(^|:)' . preg_quote((string)$key, '/') . '(?:\*\d+)?(?=:|$)/', '', $record);
         }
         $record = trim($record, ':');
         if ($count) {

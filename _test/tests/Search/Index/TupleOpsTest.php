@@ -25,6 +25,9 @@ class TupleOpsTest extends \DokuWikiTest
             ['bar*2:foo', 'foo', 5, 'foo*5:bar*2'],
             ['18:17', 17, 3, '17*3:18'],
             ['18:17', 19, 1, '19:18:17'],
+            // numeric keys must only replace exact tuple IDs, not decimal prefixes
+            ['170*4:17*2:171*3', 17, 5, '17*5:170*4:171*3'],
+            ['170:17:171*3', 17, 0, '170:171*3'],
             // existing 1 counts are not updated unless touched directly
             ['foo*4:bar*1:baz*3', 'uff', 2, 'uff*2:foo*4:bar*1:baz*3'],
             ['foo*4:bar*1:baz*3', 'bar', 1, 'bar:foo*4:baz*3'],
