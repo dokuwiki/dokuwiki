@@ -91,6 +91,11 @@ abstract class AbstractCollection
             if ($idx === '') continue;
             try {
                 if ($idx instanceof AbstractIndex) {
+                    // A shared index that is already writable was locked by whoever
+                    // created it (eg. the page index in Indexer::addPage()). Its lock
+                    // belongs to that owner, so we must not lock it here - otherwise our
+                    // unlock() would release a lock still needed by the caller.
+                    if ($idx->isWritable()) continue;
                     $idx->lock();
                 } else {
                     Lock::acquire($idx);
