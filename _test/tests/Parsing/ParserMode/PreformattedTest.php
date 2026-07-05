@@ -6,9 +6,11 @@ use dokuwiki\Parsing\ParserMode\Code;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\File;
 use dokuwiki\Parsing\ParserMode\GfmHr;
+use dokuwiki\Parsing\ParserMode\GfmListblock;
 use dokuwiki\Parsing\ParserMode\Header;
 use dokuwiki\Parsing\ParserMode\Listblock;
 use dokuwiki\Parsing\ParserMode\Preformatted;
+use dokuwiki\Parsing\ParserMode\Table;
 
 class PreformattedTest extends ParserTestBase
 {
@@ -183,6 +185,86 @@ class PreformattedTest extends ParserTestBase
             ['cdata',["\nBar"]],
             ['p_close',[]],
             ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+
+    function testIndentedListEndsTableNotSwallowedAsPreformatted() {
+        // The list-awareness lookahead on preformatted's entry patterns is
+        // what keeps an indented list line from being read as an indented code
+        // block. In base mode sort order already gives listblock the tie, but
+        // table mode accepts preformatted (a protected mode) without connecting
+        // listblock, so inside a table only the lookahead stops "\n  *" from
+        // entering preformatted and swallowing the list. Without it the list
+        // lines vanish and the table's section-edit range grows to cover them.
+        $this->P->addMode('table', new Table());
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->addMode('listblock', new Listblock());
+        $this->P->parse("| a |\n  * one\n  * two\nafter\n");
+        $calls = [
+            ['document_start', []],
+            ['table_open', [1, 1, 1]],
+            ['tablerow_open', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [" a "]],
+            ['tablecell_close', []],
+            ['tablerow_close', []],
+            ['table_close', [6]],
+            ['p_open', []],
+            ['cdata', ["* one"]],
+            ['p_close', []],
+            ['listu_open', []],
+            ['listitem_open', [1]],
+            ['listcontent_open', []],
+            ['cdata', [" two"]],
+            ['listcontent_close', []],
+            ['listitem_close', []],
+            ['listu_close', []],
+            ['p_open', []],
+            ['cdata', ["after"]],
+            ['p_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+
+    function testIndentedListEndsTableInMixedMarkdownSyntax() {
+        // Same table/preformatted regression, but in a Markdown-preferred mixed
+        // syntax (md+dw): the DokuWiki table still exists, but GfmListblock owns
+        // lists (with +, ordered markers and tab indents) and is not connected
+        // inside the table either. The list-guard's marker set must follow the
+        // active list mode, so a tab-indented list still ends the table here
+        // instead of being swallowed as an indented code block.
+        $this->setSyntax('md+dw');
+        $this->P->addMode('table', new Table());
+        $this->P->addMode('preformatted', new Preformatted());
+        $this->P->addMode('gfm_listblock', new GfmListblock());
+        $this->P->parse("| a |\n\t* one\n\t* two\nafter\n");
+        $calls = [
+            ['document_start', []],
+            ['table_open', [1, 1, 1]],
+            ['tablerow_open', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [" a "]],
+            ['tablecell_close', []],
+            ['tablerow_close', []],
+            ['table_close', [6]],
+            ['p_open', []],
+            ['cdata', ["* one"]],
+            ['p_close', []],
+            ['listu_open', []],
+            ['listitem_open', [1]],
+            ['listcontent_open', []],
+            ['nest', [[['cdata', ["two"]]]]],
+            ['listcontent_close', []],
+            ['listitem_close', []],
+            ['listu_close', []],
+            ['p_open', []],
+            ['cdata', ["\nafter"]],
+            ['p_close', []],
+            ['document_end', []],
         ];
         $this->assertCalls($calls, $this->H->calls);
     }

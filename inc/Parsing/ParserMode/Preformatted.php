@@ -31,8 +31,27 @@ class Preformatted extends AbstractMode
     {
         $indent = str_repeat(' ', $this->getIndentWidth());
 
-        $this->Lexer->addEntryPattern('\n' . $indent, $mode, 'preformatted');
-        $this->Lexer->addEntryPattern('\n\t', $mode, 'preformatted');
+        // An indented line is ambiguous with a list item, so the entry
+        // patterns must not swallow a line whose indent begins a list - the
+        // list has to win. In base mode sort order already gives the list mode
+        // the tie, but table mode connects preformatted as a protected
+        // sub-mode without connecting any list mode, so this lookahead is the
+        // only thing that lets an indented list end the table there (in every
+        // syntax the table exists in, including the mixed dw+md / md+dw
+        // combinations). The guard tracks whichever list mode is actually
+        // loaded. DokuWiki's Listblock treats a bare * or - as a marker even
+        // with no following space, so the guard rejects those two characters
+        // outright. Markdown's GfmListblock only starts a list when one of its
+        // markers - a bullet -, *, + or a digit run ending in . or ) - is
+        // followed by whitespace or the end of the line, so the guard mirrors
+        // that and still lets an indented code block that merely starts with
+        // such a character (e.g. a *** line) through.
+        $listGuard = $this->registry->isMdPreferred()
+            ? '(?!(?:[-*+]|\d{1,9}[.)])[ \t\n])'
+            : '(?![\*\-])';
+
+        $this->Lexer->addEntryPattern('\n' . $indent . $listGuard, $mode, 'preformatted');
+        $this->Lexer->addEntryPattern('\n\t' . $listGuard, $mode, 'preformatted');
 
         // match continuation lines inside the preformatted block
         $this->Lexer->addPattern('\n' . $indent, 'preformatted');
