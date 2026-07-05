@@ -78,4 +78,13 @@ class QueryParserTest extends \DokuWikiTest
 
         $this->assertEquals('test -baz "foo bar" @abc ^def', $actualQuery);
     }
+
+    public function testConvertDropsTooShortWildcardTerms()
+    {
+        $actualParsedQuery = (new QueryParser)->convert('wiki a*');
+
+        $this->assertEquals(['W+:wiki'], $actualParsedQuery['parsed_ary']);
+        $this->assertEquals(['wiki'], $actualParsedQuery['words']);
+        $this->assertEquals(['wiki'], $actualParsedQuery['highlight']);
+    }
 }

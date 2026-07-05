@@ -93,17 +93,36 @@ class QueryEvaluator
                 case 'AND':
                     $right = array_pop($stack);
                     $left = array_pop($stack);
+                    if (!$left && !$right) break;
+                    if (!$left) {
+                        $stack[] = $right;
+                        break;
+                    }
+                    if (!$right) {
+                        $stack[] = $left;
+                        break;
+                    }
                     $stack[] = $this->opAnd($left, $right);
                     break;
 
                 case 'OR':
                     $right = array_pop($stack);
                     $left = array_pop($stack);
+                    if (!$left && !$right) break;
+                    if (!$left) {
+                        $stack[] = $right;
+                        break;
+                    }
+                    if (!$right) {
+                        $stack[] = $left;
+                        break;
+                    }
                     $stack[] = $this->opOr($left, $right);
                     break;
 
                 case 'NOT':
                     $operand = array_pop($stack);
+                    if (!$operand) break;
                     $stack[] = new NegatedEntry($operand);
                     break;
             }

@@ -69,15 +69,15 @@ class Tokenizer
      * Plugins intercepting this event should also intercept INDEX_VERSION_GET
      *
      * @param string $text plain text
-     * @param bool $wc are wildcards allowed?
+     * @param bool $wcOk are wildcards allowed?
      * @return array  list of words in the text
      *
      * @author Tom N Harris <tnharris@whoopdedo.org>
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    public static function getWords(string $text, bool $wc = false): array
+    public static function getWords(string $text, bool $wcOk = false): array
     {
-        $wc = ($wc) ? '' : '\*';
+        $wc = $wcOk ? '' : '\*';
 
         // prepare the text to be tokenized
         $event = new Event('INDEXER_TEXT_PREPARE', $text);
@@ -106,7 +106,9 @@ class Tokenizer
         }
 
         foreach ($wordlist as $i => $word) {
+            $isInvalidWildcardTerm = $wcOk && str_contains($word, '*') && !static::isValidSearchTerm($word);
             if (
+                $isInvalidWildcardTerm ||
                 (!is_numeric($word) && strlen($word) < static::getMinWordLength())
                 || in_array($word, static::getStopwords(), true)
             ) {

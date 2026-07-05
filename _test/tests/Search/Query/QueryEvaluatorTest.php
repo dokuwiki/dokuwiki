@@ -267,5 +267,18 @@ class QueryEvaluatorTest extends \DokuWikiTest
         $this->assertEquals([], $result);
     }
 
+    public function testAndIgnoresMissingOperand()
+    {
+        $terms = [
+            'wiki' => $this->makeTerm('wiki', ['page1' => 2, 'page2' => 1]),
+        ];
+        $rpn = ['W+:wiki', 'W+:a*', 'AND'];
+
+        $evaluator = new QueryEvaluator($rpn, $terms);
+        $result = $evaluator->evaluate();
+
+        $this->assertEquals(['page1' => 2, 'page2' => 1], $result);
+    }
+
     // endregion
 }
