@@ -40,9 +40,11 @@ abstract class AbstractMode
      * @var string[] mode names accepted as nested content inside this mode.
      *
      * Resolved once in setModeRegistry(): allowedCategories() mapped to concrete
-     * mode names via the registry, then passed through filterAllowedModes(). A
-     * subclass that does not use categories may instead assign this list
-     * directly, in which case it is used as-is.
+     * mode names via the registry and merged with any names a subclass assigned
+     * to this list directly, then passed through filterAllowedModes(). A subclass
+     * may therefore combine categories with individual mode names (e.g. a sibling
+     * component), or, when it declares no categories, assign the list directly and
+     * have it used as-is.
      */
     protected $allowedModes = [];
 
@@ -163,8 +165,10 @@ abstract class AbstractMode
      * This is the earliest point the per-parse registry is available, so the
      * accepted-mode list is resolved here, once: allowedCategories() mapped to
      * concrete mode names via the registry taxonomy (complete by now, plugin
-     * modes included), then passed through filterAllowedModes(). A subclass that
-     * does not use categories has its directly-assigned $allowedModes used as-is.
+     * modes included), merged with any names the subclass assigned to
+     * $allowedModes directly, then passed through filterAllowedModes(). A subclass
+     * that does not use categories has its directly-assigned $allowedModes used
+     * as-is.
      *
      * @param ModeRegistry $registry
      * @return void
@@ -173,11 +177,12 @@ abstract class AbstractMode
     {
         $this->registry = $registry;
 
+        $modes = (array) $this->allowedModes;
         $categories = $this->allowedCategories();
-        $modes = $categories
-            ? $registry->getModesForCategories($categories)
-            : (array) $this->allowedModes;
-        $this->allowedModes = $this->filterAllowedModes($modes);
+        if ($categories) {
+            $modes = array_merge($modes, $registry->getModesForCategories($categories));
+        }
+        $this->allowedModes = $this->filterAllowedModes(array_values(array_unique($modes)));
     }
 
     /**
