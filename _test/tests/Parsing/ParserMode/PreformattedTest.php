@@ -5,6 +5,7 @@ namespace dokuwiki\test\Parsing\ParserMode;
 use dokuwiki\Parsing\ParserMode\Code;
 use dokuwiki\Parsing\ParserMode\Eol;
 use dokuwiki\Parsing\ParserMode\File;
+use dokuwiki\Parsing\ParserMode\GfmHr;
 use dokuwiki\Parsing\ParserMode\Header;
 use dokuwiki\Parsing\ParserMode\Listblock;
 use dokuwiki\Parsing\ParserMode\Preformatted;
@@ -254,6 +255,71 @@ class PreformattedTest extends ParserTestBase
         $this->P->parse("\n    \n    \n\n");
         $modes = array_column($this->H->calls, 0);
         $this->assertNotContains('preformatted', $modes);
+    }
+
+    function testBlankIndentedLineKeepsFollowingContent() {
+        // A "blank" line that is empty after its indent (classic trailing
+        // whitespace) followed by a column-0 line used to make the
+        // zero-width preformatted exit fire with nothing consumed, tripping
+        // the lexer's no-advance guard and silently dropping the rest of the
+        // document. The block is whitespace-only so it emits no preformatted
+        // call; the following paragraph must survive.
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->parse("abc\n  \nmore\n");
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\nabc"]],
+            ['p_close',[]],
+            ['p_open',[]],
+            ['cdata',["\nmore"]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testBlankIndentedLineAfterCodeKeepsFollowingContent() {
+        // Same guard, but the blank indented line is a continuation line of
+        // a non-empty preformatted block: the block renders and the trailing
+        // paragraph must still survive.
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->parse("abc\n  code\n  \nmore\n");
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\nabc"]],
+            ['p_close',[]],
+            ['preformatted',['code']],
+            ['p_open',[]],
+            ['cdata',["\nmore"]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testBlankIndentedLineKeepsFollowingBlockBoundary() {
+        // The zero-width preformatted exit exists to leave the boundary \n in
+        // the stream so a following block mode can anchor on it (e.g. an <hr>
+        // right after an indented code block). That must keep working even
+        // when the exit fires with nothing consumed after a blank indented
+        // line: the hr fires and the trailing paragraph survives.
+        $this->P->addMode('preformatted',new Preformatted());
+        $this->P->addMode('gfm_hr',new GfmHr());
+        $this->P->parse("abc\n  \n----\nmore\n");
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\nabc"]],
+            ['p_close',[]],
+            ['hr',[]],
+            ['p_open',[]],
+            ['cdata',["\nmore"]],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+        $this->assertCalls($calls, $this->H->calls);
     }
 
     function testPreformattedPlusHeaderAndEol() {

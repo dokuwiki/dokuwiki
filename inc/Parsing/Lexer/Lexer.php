@@ -151,7 +151,15 @@ class Lexer
                 return false;
             }
             $newOffset = $matchPos + strlen($matched);
-            if ($newOffset === $offset) {
+            if ($newOffset === $offset && $mode !== self::MODE_EXIT) {
+                // No byte was consumed. For an ordinary match this means the
+                // pattern set cannot advance and we must stop to avoid an
+                // infinite loop. A zero-width EXIT (a lookahead-only exit
+                // pattern such as Preformatted's (?=\n[^ \t\n])) is the
+                // exception: it makes progress by popping the mode stack,
+                // leaving the boundary byte for the parent mode to consume on
+                // the next iteration. The stack strictly shrinks on each such
+                // exit, so this cannot loop forever.
                 return false;
             }
             $offset = $newOffset;
