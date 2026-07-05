@@ -349,4 +349,27 @@ class FormattingTest extends ParserTestBase
         $this->assertContains('strong_open', array_column($this->H->calls, 0));
         $this->assertContains('strong_close', array_column($this->H->calls, 0));
     }
+
+    /**
+     * The closer lookahead scans at most AbstractMode::CLOSER_SCAN_LIMIT
+     * (1024) characters: spans up to that length are recognized, a closer
+     * further away leaves the delimiters literal. The cap bounds the
+     * parser's worst case on delimiter-dense input that never closes.
+     */
+    function testCloserScanLimit()
+    {
+        $this->P->addMode('strong', new Strong());
+        $this->P->parse('**' . str_repeat('a', 1000) . '** **' . str_repeat('b', 2000) . '**');
+        $modes = array_column($this->H->calls, 0);
+        $this->assertContains(
+            'strong_open',
+            $modes,
+            'A 1000 character span must still be recognized'
+        );
+        $this->assertSame(
+            1,
+            count(array_keys($modes, 'strong_open')),
+            'A span whose closer is beyond the scan limit must stay literal'
+        );
+    }
 }

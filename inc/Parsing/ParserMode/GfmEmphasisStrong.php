@@ -38,8 +38,8 @@ class GfmEmphasisStrong extends AbstractFormatting
         //   \*\*\*                   — exactly three opening `*`
         //   (?=[^\s*])               — next body char: not whitespace, not `*`
         //                              (flanking-opener rule)
-        //   (?=                      — lookahead: a valid closer must exist
-        //     CONTENT_UNTIL_PARA     —   body that doesn't cross a paragraph
+        //   closerAhead(             — lookahead: a valid closer must exist
+        //                              before the next paragraph break
         //     [^\s]                  —   last body char: not whitespace
         //                              (flanking-closer rule)
         //     \*\*\*                 —   closing `***`
@@ -47,7 +47,7 @@ class GfmEmphasisStrong extends AbstractFormatting
         //                              (exactly 3, not 4+)
         //   )
         return '(?<!\*)\*\*\*(?=[^\s*])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]\*\*\*(?!\*))';
+            . self::closerAhead('[^\s]\*\*\*(?!\*)');
     }
 
     /** @inheritdoc */

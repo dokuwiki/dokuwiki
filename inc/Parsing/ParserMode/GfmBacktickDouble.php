@@ -31,15 +31,15 @@ class GfmBacktickDouble extends GfmBacktickSingle
 
     /**
      * Entry pattern. Same shape as the parent but with doubled
-     * delimiters. The body character class admits either a non-backtick
-     * or a lone backtick (one that isn't followed by another, so not
-     * part of a run-of-two) — such a stray backtick cannot form a valid
-     * n=2 closer.
+     * delimiters. The body admits a lone backtick (one that isn't
+     * followed by another, so not part of a run-of-two) instead of the
+     * parent's backtick runs — such a stray backtick cannot form a valid
+     * n=2 closer. Deterministic and possessive like the parent's body.
      */
     protected function getEntryPattern(): string
     {
         return '(?<!`)``(?!`)(?='
-            . '(?:' . self::NOT_AT_PARA_BREAK . '(?:[^`]|`(?!`)))+'
+            . '(?:[^`\n]++|\n(?![ \t]*\n)|`(?!`))++'
             . '(?<!`)``(?!`)'
             . ')';
     }

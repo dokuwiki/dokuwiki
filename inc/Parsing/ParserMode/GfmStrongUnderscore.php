@@ -35,7 +35,7 @@ class GfmStrongUnderscore extends AbstractFormatting
     {
         return self::NO_WORD_BEFORE
             . '__(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]__' . self::NO_WORD_AFTER . ')';
+            . self::closerAhead('[^\s]__' . self::NO_WORD_AFTER);
     }
 
     /** @inheritdoc */

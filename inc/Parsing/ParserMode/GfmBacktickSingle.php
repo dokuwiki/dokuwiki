@@ -56,15 +56,21 @@ class GfmBacktickSingle extends AbstractMode
     /**
      * Entry pattern. The length-boundary guards (?<!`)...(?!`) around
      * each delimiter ensure a run of two or more backticks is never read
-     * as an n=1 opener or closer. The body character class, which admits
-     * either a non-backtick or a run of two-or-more backticks, lets
-     * those longer runs live inside the body since they cannot be valid
-     * n=1 closers.
+     * as an n=1 opener or closer. The body admits runs of non-backticks,
+     * newlines that don't start a blank line, and runs of two-or-more
+     * backticks — the latter live inside the body since they cannot be
+     * valid n=1 closers.
+     *
+     * The body alternatives start with mutually exclusive characters and
+     * all quantifiers are possessive, so the closer-existence scan never
+     * backtracks: it stops at the first lone backtick (or fails at the
+     * paragraph break) without accumulating backtracking state. See
+     * AbstractMode::closerAhead() for why that matters.
      */
     protected function getEntryPattern(): string
     {
         return '(?<!`)`(?!`)(?='
-            . '(?:' . self::NOT_AT_PARA_BREAK . '(?:[^`]|``+))+'
+            . '(?:[^`\n]++|\n(?![ \t]*\n)|``++)++'
             . '(?<!`)`(?!`)'
             . ')';
     }

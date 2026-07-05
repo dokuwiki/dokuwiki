@@ -61,13 +61,72 @@ abstract class AbstractMode
     protected const NOT_AT_PARA_BREAK = '(?!\n[ \t]*\n)';
 
     /**
-     * Quantified group matching any character that does not start a paragraph
-     * break. Convenience for the common case of "consume until paragraph end".
+     * Maximum distance in bytes that closerAhead() scans for a closing
+     * delimiter. Spans whose closer sits further away from the opener
+     * (within the same paragraph) are not recognized and render as literal
+     * text. The cap bounds the parser's worst case on delimiter-dense
+     * input that never closes; see closerAhead() for the full reasoning.
+     */
+    protected const CLOSER_SCAN_LIMIT = 1024;
+
+    /**
+     * Builds a zero-width assertion: a closer matching the given pattern
+     * occurs within the next CLOSER_SCAN_LIMIT characters and before the
+     * next paragraph break.
      *
      * Example:
-     *     return '\*\*(?=' . self::CONTENT_UNTIL_PARA . '\*\*)';
+     *     return '\*\*(?=[^\s*])' . self::closerAhead('[^\s]\*\*');
+     *
+     * The scan advances one character at a time and stops at the first
+     * position where the closer matches. The quantifier is possessive, so
+     * the regex engine never backtracks into the scan and discards its
+     * backtracking state as it goes: one scan costs time linear in the
+     * distance to the closer and constant memory. On real content closers
+     * sit near their openers, so parsing stays effectively linear.
+     *
+     * The cap exists because the lexer runs this lookahead once per opener
+     * candidate: with an unbounded scan, a paragraph stuffed with openers
+     * that never close costs openers-times-paragraph-length - quadratic
+     * wall-clock on crafted input. The cap makes the worst case linear in
+     * the document size (openers times the cap), trading away spans longer
+     * than CLOSER_SCAN_LIMIT, which do not occur in real content. The
+     * naive greedy form this replaces (consume everything up to the
+     * paragraph break, then back up until the closer matches) had the
+     * unbounded quadratic worst case, hit it on ordinary pages too (any
+     * opener whose paragraph runs long re-scanned from the paragraph end)
+     * and kept one backtracking frame per scanned character while doing
+     * so: on large paragraphs that exhausted the PCRE JIT stack (the match
+     * silently failed and the lexer emitted everything after it as plain
+     * text) or, with the JIT disabled, the PHP memory limit. Truly linear
+     * parsing without a span-length limit needs closer verification
+     * outside the per-opener regex (CommonMark-style delimiter pairing).
+     *
+     * The closer pattern must not be able to match starting on whitespace:
+     * the scan stops unconditionally at a paragraph break and only tests the
+     * closer once there.
+     *
+     * The assertion is built from two lookaheads because of how PCRE
+     * compiles counted repeats: {0,n} on a GROUP is compiled by replicating
+     * the group's bytecode n times, so putting the cap directly on the
+     * scanning group blows the maximum pattern size ("regular expression is
+     * too large"). A counted repeat on a single dot compiles to one compact
+     * opcode instead. So the first lookahead probes, via a bounded lazy dot,
+     * that a closer occurs within the cap at all, and the second runs the
+     * possessive stop-at-the-first-closer scan described above - unbounded
+     * as written, but the first closer is within the cap when the probe
+     * succeeded and the scan never runs past the first closer, so it is
+     * bounded in effect.
+     *
+     * @param string $closer pattern for the closing delimiter, including any
+     *                       flanking context (e.g. a preceding non-whitespace
+     *                       character class)
+     * @return string
      */
-    protected const CONTENT_UNTIL_PARA = '(?:' . self::NOT_AT_PARA_BREAK . '.)*';
+    protected static function closerAhead(string $closer): string
+    {
+        return '(?=.{0,' . self::CLOSER_SCAN_LIMIT . '}?' . $closer . ')'
+            . '(?=(?:' . self::NOT_AT_PARA_BREAK . '(?!' . $closer . ').)*+' . $closer . ')';
+    }
 
     /**
      * Character class: a single "non-word" character — ASCII whitespace or

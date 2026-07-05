@@ -31,7 +31,7 @@ class GfmEmphasisStrongUnderscore extends GfmEmphasisStrong
         // `(?!_)` for exactly-3 length, and NO_WORD_AFTER for word-boundary.
         return self::NO_WORD_BEFORE
             . '(?<!_)___(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]___(?!_)' . self::NO_WORD_AFTER . ')';
+            . self::closerAhead('[^\s]___(?!_)' . self::NO_WORD_AFTER);
     }
 
     /** @inheritdoc */

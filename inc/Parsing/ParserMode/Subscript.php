@@ -19,7 +19,7 @@ class Subscript extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '<sub>(?=[^\s])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]</sub>)';
+        return '<sub>(?=[^\s])' . self::closerAhead('[^\s]</sub>');
     }
 
     /** @inheritdoc */

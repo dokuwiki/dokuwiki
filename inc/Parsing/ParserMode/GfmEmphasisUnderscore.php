@@ -38,7 +38,7 @@ class GfmEmphasisUnderscore extends AbstractFormatting
         // to ever close (or close at an invalid position).
         return self::NO_WORD_BEFORE
             . '_(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]_' . self::NO_WORD_AFTER . ')';
+            . self::closerAhead('[^\s]_' . self::NO_WORD_AFTER);
     }
 
     /** @inheritdoc */

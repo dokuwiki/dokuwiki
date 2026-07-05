@@ -86,6 +86,9 @@ class ParallelRegex
                     case PREG_BACKTRACK_LIMIT_ERROR:
                         msg('A PCRE backtrack error occured. Try to increase the pcre.backtrack_limit in php.ini', -1);
                         break;
+                    case PREG_JIT_STACKLIMIT_ERROR:
+                        msg('A PCRE JIT stacklimit error occured. Try to disable pcre.jit in php.ini', -1);
+                        break;
                     case PREG_RECURSION_LIMIT_ERROR:
                         msg('A PCRE recursion error occured. Try to increase the pcre.recursion_limit in php.ini', -1);
                         break;
