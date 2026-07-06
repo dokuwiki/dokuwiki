@@ -37,7 +37,7 @@ class common_saveWikiText_test extends DokuWikiTest {
         $attic = wikiFN($lastRevInfo['id'], $lastRevInfo['date']);
         $this->assertFileExists($attic, 'file missing in attic');
         $files = count(glob(dirname($attic).'/'.noNS($lastRevInfo['id']).'.*'));
-        $this->assertLessThanOrEqual($expectedRevs, $files, 'detectExternalEdit() should not add too often old revs');
+        $this->assertLessThanOrEqual($expectedRevs, $files, 'synthesizeExternalEdit() should not add too often old revs');
 
         // second to last revision (optional), intended to check logline of previous external edits
         if ($expected2ndLastEntry && count($revisions) > 1) {
