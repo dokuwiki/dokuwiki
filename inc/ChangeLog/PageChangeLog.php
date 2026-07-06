@@ -50,9 +50,8 @@ class PageChangeLog extends ChangeLog
     }
 
     /**
-     * Copy the externally-edited page to the attic at the synthesized revision date.
-     * If the file mtime is older than the last known revision (broken chronology),
-     * touch the file forward so future reads see a consistent state.
+     * Snapshot the externally-edited page to the attic at the synthesized revision date. Pages
+     * archive every revision, so the current (externally-changed) content is copied too.
      *
      * @param array $revInfo synthesized revision info
      * @return bool true on success (or nothing to copy), false if the attic write failed
@@ -61,12 +60,6 @@ class PageChangeLog extends ChangeLog
     {
         $file = $this->getFilename();
         if (!file_exists($file)) return true;
-
-        // rescue: file mtime older than last revision — touch forward to the synthesized date
-        if (empty($revInfo['timestamp'])) {
-            if (!@touch($file, $revInfo['date'])) return false;
-            clearstatcache(false, $file);
-        }
 
         $atticfile = $this->getFilename($revInfo['date']);
         return io_writeWikiPage($atticfile, io_readWikiPage($file, $this->id, ''), $this->id, $revInfo['date']);

@@ -595,11 +595,11 @@ abstract class ChangeLog
      * Otherwise, the change information since the last revision caused outside DokuWiki
      * should be returned, which is referred as "external revision".
      *
-     * External revisions are persisted to the changelog (and, for non-delete cases, copied
-     * to the attic) on first detection so subsequent reads see one canonical entry instead
-     * of recomputing a synthesized one. If persistence fails (e.g. the data dir is not
-     * writable in the current process context), the in-memory synthesized entry is still
-     * returned so the read path keeps working.
+     * External revisions are persisted to the changelog on first detection so subsequent reads
+     * see one canonical entry instead of recomputing a synthesized one (and, where the revision
+     * scheme keeps it, the content is snapshotted to the attic). If persistence fails (e.g. the
+     * data dir is not writable in the current process context), the in-memory synthesized entry
+     * is still returned so the read path keeps working.
      *
      * @return bool|array false when page had never existed or array with entries:
      *      - date:  revision identifier (timestamp or last revision +1)
@@ -682,7 +682,7 @@ abstract class ChangeLog
             'user' => '',
             'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
             'extra' => '',
-            'sizechange' => -io_getSizeFile($this->getFilename($clogRev)),
+            'sizechange' => -$this->lastRevisionSize($clogRev),
             'timestamp' => false,
             'mode' => $this->getMode()
         ];
@@ -732,7 +732,7 @@ abstract class ChangeLog
             'user' => '',
             'sum'  => $sum,
             'extra' => '',
-            'sizechange' => filesize($filename) - io_getSizeFile($this->getFilename($clogRev)),
+            'sizechange' => filesize($filename) - $this->lastRevisionSize($clogRev),
             'timestamp' => $timestamp,
             'mode' => $this->getMode()
         ];
@@ -886,9 +886,9 @@ abstract class ChangeLog
      * Persist a synthesized external-revision entry to the changelog
      *
      * Holds the local changelog lock around the entire detect-and-write critical section
-     * (idempotency check, attic copy, log append) so it serializes against any other
-     * writer that goes through addLogEntry(). The append uses writeLogEntry() to avoid
-     * re-entering the lock we already hold.
+     * (idempotency check, mtime repair, optional attic snapshot, log append) so it serializes
+     * against any other writer that goes through addLogEntry(). The append uses writeLogEntry()
+     * to avoid re-entering the lock we already hold.
      *
      * Returns false (without raising) when the attic write fails or another request
      * already persisted the entry. The caller falls back to the in-memory synthesized
@@ -912,6 +912,7 @@ abstract class ChangeLog
             }
 
             if ($revInfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+                if (!$this->repairExternalMtime($revInfo)) return false;
                 if (!$this->saveExternalAttic($revInfo)) return false;
             }
 
@@ -926,14 +927,55 @@ abstract class ChangeLog
     }
 
     /**
-     * Save the externally-modified file to the attic before the synthesized log entry is
-     * persisted. For deletions there is no file to copy and implementations should return
-     * true (the persist flow skips this call for the delete branch).
+     * Move the current file's modification time forward to the synthesized revision date when
+     * the detected external change had an unreliable date (its file mtime was older than the
+     * last revision, so it was dated just after that revision instead). Without this the file
+     * mtime would still disagree with the changelog on the next read and the same external
+     * change would be re-detected on every request.
+     *
+     * Only relevant for non-delete changes (a deletion has no file); the persist flow calls it
+     * only in that case.
+     *
+     * @param array $revInfo synthesized revision info with 'date' and 'timestamp' set
+     * @return bool false only if the file exists but could not be touched
+     */
+    protected function repairExternalMtime(array $revInfo)
+    {
+        // a set timestamp means the date is the real file mtime — nothing to repair
+        if (!empty($revInfo['timestamp'])) return true;
+
+        $file = $this->getFilename();
+        if (!file_exists($file)) return true;
+
+        if (!@touch($file, $revInfo['date'])) return false;
+        clearstatcache(false, $file);
+        return true;
+    }
+
+    /**
+     * Snapshot the externally-modified content to the attic before the synthesized log entry
+     * is persisted, so the revision stays retrievable. Called only for non-delete changes.
+     *
+     * Whether this is done depends on the item's revision scheme: pages archive every
+     * revision, so they snapshot; media never archive the current revision, so they do not.
      *
      * @param array $revInfo synthesized revision info with 'date' set
      * @return bool true on success or no-op, false to abort persistence
      */
     abstract protected function saveExternalAttic(array $revInfo);
+
+    /**
+     * Byte size of the last recorded revision, used as the "before" size when computing the
+     * size change of a synthesized external edit or deletion. Reads the size from that
+     * revision's attic copy.
+     *
+     * @param int $clogRev timestamp of the last recorded revision
+     * @return int size in bytes (0 when it cannot be determined)
+     */
+    protected function lastRevisionSize($clogRev)
+    {
+        return io_getSizeFile($this->getFilename($clogRev));
+    }
 
     /**
      * Whether the current item file's content is byte-identical to the stored content

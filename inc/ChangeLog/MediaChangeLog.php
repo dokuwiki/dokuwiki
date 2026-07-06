@@ -50,50 +50,62 @@ class MediaChangeLog extends ChangeLog
     }
 
     /**
-     * Copy the externally-modified media file to the attic at the synthesized revision date.
-     * If the file mtime is older than the last known revision (broken chronology),
-     * touch the file forward so future reads see a consistent state.
+     * Media deliberately does not keep an archive of its current revision — only the previous
+     * content is copied to the attic when a file is replaced or deleted (to save space). A
+     * detected external edit is the new current revision, so it is not snapshotted either: it
+     * will be archived like any other revision if and when it is later replaced. The changelog
+     * entry is still recorded by the caller, and the file-mtime repair for an unreliable date
+     * is handled by the base class.
      *
-     * @param array $revInfo synthesized revision info
-     * @return bool true on success (or nothing to copy), false if the attic copy failed
+     * @param array $revInfo synthesized revision info (unused: nothing is archived)
+     * @return bool always true
      */
     protected function saveExternalAttic(array $revInfo)
     {
-        global $conf;
-
-        $file = $this->getFilename();
-        if (!file_exists($file)) return true;
-
-        // rescue: file mtime older than last revision — touch forward to the synthesized date
-        if (empty($revInfo['timestamp'])) {
-            if (!@touch($file, $revInfo['date'])) return false;
-            clearstatcache(false, $file);
-        }
-
-        $atticfile = $this->getFilename($revInfo['date']);
-        io_makeFileDir($atticfile);
-        if (!@copy($file, $atticfile)) return false;
-        if (!empty($conf['fmode'])) @chmod($atticfile, $conf['fmode']);
         return true;
     }
 
     /**
-     * Compare the current media file against the attic copy of a revision.
+     * Byte size of the last recorded revision.
      *
-     * Media revisions are stored as raw copies. The (potentially large, binary) files are
-     * not loaded into memory: a differing size rules out a match immediately, otherwise the
-     * contents are hashed in a streaming fashion via md5_file().
+     * Media never archives its current revision (only the previous content is copied to the
+     * attic on replace or delete), so the last revision has no attic copy and its size cannot
+     * be read from disk. It is reconstructed instead as the previous revision's archived size
+     * plus the size change logged for the last revision. The first revision has no previous
+     * one, so its logged change is already its full size.
      *
-     * @param int $rev revision timestamp to compare the current file against
-     * @return bool true if the content is identical
+     * @param int $clogRev timestamp of the last recorded revision
+     * @return int size in bytes (0 when it cannot be determined)
+     */
+    protected function lastRevisionSize($clogRev)
+    {
+        $revInfo = $this->getRevisionInfo($clogRev, false);
+        $sizechange = is_array($revInfo) ? (int) $revInfo['sizechange'] : 0;
+
+        $prev = $this->getRelativeRevision($clogRev, -1);
+        $prevSize = ($prev === false) ? 0 : io_getSizeFile($this->getFilename($prev));
+
+        return max($prevSize + $sizechange, 0);
+    }
+
+    /**
+     * Tell a real external edit from a mere mtime bump (touch, rsync --times, unzip of
+     * identical bytes, ...).
+     *
+     * The current media revision is never archived, so there is no stored copy to compare the
+     * current file against byte for byte. Its expected size is reconstructed instead (see
+     * lastRevisionSize()) and compared to the current file's size: a pure mtime bump leaves the
+     * size unchanged, so an equal size means the content did not change. A same-size external
+     * replacement cannot be told apart this way and is (rarely) treated as unchanged.
+     *
+     * @param int $rev revision timestamp to compare the current file against (the last revision)
+     * @return bool true if the content is considered unchanged
      */
     protected function currentContentMatchesRevision($rev)
     {
         $current = $this->getFilename();
-        $attic = $this->getFilename($rev);
-        if (!file_exists($current) || !file_exists($attic)) return false;
-        if (filesize($current) !== filesize($attic)) return false;
+        if (!file_exists($current)) return false;
 
-        return md5_file($current) === md5_file($attic);
+        return filesize($current) === $this->lastRevisionSize($rev);
     }
 }
