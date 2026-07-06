@@ -160,12 +160,18 @@ class MediaFile
      * Returns the final display dimensions a fetch.php URL with the given
      * parameters would produce, including EXIF auto-rotation
      *
+     * The parameters mirror fetch.php one to one. With $fit (the fit=1 image
+     * URL flag) the image is fitted into the box and never enlarged. Without
+     * it, a request giving both width and height is a center-crop while a
+     * single-dimension request is a plain resize; both may enlarge a small
+     * image, exactly as fetch.php does.
+     *
      * @param int $w requested width (0 = no constraint)
      * @param int $h requested height (0 = no constraint)
-     * @param bool $crop true for center-crop, false for bounding-box fit
+     * @param bool $fit true for the no-upscale bounding-box fit (fit=1 URLs)
      * @return array [width, height]; [0, 0] for non-images/unreadable files
      */
-    public function getDisplayDimensions($w = 0, $h = 0, $crop = false)
+    public function getDisplayDimensions($w = 0, $h = 0, $fit = false)
     {
         try {
             $info = (new ImageInfo($this->path))->autorotate();
@@ -173,8 +179,8 @@ class MediaFile
             return [0, 0];
         }
         if ($w === 0 && $h === 0) return $info->getDimensions();
-        if ($crop) return $info->crop($w, $h)->getDimensions();
-        return $info->resize($w, $h)->getDimensions();
+        if (!$fit && $w && $h) return $info->crop($w, $h)->getDimensions();
+        return $info->resize($w, $h, !$fit)->getDimensions();
     }
 
     /**

@@ -27,15 +27,32 @@ class MediaFileTest extends \DokuWikiTest
     public function testGetDisplayDimensionsBboxFitRotated()
     {
         $mf = new MediaFile($this->rotated);
-        // raw 20x30 -> rotated 30x20 -> fit into 500x500 preserves aspect,
-        // max dimension scales from 30 to 500 => 500 x round(500 * 20/30) = 500 x 333
-        $this->assertSame([500, 333], $mf->getDisplayDimensions(500, 500, false));
+        // raw 20x30 -> rotated 30x20 -> already fits inside 500x500, so the
+        // no-upscale bounding-box fit (fit=1 URLs) keeps it at its native size
+        $this->assertSame([30, 20], $mf->getDisplayDimensions(500, 500, true));
+    }
+
+    public function testGetDisplayDimensionsBboxFitScaleDown()
+    {
+        $mf = new MediaFile($this->rotated);
+        // rotated 30x20 fitted into a smaller 15x15 box preserves aspect,
+        // scale = min(15/30, 15/20) = 0.5 => 15 x 10
+        $this->assertSame([15, 10], $mf->getDisplayDimensions(15, 15, true));
+    }
+
+    public function testGetDisplayDimensionsResizeWithoutFitUpscales()
+    {
+        $mf = new MediaFile($this->rotated);
+        // no fit flag + single dimension = plain resize, which enlarges small
+        // images just as fetch.php does: rotated 30x20 to width 500 => 500 x round(500 * 20/30)
+        $this->assertSame([500, 333], $mf->getDisplayDimensions(500, 0, false));
     }
 
     public function testGetDisplayDimensionsCropPassthrough()
     {
+        // both dimensions without fit = center-crop, producing exactly the box
         $mf = new MediaFile($this->rotated);
-        $this->assertSame([100, 100], $mf->getDisplayDimensions(100, 100, true));
+        $this->assertSame([100, 100], $mf->getDisplayDimensions(100, 100, false));
     }
 
     public function testGetDisplayDimensionsNativeWhenNoRequest()

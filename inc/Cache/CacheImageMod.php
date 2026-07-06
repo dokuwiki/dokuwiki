@@ -16,11 +16,13 @@ class CacheImageMod extends Cache
      * @param int $h new height in pixel
      * @param string $ext Image extension - no leading dot
      * @param bool $crop Is this a crop?
+     * @param bool $upscale Was upscaling allowed? Same dimensions yield different output when disabled
      */
-    public function __construct($file, $w, $h, $ext, $crop)
+    public function __construct($file, $w, $h, $ext, $crop, $upscale = true)
     {
         $fullext = '.media.' . $w . 'x' . $h;
         $fullext .= $crop ? '.crop' : '';
+        $fullext .= $upscale ? '' : '.noup';
         $fullext .= ".$ext";
 
         $this->file = $file;

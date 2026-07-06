@@ -67,7 +67,8 @@ class Display
 
         if (!$this->mediaFile->isImage()) return '';
 
-        [$dw, $dh] = $this->mediaFile->getDisplayDimensions($w, $h, false);
+        // the src below uses fit=1, so predict the matching no-upscale dimensions
+        [$dw, $dh] = $this->mediaFile->getDisplayDimensions($w, $h, true);
         if ($dw <= 0) return '';
 
         $id = $this->mediaFile->getId();

@@ -101,9 +101,9 @@ class GdAdapter extends Adapter
      * @inheritDoc
      * @throws Exception
      */
-    public function resize($width, $height)
+    public function resize($width, $height, $upscale = true)
     {
-        list($width, $height) = ImageInfo::boundingBox($this->width, $this->height, $width, $height);
+        list($width, $height) = ImageInfo::boundingBox($this->width, $this->height, $width, $height, $upscale);
         $this->resizeOperation($width, $height);
         return $this;
     }
@@ -112,9 +112,31 @@ class GdAdapter extends Adapter
      * @inheritDoc
      * @throws Exception
      */
-    public function crop($width, $height)
+    public function crop($width, $height, $upscale = true)
     {
-        list($this->width, $this->height, $offsetX, $offsetY) = $this->cropPosition($width, $height);
+        $width = (int)$width;
+        $height = (int)$height;
+        if ($width == 0 && $height == 0) {
+            throw new Exception('You can not crop to 0x0');
+        }
+        // an omitted dimension results in a square
+        if (!$height) $height = $width;
+        if (!$width) $width = $height;
+
+        if (!$upscale && ($width > $this->width || $height > $this->height)) {
+            // never enlarge: crop the oversized dimension(s) centered, without scaling
+            $cropWidth = min($width, $this->width);
+            $cropHeight = min($height, $this->height);
+            list($offsetX, $offsetY) = $this->centerOffset($cropWidth, $cropHeight);
+            // the extracted region equals the output, so nothing is scaled
+            $width = $cropWidth;
+            $height = $cropHeight;
+        } else {
+            list($cropWidth, $cropHeight, $offsetX, $offsetY) = $this->cropPosition($width, $height);
+        }
+
+        $this->width = $cropWidth;
+        $this->height = $cropHeight;
         $this->resizeOperation($width, $height, $offsetX, $offsetY);
         return $this;
     }
@@ -266,25 +288,14 @@ class GdAdapter extends Adapter
      * Given the wanted final size, this calculates which exact area needs to be cut
      * from the original image to be then resized to the wanted dimensions.
      *
-     * @param int $width
-     * @param int $height
+     * The dimensions are expected to be already resolved to non-zero pixel values.
+     *
+     * @param int $width resolved target width
+     * @param int $height resolved target height
      * @return array (cropWidth, cropHeight, offsetX, offsetY)
-     * @throws Exception
      */
     protected function cropPosition($width, $height)
     {
-        if ($width == 0 && $height == 0) {
-            throw new Exception('You can not crop to 0x0');
-        }
-
-        if (!$height) {
-            $height = $width;
-        }
-
-        if (!$width) {
-            $width = $height;
-        }
-
         // calculate ratios
         $oldRatio = $this->width / $this->height;
         $newRatio = $width / $height;
@@ -308,11 +319,24 @@ class GdAdapter extends Adapter
             }
         }
 
-        // calculate crop offset
-        $offsetX = (int)(($this->width - $cropWidth) / 2);
-        $offsetY = (int)(($this->height - $cropHeight) / 2);
+        list($offsetX, $offsetY) = $this->centerOffset($cropWidth, $cropHeight);
 
         return [$cropWidth, $cropHeight, $offsetX, $offsetY];
+    }
+
+    /**
+     * Calculate the top left offset to extract a centered region of the given size
+     *
+     * @param int $cropWidth width of the region to extract
+     * @param int $cropHeight height of the region to extract
+     * @return array (offsetX, offsetY)
+     */
+    protected function centerOffset($cropWidth, $cropHeight)
+    {
+        return [
+            (int)(($this->width - $cropWidth) / 2),
+            (int)(($this->height - $cropHeight) / 2),
+        ];
     }
 
     /**

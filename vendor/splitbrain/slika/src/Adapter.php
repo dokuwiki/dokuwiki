@@ -61,9 +61,10 @@ abstract class Adapter
      *
      * @param int|string $width in pixels or %
      * @param int|string $height in pixels or %
+     * @param bool $upscale when false, an image smaller than the target is kept at its original size
      * @return Adapter
      */
-    abstract public function resize($width, $height);
+    abstract public function resize($width, $height, $upscale = true);
 
 
     /**
@@ -71,11 +72,12 @@ abstract class Adapter
      *
      * You may omit one of the dimensions to use a square area
      *
-     * @param int|string $width in pixels or %
-     * @param int|string $height in pixels or %
+     * @param int $width in pixels
+     * @param int $height in pixels
+     * @param bool $upscale when false, an image smaller than the target area is cropped but never enlarged
      * @return Adapter
      */
-    abstract public function crop($width, $height);
+    abstract public function crop($width, $height, $upscale = true);
 
     /**
      * Save the new file

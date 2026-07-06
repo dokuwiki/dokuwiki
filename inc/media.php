@@ -1732,9 +1732,10 @@ function media_nstree_li($item)
  * @param int    $w    desired width
  * @param int    $h    desired height
  * @param bool   $crop should a center crop be used?
+ * @param bool   $upscale when false, a smaller image is kept at its original size
  * @return string path to resized or original size if failed
  */
-function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
+function media_mod_image($file, $ext, $w, $h = 0, $crop = false, $upscale = true)
 {
     global $conf;
     if (!$h) $h = 0;
@@ -1748,12 +1749,12 @@ function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
         'imconvert' => $conf['im_convert'],
     ];
 
-    $cache = new CacheImageMod($file, $w, $h, $ext, $crop);
+    $cache = new CacheImageMod($file, $w, $h, $ext, $crop, $upscale);
     if (!$cache->useCache()) {
         try {
             Slika::run($file, $options)
                  ->autorotate()
-                 ->$operation($w, $h)
+                 ->$operation($w, $h, $upscale)
                  ->save($cache->cache, $ext);
             if ($conf['fperm']) @chmod($cache->cache, $conf['fperm']);
         } catch (Exception $e) {
@@ -1774,11 +1775,12 @@ function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
  * @param string $ext  extension
  * @param int    $w    desired width
  * @param int    $h    desired height
+ * @param bool   $upscale when false, a smaller image is kept at its original size
  * @return string path to resized or original size if failed
  */
-function media_resize_image($file, $ext, $w, $h = 0)
+function media_resize_image($file, $ext, $w, $h = 0, $upscale = true)
 {
-    return media_mod_image($file, $ext, $w, $h, false);
+    return media_mod_image($file, $ext, $w, $h, false, $upscale);
 }
 
 /**

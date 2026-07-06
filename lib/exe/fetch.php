@@ -103,7 +103,8 @@ if ($evt->advise_before()) {
         if ($HEIGHT && $WIDTH && !$FIT) {
             $data['file'] = $FILE = media_crop_image($data['file'], $EXT, $WIDTH, $HEIGHT);
         } else {
-            $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT);
+            // the bounding-box fit (detail previews) must not enlarge a small image
+            $data['file'] = $FILE = media_resize_image($data['file'], $EXT, $WIDTH, $HEIGHT, !$FIT);
         }
     }
 }

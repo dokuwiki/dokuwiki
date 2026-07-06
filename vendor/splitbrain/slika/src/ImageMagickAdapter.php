@@ -60,7 +60,7 @@ class ImageMagickAdapter extends Adapter
      * @inheritDoc
      * @throws Exception
      */
-    public function resize($width, $height)
+    public function resize($width, $height, $upscale = true)
     {
         if ($width == 0 && $height == 0) {
             throw new Exception('You can not resize to 0x0');
@@ -69,6 +69,7 @@ class ImageMagickAdapter extends Adapter
         if ($height == 0) $height = '';
 
         $size = $width . 'x' . $height;
+        if (!$upscale) $size .= '>';
 
         $this->args[] = '-resize';
         $this->args[] = $size;
@@ -79,8 +80,10 @@ class ImageMagickAdapter extends Adapter
      * @inheritDoc
      * @throws Exception
      */
-    public function crop($width, $height)
+    public function crop($width, $height, $upscale = true)
     {
+        $width = (int)$width;
+        $height = (int)$height;
         if ($width == 0 && $height == 0) {
             throw new Exception('You can not crop to 0x0');
         }
@@ -91,7 +94,7 @@ class ImageMagickAdapter extends Adapter
         $size = $width . 'x' . $height;
 
         $this->args[] = '-resize';
-        $this->args[] = "$size^";
+        $this->args[] = $upscale ? "$size^" : "$size^>";
         $this->args[] = '-gravity';
         $this->args[] = 'center';
         $this->args[] = '-crop';

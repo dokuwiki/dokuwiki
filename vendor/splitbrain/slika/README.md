@@ -48,7 +48,7 @@ Please also check the [API Docs](https://splitbrain.github.io/slika/) for detail
 
 All resize operations will keep the original aspect ratio of the image. There will be no distortion.
 
-Keeping either width or height at zero will auto calculate the value for you.
+Keeping either width or height at zero will auto calculate the other value for you.
 
 ```php
 # fit the image into a bounding box of 500x500 pixels
@@ -61,12 +61,33 @@ Slika::run('input.jpg')->resize(500,0)->save('output.png', 'png');
 Slika::run('input.jpg')->resize(0,500)->save('output.png', 'png');
 ```
 
+By default, images smaller than the given dimensions are enlarged. That is not always desirable
+because the quality will suffer. Pass `false` as the third parameter to disable upscaling. The
+image is then never grown beyond its original size (it is returned unchanged when it already fits
+into the bounding box).
+
+```php
+# fit into 500x500 but never enlarge a smaller image
+Slika::run('input.jpg')->resize(500,500,false)->save('output.png', 'png');
+```
+
 ### crop
 
 Similar to resizing, but this time the image will be cropped to fit the new aspect ratio.
 
 ```php
 Slika::run('input.jpg')->crop(500,500)->save('output.png', 'png');
+```
+
+Cropping also accepts the `$upscale` parameter. When set to `false` an image that is
+smaller than the requested crop area is never enlarged: dimensions larger than the image
+are cropped, smaller ones are left untouched, and an image that fits entirely into the
+area is returned as is. This means that the output image may be smaller than the requested
+crop area and might have a different aspect ratio than requested.
+
+```php
+# crop to 500x500 but never enlarge a smaller image
+Slika::run('input.jpg')->crop(500,500,false)->save('output.png', 'png');
 ```
 
 ### rotate

@@ -21,9 +21,9 @@ class DisplayTest extends \DokuWikiTest
         $display = new Display(new MediaFile($this->rotated));
         $html = $display->getDetailHtml(500, 500);
 
-        // rotated 30x20 fit into 500x500 bbox -> 500x333 (matches MediaFileTest)
-        $this->assertStringContainsString('width="500"', $html);
-        $this->assertStringContainsString('height="333"', $html);
+        // rotated 30x20 already fits into the 500x500 bbox -> not upscaled (was 500x333)
+        $this->assertStringContainsString('width="30"', $html);
+        $this->assertStringContainsString('height="20"', $html);
     }
 
     public function testGetDetailHtmlStructure()

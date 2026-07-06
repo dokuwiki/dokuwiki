@@ -96,9 +96,9 @@ class MediaDiff extends Diff
 
             if ($this->is_img) {
                 $rev = $isCurrent ? '' : $RevInfo->val('date');
-                // get display dimensions for the media manager preview panel
+                // get display dimensions for the media manager preview panel (fit=1, no upscaling)
                 $RevInfo->append([
-                    'previewSize' => (new MediaFile($this->id, $rev))->getDisplayDimensions(500, 500, false)
+                    'previewSize' => (new MediaFile($this->id, $rev))->getDisplayDimensions(500, 500, true)
                 ]);
             }
         }

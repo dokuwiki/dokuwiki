@@ -162,12 +162,13 @@ class ImageInfo
      *
      * @param int|string $width in pixels or %
      * @param int|string $height in pixels or %
+     * @param bool $upscale when false, an image smaller than the target is kept at its original size
      * @return $this
      * @throws Exception when both dimensions are zero
      */
-    public function resize($width, $height)
+    public function resize($width, $height, $upscale = true)
     {
-        list($w, $h) = self::boundingBox($this->width, $this->height, $width, $height);
+        list($w, $h) = self::boundingBox($this->width, $this->height, $width, $height, $upscale);
         $this->width = (int)$w;
         $this->height = (int)$h;
         return $this;
@@ -179,15 +180,16 @@ class ImageInfo
      * Result equals the output size of Adapter::crop(): exactly ($w, $h)
      * when both are given, or a ($w, $w) / ($h, $h) square when only one is.
      *
-     * @param int|string $width in pixels or %
-     * @param int|string $height in pixels or %
+     * @param int $width in pixels
+     * @param int $height in pixels
+     * @param bool $upscale when false, an image smaller than the target area is cropped but never enlarged
      * @return $this
      * @throws Exception when both dimensions are zero
      */
-    public function crop($width, $height)
+    public function crop($width, $height, $upscale = true)
     {
-        $width = self::cleanDimension($width, $this->width);
-        $height = self::cleanDimension($height, $this->height);
+        $width = (int)$width;
+        $height = (int)$height;
 
         if ($width == 0 && $height == 0) {
             throw new Exception('You can not crop to 0x0');
@@ -198,6 +200,12 @@ class ImageInfo
         }
         if (!$width) {
             $width = $height;
+        }
+
+        if (!$upscale && ($width > $this->width || $height > $this->height)) {
+            // never enlarge: the oversized dimension(s) are cropped, but nothing is scaled up
+            $width = min($width, $this->width);
+            $height = min($height, $this->height);
         }
 
         $this->width = (int)$width;
@@ -265,10 +273,11 @@ class ImageInfo
      * @param int $origH current height
      * @param int|string $width target width (pixels or %)
      * @param int|string $height target height (pixels or %)
+     * @param bool $upscale when false, the result is never larger than the original
      * @return array [width, height]
      * @throws Exception
      */
-    public static function boundingBox($origW, $origH, $width, $height)
+    public static function boundingBox($origW, $origH, $width, $height, $upscale = true)
     {
         $width = self::cleanDimension($width, $origW);
         $height = self::cleanDimension($height, $origH);
@@ -278,19 +287,22 @@ class ImageInfo
         }
 
         if (!$height) {
-            // adjust to match width
-            $height = round(($width * $origH) / $origW);
+            // scale to the given width
+            $scale = $width / $origW;
         } else if (!$width) {
-            // adjust to match height
-            $width = round(($height * $origW) / $origH);
+            // scale to the given height
+            $scale = $height / $origH;
         } else {
-            // fit into bounding box
+            // scale to fit into the bounding box
             $scale = min($width / $origW, $height / $origH);
-            $width = $origW * $scale;
-            $height = $origH * $scale;
         }
 
-        return [$width, $height];
+        // never enlarge beyond the original size when upscaling is disabled
+        if (!$upscale && $scale > 1) {
+            $scale = 1;
+        }
+
+        return [round($origW * $scale), round($origH * $scale)];
     }
 
     /**
