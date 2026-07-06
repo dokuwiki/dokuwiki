@@ -109,8 +109,9 @@ class Tokenizer
             $isInvalidWildcardTerm = $wcOk && str_contains($word, '*') && !static::isValidSearchTerm($word);
             if (
                 $isInvalidWildcardTerm ||
-                (!is_numeric($word) && strlen($word) < static::getMinWordLength())
-                || in_array($word, static::getStopwords(), true)
+                (!is_numeric($word) &&
+                strlen($word) < static::getMinWordLength()) ||
+                in_array($word, static::getStopwords(), true)
             ) {
                 unset($wordlist[$i]);
             }

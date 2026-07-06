@@ -47,7 +47,7 @@ class Handler
      */
     public function __construct(?ModeRegistry $registry = null)
     {
-        if ($registry === null) {
+        if (!$registry instanceof ModeRegistry) {
             global $conf;
             DebugHelper::dbgDeprecatedFunction(
                 'p_get_instructions()',
