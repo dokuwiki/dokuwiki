@@ -253,10 +253,11 @@ class BulkSubscriptionSender extends SubscriptionSender
             $last = $this->lastRevBefore($id, $lastupdate);
             $link = wl($id, [], true);
             $difflink = $last ? wl($id, ['do' => 'diff', 'rev' => $last], true) : null;
+            $difflinktext = $last ? wl($id, ['do' => 'diff', 'rev' => $last], true, '&') : null;
 
             $tlist .= '* ' . $link;
-            if ($difflink) {
-                $tlist .= ' (' . $lang['diff'] . ': ' . $difflink . ')';
+            if ($difflinktext) {
+                $tlist .= ' (' . $lang['diff'] . ': ' . $difflinktext . ')';
             }
             $tlist .= NL;
 
