@@ -64,12 +64,26 @@ class FeedParserFile extends File
      * Converts DokuHTTPClient's "name => value" headers into SimplePie's
      * "name => [values]" representation
      *
-     * @param array<string, string> $headers
+     * A header that occurred more than once is stored by DokuHTTPClient as an array
+     * of values, so each value is normalized on its own and comma-separated lists are
+     * split into their individual parts.
+     *
+     * @param array<string, string|string[]> $headers
      * @return array<string, string[]>
      */
     protected function normalizeHeaders($headers)
     {
-        return array_map(static fn($value) => array_map(trim(...), explode(',', (string)$value)), $headers);
+        $normalized = [];
+        foreach ($headers as $name => $value) {
+            $values = [];
+            foreach ((array)$value as $line) {
+                foreach (explode(',', (string)$line) as $part) {
+                    $values[] = trim($part);
+                }
+            }
+            $normalized[$name] = $values;
+        }
+        return $normalized;
     }
 
     // the following methods implement SimplePie's Response interface and have to keep its naming

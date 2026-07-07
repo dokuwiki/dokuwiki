@@ -80,6 +80,22 @@ XML;
     }
 
     /**
+     * DokuHTTPClient stores a header that occurred more than once as an array of
+     * values. Those must be flattened into SimplePie's list representation instead of
+     * being cast to the literal string "Array".
+     */
+    public function testRepeatedHeadersAreFlattened()
+    {
+        $file = $this->fetchedFile(200, '', self::FEED, [
+            'content-type' => 'text/xml',
+            'set-cookie' => ['a=1', 'b=2'],
+        ]);
+
+        $this->assertSame(['text/xml'], $file->get_header('content-type'));
+        $this->assertSame(['a=1', 'b=2'], $file->get_header('set-cookie'));
+    }
+
+    /**
      * The fetched body is parsed into feed items
      */
     public function testFeedItemsAreParsed()
