@@ -226,7 +226,7 @@ class ImageInfo
     public static function readExifOrientation($path)
     {
         if (function_exists('exif_read_data')) {
-            $exif = exif_read_data($path);
+            $exif = @exif_read_data($path);
             if (!empty($exif['Orientation'])) {
                 return (int)$exif['Orientation'];
             }

@@ -825,17 +825,17 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.2.0",
-            "version_normalized": "1.2.0.0",
+            "version": "1.2.1",
+            "version_normalized": "1.2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "0b914ba7d979cca03556a80a622ae54ba3d52703"
+                "reference": "b40146f15a95cb820b60a3475a7d240cc279aeab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/0b914ba7d979cca03556a80a622ae54ba3d52703",
-                "reference": "0b914ba7d979cca03556a80a622ae54ba3d52703",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/b40146f15a95cb820b60a3475a7d240cc279aeab",
+                "reference": "b40146f15a95cb820b60a3475a7d240cc279aeab",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +847,7 @@
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2026-07-06T14:35:47+00:00",
+            "time": "2026-07-08T11:57:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -869,7 +869,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.2.0"
+                "source": "https://github.com/splitbrain/slika/tree/1.2.1"
             },
             "install-path": "../splitbrain/slika"
         }
