@@ -377,7 +377,14 @@ class Indexer
     /**
      * Update the metadata registry with new keys
      *
+     * The read-modify-write of the registry file is guarded by a lock so that
+     * concurrent indexing of pages carrying different new metadata keys cannot
+     * drop a key: without the lock two processes could read the same registry,
+     * each append a different key, and the later writer would clobber the other.
+     *
      * @param string[] $keys metadata key names to ensure are registered
+     *
+     * @throws IndexLockException when the registry lock cannot be acquired
      *
      * @internal Only marked public for access via LegacyIndexer
      */
@@ -385,19 +392,25 @@ class Indexer
     {
         global $conf;
         $fn = $conf['indexdir'] . '/metadata.idx';
-        $existing = file_exists($fn) ? file($fn, FILE_IGNORE_NEW_LINES) : [];
-        if (!$existing) $existing = [];
 
-        $added = false;
-        foreach ($keys as $key) {
-            if (!in_array($key, $existing)) {
-                $existing[] = $key;
-                $added = true;
+        Lock::acquire('metadata');
+        try {
+            $existing = file_exists($fn) ? file($fn, FILE_IGNORE_NEW_LINES) : [];
+            if (!$existing) $existing = [];
+
+            $added = false;
+            foreach ($keys as $key) {
+                if (!in_array($key, $existing)) {
+                    $existing[] = $key;
+                    $added = true;
+                }
             }
-        }
 
-        if ($added) {
-            io_saveFile($fn, implode("\n", $existing) . "\n");
+            if ($added) {
+                io_saveFile($fn, implode("\n", $existing) . "\n");
+            }
+        } finally {
+            Lock::release('metadata');
         }
     }
 

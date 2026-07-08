@@ -3,7 +3,9 @@
 namespace dokuwiki\test\Search;
 
 use dokuwiki\Search\Indexer;
+use dokuwiki\Search\Exception\IndexLockException;
 use dokuwiki\Search\Index\FileIndex;
+use dokuwiki\Search\Index\Lock;
 use dokuwiki\Search\MetadataSearch;
 
 /**
@@ -248,5 +250,52 @@ class IndexerTest extends \DokuWikiTest
         $indexer->addPage('logpage');
         $this->assertNotEmpty($messages);
         $this->assertStringContainsString('up to date', end($messages));
+    }
+
+    /**
+     * updateMetadataRegistry merges new keys into the existing registry rather
+     * than overwriting it, and leaves no lock behind
+     */
+    public function testUpdateMetadataRegistryMergesKeys()
+    {
+        global $conf;
+        $fn = $conf['indexdir'] . '/metadata.idx';
+        $indexer = new Indexer();
+
+        $indexer->updateMetadataRegistry(['alpha']);
+        $indexer->updateMetadataRegistry(['beta']);
+
+        $keys = file($fn, FILE_IGNORE_NEW_LINES);
+        $this->assertContains('alpha', $keys, 'first key lost when second was added');
+        $this->assertContains('beta', $keys);
+
+        // the registry lock must not be held once the call returns
+        Lock::acquire('metadata');
+        Lock::release('metadata');
+        $this->assertFalse(is_dir($conf['lockdir'] . '/metadata.index'));
+    }
+
+    /**
+     * The registry read-modify-write is guarded by the 'metadata' lock, so a
+     * lock held by another process blocks the update instead of letting it
+     * clobber a concurrent writer's key
+     */
+    public function testUpdateMetadataRegistryIsGuardedByLock()
+    {
+        global $conf;
+        $dir = $conf['lockdir'] . '/metadata.index';
+
+        // simulate a foreign lock and don't wait for it in the test
+        mkdir($dir);
+        touch($dir);
+        self::setInaccessibleProperty(new Lock(), 'waitTimeout', 0);
+
+        try {
+            $this->expectException(IndexLockException::class);
+            (new Indexer())->updateMetadataRegistry(['newkey']);
+        } finally {
+            self::setInaccessibleProperty(new Lock(), 'waitTimeout', 3);
+            @rmdir($dir);
+        }
     }
 }
