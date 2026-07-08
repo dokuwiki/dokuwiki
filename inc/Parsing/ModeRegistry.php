@@ -144,6 +144,11 @@ class ModeRegistry
     /**
      * Get this parse's raw category map.
      *
+     * Returns the taxonomy as loaded so far. The built-in categories are
+     * present from construction, but the plugin_* mode names are only merged in
+     * once getModes() has run its plugin loading. Call getModes() first if you
+     * need the complete taxonomy including syntax plugins.
+     *
      * @return array<string, string[]> Category name => list of mode names
      */
     public function getCategories(): array

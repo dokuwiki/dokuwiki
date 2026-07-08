@@ -197,14 +197,18 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     protected function renderSyntaxTypes()
     {
-        global $PARSER_MODES;
-        $doc = '';
+        global $conf;
 
+        $registry = new ModeRegistry($conf['syntax']);
+        $registry->getModes();
+        $categories = $registry->getCategories();
+
+        $doc = '';
         $doc .= '<div class="table"><table class="inline"><tbody>';
-        foreach ($PARSER_MODES as $mode => $modes) {
+        foreach ($categories as $type => $modes) {
             $doc .= '<tr>';
             $doc .= '<td class="leftalign">';
-            $doc .= $mode;
+            $doc .= $type;
             $doc .= '</td>';
             $doc .= '<td class="leftalign">';
             $doc .= implode(', ', $modes);
@@ -222,7 +226,8 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     protected function renderSyntaxModes()
     {
-        $modes = p_get_parsermodes();
+        global $conf;
+        $modes = (new ModeRegistry($conf['syntax']))->getModes();
 
         $compactmodes = [];
         foreach ($modes as $mode) {
