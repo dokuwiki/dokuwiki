@@ -74,15 +74,15 @@ class MediaChangeLog extends ChangeLog
      * plus the size change logged for the last revision. The first revision has no previous
      * one, so its logged change is already its full size.
      *
-     * @param int $clogRev timestamp of the last recorded revision
+     * @param int $recordedRev timestamp of the last recorded revision
      * @return int size in bytes (0 when it cannot be determined)
      */
-    protected function lastRevisionSize($clogRev)
+    protected function lastRevisionSize($recordedRev)
     {
-        $revInfo = $this->getRevisionInfo($clogRev, false);
+        $revInfo = $this->getRevisionInfo($recordedRev, false);
         $sizechange = is_array($revInfo) ? (int) $revInfo['sizechange'] : 0;
 
-        $prev = $this->getRelativeRevision($clogRev, -1);
+        $prev = $this->getRelativeRevision($recordedRev, -1);
         $prevSize = ($prev === false) ? 0 : io_getSizeFile($this->getFilename($prev));
 
         return max($prevSize + $sizechange, 0);

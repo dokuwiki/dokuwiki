@@ -625,29 +625,29 @@ abstract class ChangeLog
         // the current revision id is the item file's mtime; reconcile it against the changelog
         $filename = $this->getFilename();
         $fileRev = @filemtime($filename); // false when the file does not exist
-        $clogRev = $this->lastRevision(); // false when there is no changelog
+        $recordedRev = $this->lastRevision(); // false when there is no changelog
 
         // file and changelog agree (or the item never existed): the recorded state is current
-        if ($fileRev === $clogRev) {
-            $this->currentRevision = $clogRev;
-            return $clogRev === false ? false : $this->getRevisionInfo($clogRev);
+        if ($fileRev === $recordedRev) {
+            $this->currentRevision = $recordedRev;
+            return $recordedRev === false ? false : $this->getRevisionInfo($recordedRev);
         }
 
         // they disagree, so an external change happened. Classify it and synthesize the missing entry.
         if (!$fileRev) {
             // the file is gone: external deletion
-            $revInfo = $this->synthesizeExternalDeletion($clogRev);
-        } elseif ($clogRev === false || $this->getRevisionInfo($clogRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            $revInfo = $this->synthesizeExternalDeletion($recordedRev);
+        } elseif ($recordedRev === false || $this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
             // no changelog, or it logged a delete: (re)creation
-            $revInfo = $this->synthesizeExternalCreate($filename, $fileRev, $clogRev);
+            $revInfo = $this->synthesizeExternalCreate($filename, $fileRev, $recordedRev);
         } else {
             // the file changed against a recorded live page: external edit
-            $revInfo = $this->synthesizeExternalEdit($filename, $fileRev, $clogRev);
+            $revInfo = $this->synthesizeExternalEdit($filename, $fileRev, $recordedRev);
         }
         if ($revInfo === null) {
             // null means the external change was a no-op (content unchanged), so keep the recorded revision as current
-            $this->currentRevision = $clogRev;
-            return $this->getRevisionInfo($clogRev);
+            $this->currentRevision = $recordedRev;
+            return $this->getRevisionInfo($recordedRev);
         }
 
         // persist the synthesized entry so subsequent reads see it as a real changelog entry
@@ -661,28 +661,28 @@ abstract class ChangeLog
      * Synthesize the changelog entry for an external deletion: the item file is gone while the
      * changelog still holds entries.
      *
-     * @param int $clogRev date of the newest recorded changelog revision
+     * @param int $recordedRev date of the newest recorded changelog revision
      * @return array|null revision info to persist, or null when the deletion is already recorded
-     *                    at $clogRev (that revision stays current, nothing to synthesize)
+     *                    at $recordedRev (that revision stays current, nothing to synthesize)
      */
-    protected function synthesizeExternalDeletion($clogRev)
+    protected function synthesizeExternalDeletion($recordedRev)
     {
         global $lang;
 
-        if ($this->getRevisionInfo($clogRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
+        if ($this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
             return null;
         }
 
         // date the deletion as late as possible: 1 sec before now, or newest revision +1
         return [
-            'date' => max($clogRev + 1, time() - 1),
+            'date' => max($recordedRev + 1, time() - 1),
             'ip'   => '127.0.0.1',
             'type' => DOKU_CHANGE_TYPE_DELETE,
             'id'   => $this->id,
             'user' => '',
             'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
             'extra' => '',
-            'sizechange' => -$this->lastRevisionSize($clogRev),
+            'sizechange' => -$this->lastRevisionSize($recordedRev),
             'timestamp' => false,
             'mode' => $this->getMode()
         ];
@@ -694,45 +694,45 @@ abstract class ChangeLog
      *
      * @param string $filename path to the current item file
      * @param int    $fileRev  mtime of the current item file
-     * @param int    $clogRev  date of the newest recorded changelog revision
+     * @param int    $recordedRev  date of the newest recorded changelog revision
      * @return array|null revision info to persist, or null when the file was only touched (content
-     *                    unchanged): the mtime is reset to $clogRev and that revision stays current
+     *                    unchanged): the mtime is reset to $recordedRev and that revision stays current
      */
-    protected function synthesizeExternalEdit($filename, $fileRev, $clogRev)
+    protected function synthesizeExternalEdit($filename, $fileRev, $recordedRev)
     {
         global $lang;
 
         // A file mtime can move without the content changing (backup restore, git checkout, ...).
-        // When the content still matches $clogRev nothing was really edited: reset the mtime to the
+        // When the content still matches $recordedRev nothing was really edited: reset the mtime to the
         // recorded date and keep that revision.
-        if ($this->currentContentMatchesRevision($clogRev)) {
-            @touch($filename, $clogRev);
+        if ($this->currentContentMatchesRevision($recordedRev)) {
+            @touch($filename, $recordedRev);
             clearstatcache(false, $filename);
             return null;
         }
 
-        if ($fileRev > $clogRev) {
+        if ($fileRev > $recordedRev) {
             $timestamp = $fileRev;
             $sum = $lang['external_edit'];
         } else {
-            // $fileRev is older than $clogRev, that is an erroneous/incorrect occurrence
+            // $fileRev is older than $recordedRev, that is an erroneous/incorrect occurrence
             $msg = "Warning: current file modification time is older than last revision date";
             $details = 'File revision: ' . $fileRev . ' ' . dformat($fileRev, "%Y-%m-%d %H:%M:%S") . "\n"
-                      . 'Last revision: ' . $clogRev . ' ' . dformat($clogRev, "%Y-%m-%d %H:%M:%S");
+                      . 'Last revision: ' . $recordedRev . ' ' . dformat($recordedRev, "%Y-%m-%d %H:%M:%S");
             Logger::error($msg, $details, $filename);
             $timestamp = false;
             $sum = $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')';
         }
 
         return [
-            'date' => $timestamp ?: $clogRev + 1,
+            'date' => $timestamp ?: $recordedRev + 1,
             'ip'   => '127.0.0.1',
             'type' => DOKU_CHANGE_TYPE_EDIT,
             'id'   => $this->id,
             'user' => '',
             'sum'  => $sum,
             'extra' => '',
-            'sizechange' => filesize($filename) - $this->lastRevisionSize($clogRev),
+            'sizechange' => filesize($filename) - $this->lastRevisionSize($recordedRev),
             'timestamp' => $timestamp,
             'mode' => $this->getMode()
         ];
@@ -740,28 +740,28 @@ abstract class ChangeLog
 
     /**
      * Synthesize the changelog entry for an external creation: the item file exists but nothing
-     * live was recorded at $clogRev (no changelog at all, or the newest revision is a DELETE), so
+     * live was recorded at $recordedRev (no changelog at all, or the newest revision is a DELETE), so
      * the file is a fresh (re)creation.
      *
      * @param string    $filename path to the current item file
      * @param int       $fileRev  mtime of the current item file
-     * @param int|false $clogRev  date of the newest recorded changelog revision, or false when none
+     * @param int|false $recordedRev  date of the newest recorded changelog revision, or false when none
      * @return array revision info to persist
      */
-    protected function synthesizeExternalCreate($filename, $fileRev, $clogRev)
+    protected function synthesizeExternalCreate($filename, $fileRev, $recordedRev)
     {
         global $lang;
 
         // trust the file mtime as the creation date only when it postdates any prior delete; a
         // backup restored with an older mtime (cp -p) can't date the creation before the deletion,
         // so record it just after, with an unknown date.
-        $datedByFile = $clogRev === false || $fileRev > $clogRev;
+        $datedByFile = $recordedRev === false || $fileRev > $recordedRev;
         $timestamp = $datedByFile ? $fileRev : false;
         $sum = $lang['created'] . ' - ' . $lang['external_edit']
              . ($datedByFile ? '' : ' (' . $lang['unknowndate'] . ')');
 
         return [
-            'date' => $timestamp ?: $clogRev + 1,
+            'date' => $timestamp ?: $recordedRev + 1,
             'ip'   => '127.0.0.1',
             'type' => DOKU_CHANGE_TYPE_CREATE,
             'id'   => $this->id,
@@ -969,12 +969,12 @@ abstract class ChangeLog
      * size change of a synthesized external edit or deletion. Reads the size from that
      * revision's attic copy.
      *
-     * @param int $clogRev timestamp of the last recorded revision
+     * @param int $recordedRev timestamp of the last recorded revision
      * @return int size in bytes (0 when it cannot be determined)
      */
-    protected function lastRevisionSize($clogRev)
+    protected function lastRevisionSize($recordedRev)
     {
-        return io_getSizeFile($this->getFilename($clogRev));
+        return io_getSizeFile($this->getFilename($recordedRev));
     }
 
     /**
