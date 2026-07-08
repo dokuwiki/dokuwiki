@@ -595,11 +595,11 @@ abstract class ChangeLog
      * Otherwise, the change information since the last revision caused outside DokuWiki
      * should be returned, which is referred as "external revision".
      *
-     * External revisions are persisted to the changelog (and, for non-delete cases, copied
-     * to the attic) on first detection so subsequent reads see one canonical entry instead
-     * of recomputing a synthesized one. If persistence fails (e.g. the data dir is not
-     * writable in the current process context), the in-memory synthesized entry is still
-     * returned so the read path keeps working.
+     * External revisions are persisted to the changelog on first detection so subsequent reads
+     * see one canonical entry instead of recomputing a synthesized one (and, where the revision
+     * scheme keeps it, the content is snapshotted to the attic). If persistence fails (e.g. the
+     * data dir is not writable in the current process context), the in-memory synthesized entry
+     * is still returned so the read path keeps working.
      *
      * @return bool|array false when page had never existed or array with entries:
      *      - date:  revision identifier (timestamp or last revision +1)
@@ -618,107 +618,160 @@ abstract class ChangeLog
      */
     public function getCurrentRevisionInfo()
     {
-        global $lang;
-
         if (isset($this->currentRevision)) {
             return $this->getRevisionInfo($this->currentRevision);
         }
 
-        // get revision id from the item file timestamp and changelog
-        $fileLastMod = $this->getFilename();
-        $fileRev = @filemtime($fileLastMod); // false when the file not exist
-        $lastRev = $this->lastRevision();    // false when no changelog
+        // the current revision id is the item file's mtime; reconcile it against the changelog
+        $filename = $this->getFilename();
+        $fileRev = @filemtime($filename); // false when the file does not exist
+        $recordedRev = $this->lastRevision(); // false when there is no changelog
 
-        if (!$fileRev && !$lastRev) {                // has never existed
-            $this->currentRevision = false;
-            return false;
-        } elseif ($fileRev === $lastRev) {           // not external edit
-            $this->currentRevision = $lastRev;
-            return $this->getRevisionInfo($lastRev);
+        // file and changelog agree (or the item never existed): the recorded state is current
+        if ($fileRev === $recordedRev) {
+            $this->currentRevision = $recordedRev;
+            return $recordedRev === false ? false : $this->getRevisionInfo($recordedRev);
         }
 
-        if (!$fileRev && $lastRev) {                 // item file does not exist
-            // check consistency against changelog
-            $revInfo = $this->getRevisionInfo($lastRev, false);
-            if ($revInfo['type'] == DOKU_CHANGE_TYPE_DELETE) {
-                $this->currentRevision = $lastRev;
-                return $revInfo;
-            }
-
-            // externally deleted, set revision date as late as possible
-            $revInfo = [
-                'date' => max($lastRev + 1, time() - 1), // 1 sec before now or last revision +1
-                'ip'   => '127.0.0.1',
-                'type' => DOKU_CHANGE_TYPE_DELETE,
-                'id'   => $this->id,
-                'user' => '',
-                'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
-                'extra' => '',
-                'sizechange' => -io_getSizeFile($this->getFilename($lastRev)),
-                'timestamp' => false,
-                'mode' => $this->getMode()
-            ];
-        } else {                                     // item file exists, with timestamp $fileRev
-            // here, file timestamp $fileRev is different with last revision timestamp $lastRev in changelog
-            $isJustCreated = $lastRev === false || (
-                    $fileRev > $lastRev &&
-                    $this->getRevisionInfo($lastRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
-            );
-
-            // A current revision's file modification time can change without its content
-            // changing, e.g. when the file is touched or rewritten in place by an external
-            // process (a backup restore, a git checkout, ...). If the content is identical
-            // to the last recorded revision, no external edit actually happened: reset the
-            // file mtime to the recorded revision date and treat that as the current one.
-            if (!$isJustCreated && $this->currentContentMatchesRevision($lastRev)) {
-                @touch($fileLastMod, $lastRev);
-                clearstatcache(false, $fileLastMod);
-                $this->currentRevision = $lastRev;
-                return $this->getRevisionInfo($lastRev);
-            }
-
-            $filesize_new = filesize($this->getFilename());
-            $filesize_old = $isJustCreated ? 0 : io_getSizeFile($this->getFilename($lastRev));
-            $sizechange = $filesize_new - $filesize_old;
-
-            if ($isJustCreated) {
-                $timestamp = $fileRev;
-                $sum = $lang['created'] . ' - ' . $lang['external_edit'];
-            } elseif ($fileRev > $lastRev) {
-                $timestamp = $fileRev;
-                $sum = $lang['external_edit'];
-            } else {
-                // $fileRev is older than $lastRev, that is erroneous/incorrect occurrence.
-                $msg = "Warning: current file modification time is older than last revision date";
-                $details = 'File revision: ' . $fileRev . ' ' . dformat($fileRev, "%Y-%m-%d %H:%M:%S") . "\n"
-                          . 'Last revision: ' . $lastRev . ' ' . dformat($lastRev, "%Y-%m-%d %H:%M:%S");
-                Logger::error($msg, $details, $this->getFilename());
-                $timestamp = false;
-                $sum = $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')';
-            }
-
-            // externally created or edited
-            $revInfo = [
-                'date' => $timestamp ?: $lastRev + 1,
-                'ip'   => '127.0.0.1',
-                'type' => $isJustCreated ? DOKU_CHANGE_TYPE_CREATE : DOKU_CHANGE_TYPE_EDIT,
-                'id'   => $this->id,
-                'user' => '',
-                'sum'  => $sum,
-                'extra' => '',
-                'sizechange' => $sizechange,
-                'timestamp' => $timestamp,
-                'mode' => $this->getMode()
-            ];
+        // they disagree, so an external change happened. Classify it and synthesize the missing entry.
+        if (!$fileRev) {
+            // the file is gone: external deletion
+            $revInfo = $this->synthesizeExternalDeletion($recordedRev);
+        } elseif ($recordedRev === false || $this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            // no changelog, or it logged a delete: (re)creation
+            $revInfo = $this->synthesizeExternalCreate($filename, $fileRev, $recordedRev);
+        } else {
+            // the file changed against a recorded live page: external edit
+            $revInfo = $this->synthesizeExternalEdit($filename, $fileRev, $recordedRev);
+        }
+        if ($revInfo === null) {
+            // null means the external change was a no-op (content unchanged), so keep the recorded revision as current
+            $this->currentRevision = $recordedRev;
+            return $this->getRevisionInfo($recordedRev);
         }
 
         // persist the synthesized entry so subsequent reads see it as a real changelog entry
         $this->persistCurrentRevisionInfo($revInfo);
-
-        // cache current revision information of external edition
         $this->currentRevision = $revInfo['date'];
         $this->cache[$this->id][$this->currentRevision] = $revInfo;
         return $this->getRevisionInfo($this->currentRevision);
+    }
+
+    /**
+     * Synthesize the changelog entry for an external deletion: the item file is gone while the
+     * changelog still holds entries.
+     *
+     * @param int $recordedRev date of the newest recorded changelog revision
+     * @return array|null revision info to persist, or null when the deletion is already recorded
+     *                    at $recordedRev (that revision stays current, nothing to synthesize)
+     */
+    protected function synthesizeExternalDeletion($recordedRev)
+    {
+        global $lang;
+
+        if ($this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
+            return null;
+        }
+
+        // date the deletion as late as possible: 1 sec before now, or newest revision +1
+        return [
+            'date' => max($recordedRev + 1, time() - 1),
+            'ip'   => '127.0.0.1',
+            'type' => DOKU_CHANGE_TYPE_DELETE,
+            'id'   => $this->id,
+            'user' => '',
+            'sum'  => $lang['deleted'] . ' - ' . $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')',
+            'extra' => '',
+            'sizechange' => -$this->lastRevisionSize($recordedRev),
+            'timestamp' => false,
+            'mode' => $this->getMode()
+        ];
+    }
+
+    /**
+     * Synthesize the changelog entry for an external edit: the item file exists and its mtime
+     * differs from the newest recorded revision, which is a live (non-deleted) page.
+     *
+     * @param string $filename path to the current item file
+     * @param int    $fileRev  mtime of the current item file
+     * @param int    $recordedRev  date of the newest recorded changelog revision
+     * @return array|null revision info to persist, or null when the file was only touched (content
+     *                    unchanged): the mtime is reset to $recordedRev and that revision stays current
+     */
+    protected function synthesizeExternalEdit($filename, $fileRev, $recordedRev)
+    {
+        global $lang;
+
+        // A file mtime can move without the content changing (backup restore, git checkout, ...).
+        // When the content still matches $recordedRev nothing was really edited: reset the mtime to the
+        // recorded date and keep that revision.
+        if ($this->currentContentMatchesRevision($recordedRev)) {
+            @touch($filename, $recordedRev);
+            clearstatcache(false, $filename);
+            return null;
+        }
+
+        if ($fileRev > $recordedRev) {
+            $timestamp = $fileRev;
+            $sum = $lang['external_edit'];
+        } else {
+            // $fileRev is older than $recordedRev, that is an erroneous/incorrect occurrence
+            $msg = "Warning: current file modification time is older than last revision date";
+            $details = 'File revision: ' . $fileRev . ' ' . dformat($fileRev, "%Y-%m-%d %H:%M:%S") . "\n"
+                      . 'Last revision: ' . $recordedRev . ' ' . dformat($recordedRev, "%Y-%m-%d %H:%M:%S");
+            Logger::error($msg, $details, $filename);
+            $timestamp = false;
+            $sum = $lang['external_edit'] . ' (' . $lang['unknowndate'] . ')';
+        }
+
+        return [
+            'date' => $timestamp ?: $recordedRev + 1,
+            'ip'   => '127.0.0.1',
+            'type' => DOKU_CHANGE_TYPE_EDIT,
+            'id'   => $this->id,
+            'user' => '',
+            'sum'  => $sum,
+            'extra' => '',
+            'sizechange' => filesize($filename) - $this->lastRevisionSize($recordedRev),
+            'timestamp' => $timestamp,
+            'mode' => $this->getMode()
+        ];
+    }
+
+    /**
+     * Synthesize the changelog entry for an external creation: the item file exists but nothing
+     * live was recorded at $recordedRev (no changelog at all, or the newest revision is a DELETE), so
+     * the file is a fresh (re)creation.
+     *
+     * @param string    $filename path to the current item file
+     * @param int       $fileRev  mtime of the current item file
+     * @param int|false $recordedRev  date of the newest recorded changelog revision, or false when none
+     * @return array revision info to persist
+     */
+    protected function synthesizeExternalCreate($filename, $fileRev, $recordedRev)
+    {
+        global $lang;
+
+        // trust the file mtime as the creation date only when it postdates any prior delete; a
+        // backup restored with an older mtime (cp -p) can't date the creation before the deletion,
+        // so record it just after, with an unknown date.
+        $datedByFile = $recordedRev === false || $fileRev > $recordedRev;
+        $timestamp = $datedByFile ? $fileRev : false;
+        $sum = $lang['created'] . ' - ' . $lang['external_edit']
+             . ($datedByFile ? '' : ' (' . $lang['unknowndate'] . ')');
+
+        return [
+            'date' => $timestamp ?: $recordedRev + 1,
+            'ip'   => '127.0.0.1',
+            'type' => DOKU_CHANGE_TYPE_CREATE,
+            'id'   => $this->id,
+            'user' => '',
+            'sum'  => $sum,
+            'extra' => '',
+            'sizechange' => filesize($filename),
+            'timestamp' => $timestamp,
+            'mode' => $this->getMode()
+        ];
     }
 
     /**
@@ -833,9 +886,9 @@ abstract class ChangeLog
      * Persist a synthesized external-revision entry to the changelog
      *
      * Holds the local changelog lock around the entire detect-and-write critical section
-     * (idempotency check, attic copy, log append) so it serializes against any other
-     * writer that goes through addLogEntry(). The append uses writeLogEntry() to avoid
-     * re-entering the lock we already hold.
+     * (idempotency check, mtime repair, optional attic snapshot, log append) so it serializes
+     * against any other writer that goes through addLogEntry(). The append uses writeLogEntry()
+     * to avoid re-entering the lock we already hold.
      *
      * Returns false (without raising) when the attic write fails or another request
      * already persisted the entry. The caller falls back to the in-memory synthesized
@@ -859,6 +912,7 @@ abstract class ChangeLog
             }
 
             if ($revInfo['type'] !== DOKU_CHANGE_TYPE_DELETE) {
+                if (!$this->repairExternalMtime($revInfo)) return false;
                 if (!$this->saveExternalAttic($revInfo)) return false;
             }
 
@@ -873,14 +927,55 @@ abstract class ChangeLog
     }
 
     /**
-     * Save the externally-modified file to the attic before the synthesized log entry is
-     * persisted. For deletions there is no file to copy and implementations should return
-     * true (the persist flow skips this call for the delete branch).
+     * Move the current file's modification time forward to the synthesized revision date when
+     * the detected external change had an unreliable date (its file mtime was older than the
+     * last revision, so it was dated just after that revision instead). Without this the file
+     * mtime would still disagree with the changelog on the next read and the same external
+     * change would be re-detected on every request.
+     *
+     * Only relevant for non-delete changes (a deletion has no file); the persist flow calls it
+     * only in that case.
+     *
+     * @param array $revInfo synthesized revision info with 'date' and 'timestamp' set
+     * @return bool false only if the file exists but could not be touched
+     */
+    protected function repairExternalMtime(array $revInfo)
+    {
+        // a set timestamp means the date is the real file mtime — nothing to repair
+        if (!empty($revInfo['timestamp'])) return true;
+
+        $file = $this->getFilename();
+        if (!file_exists($file)) return true;
+
+        if (!@touch($file, $revInfo['date'])) return false;
+        clearstatcache(false, $file);
+        return true;
+    }
+
+    /**
+     * Snapshot the externally-modified content to the attic before the synthesized log entry
+     * is persisted, so the revision stays retrievable. Called only for non-delete changes.
+     *
+     * Whether this is done depends on the item's revision scheme: pages archive every
+     * revision, so they snapshot; media never archive the current revision, so they do not.
      *
      * @param array $revInfo synthesized revision info with 'date' set
      * @return bool true on success or no-op, false to abort persistence
      */
     abstract protected function saveExternalAttic(array $revInfo);
+
+    /**
+     * Byte size of the last recorded revision, used as the "before" size when computing the
+     * size change of a synthesized external edit or deletion. Reads the size from that
+     * revision's attic copy.
+     *
+     * @param int $recordedRev timestamp of the last recorded revision
+     * @return int size in bytes (0 when it cannot be determined)
+     */
+    protected function lastRevisionSize($recordedRev)
+    {
+        return io_getSizeFile($this->getFilename($recordedRev));
+    }
 
     /**
      * Whether the current item file's content is byte-identical to the stored content
