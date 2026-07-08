@@ -17,7 +17,9 @@ class Quotes extends AbstractMode
     {
         global $conf;
 
-        $ws   =  '\s/\#~:+=&%@\-\x28\x29\]\[{}><"\'';   // whitespace
+        // word boundaries around a quote: whitespace plus inline-formatting
+        // delimiters (/ ** __ etc.) that may sit next to it after being consumed
+        $ws   =  '\s/\#~:+=&%@\-\x28\x29\]\[{}><"\'*_';
         $punc =  ';,\.?!';
 
         if ($conf['typography'] == 2) {

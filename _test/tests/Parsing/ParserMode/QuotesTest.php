@@ -144,6 +144,46 @@ class QuotesTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls, 'wikitext => '.$raw);
     }
 
+    function testSingleQuotesAfterStrong() {
+        $raw = "**'hello'**";
+        $this->P->addMode('quotes',new Quotes());
+        $this->P->parse($raw);
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n".'**']],
+            ['singlequoteopening',[]],
+            ['cdata',['hello']],
+            ['singlequoteclosing',[]],
+            ['cdata',['**']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls, 'wikitext => '.$raw);
+    }
+
+    function testSingleQuotesAfterUnderline() {
+        $raw = "__'hello'__";
+        $this->P->addMode('quotes',new Quotes());
+        $this->P->parse($raw);
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n".'__']],
+            ['singlequoteopening',[]],
+            ['cdata',['hello']],
+            ['singlequoteclosing',[]],
+            ['cdata',['__']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls, 'wikitext => '.$raw);
+    }
+
     function testDoubleQuoteOpening() {
         $raw = 'Foo "hello Bar';
         $this->P->addMode('quotes',new Quotes());
