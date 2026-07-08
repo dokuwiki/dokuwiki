@@ -92,6 +92,7 @@ class FileIndex extends AbstractIndex
         $result = [];
         sort($rids);
         $next = array_shift($rids);
+        if ($next === null) return $result;
 
         if (!file_exists($this->filename)) {
             return $result;
@@ -105,7 +106,7 @@ class FileIndex extends AbstractIndex
             if (++$ln === $next) {
                 $result[$ln] = rtrim($line);
                 $next = array_shift($rids);
-                if ($next === false) break;
+                if ($next === null) break;
             }
         }
         fclose($fh);
