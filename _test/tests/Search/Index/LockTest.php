@@ -10,6 +10,8 @@ class LockTest extends \DokuWikiTest
     protected function tearDown(): void
     {
         Lock::releaseAll();
+        // restore the default wait timeout in case a test lowered it
+        self::setInaccessibleProperty(new Lock(), 'waitTimeout', 3);
         parent::tearDown();
     }
 
@@ -62,8 +64,33 @@ class LockTest extends \DokuWikiTest
         // set mtime to now so it's not stale
         touch($dir);
 
+        // don't wait for the foreign lock in the test
+        self::setInaccessibleProperty(new Lock(), 'waitTimeout', 0);
+
         $this->expectException(IndexLockException::class);
         Lock::acquire('foreign');
+    }
+
+    public function testAcquireAppliesConfiguredDirectoryPermissions()
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->markTestSkipped('Permission checks skipped on Windows');
+        }
+
+        global $conf;
+        $dir = $conf['lockdir'] . '/perm.index';
+
+        $oldumask = umask(0);
+        $conf['dperm'] = 0707;
+        try {
+            Lock::acquire('perm');
+
+            clearstatcache();
+            $this->assertSame(0707, fileperms($dir) & 0777);
+        } finally {
+            Lock::release('perm');
+            umask($oldumask);
+        }
     }
 
     public function testStaleLockIsOverridden()

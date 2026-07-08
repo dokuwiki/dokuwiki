@@ -17,33 +17,49 @@ class Lock
     /** @var array<string, int> Lock names held by this process with reference counts */
     protected static array $held = [];
 
+    /** @var int Seconds to wait for a lock held by another process before giving up */
+    protected static int $waitTimeout = 3;
+
     /**
      * Acquire a filesystem lock and register it
      *
-     * Idempotent within a process — if already held, increments
-     * reference count without touching the filesystem.
+     * Idempotent within a process - if already held, increments the reference
+     * count without touching the filesystem. When the lock is held by another
+     * process this waits for it to be released, giving up after a few seconds.
+     * A lock older than five minutes is considered stale and cleared. The lock
+     * directory is created with the configured directory permissions.
      *
      * @param string $name The index base name to lock
-     * @throws IndexLockException
+     * @throws IndexLockException when the lock cannot be acquired
      */
     public static function acquire(string $name): void
     {
+        global $conf;
+
         if (isset(self::$held[$name])) {
             self::$held[$name]++;
             return;
         }
 
         $dir = self::lockDir($name);
-        if (!@mkdir($dir)) {
-            // check for stale lock
-            if (time() - @filemtime($dir) > 60 * 5) {
-                @rmdir($dir);
-                if (!@mkdir($dir)) {
-                    throw new IndexLockException('Could not lock ' . $name);
+        $timeStart = time();
+        while (!@mkdir($dir)) {
+            // clear and retry immediately if the existing lock has gone stale
+            if (is_dir($dir) && time() - @filemtime($dir) > 60 * 5) {
+                if (!@rmdir($dir)) {
+                    throw new IndexLockException('Could not remove stale lock ' . $name);
                 }
-            } else {
+                continue;
+            }
+            // give up once we have waited long enough for the holder to finish
+            if (time() - $timeStart >= self::$waitTimeout) {
                 throw new IndexLockException('Could not lock ' . $name);
             }
+            usleep(50);
+        }
+
+        if ($conf['dperm']) {
+            chmod($dir, $conf['dperm']);
         }
 
         self::$held[$name] = 1;
