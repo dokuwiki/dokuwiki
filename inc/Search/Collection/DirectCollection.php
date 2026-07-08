@@ -102,15 +102,13 @@ abstract class DirectCollection extends AbstractCollection
         $entityIndex = $this->getEntityIndex();
         $tokenIndex = $this->getTokenIndex();
 
-        $entities = [];
+        $entityIds = [];
         foreach ($tokenIndex as $entityId => $token) {
-            if ($token === '') continue;
-            $name = $entityIndex->retrieveRow($entityId);
-            if ($name !== '') {
-                $entities[] = $name;
-            }
+            if ($token !== '') $entityIds[] = $entityId;
         }
-        return $entities;
+
+        $names = $entityIndex->retrieveRows($entityIds);
+        return array_values(array_filter($names, static fn($v) => $v !== ''));
     }
 
     /**
