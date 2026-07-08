@@ -78,7 +78,7 @@ class Admin extends Ui
         echo '<div id="admin__version">';
         echo getVersion();
         echo '<br>';
-        echo hsc($conf['template']). ' ' . hsc($conf['syntax']);
+        echo hsc($conf['template']) . ' ' . hsc($conf['syntax']);
         echo '<br>';
         echo implode('<br>', array_map(hsc(...), array_values($runtime)));
         echo '</div>';
