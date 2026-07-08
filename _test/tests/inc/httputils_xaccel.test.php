@@ -95,6 +95,24 @@ class httputils_xaccel_test extends DokuWikiTest
     }
 
     /**
+     * A relocated directory configured with a non-canonical path (containing
+     * '..' or '.' segments) must still be recognised. The comparison file is
+     * canonicalized via fullpath(), so the configured roots have to be too --
+     * this is the same canonicalization the DOKU_INC branch relies on, where
+     * the lib/exe entry points define DOKU_INC as __DIR__.'/../../'.
+     */
+    public function test_noncanonical_root_is_resolved()
+    {
+        global $conf;
+        $conf['savedir'] = '/srv/dwdata/sub/../';
+        $file = '/srv/dwdata/attic/wiki/start.1.txt.gz';
+        $this->assertEquals(
+            DOKU_REL . 'data/attic/wiki/start.1.txt.gz',
+            http_xaccel_url($file)
+        );
+    }
+
+    /**
      * File names with spaces or other special characters must be URL-encoded,
      * because nginx URL-decodes the X-Accel-Redirect target.
      */

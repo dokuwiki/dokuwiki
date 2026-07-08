@@ -104,20 +104,24 @@ function http_xaccel_url($file)
     global $conf;
 
     $file = fullpath($file);
+    // DOKU_INC and savedir may carry uncanonicalized segments (the lib/exe entry points define
+    // DOKU_INC as __DIR__.'/../../', savedir defaults to the relative './data'); canonicalize both
+    // sides so the prefix comparisons against the canonicalized $file actually match
+    $dokuinc = fullpath(DOKU_INC) . '/';
 
-    if (str_starts_with($file, DOKU_INC)) {
+    if (str_starts_with($file, $dokuinc)) {
         // A. files inside the DokuWiki directory: keep their path relative to the root
-        $path = substr($file, strlen(DOKU_INC));
+        $path = substr($file, strlen($dokuinc));
     } else {
         // C. files outside DokuWiki and its data dirs: add prefix (overridden below if a root matches)
         $path = '_x_accel_redirect/' . ltrim($file, '/');
 
         // B. files in a relocated data directory: map back to their default URL below data/
         $roots = [
-            $conf['mediadir']    => 'data/media/',
-            $conf['mediaolddir'] => 'data/media_attic/',
-            $conf['cachedir']    => 'data/cache/',
-            $conf['savedir']     => 'data/',
+            fullpath($conf['mediadir'])    => 'data/media/',
+            fullpath($conf['mediaolddir']) => 'data/media_attic/',
+            fullpath($conf['cachedir'])    => 'data/cache/',
+            fullpath($conf['savedir'])     => 'data/',
         ];
         // match the most specific (longest) root first so nested directories win
         uksort($roots, fn($a, $b) => strlen($b) - strlen($a));
