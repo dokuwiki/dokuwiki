@@ -89,6 +89,39 @@ class ApiCoreAclCheckTest extends \DokuWikiTest {
     }
 
     /**
+     * On a case-insensitive backend a user may check their own permissions even
+     * when naming themselves in a different case than their logged-in name.
+     */
+    public function testCheckaclSelfCaseInsensitiveBackend() {
+        global $conf;
+        global $AUTH_ACL, $USERINFO;
+        global $auth;
+
+        // logging in as "john" and naming "John" refer to the same user here
+        $auth = new class extends \auth_plugin_authplain {
+            public function isCaseSensitive() {
+                return false;
+            }
+        };
+
+        $conf['useacl'] = 1;
+        $_SERVER['REMOTE_USER'] = 'john';
+        $USERINFO['grps'] = ['user'];
+        $AUTH_ACL = [
+            '*                  @ALL           0', //none
+            '*                  @user          2', //edit
+        ];
+
+        // naming yourself in a different case must not be treated as another user
+        $params = [
+            'nice_page',
+            'John',
+            ['user']
+        ];
+        $this->assertEquals(AUTH_EDIT, $this->remote->call('core.aclCheck', $params));
+    }
+
+    /**
      * Checking another user's permissions is restricted to superusers and must
      * be denied for a regular user.
      */

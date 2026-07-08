@@ -17,6 +17,7 @@ use dokuwiki\Remote\Response\User;
 use dokuwiki\Search\Indexer;
 use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -216,7 +217,6 @@ class ApiCore
     {
         /** @var AuthPlugin $auth */
         global $auth;
-        global $INPUT;
 
         $page = $this->checkPage($page, 0, false, AUTH_NONE);
 
@@ -224,7 +224,7 @@ class ApiCore
             return auth_quickaclcheck($page);
         } else {
             // checking another user's permissions discloses their ACL posture, restrict to superusers
-            if ($user !== $INPUT->server->str('REMOTE_USER') && !auth_isadmin()) {
+            if (!$this->isSelf($user) && !auth_isadmin()) {
                 throw new AccessDeniedException('Only admins are allowed to check ACL for other users', 114);
             }
             if ($groups === []) {
@@ -237,6 +237,30 @@ class ApiCore
             }
             return auth_aclcheck($page, $user, $groups);
         }
+    }
+
+    /**
+     * Check whether the given user is the currently logged-in user
+     *
+     * The comparison normalizes both names the same way the ACL machinery matches
+     * them, so on a case-insensitive backend a differently-cased spelling of the
+     * current user is still recognized as themselves.
+     *
+     * @param string $user username to compare against the current user
+     * @return bool
+     */
+    protected function isSelf($user)
+    {
+        /** @var AuthPlugin $auth */
+        global $auth;
+        global $INPUT;
+
+        $curUser = $INPUT->server->str('REMOTE_USER');
+        if (!$auth->isCaseSensitive()) {
+            $user = PhpString::strtolower($user);
+            $curUser = PhpString::strtolower($curUser);
+        }
+        return $auth->cleanUser($user) === $auth->cleanUser($curUser);
     }
 
     // endregion
