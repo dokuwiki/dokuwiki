@@ -16,8 +16,12 @@ class Media extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        // Word boundaries?
-        $this->Lexer->addSpecialPattern("\{\{(?:[^\}]|(?:\}[^\}]))+\}\}", $mode, 'media');
+        // Body is possessive: it can only match up to the first `}}` (neither
+        // alternative accepts `}}`), so it never needs to backtrack to let the
+        // closing `}}` match. Without the possessive quantifier an unclosed
+        // `{{` followed by a large body drives the non-JIT PCRE engine to
+        // retain one backtracking frame per byte — an unbounded memory spike.
+        $this->Lexer->addSpecialPattern("\{\{(?:[^\}]|(?:\}[^\}]))++\}\}", $mode, 'media');
     }
 
     /** @inheritdoc */

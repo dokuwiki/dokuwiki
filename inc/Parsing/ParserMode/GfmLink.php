@@ -60,8 +60,9 @@ class GfmLink extends AbstractMode
     // Image sub-pattern reused for both the label alternative in the main
     // pattern and the image-as-label detector in handle(). No capture
     // groups here — the lexer wraps user patterns in a capture and
-    // additional captures would renumber unpredictably.
-    private const IMAGE_SUB = '!\[' . self::LABEL_CHAR . '*\]\(' . self::URL_CHAR . '+\)';
+    // additional captures would renumber unpredictably. The label/url
+    // quantifiers are possessive for the same reason as the main pattern.
+    private const IMAGE_SUB = '!\[' . self::LABEL_CHAR . '*+\]\(' . self::URL_CHAR . '++\)';
 
     /** @inheritdoc */
     public function getSort()
@@ -77,7 +78,13 @@ class GfmLink extends AbstractMode
         // image alternative explicitly matches one inline image. URL
         // slot is permissive — handle() does URL / title splitting
         // post-entry, mirroring how DW Internallink parses inside `[[...]]`.
-        $pattern = '\[(?!\[)(?:' . self::LABEL_CHAR . '+|' . self::IMAGE_SUB . ')\]\(' . self::URL_CHAR . '+\)';
+        //
+        // The label and url quantifiers are possessive: LABEL_CHAR never
+        // matches an unescaped `]` and URL_CHAR never matches an unescaped
+        // `)`, so each run stops exactly at its own closer and never needs to
+        // backtrack. A plain `+` here lets an unclosed `[text…` drive the
+        // non-JIT PCRE engine to retain one backtracking frame per byte.
+        $pattern = '\[(?!\[)(?:' . self::LABEL_CHAR . '++|' . self::IMAGE_SUB . ')\]\(' . self::URL_CHAR . '++\)';
         $this->Lexer->addSpecialPattern($pattern, $mode, 'gfm_link');
     }
 
