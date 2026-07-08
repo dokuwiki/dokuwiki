@@ -69,13 +69,18 @@ XML;
     }
 
     /**
-     * A genuine connection failure must stay distinguishable from a success
+     * DokuHTTPClient reports transport failures (no connection, SSL unsupported, timeout)
+     * as negative pseudo statuses while carrying the real message in its error field.
+     * SimplePie's FileClient only turns a file error into a thrown ClientException -- and
+     * thus surfaces that message -- when the status code is zero; any other value is
+     * reported as "unsupported status code" and the real message is lost. The pseudo
+     * statuses are therefore clamped to zero so the descriptive error reaches the output.
      */
-    public function testFailedResponseKeepsStatusAndError()
+    public function testTransportFailureIsReportedWithStatusZero()
     {
         $file = $this->fetchedFile(-100, 'Could not connect to server', '');
 
-        $this->assertSame(-100, $file->get_status_code());
+        $this->assertSame(0, $file->get_status_code());
         $this->assertSame('Could not connect to server', $file->error);
     }
 

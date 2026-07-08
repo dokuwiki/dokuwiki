@@ -40,7 +40,9 @@ class FeedParserFile extends File
         $this->success = $this->http->sendRequest($url);
 
         $this->requestUrl = $url;
-        $this->responseStatus = (int)$this->http->status;
+        // DokuHTTPClient reports transport failures as negative pseudo statuses (-100 etc.),
+        // but SimplePie only surfaces our error message when the status code is 0
+        $this->responseStatus = max(0, (int)$this->http->status);
         $this->responseBody = (string)$this->http->resp_body;
         $this->responseHeaders = $this->normalizeHeaders($this->http->resp_headers);
         // DokuHTTPClient uses an empty string for "no error", but SimplePie's FileClient
