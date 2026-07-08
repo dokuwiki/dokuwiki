@@ -36,13 +36,10 @@ class GfmEmphasis extends AbstractFormatting
         //   (?=                       — lookahead: a valid closer must exist
         //     [^\s*]                  —   first body char: not whitespace, not `*`
         //                                 (flanking-opener rule)
-        //     (?:                     —   optional: more body
-        //       (?:NOT_AT_PARA_BREAK  —     …any non-`*` char that doesn't
-        //          [^*])*             —     start a paragraph break
-        //       [^\s*]                —     last body char: not whitespace, not `*`
+        //     (?:NOT_AT_PARA_BREAK    —   possessive run of any non-`*` char
+        //        [^*])*+              —     that doesn't start a paragraph break
+        //     (?<![\s*])              —   last body char: not whitespace, not `*`
         //                                 (flanking-closer rule)
-        //     )?                      —   `?` so single-char bodies like `*a*`
-        //                                 also match
         //     \*                      —   closing `*`
         //   )
         // The lookahead only reaches the nearest `*` (its body is `[^*]`), so
@@ -50,7 +47,15 @@ class GfmEmphasis extends AbstractFormatting
         // closer scan cannot express. The inherited closer check additionally
         // keeps the opener from spanning an enclosing mode's closer (e.g. a
         // stray `*` inside ''glob/*.conf'').
-        return '\*(?=[^\s*](?:(?:' . self::NOT_AT_PARA_BREAK . '[^*])*[^\s*])?\*)';
+        //
+        // The body run is possessive and the flanking-closer rule is a
+        // lookbehind rather than a trailing character the run must give back:
+        // `[^*]` cannot match `*`, so the run always stops at the nearest `*`
+        // (or a paragraph break) and never needs to backtrack. A plain
+        // quantifier with a trailing `[^\s*]` forced backtracking on every
+        // opener, so a long run of `*` with no valid closer made the non-JIT
+        // PCRE engine retain one backtracking frame per byte.
+        return '\*(?=[^\s*](?:' . self::NOT_AT_PARA_BREAK . '[^*])*+(?<![\s*])\*)';
     }
 
     /** @inheritdoc */
