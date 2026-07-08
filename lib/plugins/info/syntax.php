@@ -201,6 +201,7 @@ class syntax_plugin_info extends SyntaxPlugin
 
         $registry = new ModeRegistry($conf['syntax']);
         $registry->getModes();
+
         $categories = $registry->getCategories();
 
         $doc = '';
