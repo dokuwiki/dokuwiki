@@ -36,13 +36,7 @@ class GfmDeleted extends AbstractFormatting
         //                            are fenced-code markers, not strike)
         //   ~~                     — two opening tildes
         //   (?=[^\s~])             — next body char: not whitespace, not `~`
-        //   (?=                    — lookahead: a valid closer must exist
-        //     CONTENT_UNTIL_PARA   —   body that doesn't cross a blank line
-        //     [^\s]~~              —   non-whitespace, then closing `~~`
-        //     (?!~)                —   and not followed by another `~`
-        //   )
-        return '(?<!~)~~(?=[^\s~])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]~~(?!~))';
+        return '(?<!~)~~(?=[^\s~])';
     }
 
     /** @inheritdoc */

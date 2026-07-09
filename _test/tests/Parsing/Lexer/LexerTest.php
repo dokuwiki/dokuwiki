@@ -6,7 +6,7 @@ use dokuwiki\Parsing\Lexer\Lexer;
 
 class LexerTest extends \DokuWikiTest
 {
-    function testNoPatterns()
+    public function testNoPatterns()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler);
@@ -14,7 +14,7 @@ class LexerTest extends \DokuWikiTest
         $this->assertSame([], $handler->recorded);
     }
 
-    function testEmptyPage()
+    public function testEmptyPage()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler);
@@ -23,7 +23,7 @@ class LexerTest extends \DokuWikiTest
         $this->assertSame([], $handler->recorded);
     }
 
-    function testSinglePattern()
+    public function testSinglePattern()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler);
@@ -41,7 +41,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testMultiplePattern()
+    public function testMultiplePattern()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler);
@@ -53,7 +53,7 @@ class LexerTest extends \DokuWikiTest
         $this->assertSame($expected, $actual);
     }
 
-    function testIsolatedPattern()
+    public function testIsolatedPattern()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "a");
@@ -72,7 +72,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testModeChange()
+    public function testModeChange()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "a");
@@ -97,7 +97,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testNesting()
+    public function testNesting()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "a");
@@ -121,7 +121,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testSingular()
+    public function testSingular()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "a");
@@ -138,7 +138,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testUnwindTooFar()
+    public function testUnwindTooFar()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "a");
@@ -151,7 +151,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testModeMapping()
+    public function testModeMapping()
     {
         $handler = new RecordingHandler();
         $lexer = new Lexer($handler, "mode_a");
@@ -173,7 +173,7 @@ class LexerTest extends \DokuWikiTest
         ], $handler->recorded);
     }
 
-    function testIndex()
+    public function testIndex()
     {
         $doc = "aaa<file>bcd</file>eee";
         $handler = new RecordingHandler();
@@ -195,7 +195,7 @@ class LexerTest extends \DokuWikiTest
         ], $caught);
     }
 
-    function testIndexLookaheadEqual()
+    public function testIndexLookaheadEqual()
     {
         $doc = "aaa<file>bcd</file>eee";
         $handler = new RecordingHandler();
@@ -217,7 +217,7 @@ class LexerTest extends \DokuWikiTest
         ], $caught);
     }
 
-    function testIndexLookaheadNotEqual()
+    public function testIndexLookaheadNotEqual()
     {
         $doc = "aaa<file>bcd</file>eee";
         $handler = new RecordingHandler();
@@ -239,7 +239,7 @@ class LexerTest extends \DokuWikiTest
         ], $caught);
     }
 
-    function testIndexLookbehindEqual()
+    public function testIndexLookbehindEqual()
     {
         $doc = "aaa<file>bcd</file>eee";
         $handler = new RecordingHandler();
@@ -261,7 +261,7 @@ class LexerTest extends \DokuWikiTest
         ], $caught);
     }
 
-    function testIndexLookbehindNotEqual()
+    public function testIndexLookbehindNotEqual()
     {
         $doc = "aaa<file>bcd</file>eee";
         $handler = new RecordingHandler();
@@ -297,7 +297,7 @@ class LexerTest extends \DokuWikiTest
      * `<a/>` that was consumed as a SPECIAL token on the previous step. Before
      * the fix, `</x>` would fall out as UNMATCHED instead of EXIT.
      */
-    function testIndexLookbehindAcrossConsumedToken()
+    public function testIndexLookbehindAcrossConsumedToken()
     {
         $doc = "<x><a/></x>";
         $handler = new RecordingHandler();
@@ -320,7 +320,7 @@ class LexerTest extends \DokuWikiTest
      * This test is primarily to ensure the correct match is chosen
      * when there are non-captured elements in the pattern.
      */
-    function testIndexSelectCorrectMatch()
+    public function testIndexSelectCorrectMatch()
     {
         $doc = "ALL FOOLS ARE FOO";
         $pattern = '\bFOO\b';
@@ -336,5 +336,185 @@ class LexerTest extends \DokuWikiTest
         $this->assertSame('FOO', $caught[0][1]);
         $this->assertSame(\DOKU_LEXER_SPECIAL, $caught[0][2]);
         $this->assertSame($matches[0][1], $caught[0][3]);
+    }
+
+    public function testCloserPatternSkipsCandidateWithoutCloserBeforeBoundary()
+    {
+        // no closer (\w followed by **) before the blank line: the first
+        // ** stays literal; the span after the boundary still matches
+        $doc = "** foo\n\n**bar**";
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('\w\*\*', 'caught', '\n\n');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $caught = array_values(array_filter($handler->recorded, fn($c) => $c[0] === 'caught'));
+        $this->assertSame([
+            ['caught', '**', \DOKU_LEXER_ENTER, 8],
+            ['caught', 'bar', \DOKU_LEXER_UNMATCHED, 10],
+            ['caught', '**', \DOKU_LEXER_EXIT, 13],
+        ], $caught);
+        // the rejected candidate stays part of the unmatched text
+        $this->assertSame(['ignore', "** foo\n\n", \DOKU_LEXER_UNMATCHED, 0], $handler->recorded[0]);
+    }
+
+    public function testCloserPatternWithoutBoundaryScansWholeSubject()
+    {
+        // same shape, but with no boundary the closer behind the blank
+        // line counts and the first ** does enter the mode
+        $doc = "** foo\n\n**bar**";
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('\w\*\*', 'caught');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $this->assertSame(['caught', '**', \DOKU_LEXER_ENTER, 0], $handler->recorded[0]);
+    }
+
+    public function testCloserPatternRejectsAllCandidates()
+    {
+        $doc = 'a ** b ** c';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('\w\*\*', 'caught');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $this->assertSame([
+            ['ignore', 'a ** b ** c', \DOKU_LEXER_UNMATCHED, 0],
+        ], $handler->recorded);
+    }
+
+    public function testCloserScanIgnoresCloserInsideSpecialPatternMatch()
+    {
+        // the only closer candidate sits inside a special pattern's match,
+        // which the lexer consumes atomically — the scan must not count it,
+        // so the entry is rejected
+        $doc = 'a **b %%c** d%% e';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('(?<=\w)\*\*', 'caught');
+        $lexer->addSpecialPattern('%%.*?%%', 'caught', 'prot');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $this->assertSame([
+            ['ignore', $doc, \DOKU_LEXER_UNMATCHED, 0],
+        ], $handler->recorded);
+    }
+
+    public function testCloserScanFindsCloserBehindSpecialPatternMatch()
+    {
+        // a real closer behind the atomically consumed span still
+        // validates the entry
+        $doc = 'a **b %%c** d%% e** f';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('(?<=\w)\*\*', 'caught');
+        $lexer->addSpecialPattern('%%.*?%%', 'caught', 'prot');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $this->assertSame(['caught', '**', \DOKU_LEXER_ENTER, 2], $handler->recorded[1]);
+    }
+
+    public function testCloserScanIgnoresCloserInsideVerbatimModeSpan()
+    {
+        // the only closer candidate sits inside the span of a nested
+        // verbatim mode (only exit patterns of its own): the scan derives
+        // the span from the entry and exit patterns and skips it
+        $doc = 'a **b <v>c** d</v> e';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('(?<=\w)\*\*', 'caught');
+        $lexer->addEntryPattern('<v>', 'caught', 'verb');
+        $lexer->addExitPattern('</v>', 'verb');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        $this->assertTrue($lexer->parse($doc));
+        $this->assertSame([
+            ['ignore', $doc, \DOKU_LEXER_UNMATCHED, 0],
+        ], $handler->recorded);
+    }
+
+    public function testCloserMemoIsResetBetweenParses()
+    {
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'caught');
+        $lexer->addCloserPattern('\w\*\*', 'caught');
+        $lexer->addExitPattern('\*\*', 'caught');
+
+        // first parse memoizes "no closer from position 4 onwards"
+        $this->assertTrue($lexer->parse('x ** a'));
+        $this->assertSame([
+            ['ignore', 'x ** a', \DOKU_LEXER_UNMATCHED, 0],
+        ], $handler->recorded);
+
+        // a stale memo would reject the same position in the next subject
+        $handler->recorded = [];
+        $this->assertTrue($lexer->parse('x **b** c'));
+        $this->assertSame(['caught', '**', \DOKU_LEXER_ENTER, 2], $handler->recorded[1]);
+    }
+
+    public function testCloserCheckLooksPastUnguardedEnclosingMode()
+    {
+        // inner // sits in an unguarded middle mode inside a guarded outer
+        // mode; its only closer lies beyond the outer closer. The enclosing
+        // check must step over the unguarded middle, reach the outer, and
+        // reject, so the inner // stays literal instead of pairing across the
+        // middle and outer boundaries.
+        $doc = '**A ((B //C)) D** E F//G//';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'outer');
+        $lexer->addCloserPattern('(?<=\w)\*\*', 'outer');
+        $lexer->addEntryPattern('\(\(', 'outer', 'middle'); // unguarded: no closer
+        $lexer->addExitPattern('\)\)', 'middle');
+        $lexer->addEntryPattern('//', 'middle', 'inner');
+        $lexer->addCloserPattern('(?<=\w)//', 'inner');
+        $lexer->addExitPattern('//', 'inner');
+        $lexer->addExitPattern('\*\*', 'outer');
+
+        $this->assertTrue($lexer->parse($doc));
+        $enterModes = array_column(
+            array_filter($handler->recorded, fn($c) => $c[2] === \DOKU_LEXER_ENTER),
+            0
+        );
+        $this->assertContains('outer', $enterModes);
+        $this->assertContains('middle', $enterModes);
+        $this->assertNotContains('inner', $enterModes);
+    }
+
+    public function testCloserCheckAllowsInnerClosingBeforeGuardedAncestor()
+    {
+        // same shape, but the inner // now closes before the outer closer, so
+        // nesting through the unguarded middle is allowed
+        $doc = '**A ((B //C// D)) E**';
+        $handler = new RecordingHandler();
+        $lexer = new Lexer($handler, 'ignore', true);
+        $lexer->addEntryPattern('\*\*', 'ignore', 'outer');
+        $lexer->addCloserPattern('(?<=\w)\*\*', 'outer');
+        $lexer->addEntryPattern('\(\(', 'outer', 'middle'); // unguarded: no closer
+        $lexer->addExitPattern('\)\)', 'middle');
+        $lexer->addEntryPattern('//', 'middle', 'inner');
+        $lexer->addCloserPattern('(?<=\w)//', 'inner');
+        $lexer->addExitPattern('//', 'inner');
+        $lexer->addExitPattern('\*\*', 'outer');
+
+        $this->assertTrue($lexer->parse($doc));
+        $enterModes = array_column(
+            array_filter($handler->recorded, fn($c) => $c[2] === \DOKU_LEXER_ENTER),
+            0
+        );
+        $this->assertContains('inner', $enterModes);
     }
 }

@@ -54,25 +54,47 @@ class GfmBacktickSingle extends AbstractMode
     }
 
     /**
-     * Entry pattern. The length-boundary guards (?<!`)...(?!`) around
-     * each delimiter ensure a run of two or more backticks is never read
-     * as an n=1 opener or closer. The body character class, which admits
-     * either a non-backtick or a run of two-or-more backticks, lets
-     * those longer runs live inside the body since they cannot be valid
-     * n=1 closers.
+     * Delimiter: a lone backtick. The length-boundary guards
+     * (?<!`)...(?!`) ensure a run of two or more backticks is never read
+     * as an n=1 opener or closer.
+     */
+    protected function getDelimiterPattern(): string
+    {
+        return '(?<!`)`(?!`)';
+    }
+
+    /**
+     * Span body. Admits runs of non-backticks, newlines that don't start
+     * a blank line, and runs of two-or-more backticks — the latter live
+     * inside the body since they cannot be valid n=1 closers.
+     *
+     * The alternatives start with mutually exclusive characters and all
+     * quantifiers are possessive, so a scan over the body never
+     * backtracks: it stops at the first lone backtick (or fails at the
+     * paragraph break) without accumulating backtracking state.
+     */
+    protected function getBodyPattern(): string
+    {
+        return '(?:[^`\n]++|' . self::NOT_AT_PARA_BREAK . '\n|``++)++';
+    }
+
+    /**
+     * Entry pattern: an opening delimiter whose lookahead verifies a body
+     * and a closing delimiter ahead. The lookahead is self-limiting — a
+     * lone backtick ahead is always a valid closer, so at most one scan
+     * per paragraph can fail — which keeps it linear without the memoized
+     * closer machinery of Lexer::addCloserPattern().
      */
     protected function getEntryPattern(): string
     {
-        return '(?<!`)`(?!`)(?='
-            . '(?:' . self::NOT_AT_PARA_BREAK . '(?:[^`]|``+))+'
-            . '(?<!`)`(?!`)'
-            . ')';
+        return $this->getDelimiterPattern()
+            . '(?=' . $this->getBodyPattern() . $this->getDelimiterPattern() . ')';
     }
 
-    /** Exit pattern. Same boundary guards as the entry. */
+    /** Exit pattern: the same delimiter that opened the span. */
     protected function getExitPattern(): string
     {
-        return '(?<!`)`(?!`)';
+        return $this->getDelimiterPattern();
     }
 
     /** @inheritdoc */

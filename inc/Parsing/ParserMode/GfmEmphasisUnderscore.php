@@ -33,12 +33,8 @@ class GfmEmphasisUnderscore extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        // Entry requires a valid closing `_` (non-whitespace char before it AND
-        // NO_WORD_AFTER following). Otherwise emphasis would open with no way
-        // to ever close (or close at an invalid position).
         return self::NO_WORD_BEFORE
-            . '_(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]_' . self::NO_WORD_AFTER . ')';
+            . '_(?=[^\s_])';
     }
 
     /** @inheritdoc */

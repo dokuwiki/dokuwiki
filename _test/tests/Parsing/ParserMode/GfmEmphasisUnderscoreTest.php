@@ -15,10 +15,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->setSyntax('md');
     }
 
-    function testBasicUnderscore()
+    public function testBasicUnderscore()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('Foo _Bar_ Baz');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -33,10 +34,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testSingleCharacter()
+    public function testSingleCharacter()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('foo _b_ bar');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -51,10 +53,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testMultipleWords()
+    public function testMultipleWords()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('_one two three_');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -69,11 +72,12 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testIntrawordUnderscoreIsNotEmphasised()
+    public function testIntrawordUnderscoreIsNotEmphasised()
     {
         // GFM's key word-boundary rule: underscores inside words stay literal.
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('this_is_not_an_emphasis');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -84,10 +88,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testOpenerFollowedBySpaceDoesNotEmphasise()
+    public function testOpenerFollowedBySpaceDoesNotEmphasise()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('foo _ bar_ baz');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -98,7 +103,7 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testDoubleUnderscoreDoesNotEmphasise()
+    public function testDoubleUnderscoreDoesNotEmphasise()
     {
         // `__foo__` must stay literal. At the first `_`, the lookahead
         // `(?=[^\s_])` forbids entry (next char is another `_`). At the
@@ -107,6 +112,7 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         // `__foo` can't open emphasis at the inner underscore).
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('foo __bar__ baz');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -117,10 +123,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testTwoSeparateEmphasisOnOneLine()
+    public function testTwoSeparateEmphasisOnOneLine()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('_one_ and _two_');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -139,10 +146,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testMultilineEmphasis()
+    public function testMultilineEmphasis()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse("_line\nline\nline_");
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -157,25 +165,27 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testSortValue()
+    public function testSortValue()
     {
         $mode = new GfmEmphasisUnderscore();
         $this->assertSame(80, $mode->getSort());
     }
 
-    function testDoesNotSpanParagraphBoundary()
+    public function testDoesNotSpanParagraphBoundary()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse("_open\n\nclose_");
+
         $modes = array_column($this->H->calls, 0);
         $this->assertNotContains('emphasis_open', $modes,
             'GfmEmphasisUnderscore must not open when the closing `_` is past a blank line');
     }
 
-    function testAllowsSingleNewlineInsideMultiline()
+    public function testAllowsSingleNewlineInsideMultiline()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse("_open\nclose_");
+
         $modes = array_column($this->H->calls, 0);
         $this->assertContains('emphasis_open', $modes,
             'GfmEmphasisUnderscore must still match across a single newline');
@@ -198,10 +208,11 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
      *
      * @dataProvider provideMultibyteIntrawordCases
      */
-    function testIntrawordUnderscoreInMultibyteText(string $input)
+    public function testIntrawordUnderscoreInMultibyteText(string $input)
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse($input);
+
         $modes = array_column($this->H->calls, 0);
         $this->assertNotContains(
             'emphasis_open',
@@ -233,11 +244,12 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
      * following letters are multibyte. Verifies that both the lookbehind
      * and the closing-delimiter lookahead reject multibyte word chars.
      */
-    function testMultibyteWordCharsAreNotTreatedAsBoundary()
+    public function testMultibyteWordCharsAreNotTreatedAsBoundary()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         // Intraword between Cyrillic on the left and Cyrillic on the right.
         $this->P->parse('до_середины_текста');
+
         $modes = array_column($this->H->calls, 0);
         $this->assertNotContains('emphasis_open', $modes,
             'Cyrillic-surrounded `_` must not emphasize');
@@ -248,14 +260,23 @@ class GfmEmphasisUnderscoreTest extends ParserTestBase
      * punctuation, multibyte content *inside* the emphasis span is fine.
      * `_für etwas_` surrounded by spaces should emphasize the multibyte text.
      */
-    function testMultibyteContentInsideEmphasisWorks()
+    public function testMultibyteContentInsideEmphasisWorks()
     {
         $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
         $this->P->parse('foo _für etwas_ bar');
+
         $modes = array_column($this->H->calls, 0);
         $this->assertContains('emphasis_open', $modes,
             'Multibyte text inside `_..._` must emphasize when boundaries are clear');
         $this->assertContains('emphasis_close', $modes,
             'Multibyte text inside `_..._` must emphasize when boundaries are clear');
+    }
+
+    public function testRejectedOpenerBeforeValidSpanStaysLiteral()
+    {
+        $this->P->addMode('gfm_emphasis_underscore', new GfmEmphasisUnderscore());
+        $this->P->parse('_ foo _bar_');
+        $this->assertContains('emphasis_open', array_column($this->H->calls, 0));
+        $this->assertStringContainsString('_ foo ', $this->H->calls[2][1][0]);
     }
 }

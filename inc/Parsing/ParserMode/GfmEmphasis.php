@@ -45,6 +45,11 @@ class GfmEmphasis extends AbstractFormatting
         //                                 also match
         //     \*                      —   closing `*`
         //   )
+        // The lookahead only reaches the nearest `*` (its body is `[^*]`), so
+        // it enforces CommonMark's nearest-delimiter pairing that a plain
+        // closer scan cannot express. The inherited closer check additionally
+        // keeps the opener from spanning an enclosing mode's closer (e.g. a
+        // stray `*` inside ''glob/*.conf'').
         return '\*(?=[^\s*](?:(?:' . self::NOT_AT_PARA_BREAK . '[^*])*[^\s*])?\*)';
     }
 

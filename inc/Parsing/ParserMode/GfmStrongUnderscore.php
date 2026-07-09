@@ -34,8 +34,7 @@ class GfmStrongUnderscore extends AbstractFormatting
     protected function getEntryPattern(): string
     {
         return self::NO_WORD_BEFORE
-            . '__(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]__' . self::NO_WORD_AFTER . ')';
+            . '__(?=[^\s_])';
     }
 
     /** @inheritdoc */

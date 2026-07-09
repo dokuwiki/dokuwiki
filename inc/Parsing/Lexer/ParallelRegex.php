@@ -57,6 +57,26 @@ class ParallelRegex
     }
 
     /**
+     * Lists the registered patterns together with their labels, in
+     * registration order.
+     *
+     * The label tells how the lexer treats a match: true for a plain
+     * pattern consumed in place, Lexer::MODE_EXIT for an exit pattern,
+     * a mode name prefixed with Lexer::MODE_SPECIAL_PREFIX for a special
+     * pattern, and a bare mode name for an entry pattern into that mode.
+     *
+     * @return array[] list of ['pattern' => string, 'label' => bool|string]
+     */
+    public function getPatterns()
+    {
+        return array_map(
+            static fn($pattern, $label) => ['pattern' => $pattern, 'label' => $label],
+            $this->patterns,
+            $this->labels
+        );
+    }
+
+    /**
      * Attempts to split the string against all patterns at once.
      *
      * When `$offset` is non-zero, the match begins at that byte position in
@@ -85,6 +105,9 @@ class ParallelRegex
                 switch ($err) {
                     case PREG_BACKTRACK_LIMIT_ERROR:
                         msg('A PCRE backtrack error occured. Try to increase the pcre.backtrack_limit in php.ini', -1);
+                        break;
+                    case PREG_JIT_STACKLIMIT_ERROR:
+                        msg('A PCRE JIT stacklimit error occured. Try to disable pcre.jit in php.ini', -1);
                         break;
                     case PREG_RECURSION_LIMIT_ERROR:
                         msg('A PCRE recursion error occured. Try to increase the pcre.recursion_limit in php.ini', -1);
@@ -115,6 +138,62 @@ class ParallelRegex
     }
 
     /**
+     * Translates a pattern from the lexer convention into plain PCRE
+     * syntax: bare ( and ) match literally — only the (?...) group forms
+     * keep their regex meaning — and / needs no escaping despite the
+     * /-delimited compound. Any fragment embedded into a /-delimited
+     * regex alongside the registered patterns must go through this
+     * translation to compose correctly.
+     *
+     * @param string $pattern pattern in the lexer convention
+     * @return string plain PCRE pattern fragment
+     */
+    public static function escapePattern($pattern)
+    {
+        /*
+         * decompose the input pattern into "(", "(?", ")",
+         * "[...]", "[]..]", "[^]..]", "[...[:...:]..]", "\x"...
+         * elements.
+         */
+        preg_match_all('/\\\\.|' .
+                       '\(\?|' .
+                       '[()]|' .
+                       '\[\^?\]?(?:\\\\.|\[:[^]]*:\]|[^]\\\\])*\]|' .
+                       '[^[()\\\\]+/', $pattern, $elts);
+
+        $escaped = "";
+        $level = 0;
+
+        foreach ($elts[0] as $elt) {
+            /*
+             * for "(", ")" remember the nesting level, add "\"
+             * only to the non-"(?" ones.
+             */
+
+            switch ($elt) {
+                case '(':
+                    $escaped .= '\(';
+                    break;
+                case ')':
+                    if ($level > 0)
+                        $level--; /* closing (? */
+                    else $escaped .= '\\';
+                    $escaped .= ')';
+                    break;
+                case '(?':
+                    $level++;
+                    $escaped .= '(?';
+                    break;
+                default:
+                    if (str_starts_with($elt, '\\'))
+                        $escaped .= $elt;
+                    else $escaped .= str_replace('/', '\/', $elt);
+            }
+        }
+        return $escaped;
+    }
+
+    /**
      * Compounds the patterns into a single
      * regular expression separated with the
      * "or" operator. Caches the regex.
@@ -125,51 +204,11 @@ class ParallelRegex
     protected function getCompoundedRegex()
     {
         if ($this->regex == null) {
-            $cnt = count($this->patterns);
-            for ($i = 0; $i < $cnt; $i++) {
-                /*
-                 * decompose the input pattern into "(", "(?", ")",
-                 * "[...]", "[]..]", "[^]..]", "[...[:...:]..]", "\x"...
-                 * elements.
-                 */
-                preg_match_all('/\\\\.|' .
-                               '\(\?|' .
-                               '[()]|' .
-                               '\[\^?\]?(?:\\\\.|\[:[^]]*:\]|[^]\\\\])*\]|' .
-                               '[^[()\\\\]+/', $this->patterns[$i], $elts);
-
-                $pattern = "";
-                $level = 0;
-
-                foreach ($elts[0] as $elt) {
-                    /*
-                     * for "(", ")" remember the nesting level, add "\"
-                     * only to the non-"(?" ones.
-                     */
-
-                    switch ($elt) {
-                        case '(':
-                            $pattern .= '\(';
-                            break;
-                        case ')':
-                            if ($level > 0)
-                                $level--; /* closing (? */
-                            else $pattern .= '\\';
-                            $pattern .= ')';
-                            break;
-                        case '(?':
-                            $level++;
-                            $pattern .= '(?';
-                            break;
-                        default:
-                            if (str_starts_with($elt, '\\'))
-                                $pattern .= $elt;
-                            else $pattern .= str_replace('/', '\/', $elt);
-                    }
-                }
-                $this->patterns[$i] = "($pattern)";
-            }
-            $this->regex = "/" . implode("|", $this->patterns) . "/" . $this->getPerlMatchingFlags();
+            $groups = array_map(
+                static fn($pattern) => '(' . self::escapePattern($pattern) . ')',
+                $this->patterns
+            );
+            $this->regex = "/" . implode("|", $groups) . "/" . $this->getPerlMatchingFlags();
         }
         return $this->regex;
     }

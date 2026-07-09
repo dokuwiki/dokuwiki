@@ -27,11 +27,8 @@ class GfmEmphasisStrongUnderscore extends GfmEmphasisStrong
     {
         // NO_WORD_BEFORE + `(?<!_)` blocks intraword and longer-run openers.
         // `(?=[^\s_])` enforces the flanking-opener rule.
-        // The closing-delimiter lookahead requires non-whitespace before `___`,
-        // `(?!_)` for exactly-3 length, and NO_WORD_AFTER for word-boundary.
         return self::NO_WORD_BEFORE
-            . '(?<!_)___(?=[^\s_])'
-            . '(?=' . self::CONTENT_UNTIL_PARA . '[^\s]___(?!_)' . self::NO_WORD_AFTER . ')';
+            . '(?<!_)___(?=[^\s_])';
     }
 
     /** @inheritdoc */

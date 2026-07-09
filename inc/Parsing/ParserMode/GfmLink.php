@@ -55,7 +55,7 @@ class GfmLink extends AbstractMode
     // permitted as long as it is not followed by a blank line — soft
     // line breaks inside link text are allowed by the spec, blank lines
     // are not (and they would also tie up `\n#`-anchored block modes).
-    private const LABEL_CHAR = '(?:\\\\.|[^\[\]\n]|\n(?![ \t]*\n))';
+    private const LABEL_CHAR = '(?:\\\\.|[^\[\]\n]|' . self::NOT_AT_PARA_BREAK . '\n)';
 
     // Image sub-pattern reused for both the label alternative in the main
     // pattern and the image-as-label detector in handle(). No capture

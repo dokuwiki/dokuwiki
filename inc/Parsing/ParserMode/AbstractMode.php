@@ -51,25 +51,18 @@ abstract class AbstractMode
     //region Pattern building blocks
 
     /**
-     * Zero-width assertion: not at the start of a paragraph break.
+     * Zero-width assertion: not at the start of a paragraph break
+     * (Lexer::PARA_BREAK).
      *
-     * Paragraph boundaries are blank lines — two newlines possibly separated
-     * by horizontal whitespace. The lexer compiles all patterns with the `s`
-     * (DOTALL) flag, so a plain `.*` inside an entry-pattern lookahead would
-     * match across blank lines and let an unclosed delimiter greedily consume
-     * following paragraphs. Place this assertion before a character class to
-     * stop the match at a paragraph boundary.
-     */
-    protected const NOT_AT_PARA_BREAK = '(?!\n[ \t]*\n)';
-
-    /**
-     * Quantified group matching any character that does not start a paragraph
-     * break. Convenience for the common case of "consume until paragraph end".
+     * The lexer compiles all patterns with the `s` (DOTALL) flag, so a
+     * plain `.*` inside an entry-pattern lookahead would match across blank
+     * lines and let an unclosed delimiter greedily consume following
+     * paragraphs. Place this assertion before a character class to stop the
+     * match at a paragraph boundary.
      *
-     * Example:
-     *     return '\*\*(?=' . self::CONTENT_UNTIL_PARA . '\*\*)';
+     * @var string
      */
-    protected const CONTENT_UNTIL_PARA = '(?:' . self::NOT_AT_PARA_BREAK . '.)*';
+    protected const NOT_AT_PARA_BREAK = '(?!' . Lexer::PARA_BREAK . ')';
 
     /**
      * Character class: a single "non-word" character — ASCII whitespace or
@@ -86,6 +79,8 @@ abstract class AbstractMode
      * therefore correctly treats multibyte letters as word-like — preventing
      * intraword matches in non-Latin text (e.g. `für_etwas`, `日本_語`)
      * without requiring `u` flag support across the whole lexer.
+     *
+     * @var string
      */
     protected const NON_WORD_CHAR = '[\s!"#$%&\'()*+,\-./:;<=>?@\[\\\\\]^`{|}~]';
 
@@ -93,6 +88,8 @@ abstract class AbstractMode
      * Zero-width assertion: current position is preceded by a non-word
      * character, or is at the start of input/line. See {@see self::NON_WORD_CHAR}
      * for the multibyte reasoning.
+     *
+     * @var string
      */
     protected const NO_WORD_BEFORE = '(?:^|(?<=' . self::NON_WORD_CHAR . '))';
 
@@ -100,6 +97,8 @@ abstract class AbstractMode
      * Zero-width assertion: current position is followed by a non-word
      * character, or is at the end of input. Complement to
      * {@see self::NO_WORD_BEFORE}.
+     *
+     * @var string
      */
     protected const NO_WORD_AFTER = '(?:\z|(?=' . self::NON_WORD_CHAR . '))';
 
