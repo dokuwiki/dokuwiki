@@ -4,31 +4,35 @@
  */
 
 /* ============================================
-   LESS Variables - Colors
-   ============================================ */
-@brand-primary: #009c7f; // Main green color
-@brand-accent: #e9c200; // Yellow accent for buttons
-@text-color: #333; // Dark text for readability
-@background-color: #fff; // White background
-@background-site: #fafafa; // Light gray site background
+LESS Variables - Colors
+============================================ */
+@brand-primary: #006953; // Primary green (Urban Integrity)
+@brand-secondary: #b41f00; // Secondary red, urgent actions
+@brand-accent: #d0a600; // Tertiary-container yellow, accent
+@on-brand-accent: #4f3d00; // Text on tertiary-container yellow
+@text-color: #1c1b1b; // on-surface
+@background-color: #fff; // surface-container-lowest
+@background-site: #fff; // surface
+@inverse-surface: #16251d;
+@inverse-on-surface: #f3f0ef;
+@heading-color: #0f2118; // tokens.$mpr-heading
 @width-break: 35em;
 
 /* ============================================
-   LESS Variables - Sizes & Dimensions
-   ============================================ */
-@header-height: 60px;
+LESS Variables - Sizes & Dimensions
+============================================ */
+@header-height: 74px;
 @content-max-width: 1024px;
-@font-base: 16px;
-@font-body: 16px;
-@font-h1: 36px;
-@font-h2: 28px;
-@font-h3: 22px;
+@font-base: 18px;
+@font-body: 18px;
+@font-h1: 48px;
+@font-h2: 36px;
+@font-h3: 24px;
 @line-height-base: 1.4;
-@border-radius-button: 22px;
 
 /* ============================================
-   LESS Variables - Spacing
-   ============================================ */
+LESS Variables - Spacing
+============================================ */
 @padding-desktop-vertical: 40px;
 @padding-desktop-horizontal: 30px;
 @padding-mobile-vertical: 20px;
@@ -36,14 +40,14 @@
 @paragraph-margin: 1.2em;
 
 /* ============================================
-   LESS Variables - Breakpoints
-   ============================================ */
+LESS Variables - Breakpoints
+============================================ */
 @breakpoint-tablet: 800px;
 @breakpoint-mobile: 480px;
 
 /* ============================================
-   LESS Variables - Z-index
-   ============================================ */
+LESS Variables - Z-index
+============================================ */
 @z-index-header: 1000;
 @z-index-mobile-menu: 999;
 @z-index-dropdown: 100;
@@ -52,255 +56,230 @@
 
 
 /* ============================================
-   Google Fonts Import
-   ============================================ */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: italic;
-    font-weight: 400;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-italic.woff2') format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: italic;
-    font-weight: 400;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-italic-u.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: italic;
-    font-weight: 700;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-italic.woff2') format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: italic;
-    font-weight: 700;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-italic-u.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-normal.woff2') format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-normal-u.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: normal;
-    font-weight: 700;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-normal.woff2') format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Red Hat Display';
-    font-style: normal;
-    font-weight: 700;
-    src: url('/wiki/lib/tpl/uprzejmiedonosze/css/Red-Hat-Display-normal-u.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* ============================================
-   Fixed Header Styles
-   ============================================ */
+Fixed Header Styles
+============================================ */
 
 body header#dokuwiki__header {
-    position: fixed;
-    width: 100%;
-    z-index: 2;
-    color: #fff;
-    background-color: @brand-primary;
-    height: @header-height;
-    top: 0;
-    left: 0;
-    padding: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 2;
+	color: @text-color;
+	background-color: @background-site;
+	height: @header-height;
+	box-shadow: inset 0 3px 0 var(--env-tint, transparent);
+	border-bottom: 1px solid #e6e3dc;
+	top: 0;
+	left: 0;
+	padding: 0;
 
+	.dokuwiki__header_container {
+		text-align: left;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		height: 74px;
+		margin: 0;
+		box-sizing: border-box;
+		max-width: 1024px;
+		margin: 0 auto;
+		padding: 1rem 2em;
+		h1 {
+			flex-shrink: 0;
+			// the generic `h1, .dokuwiki h1 { margin-top: 1.5em;
+			// margin-bottom: .6em; }` content-heading rule also matches
+			// this h1 and was pushing it down inside the flex row
+			margin: 0;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			font-size: 1.1rem;
 
-    h1 {
-        text-align: center;
-        display: block;
-        height: 60px;
-        margin: 0 20%;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 16px;
+			a {
+				// the global `a { font-family: Public Sans }` rule beats
+				// inheritance from the h1, so the display font must be set
+				// explicitly here (same issue as .mpr-navbar-logo)
+				font-family: "Bricolage Grotesque", sans-serif;
+				color: @brand-primary;
+				text-decoration: none;
+				font-weight: 700;
+				&:hover {
+					color: @brand-primary;
+				}
+			}
 
-        a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            left: 50%;
-            text-transform: uppercase;
-        }
-    }
+		}
+
+		// design.less sets `margin-bottom: 0.5em` on form.search which
+		// throws off vertical centering here; reset it and push the
+		// form to the right, same pattern as .mpr-navbar-links
+		// (margin-left: auto) in the reference project's header.scss
+		form.search {
+			margin: 0 0 0 auto;
+			flex-shrink: 1;
+			min-width: 0;
+			max-width: 260px;
+
+			// design.less renders input+button as separate inline
+			// elements inside div.no; if they don't both fit on one
+			// line they wrap, and the button's negative margin-left
+			// (meant to sit it over the input's right edge) then
+			// drags it away from the input entirely. Force them onto
+			// one row so that never happens.
+			div.no {
+				display: flex;
+				align-items: center;
+			}
+
+			input[type="text"] {
+				width: 100%;
+				min-width: 0;
+				flex: 1 1 auto;
+			}
+
+			button[type="submit"] {
+				flex: 0 0 auto;
+			}
+		}
+	}
 }
 
 /* ============================================
-   Body Layout Adjustments for Fixed Header
-   ============================================ */
+Body Layout Adjustments for Fixed Header
+============================================ */
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-    padding-top: @header-height;
+	padding-top: @header-height;
+	// basic.less sets a shorthand `background` (color + gradient image)
+	// on body; drop just the color component here
+	background-color: transparent;
 }
 
 #dokuwiki__content {
-    margin-top: 0;
-    background-color: #fff;
+	margin-top: 0;
+	background-color: #fff;
 }
 
 #dokuwiki__site {
-    max-width: @content-max-width;
+	max-width: @content-max-width;
 }
 
 .pageId {
-    display: none;
+	display: none;
 }
 
 /* ============================================
-   Header Container Structure
-   ============================================ */
+Header Container Structure
+============================================ */
 
 .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
 }
 
 .header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
 
-    .logo {
-        margin: 0;
-        line-height: 1;
+	.logo {
+		margin: 0;
+		line-height: 1;
 
-        a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #fff !important;
-            text-decoration: none;
-            font-size: 16px;
+		a {
+			font-family: "Bricolage Grotesque", sans-serif;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: @brand-primary !important;
+			text-decoration: none;
+			font-size: 16px;
 
-            &:hover {
-                opacity: 0.9;
-            }
-        }
+			&:hover {
+				opacity: 0.9;
+			}
+		}
 
-        img {
-            max-height: 40px;
-            width: auto;
-        }
-    }
+		img {
+			max-height: 40px;
+			width: auto;
+		}
+	}
 }
 
 .header-right {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 
-    .tools {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
+	.tools {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
 }
 
 /* ============================================
-   "Zgłoś" Button Styles
-   ============================================ */
+"Zgłoś" Button Styles
+============================================ */
 
 .btn-report {
-    display: inline-block;
-    background-color: @brand-accent;
-    color: @text-color;
-    padding: 10px 20px;
-    border-radius: @border-radius-button;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+	display: inline-block;
+	background-color: @brand-primary;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 0.5rem;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 16px;
+	transition: all 0.3s ease;
+	white-space: nowrap;
 
-    &:hover {
-        background-color: darken(@brand-accent, 10%);
-        color: @text-color;
-        text-decoration: none;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
+	&:hover {
+		background-color: darken(@brand-primary, 10%);
+		color: #fff;
+		text-decoration: none;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	}
 
-    &:active {
-        transform: translateY(0);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    }
+	&:active {
+		transform: translateY(0);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+	}
 }
 
 /* Mobile adjustments for button */
 @media (max-width: @breakpoint-mobile) {
-    .btn-report {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
+	.btn-report {
+		padding: 8px 16px;
+		font-size: 14px;
+	}
 }
 
 /* ============================================
-   Typography Styles
-   ============================================ */
+Typography Styles
+============================================ */
 
-/* Apply Red Hat Display as main font */
+/* Apply Public Sans as main body font */
 body,
 html {
-    font-family: "Red Hat Display", sans-serif;
-    font-size: @font-body;
-    line-height: @line-height-base;
-    color: @text-color;
+	font-family: "Public Sans", sans-serif;
+	font-size: @font-body;
+	line-height: @line-height-base;
+	color: @text-color;
 }
 
-/* Apply font to all text elements */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
+/* Body/interface elements use Public Sans. Only h1-h3 get the display
+font below (matches typography.scss: heading mixin applies to h1-h3
+only, h4 stays on body font). */
 p,
 a,
 span,
@@ -312,82 +291,102 @@ input,
 textarea,
 select,
 button,
-.dokuwiki {
-    font-family: "Red Hat Display", sans-serif;
+.dokuwiki,
+h4,
+h5,
+h6 {
+	font-family: "Public Sans", sans-serif;
+}
+
+/* project intentionally doesn't bold strong/b (per typography.scss) */
+strong,
+b {
+	font-weight: 400;
+}
+
+/* Headings use Bricolage Grotesque */
+h1,
+h2,
+h3 {
+	font-family: "Bricolage Grotesque", sans-serif;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: @heading-color;
 }
 
 /* Font size hierarchy */
 h1,
 .dokuwiki h1 {
-    font-size: @font-h1;
-    line-height: 1.4;
+	font-size: @font-h1;
+	line-height: 1.2;
 }
 
 h2,
 .dokuwiki h2 {
-    font-size: @font-h2;
-    line-height: 1.4;
+	font-size: @font-h2;
+	line-height: 1.3;
 }
 
 h3,
 .dokuwiki h3 {
-    font-size: @font-h3;
-    line-height: 1.4;
+	font-size: @font-h3;
+	line-height: 1.4;
 }
 
 h4,
 .dokuwiki h4 {
-    font-size: 20px;
-    line-height: 1.5;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1.5;
 }
 
 h5,
 .dokuwiki h5 {
-    font-size: 18px;
-    line-height: 1.5;
+	font-size: 18px;
+	line-height: 1.5;
 }
 
 h6,
 .dokuwiki h6 {
-    font-size: 16px;
-    line-height: 1.5;
+	font-size: 16px;
+	line-height: 1.5;
 }
 
 /* Body text */
 p,
 .dokuwiki p,
 .dokuwiki div.page {
-    font-size: @font-body;
-    line-height: @line-height-base;
-    box-shadow: none;
-    border: none;
-    padding: 0;
+	font-size: @font-body;
+	line-height: @line-height-base;
+	box-shadow: none;
+	border: none;
+	padding: 0;
 
 }
 
 /* Paragraph spacing */
 p,
 .dokuwiki p {
-    margin-bottom: @paragraph-margin;
+	margin-bottom: @paragraph-margin;
 }
 
 /* Heading margins for proper spacing */
 h1,
 .dokuwiki h1 {
-    margin-top: 1.5em;
-    margin-bottom: 0.6em;
+	margin-top: 1.5em;
+	margin-bottom: 0.6em;
 }
 
 h2,
 .dokuwiki h2 {
-    margin-top: 1.4em;
-    margin-bottom: 0.5em;
+	margin-top: 1.4em;
+	margin-bottom: 0.5em;
 }
 
 h3,
 .dokuwiki h3 {
-    margin-top: 1.3em;
-    margin-bottom: 0.5em;
+	margin-top: 1.3em;
+	margin-bottom: 0.5em;
 }
 
 h4,
@@ -396,741 +395,735 @@ h5,
 .dokuwiki h5,
 h6,
 .dokuwiki h6 {
-    margin-top: 1.2em;
-    margin-bottom: 0.4em;
+	margin-top: 1.2em;
+	margin-bottom: 0.4em;
 }
 
 /* First heading should not have top margin */
 .dokuwiki div.page>h1:first-child,
 .dokuwiki div.page>h2:first-child,
 .dokuwiki div.page>h3:first-child {
-    margin-top: 0;
+	margin-top: 0;
 }
 
 /* ============================================
-   Breadcrumbs Styles (positioned below fixed header)
-   ============================================ */
+Breadcrumbs Styles (positioned below fixed header)
+============================================ */
 
 .breadcrumbs {
-    max-width: @content-max-width;
-    margin: 0 auto;
-    padding: 15px @padding-desktop-horizontal;
-    font-size: 14px;
-    color: #666;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
+	max-width: @content-max-width;
+	margin: 0 auto;
+	padding: 15px @padding-desktop-horizontal;
+	font-size: 14px;
+	color: #3d4944;
+	background-color: #f6f3f2;
+	border-bottom: 1px solid #bccac3;
 
-    /* Breadcrumbs links */
-    a {
-        color: @brand-primary;
-        text-decoration: none;
-        transition: color 0.2s ease;
+	/* Breadcrumbs links */
+	a {
+		color: @brand-primary;
+		text-decoration: none;
+		transition: color 0.2s ease;
 
-        &:hover {
-            color: darken(@brand-primary, 10%);
-            text-decoration: underline;
-        }
-    }
+		&:hover {
+			color: darken(@brand-primary, 10%);
+			text-decoration: underline;
+		}
+	}
 
-    /* Separator styling */
-    .bcsep {
-        margin: 0 8px;
-        color: #999;
-    }
+	/* Separator styling */
+	.bcsep {
+		margin: 0 8px;
+		color: #6d7a74;
+	}
 
-    /* You are here section */
-    .youarehere {
-        margin-bottom: 8px;
-        font-size: 13px;
+	/* You are here section */
+	.youarehere {
+		margin-bottom: 8px;
+		font-size: 13px;
 
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 
-    /* Trace/breadcrumb trail */
-    .trace {
-        font-size: 13px;
+	/* Trace/breadcrumb trail */
+	.trace {
+		font-size: 13px;
 
-        span.bchead {
-            font-weight: 600;
-            margin-right: 8px;
-        }
-    }
+		span.bchead {
+			font-weight: 600;
+			margin-right: 8px;
+		}
+	}
 }
 
 @media (max-width: @breakpoint-mobile) {
-    .breadcrumbs {
-        padding: 15px @padding-mobile-horizontal;
-        margin: 0 auto;
-    }
+	.breadcrumbs {
+		padding: 15px @padding-mobile-horizontal;
+		margin: 0 auto;
+	}
 
-    .header-left {
-        .logo {
-            a {
-                font-size: 18px;
-            }
+	.header-left {
+		.logo {
+			a {
+				font-size: 18px;
+			}
 
-            img {
-                max-height: 30px;
-            }
-        }
-    }
+			img {
+				max-height: 30px;
+			}
+		}
+	}
 }
 
 /* ============================================
-   Content Container Width and Layout
-   ============================================ */
+Content Container Width and Layout
+============================================ */
 
 /* Main content container - max-width and centering */
 #dokuwiki__content {
-    max-width: @content-max-width;
-    margin: 0 auto;
+	max-width: @content-max-width;
+	margin: 0 auto;
 
-    .pad {
-        padding: @padding-desktop-vertical @padding-desktop-horizontal;
-    }
+	.pad {
+		padding: @padding-desktop-vertical @padding-desktop-horizontal;
+	}
 }
 
 /* Wrapper container for proper centering */
 .wrapper {
-    max-width: @content-max-width;
-    margin: 0 auto;
-    border: 0 solid rgba(217, 217, 217, .5);
-    border-width: 0 1px;
-
+	max-width: @content-max-width;
+	margin: 0 auto;
 }
 
 .dokuwiki .wrapper {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 /* Top navigation (sidebar converted to top bar) */
 #dokuwiki__aside {
-    background-color: @background-site;
-    border-bottom: 1px solid #e0e0e0;
-    margin: 0;
-    position: relative;
+	margin: 0;
+	position: relative;
 
-    > .pad {
-        margin: 0;
-        padding: 0 @padding-desktop-horizontal;
-        overflow: visible;
-    }
+	> .pad {
+		margin: 0;
+		padding: 0 @padding-desktop-horizontal;
+		overflow: visible;
+	}
 
-    .aside,
-    .content,
-    .group {
-        overflow: visible;
-    }
+	.aside,
+	.content,
+	.group {
+		overflow: visible;
+	}
 
-    h3.toggle {
-        display: none !important;
-    }
+	h3.toggle {
+		display: none !important;
+	}
 
-    div.content {
-        display: block !important;
-        padding: 0;
-    }
+	div.content {
+		display: block !important;
+		padding: 0;
+	}
 
-    div.content > .group {
-        display: block !important;
-    }
+	div.content > .group {
+		display: block !important;
+	}
 
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 
-    li {
-        margin: 0;
-        padding: 0;
-    }
+	li {
+		margin: 0;
+		padding: 0;
+	}
 
-    > .pad > .content > .group > ul {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 6px;
-    }
+	> .pad > .content > .group > ul {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px;
+	}
 
-    .level1 {
-        position: relative;
-    }
+	.level1 {
+		position: relative;
+	}
 
-    .level1 > .li {
-        padding: 12px 10px;
-        font-weight: 600;
-        color: @text-color;
-    }
+	.level1 > .li {
+		padding: 12px 10px;
+		font-weight: 600;
+		color: @text-color;
+	}
 
-    .level1 > .li a {
-        color: inherit;
-        text-decoration: none;
-    }
+	.level1 > .li a {
+		color: inherit;
+		text-decoration: none;
+	}
 
-    .level1 > .li a:hover,
-    .level1 > .li a:focus {
-        color: @brand-primary;
-        text-decoration: none;
-    }
+	.level1 > .li a:hover,
+	.level1 > .li a:focus {
+		color: @brand-primary;
+		text-decoration: none;
+	}
 
-    a.wikilink2 {
-        color: #d30;
-    }
+	a.wikilink2 {
+		color: #d30;
+	}
 
-    a.wikilink2:hover,
-    a.wikilink2:focus {
-        color: darken(#d30, 10%);
-    }
+	a.wikilink2:hover,
+	a.wikilink2:focus {
+		color: darken(#d30, 10%);
+	}
 
-    .level1.node > .li {
-        cursor: default;
-        position: relative;
-        padding-right: 26px;
-    }
+	.level1.node > .li {
+		cursor: default;
+		position: relative;
+		padding-right: 26px;
+	}
 
-    .level1.node > .li::after {
-        content: "";
-        border-style: solid;
-        border-width: 4px 4px 0 4px;
-        border-color: @text-color transparent transparent transparent;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-    }
+	.level1.node > .li::after {
+		content: "";
+		border-style: solid;
+		border-width: 4px 4px 0 4px;
+		border-color: @text-color transparent transparent transparent;
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 
-    .level1:hover > .li::after,
-    .level1:focus-within > .li::after {
-        border-top-color: @brand-primary;
-    }
+	.level1:hover > .li::after,
+	.level1:focus-within > .li::after {
+		border-top-color: @brand-primary;
+	}
 
-    .level1 > ul {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        min-width: 220px;
-        background-color: @background-color;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-        padding: 6px 0;
-        margin: 0;
-        display: none;
-        z-index: @z-index-dropdown;
-    }
+	.level1 > ul {
+		position: absolute;
+		left: 0;
+		top: 100%;
+		min-width: 220px;
+		background-color: @background-color;
+		border: 1px solid #bccac3;
+		border-radius: 1rem;
+		box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+		padding: 6px 0;
+		margin: 0;
+		display: none;
+		z-index: @z-index-dropdown;
+	}
 
-    .level1:hover > ul,
-    .level1:focus-within > ul {
-        display: block;
-    }
+	.level1:hover > ul,
+	.level1:focus-within > ul {
+		display: block;
+	}
 
-    .level1 > ul > li > .li {
-        padding: 8px 16px;
-        font-weight: 400;
-        white-space: nowrap;
-    }
+	.level1 > ul > li > .li {
+		padding: 8px 16px;
+		font-weight: 400;
+		white-space: nowrap;
+	}
 
-    .level1 > ul > li > .li a {
-        color: @text-color;
-        text-decoration: none;
-    }
+	.level1 > ul > li > .li a {
+		color: @text-color;
+		text-decoration: none;
+	}
 
-    .level1 > ul > li > .li a:hover,
-    .level1 > ul > li > .li a:focus {
-        color: @brand-primary;
-        text-decoration: none;
-    }
+	.level1 > ul > li > .li a:hover,
+	.level1 > ul > li > .li a:focus {
+		color: @brand-primary;
+		text-decoration: none;
+	}
 
-    .curid a {
-        color: @brand-primary;
-        font-weight: 700;
-    }
+	.curid a {
+		color: @brand-primary;
+		font-weight: 700;
+	}
 
-    hr {
-        border: 0;
-        border-top: 1px solid #e0e0e0;
-        margin: 0;
-    }
+	hr {
+		border: 0;
+		border-top: 1px solid #e0e0e0;
+		margin: 0;
+	}
 }
 
 [dir=rtl] #dokuwiki__aside {
-    .level1.node > .li {
-        padding-right: 10px;
-        padding-left: 26px;
-    }
+	.level1.node > .li {
+		padding-right: 10px;
+		padding-left: 26px;
+	}
 
-    .level1.node > .li::after {
-        right: auto;
-        left: 10px;
-    }
+	.level1.node > .li::after {
+		right: auto;
+		left: 10px;
+	}
 
-    .level1 > ul {
-        left: auto;
-        right: 0;
-    }
+	.level1 > ul {
+		left: auto;
+		right: 0;
+	}
 }
 
 /* Remove sidebar preview border for top navigation layout */
 .dokuwiki.hasSidebar div.preview {
-    border-right: 0;
+	border-right: 0;
 }
 
 [dir=rtl] .dokuwiki.hasSidebar div.preview {
-    border-left: 0;
+	border-left: 0;
 }
 
 /* Mobile responsive padding */
 @media (max-width: @breakpoint-mobile) {
-    #dokuwiki__content {
-        .pad {
-            padding: @padding-mobile-vertical @padding-mobile-horizontal;
-        }
-    }
+	#dokuwiki__content {
+		.pad {
+			padding: @padding-mobile-vertical @padding-mobile-horizontal;
+		}
+	}
 }
 
 /* ============================================
-   RESPONSIVE DESIGN - MEDIA QUERIES
-   ============================================ */
+RESPONSIVE DESIGN - MEDIA QUERIES
+============================================ */
 
 /* ============================================
-   Tablet Breakpoint (max-width: 800px)
-   ============================================ */
+Tablet Breakpoint (max-width: 800px)
+============================================ */
 @media (max-width: @breakpoint-tablet) {
 
-    /* Adjust content padding for tablet */
-    #dokuwiki__content {
-        .pad {
-            padding: 30px 20px;
-        }
-    }
+	/* Adjust content padding for tablet */
+	#dokuwiki__content {
+		.pad {
+			padding: 30px 20px;
+		}
+	}
 
-    /* Adjust header for tablet */
-    #dokuwiki__header {
-        height: 70px;
+	/* Adjust header for tablet */
+	#dokuwiki__header {
+		height: 70px;
 
-        .pad {
-            padding: 0 20px;
-        }
-    }
+		.pad {
+			padding: 0 20px;
+		}
+	}
 
-    body {
-        padding-top: 70px;
-    }
+	body {
+		padding-top: 70px;
+	}
 
-    /* Adjust typography for tablet */
-    body,
-    html {
-        font-size: 17px;
-    }
+	/* Adjust typography for tablet */
+	body,
+	html {
+		font-size: 17px;
+	}
 
-    h1,
-    .dokuwiki h1 {
-        font-size: 32px;
-    }
+	h1,
+	.dokuwiki h1 {
+		font-size: 32px;
+	}
 
-    h2,
-    .dokuwiki h2 {
-        font-size: 26px;
-    }
+	h2,
+	.dokuwiki h2 {
+		font-size: 26px;
+	}
 
-    h3,
-    .dokuwiki h3 {
-        font-size: 21px;
-    }
+	h3,
+	.dokuwiki h3 {
+		font-size: 21px;
+	}
 
-    /* Adjust button for tablet */
-    .btn-report {
-        padding: 9px 18px;
-        font-size: 15px;
-    }
+	/* Adjust button for tablet */
+	.btn-report {
+		padding: 9px 18px;
+		font-size: 15px;
+	}
 }
 
 /* ============================================
-   Mobile Breakpoint (max-width: 480px)
-   ============================================ */
+Mobile Breakpoint (max-width: 480px)
+============================================ */
 @media (max-width: @breakpoint-mobile) {
 
-    /* Mobile header adjustments */
-    #dokuwiki__header {
-        .pad {
-            padding: 0 @padding-mobile-horizontal;
-        }
-    }
+	/* Mobile header adjustments */
+	#dokuwiki__header {
+		.pad {
+			padding: 0 @padding-mobile-horizontal;
+		}
+	}
 
-    body {
-        padding-top: @header-height;
-    }
+	body {
+		padding-top: @header-height;
+	}
 
-    /* Mobile typography adjustments */
-    body,
-    html {
-        font-size: 16px;
-    }
+	/* Mobile typography adjustments */
+	body,
+	html {
+		font-size: 16px;
+	}
 
-    h1,
-    .dokuwiki h1 {
-        font-size: 28px;
-    }
+	h1,
+	.dokuwiki h1 {
+		font-size: 28px;
+	}
 
-    h2,
-    .dokuwiki h2 {
-        font-size: 24px;
-    }
+	h2,
+	.dokuwiki h2 {
+		font-size: 24px;
+	}
 
-    h3,
-    .dokuwiki h3 {
-        font-size: 20px;
-    }
+	h3,
+	.dokuwiki h3 {
+		font-size: 20px;
+	}
 
-    h4,
-    .dokuwiki h4 {
-        font-size: 18px;
-    }
+	h4,
+	.dokuwiki h4 {
+		font-size: 18px;
+	}
 
-    h5,
-    .dokuwiki h5 {
-        font-size: 16px;
-    }
+	h5,
+	.dokuwiki h5 {
+		font-size: 16px;
+	}
 
-    h6,
-    .dokuwiki h6 {
-        font-size: 15px;
-    }
+	h6,
+	.dokuwiki h6 {
+		font-size: 15px;
+	}
 
-    /* Mobile button adjustments */
-    .btn-report {
-        padding: 8px 16px;
-        font-size: 14px;
-        min-height: 44px;
-        min-width: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	/* Mobile button adjustments */
+	.btn-report {
+		padding: 8px 16px;
+		font-size: 14px;
+		min-height: 44px;
+		min-width: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-    /* Mobile logo adjustments */
-    .header-left {
-        .logo {
-            a {
-                font-size: 18px;
-            }
+	/* Mobile logo adjustments */
+	.header-left {
+		.logo {
+			a {
+				font-size: 18px;
+			}
 
-            img {
-                max-height: 30px;
-            }
-        }
-    }
+			img {
+				max-height: 30px;
+			}
+		}
+	}
 
-    /* Mobile breadcrumbs */
-    .breadcrumbs {
-        padding: 15px @padding-mobile-horizontal;
-        margin: 0 auto;
-        font-size: 13px;
-    }
+	/* Mobile breadcrumbs */
+	.breadcrumbs {
+		padding: 15px @padding-mobile-horizontal;
+		margin: 0 auto;
+		font-size: 13px;
+	}
 
-    /* Mobile content padding */
-    #dokuwiki__content {
-        .pad {
-            padding: @padding-mobile-vertical @padding-mobile-horizontal;
-        }
-    }
+	/* Mobile content padding */
+	#dokuwiki__content {
+		.pad {
+			padding: @padding-mobile-vertical @padding-mobile-horizontal;
+		}
+	}
 
 }
 
 /* ============================================
-   Mobile Menu (Hamburger) Styles
-   ============================================ */
+Mobile Menu (Hamburger) Styles
+============================================ */
 
 /* Mobile menu toggle button */
 .mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    min-width: 44px;
-    min-height: 44px;
-    align-items: center;
-    justify-content: center;
+	display: none;
+	background: none;
+	border: none;
+	color: #fff;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 10px;
+	min-width: 44px;
+	min-height: 44px;
+	align-items: center;
+	justify-content: center;
 
-    &:hover {
-        opacity: 0.8;
-    }
+	&:hover {
+		opacity: 0.8;
+	}
 
-    &:focus {
-        outline: 2px solid rgba(255, 255, 255, 0.5);
-        outline-offset: 2px;
-    }
+	&:focus {
+		outline: 2px solid rgba(255, 255, 255, 0.5);
+		outline-offset: 2px;
+	}
 }
 
 /* Show hamburger menu on mobile */
 @media (max-width: @breakpoint-mobile) {
-    .mobile-menu-toggle {
-        display: flex;
-    }
+	.mobile-menu-toggle {
+		display: flex;
+	}
 
-    /* Hide full menu on mobile - show only mobile dropdown */
-    #dokuwiki__header {
-        .tools {
+	/* Hide full menu on mobile - show only mobile dropdown */
+	#dokuwiki__header {
+		.tools {
 
-            #dokuwiki__usertools,
-            #dokuwiki__sitetools>ul {
-                display: none;
-            }
+			#dokuwiki__usertools,
+			#dokuwiki__sitetools>ul {
+				display: none;
+			}
 
-            /* Keep search and mobile dropdown visible */
-            #dokuwiki__sitetools {
-                .mobileTools {
-                    display: block;
-                }
-            }
-        }
-    }
+			/* Keep search and mobile dropdown visible */
+			#dokuwiki__sitetools {
+				.mobileTools {
+					display: block;
+				}
+			}
+		}
+	}
 
-    /* Adjust header layout for mobile */
-    .header-right {
-        gap: 10px;
+	/* Adjust header layout for mobile */
+	.header-right {
+		gap: 10px;
 
-        .tools {
-            gap: 10px;
-        }
-    }
+		.tools {
+			gap: 10px;
+		}
+	}
 }
 
 /* Desktop: hide mobile menu elements */
 @media (min-width: 481px) {
-    .mobile-menu-toggle {
-        display: none;
-    }
+	.mobile-menu-toggle {
+		display: none;
+	}
 
-    #dokuwiki__sitetools .mobileTools {
-        display: none;
-    }
+	#dokuwiki__sitetools .mobileTools {
+		display: none;
+	}
 }
 
 /* ============================================
-   Touch Target Sizes for Mobile
-   ============================================ */
+Touch Target Sizes for Mobile
+============================================ */
 
 @media (max-width: @breakpoint-mobile) {
 
-    /* Ensure all interactive elements meet 44x44px minimum */
-    a,
-    button,
-    input[type="submit"],
-    input[type="button"],
-    .action,
-    .button,
-    [role="button"] {
-        min-height: 44px;
-        min-width: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 16px;
-    }
+	/* Ensure all interactive elements meet 44x44px minimum */
+	a,
+	button,
+	input[type="submit"],
+	input[type="button"],
+	.action,
+	.button,
+	[role="button"] {
+		min-height: 44px;
+		min-width: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-    /* Links in content can be smaller but with adequate padding */
-    .dokuwiki div.page a {
-        min-height: auto;
-        min-width: auto;
-        padding: 4px 2px;
-        display: inline;
-        border: 0;
-        box-shadow: none;
-    }
+	/* Links in content can be smaller but with adequate padding */
+	.dokuwiki div.page a {
+		min-height: auto;
+		min-width: auto;
+		padding: 4px 2px;
+		display: inline;
+		border: 0;
+		box-shadow: none;
+	}
 
-    /* Form inputs */
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="search"],
-    textarea,
-    select {
-        min-height: 44px;
-        padding: 12px;
-        font-size: 16px;
-        /* Prevents zoom on iOS */
-    }
+	/* Form inputs */
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	input[type="search"],
+	textarea,
+	select {
+		min-height: 44px;
+		padding: 12px;
+		font-size: 16px;
+		/* Prevents zoom on iOS */
+	}
 
-    /* Navigation and menu items */
-    #dokuwiki__usertools li,
-    #dokuwiki__sitetools li {
-        a {
-            min-height: 44px;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-        }
-    }
+	/* Navigation and menu items */
+	#dokuwiki__usertools li,
+	#dokuwiki__sitetools li {
+		a {
+			min-height: 44px;
+			padding: 12px 16px;
+			display: flex;
+			align-items: center;
+		}
+	}
 
-    /* Search form button */
-    .dokuwiki form.search button {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px;
-    }
+	/* Search form button */
+	.dokuwiki form.search button {
+		min-height: 44px;
+		min-width: 44px;
+		padding: 12px;
+	}
 
-    /* Mobile dropdown toggle */
-    .mobileTools button,
-    .mobileTools a {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px 16px;
-    }
+	/* Mobile dropdown toggle */
+	.mobileTools button,
+	.mobileTools a {
+		min-height: 44px;
+		min-width: 44px;
+		padding: 12px 16px;
+	}
 }
 
 /* ============================================
-   Additional Mobile Optimizations
-   ============================================ */
+Additional Mobile Optimizations
+============================================ */
 
 @media (max-width: @breakpoint-mobile) {
 
-    /* Improve readability on mobile */
-    p,
-    .dokuwiki p {
-        line-height: 1.6;
-        margin-bottom: 1em;
-    }
+	/* Improve readability on mobile */
+	p,
+	.dokuwiki p {
+		line-height: 1.6;
+		margin-bottom: 1em;
+	}
 
-    /* Adjust list spacing */
-    ul,
-    ol {
-        padding-left: 20px;
-    }
+	/* Adjust list spacing */
+	ul,
+	ol {
+		padding-left: 20px;
+	}
 
-    li {
-        margin-bottom: 0.5em;
-    }
+	li {
+		margin-bottom: 0.5em;
+	}
 
-    /* Make tables scrollable on mobile */
-    .dokuwiki table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+	/* Make tables scrollable on mobile */
+	.dokuwiki table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
 
-    /* Adjust image sizes */
-    .dokuwiki img {
-        max-width: 100%;
-        height: auto;
-    }
+	/* Adjust image sizes */
+	.dokuwiki img {
+		max-width: 100%;
+		height: auto;
+	}
 
-    /* Code blocks */
-    .dokuwiki pre,
-    .dokuwiki code {
-        font-size: 14px;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+	/* Code blocks */
+	.dokuwiki pre,
+	.dokuwiki code {
+		font-size: 14px;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
 }
 
 /* ============================================
-   Link and Interactive Element Styles
-   ============================================ */
+Link and Interactive Element Styles
+============================================ */
 
 /* Base link styles - brand primary color */
 a,
 .dokuwiki a {
-    color: @brand-primary;
-    text-decoration: none;
-    transition: all 0.2s ease;
+	color: @brand-primary;
+	text-decoration: none;
+	transition: all 0.2s ease;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-        text-decoration: underline;
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+		text-decoration: underline;
+	}
 
-    &:focus {
-        outline: 2px solid @brand-primary;
-        outline-offset: 2px;
-    }
+	&:focus {
+		outline: 2px solid @brand-primary;
+		outline-offset: 2px;
+	}
 
-    &:active {
-        color: darken(@brand-primary, 15%);
-    }
+	&:active {
+		color: darken(@brand-primary, 15%);
+	}
 }
 
 /* Content area links - enhanced styling */
 .dokuwiki div.page a {
-    color: @brand-primary;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s ease;
+	color: @brand-primary;
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: all 0.2s ease;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-        border-bottom-color: @brand-primary;
-        text-decoration: none;
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+		border-bottom-color: @brand-primary;
+		text-decoration: none;
+	}
 
-    &:focus {
-        outline: 2px solid @brand-primary;
-        outline-offset: 2px;
-        border-radius: 2px;
-    }
+	&:focus {
+		outline: 2px solid @brand-primary;
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
 }
 
 /* Wiki links - existing pages */
 .dokuwiki a.wikilink1 {
-    color: @brand-primary;
+	color: @brand-primary;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+	}
 }
 
 /* Wiki links - missing pages (keep red for visibility) */
 .dokuwiki a.wikilink2 {
-    color: #d30;
+	color: #d30;
 
-    &:hover {
-        color: darken(#d30, 10%);
-    }
+	&:hover {
+		color: darken(#d30, 10%);
+	}
 }
 
 /* External links */
 .dokuwiki a.urlextern,
 .dokuwiki a.interwiki {
-    color: @brand-primary;
+	color: @brand-primary;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+	}
 }
 
 /* Navigation links */
 #dokuwiki__usertools a,
 #dokuwiki__sitetools a,
 .dokuwiki .breadcrumbs a {
-    color: @brand-primary;
-    text-decoration: none;
+	color: @brand-primary;
+	text-decoration: none;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-        text-decoration: underline;
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+		text-decoration: underline;
+	}
 }
 
 /* Header links (white on green background) */
 #dokuwiki__header a {
-    color: #000;
-    text-decoration: none;
+	color: #000;
+	text-decoration: none;
 
-    &:hover {
-        color: rgba(255, 255, 255, 0.9);
-        text-decoration: none;
-    }
+	&:hover {
+		color: rgba(255, 255, 255, 0.9);
+		text-decoration: none;
+	}
 
-    &:focus {
-        outline: 2px solid rgba(255, 255, 255, 0.5);
-        outline-offset: 2px;
-    }
+	&:focus {
+		outline: 2px solid rgba(255, 255, 255, 0.5);
+		outline-offset: 2px;
+	}
 }
 
 /* Button-like links */
@@ -1138,55 +1131,59 @@ a,
 .dokuwiki button,
 .dokuwiki input[type="submit"],
 .dokuwiki input[type="button"] {
-    background-color: @brand-primary;
-    color: #fff;
-    border: none;
-    //padding: 0;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    display: inline-block;
-    background-image: none;
+	background-color: @brand-primary;
+	color: #fff;
+	border: none;
+	//padding: 0;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	text-decoration: none;
+	display: inline-block;
+	background-image: none;
 
-    &:hover {
-        background-color: darken(@brand-primary, 10%);
-        color: #fff;
-        text-decoration: none;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+	&:hover {
+		background-color: darken(@brand-primary, 10%);
+		color: #fff;
+		text-decoration: none;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
 
-    &:active {
-        transform: translateY(0);
-        box-shadow: none;
-    }
+	&:active {
+		transform: translateY(0);
+		box-shadow: none;
+	}
 
-    &:focus {
-        outline: 2px solid @brand-primary;
-        outline-offset: 2px;
-    }
+	&:focus {
+		outline: 2px solid @brand-primary;
+		outline-offset: 2px;
+	}
+
+	&.code-copy-btn {
+		display: none;
+	}
 }
 
 /* Action links (edit, revisions, etc.) */
 .dokuwiki .action,
 .dokuwiki .pagetools a {
-    color: @brand-primary;
+	color: @brand-primary;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+	}
 }
 
 /* Table of contents links */
 #dw__toc a {
-    color: @brand-primary;
-    text-decoration: none;
+	color: @brand-primary;
+	text-decoration: none;
 
-    &:hover {
-        color: darken(@brand-primary, 10%);
-        text-decoration: underline;
-    }
+	&:hover {
+		color: darken(@brand-primary, 10%);
+		text-decoration: underline;
+	}
 }
 
 /* Ensure sufficient contrast for accessibility */
@@ -1194,22 +1191,22 @@ a,
 /* Brand primary #00a896 on white background has ~3.5:1 ratio */
 /* For better accessibility, we darken links slightly in content */
 .dokuwiki div.page {
-    a {
-        color: darken(@brand-primary, 5%);
+	a {
+		color: darken(@brand-primary, 5%);
 
-        &:hover {
-            color: darken(@brand-primary, 15%);
-        }
-    }
+		&:hover {
+			color: darken(@brand-primary, 15%);
+		}
+	}
 }
 
 /* Visited links - slightly different shade for usability */
 .dokuwiki a:visited {
-    color: darken(@brand-primary, 8%);
+	color: darken(@brand-primary, 8%);
 }
 
 .dokuwiki div.page a:visited {
-    color: darken(@brand-primary, 10%);
+	color: darken(@brand-primary, 10%);
 }
 
 /* Interactive elements - form controls */
@@ -1219,170 +1216,167 @@ a,
 .dokuwiki input[type="search"],
 .dokuwiki textarea,
 .dokuwiki select {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px 12px;
-    transition: all 0.2s ease;
+	border: 1px solid #ccc;
+	border-radius: 0.5rem;
+	padding: 8px 12px;
+	transition: all 0.2s ease;
 
-    &:hover {
-        border-color: lighten(@brand-primary, 20%);
-    }
+	&:hover {
+		border-color: lighten(@brand-primary, 20%);
+	}
 
-    &:focus {
-        border-color: @brand-primary;
-        outline: 2px solid lighten(@brand-primary, 40%);
-        outline-offset: 0;
-        box-shadow: 0 0 0 3px lighten(@brand-primary, 45%);
-    }
+	&:focus {
+		border-color: @brand-primary;
+		outline: 2px solid lighten(@brand-primary, 40%);
+		outline-offset: 0;
+		box-shadow: 0 0 0 3px lighten(@brand-primary, 45%);
+	}
 }
 
 /* Checkbox and radio button styling */
 .dokuwiki input[type="checkbox"],
 .dokuwiki input[type="radio"] {
-    accent-color: @brand-primary;
-    cursor: pointer;
+	accent-color: @brand-primary;
+	cursor: pointer;
 
-    &:focus {
-        outline: 2px solid @brand-primary;
-        outline-offset: 2px;
-    }
+	&:focus {
+		outline: 2px solid @brand-primary;
+		outline-offset: 2px;
+	}
 }
 
 /* Dropdown menus and interactive lists */
 .dokuwiki .dropdown a,
 .dokuwiki .menu a {
-    color: @text-color;
+	color: @text-color;
 
-    &:hover {
-        background-color: lighten(@brand-primary, 45%);
-        color: darken(@brand-primary, 10%);
-    }
+	&:hover {
+		background-color: lighten(@brand-primary, 45%);
+		color: darken(@brand-primary, 10%);
+	}
 }
 
 /* Search form styling */
 .dokuwiki form.search {
-    position: fixed;
-    top: 10px;
-    right: -69px;
 
-    input[type="text"] {
-        border: 1px solid #ccc;
+	input[type="text"] {
+		border: 1px solid #ccc;
 
-        &:focus {
-            border-color: @brand-primary;
-        }
-    }
+		&:focus {
+			border-color: @brand-primary;
+		}
+	}
 
-    button[type="submit"] {
-        background-color: lighten(@brand-primary, 70%);
-        color: #fff;
-        border: none;
-        height: 2em;
-        width: 2em;
-        background-position: 50%;
-        margin-left: -2.1em;
+	button[type="submit"] {
+		background-color: lighten(@brand-primary, 70%);
+		color: #fff;
+		border: none;
+		height: 2em;
+		width: 2em;
+		background-position: 50%;
+		margin-left: -2.1em;
 
-        &:hover {
-            background-color: darken(@brand-primary, 10%);
-        }
-    }
+		&:hover {
+			background-color: darken(@brand-primary, 10%);
+		}
+	}
 }
 
 /* Pagination links */
 .dokuwiki .pagination a {
-    color: @brand-primary;
-    border: 1px solid @brand-primary;
-    padding: 5px 10px;
-    border-radius: 4px;
-    text-decoration: none;
+	color: @brand-primary;
+	border: 1px solid @brand-primary;
+	padding: 5px 10px;
+	border-radius: 0.5rem;
+	text-decoration: none;
 
-    &:hover {
-        background-color: @brand-primary;
-        color: #fff;
-    }
+	&:hover {
+		background-color: @brand-primary;
+		color: #fff;
+	}
 
-    &.current {
-        background-color: @brand-primary;
-        color: #fff;
-    }
+	&.current {
+		background-color: @brand-primary;
+		color: #fff;
+	}
 }
 
 /* Tags and labels */
 .dokuwiki .tag a,
 .dokuwiki .label a {
-    color: @brand-primary;
-    background-color: lighten(@brand-primary, 45%);
-    padding: 3px 8px;
-    border-radius: 3px;
-    text-decoration: none;
+	color: @brand-primary;
+	background-color: lighten(@brand-primary, 45%);
+	padding: 3px 8px;
+	border-radius: 9999px;
+	text-decoration: none;
 
-    &:hover {
-        background-color: lighten(@brand-primary, 35%);
-        color: darken(@brand-primary, 10%);
-    }
+	&:hover {
+		background-color: lighten(@brand-primary, 35%);
+		color: darken(@brand-primary, 10%);
+	}
 }
 
 /** buttons */
 
 .base-button {
-    -webkit-background-clip: padding;
-    background-clip: padding-box;
-    background-color: @brand-primary;
-    border: none;
-    color: #fff !important;
-    display: block;
-    font-weight: 700;
-    margin: auto;
-    overflow: hidden;
-    padding: .7em 1em;
-    text-align: center;
-    text-decoration: none;
-    text-overflow: ellipsis;
-    user-select: none;
-    text-shadow: none !important;
-    white-space: nowrap;
-    max-width: @width-break;
-    z-index: 3;
-    transition: 0.3s;
+	-webkit-background-clip: padding;
+	background-clip: padding-box;
+	background-color: @brand-primary;
+	border: none;
+	color: #fff !important;
+	display: block;
+	font-weight: 700;
+	margin: auto;
+	overflow: hidden;
+	padding: .7em 1em;
+	text-align: center;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	user-select: none;
+	text-shadow: none !important;
+	white-space: nowrap;
+	max-width: @width-break;
+	z-index: 3;
+	transition: 0.3s;
 
-    &:hover {
-        filter: brightness(110%);
-        cursor: pointer;
-    }
+	&:hover {
+		filter: brightness(110%);
+		cursor: pointer;
+	}
 
-    &:focus {
-        box-shadow: none !important;
-    }
+	&:focus {
+		box-shadow: none !important;
+	}
 
-    &:active {
-        transform: translateY(2px);
-    }
+	&:active {
+		transform: translateY(2px);
+	}
 }
 
 .button {
-    //.base-button;
-    border-radius: 16vmin;
+	//.base-button;
+	border-radius: 16vmin;
 }
 
 .dokuwiki {
 
-    div.toolbar button.toolbutton,
-    div.editButtons button {
-        background-color: @background-site;
-        color: @text-color;
-        border-width: 1px 0 1px 1px;
-        border-style: solid;
-        border-color: #ccc;
+	div.toolbar button.toolbutton,
+	div.editButtons button {
+		background-color: @background-site;
+		color: @text-color;
+		border-width: 1px 0 1px 1px;
+		border-style: solid;
+		border-color: #ccc;
 
-        &:last-child {
-            border-width: 1px;
-        }
-    }
+		&:last-child {
+			border-width: 1px;
+		}
+	}
 
-    div.editButtons button {
-        margin-right: 5px;
-        border-width: 1px;
-    }
+	div.editButtons button {
+		margin-right: 5px;
+		border-width: 1px;
+	}
 }
 
 /** menu */
@@ -1390,327 +1384,328 @@ a,
 @borderRadius: 5px;
 
 .container {
-    left: 50%;
-    max-width: calc(800px + 2 * 2em);
-    overflow: visible;
-    height: 0;
-    position: fixed;
-    top: 0px;
-    transform: translate(-50%);
-    width: 100%;
-    box-sizing: border-box;
+	left: 50%;
+	max-width: calc(800px + 2 * 2em);
+	overflow: visible;
+	height: 0;
+	position: fixed;
+	top: 0px;
+	transform: translate(-50%);
+	width: 100%;
+	box-sizing: border-box;
 
-    * {
-        box-sizing: border-box;
-    }
+	* {
+		box-sizing: border-box;
+	}
 
-    &:has(nav) {
-        z-index: 2;
-    }
+	&:has(nav) {
+		z-index: 2;
+	}
 }
 
 // To hide the checkbox
 #toggle {
-    position: absolute;
-    left: -100%;
-    top: -100%;
+	position: absolute;
+	left: -100%;
+	top: -100%;
 }
 
 #courtain {
-    position: fixed;
-    z-index: 1;
-    height: 100vh;
-    background-color: #0009;
-    transform: translateY(-100vh);
-    top: 0;
+	position: fixed;
+	z-index: 1;
+	height: 100vh;
+	background-color: #0009;
+	transform: translateY(-100vh);
+	top: 0;
 }
 
 .nav {
-    box-shadow: 8px 0 20px rgba(0, 0, 0, 0.3);
-    background-color: white;
-    flex-direction: column;
-    width: 70%;
-    height: 100vh;
-    transition: transform .4s ease-in-out;
-    position: fixed;
-    transform: translateY(-100%);
-    overflow: hidden auto;
-    padding: 0;
-    z-index: 30;
+	box-shadow: 8px 0 20px rgba(0, 0, 0, 0.3);
+	background-color: white;
+	flex-direction: column;
+	width: 70%;
+	height: 100vh;
+	transition: transform .4s ease-in-out;
+	position: fixed;
+	transform: translateY(-100%);
+	overflow: hidden auto;
+	padding: 0;
+	z-index: 30;
 }
 
 nav.nav>h1 {
-    height: 60px;
-    padding-top: 16px;
-    padding-left: 14px;
-    font-weight: 700;
-    text-align: left !important;
-    margin: 0 !important;
-    background-color: @brand-primary;
-    color: #fff;
+	height: 74px;
+	padding-top: 16px;
+	padding-left: 14px;
+	font-weight: 700;
+	text-align: left !important;
+	margin: 0 !important;
+	background-color: @brand-primary;
+	color: #fff;
 }
 
 nav.nav>ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 nav.nav>ul>li {
-    padding: 14px;
-    margin: 0;
+	padding: 14px;
+	margin: 0;
 }
 
 nav.nav>ul>li.username {
-    float: left;
+	float: left;
 }
 
 nav.nav>ul>li.logout {
-    float: right;
+	float: right;
 }
 
 nav.nav>ul>li>a {
-    cursor: pointer;
-    color: #000 !important;
-    font-weight: 400;
+	cursor: pointer;
+	color: #000 !important;
+	font-weight: 400;
 }
 
 nav.nav>.spacer {
-    border-top: 1px solid @brand-primary;
-    padding: 1px 0 !important;
+	border-top: 1px solid @brand-primary;
+	padding: 1px 0 !important;
 }
 
 nav.nav>.spacer-new {
-    text-transform: uppercase;
-    color: @brand-primary;
-    font-weight: 700;
-    font-size: 0.9em;
-    padding-top: 20px !important;
-    padding-left: 64px !important;
+	text-transform: uppercase;
+	color: @brand-primary;
+	font-weight: 700;
+	font-size: 0.9em;
+	padding-top: 20px !important;
+	padding-left: 64px !important;
 
 }
 
 nav.nav>ul>li>a,
 nav.nav>.spacer {
-    clear: both;
-    white-space: nowrap;
-    width: 100%;
-    text-decoration: none;
-    display: block;
-    position: relative;
-    user-select: none;
+	clear: both;
+	white-space: nowrap;
+	width: 100%;
+	text-decoration: none;
+	display: block;
+	position: relative;
+	user-select: none;
 
-    &.first {
-        background-color: @brand-primary;
-        color: white !important;
-        font-weight: 700;
-        height: @header-height;
-        padding-top: 16px;
+	&.first {
+		background-color: @brand-primary;
+		color: white !important;
+		font-weight: 700;
+		height: @header-height;
+		padding-top: 16px;
 
-        &:hover {
-            color: white !important;
-        }
-    }
+		&:hover {
+			color: white !important;
+		}
+	}
 
-    &.first+a {
-        padding-top: 22px;
-    }
+	&.first+a {
+		padding-top: 22px;
+	}
 
-    &:hover {
-        color: @brand-primary !important;
-    }
+	&:hover {
+		color: @brand-primary !important;
+	}
 
-    &.active {
-        font-weight: 700;
-    }
+	&.active {
+		font-weight: 700;
+	}
 }
 
 label.menu {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 
 .menu-button {
-    .button;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    display: inline-block;
-    padding: calc((@header-height - 36px) / 2) 1em;
+	.button;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	display: inline-block;
+	padding: calc((@header-height - 36px) / 2) 1em;
 
-    &:active {
-        transform: translateY(2px);
-    }
+	&:active {
+		transform: translateY(2px);
+	}
 
 }
 
 .menu-button.left {
-    .menu-button;
-    left: 0;
-    margin: 5px 25px 25px 10px;
+	.menu-button;
+	left: 0;
+	margin: 5px 25px 25px 10px;
 }
 
 .menu-button.right {
-    .menu-button;
-    right: 0;
-    color: black !important;
-    background-color: @brand-accent;
-    border: 10px solid @brand-primary;
-    padding: 8px 1em;
+	.menu-button;
+	right: 0;
+	color: black !important;
+	background-color: @brand-accent;
+	border: 10px solid @brand-primary;
+	padding: 8px 1em;
 }
 
 .button-toggle {
-    display: none;
-    visibility: hidden;
+	display: none;
+	visibility: hidden;
 
-    .menu-button;
-    padding: 30px 0;
-    width: 80px;
-    background: @brand-primary;
-    position: fixed;
-    left: -69px;
+	.menu-button;
+	padding: 30px 0;
+	width: 80px;
+	background: @brand-primary;
+	position: fixed;
+	left: -69px;
 
-    .icon {
-        position: absolute;
-        top: calc((100% - 3px) / 2);
-        left: calc((100% - 25px) / 2);
-        width: 25px;
-        height: 3px;
-        background: white;
-        border-radius: @borderRadius;
+	.icon {
+		position: absolute;
+		top: calc((100% - 3px) / 2);
+		left: calc((100% - 25px) / 2);
+		width: 25px;
+		height: 3px;
+		background: white;
+		border-radius: @borderRadius;
 
-        &:first-child {
+		&:first-child {
 
-            &::before,
-            &::after {
-                position: absolute;
-                left: 0;
-                width: 100%;
-                height: 3px;
-                background: white;
-                border-radius: @borderRadius;
-                content: '';
-                transform-origin: 50% 50%;
-            }
+			&::before,
+			&::after {
+				position: absolute;
+				left: 0;
+				width: 100%;
+				height: 3px;
+				background: white;
+				border-radius: @borderRadius;
+				content: '';
+				transform-origin: 50% 50%;
+			}
 
-            &::before {
-                top: 7px;
-            }
+			&::before {
+				top: 7px;
+			}
 
-            &::after {
-                bottom: 7px;
-            }
-        }
-    }
+			&::after {
+				bottom: 7px;
+			}
+		}
+	}
 }
 
 
 
 #toggle:checked {
 
-    &~.container>.nav,
-    &~#courtain {
-        transform: translateY(0);
-    }
+	&~.container>.nav,
+	&~#courtain {
+		transform: translateY(0);
+	}
 
-    &~.container .menu .button-toggle {
-        box-shadow: 0 0px 20px #00000030;
-    }
+	&~.container .menu .button-toggle {
+		box-shadow: 0 0px 20px #00000030;
+	}
 
 }
 
 
 footer {
-    background-color: black;
+	background-color: @inverse-surface;
 
-    border-color: #ddd;
-    color: white;
-    font-weight: 700;
-    border-width: 1px 0;
-    border-style: solid;
-    position: absolute;
-    width: 100%;
-    left: 0;
+	border-color: #ddd;
+	color: @inverse-on-surface;
+	border-width: 1px 0;
+	border-style: solid;
+	position: absolute;
+	width: 100%;
+	left: 0;
 
-    .grid3 {
-        max-width: 864px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-        padding: 1em 2em;
+	.grid3 {
+		max-width: 864px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 10px;
+		padding: 1em 2em;
 
-        @media (min-width: 500px) {
-            grid-template-columns: 1fr 1fr;
-        }
+		@media (min-width: 500px) {
+			grid-template-columns: 1fr 1fr;
+		}
 
-        @media (min-width: 700px) {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
+		@media (min-width: 700px) {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
 
-        div>.header {
-            text-transform: uppercase;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 1em;
-            margin-top: 2em;
-            text-align: left;
-        }
+		div>.header {
+			font-family: "Public Sans", sans-serif;
+			text-transform: uppercase;
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: 0.05em;
+			margin-bottom: 1em;
+			margin-top: 2em;
+			text-align: left;
+		}
 
-        div>a {
-            font-size: 14px;
-            display: block;
-            color: white;
-            text-decoration: none;
-            user-select: none;
-            margin-bottom: 1em !important;
-            font-weight: 400;
-            color: white !important;
-            margin-bottom: 0;
-            text-align: left;
-        }
+		div>a {
+			font-size: 14px;
+			display: block;
+			color: @inverse-on-surface;
+			text-decoration: none;
+			user-select: none;
+			margin-bottom: 1em !important;
+			font-weight: 400;
+			color: @inverse-on-surface !important;
+			margin-bottom: 0;
+			text-align: left;
+		}
 
-        div>a.login,
-        div>a.logout {
-            background-color: @ini_brand_accent;
-            color: black !important;
-            padding: 6px 12px;
-            border-radius: 4px;
-            display: block;
-            width: max-content;
-            margin-top: 10px !important;
-            margin-bottom: 5px !important;
-            font-weight: 700;
-            text-decoration: none;
-            transition: background-color 0.2s;
-            line-height: 1.2;
-            font-size: 13px;
+		div>a.login,
+		div>a.logout {
+			background-color: @brand-accent;
+			color: @on-brand-accent !important;
+			padding: 6px 12px;
+			border-radius: 0.5rem;
+			display: block;
+			width: max-content;
+			margin-top: 10px !important;
+			margin-bottom: 5px !important;
+			font-weight: 700;
+			text-decoration: none;
+			transition: background-color 0.2s;
+			line-height: 1.2;
+			font-size: 13px;
 
-            &:hover {
-                background-color: darken(@ini_brand_accent, 10%);
-                text-decoration: none;
-                color: black !important;
-            }
-        }
+			&:hover {
+				background-color: darken(@brand-accent, 10%);
+				text-decoration: none;
+				color: @on-brand-accent !important;
+			}
+		}
 
-        div>a[rel~="external"]::after {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E");
-            content: "";
-            width: 11px;
-            height: 11px;
-            margin-left: 4px;
-            display: inline-block;
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: 50%;
-        }
+		div>a[rel~="external"]::after {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/%3E%3Cpath fill-rule='evenodd' d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/%3E%3C/svg%3E");
+			content: "";
+			width: 11px;
+			height: 11px;
+			margin-left: 4px;
+			display: inline-block;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: 50%;
+		}
 
-    }
+	}
 
-    h4 {
-        margin: 0 1em;
-        padding: 1em 0;
-        text-align: center;
-    }
+	h4 {
+		margin: 0 1em;
+		padding: 1em 0;
+		text-align: center;
+	}
 }
