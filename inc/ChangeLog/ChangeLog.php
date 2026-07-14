@@ -637,7 +637,10 @@ abstract class ChangeLog
         if (!$fileRev) {
             // the file is gone: external deletion
             $revInfo = $this->synthesizeExternalDeletion($recordedRev);
-        } elseif ($recordedRev === false || $this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE) {
+        } elseif (
+            $recordedRev === false ||
+            $this->getRevisionInfo($recordedRev, false)['type'] == DOKU_CHANGE_TYPE_DELETE
+        ) {
             // no changelog, or it logged a delete: (re)creation
             $revInfo = $this->synthesizeExternalCreate($filename, $fileRev, $recordedRev);
         } else {
