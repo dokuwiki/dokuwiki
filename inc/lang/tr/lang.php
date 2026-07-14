@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
@@ -152,6 +153,8 @@ $lang['profdeleted']           = 'Bu wiki\'den hesabınız silindi';
 $lang['profconfdelete']        = 'Bu wiki\'den hesabımı silmek istiyorum. <br/>Bu işlem geri alınamaz';
 $lang['profconfdeletemissing'] = 'Onay kutusu işaretlenmedi';
 $lang['proffail']              = 'Kullanıcı bilgileri güncellenmedi.';
+$lang['proftokenlegend']       = 'Doğrulama Belirteci';
+$lang['proftokengenerate']     = 'Sıfırlama Belirteci';
 $lang['pwdforget']             = 'Parolanızı mı unuttunuz? Yeni bir parola alın';
 $lang['resendna']              = 'Bu wiki parolayı tekrar göndermeyi desteklememektedir.';
 $lang['resendpwd']             = 'İçin yeni şifre belirle';
@@ -222,6 +225,7 @@ $lang['created']               = 'oluşturuldu';
 $lang['restored']              = 'eski sürüme dönüldü (%s)';
 $lang['external_edit']         = 'Dışarıdan düzenle';
 $lang['summary']               = 'Özeti düzenle';
+$lang['unknowndate']           = 'Bilinmeyen tarih';
 $lang['noflash']               = 'Bu içeriği göstermek için <a href="http://get.adobe.com/flashplayer">Adobe Flash Eklentisi</a> gerekmektedir.';
 $lang['download']              = 'Parçacığı indir';
 $lang['tools']                 = 'Alet';
@@ -362,3 +366,6 @@ $lang['plainhtml']             = 'Yalın HTML';
 $lang['wikimarkup']            = 'Wiki Biçimlendirmesi';
 $lang['email_signature_text']  = 'Bu e-posta aşağıdaki DokuWiki tarafından otomatik olarak oluşturulmuştur
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Kayıt dosyası fazla büyük. Önceki sıralar atlandı!';
+$lang['log_file_failed_to_open'] = 'Kayıt dosyası açılamadı.';
+$lang['log_file_failed_to_read'] = 'Bu kaydı okurken bir sorun oluştu.';

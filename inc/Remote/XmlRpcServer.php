@@ -28,19 +28,16 @@ class XmlRpcServer extends Server
     public function serve($data = false)
     {
         global $conf;
+        global $INPUT;
         if (!$conf['remote']) {
             throw new ServerException("XML-RPC server not enabled.", -32605);
         }
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
         }
-        if (
-            !isset($_SERVER['CONTENT_TYPE']) ||
-            (
-                strtolower($_SERVER['CONTENT_TYPE']) !== 'text/xml' &&
-                strtolower($_SERVER['CONTENT_TYPE']) !== 'application/xml'
-            )
-        ) {
+        [$contentType] = explode(';', $INPUT->server->str('CONTENT_TYPE'), 2); // ignore charset
+        $contentType = strtolower($contentType); // mime types are case-insensitive
+        if ($contentType !== 'text/xml' && $contentType !== 'application/xml') {
             throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
         }
 

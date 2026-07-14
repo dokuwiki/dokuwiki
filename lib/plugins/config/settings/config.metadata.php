@@ -247,7 +247,6 @@ $meta['renderer_xhtml'] = ['renderer', '_format' => 'xhtml', '_choices' => ['xht
 $meta['readdircache'] = ['numeric'];
 $meta['search_nslimit'] = ['numeric', '_min' => 0];
 $meta['search_fragment'] = ['multichoice', '_choices' => ['exact', 'starts_with', 'ends_with', 'contains']];
-$meta['trustedproxy'] = ['regex'];
 
 $meta['_feature_flags'] = ['fieldset'];
 $meta['defer_js'] = ['onoff'];
@@ -256,6 +255,8 @@ $meta['hidewarnings'] = ['onoff'];
 $meta['_network'] = ['fieldset'];
 $meta['dnslookups'] = ['onoff'];
 $meta['jquerycdn'] = ['multichoice', '_choices' => [0, 'jquery', 'cdnjs']];
+$meta['trustedproxies'] = ['array', '_caution' => 'security'];
+$meta['realip'] = ['onoff', '_caution' => 'security'];
 $meta['proxy____host'] = ['string', '_pattern' => '#^(|[a-z0-9\-\.+]+)$#i'];
 $meta['proxy____port'] = ['numericopt'];
 $meta['proxy____user'] = ['string'];

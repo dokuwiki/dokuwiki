@@ -1,6 +1,9 @@
 # This workflow updates the list of deleted files based on the recent changes and creates a pull request.
+# It compares the current master with the data/deleted.files file and cleans the file from any re-introduced files.
 # It compares the current master with the stable branch and adds all deleted files to the data/deleted.files file
 # unless they are already listed there or are excluded from the release archives (export-ignore in .gitattributes).
+# Any additions are made to the top of the list with a single trailing line before the first "# removed on" line.
+# Finally, the list of newly removed entries receives a header "# removed on $(date -I)" with the current ISO date.
 
 name: "Update deleted files"
 on:
@@ -14,24 +17,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Update deleted files
+      - name: Cleaning list from re-introduced files
+        run: |
+          for E in $(git ls-tree -r master --name-only); do
+            if (git check-attr export-ignore "$E" | grep -q "export-ignore: set"); then
+              continue
+            fi
+            grep -v "^$E$" data/deleted.files > data/deleted.files.tmp && mv data/deleted.files{.tmp,}
+          done
+
+      - name: Update list with deleted files
         run: |
           for F in $(git diff origin/stable..HEAD --summary | awk '/^ delete/ && $4 !~ /^(VERSION)/ {print $4}'); do
             if (git check-attr export-ignore "$F" | grep -q "export-ignore: set"); then
               continue
             fi
-            if grep -q "^$F" data/deleted.files; then
+            if grep -q "^$F$" data/deleted.files; then
               continue
             fi
-            echo "$F" >> data/deleted.files
+            if ( ! test -f "data/deleted.files.tmp"); then
+              awk -v "input=# newly removed" '/# removed on/ && !found {print input; found=1} 1' data/deleted.files > data/deleted.files.tmp && cp data/deleted.files{.tmp,}
+            fi
+            awk -v "input=$F" '/# removed on/ && !found {print input; found=1} 1' data/deleted.files > data/deleted.files.tmp && cp data/deleted.files{.tmp,}
           done
+          if (test -f "data/deleted.files.tmp"); then
+            awk '/# removed on/ && !found {printf("\n"); found=1} 1' data/deleted.files > data/deleted.files.tmp && mv data/deleted.files{.tmp,}
+            sed -i "s/^# newly removed/# removed on $(date -I)/" data/deleted.files
+          fi
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "🤖 Update deleted files"
           title: "🤖 Update deleted files"

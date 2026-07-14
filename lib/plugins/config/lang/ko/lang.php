@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
  * @author pavement <pavement@rael.cc>
@@ -153,6 +154,9 @@ $lang['renderer__core']        = '%s (도쿠위키 코어)';
 $lang['renderer__plugin']      = '%s (플러그인)';
 $lang['search_nslimit']        = '검색을 현재 X 네임스페이스로 제한하십시오. 더 깊은 네임스페이스 내의 페이지에서 검색을 실행하면 첫 번째 X 네임스페이스가 필터로 추가됩니다.';
 $lang['search_fragment_o_exact'] = '정확한';
+$lang['defer_js']              = 'Defer JavaScript 하여 페이지의 HTML이 구문 분석된 후에 실행되도록 합니다. 이는 인식되는 페이지 속도를 향상시키지만, 소수의 플러그인을 망가뜨릴 수 있습니다.
+';
+$lang['hidewarnings']          = 'PHP에서 발생한 경고를 표시하지 마십시오. 이는 PHP8+로의 전환을 쉽게 할 수 있습니다. 경고는 여전히 오류 로그에 기록되며 보고되어야 합니다.';
 $lang['dnslookups']            = '도쿠위키가 문서를 편집하는 사용자의 원격 IP 주소에 대한 호스트 이름을 조회합니다. 서버가 느리거나 DNS 서버를 작동하지 않거나 이 기능을 원하지 않으면, 이 옵션을 비활성화하세요';
 $lang['jquerycdn']             = '제이쿼리(jQuery)와 제이쿼리UI 스크립트 파일을 컨텐츠전송네트워크(CDN)에서 불러와야만 합니까? 이것은 추가적인 HTTP요청을 합니다. 하지만 파일이 빨리 불러지고 캐쉬에 저장되게 할 수 있습니다.';
 $lang['jquerycdn_o_0']         = '컨텐츠전송네트워크(CDN) 사용 안 함. 로컬 전송만 함';

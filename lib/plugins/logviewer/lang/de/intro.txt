@@ -1,6 +1,6 @@
 ====== Logs anzeigen ======
 
-Diese Oberfläche gibt Zugriff auf die verschiedenen Logdateien die von DokuWiki erzeugt werden. Normalerweise sollte hier nicht viel zu sehen sein (abhängig von Ihren [[ [[doku>config:dontlog|Logging Einstellungen]]). Geht jedoch etwas schief, ist die Wahrscheinlichkeit hoch hier nützliche Informationen zum Problem zu finden. Alle angezeigten Zeiten sind in UTC!
+Diese Oberfläche gibt Zugriff auf die verschiedenen Logdateien die von DokuWiki erzeugt werden. Normalerweise sollte hier nicht viel zu sehen sein (abhängig von Ihren [[doku>config:dontlog|Logging Einstellungen]]). Geht jedoch etwas schief, ist die Wahrscheinlichkeit hoch hier nützliche Informationen zum Problem zu finden.
 
 Bitte beachten Sie, dass **Logdateien sensitive Informationen enthalten können**. Dazu gehören Passwörter, Dateipfade und andere Geheimnisse.
 Bearbeiten Sie die Ausgaben entsprechend wenn Sie diese im Forum oder in Fehlermeldungen posten!

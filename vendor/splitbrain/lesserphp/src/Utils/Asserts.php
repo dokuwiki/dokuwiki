@@ -50,7 +50,7 @@ class Asserts
                 $name = $name . ': ';
             }
 
-            throw new Exception("${name}expecting at least $expectedMinArgs arguments, got $numValues");
+            throw new Exception("$name expecting at least $expectedMinArgs arguments, got $numValues");
         }
 
         return $values;

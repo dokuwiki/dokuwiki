@@ -378,7 +378,7 @@ function store_data($d)
     $d['policy'] = (int)$d['policy'];
 
     // create local.php
-    $now = gmdate('r');
+    $now = date('r');
     $output = <<<EOT
 <?php
 /**
@@ -632,11 +632,6 @@ function check_functions()
         'rename rmdir serialize session_start unlink usleep ' .
         'preg_replace file_get_contents htmlspecialchars_decode ' .
         'spl_autoload_register stream_select fsockopen pack xml_parser_create');
-
-    if (!function_exists('mb_substr')) {
-        $funcs[] = 'utf8_encode';
-        $funcs[] = 'utf8_decode';
-    }
 
     if (!function_exists('mail')) {
         if (strpos(ini_get('disable_functions'), 'mail') !== false) {

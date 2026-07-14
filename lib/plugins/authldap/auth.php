@@ -202,9 +202,9 @@ class auth_plugin_authldap extends AuthPlugin
 
         $this->debug('LDAP Filter: ' . hsc($filter), 0, __LINE__, __FILE__);
 
-        $this->debug('LDAP user search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
         $this->debug('LDAP search at: ' . hsc($base . ' ' . $filter), 0, __LINE__, __FILE__);
         $sr = $this->ldapSearch($this->con, $base, $filter, $this->getConf('userscope'), $this->getConf('attributes'));
+        $this->debug('LDAP user search: ' . hsc(ldap_error($this->con)), 0, __LINE__, __FILE__);
         if ($sr === false) {
             $this->debug('User ldap_search failed. Check configuration.', 0, __LINE__, __FILE__);
             return false;
@@ -253,7 +253,7 @@ class auth_plugin_authldap extends AuthPlugin
                     // $key = array($key=>$regexp), only handles the first key-value
                     $regexp = current($key);
                     $key = key($key);
-                    if ($user_result[$key]) foreach ($user_result[$key] as $grpkey => $grp) {
+                    if (is_array($user_result[$key] ?? null)) foreach ($user_result[$key] as $grpkey => $grp) {
                         if ($grpkey !== 'count' && preg_match($regexp, $grp, $match)) {
                             if ($localkey == 'grps') {
                                 $info[$localkey][] = $match[1];
@@ -365,8 +365,12 @@ class auth_plugin_authldap extends AuthPlugin
         }
 
         // Generate the salted hashed password for LDAP
-        $phash = new PassHash();
-        $hash = $phash->hash_ssha($changes['pass']);
+        if ($this->getConf('modPassPlain')) {
+            $hash = $changes['pass'];
+        } else {
+            $phash = new PassHash();
+            $hash = $phash->hash_ssha($changes['pass']);
+        }
 
         // change the password
         if (!@ldap_mod_replace($this->con, $dn, ['userpassword' => $hash])) {
@@ -551,7 +555,11 @@ class auth_plugin_authldap extends AuthPlugin
         $servers = explode(',', $this->getConf('server'));
         foreach ($servers as $server) {
             $server = trim($server);
-            $this->con = @ldap_connect($server, $port);
+            if (str_starts_with($server, 'ldap://') || str_starts_with($server, 'ldaps://')) {
+                $this->con = @ldap_connect($server);
+            } else {
+                $this->con = @ldap_connect($server, $port);
+            }
             if (!$this->con) {
                 continue;
             }

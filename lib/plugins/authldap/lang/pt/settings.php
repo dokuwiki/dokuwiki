@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Thalles Lázaro <dokuwiki@thall.es>
  * @author Paulo Schopf <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
  * @author Maykon Oliveira <maykonoliveira850@gmail.com>
@@ -29,6 +30,7 @@ $lang['groupscope']            = 'Escopo de pesquisa limite para pesquisa de gru
 $lang['userkey']               = 'Atributo denotando o nome de usuário; deve ser consistente com o filtro do usuário.';
 $lang['groupkey']              = 'A participação no grupo a partir de qualquer atributo de usuário (em vez de AD padrão de grupos) ex: grupo de departamento ou número de telefone';
 $lang['modPass']               = 'Sua senha LDAP pode ser alterada via dokuwiki?';
+$lang['modPassPlain']          = 'Enviar atualizações de senha em texto simples para o servidor LDAP (em vez de usar o algoritmo configurado para fazer o salt e o hash antes da transmissão)?';
 $lang['debug']                 = 'Mostrar informação adicional de debug quando ocorrerem erros';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

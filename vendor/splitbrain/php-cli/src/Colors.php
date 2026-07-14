@@ -31,6 +31,9 @@ class Colors
     const C_LIGHTGRAY = 'lightgray';
     const C_WHITE = 'white';
 
+    // Regex pattern to match color codes
+    const C_CODE_REGEX = "/(\33\[[0-9;]+m)/";
+
     /** @var array known color names */
     protected $colors = array(
         self::C_RESET => "\33[0m",
@@ -67,6 +70,10 @@ class Colors
             return;
         }
         if (!getenv('TERM')) {
+            $this->enabled = false;
+            return;
+        }
+        if (getenv('NO_COLOR')) { // https://no-color.org/
             $this->enabled = false;
             return;
         }

@@ -302,7 +302,7 @@ class Search extends Ui
         $currentWrapper = $searchForm->addTagOpen('div')->addClass('current');
         if ($baseNS) {
             $currentWrapper->addClass('changed');
-            $searchForm->addHTML('@' . $baseNS);
+            $searchForm->addHTML('@' . hsc($baseNS));
         } else {
             $searchForm->addHTML($lang['search_any_ns']);
         }
@@ -323,7 +323,7 @@ class Search extends Ui
 
         foreach ($extraNS as $ns => $count) {
             $listItem = $searchForm->addTagOpen('li');
-            $label = $ns . ($count ? " <bdi>($count)</bdi>" : '');
+            $label = hsc($ns) . ($count ? " <bdi>($count)</bdi>" : '');
 
             if ($ns === $baseNS) {
                 $listItem->addClass('active');

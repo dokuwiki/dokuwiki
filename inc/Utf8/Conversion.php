@@ -155,4 +155,51 @@ class Conversion
         $uni = unpack('n*', $str);
         return Unicode::toUtf8($uni);
     }
+
+    /**
+     * Converts a string from ISO-8859-1 to UTF-8
+     *
+     * This is a replacement for the deprecated utf8_encode function.
+     *
+     * @param $string
+     * @return string
+     * @author <p@tchwork.com> Nicolas Grekas - pure PHP implementation
+     * @link https://github.com/tchwork/utf8/blob/master/src/Patchwork/PHP/Shim/Xml.php
+     */
+    public static function fromLatin1($string)
+    {
+        if (UTF8_MBSTRING) {
+            return mb_convert_encoding($string, 'UTF-8', 'ISO-8859-1');
+        }
+        if (function_exists('iconv')) {
+            return iconv('ISO-8859-1', 'UTF-8', $string);
+        }
+        if (class_exists('UConverter')) {
+            return \UConverter::transcode($string, 'UTF8', 'ISO-8859-1');
+        }
+        if (function_exists('utf8_encode')) {
+            // deprecated
+            return utf8_encode($string);
+        }
+
+        // fallback to pure PHP
+        $string .= $string;
+        $len = strlen($string);
+        for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
+            switch (true) {
+                case $string[$i] < "\x80":
+                    $string[$j] = $string[$i];
+                    break;
+                case $string[$i] < "\xC0":
+                    $string[$j] = "\xC2";
+                    $string[++$j] = $string[$i];
+                    break;
+                default:
+                    $string[$j] = "\xC3";
+                    $string[++$j] = chr(ord($string[$i]) - 64);
+                    break;
+            }
+        }
+        return substr($string, 0, $j);
+    }
 }

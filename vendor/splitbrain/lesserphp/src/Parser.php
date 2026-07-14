@@ -142,7 +142,11 @@ class Parser
         }
 
         if ($this->count != strlen($this->buffer)) {
-            $this->throwError();
+            $this->throwError(sprintf(
+                "parse error: count mismatches buffer length %d != %d",
+                $this->count,
+                strlen($this->buffer)
+            ));
         }
 
         // TODO report where the block was opened
@@ -1395,7 +1399,7 @@ class Parser
      * @param \Throwable|null $previous A previous exception to chain
      * @throws ParserException
      */
-    public function throwError(string $msg = 'parse error', ?int $count = null, \Throwable $previous = null)
+    public function throwError(string $msg = 'parse error', ?int $count = null, ?\Throwable $previous = null)
     {
         $count = is_null($count) ? $this->count : $count;
 

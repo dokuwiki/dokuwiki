@@ -17,7 +17,8 @@
         "splitbrain/php-cli": "^1.1",
         "splitbrain/slika": "^1.0",
         "kissifrot/php-ixr": "^1.8",
-        "splitbrain/php-jsstrip": "^1.0"
+        "splitbrain/php-jsstrip": "^1.0",
+        "php81_bc/strftime": "dev-fallback-intl"
     },
     "config": {
         "platform": {
@@ -26,9 +27,7 @@
     },
     "suggest": {
         "ext-mbstring": "The mbstring extension is highly recommended to speed up all UTF-8 handling",
-        "ext-intl": "The intl extension allows for better locale specific sorting",
-        "squizlabs/php_codesniffer": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-        "phpunit/phpunit": "Allows automated tests to be run without system-wide install (only version 4-7 are supported)."
+        "ext-intl": "The intl extension allows for better locale specific sorting"
     },
     "prefer-stable": true
 }

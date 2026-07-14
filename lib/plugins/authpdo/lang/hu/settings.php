@@ -5,6 +5,8 @@
  *
  * @author Fekete Ádám Zsolt <fadam@egbcsoport.hu>
  */
+$lang['debug']                 = 'Jelenítse meg a részletes hibaüzeneteket. Érdemes indítás után kikapcsolni.';
+$lang['dsn']                   = 'Az adatbáziskapcsolathoz szükséges DSN.';
 $lang['user']                  = 'Felhasználónév az adatbáziskapcsolathoz (sqlite esetén üres)';
 $lang['pass']                  = 'Jelszó az adatbáziskapcsolathoz (sqlite esetén üres)';
 $lang['select-user']           = 'SQL kifejezés egy felhasználó lekérdezéséhez';

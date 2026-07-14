@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Peter Dave Hello <hsu@peterdavehello.org>
  * @author Chun-Chung Chen <cjj@u.washington.edu>
  * @author GHSRobert Ciang <robertus0617@gmail.com>
  * @author Stan <talktostan@gmail.com>
@@ -16,9 +17,6 @@ $lang['tab_templates']         = '已安裝裝模版
 $lang['tab_search']            = '搜尋與安裝';
 $lang['tab_install']           = '手動安裝';
 $lang['notimplemented']        = '此功能尚未完成';
-$lang['notinstalled']          = '此延伸功能尚未安裝';
-$lang['alreadyenabled']        = '此延伸功能已經安裝';
-$lang['alreadydisabled']       = '此延伸功能停用';
 $lang['unknownauthor']         = '作者未知';
 $lang['unknownversion']        = '版本未知';
 $lang['btn_info']              = '顯示更多訊息';
@@ -29,11 +27,13 @@ $lang['btn_disable']           = '停用';
 $lang['btn_install']           = '安裝';
 $lang['btn_reinstall']         = '重新安裝';
 $lang['js']['reallydel']       = '確定要移除此延伸功能？';
+$lang['js']['display_viewoptions'] = '檢視選項：';
 $lang['js']['display_enabled'] = '啟用';
 $lang['js']['display_disabled'] = '禁用';
 $lang['js']['display_updatable'] = '可更新';
 $lang['search_for']            = '搜尋延伸功能：';
 $lang['search']                = '搜尋';
+$lang['screenshot']            = '%s 的螢幕截圖';
 $lang['homepage_link']         = '文件';
 $lang['tags']                  = '標籤：';
 $lang['author_hint']           = '搜尋相同作者的延伸功能';
@@ -63,17 +63,14 @@ $lang['status_bundled']        = '已綑綁內附';
 $lang['msg_enabled']           = '外掛 %s 已啟用';
 $lang['msg_disabled']          = '外掛 %s 已禁用';
 $lang['msg_delete_failed']     = '解除安裝 %s 失敗';
-$lang['msg_template_install_success'] = '模板 %s 已成功安裝';
-$lang['msg_template_update_success'] = '模板 %s 已成功更新';
-$lang['msg_plugin_install_success'] = '外掛 %s 已成功安裝';
-$lang['msg_plugin_update_success'] = '外掛 %s 已成功更新';
 $lang['msg_upload_failed']     = '上傳檔案失敗';
-$lang['missing_dependency']    = '<strong>遺失或禁用相依性套件:</strong> %s';
-$lang['security_issue']        = '<strong>安全性問題:</strong> %s';
-$lang['security_warning']      = '<strong>安全問題警告:</strong> %s';
-$lang['update_available']      = '<strong>更新:</strong> 已可取得 %s 的新版本';
-$lang['wrong_folder']          = '<strong>外掛安裝不正確:</strong> 將外掛資料夾從 "%s" 更名至 "%s"。';
-$lang['url_change']            = '<strong>網址已變更:</strong> 自從上次下載後下載網址已變更。在更新延伸功能前請先檢查新網址是否可用。<br />新: %s<br />舊: %s';
+$lang['missing_dependency']    = '遺失或禁用相依性套件: %s';
+$lang['security_issue']        = '安全性問題: %s';
+$lang['security_warning']      = '安全問題警告: %s';
+$lang['wrong_folder']          = '外掛安裝不正確: 將外掛資料夾從 "%s" 更名至 "%s"。';
+$lang['url_change']            = '網址已變更: 自從上次下載後下載網址已變更。在更新延伸功能前請先檢查新網址是否可用。
+新: %s
+舊: %s';
 $lang['error_dircreate']       = '無法建立暫存目錄以接收下載檔案';
 $lang['error_download']        = '無法下載檔案：%s';
 $lang['error_decompress']      = '無法解壓縮檔案。這可能是下載品質不佳所致，在這個情況下你應該再試一次；也有可能是因為無法辨識的壓縮格式，在這個情況下你應該自行下載並手動安裝';

@@ -12,6 +12,8 @@ modified by me for consistency/bug fixing.
 Please send any bug reports to BenBE@omorphia.de, or use the bug report tracker
 at sourceforge (http://sourceforge.net/tracker/?group_id=114997&atid=670231)
 
+Version 1.0.9.2
+  -  Renamed Nimrod to Nim (mrtuxa)
 Version 1.0.9.1
   -  Added language files
      * OpenSSH config (Kevin Ernst)

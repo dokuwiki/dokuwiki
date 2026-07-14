@@ -38,5 +38,12 @@
         "psr-4": {
             "splitbrain\\PHPArchive\\": "tests"
         }
-    }
+    },
+
+    "funding": [
+        {
+            "url": "https://github.com/sponsors/splitbrain",
+            "type": "github"
+        }
+    ]
 }

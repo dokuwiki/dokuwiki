@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Impeck <impeck@ya.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Ivan I. Udovichenko (sendtome@mymailbox.pp.ua)
  * @author Erli Moen <evseev.jr@gmail.com>
@@ -28,6 +29,7 @@ $lang['groupscope']            = 'Ограничить область поиск
 $lang['userkey']               = 'Атрибут, означающий имя пользователя; должен быть таким же как в userfilter';
 $lang['groupkey']              = 'Использовать любой атрибут пользователя для включения в группу (вместо стандартного AD groups). Например, из атрибута department или telephone number';
 $lang['modPass']               = 'Может ли пароль LDAP быть изменён через «Докувики»?';
+$lang['modPassPlain']          = 'Отправлять обновления пароля в виде простого текста на LDAP-сервер (вместо хеширования с солью по настроенному алгоритму перед отправкой)?';
 $lang['debug']                 = 'Показывать дополнительную отладочную информацию при ошибках';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

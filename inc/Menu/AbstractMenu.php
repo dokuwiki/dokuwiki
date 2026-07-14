@@ -43,6 +43,12 @@ abstract class AbstractMenu implements MenuInterface
     {
         $data = ['view' => $this->view, 'items' => []];
         Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, [$this, 'loadItems']);
+
+        $data['items'] = array_filter(
+            $data['items'],
+            fn($item) => $item instanceof AbstractItem && $item->visibleInContext($this->context)
+        );
+
         return $data['items'];
     }
 
@@ -59,7 +65,6 @@ abstract class AbstractMenu implements MenuInterface
                 $class = "\\dokuwiki\\Menu\\Item\\$class";
                 /** @var AbstractItem $item */
                 $item = new $class();
-                if (!$item->visibleInContext($this->context)) continue;
                 $data['items'][] = $item;
             } catch (\RuntimeException $ignored) {
                 // item not available

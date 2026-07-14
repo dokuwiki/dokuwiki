@@ -317,7 +317,7 @@ class LegacyApiCore extends ApiCore
      */
     public function legacyAppendPage($id, $text, $params = [])
     {
-        $ok = $this->appendPage($id, $text, $params['summary'] ?? '', $params['minor'] ?? false);
+        $ok = $this->appendPage($id, $text, $params['sum'] ?? '', $params['minor'] ?? false);
         if ($ok === true) {
             return cleanID($id);
         } else {

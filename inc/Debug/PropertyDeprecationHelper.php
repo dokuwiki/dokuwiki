@@ -67,7 +67,7 @@ trait PropertyDeprecationHelper
         $qualifiedName = get_class() . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
-            trigger_error("Cannot access non-public property $qualifiedName", E_USER_ERROR);
+            throw new \RuntimeException("Cannot access non-public property $qualifiedName");
         } else {
             // Non-existing property. Try to behave like PHP would.
             trigger_error("Undefined property: $qualifiedName", E_USER_NOTICE);
@@ -87,7 +87,7 @@ trait PropertyDeprecationHelper
         $qualifiedName = get_class() . '::$' . $name;
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
-            trigger_error("Cannot access non-public property $qualifiedName", E_USER_ERROR);
+            throw new \RuntimeException("Cannot access non-public property $qualifiedName");
         } else {
             // Non-existing property. Try to behave like PHP would.
             $this->$name = $value;

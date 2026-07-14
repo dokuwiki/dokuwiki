@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author andreash <aeheil@gmail.com>
  * @author Axel Kirch <axel@globeglotter.com>
  * @author MaWi <drmaxxis@gmail.com>
  * @author lp <spam@lukpopp.ch>
@@ -234,6 +235,7 @@ $lang['created']               = 'angelegt';
 $lang['restored']              = 'alte Version wiederhergestellt (%s)';
 $lang['external_edit']         = 'Externe Bearbeitung';
 $lang['summary']               = 'Zusammenfassung';
+$lang['unknowndate']           = 'Datum unbekannt';
 $lang['noflash']               = 'Das <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a> wird benötigt, um diesen Inhalt anzuzeigen.';
 $lang['download']              = 'Schnipsel herunterladen';
 $lang['tools']                 = 'Werkzeuge';

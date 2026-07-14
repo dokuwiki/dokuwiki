@@ -37,7 +37,7 @@ class admin_plugin_logviewer extends AdminPlugin
 
         $this->date = $INPUT->str('date');
         if (!preg_match('/^\d\d\d\d-\d\d-\d\d$/', $this->date)) {
-            $this->date = gmdate('Y-m-d');
+            $this->date = date('Y-m-d');
         }
     }
 

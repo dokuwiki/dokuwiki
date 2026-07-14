@@ -4,4 +4,4 @@ email  chris@jalakai.co.uk
 date   2015-07-15
 name   User Manager
 desc   Manage DokuWiki user accounts
-url    http://dokuwiki.org/plugin:usermanager
+url    https://www.dokuwiki.org/plugin:usermanager

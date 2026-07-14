@@ -8,6 +8,7 @@
  * auth.class language support 
  * installer strings 
  *
+ * @author Marek Lach <mareklachbc@tutanota.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Peter Mydliar <peto.mydliar@gmail.com>
  * @author Ondrej Vegh <ov@vsieti.sk> with help of the scholars from Zdruzena stredna skola polygraficka in Bratislava
@@ -221,6 +222,7 @@ $lang['created']               = 'vytvorené';
 $lang['restored']              = 'stará verzia bola obnovená (%s)';
 $lang['external_edit']         = 'externá úprava';
 $lang['summary']               = 'Komentár k úpravám';
+$lang['unknowndate']           = 'Neznámy dátum';
 $lang['noflash']               = 'Pre zobrazenie tohto obsahu potrebujete <a href="http://get.adobe.com/flashplayer">Adobe Flash Plugin</a>.';
 $lang['download']              = 'Stiahnuť';
 $lang['tools']                 = 'Nástroje';

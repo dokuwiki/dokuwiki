@@ -1,0 +1,7 @@
+base     multi5
+author   Andreas Gohr
+email    andi@splitbrain.org
+date     2024-11-22
+name     Dummy Template
+desc     Dummy template data
+url      http://example.com/template:multi5

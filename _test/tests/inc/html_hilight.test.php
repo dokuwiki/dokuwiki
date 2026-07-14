@@ -4,7 +4,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testHighlightOneWord() {
         $html = 'Foo bar Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo <span.*>bar<\/span> Foo/',
             html_hilight($html,'bar')
         );
@@ -12,7 +12,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testHighlightTwoWords() {
         $html = 'Foo bar Foo php Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo <span.*>bar<\/span> Foo <span.*>php<\/span> Foo/',
             html_hilight($html,array('bar','php'))
         );
@@ -20,7 +20,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testHighlightTwoWordsHtml() {
         $html = 'Foo <b>bar</b> <i>Foo</i> php Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo <b><span.*>bar<\/span><\/b> <i>Foo<\/i> <span.*>php<\/span> Foo/',
             html_hilight($html,array('bar','php'))
         );
@@ -28,7 +28,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testNoMatchHtml() {
         $html = 'Foo <font>font</font> Bar';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo <font><span.*>font<\/span><\/font> Bar/',
             html_hilight($html,'font')
         );
@@ -36,7 +36,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testWildcardRight() {
         $html = 'foo bar foobar barfoo foobarfoo foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo <span.*>bar<\/span> foobar <span.*>bar<\/span>foo foobarfoo foo/',
             html_hilight($html,'bar*')
         );
@@ -44,7 +44,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testWildcardLeft() {
         $html = 'foo bar foobar barfoo foobarfoo foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo <span.*>bar<\/span> foo<span.*>bar<\/span> barfoo foobarfoo foo/',
             html_hilight($html,'*bar')
         );
@@ -52,7 +52,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testWildcardBoth() {
         $html = 'foo bar foobar barfoo foobarfoo foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo <span.*>bar<\/span> foo<span.*>bar<\/span> <span.*>bar<\/span>foo foo<span.*>bar<\/span>foo foo/',
             html_hilight($html,'*bar*')
         );
@@ -60,7 +60,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testNoHighlight() {
         $html = 'Foo bar Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo bar Foo/',
             html_hilight($html,'php')
         );
@@ -68,7 +68,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testMatchAttribute() {
         $html = 'Foo <b class="x">bar</b> Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo <b class="x">bar<\/b> Foo/',
             html_hilight($html,'class="x"')
         );
@@ -84,7 +84,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testRegexInjection() {
         $html = 'Foo bar Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo bar Foo/',
             html_hilight($html,'*')
         );
@@ -92,7 +92,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testRegexInjectionSlash() {
         $html = 'Foo bar Foo';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/Foo bar Foo/',
             html_hilight($html,'x/')
         );
@@ -100,7 +100,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testMB() {
         $html = 'foo ДокуВики bar';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo <span.*>ДокуВики<\/span> bar/',
             html_hilight($html,'ДокуВики')
         );
@@ -108,7 +108,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testMBright() {
         $html = 'foo ДокуВики bar';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo <span.*>Доку<\/span>Вики bar/',
             html_hilight($html,'Доку*')
         );
@@ -116,7 +116,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testMBleft() {
         $html = 'foo ДокуВики bar';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo Доку<span.*>Вики<\/span> bar/',
             html_hilight($html,'*Вики')
         );
@@ -124,7 +124,7 @@ class html_hilight_test extends DokuWikiTest {
 
     function testMBboth() {
         $html = 'foo ДокуВики bar';
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/foo До<span.*>куВи<\/span>ки bar/',
             html_hilight($html,'*куВи*')
         );

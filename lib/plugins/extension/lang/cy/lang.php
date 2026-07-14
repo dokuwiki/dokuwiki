@@ -78,12 +78,11 @@ $lang['msg_plugin_install_success']   = 'Arsefydlwyd ategyn %s yn llwyddiannus';
 $lang['msg_plugin_update_success']    = 'Diweddarwyd ategyn %s yn llwyddiannus';
 $lang['msg_upload_failed']            = 'Methodd lanlwytho\'r ffeil';
 
-$lang['missing_dependency']           = '<strong>Missing or disabled dependency:</strong> %s';
-$lang['security_issue']               = '<strong>Mater Diogelwch:</strong> %s';
-$lang['security_warning']             = '<strong>Rhybudd Diogelwch:</strong> %s';
-$lang['update_available']             = '<strong>Diweddariad:</strong> Mae fersiwn newydd %s ar gael.';
-$lang['wrong_folder']                 = '<strong>Ategyn wedi\'i arsefydlu\'n anghywir:</strong> Ailenwch ffolder yr ategyn o "%s" i "%s".';
-$lang['url_change']                   = '<strong>Newid i\'r URL:</strong> Newidiodd yr URL lawlwytho ers y diweddariad diwethaf. Gwiriwch i weld os yw\'r URL newydd yn ddilys cyn diweddaru\'r estyniad.<br />Newydd: %s<br />Hen: %s';
+$lang['missing_dependency']           = 'Missing or disabled dependency: %s';
+$lang['security_issue']               = 'Mater Diogelwch: %s';
+$lang['security_warning']             = 'Rhybudd Diogelwch: %s';
+$lang['wrong_folder']                 = 'Ategyn wedi\'i arsefydlu\'n anghywir: Ailenwch ffolder yr ategyn o "%s" i "%s".';
+$lang['url_change']                   = "Newid i'r URL: Newidiodd yr URL lawlwytho ers y diweddariad diwethaf. Gwiriwch i weld os yw'r URL newydd yn ddilys cyn diweddaru'r estyniad.\nNewydd: %s\nHen: %s";
 
 $lang['error_badurl']                 = 'Dylai URL ddechrau gyda http neu https';
 $lang['error_dircreate']              = 'Methu â chreu ffolder dros dro er mwyn derbyn y lawrlwythiad';

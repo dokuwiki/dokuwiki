@@ -15,6 +15,7 @@ namespace splitbrain\PHPArchive;
  */
 class Tar extends Archive
 {
+    const READ_CHUNK_SIZE = 1048576; // 1MB
 
     protected $file = '';
     protected $comptype = Archive::COMPRESS_AUTO;
@@ -23,6 +24,9 @@ class Tar extends Archive
     protected $memory = '';
     protected $closed = true;
     protected $writeaccess = false;
+    protected $position = 0;
+    protected $contentUntil = 0;
+    protected $skipUntil = 0;
 
     /**
      * Sets the compression to use
@@ -72,6 +76,7 @@ class Tar extends Archive
             throw new ArchiveIOException('Could not open file for reading: '.$this->file);
         }
         $this->closed = false;
+        $this->position = 0;
     }
 
     /**
@@ -118,12 +123,37 @@ class Tar extends Archive
                 continue;
             }
 
-            $this->skipbytes(ceil($header['size'] / 512) * 512);
+            $this->contentUntil = $this->position + $header['size'];
+            $this->skipUntil = $this->position + ceil($header['size'] / 512) * 512;
+
             yield $this->header2fileinfo($header);
+
+            $skip = $this->skipUntil - $this->position;
+            if ($skip > 0) {
+                $this->skipbytes($skip);
+            }
         }
 
         $this->close();
+    }
 
+    /**
+     * Reads content of a current archive entry.
+     *
+     * Works only when iterating trough the archive using the generator returned
+     * by the yieldContents().
+     *
+     * @param int $length maximum number of bytes to read
+     *
+     * @return string
+     */
+    public function readCurrentEntry($length = PHP_INT_MAX)
+    {
+        $length = (int) min($length, $this->contentUntil - $this->position);
+        if ($length === 0) {
+            return '';
+        }
+        return $this->readbytes($length);
     }
 
     /**
@@ -290,16 +320,27 @@ class Tar extends Archive
                 throw new ArchiveIOException('Could not open file for reading: ' . $file);
             }
             while (!feof($fp)) {
-                $data = fread($fp, 512);
-                $read += strlen($data);
+                // for performance reasons read bigger chunks at once
+                $data = fread($fp, self::READ_CHUNK_SIZE);
                 if ($data === false) {
                     break;
                 }
                 if ($data === '') {
                     break;
                 }
-                $packed = pack("a512", $data);
-                $this->writebytes($packed);
+                $dataLen = strlen($data);
+                $read += $dataLen;
+                // how much of data read fully fills 512-byte blocks?
+                $passLen = ($dataLen >> 9) << 9;
+                if ($passLen === $dataLen) {
+                    // all - just write the data
+                    $this->writebytes($data);
+                } else {
+                    // directly write what fills 512-byte blocks fully
+                    $this->writebytes(substr($data, 0, $passLen));
+                    // pad the reminder to 512 bytes
+                    $this->writebytes(pack("a512", substr($data, $passLen)));
+                }
             }
             fclose($fp);
 
@@ -335,8 +376,11 @@ class Tar extends Archive
         $fileinfo->setSize($len);
         $this->writeFileHeader($fileinfo);
 
-        for ($s = 0; $s < $len; $s += 512) {
-            $this->writebytes(pack("a512", substr($data, $s, 512)));
+        // write directly everything but the last block which needs padding
+        $passLen = ($len >> 9) << 9;
+        $this->writebytes(substr($data, 0, $passLen));
+        if ($passLen < $len) {
+            $this->writebytes(pack("a512", substr($data, $passLen, 512)));
         }
 
         if (is_callable($this->callback)) {
@@ -439,12 +483,14 @@ class Tar extends Archive
     protected function readbytes($length)
     {
         if ($this->comptype === Archive::COMPRESS_GZIP) {
-            return @gzread($this->fh, $length);
+            $ret = @gzread($this->fh, $length);
         } elseif ($this->comptype === Archive::COMPRESS_BZIP) {
-            return @bzread($this->fh, $length);
+            $ret = @bzread($this->fh, $length);
         } else {
-            return @fread($this->fh, $length);
+            $ret = @fread($this->fh, $length);
         }
+        $this->position += strlen($ret);
+        return $ret;
     }
 
     /**
@@ -494,6 +540,7 @@ class Tar extends Archive
         } else {
             @fseek($this->fh, $bytes, SEEK_CUR);
         }
+        $this->position += $bytes;
     }
 
     /**
@@ -553,8 +600,8 @@ class Tar extends Archive
         $uid   = sprintf("%6s ", decoct($uid));
         $gid   = sprintf("%6s ", decoct($gid));
         $perm  = sprintf("%6s ", decoct($perm));
-        $size  = sprintf("%11s ", decoct($size));
-        $mtime = sprintf("%11s", decoct($mtime));
+        $size  = self::numberEncode($size, 12);
+        $mtime = self::numberEncode($size, 12);
 
         $data_first = pack("a100a8a8a8a12A12", $name, $perm, $uid, $gid, $size, $mtime);
         $data_last  = pack("a1a100a6a2a32a32a8a8a155a12", $typeflag, '', 'ustar', '', '', '', '', '', $prefix, "");
@@ -614,8 +661,8 @@ class Tar extends Archive
         $return['perm']     = OctDec(trim($header['perm']));
         $return['uid']      = OctDec(trim($header['uid']));
         $return['gid']      = OctDec(trim($header['gid']));
-        $return['size']     = OctDec(trim($header['size']));
-        $return['mtime']    = OctDec(trim($header['mtime']));
+        $return['size']     = self::numberDecode($header['size']);
+        $return['mtime']    = self::numberDecode($header['mtime']);
         $return['typeflag'] = $header['typeflag'];
         $return['link']     = trim($header['link']);
         $return['uname']    = trim($header['uname']);
@@ -713,4 +760,64 @@ class Tar extends Archive
         return Archive::COMPRESS_NONE;
     }
 
+    /**
+     * Decodes numeric values according to the 
+     * https://www.gnu.org/software/tar/manual/html_node/Extensions.html#Extensions
+     * (basically with support for big numbers)
+     *
+     * @param string $field
+     * $return int
+     */
+    static public function numberDecode($field)
+    {
+        $firstByte = ord(substr($field, 0, 1));
+        if ($firstByte === 255) {
+            $value = -1 << (8 * strlen($field));
+            $shift = 0;
+            for ($i = strlen($field) - 1; $i >= 0; $i--) {
+                $value += ord(substr($field, $i, 1)) << $shift;
+                $shift += 8;
+            }
+        } elseif ($firstByte === 128) {
+            $value = 0;
+            $shift = 0;
+            for ($i = strlen($field) - 1; $i > 0; $i--) {
+                $value += ord(substr($field, $i, 1)) << $shift;
+                $shift += 8;
+            }
+        } else {
+            $value = octdec(trim($field));
+        }
+        return $value;
+    }
+
+    /**
+     * Encodes numeric values according to the
+     * https://www.gnu.org/software/tar/manual/html_node/Extensions.html#Extensions
+     * (basically with support for big numbers)
+     *
+     * @param int $value
+     * @param int $length field length
+     * @return string
+     */
+    static public function numberEncode($value, $length)
+    {
+        // old implementations leave last byte empty
+        // octal encoding encodes three bits per byte
+        $maxValue = 1 << (($length - 1) * 3);
+        if ($value < 0) {
+            // PHP already stores integers as 2's complement
+            $value = pack(PHP_INT_SIZE === 8 ? 'J' : 'N', (int) $value);
+            $encoded = str_repeat(chr(255), max(1, $length - PHP_INT_SIZE));
+            $encoded .= substr($value, max(0, PHP_INT_SIZE - $length + 1));
+        } elseif ($value >= $maxValue) {
+            $value = pack(PHP_INT_SIZE === 8 ? 'J' : 'N', (int) $value);
+            $encoded = chr(128) . str_repeat(chr(0), max(0, $length - PHP_INT_SIZE - 1));
+            $encoded .= substr($value, max(0, PHP_INT_SIZE - $length + 1));
+        } else {
+            $encoded = sprintf("%" . ($length - 1) . "s ", decoct($value));
+        }
+        return $encoded;
+    }
 }
+

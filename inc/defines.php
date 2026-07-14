@@ -66,6 +66,12 @@ define('DOKU_MEDIA_INUSE', 4);
 define('DOKU_MEDIA_EMPTY_NS', 8);
 
 /**
+ * Unusable password hash
+ * @file inc/auth.php
+ */
+define('DOKU_UNUSABLE_PASSWORD', '!unusable');
+
+/**
  * Mail header constants
  *
  * EOL is defined as CRLF in RFC822 and seems to work on modern systems. We had problems with

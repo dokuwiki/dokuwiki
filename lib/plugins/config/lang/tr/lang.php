@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
  * @author mahir <mahirtakak@gmail.com>
@@ -35,6 +36,7 @@ $lang['_anti_spam']            = 'Spam Engelleme Ayarları';
 $lang['_editing']              = 'Sayfa Yazımı Ayarları';
 $lang['_links']                = 'Bağlantı Ayarları';
 $lang['_media']                = 'Medya Ayarları';
+$lang['_notifications']        = 'Bildirim';
 $lang['_advanced']             = 'Gelişmiş Ayarlar';
 $lang['_network']              = 'Ağ Ayarları';
 $lang['_msg_setting_undefined'] = 'Ayar üstverisi yok.';

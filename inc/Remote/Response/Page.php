@@ -86,7 +86,7 @@ class Page extends ApiResponse
      */
     public function calculateHash()
     {
-        $this->hash = md5(io_readFile($this->file));
+        $this->hash = md5(trim(io_readFile($this->file)));
     }
 
     /**

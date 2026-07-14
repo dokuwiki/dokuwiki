@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Philip Gabrielsen <philip@digno.no>
  * @author Arne Hanssen <arnehans@getmail.no>
  */
 $lang['menu']                  = 'Utvidelsesbehandling';
@@ -72,12 +73,11 @@ $lang['msg_template_update_success'] = 'Mal %s ble oppdatert';
 $lang['msg_plugin_install_success'] = 'Programtillegg %s ble installert';
 $lang['msg_plugin_update_success'] = 'Programtillegg %s ble oppdatert';
 $lang['msg_upload_failed']     = 'Opplasting av fil feilet';
-$lang['missing_dependency']    = '<strong>Manglende eller avslått avhengighet:</strong> %s';
-$lang['security_issue']        = '<strong>Sikerhetsproblem:</strong> %s';
-$lang['security_warning']      = '<strong>Sikerhetsvarsel:</strong> %s';
-$lang['update_available']      = '<strong>Oppdater:</strong> Ny versjon %s er tilgjengelig.';
-$lang['wrong_folder']          = '<strong>Programtillegg  feil installert:</strong> Døp om mappen for programtillegg "%s" til "%s".';
-$lang['url_change']            = '<strong>URL er endret:</strong> URL for nedlasning er blitt endret sidene siste nedlastning. Sjekk at den nye URLen er gyldig før du oppdatere utvidelsen.<br />Ny: %s<br />Gammel: %s';
+$lang['missing_dependency']    = 'Manglende eller avslått avhengighet: %s';
+$lang['security_issue']        = 'Sikerhetsproblem: %s';
+$lang['security_warning']      = 'Sikerhetsvarsel: %s';
+$lang['wrong_folder']          = 'Programtillegg  feil installert: Døp om mappen for programtillegg "%s" til "%s".';
+$lang['url_change']            = "URL er endret: URL for nedlasning er blitt endret sidene siste nedlastning. Sjekk at den nye URLen er gyldig før du oppdatere utvidelsen.\nNy: %s\nGammel: %s";
 $lang['error_badurl']          = 'URLer bør starte med http eller https';
 $lang['error_dircreate']       = 'Klarte ikke opprette midlertidig mappe nedlasting';
 $lang['error_download']        = 'Klarte ikke laste ned filen: %s';
@@ -91,5 +91,5 @@ $lang['git']                   = 'Denne utvidelsen ble installert via git, du vl
 $lang['auth']                  = 'Denne autentiseringsutvidelser er i konfigurasjonsinstillingene ikke slått på. vurder å slå den av.';
 $lang['install_url']           = 'Installer fra URL:';
 $lang['install_upload']        = 'Last opp utvidelse:';
-$lang['repo_error']            = 'Lagret for programtillegg kunne ikke kontaktes. Kontroller at din server har rettigheter til å kontakte www.dokuwiki.org, sjekk også instillinger for hurtiglager (proxy).';
+$lang['repo_error']            = 'Lageret for programtillegg kunne ikke kontaktes. Kontroller at din server har rettigheter til å kontakte www.dokuwiki.org, sjekk også instillinger for hurtiglager (proxy).';
 $lang['nossl']                 = 'DIn PHP-installasjon mangler støtte for SSL. Nedlastning vil derfor ikke virke for mange DokuWIki-utvidelser.';

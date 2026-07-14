@@ -12,18 +12,23 @@
 
 # DokuWiki
 .htaccess
-/conf/*.local.conf
-/conf/acl.auth.php
-/conf/local.php
-/conf/local.protected.php
-/conf/users.auth.php
-/conf/user*.css
-/conf/user*.js
-/conf/words.aspell
-/conf/lang/*
-/conf/plugin_lang/*
-/conf/plugins.local.*
-/conf/tpl/*
+/conf/*
+!/conf/.htaccess
+!/conf/*.dist
+!/conf/acronyms.conf
+!/conf/dokuwiki.php
+!/conf/entities.conf
+!/conf/interwiki.conf
+!/conf/license.php
+!/conf/manifest.json
+!/conf/mediameta.php
+!/conf/mime.conf
+!/conf/mysql.conf.php.example
+!/conf/plugins.php
+!/conf/plugins.required.php
+!/conf/scheme.conf
+!/conf/smileys.conf
+!/conf/wordblock.conf
 /data/attic/*
 /data/cache/*
 /data/index/*

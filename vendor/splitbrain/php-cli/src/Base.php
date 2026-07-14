@@ -94,7 +94,7 @@ abstract class Base
         if ($autocatch) {
             set_exception_handler(array($this, 'fatal'));
         }
-
+        $this->setLogLevel($this->logdefault);
         $this->colors = new Colors();
         $this->options = new Options($this->colors);
     }

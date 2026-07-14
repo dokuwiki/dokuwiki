@@ -104,12 +104,7 @@ class io_replaceinfile_test extends DokuWikiTest {
      */
     function test_badparam()
     {
-        if (class_exists('PHPUnit\Framework\Error\Warning')) {
-            $expect = 'PHPUnit\Framework\Error\Warning'; // PHPUnit 6
-        } else {
-            $expect = 'PHPUnit_Framework_Error_Warning'; // PHPUnit 5
-        }
-        $this->expectException($expect);
+        $this->expectLogMessage('io_replaceInFile() $oldline parameter cannot be empty');
 
         /* The empty $oldline parameter should be caught before the file doesn't exist test. */
         $this->assertFalse(io_replaceInFile(TMP_DIR.'/not_existing_file.txt', '', '', false, 0));

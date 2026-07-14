@@ -213,7 +213,7 @@ class Loader
         $data = [];
         $data[$prefix . $type . '_settings_name'] = ['fieldset'];
         foreach ($meta as $key => $value) {
-            if ($value[0] == 'fieldset') continue; //plugins only get one fieldset
+            if (isset($value[0]) && $value[0] == 'fieldset') continue; //plugins only get one fieldset
             $data[$prefix . $key] = $value;
         }
 

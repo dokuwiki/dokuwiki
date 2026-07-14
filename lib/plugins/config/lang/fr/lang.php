@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
@@ -180,12 +180,13 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'commence par';
 $lang['search_fragment_o_ends_with'] = 'se termine par';
 $lang['search_fragment_o_contains'] = 'contient';
-$lang['trustedproxy']          = 'Faire confiance aux mandataires qui correspondent à cette expression régulière pour l\'adresse IP réelle des clients qu\'ils rapportent. La valeur par défaut correspond aux réseaux locaux. Laisser vide pour ne faire confiance à aucun mandataire.';
 $lang['_feature_flags']        = 'Fonctionnalités expérimentales';
 $lang['defer_js']              = 'Attendre que le code HTML des pages soit analysé avant d\'exécuter le javascript. Améliore la vitesse de chargement perçue, mais pourrait casser un petit nombre de greffons.';
 $lang['hidewarnings']          = 'Ne montrer aucun avertissement émis par PHP. Cela peut faciliter la transition vers PHP 8+. Les avertissements seront toujours enregistrés dans le journal des erreurs et devraient être rapportés.';
 $lang['dnslookups']            = 'DokuWiki effectuera une résolution du nom d\'hôte sur les adresses IP des utilisateurs modifiant des pages. Si vous ne possédez pas de serveur DNS, que ce dernier est lent ou que vous ne souhaitez pas utiliser cette fonctionnalité : désactivez-la.';
 $lang['jquerycdn']             = 'Faut-il distribuer les scripts JQuery et JQuery UI depuis un CDN ? Cela ajoute une requête HTTP, mais les fichiers peuvent se charger plus vite et les internautes les ont peut-être déjà en cache.';
+$lang['trustedproxies']        = 'Liste à virgule de serveurs mandataires inverses de confiance depuis lesquels lire l\'entête X-Forwarded-For. Chaque élément de la liste peut être une adresse, IPV4 ou IPV6, ou une plage en format CIDR (exple : 10.0.0.0/8). Laisser vide pour ne faire confiance en aucun mandataire.';
+$lang['realip']                = 'Avoir confiance en l\'entête X-Real-IP. N\'activer que si votre serveur produit cet entête, sinon cela autorise des usurpations d\'IP.';
 $lang['jquerycdn_o_0']         = 'Non : utilisation de votre serveur.';
 $lang['jquerycdn_o_jquery']    = 'Oui : CDN code.jquery.com.';
 $lang['jquerycdn_o_cdnjs']     = 'Oui : CDN cdnjs.com.';

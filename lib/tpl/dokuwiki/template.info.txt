@@ -4,4 +4,4 @@ email    anika@selfthinker.org
 date     2015-07-26
 name     DokuWiki Template
 desc     DokuWiki's default template since 2012
-url      http://www.dokuwiki.org/template:dokuwiki
+url      https://www.dokuwiki.org/template:dokuwiki

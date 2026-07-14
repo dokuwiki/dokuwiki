@@ -15,12 +15,6 @@ use splitbrain\phpcli\TableFormatter;
  */
 class cli_plugin_usermanager extends CLIPlugin
 {
-    public function __construct()
-    {
-        parent::__construct();
-        auth_setup();
-    }
-
     /** @inheritdoc */
     protected function setup(Options $options)
     {
@@ -60,6 +54,8 @@ class cli_plugin_usermanager extends CLIPlugin
     /** @inheritdoc */
     protected function main(Options $options)
     {
+        auth_setup();
+
         /** @var AuthPlugin $auth */
         global $auth;
 

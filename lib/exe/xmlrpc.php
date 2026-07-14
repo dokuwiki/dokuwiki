@@ -15,5 +15,5 @@ $server = new XmlRpcServer(true);
 try {
     $server->serve();
 } catch (\Exception $e) {
-    $server->error($e->getCode(), $e->getMessage());
+    $server->error($e->getCode() ?: 1, $e->getMessage());
 }

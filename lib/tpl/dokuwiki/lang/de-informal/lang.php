@@ -3,9 +3,11 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author andreash <aeheil@gmail.com>
  * @author MaWi <drmaxxis@gmail.com>
  * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
+$lang['home']                  = 'Startseite';
 $lang['__background_site__']   = 'Farbe für den Seitenhintergrund (hinter dem Inhaltsbereich)';
 $lang['__link__']              = 'Allgemeine Linkfarbe';
 $lang['__existing__']          = 'Farbe für Links zu existierenden Seiten';

@@ -77,9 +77,12 @@ class PassHash
         } elseif (preg_match('/^md5\$(.{5})\$/', $hash, $m)) {
             $method = 'djangomd5';
             $salt   = $m[1];
-        } elseif (preg_match('/^\$2(a|y)\$(.{2})\$/', $hash, $m)) {
+        } elseif (preg_match('/^\$2([abxy])\$(.{2})\$/', $hash, $m)) {
             $method = 'bcrypt';
-            $salt   = $hash;
+            $salt = $hash;
+        } elseif (str_starts_with($hash, 'Bcrypt:$2')) {
+            $method = 'woltlab';
+            $salt = substr($hash, 7);
         } elseif (str_starts_with($hash, '{SSHA}')) {
             $method = 'ssha';
             $salt   = substr(base64_decode(substr($hash, 6)), 20);
@@ -683,6 +686,21 @@ class PassHash
         }
 
         return crypt($clear, $salt);
+    }
+
+    /**
+     * Password hashing method 'woltlab'
+     *
+     * Woltlab forums use a bcrypt hash with a custom prefix.
+     *
+     * @param $clear
+     * @param $salt
+     * @return string
+     * @throws \Exception
+     */
+    public function hash_woltlab($clear, $salt = null)
+    {
+        return 'Bcrypt:' . $this->hash_bcrypt($clear, $salt);
     }
 
     /**

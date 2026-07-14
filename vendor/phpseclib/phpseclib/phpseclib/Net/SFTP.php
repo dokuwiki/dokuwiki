@@ -391,7 +391,8 @@ class SFTP extends SSH2
                 104 => 'NET_SFTP_NAME',
                 105 => 'NET_SFTP_ATTRS',
 
-                200 => 'NET_SFTP_EXTENDED'
+                200 => 'NET_SFTP_EXTENDED',
+                201 => 'NET_SFTP_EXTENDED_REPLY'
             ];
             self::$status_codes = [
                 0 => 'NET_SFTP_STATUS_OK',
@@ -547,7 +548,7 @@ class SFTP extends SSH2
      */
     private function partial_init_sftp_connection()
     {
-        $response = $this->openChannel(self::CHANNEL, true);
+        $response = $this->open_channel(self::CHANNEL, true);
         if ($response === true && $this->isTimeout()) {
             return false;
         }
@@ -705,7 +706,8 @@ class SFTP extends SSH2
                 throw $e;
             }
             $this->canonicalize_paths = false;
-            $this->reset_connection(NET_SSH2_DISCONNECT_CONNECTION_LOST);
+            $this->reset_sftp();
+            return $this->init_sftp_connection();
         }
 
         $this->update_stat_cache($this->pwd, []);
@@ -2100,7 +2102,7 @@ class SFTP extends SSH2
      * @param callable|null $progressCallback
      * @throws \UnexpectedValueException on receipt of unexpected packets
      * @throws \BadFunctionCallException if you're uploading via a callback and the callback function is invalid
-     * @throws \phpseclib3\Exception\FileNotFoundException if you're uploading via a file and the file doesn't exist
+     * @throws FileNotFoundException if you're uploading via a file and the file doesn't exist
      * @return bool
      */
     public function put($remote_file, $data, $mode = self::SOURCE_STRING, $start = -1, $local_start = -1, $progressCallback = null)
@@ -2129,8 +2131,8 @@ class SFTP extends SSH2
             $offset = $start;
         } elseif ($mode & (self::RESUME | self::RESUME_START)) {
             // if NET_SFTP_OPEN_APPEND worked as it should _size() wouldn't need to be called
-            $size = $this->stat($remote_file)['size'];
-            $offset = $size !== false ? $size : 0;
+            $stat = $this->stat($remote_file);
+            $offset = $stat !== false && $stat['size'] ? $stat['size'] : 0;
         } else {
             $offset = 0;
             if ($this->version >= 5) {
@@ -3041,6 +3043,8 @@ class SFTP extends SSH2
      */
     protected function parseAttributes(&$response)
     {
+        $attr = [];
+
         if ($this->version >= 4) {
             list($flags, $attr['type']) = Strings::unpackSSH2('NC', $response);
         } else {
@@ -3268,6 +3272,7 @@ class SFTP extends SSH2
         // in SSH2.php the timeout is cumulative per function call. eg. exec() will
         // timeout after 10s. but for SFTP.php it's cumulative per packet
         $this->curTimeout = $this->timeout;
+        $this->is_timeout = false;
 
         $packet = $this->use_request_id ?
             pack('NCNa*', strlen($data) + 5, $type, $request_id, $data) :
@@ -3285,17 +3290,23 @@ class SFTP extends SSH2
     }
 
     /**
-     * Resets a connection for re-use
-     *
-     * @param int $reason
+     * Resets the SFTP channel for re-use
      */
-    protected function reset_connection($reason)
+    private function reset_sftp()
     {
-        parent::reset_connection($reason);
         $this->use_request_id = false;
         $this->pwd = false;
         $this->requestBuffer = [];
         $this->partial_init = false;
+    }
+
+    /**
+     * Resets a connection for re-use
+     */
+    protected function reset_connection()
+    {
+        parent::reset_connection();
+        $this->reset_sftp();
     }
 
     /**
@@ -3324,6 +3335,7 @@ class SFTP extends SSH2
         // in SSH2.php the timeout is cumulative per function call. eg. exec() will
         // timeout after 10s. but for SFTP.php it's cumulative per packet
         $this->curTimeout = $this->timeout;
+        $this->is_timeout = false;
 
         $start = microtime(true);
 
@@ -3446,7 +3458,7 @@ class SFTP extends SSH2
     }
 
     /**
-     * Returns all errors
+     * Returns all errors on the SFTP layer
      *
      * @return array
      */
@@ -3456,7 +3468,7 @@ class SFTP extends SSH2
     }
 
     /**
-     * Returns the last error
+     * Returns the last error on the SFTP layer
      *
      * @return string
      */
@@ -3485,6 +3497,24 @@ class SFTP extends SSH2
             $temp['extensions'] = $this->extensions['versions'];
         }
         return $temp;
+    }
+
+    /**
+     * Get supported SFTP extensions
+     *
+     * @return array
+     */
+    public function getSupportedExtensions()
+    {
+        if (!($this->bitmap & SSH2::MASK_LOGIN)) {
+            return false;
+        }
+
+        if (!$this->partial_init) {
+            $this->partial_init_sftp_connection();
+        }
+
+        return $this->extensions;
     }
 
     /**
@@ -3543,5 +3573,125 @@ class SFTP extends SSH2
     public function disableDatePreservation()
     {
         $this->preserveTime = false;
+    }
+
+    /**
+     * POSIX Rename
+     *
+     * Where rename() fails "if there already exists a file with the name specified by newpath"
+     * (draft-ietf-secsh-filexfer-02#section-6.5), posix_rename() overwrites the existing file in an atomic fashion.
+     * ie. "there is no observable instant in time where the name does not refer to either the old or the new file"
+     * (draft-ietf-secsh-filexfer-13#page-39).
+     *
+     * @param string $oldname
+     * @param string $newname
+     * @return bool
+     */
+    public function posix_rename($oldname, $newname)
+    {
+        if (!$this->precheck()) {
+            return false;
+        }
+
+        $oldname = $this->realpath($oldname);
+        $newname = $this->realpath($newname);
+        if ($oldname === false || $newname === false) {
+            return false;
+        }
+
+        if ($this->version >= 5) {
+            $packet = Strings::packSSH2('ssN', $oldname, $newname, 2); // 2 = SSH_FXP_RENAME_ATOMIC
+            $this->send_sftp_packet(NET_SFTP_RENAME, $packet);
+        } elseif (isset($this->extensions['posix-rename@openssh.com']) && $this->extensions['posix-rename@openssh.com'] === '1') {
+            $packet = Strings::packSSH2('sss', 'posix-rename@openssh.com', $oldname, $newname);
+            $this->send_sftp_packet(NET_SFTP_EXTENDED, $packet);
+        } else {
+            throw new \RuntimeException(
+                "Extension 'posix-rename@openssh.com' is not supported by the server. " .
+                "Call getSupportedVersions() to see a list of supported extension"
+            );
+        }
+
+        $response = $this->get_sftp_packet();
+        if ($this->packet_type != NET_SFTP_STATUS) {
+            throw new \UnexpectedValueException('Expected NET_SFTP_STATUS. '
+                                              . 'Got packet type: ' . $this->packet_type);
+        }
+
+        // if $status isn't SSH_FX_OK it's probably SSH_FX_NO_SUCH_FILE or SSH_FX_PERMISSION_DENIED
+        list($status) = Strings::unpackSSH2('N', $response);
+        if ($status != NET_SFTP_STATUS_OK) {
+            $this->logError($response, $status);
+            return false;
+        }
+
+        // don't move the stat cache entry over since this operation could very well change the
+        // atime and mtime attributes
+        //$this->update_stat_cache($newname, $this->query_stat_cache($oldname));
+        $this->remove_from_stat_cache($oldname);
+        $this->remove_from_stat_cache($newname);
+
+        return true;
+    }
+
+    /**
+     * Returns general information about a file system.
+     *
+     * The function statvfs() returns information about a mounted filesystem.
+     * @see https://man7.org/linux/man-pages/man3/statvfs.3.html
+     *
+     * @param string $path
+     * @return false|array{bsize: int, frsize: int, blocks: int, bfree: int, bavail: int, files: int, ffree: int, favail: int, fsid: int, flag: int, namemax: int}
+     */
+    public function statvfs($path)
+    {
+        if (!$this->precheck()) {
+            return false;
+        }
+
+        if (!isset($this->extensions['statvfs@openssh.com']) || $this->extensions['statvfs@openssh.com'] !== '2') {
+            throw new \RuntimeException(
+                "Extension 'statvfs@openssh.com' is not supported by the server. " .
+                "Call getSupportedVersions() to see a list of supported extension"
+            );
+        }
+
+        $realpath = $this->realpath($path);
+        if ($realpath === false) {
+            return false;
+        }
+
+        $packet = Strings::packSSH2('ss', 'statvfs@openssh.com', $realpath);
+        $this->send_sftp_packet(NET_SFTP_EXTENDED, $packet);
+
+        $response = $this->get_sftp_packet();
+        if ($this->packet_type !== NET_SFTP_EXTENDED_REPLY) {
+            throw new \UnexpectedValueException(
+                'Expected SSH_FXP_EXTENDED_REPLY. '
+                . 'Got packet type: ' . $this->packet_type
+            );
+        }
+
+        /**
+         * These requests return a SSH_FXP_STATUS reply on failure. On success they
+         * return the following SSH_FXP_EXTENDED_REPLY reply:
+         *
+         * uint32        id
+         * uint64        f_bsize     file system block size
+         * uint64        f_frsize     fundamental fs block size
+         * uint64        f_blocks     number of blocks (unit f_frsize)
+         * uint64        f_bfree      free blocks in file system
+         * uint64        f_bavail     free blocks for non-root
+         * uint64        f_files      total file inodes
+         * uint64        f_ffree      free file inodes
+         * uint64        f_favail     free file inodes for to non-root
+         * uint64        f_fsid       file system id
+         * uint64        f_flag       bit mask of f_flag values
+         * uint64        f_namemax    maximum filename length
+         */
+        return array_combine(
+            ['bsize', 'frsize', 'blocks', 'bfree', 'bavail', 'files', 'ffree', 'favail', 'fsid', 'flag', 'namemax'],
+            Strings::unpackSSH2('QQQQQQQQQQQ', $response)
+        );
     }
 }

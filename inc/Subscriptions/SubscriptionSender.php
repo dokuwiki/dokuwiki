@@ -8,7 +8,7 @@ abstract class SubscriptionSender
 {
     protected $mailer;
 
-    public function __construct(Mailer $mailer = null)
+    public function __construct(?Mailer $mailer = null)
     {
         if (!$mailer instanceof \Mailer) {
             $mailer = new Mailer();

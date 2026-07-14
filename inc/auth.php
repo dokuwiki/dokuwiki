@@ -47,6 +47,11 @@ function auth_setup()
     global $plugin_controller;
     $AUTH_ACL = [];
 
+    // unset REMOTE_USER if empty
+    if ($INPUT->server->str('REMOTE_USER') === '') {
+        $INPUT->server->remove('REMOTE_USER');
+    }
+
     if (!$conf['useacl']) return false;
 
     // try to load auth backend from plugins
@@ -98,7 +103,7 @@ function auth_setup()
     if (!auth_tokenlogin()) {
         $ok = null;
 
-        if ($auth instanceof AuthPlugin && $auth->canDo('external')) {
+        if ($auth->canDo('external')) {
             $ok = $auth->trustExternal($INPUT->str('u'), $INPUT->str('p'), $INPUT->bool('r'));
         }
 
@@ -185,18 +190,37 @@ function auth_tokenlogin()
     global $auth;
     if (!$auth) return false;
 
-    // see if header has token
-    $header = '';
+    $headers = [];
+
+    // try to get the headers from Apache
     if (function_exists('getallheaders')) {
-        // Authorization headers are not in $_SERVER for mod_php
-        $headers = array_change_key_case(getallheaders());
-        if (isset($headers['authorization'])) $header = $headers['authorization'];
-    } else {
-        $header = $INPUT->server->str('HTTP_AUTHORIZATION');
+        $headers = getallheaders();
+        if (is_array($headers)) {
+            $headers = array_change_key_case($headers);
+        }
     }
-    if (!$header) return false;
-    [$type, $token] = sexplode(' ', $header, 2);
-    if ($type !== 'Bearer') return false;
+
+    // get the headers from $_SERVER
+    if (!$headers) {
+        foreach ($_SERVER as $key => $value) {
+            if (substr($key, 0, 5) === 'HTTP_') {
+                $headers[strtolower(substr($key, 5))] = $value;
+            }
+        }
+    }
+
+    // check authorization header
+    if (isset($headers['authorization'])) {
+        [$type, $token] = sexplode(' ', $headers['authorization'], 2);
+        if ($type !== 'Bearer') $token = ''; // not the token we want
+    }
+
+    // check x-dokuwiki-token header
+    if (isset($headers['x-dokuwiki-token'])) {
+        $token = $headers['x-dokuwiki-token'];
+    }
+
+    if (empty($token)) return false;
 
     // check token
     try {
@@ -1302,6 +1326,8 @@ function act_resendpwd()
  * If the selected method needs a salt and none was given, a random one
  * is chosen.
  *
+ * You can pass null as the password to create an unusable hash.
+ *
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
  * @param string $clear The clear text password
@@ -1312,6 +1338,11 @@ function act_resendpwd()
 function auth_cryptPassword($clear, $method = '', $salt = null)
 {
     global $conf;
+
+    if ($clear === null) {
+        return DOKU_UNUSABLE_PASSWORD;
+    }
+
     if (empty($method)) $method = $conf['passcrypt'];
 
     $pass = new PassHash();
@@ -1337,6 +1368,10 @@ function auth_cryptPassword($clear, $method = '', $salt = null)
  */
 function auth_verifyPassword($clear, $crypt)
 {
+    if ($crypt === DOKU_UNUSABLE_PASSWORD) {
+        return false;
+    }
+
     $pass = new PassHash();
     return $pass->verify_hash($clear, $crypt);
 }

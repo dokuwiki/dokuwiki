@@ -5,6 +5,7 @@
  * @author  Piyush Mishra <me@piyushmishra.com>
  * @author  Håkan Sandell <sandell.hakan@gmail.com>
  * @author  Anika Henke <anika@selfthinker.org>
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 
 /**
@@ -46,312 +47,210 @@
         border-bottom: solid 1px @ini_background_alt;
         z-index: 2;
     }
+
     .panelHeader {
         background-color: @ini_background_alt;
         margin: 0 0 10px 0;
         padding: 10px 10px 8px;
         overflow: hidden;
     }
-
-    // message spacing
-    div.msg {
-        margin: 0.4em 0 0 0;
-    }
 }
 
-/*
- * extensions table
- */
+
 #extension__list {
-    ul.extensionList {
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0;
-        list-style: none;
+    @thumbwidth: 125px; // width of the thumbnail column, can be increased once we have larger thumbnails
+
+    &, * {
+        box-sizing: border-box;
     }
 
-    ul.extensionList li {
-        margin: 0 0 .5em;
-        padding: 0 0 .5em;
-        color: @ini_text;
+    section.extension {
+        display: grid;
+        grid-template-columns: @thumbwidth auto 22%;
+        grid-template-rows: repeat(4, auto);
+        margin-bottom: 1em;
         border-bottom: 1px solid @ini_border;
-        overflow: hidden;
-    }
+        word-break: break-word;
 
-    button {
-        margin-bottom: .3em;
-    }
-}
+        > .screenshot {
+            grid-column: 1;
+            grid-row: 1;
+            padding-top: 0.5em;
+            padding-right: 0.5em;
+            margin-bottom: 1.5em; // adds space for the detail summary label
+            position: relative;
 
-/**
- * extension table left column
- */
-#extension__list .legend {
-    position: relative;
-    width: 75%;
-    float: left;
+            img.shot {
+                border: 1px solid @ini_border;
+                border-radius: 2px;
+                width: 100%;
+                height: auto;
+            }
 
-    // padding
-    > div {
-        padding: 0 .5em 0 132px;
-        border-right: 1px solid @ini_background_alt;
-        overflow: hidden;
-    }
+            .id {
+                font-size: 80%;
+                color: @ini_text_alt;
+                background-color: @ini_background_alt;
+                padding: 0.1em 0.25em;
+                position: absolute;
+                top: 0.5em;
+                left: 0;
+                border-bottom-left-radius: 2px;
+                white-space: nowrap;
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: default;
+            }
 
-    // screenshot
-    div.screenshot {
-        margin-top: 4px;
-        margin-left: -132px;
-        max-width: 120px;
-        float: left;
-        position: relative;
-
-        img {
-            width: 120px;
-            height: 70px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 2px #666;
+            .popularity {
+                cursor: default;
+                img {
+                    vertical-align: middle;
+                    height: 1.2rem;
+                    width: auto;
+                }
+            }
         }
 
-        span {
-            min-height: 24px;
-            min-width: 24px;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-    }
+        > .main {
+            grid-column: 2;
+            grid-row: 1;
+            padding: 0.5em;
+            min-height: 7em;
 
-    // plugin headline
-    h2 {
-        width: 100%;
-        float: right;
-        margin: 0.2em 0 0.5em;
-        font-size: 100%;
-        font-weight: normal;
-        border: none;
+            > h2 {
+                font-size: 100%;
+                line-height: 1.2;
+                font-weight: normal;
+                display: flex;
+                gap: 1em;
+                justify-content: space-between;
 
-        strong {
-            font-size: 120%;
-            font-weight: bold;
-            vertical-align: baseline;
-        }
-    }
+                strong {
+                    font-size: 120%;
+                    font-weight: bold;
+                }
 
-    // description
-    p {
-        margin: 0 0 0.6em 0;
-    }
+                .version {
+                    white-space: nowrap;
+                }
+            }
 
-    // popularity bar
-    div.popularity {
-        background-color: @ini_background;
-        border: 1px solid silver;
-        height: .4em;
-        margin: 0 auto;
-        padding: 1px;
-        width: 5.5em;
-        position: absolute;
-        right: .5em;
-        top: 0.2em;
-
-        div {
-            background-color: @ini_border;
-            height: 100%;
-        }
-    }
-
-    // Docs, Bugs, Tags
-    div.linkbar {
-        font-size: 85%;
-
-        span.tags {
-            padding-left: 18px;
-            background: transparent url(images/tag.png) no-repeat 0 0;
+            .linkbar {
+                a.bugs {
+                    background-image: url('images/bug.svg');
+                }
+                a.donate {
+                    background-image: url('images/coffee.svg');
+                }
+            }
         }
 
-        a.bugs {
-            padding-left: 18px;
-            background: transparent url(images/bug.gif) no-repeat 0 0;
-        }
-    }
+        > .actions {
+            grid-column: 3;
+            grid-row: 1;
+            padding: 0.5em 0 0.5em 0.5em;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            gap: 0.5em;
 
-    // more info button
-    a.info {
-        background: transparent url(images/down.png) no-repeat 0 0;
-        border-width: 0;
-        height: 13px;
-        width: 13px;
-        text-indent: -9999px;
-        float: right;
-        margin: .5em 0 0;
-        overflow: hidden;
+            .available {
+                line-height: 1.2;
+                margin-bottom: 1em;
+                text-align: right;
 
-        &.close {
-            background: transparent url(images/up.png) no-repeat 0 0;
-        }
-    }
-
-    // detailed info box
-    dl.details {
-        margin: 0.4em 0 0 0;
-        font-size: 85%;
-        border-top: 1px solid @ini_background_alt;
-        clear: both;
-
-        dt {
-            clear: left;
-            float: left;
-            width: 25%;
-            margin: 0;
-            text-align: right;
-            font-weight: normal;
-            padding: 0.2em 5px 0 0;
-            font-weight: bold;
+                .version {
+                    white-space: nowrap;
+                }
+            }
         }
 
-        dd {
-            margin-left: 25%;
-            padding: 0.2em 0 0 5px;
 
-            a.donate {
-                padding-left: 18px;
-                background: transparent url(images/donate.png) left center no-repeat;
+        > .notices {
+            grid-column: 2 / span 2;
+            grid-row: 2;
+            padding: 0 0.5em;
+
+            ul, li {
+                list-style: none;
+                margin: 0.5em 0 0 0;
+                padding: 0;
+
+                div.li {
+                    display: flex;
+                    line-height: 1.2em;
+                    gap: 0.25em;
+                    align-items: center;
+                    span.icon svg {
+                        fill: @ini_link;
+                    }
+                }
+
+                &.error div.li span.icon svg {
+                    fill: #f33;
+                }
+                &.security div.li span.icon svg,
+                &.warning div.li span.icon svg {
+                    fill: #f90;
+                }
+            }
+        }
+
+        > .details {
+            grid-column: 1 / span 3;
+            grid-row: 3;
+
+            details {
+                font-size: 90%;
+                border: 1px solid transparent; // fixes jumping summary
+                summary {
+                    cursor: pointer;
+                    float: left;
+                    margin-top: -1.5em; // moves it up into the screenshot margin
+                    color: @ini_text_alt;
+                }
+
+                &[open] {
+                    dl {
+                        margin: 0.5em 0 0.5em 0;
+                    }
+                }
+
+                dl {
+                    margin: 0;
+                    display: grid;
+                    grid-template-columns: @thumbwidth auto;
+
+                    dt {
+                        grid-column: 1;
+                    }
+
+                    dd {
+                        grid-column: 2;
+                        margin: 0 0 0 0.5em;
+                    }
+                }
             }
         }
     }
-}
 
-[dir=rtl] #extension__list .legend {
-    float: right;
-
-    > div {
-        padding: 0 132px 0 .5em;
-        border-left: 1px solid @ini_background_alt;
-        border-right-width: 0;
-    }
-
-    div.screenshot {
-        margin-left: 0;
-        margin-right: -132px;
-        float: right;
-
-        span {
-            left: auto;
-            right: 0;
+    section.extension.installed.disabled {
+        .screenshot img,
+        .main,
+        .details {
+            opacity: 0.5;
         }
     }
 
-    h2 {
-        float: left;
-    }
-
-    div.popularity {
-        right: auto;
-        left: .5em;
-    }
-
-    div.linkbar span.tags,
-    dl.details dd a.donate {
-        padding-left: 0;
-        padding-right: 18px;
-        background-position: top right;
-    }
-
-    a.info {
-        float: left;
-    }
-
-    dl.details {
-        dt {
-            clear: right;
-            float: right;
-            text-align: left;
-            padding-left: 5px;
-            padding-right: 0;
-        }
-
-        dd {
-            margin-left: 0;
-            margin-right: 25%;
-            padding-left: 0;
-            padding-right: 5px;
-        }
-    }
-}
-
-/*
- * Enabled/Disabled overrides
- */
-#extension__list {
-
-    &.hasDisplayOptions {
-        .enabled,
-        .disabled,
-        .updatable {
+    &.filter {
+        section.extension {
             display: none;
         }
-
-        &.enabled .enabled,
-        &.disabled .disabled,
-        &.updatable .updatable {
-            display: block;
+        section.extension.update {
+            display: grid;
         }
-    }
-
-    .enabled div.screenshot span {
-        background: transparent url(images/enabled.png) no-repeat 2px 2px;
-    }
-
-    .disabled div.screenshot span {
-        background: transparent url(images/disabled.png) no-repeat 2px 2px;
-    }
-
-    .disabled .legend {
-        opacity: 0.7;
-    }
-}
-
-/**
- * extension table right column
- */
-#extension__manager .actions {
-    padding: 0;
-    font-size: 95%;
-    width: 25%;
-    float: right;
-    text-align: right;
-
-    .version {
-        display: block;
-    }
-
-    p {
-        margin: 0.2em 0;
-        text-align: center;
-    }
-
-    p.permerror {
-        margin-left: 0.4em;
-        text-align: left;
-        padding-left: 19px;
-        background: transparent url(images/warning.png) center left no-repeat;
-        line-height: 18px;
-        font-size: 12px;
-    }
-}
-
-[dir=rtl] #extension__manager .actions {
-    float: left;
-    text-align: left;
-
-    p.permerror {
-        margin-left: 0;
-        margin-right: 0.4em;
-        text-align: right;
-        padding-left: 0;
-        padding-right: 19px;
-        background-position: center right;
     }
 }
 
@@ -378,9 +277,4 @@
     text-align: center;
     display: block;
     width: 60%;
-}
-
-#extension__viewoptions label {
-    margin-left: 1em;
-    vertical-align: baseline;
 }

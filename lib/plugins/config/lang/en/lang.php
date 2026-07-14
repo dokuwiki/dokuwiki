@@ -188,7 +188,6 @@ $lang['search_fragment_o_exact'] = 'exact';
 $lang['search_fragment_o_starts_with'] = 'starts with';
 $lang['search_fragment_o_ends_with'] = 'ends with';
 $lang['search_fragment_o_contains'] = 'contains';
-$lang['trustedproxy'] = 'Trust forwarding proxies matching this regular expression about the true client IP they report. The default matches local networks. Leave empty to trust no proxy.';
 
 $lang['_feature_flags'] = 'Feature Flags';
 $lang['defer_js'] = 'Defer javascript to be execute after the page\'s HTML has been parsed. Improves perceived page speed but could break a small number of plugins.';
@@ -197,6 +196,8 @@ $lang['hidewarnings'] = 'Do not display any warnings issued by PHP. This may eas
 /* Network Options */
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
 $lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
+$lang['trustedproxies'] = 'Comma-separated list of trusted proxy servers from which to read the X-Forwarded-For header. Each item in the array may be either an IPv4 or IPv6 address, or an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8). Leave empty to trust no proxy.';
+$lang['realip'] = 'Trust the X-Real-IP header. Only enable this if your server writes this header, otherwise it may be spoofed.';
 
 /* jQuery CDN options */
 $lang['jquerycdn_o_0'] = 'No CDN, local delivery only';

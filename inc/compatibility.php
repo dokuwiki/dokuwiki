@@ -92,9 +92,9 @@ if (!function_exists('gztell') && function_exists('gztell64')) {
  * @see https://www.php.net/manual/en/function.str-starts-with
  */
 if (!function_exists('str_starts_with')) {
-    function str_starts_with(string $haystack, string $needle)
+    function str_starts_with(?string $haystack, ?string $needle)
     {
-        return empty($needle) || strpos($haystack, $needle) === 0;
+        return 0 === strncmp($haystack, $needle, \strlen($needle));
     }
 }
 
@@ -103,9 +103,9 @@ if (!function_exists('str_starts_with')) {
  * @see https://www.php.net/manual/en/function.str-contains
  */
 if (!function_exists('str_contains')) {
-    function str_contains(string $haystack, string $needle)
+    function str_contains(?string $haystack, ?string $needle)
     {
-        return empty($needle) || strpos($haystack, $needle) !== false;
+        return '' === $needle || false !== strpos($haystack, (string) $needle);
     }
 }
 
@@ -114,9 +114,19 @@ if (!function_exists('str_contains')) {
  * @see https://www.php.net/manual/en/function.str-ends-with
  */
 if (!function_exists('str_ends_with')) {
-    function str_ends_with(string $haystack, string $needle)
+    function str_ends_with(?string $haystack, ?string $needle)
     {
-        return empty($needle) || substr($haystack, -strlen($needle)) === $needle;
+        if ('' === $needle || $needle === $haystack) {
+            return true;
+        }
+
+        if ('' === $haystack) {
+            return false;
+        }
+
+        $needleLength = \strlen($needle);
+
+        return $needleLength <= \strlen($haystack) && 0 === substr_compare($haystack, $needle, -$needleLength);
     }
 }
 

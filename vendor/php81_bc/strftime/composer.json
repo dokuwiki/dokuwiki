@@ -1,0 +1,43 @@
+{
+  "name": "php81_bc/strftime",
+  "description": "Locale-formatted strftime using IntlDateFormatter (PHP 8.1 compatible)",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fernando Herrero",
+      "homepage": "https://github.com/alphp/strftime/graphs/contributors"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/alphp/strftime/issues",
+    "source": "https://github.com/alphp/strftime"
+  },
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "suggest": {
+    "ext-intl": "For proper locale aware output"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "@stable"
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  },
+  "scripts-descriptions": {
+    "test": "Run PHPUnit tests"
+  },
+  "autoload": {
+    "files": [
+      "src/php-8.1-strftime.php"
+    ],
+    "psr-4": {
+      "PHP81_BC\\strftime\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PHP81_BC\\Tests\\": "tests/"
+    }
+  }
+}

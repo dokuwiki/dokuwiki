@@ -19,15 +19,18 @@ use dokuwiki\Subscriptions\PageSubscriptionSender;
 use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
+use dokuwiki\Ip;
+
+use function PHP81_BC\strftime;
 
 /**
  * Wrapper around htmlspecialchars()
  *
+ * @param string $string the string being converted
+ * @return string converted string
  * @author Andreas Gohr <andi@splitbrain.org>
  * @see    htmlspecialchars()
  *
- * @param string $string the string being converted
- * @return string converted string
  */
 function hsc($string)
 {
@@ -46,8 +49,8 @@ function hsc($string)
  * @param string $string The input string
  * @param int $limit The number of expected elements
  * @param mixed $default The value to use when filling up missing elements
- * @see explode
  * @return array
+ * @see explode
  */
 function sexplode($separator, $string, $limit, $default = null)
 {
@@ -84,10 +87,10 @@ function blank(&$in, $trim = false)
 /**
  * strips control characters (<32) from the given string
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $string being stripped
  * @return string
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function stripctl($string)
 {
@@ -97,11 +100,11 @@ function stripctl($string)
 /**
  * Return a secret token to be used for CSRF attack prevention
  *
- * @author  Andreas Gohr <andi@splitbrain.org>
+ * @return  string
  * @link    http://en.wikipedia.org/wiki/Cross-site_request_forgery
  * @link    http://christ1an.blogspot.com/2007/04/preventing-csrf-efficiently.html
  *
- * @return  string
+ * @author  Andreas Gohr <andi@splitbrain.org>
  */
 function getSecurityToken()
 {
@@ -139,10 +142,10 @@ function checkSecurityToken($token = null)
 /**
  * Print a hidden form field with a secret CSRF token
  *
+ * @param bool $print if true print the field, otherwise html of the field is returned
+ * @return string html of hidden form field
  * @author  Andreas Gohr <andi@splitbrain.org>
  *
- * @param bool $print  if true print the field, otherwise html of the field is returned
- * @return string html of hidden form field
  */
 function formSecurityToken($print = true)
 {
@@ -154,13 +157,13 @@ function formSecurityToken($print = true)
 /**
  * Determine basic information for a request of $id
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Chris Smith <chris@jalakai.co.uk>
- *
- * @param string $id         pageid
- * @param bool   $htmlClient add info about whether is mobile browser
+ * @param string $id pageid
+ * @param bool $htmlClient add info about whether is mobile browser
  * @return array with info for a request of $id
  *
+ * @author Chris Smith <chris@jalakai.co.uk>
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function basicinfo($id, $htmlClient = true)
 {
@@ -170,15 +173,15 @@ function basicinfo($id, $htmlClient = true)
 
     // set info about manager/admin status.
     $info = [];
-    $info['isadmin']   = false;
+    $info['isadmin'] = false;
     $info['ismanager'] = false;
     if ($INPUT->server->has('REMOTE_USER')) {
-        $info['userinfo']   = $USERINFO;
-        $info['perm']       = auth_quickaclcheck($id);
-        $info['client']     = $INPUT->server->str('REMOTE_USER');
+        $info['userinfo'] = $USERINFO;
+        $info['perm'] = auth_quickaclcheck($id);
+        $info['client'] = $INPUT->server->str('REMOTE_USER');
 
         if ($info['perm'] == AUTH_ADMIN) {
-            $info['isadmin']   = true;
+            $info['isadmin'] = true;
             $info['ismanager'] = true;
         } elseif (auth_ismanager()) {
             $info['ismanager'] = true;
@@ -189,8 +192,8 @@ function basicinfo($id, $htmlClient = true)
             $info['userinfo']['name'] = $INPUT->server->str('REMOTE_USER');
         }
     } else {
-        $info['perm']       = auth_aclcheck($id, '', null);
-        $info['client']     = clientIP(true);
+        $info['perm'] = auth_aclcheck($id, '', null);
+        $info['client'] = clientIP(true);
     }
 
     $info['namespace'] = getNS($id);
@@ -223,15 +226,15 @@ function pageinfo()
 
     // include ID & REV not redundant, as some parts of DokuWiki may temporarily change $ID, e.g. p_wiki_xhtml
     // FIXME ... perhaps it would be better to ensure the temporary changes weren't necessary
-    $info['id']  = $ID;
+    $info['id'] = $ID;
     $info['rev'] = $REV;
 
     $subManager = new SubscriberManager();
     $info['subscribed'] = $subManager->userSubscription();
 
-    $info['locked']     = checklock($ID);
-    $info['filepath']   = wikiFN($ID);
-    $info['exists']     = file_exists($info['filepath']);
+    $info['locked'] = checklock($ID);
+    $info['filepath'] = wikiFN($ID);
+    $info['exists'] = file_exists($info['filepath']);
     $info['currentrev'] = @filemtime($info['filepath']);
 
     if ($REV) {
@@ -240,13 +243,13 @@ function pageinfo()
             $REV = '';
         } elseif ($RANGE) {
             //section editing does not work with old revisions!
-            $REV   = '';
+            $REV = '';
             $RANGE = '';
             msg($lang['nosecedit'], 0);
         } else {
             //really use old revision
             $info['filepath'] = wikiFN($ID, $REV);
-            $info['exists']   = file_exists($info['filepath']);
+            $info['exists'] = file_exists($info['filepath']);
         }
     }
     $info['rev'] = $REV;
@@ -256,7 +259,7 @@ function pageinfo()
         $info['writable'] = ($info['perm'] >= AUTH_CREATE);
     }
     $info['editable'] = ($info['writable'] && empty($info['locked']));
-    $info['lastmod']  = @filemtime($info['filepath']);
+    $info['lastmod'] = @filemtime($info['filepath']);
 
     //load page meta data
     $info['meta'] = p_get_metadata($ID);
@@ -278,23 +281,23 @@ function pageinfo()
     //and check for an external edit
     if ($revinfo !== false && $revinfo['date'] != $info['lastmod']) {
         // cached changelog line no longer valid
-        $revinfo                     = false;
+        $revinfo = false;
         $info['meta']['last_change'] = $revinfo;
         p_set_metadata($ID, ['last_change' => $revinfo]);
     }
 
     if ($revinfo !== false) {
-        $info['ip']   = $revinfo['ip'];
+        $info['ip'] = $revinfo['ip'];
         $info['user'] = $revinfo['user'];
-        $info['sum']  = $revinfo['sum'];
+        $info['sum'] = $revinfo['sum'];
         // See also $INFO['meta']['last_change'] which is the most recent log line for page $ID.
         // Use $INFO['meta']['last_change']['type']===DOKU_CHANGE_TYPE_MINOR_EDIT in place of $info['minor'].
 
         $info['editor'] = $revinfo['user'] ?: $revinfo['ip'];
     } else {
-        $info['ip']     = null;
-        $info['user']   = null;
-        $info['sum']    = null;
+        $info['ip'] = null;
+        $info['user'] = null;
+        $info['sum'] = null;
         $info['editor'] = null;
     }
 
@@ -318,11 +321,11 @@ function jsinfo()
         $JSINFO = [];
     }
     //export minimal info to JS, plugins can add more
-    $JSINFO['id']                    = $ID;
-    $JSINFO['namespace']             = isset($INFO) ? (string) $INFO['namespace'] : '';
-    $JSINFO['ACT']                   = act_clean($ACT);
-    $JSINFO['useHeadingNavigation']  = (int) useHeading('navigation');
-    $JSINFO['useHeadingContent']     = (int) useHeading('content');
+    $JSINFO['id'] = $ID;
+    $JSINFO['namespace'] = isset($INFO) ? (string)$INFO['namespace'] : '';
+    $JSINFO['ACT'] = act_clean($ACT);
+    $JSINFO['useHeadingNavigation'] = (int)useHeading('navigation');
+    $JSINFO['useHeadingContent'] = (int)useHeading('content');
 }
 
 /**
@@ -344,24 +347,15 @@ function mediainfo()
 /**
  * Build an string of URL parameters
  *
- * @author Andreas Gohr
- *
- * @param array  $params    array with key-value pairs
- * @param string $sep       series of pairs are separated by this character
+ * @see http_build_query()
+ * @param array|object $params the data to encode
+ * @param string $sep series of pairs are separated by this character
  * @return string query string
+ *
  */
 function buildURLparams($params, $sep = '&amp;')
 {
-    $url = '';
-    $amp = false;
-    foreach ($params as $key => $val) {
-        if ($amp) $url .= $sep;
-
-        $url .= rawurlencode($key) . '=';
-        $url .= rawurlencode((string) $val);
-        $amp = true;
-    }
-    return $url;
+    return http_build_query($params, '', $sep, PHP_QUERY_RFC3986);
 }
 
 /**
@@ -369,15 +363,15 @@ function buildURLparams($params, $sep = '&amp;')
  *
  * Skips keys starting with '_', values get HTML encoded
  *
+ * @param array $params array with (attribute name-attribute value) pairs
+ * @param bool $skipEmptyStrings skip empty string values?
+ * @return string
  * @author Andreas Gohr
  *
- * @param array $params           array with (attribute name-attribute value) pairs
- * @param bool  $skipEmptyStrings skip empty string values?
- * @return string
  */
 function buildAttributes($params, $skipEmptyStrings = false)
 {
-    $url   = '';
+    $url = '';
     $white = false;
     foreach ($params as $key => $val) {
         if ($key[0] == '_') continue;
@@ -395,9 +389,9 @@ function buildAttributes($params, $skipEmptyStrings = false)
 /**
  * This builds the breadcrumb trail and returns it as array
  *
+ * @return string[] with the data: array(pageid=>name, ... )
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @return string[] with the data: array(pageid=>name, ... )
  */
 function breadcrumbs()
 {
@@ -458,11 +452,11 @@ function breadcrumbs()
  *
  * Urlencoding is ommitted when the second parameter is false
  *
+ * @param string $id pageid being filtered
+ * @param bool $ue apply urlencoding?
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $id pageid being filtered
- * @param bool   $ue apply urlencoding?
- * @return string
  */
 function idfilter($id, $ue = true)
 {
@@ -470,7 +464,7 @@ function idfilter($id, $ue = true)
     /* @var Input $INPUT */
     global $INPUT;
 
-    $id = (string) $id;
+    $id = (string)$id;
 
     if ($conf['useslash'] && $conf['userewrite']) {
         $id = strtr($id, ':', '/');
@@ -495,13 +489,13 @@ function idfilter($id, $ue = true)
  *
  * It handles URL rewriting and adds additional parameters
  *
+ * @param string $id page id, defaults to start page
+ * @param string|array $urlParameters URL parameters, associative array recommended
+ * @param bool $absolute request an absolute URL instead of relative
+ * @param string $separator parameter separator
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string       $id             page id, defaults to start page
- * @param string|array $urlParameters  URL parameters, associative array recommended
- * @param bool         $absolute       request an absolute URL instead of relative
- * @param string       $separator      parameter separator
- * @return string
  */
 function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp;')
 {
@@ -547,13 +541,13 @@ function wl($id = '', $urlParameters = '', $absolute = false, $separator = '&amp
  *
  * Handles URL rewriting if enabled. Follows the style of wl().
  *
- * @author Ben Coburn <btcoburn@silicodon.net>
- * @param string       $id             page id, defaults to start page
- * @param string       $format         the export renderer to use
- * @param string|array $urlParameters  URL parameters, associative array recommended
- * @param bool         $abs            request an absolute URL instead of relative
- * @param string       $sep            parameter separator
+ * @param string $id page id, defaults to start page
+ * @param string $format the export renderer to use
+ * @param string|array $urlParameters URL parameters, associative array recommended
+ * @param bool $abs request an absolute URL instead of relative
+ * @param string $sep parameter separator
  * @return string
+ * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false, $sep = '&amp;')
 {
@@ -565,7 +559,7 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
     }
 
     $format = rawurlencode($format);
-    $id     = idfilter($id);
+    $id = idfilter($id);
     if ($abs) {
         $xlink = DOKU_URL;
     } else {
@@ -594,11 +588,11 @@ function exportlink($id = '', $format = 'raw', $urlParameters = '', $abs = false
  * The $more parameter should always be given as array, the function then
  * will strip default parameters to produce even cleaner URLs
  *
- * @param string  $id     the media file id or URL
- * @param mixed   $more   string or array with additional parameters
- * @param bool    $direct link to detail page if false
- * @param string  $sep    URL parameter separator
- * @param bool    $abs    Create an absolute URL
+ * @param string $id the media file id or URL
+ * @param mixed $more string or array with additional parameters
+ * @param bool $direct link to detail page if false
+ * @param string $sep URL parameter separator
+ * @param bool $abs Create an absolute URL
  * @return string
  */
 function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
@@ -686,9 +680,9 @@ function ml($id = '', $more = '', $direct = true, $sep = '&amp;', $abs = false)
  *
  * Consider using wl() instead, unless you absoutely need the doku.php endpoint
  *
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @return string
  */
 function script()
 {
@@ -714,11 +708,11 @@ function script()
  *      [mail]         - mail address (if logged in)
  *      [name]         - real name (if logged in)
  *
+ * @param string $text - optional text to check, if not given the globals are used
+ * @return bool         - true if a spam word was found
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Michael Klier <chi@chimeric.de>
  *
- * @param  string $text - optional text to check, if not given the globals are used
- * @return bool         - true if a spam word was found
  */
 function checkwordblock($text = '')
 {
@@ -761,7 +755,7 @@ function checkwordblock($text = '')
         if (count($re) && preg_match('#(' . implode('|', $re) . ')#si', $text, $matches)) {
             // prepare event data
             $data = [];
-            $data['matches']        = $matches;
+            $data['matches'] = $matches;
             $data['userinfo']['ip'] = $INPUT->server->str('REMOTE_ADDR');
             if ($INPUT->server->str('REMOTE_USER')) {
                 $data['userinfo']['user'] = $INPUT->server->str('REMOTE_USER');
@@ -776,58 +770,32 @@ function checkwordblock($text = '')
 }
 
 /**
- * Return the IP of the client
+ * Return the IP of the client.
  *
- * Honours X-Forwarded-For and X-Real-IP Proxy Headers
+ * The IP is sourced from, in order of preference:
  *
- * It returns a comma separated list of IPs if the above mentioned
- * headers are set. If the single parameter is set, it tries to return
- * a routable public address, prefering the ones suplied in the X
- * headers
+ *   - The X-Real-IP header if $conf[realip] is true.
+ *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
+ *   - The TCP/IP connection remote address.
+ *   - 0.0.0.0 if all else fails.
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * The 'realip' config value should only be set to true if the X-Real-IP header
+ * is being added by the web server, otherwise it may be spoofed by the client.
  *
- * @param  boolean $single If set only a single IP is returned
- * @return string
+ * The 'trustedproxies' setting must not allow any IP, otherwise the X-Forwarded-For
+ * may be spoofed by the client.
+ *
+ * @param bool $single If set only a single IP is returned.
+ *
+ * @return string Returns an IP address if 'single' is true, or a comma-separated list
+ *                of IP addresses otherwise.
+ * @author Zebra North <mrzebra@mrzebra.co.uk>
+ *
  */
 function clientIP($single = false)
 {
-    /* @var Input $INPUT */
-    global $INPUT, $conf;
-
-    $ip   = [];
-    $ip[] = $INPUT->server->str('REMOTE_ADDR');
-    if ($INPUT->server->str('HTTP_X_FORWARDED_FOR')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_FORWARDED_FOR'))));
-    }
-    if ($INPUT->server->str('HTTP_X_REAL_IP')) {
-        $ip = array_merge($ip, explode(',', str_replace(' ', '', $INPUT->server->str('HTTP_X_REAL_IP'))));
-    }
-
-    // remove any non-IP stuff
-    $cnt   = count($ip);
-    for ($i = 0; $i < $cnt; $i++) {
-        if (filter_var($ip[$i], FILTER_VALIDATE_IP) === false) {
-            unset($ip[$i]);
-        }
-    }
-    $ip = array_values(array_unique($ip));
-    if ($ip === [] || !$ip[0]) $ip[0] = '0.0.0.0'; // for some strange reason we don't have a IP
-
-    if (!$single) return implode(',', $ip);
-
-    // skip trusted local addresses
-    foreach ($ip as $i) {
-        if (!empty($conf['trustedproxy']) && preg_match('/' . $conf['trustedproxy'] . '/', $i)) {
-            continue;
-        } else {
-            return $i;
-        }
-    }
-
-    // still here? just use the last address
-    // this case all ips in the list are trusted
-    return $ip[count($ip) - 1];
+    // Return the first IP in single mode, or all the IPs.
+    return $single ? Ip::clientIp() : implode(',', Ip::clientIps());
 }
 
 /**
@@ -886,10 +854,10 @@ function link_isinterwiki($link)
  *
  * If $conf['dnslookups'] is disabled it simply returns the input string
  *
+ * @param string $ips comma separated list of IP addresses
+ * @return string a comma separated list of hostnames
  * @author Glen Harris <astfgl@iamnota.org>
  *
- * @param  string $ips comma separated list of IP addresses
- * @return string a comma separated list of hostnames
  */
 function gethostsbyaddrs($ips)
 {
@@ -897,7 +865,7 @@ function gethostsbyaddrs($ips)
     if (!$conf['dnslookups']) return $ips;
 
     $hosts = [];
-    $ips   = explode(',', $ips);
+    $ips = explode(',', $ips);
 
     if (is_array($ips)) {
         foreach ($ips as $ip) {
@@ -914,10 +882,10 @@ function gethostsbyaddrs($ips)
  *
  * removes stale lockfiles
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $id page id
  * @return bool page is locked?
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function checklock($id)
 {
@@ -948,9 +916,9 @@ function checklock($id)
 /**
  * Lock a page for editing
  *
+ * @param string $id page id to lock
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $id page id to lock
  */
 function lock($id)
 {
@@ -973,10 +941,10 @@ function lock($id)
 /**
  * Unlock a page if it was locked by the user
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $id page id to unlock
  * @return bool true if a lock was removed
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function unlock($id)
 {
@@ -999,11 +967,11 @@ function unlock($id)
  *
  * also makes sure the given text is valid UTF-8
  *
+ * @param string $text
+ * @return string
  * @see    formText() for 2crlf conversion
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $text
- * @return string
  */
 function cleanText($text)
 {
@@ -1012,7 +980,7 @@ function cleanText($text)
     // if the text is not valid UTF-8 we simply assume latin1
     // this won't break any worse than it breaks with the wrong encoding
     // but might actually fix the problem in many cases
-    if (!Clean::isUtf8($text)) $text = utf8_encode($text);
+    if (!Clean::isUtf8($text)) $text = Conversion::fromLatin1($text);
 
     return $text;
 }
@@ -1022,11 +990,11 @@ function cleanText($text)
  * It also converts line endings to Windows format which is
  * pseudo standard for webforms.
  *
+ * @param string $text
+ * @return string
  * @see    cleanText() for 2unix conversion
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $text
- * @return string
  */
 function formText($text)
 {
@@ -1037,11 +1005,11 @@ function formText($text)
 /**
  * Returns the specified local text in raw format
  *
+ * @param string $id page id
+ * @param string $ext extension of file being read, default 'txt'
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $id   page id
- * @param string $ext  extension of file being read, default 'txt'
- * @return string
  */
 function rawLocale($id, $ext = 'txt')
 {
@@ -1051,11 +1019,11 @@ function rawLocale($id, $ext = 'txt')
 /**
  * Returns the raw WikiText
  *
+ * @param string $id page id
+ * @param string|int $rev timestamp when a revision of wikitext is desired
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $id   page id
- * @param string|int $rev  timestamp when a revision of wikitext is desired
- * @return string
  */
 function rawWiki($id, $rev = '')
 {
@@ -1066,10 +1034,10 @@ function rawWiki($id, $rev = '')
  * Returns the pagetemplate contents for the ID's namespace
  *
  * @triggers COMMON_PAGETPL_LOAD
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $id the id of the page to be created
  * @return string parsed pagetemplate content
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function pageTemplate($id)
 {
@@ -1079,9 +1047,9 @@ function pageTemplate($id)
 
     // prepare initial event data
     $data = [
-        'id'        => $id, // the id of the page to be created
-        'tpl'       => '', // the text used as template
-        'tplfile'   => '', // the file above text was/should be loaded from
+        'id' => $id, // the id of the page to be created
+        'tpl' => '', // the text used as template
+        'tplfile' => '', // the file above text was/should be loaded from
         'doreplace' => true,
     ];
 
@@ -1121,18 +1089,18 @@ function pageTemplate($id)
  * Performs common page template replacements
  * This works on data from COMMON_PAGETPL_LOAD
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param array $data array with event data
  * @return string
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function parsePageTemplate(&$data)
 {
     /**
-     * @var string $id        the id of the page to be created
-     * @var string $tpl       the text used as template
-     * @var string $tplfile   the file above text was/should be loaded from
-     * @var bool   $doreplace should wildcard replacements be done on the text?
+     * @var string $id the id of the page to be created
+     * @var string $tpl the text used as template
+     * @var string $tplfile the file above text was/should be loaded from
+     * @var bool $doreplace should wildcard replacements be done on the text?
      */
     extract($data);
 
@@ -1205,12 +1173,12 @@ function parsePageTemplate(&$data)
  * UTF-8 awareness is needed.
  * The returned order is prefix, section and suffix.
  *
+ * @param string $range in form "from-to"
+ * @param string $id page id
+ * @param string $rev optional, the revision timestamp
+ * @return string[] with three slices
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param string $range in form "from-to"
- * @param string $id    page id
- * @param string $rev   optional, the revision timestamp
- * @return string[] with three slices
  */
 function rawWikiSlices($range, $id, $rev = '')
 {
@@ -1220,7 +1188,7 @@ function rawWikiSlices($range, $id, $rev = '')
     [$from, $to] = sexplode('-', $range, 2);
     // Make range zero-based, use defaults if marker is missing
     $from = $from ? $from - 1 : (0);
-    $to   = $to ? $to - 1 : (strlen($text));
+    $to = $to ? $to - 1 : (strlen($text));
 
     $slices = [];
     $slices[0] = substr($text, 0, $from);
@@ -1236,13 +1204,13 @@ function rawWikiSlices($range, $id, $rev = '')
  * When the pretty parameter is set to true it adds additional empty
  * lines between sections if needed (used on saving).
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $pre   prefix
- * @param string $text  text in the middle
- * @param string $suf   suffix
+ * @param string $pre prefix
+ * @param string $text text in the middle
+ * @param string $suf suffix
  * @param bool $pretty add additional empty lines between sections
  * @return string
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function con($pre, $text, $suf, $pretty = false)
 {
@@ -1270,9 +1238,9 @@ function con($pre, $text, $suf, $pretty = false)
  * attic copy and add a proper changelog line.
  *
  * This check is only executed when the page is about to be saved again from the
- * wiki, triggered in @see saveWikiText()
+ * wiki, triggered in @param string $id the page ID
+ * @see saveWikiText()
  *
- * @param string $id the page ID
  * @deprecated 2021-11-28
  */
 function detectExternalEdit($id)
@@ -1285,13 +1253,13 @@ function detectExternalEdit($id)
  * Saves a wikitext by calling io_writeWikiPage.
  * Also directs changelog and attic updates.
  *
+ * @param string $id page id
+ * @param string $text wikitext being saved
+ * @param string $summary summary of text update
+ * @param bool $minor mark this saved version as minor update
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Ben Coburn <btcoburn@silicodon.net>
  *
- * @param string $id       page id
- * @param string $text     wikitext being saved
- * @param string $summary  summary of text update
- * @param bool   $minor    mark this saved version as minor update
  */
 function saveWikiText($id, $text, $summary, $minor = false)
 {
@@ -1318,10 +1286,10 @@ function saveWikiText($id, $text, $summary, $minor = false)
 /**
  * moves the current version to the attic and returns its revision date
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $id page id
  * @return int|string revision timestamp
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  * @deprecated 2021-11-28
  */
 function saveOldRevision($id)
@@ -1333,13 +1301,13 @@ function saveOldRevision($id)
 /**
  * Sends a notify mail on page change or registration
  *
- * @param string     $id       The changed page
- * @param string     $who      Who to notify (admin|subscribers|register)
- * @param int|string $rev      Old page revision
- * @param string     $summary  What changed
- * @param boolean    $minor    Is this a minor edit?
- * @param string[]   $replace  Additional string substitutions, @KEY@ to be replaced by value
- * @param int|string $current_rev  New page revision
+ * @param string $id The changed page
+ * @param string $who Who to notify (admin|subscribers|register)
+ * @param int|string $rev Old page revision
+ * @param string $summary What changed
+ * @param boolean $minor Is this a minor edit?
+ * @param string[] $replace Additional string substitutions, @KEY@ to be replaced by value
+ * @param int|string $current_rev New page revision
  * @return bool
  *
  * @author Andreas Gohr <andi@splitbrain.org>
@@ -1354,7 +1322,7 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
     if ($who == 'admin') {
         if (empty($conf['notify'])) return false; //notify enabled?
         $tpl = 'mailtext';
-        $to  = $conf['notify'];
+        $to = $conf['notify'];
     } elseif ($who == 'subscribers') {
         if (!actionOK('subscribe')) return false; //subscribers enabled?
         if ($conf['useacl'] && $INPUT->server->str('REMOTE_USER') && $minor) return false; //skip minors
@@ -1379,10 +1347,10 @@ function notify($id, $who, $rev = '', $summary = '', $minor = false, $replace = 
 /**
  * extracts the query from a search engine referrer
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * @return array|string
  * @author Todd Augsburger <todd@rollerorgans.com>
  *
- * @return array|string
+ * @author Andreas Gohr <andi@splitbrain.org>
  */
 function getGoogleQuery()
 {
@@ -1434,7 +1402,7 @@ function filesize_h($size, $dec = 1)
 {
     $sizes = ['B', 'KB', 'MB', 'GB'];
     $count = count($sizes);
-    $i     = 0;
+    $i = 0;
 
     while ($size >= 1024 && ($i < $count - 1)) {
         $size /= 1024;
@@ -1447,10 +1415,10 @@ function filesize_h($size, $dec = 1)
 /**
  * Return the given timestamp as human readable, fuzzy age
  *
- * @author Andreas Gohr <gohr@cosmocode.de>
- *
  * @param int $dt timestamp
  * @return string
+ * @author Andreas Gohr <gohr@cosmocode.de>
+ *
  */
 function datetime_h($dt)
 {
@@ -1484,19 +1452,19 @@ function datetime_h($dt)
  * The format default to $conf['dformat']. It is passed to
  * strftime - %f can be used to get the value from datetime_h()
  *
- * @see datetime_h
+ * @param int|null $dt timestamp when given, null will take current timestamp
+ * @param string $format empty default to $conf['dformat'], or provide format as recognized by strftime()
+ * @return string
  * @author Andreas Gohr <gohr@cosmocode.de>
  *
- * @param int|null $dt      timestamp when given, null will take current timestamp
- * @param string   $format  empty default to $conf['dformat'], or provide format as recognized by strftime()
- * @return string
+ * @see datetime_h
  */
 function dformat($dt = null, $format = '')
 {
     global $conf;
 
     if (is_null($dt)) $dt = time();
-    $dt = (int) $dt;
+    $dt = (int)$dt;
     if (!$format) $format = $conf['dformat'];
 
     $format = str_replace('%f', datetime_h($dt), $format);
@@ -1506,17 +1474,17 @@ function dformat($dt = null, $format = '')
 /**
  * Formats a timestamp as ISO 8601 date
  *
+ * @param int $int_date current date in UNIX timestamp
+ * @return string
  * @author <ungu at terong dot com>
  * @link http://php.net/manual/en/function.date.php#54072
  *
- * @param int $int_date current date in UNIX timestamp
- * @return string
  */
 function date_iso8601($int_date)
 {
-    $date_mod     = date('Y-m-d\TH:i:s', $int_date);
+    $date_mod = date('Y-m-d\TH:i:s', $int_date);
     $pre_timezone = date('O', $int_date);
-    $time_zone    = substr($pre_timezone, 0, 3) . ":" . substr($pre_timezone, 3, 2);
+    $time_zone = substr($pre_timezone, 0, 3) . ":" . substr($pre_timezone, 3, 2);
     $date_mod .= $time_zone;
     return $date_mod;
 }
@@ -1524,11 +1492,11 @@ function date_iso8601($int_date)
 /**
  * return an obfuscated email address in line with $conf['mailguard'] setting
  *
+ * @param string $email email address
+ * @return string
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Christopher Smith <chris@jalakai.co.uk>
  *
- * @param string $email email address
- * @return string
  */
 function obfuscate($email)
 {
@@ -1551,11 +1519,11 @@ function obfuscate($email)
 /**
  * Removes quoting backslashes
  *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
  * @param string $string
  * @param string $char backslashed character
  * @return string
+ * @author Andreas Gohr <andi@splitbrain.org>
+ *
  */
 function unslash($string, $char = "'")
 {
@@ -1577,16 +1545,16 @@ function php_to_byte($value)
 {
     switch (strtoupper(substr($value, -1))) {
         case 'G':
-            $ret = (int) substr($value, 0, -1) * 1024 * 1024 * 1024;
+            $ret = (int)substr($value, 0, -1) * 1024 * 1024 * 1024;
             break;
         case 'M':
-            $ret = (int) substr($value, 0, -1) * 1024 * 1024;
+            $ret = (int)substr($value, 0, -1) * 1024 * 1024;
             break;
         case 'K':
-            $ret = (int) substr($value, 0, -1) * 1024;
+            $ret = (int)substr($value, 0, -1) * 1024;
             break;
         default:
-            $ret = (int) $value;
+            $ret = (int)$value;
             break;
     }
     return $ret;
@@ -1611,11 +1579,11 @@ function preg_quote_cb($string)
  * in the middle to shorten but only if at least $min chars are
  * left to display it. Otherwise it will be left off.
  *
- * @param string $keep   the part to keep
- * @param string $short  the part to shorten
- * @param int    $max    maximum chars you want for the whole string
- * @param int    $min    minimum number of chars to have left for middle shortening
- * @param string $char   the shortening character to use
+ * @param string $keep the part to keep
+ * @param string $short the part to shorten
+ * @param int $max maximum chars you want for the whole string
+ * @param int $min minimum number of chars to have left for middle shortening
+ * @param string $char the shortening character to use
  * @return string
  */
 function shorten($keep, $short, $max, $min = 9, $char = '…')
@@ -1728,7 +1696,7 @@ function userlink($username = null, $textonly = false)
                         if (is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
                         }
-                        if (empty($xhtml_renderer->interwiki)) {
+                        if ($xhtml_renderer->interwiki === []) {
                             $xhtml_renderer->interwiki = getInterwiki();
                         }
                         $shortcut = 'user';
@@ -1772,10 +1740,10 @@ function userlink($username = null, $textonly = false)
  * Returns the path to a image file for the currently chosen license.
  * When no image exists, returns an empty string
  *
+ * @param string $type - type of image 'badge' or 'button'
+ * @return string
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param  string $type - type of image 'badge' or 'button'
- * @return string
  */
 function license_img($type)
 {
@@ -1783,7 +1751,7 @@ function license_img($type)
     global $conf;
     if (!$conf['license']) return '';
     if (!is_array($license[$conf['license']])) return '';
-    $try   = [];
+    $try = [];
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.png';
     $try[] = 'lib/images/license/' . $type . '/' . $conf['license'] . '.gif';
     if (str_starts_with($conf['license'], 'cc-')) {
@@ -1801,12 +1769,12 @@ function license_img($type)
  * If the memory_get_usage() function is not available the
  * function just assumes $bytes of already allocated memory
  *
- * @author Filip Oscadal <webmaster@illusionsoftworks.cz>
+ * @param int $mem Size of memory you want to allocate in bytes
+ * @param int $bytes already allocated memory (see above)
+ * @return bool
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param int  $mem    Size of memory you want to allocate in bytes
- * @param int  $bytes  already allocated memory (see above)
- * @return bool
+ * @author Filip Oscadal <webmaster@illusionsoftworks.cz>
  */
 function is_mem_available($mem, $bytes = 1_048_576)
 {
@@ -1891,15 +1859,15 @@ function send_redirect($url)
  * $valid_values. If not, the function returns a default value or, if no
  * default is specified, throws an exception.
  *
- * @param string $param        The name of the parameter
- * @param array  $valid_values A set of valid values; Optionally a default may
+ * @param string $param The name of the parameter
+ * @param array $valid_values A set of valid values; Optionally a default may
  *                             be marked by the key “default”.
- * @param array  $array        The array containing the value (typically $_POST
+ * @param array $array The array containing the value (typically $_POST
  *                             or $_GET)
- * @param string $exc          The text of the raised exception
+ * @param string $exc The text of the raised exception
  *
- * @throws Exception
  * @return mixed
+ * @throws Exception
  * @author Adrian Lang <lang@cosmocode.de>
  */
 function valid_input_set($param, $valid_values, $array, $exc = '')
@@ -1917,8 +1885,8 @@ function valid_input_set($param, $valid_values, $array, $exc = '')
  * Read a preference from the DokuWiki cookie
  * (remembering both keys & values are urlencoded)
  *
- * @param string $pref     preference key
- * @param mixed  $default  value returned when preference not found
+ * @param string $pref preference key
+ * @param mixed $default value returned when preference not found
  * @return string preference value
  */
 function get_doku_pref($pref, $default)
@@ -1926,7 +1894,7 @@ function get_doku_pref($pref, $default)
     $enc_pref = urlencode($pref);
     if (isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt   = count($parts);
+        $cnt = count($parts);
 
         // due to #2721 there might be duplicate entries,
         // so we read from the end
@@ -1944,8 +1912,8 @@ function get_doku_pref($pref, $default)
  * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
  * Remove it by setting $val to false
  *
- * @param string $pref  preference key
- * @param string $val   preference value
+ * @param string $pref preference key
+ * @param string $val preference value
  */
 function set_doku_pref($pref, $val)
 {
@@ -1955,7 +1923,7 @@ function set_doku_pref($pref, $val)
 
     if ($orig !== false && ($orig !== $val)) {
         $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt   = count($parts);
+        $cnt = count($parts);
         // urlencode $pref for the comparison
         $enc_pref = rawurlencode($pref);
         $seen = false;

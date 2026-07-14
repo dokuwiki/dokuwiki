@@ -7,12 +7,12 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Debug\DebugHelper;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
-use dokuwiki\Utf8\PhpString;
-use dokuwiki\Debug\DebugHelper;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\Utf8\PhpString;
 
 if (!defined('DOKU_MESSAGEURL')) {
     if (in_array('ssl', stream_get_transports())) {
@@ -154,8 +154,8 @@ function getVersionData()
  * If no version can be determined "snapshot? update version XX" is returned.
  * Where XX represents the update version number set in doku.php.
  *
- * @author Anika Henke <anika@selfthinker.org>
  * @return string The version string e.g. "Release 2023-04-04a"
+ * @author Anika Henke <anika@selfthinker.org>
  */
 function getVersion()
 {
@@ -163,6 +163,63 @@ function getVersion()
     $sha = empty($version['sha']) ? '' : ' (' . $version['sha'] . ')';
     return $version['type'] . ' ' . $version['date'] . $sha;
 }
+
+/**
+ * Get some data about the environment this wiki is running in
+ *
+ * @return array
+ */
+function getRuntimeVersions()
+{
+    $data = [];
+    $data['php'] = 'PHP ' . PHP_VERSION;
+
+    $osRelease = getOsRelease();
+    if (isset($osRelease['PRETTY_NAME'])) {
+        $data['dist'] = $osRelease['PRETTY_NAME'];
+    }
+
+    $data['os'] = php_uname('s') . ' ' . php_uname('r');
+    $data['sapi'] = PHP_SAPI;
+
+    if (getenv('KUBERNETES_SERVICE_HOST')) {
+        $data['container'] = 'Kubernetes';
+    } elseif (@file_exists('/.dockerenv')) {
+        $data['container'] = 'Docker';
+    }
+
+    return $data;
+}
+
+/**
+ * Get informational data about the linux distribution this wiki is running on
+ *
+ * @see https://gist.github.com/natefoo/814c5bf936922dad97ff
+ * @return array an os-release array, might be empty
+ */
+function getOsRelease()
+{
+    $reader = fn($file) => @parse_ini_string(preg_replace('/#.*$/m', '', file_get_contents($file)));
+
+    $osRelease = [];
+    if (@file_exists('/etc/os-release')) {
+        // pretty much any common Linux distribution has this
+        $osRelease = $reader('/etc/os-release');
+    } elseif (@file_exists('/etc/synoinfo.conf') && @file_exists('/etc/VERSION')) {
+        // Synology DSM has its own way
+        $synoInfo = $reader('/etc/synoinfo.conf');
+        $synoVersion = $reader('/etc/VERSION');
+        $osRelease['NAME'] = 'Synology DSM';
+        $osRelease['ID'] = 'synology';
+        $osRelease['ID_LIKE'] = 'linux';
+        $osRelease['VERSION_ID'] = $synoVersion['productversion'];
+        $osRelease['VERSION'] = $synoVersion['productversion'];
+        $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'];
+        $osRelease['PRETTY_NAME'] = implode(' ', [$osRelease['NAME'], $osRelease['VERSION'], $osRelease['SYNO_MODEL']]);
+    }
+    return $osRelease;
+}
+
 
 /**
  * Run a few sanity checks

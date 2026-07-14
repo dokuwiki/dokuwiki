@@ -150,7 +150,7 @@ class Editor extends Ui
         // start editor html output
         if ($wr) {
             // sets changed to true when previewed
-            echo '<script>/*<![CDATA[*/textChanged = ' . ($mod ? 'true' : 'false') . '/*!]]>*/</script>';
+            tpl_inlineScript('textChanged = ' . ($mod ? 'true' : 'false') . ';');
         }
 
         // print intro locale text (edit, rditrev, or read.txt)

@@ -73,12 +73,11 @@ $lang['msg_plugin_install_success'] = 'Το πρόσθετο %s εγκαταστ
 $lang['msg_plugin_update_success'] = 'Το πρόσθετο %s ενημερώθηκε με επιτυχία ';
 $lang['msg_upload_failed']     = 'Το ανέβασμα του αρχείου απέτυχε';
 
-$lang['missing_dependency']    = '<strong>Εξάρτηση που λείπει ή απενεργοποιήθηκε:</strong> %s';
-$lang['security_issue']        = '<strong>Θέμα ασφάλειας:</strong> %s	';
-$lang['security_warning']      = '<strong>Προειδοποίηση Ασφάλειας:</strong> %s	';
-$lang['update_available']      = '<strong>Ενημέρωση:</strong> Η νέα έκδοση %s είναι διαθέσιμη.';
-$lang['wrong_folder']          = '<strong>Λανθασμένη εγκατάσταση του πρόσθετου:</strong> Μετονομάστε το φάκελο "%s" σε "%s".';
-$lang['url_change']            = '<strong>To URL άλλαξε:</strong> Το URL άλλαξε από το προηγούμενο κατέβασμα. Ελέγξετε την ορθότητα του νέου URL πριν την ενημέρωση του πρόσθετου.<br />Καινούργιο: %s<br />Παλιό: %s';
+$lang['missing_dependency']    = 'Εξάρτηση που λείπει ή απενεργοποιήθηκε: %s';
+$lang['security_issue']        = 'Θέμα ασφάλειας: %s	';
+$lang['security_warning']      = 'Προειδοποίηση Ασφάλειας: %s	';
+$lang['wrong_folder']          = 'Λανθασμένη εγκατάσταση του πρόσθετου: Μετονομάστε το φάκελο "%s" σε "%s".';
+$lang['url_change']            = "To URL άλλαξε: Το URL άλλαξε από το προηγούμενο κατέβασμα. Ελέγξετε την ορθότητα του νέου URL πριν την ενημέρωση του πρόσθετου.\nΚαινούργιο: %s\nΠαλιό: %s";
 
 $lang['error_badurl']          = 'Τα URLs πρέπει να αρχίζουν με  http ή https';
 $lang['error_dircreate']       = 'Σφάλμα κατά τη δημιουργία προσωρινού φακέλου για το κατέβασμα του αρχείου';

@@ -200,7 +200,6 @@ class Client
     /**
      * Sets the timeout for data transfer
      * @param int $timeout_io
-     * @return $this
      */
     public function setTimeoutIo($timeout_io)
     {

@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
  * @author Pierre Henriot <pierre.henriot@gmail.com>
  * @author PaliPalo <palipalo@hotmail.fr>
  * @author Bruno Veilleux <bruno.vey@gmail.com>
@@ -27,6 +27,7 @@ $lang['groupscope']            = 'Limiter la portée de recherche de groupes';
 $lang['userkey']               = 'Attribut indiquant le nom d\'utilisateur. Doit être en accord avec le filtre d\'utilisateur.';
 $lang['groupkey']              = 'Affiliation aux groupes à partir de n\'importe quel attribut utilisateur (au lieu des groupes AD standards), p. ex. groupes par département ou numéro de téléphone';
 $lang['modPass']               = 'Peut-on changer le mot de passe LDAP depuis DokiWiki ?';
+$lang['modPassPlain']          = 'Envoyer les mises à jour de mot de passe en clair au serveur LDAP au lieu de transmettre l\'empreinte salée calculée avec l\'algorithme configuré ?';
 $lang['debug']                 = 'Afficher des informations de débogage supplémentaires pour les erreurs';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

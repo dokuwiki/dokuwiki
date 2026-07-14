@@ -1,0 +1,104 @@
+name: 🐛 Report a bug
+description: Use this to report a bug in DokuWiki
+labels: [ "Bug" ]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        ### ✋ **This is bug tracker, not a support forum**
+
+        If you have questions or need help, [**get in touch at the forum**](https://forum.dokuwiki.org/).
+
+
+        ---
+
+        **Thank you for wanting to report a bug in DokuWiki!**
+
+
+        If this is the first time you are doing this, please take a few moments to read
+        through our wiki page on [Reporting DokuWiki Bugs](https://www.dokuwiki.org/bugs).
+
+
+        You are about to report a bug in **DokuWiki**. Bugs in plugins should be reported
+        at their respective places, usually the plugin's repository.
+  - type: textarea
+    attributes:
+      label: The problem
+      description: >-
+        Describe the issue you are experiencing here. Basically tell us
+
+          * What you were trying to do
+          * What you expected to happen
+          * What actually happened
+
+        Provide a clear and concise description of what the problem is and include as many
+        details as possible. Add screenshots if you think it would help to explain the problem.
+
+
+        If you already tried to debug the problem, please also describe what you found out.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+  - type: input
+    attributes:
+      label: Version of DokuWiki
+      description: Can be found in the admin screen or in the `VERSION` file.
+      placeholder: 2024-02-14a "Kaos"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: PHP Version
+      description: The version of PHP you are using to run DokuWiki
+      placeholder: "8.3"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Webserver and version of webserver
+      description: If applicable, always include if unsure
+      placeholder: Apache 2.4 on Debian Linux
+  - type: input
+    attributes:
+      label: Browser and version of browser, operating system running browser
+      description: If applicable, always include if unsure
+      placeholder: "Chrome 221 on Windows 11"
+  - type: textarea
+    attributes:
+      label: Additional environment information
+      description: >-
+        If you think it might be relevant, please provide any additional information about your environment here.
+        For example:
+
+          * Provider-, server- and network-setup like proxies, firewalls, Single-Sign-On environments etc.
+          * Any installed plugins or templates that might be relevant to the problem
+          * Your configuration settings related to the problem
+          * Any custom changes you made to the DokuWiki core or plugins
+  - type: markdown
+    attributes:
+      value: |
+        ## Logs and other files needed for analysis
+  - type: markdown
+    attributes:
+      value: >-
+        Please be sure to include any technical information that might be helpful in diagnosing the problem. This includes:
+
+          * Your browser's JavaScript console, if you are reporting a problem with the
+            user interface.
+          * Related entries in DokuWiki's log files. Especially when the error message states that more info has been
+            written to the log file.
+          * Related entries in your webserver's error log files.
+          * If possible, screenshots or videos showing the problem, especially if you
+            are reporting a problem with the user interface!
+
+        Again, refer to [Reporting DokuWiki Bugs](https://www.dokuwiki.org/bugs) on how to obtain these infos.
+  - type: textarea
+    attributes:
+      label: Relevant logs and/or error messages
+      description: >-
+        Please copy and paste any relevant logs and/or error messages here. This will automatically formatted into code, so no need for backticks.
+      render: text
+

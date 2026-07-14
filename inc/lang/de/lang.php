@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Niclas Tittl <niclas.tittl@msn.com>
+ * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Xrizzy <xrizzy@web.de>
  * @author Kurt Singer <webmaster@kurt-singer.com>
  * @author Robert Riebisch <rr@bttr-software.de>
@@ -56,7 +58,7 @@ $lang['singlequoteopening']    = '‚';
 $lang['singlequoteclosing']    = '‘';
 $lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Diese Seite bearbeiten';
-$lang['btn_source']            = 'Zeige Quelltext';
+$lang['btn_source']            = 'Quelltext anzeigen';
 $lang['btn_show']              = 'Seite anzeigen';
 $lang['btn_create']            = 'Seite anlegen';
 $lang['btn_search']            = 'Suche';
@@ -184,6 +186,9 @@ $lang['profdeleted']           = 'Ihr Benutzerprofil wurde im Wiki gelöscht.';
 $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/> Diese Aktion lässt sich nicht rückgängig machen,';
 $lang['profconfdeletemissing'] = 'Bestätigung in Kontrollkästchen fehlt';
 $lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
+$lang['proftokenlegend']       = 'Zugangs-Token';
+$lang['proftokengenerate']     = 'Rücksetz-Token';
+$lang['proftokeninfo']         = 'Das Zugangs-Token kann von Dritten benutzt werden, um Aktionen in Deinem Namen durchzuführen. Wird das Token zurückgesetzt, wird das alte ungültig und es wird aus allen Anwendungen, die das alte Token verwendet haben, ausgeloggt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordern Sie ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
 $lang['resendpwd']             = 'Neues Passwort setzen für';

@@ -40,7 +40,7 @@ class UserProfile extends Ui
         echo $this->updateProfileForm($userinfo)->toHTML('UpdateProfile');
         echo $this->tokenForm($userinfo['user'])->toHTML();
         if ($auth->canDo('delUser') && actionOK('profile_delete')) {
-            $this->deleteProfileForm()->toHTML('ProfileDelete');
+            echo $this->deleteProfileForm()->toHTML('ProfileDelete');
         }
 
         echo '</div>';

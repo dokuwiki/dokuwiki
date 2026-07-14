@@ -3,6 +3,8 @@
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
 use dokuwiki\Extension\EventHandler;
+use dokuwiki\Logger;
+
 /**
  * Helper class to provide basic functionality for tests
  *
@@ -265,5 +267,18 @@ abstract class DokuWikiTest extends PHPUnit\Framework\TestCase {
         $property = $class->getProperty($prop);
         $property->setAccessible(true);
         $property->setValue($obj, $value);
+    }
+
+    /**
+     * Expect the next log message to contain $message
+     *
+     * @param string $facility
+     * @param string $message
+     * @return void
+     */
+    protected function expectLogMessage(string $message, string $facility = Logger::LOG_ERROR): void
+    {
+        $logger = Logger::getInstance($facility);
+        $logger->expect($message);
     }
 }

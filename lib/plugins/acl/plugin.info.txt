@@ -4,4 +4,4 @@ email  andi@splitbrain.org
 date   2015-07-25
 name   ACL Manager
 desc   Manage Page Access Control Lists
-url    http://dokuwiki.org/plugin:acl
+url    https://www.dokuwiki.org/plugin:acl

@@ -51,18 +51,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "7884d22244c6d2de5ac7ffd919ce4add02b36e66"
+                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/7884d22244c6d2de5ac7ffd919ce4add02b36e66",
-                "reference": "7884d22244c6d2de5ac7ffd919ce4add02b36e66",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/17ff9b22ac6695efa6ab6fbcf0607263f080468c",
+                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c",
                 "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
             },
-            "time": "2023-02-19T12:05:59+00:00",
+            "time": "2024-03-17T14:59:35+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "source",
@@ -96,17 +96,17 @@
         },
         {
             "name": "kissifrot/php-ixr",
-            "version": "1.8.4",
-            "version_normalized": "1.8.4.0",
+            "version": "1.8.5",
+            "version_normalized": "1.8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kissifrot/php-ixr.git",
-                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4"
+                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
-                "reference": "45f6e4d46c1f9bb49e41a1787b6bdbcc9ab788e4",
+                "url": "https://api.github.com/repos/kissifrot/php-ixr/zipball/17c5bc99f42fa086620a0ad2a593366ff6798753",
+                "reference": "17c5bc99f42fa086620a0ad2a593366ff6798753",
                 "shasum": ""
             },
             "require": {
@@ -116,7 +116,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^8.0"
             },
-            "time": "2023-04-15T08:50:43+00:00",
+            "time": "2025-04-22T07:42:43+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -145,23 +145,23 @@
             ],
             "support": {
                 "issues": "https://github.com/kissifrot/php-ixr/issues",
-                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.4"
+                "source": "https://github.com/kissifrot/php-ixr/tree/1.8.5"
             },
             "install-path": "../kissifrot/php-ixr"
         },
         {
             "name": "openpsa/universalfeedcreator",
-            "version": "v1.8.6",
-            "version_normalized": "1.8.6.0",
+            "version": "v1.9.0",
+            "version_normalized": "1.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flack/UniversalFeedCreator.git",
-                "reference": "3abf36ef9d3a3b31a3c330caea7d5176f0396301"
+                "reference": "c55f908e867aa6dade0905b8aefb94fd9d8c1f9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/3abf36ef9d3a3b31a3c330caea7d5176f0396301",
-                "reference": "3abf36ef9d3a3b31a3c330caea7d5176f0396301",
+                "url": "https://api.github.com/repos/flack/UniversalFeedCreator/zipball/c55f908e867aa6dade0905b8aefb94fd9d8c1f9e",
+                "reference": "c55f908e867aa6dade0905b8aefb94fd9d8c1f9e",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.5.32 || ^9.5.10"
             },
-            "time": "2024-01-23T15:59:31+00:00",
+            "time": "2024-02-22T11:08:24+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -203,23 +203,23 @@
             ],
             "support": {
                 "issues": "https://github.com/flack/UniversalFeedCreator/issues",
-                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.8.6"
+                "source": "https://github.com/flack/UniversalFeedCreator/tree/v1.9.0"
             },
             "install-path": "../openpsa/universalfeedcreator"
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.6.3",
-            "version_normalized": "2.6.3.0",
+            "version": "v2.7.0",
+            "version_normalized": "2.7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "58c3f47f650c94ec05a151692652a868995d2938"
+                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/58c3f47f650c94ec05a151692652a868995d2938",
-                "reference": "58c3f47f650c94ec05a151692652a868995d2938",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/52a0d99e69f56b9ec27ace92ba56897fe6993105",
+                "reference": "52a0d99e69f56b9ec27ace92ba56897fe6993105",
                 "shasum": ""
             },
             "require": {
@@ -229,7 +229,7 @@
                 "phpunit/phpunit": "^6|^7|^8|^9",
                 "vimeo/psalm": "^1|^2|^3|^4"
             },
-            "time": "2022-06-14T06:56:20+00:00",
+            "time": "2024-05-08T12:18:48+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -331,22 +331,74 @@
             "install-path": "../paragonie/random_compat"
         },
         {
-            "name": "phpseclib/phpseclib",
-            "version": "3.0.35",
-            "version_normalized": "3.0.35.0",
+            "name": "php81_bc/strftime",
+            "version": "dev-fallback-intl",
+            "version_normalized": "dev-fallback-intl",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe"
+                "url": "https://github.com/alphp/strftime.git",
+                "reference": "dcd30543db16c9b4ba095f6bf32ac16f15eb9448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4b1827beabce71953ca479485c0ae9c51287f2fe",
-                "reference": "4b1827beabce71953ca479485c0ae9c51287f2fe",
+                "url": "https://api.github.com/repos/alphp/strftime/zipball/dcd30543db16c9b4ba095f6bf32ac16f15eb9448",
+                "reference": "dcd30543db16c9b4ba095f6bf32ac16f15eb9448",
                 "shasum": ""
             },
             "require": {
-                "paragonie/constant_time_encoding": "^1|^2",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "suggest": {
+                "ext-intl": "For proper locale aware output"
+            },
+            "time": "2025-05-20T20:04:36+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/php-8.1-strftime.php"
+                ],
+                "psr-4": {
+                    "PHP81_BC\\strftime\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fernando Herrero",
+                    "homepage": "https://github.com/alphp/strftime/graphs/contributors"
+                }
+            ],
+            "description": "Locale-formatted strftime using IntlDateFormatter (PHP 8.1 compatible)",
+            "support": {
+                "issues": "https://github.com/alphp/strftime/issues",
+                "source": "https://github.com/alphp/strftime"
+            },
+            "install-path": "../php81_bc/strftime"
+        },
+        {
+            "name": "phpseclib/phpseclib",
+            "version": "3.0.43",
+            "version_normalized": "3.0.43.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/709ec107af3cb2f385b9617be72af8cf62441d02",
+                "reference": "709ec107af3cb2f385b9617be72af8cf62441d02",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/constant_time_encoding": "^1|^2|^3",
                 "paragonie/random_compat": "^1.4|^2.0|^9.99.99",
                 "php": ">=5.6.1"
             },
@@ -360,7 +412,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2023-12-29T01:59:53+00:00",
+            "time": "2024-12-14T21:12:59+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -425,7 +477,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.35"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.43"
             },
             "funding": [
                 {
@@ -445,17 +497,17 @@
         },
         {
             "name": "simplepie/simplepie",
-            "version": "1.8.0",
-            "version_normalized": "1.8.0.0",
+            "version": "1.8.1",
+            "version_normalized": "1.8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/simplepie/simplepie.git",
-                "reference": "65b095d87bc00898d8fa7737bdbcda93a3fbcc55"
+                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/65b095d87bc00898d8fa7737bdbcda93a3fbcc55",
-                "reference": "65b095d87bc00898d8fa7737bdbcda93a3fbcc55",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
+                "reference": "a567b8ab9b6145a23e6a9ec2b6b74f56d52f7ad1",
                 "shasum": ""
             },
             "require": {
@@ -476,7 +528,7 @@
                 "ext-mbstring": "",
                 "mf2/mf2": "Microformat module that allows for parsing HTML for microformats"
             },
-            "time": "2023-01-20T08:37:35+00:00",
+            "time": "2024-11-22T16:33:20+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -518,37 +570,37 @@
             ],
             "support": {
                 "issues": "https://github.com/simplepie/simplepie/issues",
-                "source": "https://github.com/simplepie/simplepie/tree/1.8.0"
+                "source": "https://github.com/simplepie/simplepie/tree/1.8.1"
             },
             "install-path": "../simplepie/simplepie"
         },
         {
             "name": "splitbrain/lesserphp",
-            "version": "v0.10.0",
-            "version_normalized": "0.10.0.0",
+            "version": "v0.10.2",
+            "version_normalized": "0.10.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/lesserphp.git",
-                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505"
+                "reference": "6def0a3b497b23add902b9859386642551f9c435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/2e5d20c4ce9186a34554a137a4a1784fc5c29505",
-                "reference": "2e5d20c4ce9186a34554a137a4a1784fc5c29505",
+                "url": "https://api.github.com/repos/splitbrain/lesserphp/zipball/6def0a3b497b23add902b9859386642551f9c435",
+                "reference": "6def0a3b497b23add902b9859386642551f9c435",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5",
-                "rector/rector": "^0.19",
+                "phpunit/phpunit": "^9",
+                "rector/rector": "^1.2",
                 "squizlabs/php_codesniffer": "^3.8"
             },
             "suggest": {
                 "ext-fileinfo": "For mime type guessing of embedded files"
             },
-            "time": "2024-02-02T11:47:26+00:00",
+            "time": "2024-11-25T11:59:34+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -582,23 +634,23 @@
             "description": "lesserphp is a compiler for LESS written in PHP based on leafo's lessphp.",
             "support": {
                 "issues": "https://github.com/splitbrain/lesserphp/issues",
-                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.0"
+                "source": "https://github.com/splitbrain/lesserphp/tree/v0.10.2"
             },
             "install-path": "../splitbrain/lesserphp"
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.3.1",
-            "version_normalized": "1.3.1.0",
+            "version": "1.4.0",
+            "version_normalized": "1.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "d274e5190ba309777926348900cf9578d9e533c9"
+                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d274e5190ba309777926348900cf9578d9e533c9",
-                "reference": "d274e5190ba309777926348900cf9578d9e533c9",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/d9d4eaac12a6587727b8e539946dd06cac8b3f02",
+                "reference": "d9d4eaac12a6587727b8e539946dd06cac8b3f02",
                 "shasum": ""
             },
             "require": {
@@ -616,7 +668,7 @@
                 "ext-mbstring": "Can be used alternatively for handling filename encoding",
                 "ext-zlib": "For zlib compression"
             },
-            "time": "2022-03-23T09:21:55+00:00",
+            "time": "2024-12-09T14:08:44+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -645,23 +697,29 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-archive/issues",
-                "source": "https://github.com/splitbrain/php-archive/tree/1.3.1"
+                "source": "https://github.com/splitbrain/php-archive/tree/1.4.0"
             },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/splitbrain",
+                    "type": "github"
+                }
+            ],
             "install-path": "../splitbrain/php-archive"
         },
         {
             "name": "splitbrain/php-cli",
-            "version": "1.3.1",
-            "version_normalized": "1.3.1.0",
+            "version": "1.3.4",
+            "version_normalized": "1.3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-cli.git",
-                "reference": "844609ef16b8486691b7fd892d54478918f27fe8"
+                "reference": "4e669f38f660b0e9f76ed14dda7f12bff390f94f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/844609ef16b8486691b7fd892d54478918f27fe8",
-                "reference": "844609ef16b8486691b7fd892d54478918f27fe8",
+                "url": "https://api.github.com/repos/splitbrain/php-cli/zipball/4e669f38f660b0e9f76ed14dda7f12bff390f94f",
+                "reference": "4e669f38f660b0e9f76ed14dda7f12bff390f94f",
                 "shasum": ""
             },
             "require": {
@@ -673,7 +731,7 @@
             "suggest": {
                 "psr/log": "Allows you to make the CLI available as PSR-3 logger"
             },
-            "time": "2024-01-17T12:03:34+00:00",
+            "time": "2025-03-15T09:02:01+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -703,7 +761,7 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-cli/issues",
-                "source": "https://github.com/splitbrain/php-cli/tree/1.3.1"
+                "source": "https://github.com/splitbrain/php-cli/tree/1.3.4"
             },
             "install-path": "../splitbrain/php-cli"
         },
@@ -762,17 +820,17 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.0.6",
-            "version_normalized": "1.0.6.0",
+            "version": "1.0.7",
+            "version_normalized": "1.0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "274511fc654fa29cb7cfc039bed97a5ea786f1a0"
+                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/274511fc654fa29cb7cfc039bed97a5ea786f1a0",
-                "reference": "274511fc654fa29cb7cfc039bed97a5ea786f1a0",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/93cd2034628136b4fa322f7f1ac3d57293a6c08d",
+                "reference": "93cd2034628136b4fa322f7f1ac3d57293a6c08d",
                 "shasum": ""
             },
             "require": {
@@ -784,7 +842,7 @@
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2023-10-26T10:06:48+00:00",
+            "time": "2024-01-28T09:41:46+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -806,7 +864,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.0.6"
+                "source": "https://github.com/splitbrain/slika/tree/1.0.7"
             },
             "install-path": "../splitbrain/slika"
         }

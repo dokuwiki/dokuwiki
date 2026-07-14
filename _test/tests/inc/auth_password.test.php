@@ -24,7 +24,6 @@ class auth_password_test extends DokuWikiTest {
             array('kmd5', 'a579299436d7969791189acadd86fcb716'),
             array('djangomd5', 'md5$abcde$d0fdddeda8cd92725d2b54148ac09158'),
             array('djangosha1', 'sha1$abcde$c8e65a7f0acc9158843048a53dcc5a6bc4d17678'),
-
         );
 
         if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1) {
@@ -74,6 +73,16 @@ class auth_password_test extends DokuWikiTest {
         $this->assertTrue(auth_verifyPassword('foo' . $method, $hash));
     }
 
+    /**
+     * @dataProvider hashes
+     * @param $method
+     * @param $hash
+     */
+    function test_verifyUnusable($method, $hash) {
+        $hash = auth_cryptPassword(null, $method);
+        $this->assertFalse(auth_verifyPassword(null, $hash));
+    }
+
     function test_bcrypt_self() {
         $hash = auth_cryptPassword('foobcrypt', 'bcrypt');
         $this->assertTrue(auth_verifyPassword('foobcrypt', $hash));
@@ -81,6 +90,7 @@ class auth_password_test extends DokuWikiTest {
 
     function test_verifyPassword_fixedbcrypt() {
         $this->assertTrue(auth_verifyPassword('foobcrypt', '$2a$12$uTWercxbq4sjp2xAzv3we.ZOxk51m5V/Bv5bp2H27oVFJl5neFQoC'));
+        $this->assertTrue(auth_verifyPassword('lemmybcrypt12hash', '$2b$12$zMBuY6QAGXuT6elIbadavO1JTI6DfaGe1MpfBthG/nt6mkodwmKAi'));
     }
 
     function test_verifyPassword_nohash() {
@@ -143,4 +153,8 @@ class auth_password_test extends DokuWikiTest {
         }
     }
 
+    function test_verifyPassword_Woltlab()
+    {
+        $this->assertTrue(auth_verifyPassword('zQ9ZwsTvgufN', 'Bcrypt:$2y$12$ygz.4TeGn/NXEcXIE0pyge4lJyuSMqRdDPT5dW469lODb.HswSzjW'));
+    }
 }

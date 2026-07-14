@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author mod <modex@mail.ru>
  * @author Impeck <impeck@ya.ru>
+ * @author mod <modex@mail.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Igor Degraf <igordegraf@gmail.com>
@@ -19,9 +19,6 @@ $lang['tab_templates']         = 'Установленные шаблоны';
 $lang['tab_search']            = 'Поиск и установка';
 $lang['tab_install']           = 'Ручная установка';
 $lang['notimplemented']        = 'Эта возможность ещё не реализована';
-$lang['notinstalled']          = 'Это дополнение не установлено';
-$lang['alreadyenabled']        = 'Это дополнение уже включено';
-$lang['alreadydisabled']       = 'Это дополнение уже отключено';
 $lang['pluginlistsaveerror']   = 'Ошибка при сохранении списка плагинов';
 $lang['unknownauthor']         = 'Автор неизвестен';
 $lang['unknownversion']        = 'Версия неизвестна';
@@ -37,6 +34,8 @@ $lang['js']['display_viewoptions'] = 'Показать как:';
 $lang['js']['display_enabled'] = 'включён';
 $lang['js']['display_disabled'] = 'отключён';
 $lang['js']['display_updatable'] = 'обновление';
+$lang['js']['close']           = 'Нажмите для закрытия';
+$lang['js']['filter']          = 'Показать только обновляемые расширения';
 $lang['search_for']            = 'Поиск дополнения';
 $lang['search']                = 'Найти';
 $lang['extensionby']           = '<strong>%s</strong> %s';
@@ -75,25 +74,40 @@ $lang['msg_enabled']           = 'Плагин %s включён';
 $lang['msg_disabled']          = 'Плагин %s отключён';
 $lang['msg_delete_success']    = 'Дополнение %s удалено';
 $lang['msg_delete_failed']     = 'Не удалось удалить дополнение %s';
-$lang['msg_template_install_success'] = 'Шаблон %s успешно установлен';
-$lang['msg_template_update_success'] = 'Шаблон %s успешно обновлён';
-$lang['msg_plugin_install_success'] = 'Плагин %s успешно установлен';
-$lang['msg_plugin_update_success'] = 'Плагин %s успешно обновлён';
+$lang['msg_install_success']   = 'Расширение %s успешно установлено';
+$lang['msg_update_success']    = 'Расширение %s успешно обновлено';
 $lang['msg_upload_failed']     = 'Не удалось загрузить файл';
 $lang['msg_nooverwrite']       = 'Расширение %s уже существует, поэтому оно не перезаписано; для перезаписи отметьте опцию перезаписи';
-$lang['missing_dependency']    = '<strong>Отсутствует или отключена зависимость:</strong> %s';
-$lang['security_issue']        = '<strong>Проблема безопасности:</strong> %s';
-$lang['security_warning']      = '<strong>Предупреждение безопасности:</strong> %s';
-$lang['update_message']        = '<strong>Сообщение об обновлении:</strong> %s';
-$lang['update_available']      = '<strong>Обновление:</strong> доступна новая версия %s';
-$lang['wrong_folder']          = '<strong>Плагин установлен неправильно:</strong> переименуйте директорию плагина из %s в %s';
-$lang['url_change']            = '<strong>Ссылка изменилась:</strong> ссылка для загрузки изменилась с&nbsp;прошлого раза. Проверьте новую ссылку прежде, чем обновлять дополнение.<br />Новая: %s<br />Старая: %s';
+$lang['missing_dependency']    = 'Отсутствует или отключена зависимость: %s';
+$lang['found_conflict']        = 'Это расширение конфликтует со следующими установленными расширениями: %s';
+$lang['security_issue']        = 'Проблема безопасности: %s';
+$lang['security_warning']      = 'Предупреждение безопасности: %s';
+$lang['update_message']        = 'Сообщение об обновлении: %s';
+$lang['wrong_folder']          = 'Плагин установлен неправильно: переименуйте директорию плагина из %s в %s';
+$lang['url_change']            = 'Ссылка изменилась: ссылка для загрузки изменилась с прошлого раза. Проверьте новую ссылку прежде, чем обновлять дополнение.
+Новая: %s
+Старая: %s';
 $lang['error_badurl']          = 'Ссылка должна начинаться с&nbsp;http или https';
 $lang['error_dircreate']       = 'Не удалось создать временную директорию для загрузки';
 $lang['error_download']        = 'Не удалось загрузить файл: %s';
 $lang['error_decompress']      = 'Не удалось распаковать загруженный файл. Возможно, файл был повреждён при загрузке — тогда нужно попробовать ещё раз. Либо неизвестен формат архива — тогда загрузку и установку надо произвести вручную';
 $lang['error_findfolder']      = 'Не удалось определить директорию для дополнения, загрузку и установку надо произвести вручную.';
 $lang['error_copy']            = 'Возникла ошибка копирования файлов в директорию <em>%s</em>: возможно, диск переполнен, или неверно выставлены права доступа. Это могло привести к неполной установке плагина и нарушить работу вашей вики.';
+$lang['error_copy_read']       = 'Не удалось прочитать директорию %s';
+$lang['error_copy_mkdir']      = 'Не удалось создать директорию %s';
+$lang['error_copy_copy']       = 'Не удалось скопировать %s в %s';
+$lang['error_archive_read']    = 'Не удалось открыть архив %s для чтения';
+$lang['error_archive_extract'] = 'Не удалось распаковать архив %s: %s';
+$lang['error_uninstall_protected'] = 'Расширение %s защищено и не может быть удалено';
+$lang['error_uninstall_dependants'] = 'Расширение %s всё ещё требуется для %s и поэтому не может быть удалено';
+$lang['error_disable_protected'] = 'Расширение %s защищено и не может быть отключено';
+$lang['error_disable_dependants'] = 'Расширение %s всё ещё требуется для %s и поэтому не может быть отключено';
+$lang['error_nourl']           = 'Не удалось найти URL для загрузки расширения %s';
+$lang['error_notinstalled']    = 'Расширение %s не установлено';
+$lang['error_alreadyenabled']  = 'Расширение %s уже включено';
+$lang['error_alreadydisabled'] = 'Расширение %s уже отключено';
+$lang['error_minphp']          = 'Расширение %s требует как минимум PHP %s, но эта вики использует PHP %s';
+$lang['error_maxphp']          = 'Расширение %s поддерживает PHP только до %s, но эта вики использует PHP %s';
 $lang['noperms']               = 'Директория для дополнений недоступна для записи';
 $lang['notplperms']            = 'Директория для шаблонов недоступна для записи';
 $lang['nopluginperms']         = 'Директория для плагинов недоступна для записи';
@@ -104,3 +118,7 @@ $lang['install_upload']        = 'Загрузить дополнение';
 $lang['repo_badresponse']      = 'Репозиторий плагинов вернул недопустимый ответ.';
 $lang['repo_error']            = 'Репозиторий плагина недоступен. Убедитесь, что у вашей вики есть доступ к www.dokuwiki.org, а также проверьте настройки соединения прокси.';
 $lang['nossl']                 = 'Ваша конфигурация PHP не имеет поддержки SSL. Это нарушит скачивание для многих дополнений.';
+$lang['popularity_high']       = 'Это одно из самых популярных расширений';
+$lang['popularity_medium']     = 'Это расширение довольно популярно';
+$lang['popularity_low']        = 'Это расширение вызвало некоторый интерес';
+$lang['details']               = 'Подробности';

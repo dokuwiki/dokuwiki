@@ -2,6 +2,7 @@
 
 namespace LesserPHP\Functions;
 
+use LesserPHP\Utils\Asserts;
 use LesserPHP\Utils\Color;
 use LesserPHP\Utils\Util;
 
@@ -20,12 +21,12 @@ class Type extends AbstractFunctionCollection
             'isstring' => [$this, 'isstring'],
             'iscolor' => [$this, 'iscolor'],
             'iskeyword' => [$this, 'iskeyword'],
-            //'isurl' => [$this, 'isurl'],
+            'isurl' => [$this, 'isurl'],
             'ispixel' => [$this, 'ispixel'],
             'isem' => [$this, 'isem'],
             'isrem' => [$this, 'isrem'],
             'ispercentage' => [$this, 'ispercentage'],
-            //'isunit' => [$this, 'isunit'],
+            'isunit' => [$this, 'isunit'],
             //'isruleset' => [$this, 'isruleset'],
             //'isdefined' => [$this, 'isdefined'],
         ];
@@ -72,7 +73,15 @@ class Type extends AbstractFunctionCollection
         return Util::toBool($value[0] == 'keyword');
     }
 
-    // isurl is missing
+    /**
+     * Returns true if a value is a url, false otherwise
+     *
+     * @link https://lesscss.org/functions/#type-functions-isurl
+     */
+    public function isurl(array $value): array
+    {
+        return Util::toBool($value[0] == 'function' && $value[1] == 'url');
+    }
 
     /**
      * Returns true if a value is a number in pixels, false otherwise
@@ -114,7 +123,22 @@ class Type extends AbstractFunctionCollection
         return Util::toBool($value[0] == 'number' && $value[2] == '%');
     }
 
-    // isunit is missing
+    /**
+     * Returns true if a value is a number with a given unit, false otherwise
+     *
+     * @link https://lesscss.org/functions/#type-functions-isunit
+     */
+    public function isunit(array $args): array
+    {
+        [$input, $unit] = Asserts::assertArgs($args, 2, 'isunit');
+        $unit = $this->lessc->compileValue($this->lessc->unwrap($unit));
+
+        return Util::toBool(
+            $input[0] == 'number' &&
+            $input[2] == $unit
+        );
+    }
+
     // isruleset is missing
     // isdefined is missing
 }

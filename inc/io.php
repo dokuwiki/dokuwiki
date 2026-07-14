@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Logger;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Extension\Event;
@@ -343,7 +344,7 @@ function io_saveFile($file, $content, $append = false)
 function io_replaceInFile($file, $oldline, $newline, $regex = false, $maxlines = 0)
 {
     if ((string)$oldline === '') {
-        trigger_error('$oldline parameter cannot be empty in io_replaceInFile()', E_USER_WARNING);
+        Logger::error('io_replaceInFile() $oldline parameter cannot be empty');
         return false;
     }
 
