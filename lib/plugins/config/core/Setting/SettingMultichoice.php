@@ -20,7 +20,7 @@ class SettingMultichoice extends SettingString
             $value = $this->protected;
             $disable = ' disabled="disabled"';
         } else {
-            $value = is_null($this->local) ? $this->default : $this->local;
+            $value = $this->local ?? $this->default;
         }
 
         // ensure current value is included
@@ -63,7 +63,7 @@ class SettingMultichoice extends SettingString
         if (is_null($input)) return false;
         if ($this->isProtected()) return false;
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         if (!in_array($input, $this->choices)) return false;

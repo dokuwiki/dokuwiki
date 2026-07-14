@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Juanma <juxmix@gmail.com>
  * @author Marc Zulet <marczulet@gmail.com>
  * @author David Surroca <davidsurrocaestrada@gmail.com>
  * @author Adolfo Jayme Barrientos <fito@libreoffice.org>
@@ -27,6 +28,7 @@ $lang['groupscope']            = 'Limiteu l\'abast de cerca per a la cerca de gr
 $lang['userkey']               = 'Atribut que denota el nom d\'usuari; ha de ser coherent amb el filtre d\'usuari.';
 $lang['groupkey']              = 'Pertinença al grup des de qualsevol atribut d\'usuari (en lloc de grups AD estàndard), p. ex. grup del departament o número de telèfon';
 $lang['modPass']               = 'Es pot canviar la contrasenya del LDAP mitjançant el Dokuwiki?';
+$lang['modPassPlain']          = 'Enviar actualitzacions de contrasenya en text pla al servidor LDAP (en lloc de convertir-los a hash+salt amb l\'algorisme de configurat abans de la transmissió)?';
 $lang['debug']                 = 'Mostra informació addicional de depuració als errors.';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';

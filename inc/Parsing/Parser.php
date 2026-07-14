@@ -3,10 +3,9 @@
 namespace dokuwiki\Parsing;
 
 use dokuwiki\Debug\DebugHelper;
-use Doku_Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
+use dokuwiki\Parsing\ParserMode\AbstractMode;
 use dokuwiki\Parsing\ParserMode\Base;
-use dokuwiki\Parsing\ParserMode\ModeInterface;
 
 /**
  * Sets up the Lexer with modes and points it to the Handler
@@ -14,26 +13,42 @@ use dokuwiki\Parsing\ParserMode\ModeInterface;
  */
 class Parser
 {
-    /** @var Doku_Handler */
+    /** @var Handler */
     protected $handler;
+
+    /** @var ModeRegistry the registry of the parse this parser belongs to */
+    protected ModeRegistry $registry;
 
     /** @var Lexer $lexer */
     protected $lexer;
 
-    /** @var ModeInterface[] $modes */
+    /** @var AbstractMode[] $modes */
     protected $modes = [];
 
     /** @var bool mode connections may only be set up once */
     protected $connected = false;
 
     /**
-     * dokuwiki\Parsing\Doku_Parser constructor.
-     *
-     * @param Doku_Handler $handler
+     * @param Handler $handler
+     * @param ModeRegistry|null $registry the registry of the parse, injected
+     *     into every mode (all descend from AbstractMode) as it is added. Null
+     *     is a backward-compatibility path for the legacy new Parser($handler)
+     *     signature: the registry is taken from the handler in that case.
      */
-    public function __construct(Doku_Handler $handler)
+    public function __construct(Handler $handler, ?ModeRegistry $registry = null)
     {
         $this->handler = $handler;
+        $this->registry = $registry ?? $handler->getModeRegistry();
+    }
+
+    /**
+     * Accessor for the Handler instance.
+     *
+     * @return Handler
+     */
+    public function getHandler()
+    {
+        return $this->handler;
     }
 
     /**
@@ -47,7 +62,22 @@ class Parser
         if (!$this->lexer) {
             $this->lexer = new Lexer($this->handler, 'base', true);
         }
-        $this->modes['base']->Lexer = $this->lexer;
+        $this->injectDependencies($BaseMode);
+        $this->handler->registerModeObject('base', $BaseMode);
+    }
+
+    /**
+     * Give a mode the shared objects of this parse: its registry and lexer.
+     *
+     * Called as the mode joins the parser, before any connect/handle callback
+     * runs. Every mode descends from AbstractMode, which carries the setters.
+     *
+     * @param AbstractMode $Mode
+     */
+    protected function injectDependencies(AbstractMode $Mode)
+    {
+        $Mode->setModeRegistry($this->registry);
+        $Mode->setLexer($this->lexer);
     }
 
     /**
@@ -57,15 +87,16 @@ class Parser
      * Mode sequence is important
      *
      * @param string $name
-     * @param ModeInterface $Mode
+     * @param AbstractMode $Mode
      */
-    public function addMode($name, ModeInterface $Mode)
+    public function addMode($name, AbstractMode $Mode)
     {
         if (!isset($this->modes['base'])) {
             $this->addBaseMode(new Base());
         }
-        $Mode->Lexer = $this->lexer; // FIXME should be done by setter
+        $this->injectDependencies($Mode);
         $this->modes[$name] = $Mode;
+        $this->handler->registerModeObject($name, $Mode);
     }
 
     /**
@@ -80,12 +111,15 @@ class Parser
             return;
         }
 
+        // Run all preConnect() first so modes can register shared
+        // metadata (e.g. line start markers) before any patterns are built
         foreach (array_keys($this->modes) as $mode) {
-            // Base isn't connected to anything
-            if ($mode == 'base') {
-                continue;
-            }
+            if ($mode == 'base') continue;
             $this->modes[$mode]->preConnect();
+        }
+
+        foreach (array_keys($this->modes) as $mode) {
+            if ($mode == 'base') continue;
 
             foreach (array_keys($this->modes) as $cm) {
                 if ($this->modes[$cm]->accepts($mode)) {
@@ -117,7 +151,7 @@ class Parser
 
             DebugHelper::dbgCustomDeprecationEvent(
                 'finalize()',
-                get_class($this->handler) . '::_finalize()',
+                $this->handler::class . '::_finalize()',
                 __METHOD__,
                 __FILE__,
                 __LINE__

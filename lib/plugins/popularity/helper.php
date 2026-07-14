@@ -110,9 +110,9 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
      * @return array
      * @see searchCountCallback
      */
-    protected function initEmptySearchList()
+    public function initEmptySearchList()
     {
-        return $list = array_fill_keys([
+        return array_fill_keys([
             'file_count',
             'file_size',
             'file_max',
@@ -153,7 +153,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of pages
         $list = $this->initEmptySearchList();
-        search($list, $conf['datadir'], [$this, 'searchCountCallback'], ['all' => false], '');
+        search($list, $conf['datadir'], $this->searchCountCallback(...), ['all' => false], '');
         $data['page_count']    = $list['file_count'];
         $data['page_size']     = $list['file_size'];
         $data['page_biggest']  = $list['file_max'];
@@ -166,7 +166,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of media
         $list = $this->initEmptySearchList();
-        search($list, $conf['mediadir'], [$this, 'searchCountCallback'], ['all' => true]);
+        search($list, $conf['mediadir'], $this->searchCountCallback(...), ['all' => true]);
         $data['media_count']    = $list['file_count'];
         $data['media_size']     = $list['file_size'];
         $data['media_biggest']  = $list['file_max'];
@@ -178,7 +178,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of cache
         $list = $this->initEmptySearchList();
-        search($list, $conf['cachedir'], [$this, 'searchCountCallback'], ['all' => true]);
+        search($list, $conf['cachedir'], $this->searchCountCallback(...), ['all' => true]);
         $data['cache_count']    = $list['file_count'];
         $data['cache_size']     = $list['file_size'];
         $data['cache_biggest']  = $list['file_max'];
@@ -188,7 +188,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of index
         $list = $this->initEmptySearchList();
-        search($list, $conf['indexdir'], [$this, 'searchCountCallback'], ['all' => true]);
+        search($list, $conf['indexdir'], $this->searchCountCallback(...), ['all' => true]);
         $data['index_count']    = $list['file_count'];
         $data['index_size']     = $list['file_size'];
         $data['index_biggest']  = $list['file_max'];
@@ -198,7 +198,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of meta
         $list = $this->initEmptySearchList();
-        search($list, $conf['metadir'], [$this, 'searchCountCallback'], ['all' => true]);
+        search($list, $conf['metadir'], $this->searchCountCallback(...), ['all' => true]);
         $data['meta_count']    = $list['file_count'];
         $data['meta_size']     = $list['file_size'];
         $data['meta_biggest']  = $list['file_max'];
@@ -208,7 +208,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
 
         // number and size of attic
         $list = $this->initEmptySearchList();
-        search($list, $conf['olddir'], [$this, 'searchCountCallback'], ['all' => true]);
+        search($list, $conf['olddir'], $this->searchCountCallback(...), ['all' => true]);
         $data['attic_count']    = $list['file_count'];
         $data['attic_size']     = $list['file_size'];
         $data['attic_biggest']  = $list['file_max'];
@@ -279,7 +279,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
     /**
      * Callback to search and count the content of directories in DokuWiki
      *
-     * @param array &$data  Reference to the result data structure
+     * @param array &$data  Reference to the result data structure, init with initEmptySearchList()
      * @param string $base  Base usually $conf['datadir']
      * @param string $file  current file or directory relative to $base
      * @param string $type  Type either 'd' for directory or 'f' for file

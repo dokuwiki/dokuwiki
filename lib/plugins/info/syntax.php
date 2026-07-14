@@ -1,7 +1,9 @@
 <?php
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Extension\SyntaxPlugin;
 use dokuwiki\Extension\PluginInterface;
+use dokuwiki\Parsing\ModeRegistry;
 
 /**
  * Info Plugin: Displays information about various DokuWiki internals
@@ -17,7 +19,7 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     public function getType()
     {
-        return 'substition';
+        return ModeRegistry::CATEGORY_SUBSTITUTION;
     }
 
     /**
@@ -50,10 +52,10 @@ class syntax_plugin_info extends SyntaxPlugin
      * @param string $match The text matched by the patterns
      * @param int $state The lexer state for the match
      * @param int $pos The character position of the matched text
-     * @param Doku_Handler $handler The Doku_Handler object
+     * @param Handler $handler The Doku_Handler object
      * @return  array Return an array with all data you want to use in render
      */
-    public function handle($match, $state, $pos, Doku_Handler $handler)
+    public function handle($match, $state, $pos, Handler $handler)
     {
         $match = substr($match, 7, -2); //strip ~~INFO: from start and ~~ from end
         return [strtolower($match)];
@@ -72,46 +74,21 @@ class syntax_plugin_info extends SyntaxPlugin
         if ($format == 'xhtml') {
             /** @var Doku_Renderer_xhtml $renderer */
             //handle various info stuff
-            switch ($data[0]) {
-                case 'syntaxmodes':
-                    $renderer->doc .= $this->renderSyntaxModes();
-                    break;
-                case 'syntaxtypes':
-                    $renderer->doc .= $this->renderSyntaxTypes();
-                    break;
-                case 'syntaxplugins':
-                    $this->renderPlugins('syntax', $renderer);
-                    break;
-                case 'adminplugins':
-                    $this->renderPlugins('admin', $renderer);
-                    break;
-                case 'actionplugins':
-                    $this->renderPlugins('action', $renderer);
-                    break;
-                case 'rendererplugins':
-                    $this->renderPlugins('renderer', $renderer);
-                    break;
-                case 'helperplugins':
-                    $this->renderPlugins('helper', $renderer);
-                    break;
-                case 'authplugins':
-                    $this->renderPlugins('auth', $renderer);
-                    break;
-                case 'remoteplugins':
-                    $this->renderPlugins('remote', $renderer);
-                    break;
-                case 'helpermethods':
-                    $this->renderHelperMethods($renderer);
-                    break;
-                case 'hooks':
-                    $this->renderHooks($renderer);
-                    break;
-                case 'datetime':
-                    $renderer->doc .= date('r');
-                    break;
-                default:
-                    $renderer->doc .= "no info about " . htmlspecialchars($data[0]);
-            }
+            match ($data[0]) {
+                'syntaxmodes' => $renderer->doc .= $this->renderSyntaxModes(),
+                'syntaxtypes' => $renderer->doc .= $this->renderSyntaxTypes(),
+                'syntaxplugins' => $this->renderPlugins('syntax', $renderer),
+                'adminplugins' => $this->renderPlugins('admin', $renderer),
+                'actionplugins' => $this->renderPlugins('action', $renderer),
+                'rendererplugins' => $this->renderPlugins('renderer', $renderer),
+                'helperplugins' => $this->renderPlugins('helper', $renderer),
+                'authplugins' => $this->renderPlugins('auth', $renderer),
+                'remoteplugins' => $this->renderPlugins('remote', $renderer),
+                'helpermethods' => $this->renderHelperMethods($renderer),
+                'hooks' => $this->renderHooks($renderer),
+                'datetime' => $renderer->doc .= date('r'),
+                default => $renderer->doc .= "no info about " . htmlspecialchars($data[0]),
+            };
             return true;
         }
         return false;
@@ -220,14 +197,19 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     protected function renderSyntaxTypes()
     {
-        global $PARSER_MODES;
-        $doc = '';
+        global $conf;
 
+        $registry = new ModeRegistry($conf['syntax']);
+        $registry->getModes();
+
+        $categories = $registry->getCategories();
+
+        $doc = '';
         $doc .= '<div class="table"><table class="inline"><tbody>';
-        foreach ($PARSER_MODES as $mode => $modes) {
+        foreach ($categories as $type => $modes) {
             $doc .= '<tr>';
             $doc .= '<td class="leftalign">';
-            $doc .= $mode;
+            $doc .= $type;
             $doc .= '</td>';
             $doc .= '<td class="leftalign">';
             $doc .= implode(', ', $modes);
@@ -245,7 +227,8 @@ class syntax_plugin_info extends SyntaxPlugin
      */
     protected function renderSyntaxModes()
     {
-        $modes = p_get_parsermodes();
+        global $conf;
+        $modes = (new ModeRegistry($conf['syntax']))->getModes();
 
         $compactmodes = [];
         foreach ($modes as $mode) {
@@ -303,7 +286,7 @@ class syntax_plugin_info extends SyntaxPlugin
                 foreach ($sequence as $handler) {
                     $renderer->listitem_open(2);
                     $renderer->listcontent_open();
-                    $renderer->cdata(get_class($handler[0]) . '::' . $handler[1] . '()');
+                    $renderer->cdata($handler[0]::class . '::' . $handler[1] . '()');
                     $renderer->listcontent_close();
                     $renderer->listitem_close();
                 }

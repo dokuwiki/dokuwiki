@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Jeann <wjeann@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
@@ -32,6 +33,8 @@ $lang['js']['display_viewoptions'] = 'Opções de visualização:';
 $lang['js']['display_enabled'] = 'habilitado';
 $lang['js']['display_disabled'] = 'desabilitado';
 $lang['js']['display_updatable'] = 'atualizável';
+$lang['js']['close']           = 'Click para fechar';
+$lang['js']['filter']          = 'Mostrar apenas extensões atualizáveis';
 $lang['search_for']            = 'Procurar extensão:';
 $lang['search']                = 'Procurar';
 $lang['extensionby']           = '<strong>%s</strong> de %s';
@@ -70,9 +73,12 @@ $lang['msg_enabled']           = 'Extensão %s habilitada';
 $lang['msg_disabled']          = 'Extensão %s desabilitada';
 $lang['msg_delete_success']    = 'Extensão %s desinstalada';
 $lang['msg_delete_failed']     = 'Falha na desinstalação da extensão %s';
+$lang['msg_install_success']   = 'A extensão %s foi instalada com sucesso';
+$lang['msg_update_success']    = 'A extensão %s foi atualizada com sucesso';
 $lang['msg_upload_failed']     = 'Subida do arquivo falhou';
 $lang['msg_nooverwrite']       = 'A extensão %s já existe e, portanto, não está sendo substituída; para substituir, marque a opção de substituição';
 $lang['missing_dependency']    = 'Dependência faltante ou desabilitada: %s';
+$lang['found_conflict']        = 'Esta extensão está marcada como conflitante com as seguintes extensões instaladas: %s';
 $lang['security_issue']        = 'Problema com segurança: %s';
 $lang['security_warning']      = 'Aviso sobre segurança: %s';
 $lang['update_message']        = 'Mensagem de atualização: %s';
@@ -86,6 +92,17 @@ $lang['error_download']        = 'Impossável baixar o arquivo: %s';
 $lang['error_decompress']      = 'Impossável descompimir o arquivo baixado. Isso pode ser resultado de um download ruim que neste caso pode ser tentado novamente; ou o formato da compressão pode ser desconhecido, neste caso baixe e instale manualmente.';
 $lang['error_findfolder']      = 'Impossíl identificar a extensão do diretório, você deve baixar e instalar manualmente.';
 $lang['error_copy']            = 'Houve um erro de cópia de arquivo durante a tentativa de instalar os arquivos para o diretório <em>%s</em> : o disco pode estar cheio ou as permissões de acesso ao arquivo podem estar incorreta. Isso pode ter resultado em um plugin parcialmente instalado e deixar a sua instalação wiki instável';
+$lang['error_copy_read']       = 'Não foi possível ler o diretório %s';
+$lang['error_copy_mkdir']      = 'Não foi possível criar o diretório %s';
+$lang['error_copy_copy']       = 'Não foi possível copiar %s para %s';
+$lang['error_archive_read']    = 'Não foi possível abrir o arquivo %s para leitura';
+$lang['error_archive_extract'] = 'Não foi possível extrair o arquivo %s: %s';
+$lang['error_uninstall_protected'] = 'A extensão %s está protegida e não pode ser desinstalada';
+$lang['error_uninstall_dependants'] = 'A extensão %s ainda é necessária para %s e, portanto, não pode ser desinstalada';
+$lang['error_disable_protected'] = 'A extensão %s está protegida e não pode ser desabilitada';
+$lang['error_disable_dependants'] = 'A extensão %s ainda é necessária por %s e, portanto, não pode ser desabilitada';
+$lang['error_nourl']           = 'Não foi possível encontrar nenhuma URL de download para a extensão %s';
+$lang['error_notinstalled']    = 'A extensão %s não está instalada';
 $lang['error_alreadyenabled']  = 'A extensão %s já foi habilitada';
 $lang['error_alreadydisabled'] = 'A extensão %s já foi desabilitada';
 $lang['error_minphp']          = 'A extensão %s requer pelo menos PHP %s, mas este wiki está executando PHP %s';

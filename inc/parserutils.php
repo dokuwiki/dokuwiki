@@ -8,19 +8,14 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-use dokuwiki\Extension\PluginInterface;
 use dokuwiki\Cache\CacheInstructions;
 use dokuwiki\Cache\CacheRenderer;
 use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\PluginController;
 use dokuwiki\Extension\Event;
-use dokuwiki\Extension\SyntaxPlugin;
+use dokuwiki\Parsing\Handler;
+use dokuwiki\Parsing\ModeRegistry;
 use dokuwiki\Parsing\Parser;
-use dokuwiki\Parsing\ParserMode\Acronym;
-use dokuwiki\Parsing\ParserMode\Camelcaselink;
-use dokuwiki\Parsing\ParserMode\Entity;
-use dokuwiki\Parsing\ParserMode\Formatting;
-use dokuwiki\Parsing\ParserMode\Smiley;
 
 /**
  * How many pages shall be rendered for getting metadata during one request
@@ -126,7 +121,9 @@ function p_locale_xhtml($id)
 
     $event = new Event('PARSER_LOCALE_XHTML', $data);
     if ($event->advise_before()) {
-        $data['html'] = p_cached_output(localeFN($data['id']));
+        // locale files are core assets authored in DokuWiki syntax; render
+        // them as 'dw' regardless of the configured wiki syntax preference
+        $data['html'] = p_cached_output(localeFN($data['id']), 'xhtml', '', 'dw');
     }
     $event->advise_after();
 
@@ -139,23 +136,27 @@ function p_locale_xhtml($id)
  * @param string $file filename, path to file
  * @param string $format
  * @param string $id page id
+ * @param string|null $syntax syntax flavour to parse under; null uses the
+ *     configured $conf['syntax']. When passed explicitly it also enters the
+ *     cache key so the same file rendered under two syntaxes never collides.
+ *     See p_get_instructions().
  * @return null|string
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Chris Smith <chris@jalakai.co.uk>
  *
  */
-function p_cached_output($file, $format = 'xhtml', $id = '')
+function p_cached_output($file, $format = 'xhtml', $id = '', $syntax = null)
 {
     global $conf;
 
-    $cache = new CacheRenderer($id, $file, $format);
+    $cache = new CacheRenderer($id, $file, $format, $syntax);
     if ($cache->useCache()) {
         $parsed = $cache->retrieveCache(false);
         if ($conf['allowdebug'] && $format == 'xhtml') {
             $parsed .= "\n<!-- cachefile {$cache->cache} used -->\n";
         }
     } else {
-        $parsed = p_render($format, p_cached_instructions($file, false, $id), $info);
+        $parsed = p_render($format, p_cached_instructions($file, false, $id, $syntax), $info);
 
         if (!empty($info['cache']) && $cache->storeCache($parsed)) { // storeCache() attempts to save cachefile
             if ($conf['allowdebug'] && $format == 'xhtml') {
@@ -180,24 +181,31 @@ function p_cached_output($file, $format = 'xhtml', $id = '')
  * @param string $file filename, path to file
  * @param bool $cacheonly
  * @param string $id page id
+ * @param string|null $syntax syntax flavour to parse under; null uses the
+ *     configured $conf['syntax']. See p_get_instructions().
  * @return array|null
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  */
-function p_cached_instructions($file, $cacheonly = false, $id = '')
+function p_cached_instructions($file, $cacheonly = false, $id = '', $syntax = null)
 {
     static $run = null;
     if (is_null($run)) $run = [];
 
-    $cache = new CacheInstructions($id, $file);
+    // The in-request memo and the on-disk cache are both keyed on $syntax so
+    // the same file rendered under two syntaxes in one request (e.g. a plugin
+    // forcing 'dw' on a doc whose configured syntax is 'md') does not collide.
+    $runKey = $file . '|' . ($syntax ?? '');
 
-    if ($cacheonly || $cache->useCache() || (isset($run[$file]) && !defined('DOKU_UNITTEST'))) {
+    $cache = new CacheInstructions($id, $file, $syntax);
+
+    if ($cacheonly || $cache->useCache() || (isset($run[$runKey]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
     } elseif (file_exists($file)) {
         // no cache - do some work
-        $ins = p_get_instructions(io_readWikiPage($file, $id));
+        $ins = p_get_instructions(io_readWikiPage($file, $id), $syntax);
         if ($cache->storeCache($ins)) {
-            $run[$file] = true; // we won't rebuild these instructions in the same run again
+            $run[$runKey] = true; // we won't rebuild these instructions in the same run again
         } else {
             msg('Unable to save cache file. Hint: disk full; file permissions; safe_mode setting.', -1);
         }
@@ -210,22 +218,32 @@ function p_cached_instructions($file, $cacheonly = false, $id = '')
 /**
  * turns a page into a list of instructions
  *
+ * This is the one place in the parser pipeline where the configured wiki
+ * syntax preference ($conf['syntax']) is read. From here on the syntax is
+ * a parameter carried by the ModeRegistry, never a global lookup.
+ *
  * @param string $text raw wiki syntax text
+ * @param string|null $syntax syntax flavour to parse under: 'dw', 'md',
+ *     'dw+md' or 'md+dw'. null (the default) means "use the configured
+ *     $conf['syntax']" — appropriate for user content. Locale/bundled
+ *     callers pass 'dw' explicitly.
  * @return array a list of instruction arrays
  * @author Harry Fuecks <hfuecks@gmail.com>
  * @author Andreas Gohr <andi@splitbrain.org>
  *
  */
-function p_get_instructions($text)
+function p_get_instructions($text, $syntax = null)
 {
+    global $conf;
 
-    $modes = p_get_parsermodes();
+    $registry = new ModeRegistry($syntax ?? $conf['syntax']);
 
     // Create the parser and handler
-    $Parser = new Parser(new Doku_Handler());
+    $Handler = new Handler($registry);
+    $Parser = new Parser($Handler, $registry);
 
     //add modes to parser
-    foreach ($modes as $mode) {
+    foreach ($registry->getModes() as $mode) {
         $Parser->addMode($mode['mode'], $mode['obj']);
     }
 
@@ -380,7 +398,7 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
             }
 
             // be careful with some senisitive arrays of $meta
-        } elseif (in_array($key, $protected)) {
+        } elseif (in_array($key, $protected, true)) {
             // these keys, must have subkeys - a legitimate value must be an array
             if (is_array($value)) {
                 $meta['current'][$key] = empty($meta['current'][$key]) ?
@@ -543,112 +561,6 @@ function p_render_metadata($id, $orig)
     $ID = $keep;
     unset($METADATA_RENDERERS[$id]);
     return $evt->result;
-}
-
-/**
- * returns all available parser syntax modes in correct order
- *
- * @return array[] with for each plugin the array('sort' => sortnumber, 'mode' => mode string, 'obj'  => plugin object)
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- */
-function p_get_parsermodes()
-{
-    global $conf;
-
-    //reuse old data
-    static $modes = null;
-    if ($modes != null && !defined('DOKU_UNITTEST')) {
-        return $modes;
-    }
-
-    //import parser classes and mode definitions
-    require_once DOKU_INC . 'inc/parser/parser.php';
-
-    // we now collect all syntax modes and their objects, then they will
-    // be sorted and added to the parser in correct order
-    $modes = [];
-
-    // add syntax plugins
-    $pluginlist = plugin_list('syntax');
-    if ($pluginlist !== []) {
-        global $PARSER_MODES;
-        foreach ($pluginlist as $p) {
-            /** @var SyntaxPlugin $obj */
-            $obj = plugin_load('syntax', $p);
-            if (!$obj instanceof PluginInterface) continue;
-            $PARSER_MODES[$obj->getType()][] = "plugin_$p"; //register mode type
-            //add to modes
-            $modes[] = [
-                'sort' => $obj->getSort(),
-                'mode' => "plugin_$p",
-                'obj' => $obj,
-            ];
-            unset($obj); //remove the reference
-        }
-    }
-
-    // add default modes
-    $std_modes = [
-        'listblock', 'preformatted', 'notoc', 'nocache', 'header', 'table', 'linebreak', 'footnote', 'hr',
-        'unformatted', 'code', 'file', 'quote', 'internallink', 'rss', 'media', 'externallink',
-        'emaillink', 'windowssharelink', 'eol'
-    ];
-    if ($conf['typography']) {
-        $std_modes[] = 'quotes';
-        $std_modes[] = 'multiplyentity';
-    }
-    foreach ($std_modes as $m) {
-        $class = 'dokuwiki\\Parsing\\ParserMode\\' . ucfirst($m);
-        $obj = new $class();
-        $modes[] = ['sort' => $obj->getSort(), 'mode' => $m, 'obj' => $obj];
-    }
-
-    // add formatting modes
-    $fmt_modes = [
-        'strong', 'emphasis', 'underline', 'monospace', 'subscript', 'superscript', 'deleted'
-    ];
-    foreach ($fmt_modes as $m) {
-        $obj = new Formatting($m);
-        $modes[] = [
-            'sort' => $obj->getSort(),
-            'mode' => $m,
-            'obj' => $obj
-        ];
-    }
-
-    // add modes which need files
-    $obj = new Smiley(array_keys(getSmileys()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'smiley', 'obj' => $obj];
-    $obj = new Acronym(array_keys(getAcronyms()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'acronym', 'obj' => $obj];
-    $obj = new Entity(array_keys(getEntities()));
-    $modes[] = ['sort' => $obj->getSort(), 'mode' => 'entity', 'obj' => $obj];
-
-    // add optional camelcase mode
-    if ($conf['camelcase']) {
-        $obj = new Camelcaselink();
-        $modes[] = ['sort' => $obj->getSort(), 'mode' => 'camelcaselink', 'obj' => $obj];
-    }
-
-    //sort modes
-    usort($modes, 'p_sort_modes');
-
-    return $modes;
-}
-
-/**
- * Callback function for usort
- *
- * @param array $a
- * @param array $b
- * @return int $a is lower/equal/higher than $b
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- */
-function p_sort_modes($a, $b)
-{
-    return $a['sort'] <=> $b['sort'];
 }
 
 /**

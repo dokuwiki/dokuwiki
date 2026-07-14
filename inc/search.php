@@ -53,7 +53,7 @@ function search(&$data, $base, $func, $opts, $dir = '', $lvl = 1, $sort = 'natur
     closedir($dh);
     if (!empty($sort)) {
         if ($sort == 'date') {
-            @array_multisort(array_map('filemtime', $filepaths), SORT_NUMERIC, SORT_DESC, $files);
+            @array_multisort(array_map(filemtime(...), $filepaths), SORT_NUMERIC, SORT_DESC, $files);
         } else /* natural */ {
             Sort::asortFN($files);
         }
@@ -192,7 +192,6 @@ function search_namespaces(&$data, $base, $file, $type, $lvl, $opts)
  */
 function search_media(&$data, $base, $file, $type, $lvl, $opts)
 {
-
     //we do nothing with directories
     if ($type == 'd') {
         if (empty($opts['depth'])) return true; // recurse forever
@@ -210,7 +209,7 @@ function search_media(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($info['id']) . ':*');
+    $info['perm'] = auth_quickaclcheck(mediaAclPath($info['id']));
     if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }
@@ -277,7 +276,7 @@ function search_mediafiles(&$data, $base, $file, $type, $lvl, $opts)
     }
 
     //check ACL for namespace (we have no ACL for mediafiles)
-    $info['perm'] = auth_quickaclcheck(getNS($id) . ':*');
+    $info['perm'] = auth_quickaclcheck(mediaAclPath($id));
     if (empty($opts['skipacl']) && $info['perm'] < AUTH_READ) {
         return false;
     }
@@ -347,7 +346,7 @@ function search_pagename(&$data, $base, $file, $type, $lvl, $opts)
 
     //simple stringmatching
     if (!empty($opts['query'])) {
-        if (strpos($file, (string) $opts['query']) !== false) {
+        if (str_contains($file, (string) $opts['query'])) {
             //check ACL
             $id = pathID($file);
             if (auth_quickaclcheck($id) < AUTH_READ) {
@@ -577,7 +576,9 @@ function search_universal(&$data, $base, $file, $type, $lvl, $opts)
 
     if ($type == 'f') {
         if (!empty($opts['hash'])) $item['hash'] = md5(io_readFile($base . '/' . $file, false));
-        if (!empty($opts['firsthead'])) $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        if (!empty($opts['firsthead'])) {
+            $item['title'] = p_get_first_heading($item['id'], METADATA_DONT_RENDER);
+        }
     }
 
     // finally add the item

@@ -22,7 +22,7 @@ header('Content-Type: text/html; charset=utf-8');
 //call the requested function
 global $INPUT;
 if ($INPUT->has('call')) {
-    $call = $INPUT->filter([Clean::class, 'stripspecials'])->str('call');
+    $call = $INPUT->filter(Clean::stripspecials(...))->str('call');
     new Ajax($call);
 } else {
     http_status(404);

@@ -1,8 +1,7 @@
-Salutare, @FULLNAME@!
-
 Un fișier a fost încărcat în DokuWiki. Iată detaliile:
 
 Fișier : @MEDIA@
+Versiune anterioară: @OLD@
 Dată : @DATE@
 Browser : @BROWSER@
 Adresă IP : @IPADDRESS@

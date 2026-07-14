@@ -2,6 +2,35 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-06-25
+inc/Parsing/Handler/Quote.php
+inc/Parsing/ParserMode/Hr.php
+inc/Parsing/ParserMode/ModeInterface.php
+inc/Parsing/ParserMode/Quote.php
+
+# removed on 2026-06-07
+inc/mail.php
+
+# removed on 2026-05-06
+inc/Parsing/ParserMode/Formatting.php
+inc/fulltext.php
+inc/indexer.php
+inc/parser/handler.php
+inc/parser/parser.php
+
+# removed on 2026-04-12
+lib/images/larger.gif
+lib/images/smaller.gif
+lib/images/wrap.gif
+
+# removed on 2026-03-22
+vendor/simplepie/simplepie/.php-cs-fixer.dist.php
+vendor/simplepie/simplepie/LICENSE.txt
+vendor/simplepie/simplepie/idn/LICENCE
+vendor/simplepie/simplepie/idn/ReadMe.txt
+vendor/simplepie/simplepie/idn/idna_convert.class.php
+vendor/simplepie/simplepie/idn/npdata.ser
+
 # removed on 2024-12-09
 lib/plugins/extension/_test/extension.test.php
 lib/plugins/extension/all.less
@@ -993,7 +1022,6 @@ vendor/kissifrot/php-ixr/.editorconfig
 vendor/kissifrot/php-ixr/.gitignore
 _test/tests/inc/pageutils_resolve_mediaid.test.php
 _test/tests/inc/pageutils_resolve_pageid.test.php
-vendor/phpseclib/phpseclib/phpseclib/Net/SCP.php
 vendor/phpseclib/phpseclib/phpseclib/Net/SSH1.php
 vendor/marcusschwarz/lesserphp/README.md
 vendor/marcusschwarz/lesserphp/lessc.inc.php

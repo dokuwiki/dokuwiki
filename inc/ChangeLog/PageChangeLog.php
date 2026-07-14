@@ -38,31 +38,49 @@ class PageChangeLog extends ChangeLog
         return RevisionInfo::MODE_PAGE;
     }
 
-
     /**
-     * Adds an entry to the changelog
+     * Returns path to the global page-changelog file
      *
-     * @param array $info    Revision info structure of a page
-     * @param int $timestamp log line date (optional)
-     * @return array revision info of added log line
-     *
-     * @see also addLogEntry() in inc/changelog.php file
+     * @return string path to file
      */
-    public function addLogEntry(array $info, $timestamp = null)
+    protected function getGlobalChangelogFilename()
     {
         global $conf;
+        return $conf['changelog'];
+    }
 
-        if (isset($timestamp)) unset($this->cache[$this->id][$info['date']]);
+    /**
+     * Snapshot the externally-edited page to the attic at the synthesized revision date. Pages
+     * archive every revision, so the current (externally-changed) content is copied too.
+     *
+     * @param array $revInfo synthesized revision info
+     * @return bool true on success (or nothing to copy), false if the attic write failed
+     */
+    protected function saveExternalAttic(array $revInfo)
+    {
+        $file = $this->getFilename();
+        if (!file_exists($file)) return true;
 
-        // add changelog lines
-        $logline = static::buildLogLine($info, $timestamp);
-        io_saveFile(metaFN($this->id, '.changes'), $logline, true);
-        io_saveFile($conf['changelog'], $logline, true); //global changelog cache
+        $atticfile = $this->getFilename($revInfo['date']);
+        return io_writeWikiPage($atticfile, io_readWikiPage($file, $this->id, ''), $this->id, $revInfo['date']);
+    }
 
-        // update cache
-        $this->currentRevision = $info['date'];
-        $info['mode'] = $this->getMode();
-        $this->cache[$this->id][$this->currentRevision] = $info;
-        return $info;
+    /**
+     * Compare the current page content against the (gzip-aware) attic copy of a revision.
+     *
+     * Both sides are already loaded (and decompressed) into memory by io_readWikiPage, so
+     * they are compared directly rather than via a hash: the string comparison stops at the
+     * first differing byte and avoids hashing the full contents.
+     *
+     * @param int $rev revision timestamp to compare the current page against
+     * @return bool true if the decompressed content is identical
+     */
+    protected function currentContentMatchesRevision($rev)
+    {
+        $current = $this->getFilename();
+        $attic = $this->getFilename($rev);
+        if (!file_exists($current) || !file_exists($attic)) return false;
+
+        return io_readWikiPage($current, $this->id, '') === io_readWikiPage($attic, $this->id, $rev);
     }
 }

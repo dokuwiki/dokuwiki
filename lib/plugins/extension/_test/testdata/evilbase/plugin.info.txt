@@ -1,0 +1,7 @@
+base     ../../../../evil
+author   Attacker
+email    evil@example.com
+date     2026-01-01
+name     Evil Plugin
+desc     Tries to escape the plugin directory via a traversal base name
+url      http://example.com/plugin:evil

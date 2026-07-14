@@ -3,6 +3,7 @@
 namespace dokuwiki\Extension;
 
 use dokuwiki\Logger;
+use dokuwiki\MailUtils;
 
 /**
  * Provides standard DokuWiki plugin behaviour
@@ -19,7 +20,7 @@ trait PluginTrait
      */
     public function getInfo()
     {
-        $class = get_class($this);
+        $class = $this::class;
         $parts = sexplode('_', $class, 3);
         $ext = $parts[2];
 
@@ -82,7 +83,7 @@ trait PluginTrait
      */
     public function getPluginType()
     {
-        [$t] = explode('_', get_class($this), 2);
+        [$t] = explode('_', $this::class, 2);
         return $t;
     }
 
@@ -91,7 +92,7 @@ trait PluginTrait
      */
     public function getPluginName()
     {
-        [/* t */, /* p */, $n] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, $n] = sexplode('_', $this::class, 4, '');
         return $n;
     }
 
@@ -100,7 +101,7 @@ trait PluginTrait
      */
     public function getPluginComponent()
     {
-        [/* t */, /* p */, /* n */, $c] = sexplode('_', get_class($this), 4, '');
+        [/* t */, /* p */, /* n */, $c] = sexplode('_', $this::class, 4, '');
         return $c;
     }
 
@@ -122,7 +123,9 @@ trait PluginTrait
      */
     public function locale_xhtml($id)
     {
-        return p_cached_output($this->localFN($id));
+        // plugin-bundled locale files are authored in DokuWiki syntax; render
+        // them as 'dw' regardless of the configured wiki syntax preference
+        return p_cached_output($this->localFN($id), 'xhtml', '', 'dw');
     }
 
     /**
@@ -243,10 +246,11 @@ trait PluginTrait
     public function email($email, $name = '', $class = '', $more = '')
     {
         if (!$email) return $name;
-        $email = obfuscate($email);
-        if (!$name) $name = $email;
+        $display = MailUtils::obfuscate($email);
+        $href = MailUtils::obfuscateUrl($email);
+        if (!$name) $name = $display;
         $class = "class='" . ($class ?: 'mail') . "'";
-        return "<a href='mailto:$email' $class title='$email' $more>$name</a>";
+        return "<a href='mailto:$href' $class title='$display' $more>$name</a>";
     }
 
     /**
@@ -271,9 +275,9 @@ trait PluginTrait
     /**
      * @see PluginInterface::render_text()
      */
-    public function render_text($text, $format = 'xhtml')
+    public function render_text($text, $format = 'xhtml', $syntax = 'dw')
     {
-        return p_render($format, p_get_instructions($text), $info);
+        return p_render($format, p_get_instructions($text, $syntax), $info);
     }
 
     // endregion

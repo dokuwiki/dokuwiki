@@ -10,6 +10,8 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Input\Input;
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Extension\Event;
@@ -44,7 +46,7 @@ class Mailer
         global $INPUT;
 
         $server = parse_url(DOKU_URL, PHP_URL_HOST);
-        if (strpos($server, '.') === false) $server .= '.localhost';
+        if (!str_contains($server, '.')) $server .= '.localhost';
 
         $this->partid   = substr(md5(uniqid(random_int(0, mt_getrandmax()), true)), 0, 8) . '@' . $server;
         $this->boundary = '__________' . md5(uniqid(random_int(0, mt_getrandmax()), true));
@@ -70,6 +72,62 @@ class Mailer
         $this->setHeader('Message-Id', "<$messageid>");
 
         $this->prepareTokenReplacements();
+    }
+
+    /**
+     * Resolve the @MAIL@/@USER@/@NAME@ placeholders in $conf['mailfrom'] and derive $conf['mailfromnobody'].
+     *
+     * Called once during init. The "nobody" variant is the address used when the resolved mailfrom would be
+     * user-dependent (e.g. for subscriptions which must look like they come from a generic sender, not the actor).
+     *
+     * @todo Resolve lazily on first Mailer instantiation instead of eagerly at init time, so the explicit init.php
+     *       call can go away and this method makes more sense here
+     *
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    public static function configInit(): void
+    {
+        global $conf;
+        global $USERINFO;
+        /** @var Input $INPUT */
+        global $INPUT;
+
+        // auto constructed address
+        $host = @parse_url(DOKU_URL, PHP_URL_HOST);
+        if (!$host) $host = 'example.com';
+        $noreply = 'noreply@' . $host;
+
+        $replace = [];
+        if (!empty($USERINFO['mail'])) {
+            $replace['@MAIL@'] = $USERINFO['mail'];
+        } else {
+            $replace['@MAIL@'] = $noreply;
+        }
+
+        // use 'noreply' if no user
+        $replace['@USER@'] = $INPUT->server->str('REMOTE_USER', 'noreply', true);
+
+        if (!empty($USERINFO['name'])) {
+            $replace['@NAME@'] = $USERINFO['name'];
+        } else {
+            $replace['@NAME@'] = '';
+        }
+
+        // apply replacements
+        $from = str_replace(
+            array_keys($replace),
+            array_values($replace),
+            $conf['mailfrom']
+        );
+
+        // any replacements done? set different mailfromnone
+        if ($from != $conf['mailfrom']) {
+            $conf['mailfromnobody'] = $noreply;
+        } else {
+            $conf['mailfromnobody'] = $from;
+        }
+        $conf['mailfrom'] = $from;
     }
 
     /**
@@ -158,7 +216,7 @@ class Mailer
 
         // empty value deletes
         if (is_array($value)) {
-            $value = array_map('trim', $value);
+            $value = array_map(trim(...), $value);
             $value = array_filter($value);
             if (!$value) $value = '';
         } else {
@@ -219,7 +277,7 @@ class Mailer
             $html = str_replace('@HTMLBODY@', $html, $wrapper);
         }
 
-        if (strpos($text, '@EMAILSIGNATURE@') === false) {
+        if (!str_contains($text, '@EMAILSIGNATURE@')) {
             $text .= '@EMAILSIGNATURE@';
         }
 
@@ -236,7 +294,7 @@ class Mailer
         // embed media from templates
         $html = preg_replace_callback(
             '/@MEDIA\(([^\)]+)\)@/',
-            [$this, 'autoEmbedCallBack'],
+            $this->autoEmbedCallBack(...),
             $html
         );
 
@@ -351,7 +409,7 @@ class Mailer
     {
         $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
-        if ($count > 0 || strpos($name, ',') !== false) {
+        if ($count > 0 || str_contains($name, ',')) {
             $name = '"' . $name . '"';
         }
         return $name;
@@ -411,7 +469,7 @@ class Mailer
                 continue;
             }
 
-            if (!mail_isvalid($addr)) {
+            if (!MailUtils::isValid($addr)) {
                 msg(hsc("E-Mail address <$addr> is not valid"), -1, __LINE__, __FILE__, MSG_ADMINS_ONLY);
                 continue;
             }
@@ -426,7 +484,7 @@ class Mailer
                     $text = Clean::strip($text);
                 }
 
-                if (strpos($text, ',') !== false || !Clean::isASCII($text)) {
+                if (str_contains($text, ',') || !Clean::isASCII($text)) {
                     $text = '=?UTF-8?B?' . base64_encode($text) . '?=';
                 }
             } else {

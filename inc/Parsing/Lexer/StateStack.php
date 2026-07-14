@@ -36,6 +36,17 @@ class StateStack
     }
 
     /**
+     * The full state stack, from the oldest (bottom) state to the current
+     * (top) one.
+     *
+     * @return string[]
+     */
+    public function getStack()
+    {
+        return $this->stack;
+    }
+
+    /**
      * Adds a state to the stack and sets it to be the current state.
      *
      * @param string $state        New state.

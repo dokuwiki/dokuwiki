@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
+ * @author Rafael Fernandes <rafa.fernan10@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -51,6 +51,7 @@ $lang['summary']               = 'Mostrando usuários %1$d-%2$d de %3$d encontra
 $lang['nonefound']             = 'Nenhum usuário encontrado. Total de %d inscritos.';
 $lang['delete_ok']             = '%d usuários excluídos';
 $lang['delete_fail']           = '%d exclusões com erro.';
+$lang['delete_fail_self']      = 'Você não pode excluir a si mesmo';
 $lang['update_ok']             = 'Usuário atualizado';
 $lang['update_fail']           = 'Usuário não atualizado';
 $lang['update_exists']         = 'Erro na alteração do nome, porque o usuário (%s) já existe (as alterações restantes serão aplicadas).';

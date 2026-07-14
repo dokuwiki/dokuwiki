@@ -2,10 +2,17 @@
 
 namespace dokuwiki\plugin\extension;
 
+use dokuwiki\Logger;
+use RuntimeException;
+
 class Local
 {
     /**
      * Glob the given directory and init each subdirectory as an Extension
+     *
+     * Directories that cannot be initialized as an extension (e.g. leftover
+     * directories with an invalid base name like "myplugin (copy)") are skipped
+     * so a single stray directory does not break the whole listing.
      *
      * @param string $directory
      * @return Extension[]
@@ -16,7 +23,12 @@ class Local
         $directory = rtrim($directory, '/');
         $dirs = glob($directory . '/*', GLOB_ONLYDIR);
         foreach ($dirs as $dir) {
-            $ext = Extension::createFromDirectory($dir);
+            try {
+                $ext = Extension::createFromDirectory($dir);
+            } catch (RuntimeException $e) {
+                Logger::debug('Skipping invalid extension directory: ' . $dir, $e->getMessage());
+                continue;
+            }
             $extensions[$ext->getId()] = $ext;
         }
         return $extensions;

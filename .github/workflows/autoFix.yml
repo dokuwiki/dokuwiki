@@ -4,13 +4,17 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   autofix:
     if: github.repository_owner == 'dokuwiki'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -25,7 +29,7 @@ jobs:
           composer install --no-interaction --no-progress --no-suggest --prefer-dist
 
       - name: Setup Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: _test/.rector-cache
           key: ${{ runner.os }}-rector-${{ hashFiles('_test/rector.php') }}
@@ -38,7 +42,7 @@ jobs:
         run: ./_test/vendor/bin/phpcbf --standard=_test/phpcs_MigrationAdjustments.xml
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "🤖 Rector and PHPCS fixes"
           title: "🤖 Automatic code style fixes"

@@ -68,7 +68,7 @@ class DES extends BlockCipher
     /**
      * Block Length of the cipher
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::block_size
+     * @see Common\SymmetricKey::block_size
      * @var int
      */
     protected $block_size = 8;
@@ -76,7 +76,7 @@ class DES extends BlockCipher
     /**
      * Key Length (in bytes)
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setKeyLength()
+     * @see Common\SymmetricKey::setKeyLength()
      * @var int
      */
     protected $key_length = 8;
@@ -84,7 +84,7 @@ class DES extends BlockCipher
     /**
      * The mcrypt specific name of the cipher
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::cipher_name_mcrypt
+     * @see Common\SymmetricKey::cipher_name_mcrypt
      * @var string
      */
     protected $cipher_name_mcrypt = 'des';
@@ -92,7 +92,7 @@ class DES extends BlockCipher
     /**
      * The OpenSSL names of the cipher / modes
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::openssl_mode_names
+     * @see Common\SymmetricKey::openssl_mode_names
      * @var array
      */
     protected $openssl_mode_names = [
@@ -106,7 +106,7 @@ class DES extends BlockCipher
     /**
      * Optimizing value while CFB-encrypting
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::cfb_init_len
+     * @see Common\SymmetricKey::cfb_init_len
      * @var int
      */
     protected $cfb_init_len = 500;
@@ -586,7 +586,7 @@ class DES extends BlockCipher
      *
      * This is mainly just a wrapper to set things up for \phpseclib3\Crypt\Common\SymmetricKey::isValidEngine()
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::isValidEngine()
+     * @see Common\SymmetricKey::isValidEngine()
      * @param int $engine
      * @return bool
      */
@@ -615,7 +615,7 @@ class DES extends BlockCipher
      *
      * DES also requires that every eighth bit be a parity bit, however, we'll ignore that.
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setKey()
+     * @see Common\SymmetricKey::setKey()
      * @param string $key
      */
     public function setKey($key)
@@ -631,8 +631,8 @@ class DES extends BlockCipher
     /**
      * Encrypts a block
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::encryptBlock()
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::encrypt()
+     * @see Common\SymmetricKey::encryptBlock()
+     * @see Common\SymmetricKey::encrypt()
      * @see self::encrypt()
      * @param string $in
      * @return string
@@ -645,8 +645,8 @@ class DES extends BlockCipher
     /**
      * Decrypts a block
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::decryptBlock()
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::decrypt()
+     * @see Common\SymmetricKey::decryptBlock()
+     * @see Common\SymmetricKey::decrypt()
      * @see self::decrypt()
      * @param string $in
      * @return string
@@ -673,14 +673,14 @@ class DES extends BlockCipher
     {
         static $sbox1, $sbox2, $sbox3, $sbox4, $sbox5, $sbox6, $sbox7, $sbox8, $shuffleip, $shuffleinvip;
         if (!$sbox1) {
-            $sbox1 = array_map('intval', self::$sbox1);
-            $sbox2 = array_map('intval', self::$sbox2);
-            $sbox3 = array_map('intval', self::$sbox3);
-            $sbox4 = array_map('intval', self::$sbox4);
-            $sbox5 = array_map('intval', self::$sbox5);
-            $sbox6 = array_map('intval', self::$sbox6);
-            $sbox7 = array_map('intval', self::$sbox7);
-            $sbox8 = array_map('intval', self::$sbox8);
+            $sbox1 = array_map([self::class, 'safe_intval'], self::$sbox1);
+            $sbox2 = array_map([self::class, 'safe_intval'], self::$sbox2);
+            $sbox3 = array_map([self::class, 'safe_intval'], self::$sbox3);
+            $sbox4 = array_map([self::class, 'safe_intval'], self::$sbox4);
+            $sbox5 = array_map([self::class, 'safe_intval'], self::$sbox5);
+            $sbox6 = array_map([self::class, 'safe_intval'], self::$sbox6);
+            $sbox7 = array_map([self::class, 'safe_intval'], self::$sbox7);
+            $sbox8 = array_map([self::class, 'safe_intval'], self::$sbox8);
             /* Merge $shuffle with $[inv]ipmap */
             for ($i = 0; $i < 256; ++$i) {
                 $shuffleip[]    =  self::$shuffle[self::$ipmap[$i]];
@@ -747,7 +747,7 @@ class DES extends BlockCipher
     /**
      * Creates the key schedule
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setupKey()
+     * @see Common\SymmetricKey::setupKey()
      */
     protected function setupKey()
     {
@@ -1243,9 +1243,9 @@ class DES extends BlockCipher
                       $pc2mapd3[($d >>  8) & 0xFF] | $pc2mapd4[ $d        & 0xFF];
 
                 // Reorder: odd bytes/even bytes. Push the result in key schedule.
-                $val1 = ( $cp        & intval(0xFF000000)) | (($cp <<  8) & 0x00FF0000) |
+                $val1 = ( $cp        & self::safe_intval(0xFF000000)) | (($cp <<  8) & 0x00FF0000) |
                         (($dp >> 16) & 0x0000FF00) | (($dp >>  8) & 0x000000FF);
-                $val2 = (($cp <<  8) & intval(0xFF000000)) | (($cp << 16) & 0x00FF0000) |
+                $val2 = (($cp <<  8) & self::safe_intval(0xFF000000)) | (($cp << 16) & 0x00FF0000) |
                         (($dp >>  8) & 0x0000FF00) | ( $dp        & 0x000000FF);
                 $keys[$des_round][self::ENCRYPT][       ] = $val1;
                 $keys[$des_round][self::DECRYPT][$ki - 1] = $val1;
@@ -1281,7 +1281,7 @@ class DES extends BlockCipher
     /**
      * Setup the performance-optimized function for de/encrypt()
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setupInlineCrypt()
+     * @see Common\SymmetricKey::setupInlineCrypt()
      */
     protected function setupInlineCrypt()
     {
@@ -1292,14 +1292,14 @@ class DES extends BlockCipher
 
         $init_crypt = 'static $sbox1, $sbox2, $sbox3, $sbox4, $sbox5, $sbox6, $sbox7, $sbox8, $shuffleip, $shuffleinvip;
             if (!$sbox1) {
-                $sbox1 = array_map("intval", self::$sbox1);
-                $sbox2 = array_map("intval", self::$sbox2);
-                $sbox3 = array_map("intval", self::$sbox3);
-                $sbox4 = array_map("intval", self::$sbox4);
-                $sbox5 = array_map("intval", self::$sbox5);
-                $sbox6 = array_map("intval", self::$sbox6);
-                $sbox7 = array_map("intval", self::$sbox7);
-                $sbox8 = array_map("intval", self::$sbox8);'
+                $sbox1 = array_map(["' . self::class . '", "safe_intval"], self::$sbox1);
+                $sbox2 = array_map(["' . self::class . '", "safe_intval"], self::$sbox2);
+                $sbox3 = array_map(["' . self::class . '", "safe_intval"], self::$sbox3);
+                $sbox4 = array_map(["' . self::class  .'", "safe_intval"], self::$sbox4);
+                $sbox5 = array_map(["' . self::class . '", "safe_intval"], self::$sbox5);
+                $sbox6 = array_map(["' . self::class . '", "safe_intval"], self::$sbox6);
+                $sbox7 = array_map(["' . self::class . '", "safe_intval"], self::$sbox7);
+                $sbox8 = array_map(["' . self::class . '", "safe_intval"], self::$sbox8);'
                 /* Merge $shuffle with $[inv]ipmap */ . '
                 for ($i = 0; $i < 256; ++$i) {
                     $shuffleip[]    =  self::$shuffle[self::$ipmap[$i]];

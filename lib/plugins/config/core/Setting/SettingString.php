@@ -18,7 +18,7 @@ class SettingString extends Setting
         } elseif ($echo && $this->error) {
             $value = $this->input;
         } else {
-            $value = is_null($this->local) ? $this->default : $this->local;
+            $value = $this->local ?? $this->default;
         }
 
         $key = htmlspecialchars($this->key);

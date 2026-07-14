@@ -86,6 +86,7 @@ $meta['title'] = ['string'];
 $meta['start'] = ['string', '_caution' => 'warning', '_pattern' => '!^[^:;/]+$!']; // don't accept namespaces
 $meta['lang'] = ['dirchoice', '_dir' => DOKU_INC . 'inc/lang/'];
 $meta['template'] = ['dirchoice', '_dir' => DOKU_INC . 'lib/tpl/', '_pattern' => '/^[\w-]+$/'];
+$meta['syntax'] = ['multichoice', '_choices' => ['dw', 'md', 'dw+md', 'md+dw'], '_caution' => 'warning'];
 $meta['tagline'] = ['string'];
 $meta['sidebar'] = ['string'];
 $meta['license'] = ['license'];
@@ -153,6 +154,7 @@ $meta['rememberme'] = ['onoff'];
 $meta['disableactions'] = ['disableactions',
     '_choices' => [
         'backlink',
+        'diff',
         'index',
         'recent',
         'revisions',
@@ -256,7 +258,7 @@ $meta['_network'] = ['fieldset'];
 $meta['dnslookups'] = ['onoff'];
 $meta['jquerycdn'] = ['multichoice', '_choices' => [0, 'jquery', 'cdnjs']];
 $meta['trustedproxies'] = ['array', '_caution' => 'security'];
-$meta['realip'] = ['onoff', '_caution' => 'security'];
+$meta['client_ip_header'] = ['string', '_caution' => 'security', '_pattern' => '!^[A-Z0-9_]+$!'];
 $meta['proxy____host'] = ['string', '_pattern' => '#^(|[a-z0-9\-\.+]+)$#i'];
 $meta['proxy____port'] = ['numericopt'];
 $meta['proxy____user'] = ['string'];

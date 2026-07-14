@@ -20,4 +20,7 @@ class_alias('\dokuwiki\Extension\Plugin', 'DokuWiki_Plugin');
 class_alias('\dokuwiki\Extension\RemotePlugin', 'DokuWiki_Remote_Plugin');
 class_alias('\dokuwiki\Extension\SyntaxPlugin', 'DokuWiki_Syntax_Plugin');
 
+class_alias('\dokuwiki\Parsing\Handler', 'Doku_Handler');
+class_alias('\dokuwiki\Parsing\Parser', 'Doku_Parser');
+
 class_alias('\dokuwiki\Feed\FeedParser', 'FeedParser');

@@ -42,7 +42,7 @@ abstract class AbstractMenu implements MenuInterface
     public function getItems()
     {
         $data = ['view' => $this->view, 'items' => []];
-        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, [$this, 'loadItems']);
+        Event::createAndTrigger('MENU_ITEMS_ASSEMBLY', $data, $this->loadItems(...));
 
         $data['items'] = array_filter(
             $data['items'],
@@ -66,7 +66,7 @@ abstract class AbstractMenu implements MenuInterface
                 /** @var AbstractItem $item */
                 $item = new $class();
                 $data['items'][] = $item;
-            } catch (\RuntimeException $ignored) {
+            } catch (\RuntimeException) {
                 // item not available
             }
         }

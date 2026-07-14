@@ -4,8 +4,14 @@
     "homepage": "https://www.dokuwiki.org",
     "type": "project",
     "license": "GPL v2",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dokudeps/php-ixr.git"
+        }
+    ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.2",
         "ext-json": "*",
         "splitbrain/php-archive": "~1.0",
         "phpseclib/phpseclib": "^3.0",
@@ -15,14 +21,14 @@
         "aziraphale/email-address-validator": "^2",
         "splitbrain/lesserphp": "^0.10",
         "splitbrain/php-cli": "^1.1",
-        "splitbrain/slika": "^1.0",
-        "kissifrot/php-ixr": "^1.8",
+        "splitbrain/slika": "^1.2.1",
+        "kissifrot/php-ixr": "dev-dokuwiki",
         "splitbrain/php-jsstrip": "^1.0",
         "php81_bc/strftime": "dev-fallback-intl"
     },
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.2"
         }
     },
     "suggest": {

@@ -50,6 +50,8 @@ class FeedCreatorOptions
         'content_type' => 'pages',
         'guardmail' => 'none',
         'title' => '',
+        'cache_allow' => false,
+        'cache_key' => '',
     ];
 
     /**
@@ -81,7 +83,7 @@ class FeedCreatorOptions
             $conf['rss_content']
         );
         $this->options['namespace'] = $INPUT->filter('cleanID')->str('ns');
-        $this->options['items'] = max(0, $INPUT->int('num', $conf['recent']));
+        $this->options['items'] = $INPUT->int('num', $conf['recent']);
         $this->options['show_minor'] = $INPUT->bool('minor');
         $this->options['show_deleted'] = $conf['rss_show_deleted'];
         $this->options['show_summary'] = $conf['rss_show_summary'];
@@ -105,6 +107,11 @@ class FeedCreatorOptions
         $this->options['subtitle'] = $conf['tagline'];
 
         $this->options = array_merge($this->options, $options);
+        // clamp items to a reasonable range to prevent cache DoS via arbitrary num values
+        $this->options['items'] = min(max(1, (int)$this->options['items']), $conf['recent'] * 5);
+        // only the recent mode is cached by default to prevent cache DoS;
+        // plugins can enable caching for their modes via FEED_OPTS_POSTPROCESS
+        $this->options['cache_allow'] = ($this->options['feed_mode'] === 'recent');
 
         // initialization finished, let plugins know
         $eventData = [
@@ -116,13 +123,32 @@ class FeedCreatorOptions
     /**
      * The cache key to use for a feed with these options
      *
-     * Does not contain user or host specific information yet
+     * Only includes options that affect the current mode's output.
      *
-     * @return string
+     * @param string[] $additional additional key parts (e.g. user, host, port)
+     * @return string|null null if the feed should not be cached
      */
-    public function getCacheKey()
+    public function getCacheKey(array $additional = []): ?string
     {
-        return implode('', array_values($this->options));
+        if (!$this->options['cache_allow']) {
+            return null;
+        }
+
+        return implode('$', array_merge([
+            $this->options['feed_mode'],
+            $this->options['type'],
+            $this->options['link_to'],
+            $this->options['item_content'],
+            $this->options['show_summary'],
+            $this->options['guardmail'],
+            $this->options['namespace'],
+            $this->options['items'],
+            $this->options['show_minor'],
+            $this->options['show_deleted'],
+            $this->options['only_new'],
+            $this->options['content_type'],
+            $this->options['cache_key'],
+        ], $additional));
     }
 
     /**

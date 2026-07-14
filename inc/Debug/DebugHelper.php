@@ -53,7 +53,7 @@ class DebugHelper
         self::triggerDeprecationEvent(
             $backtrace,
             $alternative,
-            self::formatCall($self),
+            $thing ?: self::formatCall($self),
             self::formatCall($call),
             $self['file'] ?? $call['file'] ?? '',
             $self['line'] ?? $call['line'] ?? 0

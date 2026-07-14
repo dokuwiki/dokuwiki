@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Prepare Environment
         run: |
@@ -29,7 +29,7 @@ jobs:
           fi
 
       - name: Create tag
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           # a privileged token is needed here to create the (protected) tag
           github-token: ${{ secrets.RELEASE_TOKEN }}
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Prepare Environment
         run: |
@@ -56,9 +56,13 @@ jobs:
 
       - name: Build Archives
         run: |
-          for F in $(awk '/export-ignore/{print $1}' .gitattributes); do
-            rm -rf $F
+          git ls-files | while read path; do
+            if git check-attr export-ignore -- "$path" | grep -q 'export-ignore: set'; then
+              echo "Deleting $path"
+              rm -f "$path"
+            fi
           done
+          find . -type d -empty -delete
           mkdir -p data/pages/playground
           echo "====== PlayGround ======" > data/pages/playground/playground.txt
           cd ..
@@ -72,7 +76,7 @@ jobs:
 
       - name: Release to Github
         id: release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           name: DokuWiki ${{ env.current_raw }} [${{ env.current_update }}]
           tag_name: release-${{ env.current_version }}

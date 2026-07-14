@@ -52,7 +52,7 @@ class Media extends ApiResponse
         $this->file = mediaFN($this->id, $revision);
         $this->revision = $revision ?: $mtime ?: filemtime($this->file);
         $this->size = $size ?? filesize($this->file);
-        $this->permission = $perms ?? auth_quickaclcheck($this->id);
+        $this->permission = $perms ?? auth_quickaclcheck(mediaAclPath($this->id));
         ;
         $this->isimage = (bool)($isimage ?? preg_match("/\.(jpe?g|gif|png)$/", $id));
         $this->hash = $hash;
@@ -80,7 +80,7 @@ class Media extends ApiResponse
     }
 
     /** @inheritdoc */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->id . '@' . $this->revision;
     }

@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Luna Shirase <fwits@foxmail.com>
+ * @author Haolin Xue <tzbkk@outlook.com>
  * @author Mr_Fang <klxf@vip.qq.com>
  * @author chuachua <oceanynh@gmail.com>
  * @author Xin <chenxin1034@gmail.com>
@@ -21,9 +23,6 @@ $lang['tab_templates']         = '现有模板';
 $lang['tab_search']            = '搜索安装';
 $lang['tab_install']           = '手动安装';
 $lang['notimplemented']        = '未实现的特性';
-$lang['notinstalled']          = '该扩展未安装';
-$lang['alreadyenabled']        = '该扩展已激活';
-$lang['alreadydisabled']       = '该扩展已关闭';
 $lang['pluginlistsaveerror']   = '保存插件列表时出现错误';
 $lang['unknownauthor']         = '未知作者';
 $lang['unknownversion']        = '未知版本';
@@ -39,6 +38,8 @@ $lang['js']['display_viewoptions'] = '查看选项：';
 $lang['js']['display_enabled'] = '启用';
 $lang['js']['display_disabled'] = '禁用';
 $lang['js']['display_updatable'] = '可更新';
+$lang['js']['close']           = '点击关闭';
+$lang['js']['filter']          = '仅显示可更新的插件';
 $lang['search_for']            = '搜索扩展';
 $lang['search']                = '搜索';
 $lang['extensionby']           = '<strong>%s</strong> by %s';
@@ -77,24 +78,30 @@ $lang['msg_enabled']           = '插件 %s 已启用';
 $lang['msg_disabled']          = '插件 %s 已禁用';
 $lang['msg_delete_success']    = '%s 扩展没有安装';
 $lang['msg_delete_failed']     = '卸载扩展 %s 失败';
-$lang['msg_template_install_success'] = '模板 %s 安装成功';
-$lang['msg_template_update_success'] = '模板 %s 更新成功';
-$lang['msg_plugin_install_success'] = '插件 %s 安装成功';
-$lang['msg_plugin_update_success'] = '插件 %s 更新成功';
+$lang['msg_install_success']   = '扩展 %s 安装成功';
+$lang['msg_update_success']    = '扩展 %s 更新成功';
 $lang['msg_upload_failed']     = '上传文件失败';
 $lang['msg_nooverwrite']       = '扩展名 %s 已存在，因此不会被覆盖；要覆盖，请选中覆盖选项。';
 $lang['missing_dependency']    = '缺少或者被禁用的依赖： %s';
+$lang['found_conflict']        = '这个扩展与下面的扩展有冲突：%s';
 $lang['security_issue']        = '安全问题： %s';
 $lang['security_warning']      = '安全警告： %s';
 $lang['update_message']        = '更新提醒： %s';
 $lang['wrong_folder']          = '扩展安装错误：请将扩展目录 "%s" 重命名为 "%s"。';
-$lang['url_change']            = "URL 已改变：自上次下载以来的下载 URL 已经改变。请在更新扩展前检查新 URL 是否有效。\n新的：%s\n旧的：%s";
+$lang['url_change']            = 'URL 已改变：自上次下载以来的下载 URL 已经改变。请在更新扩展前检查新 URL 是否有效。
+新的：%s
+旧的：%s';
 $lang['error_badurl']          = 'URL 应当以 http 或者 https 作为开头';
 $lang['error_dircreate']       = '无法创建用于保存下载的临时文件夹';
 $lang['error_download']        = '无法下载文件：%s';
 $lang['error_decompress']      = '无法解压下载的文件。这可能是由于文件损坏，在这种情况下您可以重试。这也可能是由于压缩格式是未知的，在这种情况下您需要手动下载并且安装。';
 $lang['error_findfolder']      = '无法识别扩展目录，您需要手动下载和安装';
 $lang['error_copy']            = '在尝试安装文件到目录 <em>%s</em> 时出现文件复制错误：可能磁盘已满或文件权限不正确。这可能导致扩展安装不完整，并使您的维基处在不稳定状态';
+$lang['error_copy_read']       = '不能读取目录%s';
+$lang['error_copy_mkdir']      = '不能创建目录%s';
+$lang['error_copy_copy']       = '不能把%s复制到%s';
+$lang['error_archive_read']    = '不能打开压缩文件%s并读取';
+$lang['error_archive_extract'] = '不能解压压缩文件%s：%s';
 $lang['noperms']               = '扩展目录不可写';
 $lang['notplperms']            = '模板目录不可写';
 $lang['nopluginperms']         = '插件目录不可写';
@@ -105,3 +112,7 @@ $lang['install_upload']        = '上传扩展：';
 $lang['repo_badresponse']      = '插件库返回无效响应。';
 $lang['repo_error']            = '无法连接到扩展库。请确定您的服务器可以连接 www.dokuwiki.org 并检查您的代理设置。';
 $lang['nossl']                 = '您的 PHP 似乎不支持 SSL，这将导致无法下载多数 DokuWiki 扩展。';
+$lang['popularity_high']       = '这是最流行的扩展之一';
+$lang['popularity_medium']     = '这个扩展很流行';
+$lang['popularity_low']        = '这个扩展得到了少许兴趣';
+$lang['details']               = '详细信息';

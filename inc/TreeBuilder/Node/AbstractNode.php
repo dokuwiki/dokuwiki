@@ -5,7 +5,7 @@ namespace dokuwiki\TreeBuilder\Node;
 /**
  * A node represents one entry in the tree. It can have a parent and children.
  */
-abstract class AbstractNode
+abstract class AbstractNode implements \Stringable
 {
     /** @var AbstractNode|null parent node */
     protected ?AbstractNode $parent = null;

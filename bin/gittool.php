@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use dokuwiki\plugin\extension\Extension;
+use dokuwiki\plugin\extension\Installer;
 use splitbrain\phpcli\CLI;
 use splitbrain\phpcli\Options;
 
@@ -47,6 +49,13 @@ class GitToolCLI extends CLI
             true,
             'clone'
         );
+        $options->registerOption(
+            'prefer-https',
+            'Prefer HTTPS over SSH for cloning (default: try SSH first, fallback to HTTPS)',
+            false,
+            false,
+            'clone'
+        );
 
         $options->registerCommand(
             'install',
@@ -57,6 +66,13 @@ class GitToolCLI extends CLI
             'extension',
             'name of the extension to install, prefix with \'template:\' for templates',
             true,
+            'install'
+        );
+        $options->registerOption(
+            'prefer-https',
+            'Prefer HTTPS over SSH for cloning (default: try SSH first, fallback to HTTPS)',
+            false,
+            false,
             'install'
         );
 
@@ -91,10 +107,10 @@ class GitToolCLI extends CLI
                 echo $options->help();
                 break;
             case 'clone':
-                $this->cmdClone($args);
+                $this->cmdClone($args, $options->getOpt('prefer-https'));
                 break;
             case 'install':
-                $this->cmdInstall($args);
+                $this->cmdInstall($args, $options->getOpt('prefer-https'));
                 break;
             case 'repo':
             case 'repos':
@@ -109,8 +125,9 @@ class GitToolCLI extends CLI
      * Tries to install the given extensions using git clone
      *
      * @param array $extensions
+     * @param bool $preferHttps
      */
-    public function cmdClone($extensions)
+    public function cmdClone($extensions, $preferHttps = false)
     {
         $errors = [];
         $succeeded = [];
@@ -121,7 +138,7 @@ class GitToolCLI extends CLI
             if (!$repo) {
                 $this->error("could not find a repository for $ext");
                 $errors[] = $ext;
-            } elseif ($this->cloneExtension($ext, $repo)) {
+            } elseif ($this->cloneExtension($ext, $repo, $preferHttps)) {
                 $succeeded[] = $ext;
             } else {
                 $errors[] = $ext;
@@ -137,8 +154,9 @@ class GitToolCLI extends CLI
      * Tries to install the given extensions using git clone with fallback to install
      *
      * @param array $extensions
+     * @param bool $preferHttps
      */
-    public function cmdInstall($extensions)
+    public function cmdInstall($extensions, $preferHttps = false)
     {
         $errors = [];
         $succeeded = [];
@@ -148,12 +166,18 @@ class GitToolCLI extends CLI
 
             if (!$repo) {
                 $this->info("could not find a repository for $ext");
-                if ($this->downloadExtension($ext)) {
+
+                try {
+                    $installer = new Installer();
+                    $this->info("installing $ext via download");
+                    $installer->installFromId($ext);
+                    $this->success("installed $ext via download");
                     $succeeded[] = $ext;
-                } else {
+                } catch (\Exception) {
+                    $this->error("failed to install $ext via download");
                     $errors[] = $ext;
                 }
-            } elseif ($this->cloneExtension($ext, $repo)) {
+            } elseif ($this->cloneExtension($ext, $repo, $preferHttps)) {
                 $succeeded[] = $ext;
             } else {
                 $errors[] = $ext;
@@ -176,7 +200,7 @@ class GitToolCLI extends CLI
         $repos = $this->findRepos();
 
         $shell = array_merge(['git', $cmd], $arg);
-        $shell = array_map('escapeshellarg', $shell);
+        $shell = array_map(escapeshellarg(...), $shell);
         $shell = implode(' ', $shell);
 
         foreach ($repos as $repo) {
@@ -209,50 +233,14 @@ class GitToolCLI extends CLI
     }
 
     /**
-     * Install extension from the given download URL
-     *
-     * @param string $ext
-     * @return bool|null
-     */
-    private function downloadExtension($ext)
-    {
-        /** @var helper_plugin_extension_extension $plugin */
-        $plugin = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
-
-        $plugin->setExtension($ext);
-
-        $url = $plugin->getDownloadURL();
-        if (!$url) {
-            $this->error("no download URL for $ext");
-            return false;
-        }
-
-        $ok = false;
-        try {
-            $this->info("installing $ext via download from $url");
-            $ok = $plugin->installFromURL($url);
-        } catch (Exception $e) {
-            $this->error($e->getMessage());
-        }
-
-        if ($ok) {
-            $this->success("installed $ext via download");
-            return true;
-        } else {
-            $this->success("failed to install $ext via download");
-            return false;
-        }
-    }
-
-    /**
      * Clones the extension from the given repository
      *
      * @param string $ext
      * @param string $repo
+     * @param bool $preferHttps
      * @return bool
      */
-    private function cloneExtension($ext, $repo)
+    private function cloneExtension($ext, $repo, $preferHttps = false)
     {
         if (str_starts_with($ext, 'template:')) {
             $target = fullpath(tpl_incdir() . '../' . substr($ext, 9));
@@ -260,9 +248,22 @@ class GitToolCLI extends CLI
             $target = DOKU_PLUGIN . $ext;
         }
 
-        $this->info("cloning $ext from $repo to $target");
-        $ret = 0;
-        system("git clone $repo $target", $ret);
+        $ret = -1;
+
+        // try SSH clone first, unless the user prefers HTTPS
+        if (!$preferHttps) {
+            $sshUrl = $this->httpsToSshUrl($repo);
+            $this->info("cloning $ext from $sshUrl");
+            system("git clone $sshUrl $target", $ret);
+            if ($ret !== 0) $this->info("SSH clone failed, trying HTTPS: $repo");
+        }
+
+        // try HTTPS clone
+        if ($ret !== 0) {
+            $this->info("cloning $ext from $repo");
+            system("git clone $repo $target", $ret);
+        }
+
         if ($ret === 0) {
             $this->success("cloning of $ext succeeded");
             return true;
@@ -270,6 +271,22 @@ class GitToolCLI extends CLI
             $this->error("cloning of $ext failed");
             return false;
         }
+    }
+
+    /**
+     * Convert a HTTPS repo URL to an SSH URL if possible
+     *
+     * @return string
+     */
+    private function httpsToSshUrl($url)
+    {
+        if (preg_match('/(github\.com|bitbucket\.org|gitorious\.org)\/([^\/]+)\/([^\/]+)/i', $url, $m)) {
+            $host = $m[1];
+            $user = $m[2];
+            $repo = $m[3];
+            return "git@$host:$user/$repo";
+        }
+        return $url;
     }
 
     /**
@@ -293,25 +310,21 @@ class GitToolCLI extends CLI
         } else {
             $this->success('Found ' . count($data) . ' .git directories');
         }
-        $data = array_map('fullpath', array_map('dirname', $data));
+        $data = array_map(fullpath(...), array_map(dirname(...), $data));
         return $data;
     }
 
     /**
      * Returns the repository for the given extension
      *
-     * @param $extension
+     * @param string $extensionId
      * @return false|string
      */
-    private function getSourceRepo($extension)
+    private function getSourceRepo($extensionId)
     {
-        /** @var helper_plugin_extension_extension $ext */
-        $ext = plugin_load('helper', 'extension_extension');
-        if (!$ext) die("extension plugin not available, can't continue");
+        $extension = Extension::createFromId($extensionId);
 
-        $ext->setExtension($extension);
-
-        $repourl = $ext->getSourcerepoURL();
+        $repourl = $extension->getSourcerepoURL();
         if (!$repourl) return false;
 
         // match github repos

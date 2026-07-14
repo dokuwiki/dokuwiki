@@ -12,6 +12,9 @@ use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
+use dokuwiki\Search\Exception\IndexIntegrityException;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Utf8;
 use dokuwiki\Utf8\PhpString;
 
 if (!defined('DOKU_MESSAGEURL')) {
@@ -89,12 +92,15 @@ function getVersionData()
         $version['type'] = 'Git';
         $version['date'] = 'unknown';
 
-        // First try to get date and commit hash by calling Git
+        // First try to get date and commit hash by calling Git. The
+        // --pretty=reference format ("hash (subject, date)") avoids percent
+        // placeholders, which escapeshellarg() turns into spaces on Windows.
         if (function_exists('shell_exec')) {
-            $commitInfo = shell_exec("git log -1 --pretty=format:'%h %cd' --date=short");
-            if ($commitInfo) {
-                [$version['sha'], $date] = explode(' ', $commitInfo);
-                $version['date'] = hsc($date);
+            $args = ['git', 'log', '-1', '--pretty=reference'];
+            $commitInfo = shell_exec(implode(' ', array_map(escapeshellarg(...), $args)));
+            if (preg_match('/^([0-9a-f]{7,40}) \(.*, (\d{4}-\d{2}-\d{2})\)$/', trim((string)$commitInfo), $m)) {
+                $version['sha'] = $m[1];
+                $version['date'] = $m[2];
                 return $version;
             }
         }
@@ -102,7 +108,7 @@ function getVersionData()
         // we cannot use git on the shell -- let's do it manually!
         if (file_exists(DOKU_INC . '.git/HEAD')) {
             $headCommit = trim(file_get_contents(DOKU_INC . '.git/HEAD'));
-            if (strpos($headCommit, 'ref: ') === 0) {
+            if (str_starts_with($headCommit, 'ref: ')) {
                 // it is something like `ref: refs/heads/master`
                 $headCommit = substr($headCommit, 5);
                 $pathToHead = DOKU_INC . '.git/' . $headCommit;
@@ -199,7 +205,7 @@ function getRuntimeVersions()
  */
 function getOsRelease()
 {
-    $reader = fn($file) => @parse_ini_string(preg_replace('/#.*$/m', '', file_get_contents($file)));
+    $reader = fn($file) => @parse_ini_string(preg_replace('/^\s*#.*$/m', '', file_get_contents($file))) ?: [];
 
     $osRelease = [];
     if (@file_exists('/etc/os-release')) {
@@ -212,10 +218,14 @@ function getOsRelease()
         $osRelease['NAME'] = 'Synology DSM';
         $osRelease['ID'] = 'synology';
         $osRelease['ID_LIKE'] = 'linux';
-        $osRelease['VERSION_ID'] = $synoVersion['productversion'];
-        $osRelease['VERSION'] = $synoVersion['productversion'];
-        $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'];
-        $osRelease['PRETTY_NAME'] = implode(' ', [$osRelease['NAME'], $osRelease['VERSION'], $osRelease['SYNO_MODEL']]);
+        $osRelease['VERSION_ID'] = $synoVersion['productversion'] ?? '';
+        $osRelease['VERSION'] = $synoVersion['productversion'] ?? '';
+        $osRelease['SYNO_MODEL'] = $synoInfo['upnpmodelname'] ?? '';
+        $osRelease['PRETTY_NAME'] = trim(implode(' ', [
+            $osRelease['NAME'],
+            $osRelease['VERSION'],
+            $osRelease['SYNO_MODEL']
+        ]));
     }
     return $osRelease;
 }
@@ -235,12 +245,12 @@ function check()
 
     if ($INFO['isadmin'] || $INFO['ismanager']) {
         msg('DokuWiki version: ' . getVersion(), 1);
-        if (version_compare(phpversion(), '7.4.0', '<')) {
-            msg('Your PHP version is too old (' . phpversion() . ' vs. 7.4+ needed)', -1);
+        if (version_compare(phpversion(), '8.2.0', '<')) {
+            msg('Your PHP version is too old (' . phpversion() . ' vs. 8.2+ needed)', -1);
         } else {
             msg('PHP version ' . phpversion(), 1);
         }
-    } elseif (version_compare(phpversion(), '7.4.0', '<')) {
+    } elseif (version_compare(phpversion(), '8.2.0', '<')) {
         msg('Your PHP version is too old', -1);
     }
 
@@ -303,9 +313,6 @@ function check()
             msg('mb_string extension is available but will not be used', 0);
         } else {
             msg('mb_string extension is available and will be used', 1);
-            if (ini_get('mbstring.func_overload') != 0) {
-                msg('mb_string function overloading is enabled, this will cause problems and should be disabled', -1);
-            }
         }
     } else {
         msg('mb_string extension not available - PHP only replacements will be used', 0);
@@ -362,38 +369,26 @@ function check()
     }
 
     // Check for corrupted search index
-    $lengths = idx_listIndexLengths();
-    $index_corrupted = false;
-    foreach ($lengths as $length) {
-        if (count(idx_getIndex('w', $length)) !== count(idx_getIndex('i', $length))) {
-            $index_corrupted = true;
-            break;
+    $indexer = new Indexer();
+    try {
+        $indexer->checkIntegrity();
+        if (!$indexer->isIndexEmpty()) {
+            msg('The search index seems to be working', 1);
+        } else {
+            msg(
+                'The search index is empty. See
+                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
+                for help on how to fix the search index. If the default indexer
+                isn\'t used or the wiki is actually empty this is normal.'
+            );
         }
-    }
-
-    foreach (idx_getIndex('metadata', '') as $index) {
-        if (count(idx_getIndex($index . '_w', '')) !== count(idx_getIndex($index . '_i', ''))) {
-            $index_corrupted = true;
-            break;
-        }
-    }
-
-    if ($index_corrupted) {
+    } catch (IndexIntegrityException) {
         msg(
             'The search index is corrupted. It might produce wrong results and most
                 probably needs to be rebuilt. See
                 <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
                 for ways to rebuild the search index.',
             -1
-        );
-    } elseif (!empty($lengths)) {
-        msg('The search index seems to be working', 1);
-    } else {
-        msg(
-            'The search index is empty. See
-                <a href="https://www.dokuwiki.org/faq:searchindex">faq:searchindex</a>
-                for help on how to fix the search index. If the default indexer
-                isn\'t used or the wiki is actually empty this is normal.'
         );
     }
 
@@ -402,6 +397,7 @@ function check()
     $http->max_redirect = 0;
     $http->timeout = 3;
     $http->sendRequest('https://www.dokuwiki.org', '', 'HEAD');
+
     $now = time();
     if (isset($http->resp_headers['date'])) {
         $time = strtotime($http->resp_headers['date']);
@@ -549,7 +545,7 @@ function dbglog($msg, $header = '')
     dbg_deprecated('\\dokuwiki\\Logger');
 
     // was the msg as single line string? use it as header
-    if ($header === '' && is_string($msg) && strpos($msg, "\n") === false) {
+    if ($header === '' && is_string($msg) && !str_contains($msg, "\n")) {
         $header = $msg;
         $msg = '';
     }
@@ -603,7 +599,7 @@ function dbg_backtrace()
         if (isset($call['args'])) {
             foreach ($call['args'] as $arg) {
                 if (is_object($arg)) {
-                    $params[] = '[Object ' . get_class($arg) . ']';
+                    $params[] = '[Object ' . $arg::class . ']';
                 } elseif (is_array($arg)) {
                     $params[] = '[Array]';
                 } elseif (is_null($arg)) {

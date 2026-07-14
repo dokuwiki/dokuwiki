@@ -1,3 +1,4 @@
 ===== Felhasználói adatok megváltoztatása =====
 
-Csak azt a mezőt kell kitöltened, amit változtatni szeretnél. A felhasználói nevet nem lehet megváltoztatni.
+
+Csak a megváltoztatni kívánt mezőket töltsd ki. A felhasználónév nem változtatható meg.

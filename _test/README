@@ -58,3 +58,23 @@ To automatically fix code smells
 
 To learn more about PHP CodeSniffer visit https://www.dokuwiki.org/devel:rector
 
+
+===== 32-bit =====
+
+PHP 9 may drop 32bit support. Security updates for 8.4 end on 2028-12-31. See https://wiki.php.net/rfc/drop_32bit_support and https://www.php.net/supported-versions.php
+
+In the meantime, 32-bit containers (''--platform linux/386'') can provide testing for 64bit hosts. NB. The more approprate ''php:8.3.26RC1-zts-alpine3.21'' does not have `bcmath` need by `bitmask64On32` (../inc/Ip32.php); `wpstaging/php:8.3-32bit` is one container that does include the library.
+
+After local ''composer install''
+
+  podman run -v $PWD/..:/dokuwiki \
+    \--platform linux/386 --workdir /dokuwiki/_test  \
+    docker://wpstaging/php:8.3-32bit \
+    ./vendor/bin/phpunit --verbose --stderr \
+    # --filter test_ip
+
+<!-- emacs file-local settings
+Local Variables:
+mode: dokuwiki
+End:
+-->

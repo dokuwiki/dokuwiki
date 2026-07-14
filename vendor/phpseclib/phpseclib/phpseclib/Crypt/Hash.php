@@ -194,6 +194,15 @@ class Hash
     private static $maxwordrange128;
     /**#@-*/
 
+    /**#@+
+     * AES_CMAC variables
+     *
+     * @var string
+     */
+    private $k1;
+    private $k2;
+    /**#@-*/
+
     /**
      * Default Constructor.
      *
@@ -286,7 +295,7 @@ class Hash
     public function setHash($hash)
     {
         $oldHash = $this->hashParam;
-        $this->hashParam = $hash = strtolower($hash);
+        $this->hashParam = $hash = strtolower(str_replace('/', '-', $hash));
         switch ($hash) {
             case 'umac-32':
             case 'umac-64':
@@ -299,6 +308,14 @@ class Hash
                 $this->length = abs(substr($hash, -3)) >> 3;
                 $this->algo = 'umac';
                 return;
+            case 'aes_cmac':
+                if ($oldHash != $this->hashParam) {
+                    $this->recomputeAESKey = true;
+                }
+                $this->blockSize = 128;
+                $this->length = 16;
+                $this->algo = 'aes_cmac';
+                return;
             case 'md2-96':
             case 'md5-96':
             case 'sha1-96':
@@ -306,8 +323,8 @@ class Hash
             case 'sha256-96':
             case 'sha384-96':
             case 'sha512-96':
-            case 'sha512/224-96':
-            case 'sha512/256-96':
+            case 'sha512-224-96':
+            case 'sha512-256-96':
                 $hash = substr($hash, 0, -3);
                 $this->length = 12; // 96 / 8 = 12
                 break;
@@ -319,7 +336,7 @@ class Hash
                 $this->length = 20;
                 break;
             case 'sha224':
-            case 'sha512/224':
+            case 'sha512-224':
             case 'sha3-224':
                 $this->length = 28;
                 break;
@@ -327,7 +344,7 @@ class Hash
                 $this->paddingType = self::PADDING_KECCAK;
                 // fall-through
             case 'sha256':
-            case 'sha512/256':
+            case 'sha512-256':
             case 'sha3-256':
                 $this->length = 32;
                 break;
@@ -407,12 +424,12 @@ class Hash
             }
         }
 
-        if ($hash == 'sha512/224' || $hash == 'sha512/256') {
+        if ($hash == 'sha512-224' || $hash == 'sha512-256') {
             // PHP 7.1.0 introduced sha512/224 and sha512/256 support:
             // http://php.net/ChangeLog-7.php#7.1.0
             if (version_compare(PHP_VERSION, '7.1.0') < 0) {
                 // from http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf#page=24
-                $initial = $hash == 'sha512/256' ?
+                $initial = $hash == 'sha512-256' ?
                     [
                         '22312194FC2BF72C', '9F555FA3C84C64C2', '2393B86B6F53B151', '963877195940EABD',
                         '96283EE2A88EFFE3', 'BE5E1E2553863992', '2B0199FC2C85B8AA', '0EB72DDC81C52CA2'
@@ -440,6 +457,15 @@ class Hash
             $b = $this->blockSize >> 3;
             $this->ipad = str_repeat(chr(0x36), $b);
             $this->opad = str_repeat(chr(0x5C), $b);
+        }
+
+        // PHP's built in hash function does sha3-256 but sha512/256 so we'll update those accordingly
+        switch ($hash) {
+            case 'sha512-224':
+                $hash = 'sha512/224';
+                break;
+            case 'sha512-256':
+                $hash = 'sha512/256';
         }
 
         $this->algo = $hash;
@@ -977,6 +1003,69 @@ class Hash
     public function hash($text)
     {
         $algo = $this->algo;
+        // https://www.rfc-editor.org/rfc/rfc4493.html
+        // https://en.wikipedia.org/wiki/One-key_MAC
+        if ($algo == 'aes_cmac') {
+            $constZero = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
+            if ($this->recomputeAESKey) {
+                if (!is_string($this->key)) {
+                    throw new InsufficientSetupException('No key has been set');
+                }
+                if (strlen($this->key) != 16) {
+                    throw new \LengthException('Key must be 16 bytes long');
+                }
+                // Algorithm Generate_Subkey
+                $constRb = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x87";
+                $this->c = new AES('ecb');
+                $this->c->setKey($this->key);
+                $this->c->disablePadding();
+                $l = $this->c->encrypt($constZero);
+                $msb = ($l & "\x80") == "\x80";
+                $l = new BigInteger($l, 256);
+                $l->setPrecision(128);
+                $l = $l->bitwise_leftShift(1)->toBytes();
+                // make it constant time
+                $k1 = $msb ? $l ^ $constRb : $l | $constZero;
+
+                $msb = ($k1 & "\x80") == "\x80";
+                $k2 = new BigInteger($k1, 256);
+                $k2->setPrecision(128);
+                $k2 = $k2->bitwise_leftShift(1)->toBytes();
+                // make it constant time
+                $k2 = $msb ? $k2 ^ $constRb : $k2 | $constZero;
+
+                $this->k1 = $k1;
+                $this->k2 = $k2;
+            }
+
+            $len = strlen($text);
+            $const_Bsize = 16;
+            $M = strlen($text) ? str_split($text, $const_Bsize) : [''];
+
+            // Step 2
+            $n = ceil($len / $const_Bsize);
+            // Step 3
+            if ($n == 0) {
+                $n = 1;
+                $flag = false;
+            } else {
+                $flag = $len % $const_Bsize == 0;
+            }
+            // Step 4
+            $M_last = $flag ?
+                $M[$n - 1] ^ $k1 :
+                self::OMAC_padding($M[$n - 1], $const_Bsize) ^ $k2;
+            // Step 5
+            $x = $constZero;
+            // Step 6
+            $c = &$this->c;
+            for ($i = 0; $i < $n - 1; $i++) {
+                $y = $x ^ $M[$i];
+                $x = $c->encrypt($y);
+            }
+            $y = $M_last ^ $x;
+            return $c->encrypt($y);
+        }
         if ($algo == 'umac') {
             if ($this->recomputeAESKey) {
                 if (!is_string($this->nonce)) {
@@ -1788,6 +1877,17 @@ class Hash
         // Produce the final hash value (big-endian)
         // (\phpseclib3\Crypt\Hash::hash() trims the output for hashes but not for HMACs.  as such, we trim the output here)
         return pack('J*', ...$hash);
+    }
+
+    /**
+     *  OMAC Padding
+     *
+     * @link https://www.rfc-editor.org/rfc/rfc4493.html#section-2.4
+     */
+    private static function OMAC_padding($m, $length)
+    {
+        $count = $length - strlen($m) - 1;
+        return "$m\x80" . str_repeat("\0", $count);
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace dokuwiki\Extension;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\ParserMode\Plugin;
-use Doku_Handler;
 use Doku_Renderer;
 
 /**
@@ -17,8 +17,6 @@ use Doku_Renderer;
  */
 abstract class SyntaxPlugin extends Plugin
 {
-    protected $allowedModesSetup = false;
-
     /**
      * Syntax Type
      *
@@ -72,10 +70,10 @@ abstract class SyntaxPlugin extends Plugin
      * @param   string $match The text matched by the patterns
      * @param   int $state The lexer state for the match
      * @param   int $pos The character position of the matched text
-     * @param   Doku_Handler $handler The Doku_Handler object
+     * @param   Handler $handler The Handler object
      * @return  bool|array Return an array with all data you want to use in render, false don't add an instruction
      */
-    abstract public function handle($match, $state, $pos, Doku_Handler $handler);
+    abstract public function handle($match, $state, $pos, Handler $handler);
 
     /**
      * Handles the actual output creation.
@@ -103,29 +101,23 @@ abstract class SyntaxPlugin extends Plugin
     abstract public function render($format, Doku_Renderer $renderer, $data);
 
     /**
-     *  There should be no need to override this function
+     * The categories a plugin allows nested are declared via getAllowedTypes().
      *
-     * @param string $mode
-     * @return bool
+     * @inheritdoc
      */
-    public function accepts($mode)
+    protected function allowedCategories(): array
     {
+        return $this->getAllowedTypes();
+    }
 
-        if (!$this->allowedModesSetup) {
-            global $PARSER_MODES;
-
-            $allowedModeTypes = $this->getAllowedTypes();
-            foreach ($allowedModeTypes as $mt) {
-                $this->allowedModes = array_merge($this->allowedModes, $PARSER_MODES[$mt]);
-            }
-
-            $idx = array_search(substr(get_class($this), 7), (array)$this->allowedModes, true);
-            if ($idx !== false) {
-                unset($this->allowedModes[$idx]);
-            }
-            $this->allowedModesSetup = true;
-        }
-
-        return parent::accepts($mode);
+    /**
+     * Exclude the plugin's own mode so it cannot nest inside itself.
+     *
+     * @inheritdoc
+     */
+    protected function filterAllowedModes(array $modes): array
+    {
+        $self = substr(static::class, 7);
+        return array_values(array_filter($modes, static fn($mode) => $mode !== $self));
     }
 }

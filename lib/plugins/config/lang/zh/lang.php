@@ -182,7 +182,6 @@ $lang['search_fragment_o_exact'] = '精确';
 $lang['search_fragment_o_starts_with'] = '开头为';
 $lang['search_fragment_o_ends_with'] = '结尾为';
 $lang['search_fragment_o_contains'] = '包含';
-$lang['trustedproxy']          = '信任转发代理与其正则表达式有关系，显示的是真实的客户端IP。默认匹配本地网络。留空则不选择任何代理。';
 $lang['_feature_flags']        = '功能标志';
 $lang['defer_js']              = '推迟在页面HTML解析后执行的JavaScript。提高了页面的感知速度，但可能会破坏少量插件。';
 $lang['hidewarnings']          = '不显示 PHP 发出的任何警告。这可以简化到 PHP8+ 的转换。警告仍将记录在错误日志中，并应报告。';

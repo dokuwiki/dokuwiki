@@ -313,7 +313,6 @@ $lang['i_modified']            = 'For sikkerhets skyld vil dette skriptet bare v
                          <a href="https://www.dokuwiki.org/install">Dokuwiki-installasjonsinstruksen</a>';
 $lang['i_funcna']              = 'PHP-funksjonen <code>%s</code> er ikke tilgjengelig. Kanskje din nettleverandør har deaktivert denne?';
 $lang['i_phpver']              = 'Din PHP versjon <code>%s</code> er lavere enn kravet <code>%s</code>. Du må oppgradere PHP installasjonen. ';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload må deaktiveres i php.ini for å kjøre DokuWiki.';
 $lang['i_permfail']            = '<code>%s</code> er ikke skrivbar for DokuWiki. Du må fikse rettighetene for denne mappen!';
 $lang['i_confexists']          = '<code>%s</code> eksisterer allerede';
 $lang['i_writeerr']            = 'Kunne ikke opprette <code>%s</code>. Du må sjekke mappe-/filrettigheter og opprette filen manuelt.';

@@ -3,7 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Schplurtz le Déboulonné <schplurtz@laposte.net>
+ * @author Schplurtz le Déboulonné <Schplurtz@laposte.net>
  * @author Jérémy Just <jeremy@jejust.fr>
  * @author Olivier Humbert <trebmuh@tuxfamily.org>
  * @author Philippe Verbeke <ph.verbeke@gmail.com>
@@ -151,6 +151,12 @@ $lang['js']['media_drop']      = 'Déposez des fichiers ici pour les envoyer';
 $lang['js']['media_cancel']    = 'supprimer';
 $lang['js']['media_overwrt']   = 'Écraser les fichiers existants';
 $lang['js']['data_insecure']   = 'ATTENTION : votre dossier de données ne semble pas correctement sécurisé. Veuillez lire <a href="https://www.dokuwiki.org/fr:security#securite_de_l_acces_web">Sécurité de l\'accès web (en français)</a> ou <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki (en anglais)</a>.';
+$lang['js']['size_larger']     = 'Élargir le champ';
+$lang['js']['size_smaller']    = 'Rétrécir le champ';
+$lang['js']['size_wrap']       = 'Retour auto';
+$lang['js']['clipboard_button'] = 'Copier';
+$lang['js']['clipboard_success'] = 'Copié !';
+$lang['js']['clipboard_error'] = 'Échec de la copie';
 $lang['search_exact_match']    = 'Correspondance exacte';
 $lang['search_starts_with']    = 'Commence par';
 $lang['search_ends_with']      = 'Se termine par';
@@ -342,7 +348,6 @@ $lang['i_funcna']              = 'La fonction PHP <code>%s</code> n\'est pas dis
 $lang['i_disabled']            = 'Elle a été désactivée par votre hébergeur';
 $lang['i_funcnmail']           = '<b>Note :</b> La fonction PHP mail n\'est pas disponible. %s Si vous ne pouvez pas l\'activer, vous pourriez installer le <a href="https://www.dokuwiki.org/plugin:smtp">greffon smtp</a>.';
 $lang['i_phpver']              = 'Votre version de PHP (%s) est antérieure à la version requise (%s). Vous devez mettre à jour votre installation de PHP.';
-$lang['i_mbfuncoverload']      = 'Il faut désactiver mbstring.func_overload dans php.ini pour DokuWiki';
 $lang['i_urandom']             = 'DokuWiki ne peut créer de nombres cryptographiquement sûrs pour les cookies. Vous voudrez peut-être vérifier que le réglage open_basedir dans php.ini permet l\'accès à <code>/dev/urandom</code>.';
 $lang['i_permfail']            = '<code>%s</code> n\'est pas accessible en écriture pour DokuWiki. Vous devez corriger les autorisations de ce dossier !';
 $lang['i_confexists']          = '<code>%s</code> existe déjà';

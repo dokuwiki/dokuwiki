@@ -5,7 +5,6 @@ namespace dokuwiki\Action;
 use dokuwiki\Ui\UserRegister;
 use dokuwiki\Action\Exception\ActionAbort;
 use dokuwiki\Action\Exception\ActionDisabledException;
-use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Ui;
 
 /**
@@ -28,11 +27,8 @@ class Register extends AbstractAclAction
     {
         parent::checkPreconditions();
 
-        /** @var AuthPlugin $auth */
-        global $auth;
-        global $conf;
-        if (isset($conf['openregister']) && !$conf['openregister']) throw new ActionDisabledException();
-        if (!$auth->canDo('addUser')) throw new ActionDisabledException();
+        // actionOK() bundles the disableactions, legacy openregister and addUser capability checks
+        if (!actionOK('register')) throw new ActionDisabledException();
     }
 
     /** @inheritdoc */

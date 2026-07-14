@@ -2,8 +2,17 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
-class File extends AbstractMode
+class File extends Code
 {
+    /** @var string The call type used in addCall ('code' or 'file') */
+    protected $type = 'file';
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 210;
+    }
+
     /** @inheritdoc */
     public function connectTo($mode)
     {
@@ -14,11 +23,5 @@ class File extends AbstractMode
     public function postConnect()
     {
         $this->Lexer->addExitPattern('</file>', 'file');
-    }
-
-    /** @inheritdoc */
-    public function getSort()
-    {
-        return 210;
     }
 }

@@ -660,60 +660,29 @@ class JpegMeta {
         $earliestTime = time();
         $earliestTimeSource = "";
 
-        if (@isset($this->_info['exif']['DateTime'])) {
-            $dates['ExifDateTime'] = $this->_info['exif']['DateTime'];
+        $exifDateFields = array(
+            'DateTime' => 'ExifDateTime',
+            'DateTimeOriginal' => 'ExifDateTimeOriginal',
+            'DateTimeDigitized' => 'ExifDateTimeDigitized',
+        );
 
-            $aux = $this->_info['exif']['DateTime'];
-            $aux[4] = "-";
-            $aux[7] = "-";
-            $t = strtotime($aux);
-
-            if ($t && $t > $latestTime) {
-                $latestTime = $t;
-                $latestTimeSource = "ExifDateTime";
+        foreach ($exifDateFields as $field => $source) {
+            if (!isset($this->_info['exif'][$field])) {
+                continue;
             }
 
-            if ($t && $t < $earliestTime) {
-                $earliestTime = $t;
-                $earliestTimeSource = "ExifDateTime";
-            }
-        }
+            $dates[$source] = $this->_info['exif'][$field];
 
-        if (@isset($this->_info['exif']['DateTimeOriginal'])) {
-            $dates['ExifDateTimeOriginal'] = $this->_info['exif']['DateTimeOriginal'];
+            foreach ($this->parseExifDateTime($this->_info['exif'][$field]) as $t) {
+                if ($t && $t > $latestTime) {
+                    $latestTime = $t;
+                    $latestTimeSource = $source;
+                }
 
-            $aux = $this->_info['exif']['DateTimeOriginal'];
-            $aux[4] = "-";
-            $aux[7] = "-";
-            $t = strtotime($aux);
-
-            if ($t && $t > $latestTime) {
-                $latestTime = $t;
-                $latestTimeSource = "ExifDateTimeOriginal";
-            }
-
-            if ($t && $t < $earliestTime) {
-                $earliestTime = $t;
-                $earliestTimeSource = "ExifDateTimeOriginal";
-            }
-        }
-
-        if (@isset($this->_info['exif']['DateTimeDigitized'])) {
-            $dates['ExifDateTimeDigitized'] = $this->_info['exif']['DateTimeDigitized'];
-
-            $aux = $this->_info['exif']['DateTimeDigitized'];
-            $aux[4] = "-";
-            $aux[7] = "-";
-            $t = strtotime($aux);
-
-            if ($t && $t > $latestTime) {
-                $latestTime = $t;
-                $latestTimeSource = "ExifDateTimeDigitized";
-            }
-
-            if ($t && $t < $earliestTime) {
-                $earliestTime = $t;
-                $earliestTimeSource = "ExifDateTimeDigitized";
+                if ($t && $t < $earliestTime) {
+                    $earliestTime = $t;
+                    $earliestTimeSource = $source;
+                }
             }
         }
 
@@ -762,6 +731,36 @@ class JpegMeta {
         $dates['LatestTimeStr'] = date("Y-m-d H:i:s", $latestTime);
 
         return $dates;
+    }
+
+    /**
+     * Parse one or more EXIF date strings to unix timestamps
+     *
+     * EXIF tags can occur multiple times in different IFDs. In that case the
+     * metadata parser stores the field as an array of values.
+     *
+     * @return int[]
+     */
+    protected function parseExifDateTime(string|array $value): array {
+        $timestamps = [];
+        foreach ((array) $value as $date) {
+            if (is_array($date) && isset($date['val'])) {
+                $date = $date['val'];
+            }
+
+            if (!is_string($date) || strlen($date) < 10) {
+                continue;
+            }
+
+            $date[4] = '-';
+            $date[7] = '-';
+            $timestamp = strtotime($date);
+            if ($timestamp) {
+                $timestamps[] = $timestamp;
+            }
+        }
+
+        return $timestamps;
     }
 
     /**
@@ -1431,7 +1430,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE0) {
+                if ($this->_markers[$i]['marker'] == 0xE0
+                    && strlen($this->_markers[$i]['data']) >= 4) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 4);
                     if ($signature == 'JFIF') {
                         $data =& $this->_markers[$i]['data'];
@@ -1570,7 +1570,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE1) {
+                if ($this->_markers[$i]['marker'] == 0xE1
+                    && strlen($this->_markers[$i]['data']) >= 29) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 29);
                     if ($signature == "http://ns.adobe.com/xap/1.0/\0") {
                         $data = substr($this->_markers[$i]['data'], 29);
@@ -1677,7 +1678,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xE1) {
+                if ($this->_markers[$i]['marker'] == 0xE1
+                    && strlen($this->_markers[$i]['data']) >= 6) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
                     if ($signature == "Exif\0\0") {
                         $data =& $this->_markers[$i]['data'];
@@ -1958,7 +1960,8 @@ class JpegMeta {
         $data = null;
         $count = count($this->_markers);
         for ($i = 0; $i < $count; $i++) {
-            if ($this->_markers[$i]['marker'] == 0xE1) {
+            if ($this->_markers[$i]['marker'] == 0xE1
+                && strlen($this->_markers[$i]['data']) >= 6) {
                 $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 6);
                 if ($signature == "Exif\0\0") {
                     $data =& $this->_markers[$i]['data'];
@@ -2420,7 +2423,8 @@ class JpegMeta {
             $data = null;
             $count = count($this->_markers);
             for ($i = 0; $i < $count; $i++) {
-                if ($this->_markers[$i]['marker'] == 0xED) {
+                if ($this->_markers[$i]['marker'] == 0xED
+                    && strlen($this->_markers[$i]['data']) >= 14) {
                     $signature = $this->_getFixedString($this->_markers[$i]['data'], 0, 14);
                     if ($signature == "Photoshop 3.0\0") {
                         $data =& $this->_markers[$i]['data'];

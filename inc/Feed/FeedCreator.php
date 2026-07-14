@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Feed;
 
+use dokuwiki\Search\FulltextSearch;
 use dokuwiki\Extension\Event;
 
 class FeedCreator
@@ -36,19 +37,12 @@ class FeedCreator
      */
     public function build()
     {
-        switch ($this->options->get('feed_mode')) {
-            case 'list':
-                $items = $this->fetchItemsFromNamespace();
-                break;
-            case 'search':
-                $items = $this->fetchItemsFromSearch();
-                break;
-            case 'recent':
-                $items = $this->fetchItemsFromRecentChanges();
-                break;
-            default:
-                $items = $this->fetchItemsFromPlugin();
-        }
+        $items = match ($this->options->get('feed_mode')) {
+            'list' => $this->fetchItemsFromNamespace(),
+            'search' => $this->fetchItemsFromSearch(),
+            'recent' => $this->fetchItemsFromRecentChanges(),
+            default => $this->fetchItemsFromPlugin(),
+        };
 
         $eventData = [
             'rss' => $this->feed,
@@ -154,7 +148,8 @@ class FeedCreator
         if (!actionOK('search')) throw new \RuntimeException('search is disabled');
         if (!$this->options->get('search_query')) return [];
 
-        $data = ft_pageSearch($this->options->get('search_query'), $poswords);
+        $poswords = [];
+        $data = (new FulltextSearch())->pageSearch($this->options->get('search_query'), $poswords);
         return array_keys($data);
     }
 

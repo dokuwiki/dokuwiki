@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Chris Smith <chris@jalakai.co.uk>
  * @author Silvia Sargentoni <polinnia@tin.it>
  * @author Pietro Battiston <toobaz@email.it>
@@ -45,6 +46,7 @@ $lang['summary']               = 'Visualizzazione utenti %1$d-%2$d di %3$d trova
 $lang['nonefound']             = 'Nessun utente trovato. %d utenti totali.';
 $lang['delete_ok']             = '%d utenti eliminati';
 $lang['delete_fail']           = 'Eliminazione %d fallita.';
+$lang['delete_fail_self']      = 'Non puoi cancellare te stesso';
 $lang['update_ok']             = 'Aggiornamento utente riuscito';
 $lang['update_fail']           = 'Aggiornamento utente fallito';
 $lang['update_exists']         = 'Modifica nome utente fallita, il nome utente specificato (%s) esiste già (qualunque altra modifica sarà  applicata).';

@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
  * @author Filippo <abrickslife@gmail.com>
- * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Eddy <eddy@mail.it>
  * @author Riccardo <riccardo.furlato@gmail.com>
  * @author Stefano <stefano.stefano@gmail.com>
@@ -167,6 +167,9 @@ $lang['profdeleted']           = 'Il tuo account utente è stato rimosso da ques
 $lang['profconfdelete']        = 'Voglio rimuovere il mio account da questa wiki. <br/> Questa operazione non può essere annullata.';
 $lang['profconfdeletemissing'] = 'La check box di conferma non è selezionata';
 $lang['proffail']              = 'Il profilo utente non è stato aggiornato.';
+$lang['proftokenlegend']       = 'Token di autenticazione';
+$lang['proftokengenerate']     = 'Reimposta token';
+$lang['proftokeninfo']         = 'Il token di autenticazione può essere utilizzato per consentire ad applicazioni di terze parti di accedere e agire per tuo conto. La reimpostazione del token invaliderà quello precedente e disconnetterà tutte le applicazioni che lo utilizzavano.';
 $lang['pwdforget']             = 'Hai dimenticato la password? Richiedine una nuova';
 $lang['resendna']              = 'Questo wiki non supporta l\'invio di nuove password.';
 $lang['resendpwd']             = 'Imposta nuova password per';
@@ -325,7 +328,6 @@ $lang['i_funcna']              = 'La funzione PHP <code>%s</code> non è disponi
 $lang['i_disabled']            = 'E\' stato disabilitato dal tuo provider di servizi.';
 $lang['i_funcnmail']           = '<b>Nota:</b> La funzione mail PHP non è disponibile. %s Se rimane non disponibile, puoi provare ad installare <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'La versione di PHP <code>%s</code> è inferiore a quella richiesta <code>%s</code>. Devi aggiornare l\'installazione di PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload deve essere disabilitato in php.ini per eseguire DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki non può creare un numero crittograficamente sicuro di cookies. Puoi provare a controllare sulle impostazioni open_basedir su php.ini per un corretto <code>/dev/urandom</code> accesso.';
 $lang['i_permfail']            = 'DokuWiki non può scrivere <code>%s</code>. E\' necessario correggere i permessi per questa directory!';
 $lang['i_confexists']          = '<code>%s</code> esiste già';
@@ -386,3 +388,6 @@ $lang['page_nonexist_rev']     = 'Pagina non esistente a %s. E\' stata creata su
 $lang['unable_to_parse_date']  = 'Impossibile eseguire l\'analisi al parametro "%s".';
 $lang['email_signature_text']  = 'Questa email è stata generata dal DokuWiki all\'indirizzo
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'File di log troppo grande. Righe precedenti saltate!';
+$lang['log_file_failed_to_open'] = 'Impossibile aprire il file di log.';
+$lang['log_file_failed_to_read'] = 'Si è verificato un errore durante la lettura dei log.';

@@ -357,7 +357,6 @@ $lang['i_disabled']  = 'Ją išjungė jūsų tiekėjas.';
 $lang['i_funcnmail'] = '<b>Pastaba:</b> PHP elektroninio pašto funkcija nepasiekiama. %s' .
     ' Jei jos įjungti neišeis, galite įdiegti <a href="https://www.dokuwiki.org/plugin:smtp">smtp įskiepį</a>.';
 $lang['i_phpver']         = 'Jūsų PHP versija <code>%s</code> yra žemesnė nei reikalinga <code>%s</code>. Jums reikia atnaujinti PHP.';
-$lang['i_mbfuncoverload'] = 'mbstring.func_overload turi būti išjungta php.ini, kad DokuWiki galėtų veikti.';
 $lang['i_urandom']        = 'DokuWiki negali sukurti šifravimo tikrų atsitiktinių skaičių slapukams. Patikrinkite savo php.ini failo open_basedir nustatymus, kad būtų tinkama <code>/dev/urandom</code> prieiga.';
 $lang['i_permfail']       = 'Į aplanką <code>%s</code> DokuWiki negali rašyti!. Jums reikia taisyti šio aplanko leidimų nustatymus!';
 $lang['i_confexists']     = '<code>%s</code> jau egzistuoja';

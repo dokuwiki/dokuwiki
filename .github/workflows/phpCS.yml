@@ -7,6 +7,10 @@ on:
       - old-stable
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read  #  to fetch code (actions/checkout)
 
@@ -16,7 +20,7 @@ jobs:
         runs-on: ubuntu-latest
         if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v7
               with:
                   fetch-depth: 0
 

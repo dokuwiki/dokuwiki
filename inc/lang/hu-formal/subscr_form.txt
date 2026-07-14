@@ -1,0 +1,3 @@
+====== Feliratkozás kezelés ======
+
+Ezen az oldalon van lehetősége kezelni a feliratkozásait az adott oldalra vagy névtérre.

@@ -20,7 +20,7 @@ class SettingMulticheckbox extends SettingString
         $input = $input ?: [];
         $input = $this->array2str($input);
 
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         if ($this->pattern && !preg_match($this->pattern, $input)) {
@@ -45,7 +45,7 @@ class SettingMulticheckbox extends SettingString
         } elseif ($echo && $this->error) {
             $value = $this->input;
         } else {
-            $value = is_null($this->local) ? $this->default : $this->local;
+            $value = $this->local ?? $this->default;
         }
 
         $key = htmlspecialchars($this->key);

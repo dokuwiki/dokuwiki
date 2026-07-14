@@ -1,13 +1,16 @@
-Szia,
+Kedves @FULLNAME@!
 
-A @PAGE@ oldal a @TITLE wikiben megváltozott.
-Itt vannak az eltérések:
+A(z) @TITLE@ c. wiki
+@PAGE@ c. oldala megváltozott.
+Az eltérések alább olvashatók:
 
 --------------------------------------------------------
 @DIFF@
 --------------------------------------------------------
 
-Régi verzió: @OLDPAGE@
-Új verzió: @NEWPAGE@
+Korábbi változat: @OLDPAGE@
+Jelenlegi változat: @NEWPAGE@
 
-Ha nem szeretnél értesítéseket kapni, jelentkezz be a wiki-be itt: @DOKUWIKIURL@, majd ezen az oldalon tudsz leiratkozni: @SUBSCRIBE@.
+Ha nem szeretnél további értesítéseket kapni erről az oldalról, akkor
+jelentkezz be a következő oldalon: @DOKUWIKIURL@;
+ezt követően itt iratkozhatsz le: @SUBSCRIBE@.

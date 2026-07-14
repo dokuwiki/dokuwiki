@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Marek Adamski <fevbew@wp.pl>
+ * @author Szymon Olewniczak <szyolewn@pg.edu.pl>
  * @author Michał <kamykowsky@gmail.com>
  * @author pavulondit <pavloo@vp.pl>
  * @author Bartek S <sadupl@gmail.com>
@@ -133,10 +134,16 @@ $lang['js']['media_drop']      = 'Upuść tutaj pliki do przesłania';
 $lang['js']['media_cancel']    = 'usuń';
 $lang['js']['media_overwrt']   = 'Nadpisz istniejące pliki';
 $lang['js']['data_insecure']   = 'OSTRZEŻENIE: Wygląda na to, że twój katalog z danymi nie jest odpowiednio zabezpieczony. Proszę przeczytaj <a href="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
+$lang['js']['size_larger']     = 'Zwiększ rozmiar pola wprowadzania danych';
+$lang['js']['size_smaller']    = 'Zmniejsz rozmiar pola wprowadzania danych';
+$lang['js']['size_wrap']       = 'Przełącz zawijanie wierszy';
+$lang['js']['clipboard_button'] = 'Skopiuj';
+$lang['js']['clipboard_success'] = 'Skopiowano!';
+$lang['js']['clipboard_error'] = 'Błąd';
 $lang['search_exact_match']    = 'Dokładne dopasowanie';
 $lang['search_starts_with']    = 'Zaczyna się na';
 $lang['search_ends_with']      = 'Kończy się na';
-$lang['search_contains']       = 'Zwiera';
+$lang['search_contains']       = 'Zawiera';
 $lang['search_custom_match']   = 'Spersonalizowany';
 $lang['search_any_ns']         = 'Jakakolwiek przestrzeń nazw';
 $lang['search_any_time']       = 'Kiedykolwiek';
@@ -325,7 +332,6 @@ $lang['i_funcna']              = 'Funkcja PHP <code>%s</code> jest niedostępna.
 $lang['i_disabled']            = 'To zostało wyłączone przez twojego dostawcę.';
 $lang['i_funcnmail']           = '<b>Uwaga:</b> funkcja poczty PHP nie jest dostępna. %s, jeśli pozostanie niedostępna, możesz zainstalować <a href="https://www.dokuwiki.org/plugin:smtp">wtyczkę smtp</a>.';
 $lang['i_phpver']              = 'Wersja PHP <code>%s</code> jest niższa od wymaganej <code>%s</code>. Zaktualizuj instalację PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload musi zostać wyłączone w pliku php.ini aby móc uruchomić DokuWiki.';
 $lang['i_urandom']             = 'DokuWiki nie może tworzyć kryptograficznie bezpiecznych liczb dla plików cookie. Możesz sprawdzić ustawienia open_basedir w php.ini pod kątem prawidłowego dostępu do <code>/dev/urandom</code>.';
 $lang['i_permfail']            = 'DokuWiki nie ma prawa zapisu w katalogu <code>%s</code>. Zmień uprawnienia zapisu dla tego katalogu!';
 $lang['i_confexists']          = '<code>%s</code> już istnieje';

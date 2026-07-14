@@ -1,0 +1,8 @@
+====== Zobrazenie protokolov ======
+
+Toto rozhranie umožňuje zobraziť rôzne protokoly, ktoré zapisuje DokuWiki. V predvolenom nastavení by tu nemalo byť veľa
+(závisí to od vašich [[doku>config:dontlog|nastavení protokolovania]]). Ak sa však niečo pokazí, je veľká pravdepodobnosť,
+že tu nájdete užitočné informácie o probléme.
+
+Majte na pamäti, že **súbory protokolov môžu obsahovať citlivé informácie** ako heslá, cesty alebo iné tajomstvá.
+Pred ich zverejnením na fóre alebo v hláseniach o chybách ich nezabudnite vhodne upraviť a zakryť citlivé údaje!

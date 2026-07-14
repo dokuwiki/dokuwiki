@@ -28,6 +28,7 @@ class InstallerTest extends DokuWikiTest
             'plgsub6' => ['plgsub6', ['plugin6' => 'plugin']],
             'plugin1' => ['plugin1', ['plugin1' => 'plugin']],
             'plugin2' => ['plugin2', ['plugin2' => 'plugin']],
+            'plugin3' => ['plugin3', ['foobar' => 'plugin']],
             'template1' => ['template1', ['template1' => 'template']],
             'tplfoo5' => ['tplfoo5', ['template5' => 'template']],
             'tplsub3' => ['tplsub3', ['template3' => 'template']],

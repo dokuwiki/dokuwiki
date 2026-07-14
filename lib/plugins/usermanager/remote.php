@@ -2,6 +2,7 @@
 
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\RemotePlugin;
+use dokuwiki\MailUtils;
 use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\RemoteException;
 
@@ -55,12 +56,12 @@ class remote_plugin_usermanager extends RemotePlugin
 
         if ($user === '') throw new RemoteException('empty or invalid user', 401);
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if (!MailUtils::isValid($mail)) throw new RemoteException('empty or invalid mail address', 403);
 
         if ((string)$password === '') {
             try {
                 $password = auth_pwgen($user);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 throw new RemoteException('Could not generate password', 405);
             }
         }

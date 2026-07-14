@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
 use dokuwiki\Parsing\Lexer\Lexer;
 
 class Smiley extends AbstractMode
@@ -16,6 +17,12 @@ class Smiley extends AbstractMode
     public function __construct($smileys)
     {
         $this->smileys = $smileys;
+    }
+
+    /** @inheritdoc */
+    public function getSort()
+    {
+        return 230;
     }
 
     /** @inheritdoc */
@@ -35,14 +42,15 @@ class Smiley extends AbstractMode
     {
         if (!count($this->smileys)) return;
 
-        if (strlen($this->pattern) > 0) {
+        if ((string) $this->pattern !== '') {
             $this->Lexer->addSpecialPattern($this->pattern, $mode, 'smiley');
         }
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 230;
+        $handler->addCall('smiley', [$match], $pos);
+        return true;
     }
 }

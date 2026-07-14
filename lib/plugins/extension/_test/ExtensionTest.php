@@ -86,4 +86,31 @@ class ExtensionTest extends DokuWikiTest
         $this->assertFalse($extension->hasChangedURL());
         $this->assertFalse($extension->isUpdateAvailable());
     }
+
+    /**
+     * A traversal base name in an archive's info file must be rejected
+     */
+    public function testBaseFromInfoFileRejectsTraversal()
+    {
+        $this->expectException(\RuntimeException::class);
+        Extension::createFromDirectory(__DIR__ . '/testdata/evilbase');
+    }
+
+    /**
+     * A traversal base passed as an extension id must be rejected
+     */
+    public function testBaseFromIdRejectsTraversal()
+    {
+        $this->expectException(\RuntimeException::class);
+        Extension::createFromId('../../../../tmp/evil');
+    }
+
+    /**
+     * A traversal base hidden behind the template: prefix must be rejected
+     */
+    public function testBaseFromTemplateIdRejectsTraversal()
+    {
+        $this->expectException(\RuntimeException::class);
+        Extension::createFromId('template:../../../evil');
+    }
 }

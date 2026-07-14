@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author DevAny <devany.kr@gmail.com>
  * @author merefox retronica <merefox@naver.com>
  * @author take <take@ruu.kr>
  * @author merefox <admin@homerecz.com>
@@ -140,7 +141,7 @@ $lang['userewrite']            = '멋진 URL 사용';
 $lang['useslash']              = 'URL에서 이름공간 구분자로 슬래시 사용';
 $lang['sepchar']               = '문서 이름 낱말 구분자';
 $lang['canonical']             = '완전한 canonical URL 사용';
-$lang['fnencode']              = 'ASCII가 아닌 파일 이름을 인코딩하는 방법.';
+$lang['fnencode']              = 'ASCII가 아닌 파일 이름을 인코딩하는 방법';
 $lang['autoplural']            = '링크에서 복수형 검사';
 $lang['compression']           = '첨부 파일의 압축 방법';
 $lang['gzip_output']           = 'xhtml에 대해 gzip 내용 인코딩 사용';

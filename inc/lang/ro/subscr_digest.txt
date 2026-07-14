@@ -1,4 +1,4 @@
-Salutare, @FULLNAME@!
+Salutare!
 
 Pagina @PAGE@ în @TITLE@ wiki a fost modificată.
 Acestea sunt modificările:

@@ -120,8 +120,7 @@ class GMP extends Engine
     public function toBits($twos_compliment = false)
     {
         $hex = $this->toHex($twos_compliment);
-
-        $bits = gmp_strval(gmp_init($hex, 16), 2);
+        $bits = strlen($hex) ? gmp_strval(gmp_init($hex, 16), 2) : '';
 
         if ($this->precision > 0) {
             $bits = substr($bits, -$this->precision);
@@ -296,7 +295,10 @@ class GMP extends Engine
      */
     public function extendedGCD(GMP $n)
     {
-        extract(gmp_gcdext($this->value, $n->value));
+        $extended = gmp_gcdext($this->value, $n->value);
+        $g = $extended['g'];
+        $s = $extended['s'];
+        $t = $extended['t'];
 
         return [
             'gcd' => $this->normalize(new self($g)),

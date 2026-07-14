@@ -8,6 +8,7 @@
  * auth.class language support 
  * installer strings 
  *
+ * @author Wizzard <wizzardsk@gmail.com>
  * @author Marek Lach <mareklachbc@tutanota.com>
  * @author Martin Michalek <michalek.dev@gmail.com>
  * @author Peter Mydliar <peto.mydliar@gmail.com>
@@ -120,6 +121,13 @@ $lang['js']['media_done_btn']  = 'Hotovo';
 $lang['js']['media_drop']      = 'Pridajte súbory potiahnutím myšou';
 $lang['js']['media_cancel']    = 'odstrániť';
 $lang['js']['media_overwrt']   = 'Prepísať existujúce súbory';
+$lang['js']['data_insecure']   = 'UPOZORNENIE: Zdá sa, že váš dátový adresár nie je správne zabezpečený. Prečítajte si o <a href="https://www.dokuwiki.org/security#web_access_security">zabezpečení webového prístupu v DokuWiki</a>.';
+$lang['js']['size_larger']     = 'Zväčšiť veľkosť vstupného poľa';
+$lang['js']['size_smaller']    = 'Zmenšiť veľkosť vstupného poľa';
+$lang['js']['size_wrap']       = 'Prepnúť zalamovanie riadkov';
+$lang['js']['clipboard_button'] = 'Kopírovať';
+$lang['js']['clipboard_success'] = 'Skopírované!';
+$lang['js']['clipboard_error'] = 'Kopírovanie zlyhalo';
 $lang['search_exact_match']    = 'Presná zhoda';
 $lang['search_starts_with']    = 'Začína na';
 $lang['search_ends_with']      = 'Končí na';
@@ -152,6 +160,9 @@ $lang['profdeleted']           = 'Váš účet bol zrušený v tejto wiki.';
 $lang['profconfdelete']        = 'Chcem odstrániť môj účet z tejto wiki. <br/> Táto operácia je nevratná.';
 $lang['profconfdeletemissing'] = 'Nebolo zavolené potvrdzovacie políčko';
 $lang['proffail']              = 'Profil používateľa nebol aktualizovaný.';
+$lang['proftokenlegend']       = 'Autentifikačný token';
+$lang['proftokengenerate']     = 'Obnoviť token';
+$lang['proftokeninfo']         = 'Autentifikačný token umožňuje aplikáciám tretích strán prihlásiť sa a konať vo vašom mene. Obnovením tokenu sa starý token zneplatní a odhlásia sa všetky aplikácie, ktoré používali predchádzajúci token.';
 $lang['pwdforget']             = 'Zabudli ste heslo? Získajte nové!';
 $lang['resendna']              = 'Táto wiki nepodporuje opätovné zasielanie hesla.';
 $lang['resendpwd']             = 'Nastaviť nové heslo pre';
@@ -305,9 +316,10 @@ $lang['i_superuser']           = 'Správca';
 $lang['i_problems']            = 'Inštalátor narazil na nižšie uvedené problémy. Nemôžete pokračovať, pokiaľ ich neodstránite.';
 $lang['i_modified']            = 'Z bezpečnostných dôvodov bude tento skript fungovať iba s novou, neupravenou inštaláciou Dokuwiki. Môžete buď znovu rozbaliť stiahnutý inštalačný balík alebo preštudovať <a href="https://www.dokuwiki.org/install"> inštalačné inštrukcie Dokuwiki</a>';
 $lang['i_funcna']              = 'PHP funkcia <code>%s</code> nie je dostupná. Je možné, že ju z určitých dôvodov zablokoval váš poskytovateľ webhostingu?';
+$lang['i_disabled']            = 'Bolo to zakázané vaším poskytovateľom.';
 $lang['i_funcnmail']           = '<b>Note:</b> PHP mail funkcia nie je dostupná. %s Ak zostáva stále nedostupná, možno by ste mohli nainštalovať <a href="https://www.dokuwiki.org/plugin:smtp">smtp plugin</a>.';
 $lang['i_phpver']              = 'Vaša verzia PHP <code>%s</code> je nižšia ako požadovaná <code>%s</code>. Potrebujete aktualizovať Vašu inštaláciu PHP.';
-$lang['i_mbfuncoverload']      = 'mbstring.func_overload musí byt zakázaná v php.ini pre bezproblémový chod DokuWiki.';
+$lang['i_urandom']             = 'DokuWiki nedokáže vytvoriť kryptograficky bezpečné čísla pre cookies. Skontrolujte nastavenie open_basedir v php.ini, aby bol možný správny prístup k <code>/dev/urandom</code>.';
 $lang['i_permfail']            = '<code>%s</code> nie je zapisovateľný pre DokuWiki. Musíte zmeniť prístupové práva pre tento adresár!';
 $lang['i_confexists']          = '<code>%s</code> už existuje';
 $lang['i_writeerr']            = 'Nie je možné vytvoriť <code>%s</code>. Potrebujete skontrolovať prístupové práva pre adresár/súbor a vytvoriť ho manuálne.';
@@ -367,3 +379,6 @@ $lang['page_nonexist_rev']     = 'Stránka %s neexistovala. Bola vytvorená doda
 $lang['unable_to_parse_date']  = 'Nie je možné spracovať parameter "%s".';
 $lang['email_signature_text']  = 'Táto správa bola zaslaná DokuWiki
 @DOKUWIKIURL@';
+$lang['log_file_too_large']    = 'Súbor protokolu je príliš veľký. Predchádzajúce riadky boli preskočené!';
+$lang['log_file_failed_to_open'] = 'Nepodarilo sa otvoriť súbor protokolu.';
+$lang['log_file_failed_to_read'] = 'Pri čítaní protokolu nastala chyba.';

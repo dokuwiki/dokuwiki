@@ -313,7 +313,6 @@ $lang['i_funcna']              = 'تابع <code>%s</code> در پی‌اچ‌پ
 $lang['i_disabled']            = 'توسط ارائه دهنده شما غیرفعال شده است.';
 $lang['i_funcnmail']           = '<b>توجه:</b> PHP mail function در دسترس نیست. %s اگر در دسترس نیست، می‌توانید افزونه <a href="https://www.dokuwiki.org/plugin:smtp">smtp</a> را نصب کنید.';
 $lang['i_phpver']              = 'نگارش پی‌اچ‌پی <code>%s</code> پایین‌تر از نگارش مورد نیاز، یعنی <code>%s</code> است. خواهشمندیم به روز رسانی کنید.';
-$lang['i_mbfuncoverload']      = 'برای اجرای دوکوویکی باید mbstring.func_overload را در php.ini غیرفعال کنید.';
 $lang['i_permfail']            = 'شاخه‌ی <code>%s</code> قابلیت نوشتن ندارد. شما باید دسترسی‌های این شاخه را تنظیم کنید!';
 $lang['i_confexists']          = '<code>%s</code> پیش‌تر موجود است';
 $lang['i_writeerr']            = 'توانایی ایجاد <code>%s</code> نیست. شما باید دسترسی‌های شاخه یا فایل را بررسی کنید و فایل را به طور دستی ایجاد کنید.';

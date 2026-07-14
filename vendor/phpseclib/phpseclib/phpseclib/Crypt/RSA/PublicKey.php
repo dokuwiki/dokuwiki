@@ -17,6 +17,7 @@ use phpseclib3\Crypt\Hash;
 use phpseclib3\Crypt\Random;
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Crypt\RSA\Formats\Keys\PSS;
+use phpseclib3\Exception\BadConfigurationException;
 use phpseclib3\Exception\UnsupportedAlgorithmException;
 use phpseclib3\Exception\UnsupportedFormatException;
 use phpseclib3\File\ASN1;
@@ -116,7 +117,7 @@ final class PublicKey extends RSA implements Common\PublicKey
         }
 
         // Compare
-        return $r1 || $r2;
+        return boolval($r1 | $r2);
     }
 
     /**
@@ -241,13 +242,13 @@ final class PublicKey extends RSA implements Common\PublicKey
 
         $maskedDB = substr($em, 0, -$this->hLen - 1);
         $h = substr($em, -$this->hLen - 1, $this->hLen);
-        $temp = chr(0xFF << ($emBits & 7));
+        $temp = chr(256 - (1 << ($emBits & 7)));
         if ((~$maskedDB[0] & $temp) != $temp) {
             return false;
         }
         $dbMask = $this->mgf1($h, $emLen - $this->hLen - 1);
         $db = $maskedDB ^ $dbMask;
-        $db[0] = ~chr(0xFF << ($emBits & 7)) & $db[0];
+        $db[0] = ~chr(256 - (1 << ($emBits & 7))) & $db[0];
         $temp = $emLen - $this->hLen - $sLen - 2;
         if (substr($db, 0, $temp) != str_repeat(chr(0), $temp) || ord($db[$temp]) != 1) {
             return false;
@@ -301,6 +302,11 @@ final class PublicKey extends RSA implements Common\PublicKey
      */
     public function verify($message, $signature)
     {
+        $result = $this->handleOpenSSL('openssl_verify', $message, $signature);
+        if ($result !== null) {
+            return $result;
+        }
+
         switch ($this->signaturePadding) {
             case self::SIGNATURE_RELAXED_PKCS1:
                 return $this->rsassa_pkcs1_v1_5_relaxed_verify($message, $signature);
@@ -450,6 +456,11 @@ final class PublicKey extends RSA implements Common\PublicKey
      */
     public function encrypt($plaintext)
     {
+        $result = $this->handleOpenSSL('openssl_public_encrypt', $plaintext);
+        if ($result !== null) {
+            return $result;
+        }
+
         switch ($this->encryptionPadding) {
             case self::ENCRYPTION_NONE:
                 return $this->raw_encrypt($plaintext);

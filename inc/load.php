@@ -20,13 +20,10 @@ return new class {
         'confutils.php',
         'pluginutils.php',
         'form.php',
-        'fulltext.php',
         'html.php',
         'httputils.php',
-        'indexer.php',
         'infoutils.php',
         'io.php',
-        'mail.php',
         'media.php',
         'pageutils.php',
         'parserutils.php',
@@ -53,7 +50,6 @@ return new class {
         'FeedParser' => 'FeedParser.php',
         'SafeFN' => 'SafeFN.class.php',
         'Mailer' => 'Mailer.class.php',
-        'Doku_Handler' => 'parser/handler.php',
         'Doku_Renderer' => 'parser/renderer.php',
         'Doku_Renderer_xhtml' => 'parser/xhtml.php',
         'Doku_Renderer_code' => 'parser/code.php',
@@ -67,7 +63,7 @@ return new class {
     public function __construct()
     {
         require_once(DOKU_INC . 'vendor/autoload.php');
-        spl_autoload_register([$this, 'autoload']);
+        spl_autoload_register($this->autoload(...));
         $this->loadCommonLibs();
     }
 

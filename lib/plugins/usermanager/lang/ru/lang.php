@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Vyacheslav <bryanskmap@ya.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
  * @author Denis Simakov <akinoame1@gmail.com>
@@ -53,6 +54,7 @@ $lang['summary']               = 'Показаны пользователи %1$d
 $lang['nonefound']             = 'Не найдено ни одного пользователя. Всего пользователей: %d.';
 $lang['delete_ok']             = 'Удалено пользователей: %d';
 $lang['delete_fail']           = 'Не удалось удалить %d.';
+$lang['delete_fail_self']      = 'Ты не можешь себя удалить';
 $lang['update_ok']             = 'Пользователь успешно обновлён';
 $lang['update_fail']           = 'Не удалось обновить пользователя';
 $lang['update_exists']         = 'Не удалось изменить имя пользователя, потому что такой пользователь (%s) уже существует (все остальные изменения будут применены).';

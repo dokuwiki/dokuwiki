@@ -9,6 +9,8 @@ DokuWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts.
   DokuWiki supports **bold**, //italic//, __underlined__ and ''monospaced'' texts.
   Of course you can **__//''combine''//__** all these.
 
+Note that the formatting markers have to directly enclose the text, so ''%%** bold **%%'' with spaces inside the markers will not be formatted.
+
 You can use <sub>subscript</sub> and <sup>superscript</sup>, too.
 
   You can use <sub>subscript</sub> and <sup>superscript</sup>, too.
@@ -155,6 +157,12 @@ By using left or right whitespaces you can choose the alignment.
   {{ wiki:dokuwiki-128.png}}
   {{wiki:dokuwiki-128.png }}
   {{ wiki:dokuwiki-128.png }}
+
+You can also set the alignment explicitly with a ''?left'', ''?right'' or ''?center'' parameter. This takes precedence over the whitespace alignment above and can be combined with a size.
+
+{{wiki:dokuwiki-128.png?100&right}}
+
+  {{wiki:dokuwiki-128.png?100&right}}
 
 Of course, you can add a title (displayed as a tooltip by most browsers), too.
 

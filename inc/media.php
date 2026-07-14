@@ -13,12 +13,15 @@ use splitbrain\slika\Exception;
 use dokuwiki\PassHash;
 use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Extension\Event;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Form\Form;
 use dokuwiki\HTTP\DokuHTTPClient;
 use dokuwiki\Logger;
 use dokuwiki\Subscriptions\MediaSubscriptionSender;
+use dokuwiki\Ui\Media\Display;
 use dokuwiki\Ui\Media\DisplayRow;
 use dokuwiki\Ui\Media\DisplayTile;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Ui\MediaDiff;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
@@ -135,7 +138,7 @@ function media_ispublic($id)
 {
     if (media_isexternal($id)) return true;
     $id = cleanID($id);
-    if (auth_aclcheck(getNS($id) . ':*', '', []) >= AUTH_READ) return true;
+    if (auth_aclcheck(mediaAclPath($id), '', []) >= AUTH_READ) return true;
     return false;
 }
 
@@ -229,7 +232,7 @@ function media_inuse($id)
     global $conf;
 
     if ($conf['refcheck']) {
-        $mediareferences = ft_mediause($id, true);
+        $mediareferences = (new MetadataSearch())->mediause($id, true);
         if ($mediareferences === []) {
             return false;
         } else {
@@ -258,7 +261,7 @@ function media_inuse($id)
 function media_delete($id, $auth)
 {
     global $lang;
-    $auth = auth_quickaclcheck(ltrim(getNS($id) . ':*', ':'));
+    $auth = auth_quickaclcheck(mediaAclPath($id));
     if ($auth < AUTH_DELETE) return DOKU_MEDIA_NOT_AUTH;
     if (media_inuse($id)) return DOKU_MEDIA_INUSE;
 
@@ -738,7 +741,7 @@ function media_filelist($ns, $auth = null, $jump = '', $fullscreenview = false, 
             $sort
         );
 
-        if (!count($data)) {
+        if ($data === []) {
             echo '<div class="nothing">' . $lang['nothingfound'] . '</div>' . NL;
         } else {
             if ($fullscreenview) {
@@ -1012,10 +1015,10 @@ function media_tab_view($image, $ns, $auth = null, $rev = '')
     if (is_null($auth)) $auth = auth_quickaclcheck("$ns:*");
 
     if ($image && $auth >= AUTH_READ) {
-        $meta = new JpegMeta(mediaFN($image, $rev));
-        media_preview($image, $auth, $rev, $meta);
+        $mf = new MediaFile($image, $rev);
+        echo (new Display($mf))->getDetailHtml();
         media_preview_buttons($image, $auth, $rev);
-        media_details($image, $auth, $rev, $meta);
+        media_details($image, $auth, $rev, $mf->getMeta());
     } else {
         echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
     }
@@ -1066,45 +1069,6 @@ function media_tab_history($image, $ns, $auth = null)
         }
     } else {
         echo '<div class="nothing">' . $lang['media_perm_read'] . '</div>' . NL;
-    }
-}
-
-/**
- * Prints mediafile details
- *
- * @param string         $image media id
- * @param int            $auth permission level
- * @param int|string     $rev revision timestamp or empty string
- * @param JpegMeta|bool  $meta
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- */
-function media_preview($image, $auth, $rev = '', $meta = false)
-{
-
-    $size = media_image_preview_size($image, $rev, $meta);
-
-    if ($size) {
-        global $lang;
-        echo '<div class="image">';
-
-        $more = [];
-        if ($rev) {
-            $more['rev'] = $rev;
-        } else {
-            $t = @filemtime(mediaFN($image));
-            $more['t'] = $t;
-        }
-
-        $more['w'] = $size[0];
-        $more['h'] = $size[1];
-        $src = ml($image, $more);
-
-        echo '<a href="' . $src . '" target="_blank" title="' . $lang['mediaview'] . '">';
-        echo '<img src="' . $src . '" alt="" style="max-width: ' . $size[0] . 'px;" />';
-        echo '</a>';
-
-        echo '</div>';
     }
 }
 
@@ -1169,35 +1133,6 @@ function media_preview_buttons($image, $auth, $rev = '')
     }
 
     echo '</ul>';
-}
-
-/**
- * Returns image width and height for mediamanager preview panel
- *
- * @author Kate Arzamastseva <pshns@ukr.net>
- * @param string         $image
- * @param int|string     $rev
- * @param JpegMeta|bool  $meta
- * @param int            $size
- * @return array
- */
-function media_image_preview_size($image, $rev, $meta = false, $size = 500)
-{
-    if (
-        !preg_match("/\.(jpe?g|gif|png)$/", $image)
-        || !file_exists($filename = mediaFN($image, $rev))
-    ) return [];
-
-    $info = getimagesize($filename);
-    $w = $info[0];
-    $h = $info[1];
-
-    if ($meta && ($w > $size || $h > $size)) {
-        $ratio = $meta->getResizeRatio($size, $size);
-        $w = floor($w * $ratio);
-        $h = floor($h * $ratio);
-    }
-    return [$w, $h];
 }
 
 /**
@@ -1272,15 +1207,18 @@ function media_details($image, $auth, $rev = '', $meta = false)
         if ($tag['value']) {
             $value = cleanText($tag['value']);
             echo '<dt>' . $lang[$tag['tag'][1]] . '</dt><dd>';
-            if ($tag['tag'][2] == 'date') echo dformat($value);
-            else echo hsc($value);
+            if ($tag['tag'][2] == 'date') {
+                echo dformat($value);
+            } else {
+                echo hsc($value);
+            }
             echo '</dd>' . NL;
         }
     }
     echo '</dl>' . NL;
     echo '<dl>' . NL;
     echo '<dt>' . $lang['reference'] . ':</dt>';
-    $media_usage = ft_mediause($image, true);
+    $media_usage = (new MetadataSearch())->mediause($image, true);
     if ($media_usage !== []) {
         foreach ($media_usage as $path) {
             echo '<dd>' . html_wikilink($path) . '</dd>';
@@ -1638,13 +1576,23 @@ function media_getuploadsize()
 function media_searchform($ns, $query = '', $fullscreen = false)
 {
     global $lang;
+    global $INPUT;
+
+    // In popup mode the search reloads the whole page, so the parameters the
+    // opening editor or plugin relies on (edid, onselect - see media.js) have to
+    // be carried over in the action URL or they would be lost after a search.
+    $action = DOKU_BASE . 'lib/exe/mediamanager.php';
+    $keep = array_filter(['edid' => $INPUT->str('edid'), 'onselect' => $INPUT->str('onselect')]);
+    if ($keep) {
+        $action .= '?' . buildURLparams($keep, '&');
+    }
 
     // The default HTML search form
     $form = new Form([
         'id'     => 'dw__mediasearch',
         'action' => ($fullscreen)
                     ? media_managerURL([], '&')
-                    : DOKU_BASE . 'lib/exe/mediamanager.php',
+                    : $action,
     ]);
     $form->addTagOpen('div')->addClass('no');
     $form->setHiddenField('ns', $ns);
@@ -1784,9 +1732,10 @@ function media_nstree_li($item)
  * @param int    $w    desired width
  * @param int    $h    desired height
  * @param bool   $crop should a center crop be used?
+ * @param bool   $upscale when false, a smaller image is kept at its original size
  * @return string path to resized or original size if failed
  */
-function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
+function media_mod_image($file, $ext, $w, $h = 0, $crop = false, $upscale = true)
 {
     global $conf;
     if (!$h) $h = 0;
@@ -1800,12 +1749,12 @@ function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
         'imconvert' => $conf['im_convert'],
     ];
 
-    $cache = new CacheImageMod($file, $w, $h, $ext, $crop);
+    $cache = new CacheImageMod($file, $w, $h, $ext, $crop, $upscale);
     if (!$cache->useCache()) {
         try {
             Slika::run($file, $options)
                  ->autorotate()
-                 ->$operation($w, $h)
+                 ->$operation($w, $h, $upscale)
                  ->save($cache->cache, $ext);
             if ($conf['fperm']) @chmod($cache->cache, $conf['fperm']);
         } catch (Exception $e) {
@@ -1826,11 +1775,12 @@ function media_mod_image($file, $ext, $w, $h = 0, $crop = false)
  * @param string $ext  extension
  * @param int    $w    desired width
  * @param int    $h    desired height
+ * @param bool   $upscale when false, a smaller image is kept at its original size
  * @return string path to resized or original size if failed
  */
-function media_resize_image($file, $ext, $w, $h = 0)
+function media_resize_image($file, $ext, $w, $h = 0, $upscale = true)
 {
-    return media_mod_image($file, $ext, $w, $h, false);
+    return media_mod_image($file, $ext, $w, $h, false, $upscale);
 }
 
 /**
@@ -1956,200 +1906,6 @@ function media_image_download($url, $file)
     }
 
     return true;
-}
-
-/**
- * resize images using external ImageMagick convert program
- *
- * @author Pavel Vitis <Pavel.Vitis@seznam.cz>
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $ext     extension
- * @param string $from    filename path to file
- * @param int    $from_w  original width
- * @param int    $from_h  original height
- * @param string $to      path to resized file
- * @param int    $to_w    desired width
- * @param int    $to_h    desired height
- * @return bool
- */
-function media_resize_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h)
-{
-    global $conf;
-
-    // check if convert is configured
-    if (!$conf['im_convert']) return false;
-
-    // prepare command
-    $cmd  = $conf['im_convert'];
-    $cmd .= ' -resize ' . $to_w . 'x' . $to_h . '!';
-    if ($ext == 'jpg' || $ext == 'jpeg') {
-        $cmd .= ' -quality ' . $conf['jpg_quality'];
-    }
-    $cmd .= " $from $to";
-
-    @exec($cmd, $out, $retval);
-    if ($retval == 0) return true;
-    return false;
-}
-
-/**
- * crop images using external ImageMagick convert program
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- *
- * @param string $ext     extension
- * @param string $from    filename path to file
- * @param int    $from_w  original width
- * @param int    $from_h  original height
- * @param string $to      path to resized file
- * @param int    $to_w    desired width
- * @param int    $to_h    desired height
- * @param int    $ofs_x   offset of crop centre
- * @param int    $ofs_y   offset of crop centre
- * @return bool
- * @deprecated 2020-09-01
- */
-function media_crop_imageIM($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, $ofs_x, $ofs_y)
-{
-    global $conf;
-    dbg_deprecated('splitbrain\\Slika');
-
-    // check if convert is configured
-    if (!$conf['im_convert']) return false;
-
-    // prepare command
-    $cmd  = $conf['im_convert'];
-    $cmd .= ' -crop ' . $to_w . 'x' . $to_h . '+' . $ofs_x . '+' . $ofs_y;
-    if ($ext == 'jpg' || $ext == 'jpeg') {
-        $cmd .= ' -quality ' . $conf['jpg_quality'];
-    }
-    $cmd .= " $from $to";
-
-    @exec($cmd, $out, $retval);
-    if ($retval == 0) return true;
-    return false;
-}
-
-/**
- * resize or crop images using PHP's libGD support
- *
- * @author Andreas Gohr <andi@splitbrain.org>
- * @author Sebastian Wienecke <s_wienecke@web.de>
- *
- * @param string $ext     extension
- * @param string $from    filename path to file
- * @param int    $from_w  original width
- * @param int    $from_h  original height
- * @param string $to      path to resized file
- * @param int    $to_w    desired width
- * @param int    $to_h    desired height
- * @param int    $ofs_x   offset of crop centre
- * @param int    $ofs_y   offset of crop centre
- * @return bool
- * @deprecated 2020-09-01
- */
-function media_resize_imageGD($ext, $from, $from_w, $from_h, $to, $to_w, $to_h, $ofs_x = 0, $ofs_y = 0)
-{
-    global $conf;
-    dbg_deprecated('splitbrain\\Slika');
-
-    if ($conf['gdlib'] < 1) return false; //no GDlib available or wanted
-
-    // check available memory
-    if (!is_mem_available(($from_w * $from_h * 4) + ($to_w * $to_h * 4))) {
-        return false;
-    }
-
-    // create an image of the given filetype
-    $image = false;
-    if ($ext == 'jpg' || $ext == 'jpeg') {
-        if (!function_exists("imagecreatefromjpeg")) return false;
-        $image = @imagecreatefromjpeg($from);
-    } elseif ($ext == 'png') {
-        if (!function_exists("imagecreatefrompng")) return false;
-        $image = @imagecreatefrompng($from);
-    } elseif ($ext == 'gif') {
-        if (!function_exists("imagecreatefromgif")) return false;
-        $image = @imagecreatefromgif($from);
-    }
-    if (!$image) return false;
-
-    $newimg = false;
-    if (($conf['gdlib'] > 1) && function_exists("imagecreatetruecolor") && $ext != 'gif') {
-        $newimg = @imagecreatetruecolor($to_w, $to_h);
-    }
-    if (!$newimg) $newimg = @imagecreate($to_w, $to_h);
-    if (!$newimg) {
-        imagedestroy($image);
-        return false;
-    }
-
-    //keep png alpha channel if possible
-    if ($ext == 'png' && $conf['gdlib'] > 1 && function_exists('imagesavealpha')) {
-        imagealphablending($newimg, false);
-        imagesavealpha($newimg, true);
-    }
-
-    //keep gif transparent color if possible
-    if ($ext == 'gif' && function_exists('imagefill') && function_exists('imagecolorallocate')) {
-        if (function_exists('imagecolorsforindex') && function_exists('imagecolortransparent')) {
-            $transcolorindex = @imagecolortransparent($image);
-            if ($transcolorindex >= 0) { //transparent color exists
-                $transcolor = @imagecolorsforindex($image, $transcolorindex);
-                $transcolorindex = @imagecolorallocate(
-                    $newimg,
-                    $transcolor['red'],
-                    $transcolor['green'],
-                    $transcolor['blue']
-                );
-                @imagefill($newimg, 0, 0, $transcolorindex);
-                @imagecolortransparent($newimg, $transcolorindex);
-            } else { //filling with white
-                $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
-                @imagefill($newimg, 0, 0, $whitecolorindex);
-            }
-        } else { //filling with white
-            $whitecolorindex = @imagecolorallocate($newimg, 255, 255, 255);
-            @imagefill($newimg, 0, 0, $whitecolorindex);
-        }
-    }
-
-    //try resampling first
-    if (function_exists("imagecopyresampled")) {
-        if (!@imagecopyresampled($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h)) {
-            imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
-        }
-    } else {
-        imagecopyresized($newimg, $image, 0, 0, $ofs_x, $ofs_y, $to_w, $to_h, $from_w, $from_h);
-    }
-
-    $okay = false;
-    if ($ext == 'jpg' || $ext == 'jpeg') {
-        if (!function_exists('imagejpeg')) {
-            $okay = false;
-        } else {
-            $okay = imagejpeg($newimg, $to, $conf['jpg_quality']);
-        }
-    } elseif ($ext == 'png') {
-        if (!function_exists('imagepng')) {
-            $okay = false;
-        } else {
-            $okay =  imagepng($newimg, $to);
-        }
-    } elseif ($ext == 'gif') {
-        if (!function_exists('imagegif')) {
-            $okay = false;
-        } else {
-            $okay = imagegif($newimg, $to);
-        }
-    }
-
-    // destroy GD image resources
-    imagedestroy($image);
-    imagedestroy($newimg);
-
-    return $okay;
 }
 
 /**

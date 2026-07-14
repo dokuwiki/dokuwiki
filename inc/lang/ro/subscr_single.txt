@@ -1,4 +1,4 @@
-Salutare, @FULLNAME@!
+Salutare!
 
 Pagina @PAGE@ în @TITLE@ wiki a fost modificată.
 Modificările sunt următoarele:
@@ -7,11 +7,11 @@ Modificările sunt următoarele:
 @DIFF@
 --------------------------------------------------------
 
-Dată: @DATE@
 Utilizator: @USER@
-Sumarul editării: @SUMMARY@
+Rezumatul editării: @SUMMARY@
 Versiune anterioară: @OLDPAGE@
 Versiune curentă: @NEWPAGE@
+Data noii revizuiri: @DATE@
 
 Pentru a anula notificarea paginii, autentificcă-te pe wiki la
 @DOKUWIKIURL@ apoi accesează

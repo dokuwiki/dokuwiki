@@ -46,7 +46,7 @@ abstract class AbstractItem
     protected $label = '';
     /** @var string the tooltip title, defaults to $label */
     protected $title = '';
-    /** @var int the context this titme is shown in */
+    /** @var int the context this item is shown in */
     protected $context = self::CTX_ALL;
 
     /**
@@ -207,7 +207,7 @@ abstract class AbstractItem
     public function getType()
     {
         if ($this->type === '') {
-            $this->type = strtolower(substr(strrchr(get_class($this), '\\'), 1));
+            $this->type = strtolower(substr(strrchr(static::class, '\\'), 1));
         }
         return $this->type;
     }

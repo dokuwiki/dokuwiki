@@ -2,7 +2,9 @@
 
 namespace dokuwiki\File;
 
+use Exception;
 use JpegMeta;
+use splitbrain\slika\ImageInfo;
 
 class MediaFile
 {
@@ -155,6 +157,33 @@ class MediaFile
     }
 
     /**
+     * Returns the final display dimensions a fetch.php URL with the given
+     * parameters would produce, including EXIF auto-rotation
+     *
+     * The parameters mirror fetch.php one to one. With $fit (the fit=1 image
+     * URL flag) the image is fitted into the box and never enlarged. Without
+     * it, a request giving both width and height is a center-crop while a
+     * single-dimension request is a plain resize; both may enlarge a small
+     * image, exactly as fetch.php does.
+     *
+     * @param int $w requested width (0 = no constraint)
+     * @param int $h requested height (0 = no constraint)
+     * @param bool $fit true for the no-upscale bounding-box fit (fit=1 URLs)
+     * @return array [width, height]; [0, 0] for non-images/unreadable files
+     */
+    public function getDisplayDimensions($w = 0, $h = 0, $fit = false)
+    {
+        try {
+            $info = (new ImageInfo($this->path))->autorotate();
+        } catch (Exception) {
+            return [0, 0];
+        }
+        if ($w === 0 && $h === 0) return $info->getDimensions();
+        if (!$fit && $w && $h) return $info->crop($w, $h)->getDimensions();
+        return $info->resize($w, $h, !$fit)->getDimensions();
+    }
+
+    /**
      * Returns the permissions the current user has on the file
      *
      * @todo doing this for each file within a namespace is a waste, we need to cache this somehow
@@ -162,7 +191,7 @@ class MediaFile
      */
     public function userPermission()
     {
-        return auth_quickaclcheck(getNS($this->id) . ':*');
+        return auth_quickaclcheck(mediaAclPath($this->id));
     }
 
     /** @return JpegMeta */

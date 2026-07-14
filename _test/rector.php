@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+define('DOKU_INC', __DIR__ . '/../');
+
 use dokuwiki\test\rector\DokuWikiPtlnRector;
 use dokuwiki\test\rector\DokuWikiRenamePrintToEcho;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
@@ -16,24 +18,28 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfElseToTernaryRector;
 use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Isset_\IssetOnPropertyObjectToPropertyExistsRector;
 use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\StrictArraySearchRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
-use Rector\CodingStyle\Rector\String_\SymplifyQuoteEscapeRector;
+use Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Block\ReplaceBlockToItsStmtsRector;
+use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
+use Rector\DeadCode\Rector\If_\RemoveDeadIfBlockRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
 use Rector\DeadCode\Rector\StaticCall\RemoveParentCallWithoutParentRector;
 use Rector\DeadCode\Rector\Stmt\RemoveUnreachableStatementRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
-use Rector\Php80\Rector\Identical\StrEndsWithRector;
-use Rector\Php80\Rector\Identical\StrStartsWithRector;
-use Rector\Php80\Rector\NotIdentical\StrContainsRector;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php82\Rector\FuncCall\Utf8DecodeEncodeToMbConvertEncodingRector;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -41,6 +47,7 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnNeverTypeRector;
 use Rector\DeadCode\Rector\If_\ReduceAlwaysFalseIfOrRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 
 return static function (RectorConfig $rectorConfig): void {
     // FIXME we may want to autoload these later
@@ -67,7 +74,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->cacheDirectory(__DIR__ . '/.rector-cache');
 
     // supported minimum PHP version can be overridden by environment variable
-    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '' ?: '7.4');
+    [$major, $minor] = explode('.', $_SERVER['RECTOR_MIN_PHP'] ?? '' ?: '8.2');
     $phpset = LevelSetList::class . '::UP_TO_PHP_' . $major . $minor;
     fwrite(STDERR, "Using PHP set $phpset\n");
 
@@ -78,11 +85,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::DEAD_CODE,
         SetList::CODING_STYLE,
     ]);
-
-    // future rules for which we have polyfills
-    $rectorConfig->rule(StrContainsRector::class);
-    $rectorConfig->rule(StrEndsWithRector::class);
-    $rectorConfig->rule(StrStartsWithRector::class);
 
     $rectorConfig->skip([
         // skip paths
@@ -111,7 +113,7 @@ return static function (RectorConfig $rectorConfig): void {
         CombineIfRector::class,
         ExplicitBoolCompareRector::class,
         IssetOnPropertyObjectToPropertyExistsRector::class, // maybe?
-        SymplifyQuoteEscapeRector::class,
+        SimplifyQuoteEscapeRector::class,
         CatchExceptionNameMatchingTypeRector::class,
         EncapsedStringsToSprintfRector::class,
         SimplifyUselessVariableRector::class, // seems to strip constructor property initializations
@@ -133,7 +135,22 @@ return static function (RectorConfig $rectorConfig): void {
         ExplicitReturnNullRector::class, // we sometimes return void or string intentionally
         UseIdenticalOverEqualWithSameTypeRector::class, // probably a good idea, maybe later
         ReduceAlwaysFalseIfOrRector::class, // see rectorphp/rector#8916
+        NewlineBetweenClassLikeStmtsRector::class, // looks ugly
+        NullToStrictStringFuncCallArgRector::class, // might hide warnings we want to see explicitly
+        ClassPropertyAssignToConstructorPromotionRector::class, // not sure I like the syntax, maybe later
+        ReplaceBlockToItsStmtsRector::class, // blocks sometimes help readability
+        Utf8DecodeEncodeToMbConvertEncodingRector::class, // we probably want our own mapping to the UTF8/* functions
+        RemoveDeadIfBlockRector::class, // creates harder to read statements
 
+        // keep explicit (int)/(string) casts that document PREG_OFFSET_CAPTURE
+        // result types for static analysers
+        RecastingRemovalRector::class => [
+            __DIR__ . '/../inc/Parsing/Lexer/ParallelRegex.php',
+        ],
+
+        // we're not ready for full type safety. though this rule is probably safe I am not comfortable to add it yet
+        // https://getrector.com/blog/introducing-safe-and-progressive-strict-type-adoption-rule
+        SafeDeclareStrictTypesRector::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
@@ -176,11 +193,14 @@ return static function (RectorConfig $rectorConfig): void {
         'DokuWiki_Plugin' => 'dokuwiki\Extension\Plugin',
         'DokuWiki_Remote_Plugin' => 'dokuwiki\Extension\RemotePlugin',
         'DokuWiki_Syntax_Plugin' => 'dokuwiki\Extension\SyntaxPlugin',
+        'Doku_Handler' => 'dokuwiki\Parsing\Handler',
+        'Doku_Parser' => 'dokuwiki\Parsing\Parser',
     ]);
 
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
         // see inc/deprecated.php
         'Doku_Lexer_Escape' => 'dokuwiki\Parsing\Lexer\Lexer::escape',
+        'Doku_Handler_Parse_Media' => 'dokuwiki\Parsing\ParserMode\Media::parseMedia',
 
         // see inc/utf8.php
         'utf8_isASCII' => 'dokuwiki\Utf8\Clean::isASCII',
@@ -209,6 +229,11 @@ return static function (RectorConfig $rectorConfig): void {
         'utf16be_to_utf8' => 'dokuwiki\Utf8\Conversion::fromUtf16be',
         'utf8_bad_replace' => 'dokuwiki\Utf8\Clean::replaceBadBytes',
         'utf8_correctIdx' => 'dokuwiki\Utf8\Clean::correctIdx',
+
+        // see inc/deprecated.php
+        'obfuscate' => 'dokuwiki\MailUtils::obfuscate',
+        'mail_isvalid' => 'dokuwiki\MailUtils::isValid',
+        'mail_quotedprintable_encode' => 'dokuwiki\MailUtils::quotedPrintableEncode',
     ]);
 
     $rectorConfig->rule(DokuWikiPtlnRector::class);

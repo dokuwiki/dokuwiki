@@ -36,7 +36,7 @@ class Logger
 
         // Should logging be disabled for this facility?
         $dontlog = explode(',', $conf['dontlog']);
-        $dontlog = array_map('trim', $dontlog);
+        $dontlog = array_map(trim(...), $dontlog);
         if (in_array($facility, $dontlog)) $this->isLogging = false;
     }
 

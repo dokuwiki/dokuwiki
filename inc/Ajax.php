@@ -3,6 +3,7 @@
 namespace dokuwiki;
 
 use dokuwiki\Extension\Event;
+use dokuwiki\Search\MetadataSearch;
 use dokuwiki\Ui\MediaDiff;
 use dokuwiki\Ui\Index;
 use dokuwiki\Ui;
@@ -54,8 +55,7 @@ class Ajax
         if (empty($query)) return;
 
         $query = urldecode($query);
-
-        $data = ft_pageLookup($query, true, useHeading('navigation'));
+        $data = (new MetadataSearch())->pageLookup($query, true, useHeading('navigation'));
 
         if ($data === []) return;
 
@@ -98,14 +98,14 @@ class Ajax
         if (empty($query)) $query = cleanID($INPUT->get->str('q'));
         if (empty($query)) return;
 
-        $data = ft_pageLookup($query);
+        $data = (new MetadataSearch())->pageLookup($query);
         if ($data === []) return;
         $data = array_keys($data);
 
         // limit results to 15 hits
         $data = array_slice($data, 0, 15);
-        $data = array_map('trim', $data);
-        $data = array_map('noNS', $data);
+        $data = array_map(trim(...), $data);
+        $data = array_map(noNS(...), $data);
         $data = array_unique($data);
         Sort::sort($data);
 
@@ -135,13 +135,20 @@ class Ajax
         $ID = cleanID($INPUT->post->str('id'));
         if (empty($ID)) return;
 
-        $INFO = pageinfo();
-
         $response = [
             'errors' => [],
             'lock' => '0',
             'draft' => '',
         ];
+
+        if (!checkSecurityToken()) {
+            $response['errors'][] = 'Security token did not match. Please reload the page and try again.';
+            echo json_encode($response, JSON_THROW_ON_ERROR);
+            return;
+        }
+
+        $INFO = pageinfo();
+
         if (!$INFO['writable']) {
             $response['errors'][] = 'Permission to write this page has been denied.';
             echo json_encode($response);
@@ -280,7 +287,7 @@ class Ajax
 
         $id = cleanID($id);
 
-        $NS = $INPUT->str('ns');
+        $NS = $INPUT->filter('cleanID')->str('ns');
         $ns = $NS . ':' . getNS($id);
 
         $AUTH = auth_quickaclcheck("$ns:*");
@@ -337,7 +344,7 @@ class Ajax
             $data[$item]['level'] = $lvl + 1;
         }
         $idx = new Index();
-        echo html_buildlist($data, 'idx', [$idx,'formatListItem'], [$idx,'tagListItem']);
+        echo html_buildlist($data, 'idx', $idx->formatListItem(...), $idx->tagListItem(...));
     }
 
     /**
@@ -364,12 +371,12 @@ class Ajax
         $data = [];
         if ($q !== '' && $ns === '') {
             // use index to lookup matching pages
-            $pages = ft_pageLookup($id, true);
+            $pages = (new MetadataSearch())->pageLookup($id, true);
 
             // If 'useheading' option is 'always' or 'content',
             // search page titles with original query as well.
             if ($conf['useheading'] == '1' || $conf['useheading'] == 'content') {
-                $pages = array_merge($pages, ft_pageLookup($q, true, true));
+                $pages = array_merge($pages, (new MetadataSearch())->pageLookup($q, true, true));
                 asort($pages, SORT_STRING);
             }
 
@@ -379,7 +386,7 @@ class Ajax
             $dirs = [];
 
             foreach ($pages as $pid => $title) {
-                if (strpos(getNS($pid), $id) !== false) {
+                if (str_contains(getNS($pid), $id)) {
                     // match was in the namespace
                     $dirs[getNS($pid)] = 1; // assoc array avoids dupes
                 } else {
@@ -415,7 +422,7 @@ class Ajax
 
         // fixme sort results in a useful way ?
 
-        if (!count($data)) {
+        if ($data === []) {
             echo $lang['nothingfound'];
             exit;
         }

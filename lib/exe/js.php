@@ -7,6 +7,7 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
+use dokuwiki\Ip;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Cache\Cache;
 use dokuwiki\Extension\Event;
@@ -83,8 +84,7 @@ function js_out()
     // Let plugins decide to either put more scripts here or to remove some
     Event::createAndTrigger('JS_SCRIPT_LIST', $files);
 
-    // The generated script depends on some dynamic options
-    $cache = new Cache('scripts' . $_SERVER['HTTP_HOST'] . $_SERVER['SERVER_PORT'] . md5(serialize($files)), '.js');
+    $cache = new Cache('scripts' . DOKU_BASE . Ip::isSsl() . md5(serialize($files)), '.js');
     $cache->setEvent('JS_CACHE_USE');
 
     $cache_files = array_merge($files, getConfigFiles('main'));
@@ -103,7 +103,7 @@ function js_out()
     echo "var DOKU_TPL    = '" . tpl_basedir($tpl) . "';";
     echo "var DOKU_COOKIE_PARAM = " . json_encode([
             'path' => empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'],
-            'secure' => $conf['securecookie'] && is_ssl()
+            'secure' => $conf['securecookie'] && Ip::isSsl(),
         ], JSON_THROW_ON_ERROR) . ";";
     // FIXME: Move those to JSINFO
     echo "Object.defineProperty(window, 'DOKU_UHN', { get: function() {" .
@@ -128,7 +128,7 @@ function js_out()
     foreach ($files as $file) {
         if (!file_exists($file)) continue;
         $ismin = str_ends_with($file, '.min.js');
-        $debugjs = ($conf['allowdebug'] && strpos($file, DOKU_INC . 'lib/scripts/') !== 0);
+        $debugjs = ($conf['allowdebug'] && !str_starts_with($file, DOKU_INC . 'lib/scripts/'));
 
         echo "\n\n/* XXXXXXXXXX begin of " . str_replace(DOKU_INC, '', $file) . " XXXXXXXXXX */\n\n";
         if ($ismin) echo "\n/* BEGIN NOCOMPRESS */\n";

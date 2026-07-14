@@ -13,7 +13,7 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     );
 
     public static $prefixLengthsPsr4 = array (
-        's' => 
+        's' =>
         array (
             'splitbrain\\slika\\tests\\' => 23,
             'splitbrain\\slika\\' => 17,
@@ -22,25 +22,25 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
             'splitbrain\\JSStrip\\tests\\' => 25,
             'splitbrain\\JSStrip\\' => 19,
         ),
-        'p' => 
+        'p' =>
         array (
             'phpseclib3\\' => 11,
         ),
-        'S' => 
+        'S' =>
         array (
             'SimplePie\\' => 10,
         ),
-        'P' => 
+        'P' =>
         array (
             'ParagonIE\\ConstantTime\\' => 23,
             'PHP81_BC\\strftime\\' => 18,
         ),
-        'L' => 
+        'L' =>
         array (
             'LesserPHP\\tests\\' => 16,
             'LesserPHP\\' => 10,
         ),
-        'I' => 
+        'I' =>
         array (
             'IXR\\tests\\' => 10,
             'IXR\\' => 4,
@@ -48,75 +48,75 @@ class ComposerStaticInita19a915ee98347a0c787119619d2ff9b
     );
 
     public static $prefixDirsPsr4 = array (
-        'splitbrain\\slika\\tests\\' => 
+        'splitbrain\\slika\\tests\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/slika/tests',
         ),
-        'splitbrain\\slika\\' => 
+        'splitbrain\\slika\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/slika/src',
         ),
-        'splitbrain\\phpcli\\' => 
+        'splitbrain\\phpcli\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-cli/src',
         ),
-        'splitbrain\\PHPArchive\\' => 
+        'splitbrain\\PHPArchive\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-archive/src',
         ),
-        'splitbrain\\JSStrip\\tests\\' => 
+        'splitbrain\\JSStrip\\tests\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/tests',
         ),
-        'splitbrain\\JSStrip\\' => 
+        'splitbrain\\JSStrip\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/php-jsstrip/src',
         ),
-        'phpseclib3\\' => 
+        'phpseclib3\\' =>
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
         ),
-        'SimplePie\\' => 
+        'SimplePie\\' =>
         array (
             0 => __DIR__ . '/..' . '/simplepie/simplepie/src',
         ),
-        'ParagonIE\\ConstantTime\\' => 
+        'ParagonIE\\ConstantTime\\' =>
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
-        'PHP81_BC\\strftime\\' => 
+        'PHP81_BC\\strftime\\' =>
         array (
             0 => __DIR__ . '/..' . '/php81_bc/strftime/src',
         ),
-        'LesserPHP\\tests\\' => 
+        'LesserPHP\\tests\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/lesserphp/tests',
         ),
-        'LesserPHP\\' => 
+        'LesserPHP\\' =>
         array (
             0 => __DIR__ . '/..' . '/splitbrain/lesserphp/src',
         ),
-        'IXR\\tests\\' => 
+        'IXR\\tests\\' =>
         array (
             0 => __DIR__ . '/..' . '/kissifrot/php-ixr/tests',
         ),
-        'IXR\\' => 
+        'IXR\\' =>
         array (
             0 => __DIR__ . '/..' . '/kissifrot/php-ixr/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'S' => 
+        'S' =>
         array (
-            'SimplePie' => 
+            'SimplePie' =>
             array (
                 0 => __DIR__ . '/..' . '/simplepie/simplepie/library',
             ),
         ),
-        'E' => 
+        'E' =>
         array (
-            'EmailAddressValidator' => 
+            'EmailAddressValidator' =>
             array (
                 0 => __DIR__ . '/..' . '/aziraphale/email-address-validator',
             ),

@@ -146,9 +146,12 @@ interface PluginInterface
      *
      * @param string $text wiki markup to parse
      * @param string $format output format
+     * @param string|null $syntax 'dw' (default) renders the text as DokuWiki syntax regardless of the configured wiki
+     *                            syntax preference — appropriate for plugin-bundled static strings. Pass null to honor
+     *                            the configured $conf['syntax'] — appropriate for rendering user content.
      * @return null|string
      */
-    public function render_text($text, $format = 'xhtml');
+    public function render_text($text, $format = 'xhtml', $syntax = 'dw');
 
     /**
      * Allow the plugin to prevent DokuWiki from reusing an instance

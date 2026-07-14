@@ -82,7 +82,11 @@ class Message
                 break;
             }
         } while (true);
-        xml_parser_free($this->_parser);
+        if(PHP_VERSION_ID < 80000) {
+            // Manually freeing the XML parser is only necessary in PHP versions prior to 8.0
+            xml_parser_free($this->_parser);
+            unset($this->_parser); // release the reference to the parser
+        }
 
         // Grab the error messages, if any
         if ($this->messageType === 'fault') {
@@ -145,7 +149,7 @@ class Message
                 $valueFlag = true;
                 break;
             case 'double':
-                $value = (double)trim($this->_currentTagContents);
+                $value = (float)trim($this->_currentTagContents);
                 $valueFlag = true;
                 break;
             case 'string':
@@ -164,7 +168,7 @@ class Message
                 }
                 break;
             case 'boolean':
-                $value = (boolean)trim($this->_currentTagContents);
+                $value = (bool)trim($this->_currentTagContents);
                 $valueFlag = true;
                 break;
             case 'base64':

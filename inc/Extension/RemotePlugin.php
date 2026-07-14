@@ -14,7 +14,7 @@ use ReflectionMethod;
  */
 abstract class RemotePlugin extends Plugin
 {
-    private Api $api;
+    private readonly Api $api;
 
     /**
      * Constructor

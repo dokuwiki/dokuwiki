@@ -3,6 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
+ * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Schopf <pschopf@gmail.com>
  * @author Victor Westmann <victor.westmann@gmail.com>
  * @author Frederico Guimarães <frederico@teia.bio.br>
@@ -26,11 +28,12 @@ $lang['groupscope']            = 'Limitar escopo da busca para busca de grupo';
 $lang['userkey']               = 'Atributo que indica o nome do usuário; deve ser consistente com userfilter.';
 $lang['groupkey']              = 'Membro de grupo vem de qualquer atributo do usuário (ao invés de grupos padrões AD) e.g. departamento de grupo ou número de telefone';
 $lang['modPass']               = 'A senha LDAP pode ser alterada pelo dokuwiki ?';
+$lang['modPassPlain']          = 'Enviar atualizações de senha em texto puro para o servidor LDAP (em vez de usar o algoritmo configurado para fazer o salt e o hash antes da transmissão)?';
 $lang['debug']                 = 'Mostrar informações adicionais de depuração em erros';
 $lang['deref_o_0']             = 'LDAP_DEREF_NEVER';
 $lang['deref_o_1']             = 'LDAP_DEREF_SEARCHING';
 $lang['deref_o_2']             = 'LDAP_DEREF_FINDING';
 $lang['deref_o_3']             = 'LDAP_DEREF_ALWAYS';
-$lang['referrals_o_-1']        = 'use o padr&atilde;o';
-$lang['referrals_o_0']         = 'não seguem refer&ecirc;ncias';
-$lang['referrals_o_1']         = 'seguem refer&ecirc;ncias';
+$lang['referrals_o_-1']        = 'use o padrão';
+$lang['referrals_o_0']         = 'não seguem referências';
+$lang['referrals_o_1']         = 'seguem referências';

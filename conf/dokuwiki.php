@@ -17,6 +17,7 @@ $conf['title']       = 'DokuWiki';        //what to show in the title
 $conf['start']       = 'start';           //name of start page
 $conf['lang']        = 'en';              //your language
 $conf['template']    = 'dokuwiki';         //see lib/tpl directory
+$conf['syntax']      = 'dw';              //syntax flavor: 'dw', 'md', 'dw+md', 'md+dw'
 $conf['tagline']     = '';                //tagline in header (if template supports it)
 $conf['sidebar']     = 'sidebar';         //name of sidebar in root namespace (if template supports it)
 $conf['license']     = 'cc-by-nc-sa';     //see conf/license.php
@@ -174,7 +175,7 @@ $conf['trustedproxies'] = array('::1', 'fe80::/10', '127.0.0.0/8', '10.0.0.0/8',
                                          // Each item in the array may be either an IPv4 or IPv6 address, or
                                          // an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8).
 
-$conf['realip'] = false;                 // Enable reading the X-Real-IP header.  Default: false.
+$conf['client_ip_header'] = '';          // Enable reading HTTP_* client ip header.  Default: ''.
                                          // Only enable this if your server writes this header, otherwise it may be spoofed.
 
 

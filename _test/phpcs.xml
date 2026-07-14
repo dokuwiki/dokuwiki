@@ -29,9 +29,6 @@
     <exclude-pattern>*/inc/JpegMeta.php</exclude-pattern>
     <exclude-pattern>*/lib/plugins/authad/adLDAP</exclude-pattern>
 
-    <!-- deprecated files to be removed soon -->
-    <exclude-pattern>*/inc/parser/parser.php</exclude-pattern>
-
     <!-- rules on top of PSR-12 -->
     <rule ref="PSR12">
         <!-- This rule breaks the single line guard pattern that we prefer to keep using -->
@@ -82,7 +79,8 @@
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>*/inc/Extension/PluginInterface.php</exclude-pattern>
         <exclude-pattern>*/inc/Extension/PluginTrait.php</exclude-pattern>
-
         <exclude-pattern>*/inc/parser/*</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/renderer.php</exclude-pattern>
+        <exclude-pattern>*/lib/plugins/*/renderer/*.php</exclude-pattern>
     </rule>
 </ruleset>

@@ -170,6 +170,21 @@
     }
 }
 
+/* copy to clipboard */
+.dokuwiki .file,
+.dokuwiki .code {
+    .code-copy-btn {
+        opacity: 0;
+    }
+
+    &:hover,
+    &:focus {
+        .code-copy-btn {
+            opacity: 1;
+        }
+    }
+}
+
 /*____________ JS popup ____________*/
 
 .JSpopup {

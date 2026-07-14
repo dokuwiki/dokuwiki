@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Kerem ATA <contact@zoda-service.web.tr>
  * @author Ekin <ata.ekin@windowslive.com>
  * @author Eren <bosshyapma@protonmail.com>
  * @author Hakan <hakandursun2009@gmail.com>
@@ -121,6 +122,9 @@ $lang['js']['media_done_btn']  = 'Bitti';
 $lang['js']['media_drop']      = 'Yüklemek istediğiniz dosyaları buraya bırakın';
 $lang['js']['media_cancel']    = 'kaldır';
 $lang['js']['media_overwrt']   = 'Var olan dosyaların üzerine yaz';
+$lang['js']['clipboard_button'] = 'Kopyala';
+$lang['js']['clipboard_success'] = 'Kopyalandı!';
+$lang['js']['clipboard_error'] = 'Kopyalama başarısız';
 $lang['search_exact_match']    = 'Tam eşleşme';
 $lang['search_starts_with']    = 'Bununla başlar';
 $lang['search_ends_with']      = 'Bununla biter';
@@ -310,7 +314,6 @@ $lang['i_modified']            = 'Güzenlik sebebiyle bu script sadece yeni ve d
 $lang['i_funcna']              = '<code>%s</code> PHP fonksiyonu bulunmamaktadır. Barındırma(Hosting) hizmetinde bu özellik kapatılmış olabilir.';
 $lang['i_disabled']            = 'Sağlayıcınız tarafından devre dışı bırakılmış.';
 $lang['i_phpver']              = '<code>%s</code> PHP sürümü, gereken <code>%s</code>  sürümünden daha düşük. PHP kurulumunu yükseltmeniz gerekmektedir.';
-$lang['i_mbfuncoverload']      = 'DokuWiki\'nin çalışması için php.ini dosyasında mbstring.func_overload seçeneği kapalı (değeri 0) olarak ayarlanmalıdır.';
 $lang['i_permfail']            = '<code>%s</code> Dokuwiki tarafından yazılabilir değil. İzin ayarlarını bu klasör için düzeltmeniz gerekmektedir!';
 $lang['i_confexists']          = '<code>%s</code> zaten var';
 $lang['i_writeerr']            = '<code>%s</code> oluşturulamadı. Dosya/Klasör izin ayarlarını gözden geçirip dosyayı elle oluşturmalısınız.';

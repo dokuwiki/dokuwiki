@@ -7,6 +7,10 @@ on:
       - old-stable
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read  #  to fetch code (actions/checkout)
 
@@ -18,7 +22,7 @@ jobs:
 
         strategy:
             matrix:
-                php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+                php-versions: ['8.2', '8.3', '8.4', '8.5']
             fail-fast: false
 
         services:
@@ -40,13 +44,13 @@ jobs:
                     - 3128:3128
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php-versions }}
-                  extensions: mbstring, intl, PDO, pdo_sqlite, pdo_mysql, pdo_pgsql, bz2
+                  extensions: mbstring, intl, PDO, pdo_sqlite, pdo_mysql, pdo_pgsql, bz2, gd
                   ini-values: pcre.jit=0
 
             - name: Setup problem matchers

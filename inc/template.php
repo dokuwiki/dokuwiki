@@ -10,6 +10,7 @@
 use dokuwiki\ActionRouter;
 use dokuwiki\Action\Exception\FatalException;
 use dokuwiki\Extension\PluginInterface;
+use dokuwiki\File\MediaFile;
 use dokuwiki\Ui\Admin;
 use dokuwiki\StyleUtils;
 use dokuwiki\Menu\Item\AbstractItem;
@@ -291,12 +292,6 @@ function tpl_metaheaders($alt = true)
                 'type' => 'application/rss+xml',
                 'title' => $lang['btn_recent'],
                 'href' => DOKU_BASE . 'feed.php'
-            ];
-            $head['link'][] = [
-                'rel' => 'alternate',
-                'type' => 'application/rss+xml',
-                'title' => $lang['currentns'],
-                'href' => DOKU_BASE . 'feed.php?mode=list&ns=' . (isset($INFO) ? $INFO['namespace'] : '')
             ];
         }
         if (($ACT == 'show' || $ACT == 'search') && $INFO['writable']) {
@@ -605,7 +600,7 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
          * @var string $replacement
          */
         extract($data);
-        if (strpos($id, '#') === 0) {
+        if (str_starts_with($id, '#')) {
             $linktarget = $id;
         } else {
             $linktarget = wl($id, $params);
@@ -660,7 +655,7 @@ function tpl_get_action($type)
             $item = new $class();
             $data = $item->getLegacyData();
             $unknown = false;
-        } catch (RuntimeException $ignored) {
+        } catch (RuntimeException) {
             return false;
         }
     } else {
@@ -1184,30 +1179,17 @@ function tpl_img($maxwidth = 0, $maxheight = 0, $link = true, $params = null)
     /** @var Input $INPUT */
     global $INPUT;
     global $REV;
-    $w = (int)tpl_img_getTag('File.Width');
-    $h = (int)tpl_img_getTag('File.Height');
 
-    //resize to given max values
-    $ratio = 1;
-    if ($w >= $h) {
-        if ($maxwidth && $w >= $maxwidth) {
-            $ratio = $maxwidth / $w;
-        } elseif ($maxheight && $h > $maxheight) {
-            $ratio = $maxheight / $h;
-        }
-    } elseif ($maxheight && $h >= $maxheight) {
-        $ratio = $maxheight / $h;
-    } elseif ($maxwidth && $w > $maxwidth) {
-        $ratio = $maxwidth / $w;
-    }
-    if ($ratio) {
-        $w = floor($ratio * $w);
-        $h = floor($ratio * $h);
-    }
+    // rotation-aware bounding-box fit; matches the fit=1 src below (no upscaling); [0, 0] for SVG
+    [$w, $h] = (new MediaFile($IMG, $REV))->getDisplayDimensions($maxwidth, $maxheight, true);
 
-    //prepare URLs
+    //prepare URLs - fit=1 requests the no-upscale bounding-box resize from fetch.php
+    $srcParams = ['cache' => $INPUT->str('cache'), 'rev' => $REV];
+    if ($maxwidth) $srcParams['w'] = $maxwidth;
+    if ($maxheight) $srcParams['h'] = $maxheight;
+    if ($maxwidth || $maxheight) $srcParams['fit'] = 1;
     $url = ml($IMG, ['cache' => $INPUT->str('cache'), 'rev' => $REV], true, '&');
-    $src = ml($IMG, ['cache' => $INPUT->str('cache'), 'rev' => $REV, 'w' => $w, 'h' => $h], true, '&');
+    $src = ml($IMG, $srcParams, true, '&');
 
     //prepare attributes
     $alt = tpl_img_getTag('Simple.Title');
@@ -1372,7 +1354,9 @@ function tpl_getLang($id)
  */
 function tpl_locale_xhtml($id)
 {
-    return p_cached_output(tpl_localeFN($id));
+    // template locale files are assets authored in DokuWiki syntax; render
+    // them as 'dw' regardless of the configured wiki syntax preference
+    return p_cached_output(tpl_localeFN($id), 'xhtml', '', 'dw');
 }
 
 /**

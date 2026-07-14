@@ -4,6 +4,7 @@ use dokuwiki\ChangeLog\MediaChangeLog;
 use dokuwiki\Feed\FeedParser;
 use dokuwiki\File\MediaResolver;
 use dokuwiki\File\PageResolver;
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use SimplePie\Author;
 
@@ -33,7 +34,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     /** @var int current section level */
     protected $lastlevel = 0;
     /** @var array section node tracker */
-    protected $node = [0, 0, 0, 0, 0];
+    protected $node = [0, 0, 0, 0, 0, 0];
 
     /** @var string temporary $doc store */
     protected $store = '';
@@ -109,7 +110,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if (!is_null($hid)) {
             $data['hid'] .= $hid;
         }
-        $data['range'] = $data['start'] . '-' . (is_null($end) ? '' : $end);
+        $data['range'] = $data['start'] . '-' . ($end ?? '');
         unset($data['start']);
         $this->doc .= '<!-- EDIT' . hsc(json_encode($data, JSON_THROW_ON_ERROR)) . ' -->';
     }
@@ -535,6 +536,21 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     }
 
     /**
+     * Open an ordered list with a non-default starting number
+     *
+     * @param int $start Starting number; emitted as a start="N" attribute
+     */
+    public function listo_open_start($start = 1)
+    {
+        $start = (int)$start;
+        if ($start === 1) {
+            $this->listo_open();
+            return;
+        }
+        $this->doc .= '<ol start="' . $start . '">' . DOKU_LF;
+    }
+
+    /**
      * Close an ordered list
      */
     public function listo_close()
@@ -666,10 +682,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $class = preg_replace('/[^_\-a-z0-9]+/i', '_', $ext);
             $class = 'mediafile mf_' . $class;
 
-            $offset = 0;
-            if ($INPUT->has('codeblockOffset')) {
-                $offset = $INPUT->str('codeblockOffset');
-            }
+            $offset = $INPUT->int('codeblockOffset');
             $this->doc .= '<dl class="' . $type . '">' . DOKU_LF;
             $this->doc .= '<dt><a href="' .
                 exportlink(
@@ -939,7 +952,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if ($search) {
             ($conf['userewrite']) ? $link['url'] .= '?' : $link['url'] .= '&amp;';
             if (is_array($search)) {
-                $search = array_map('rawurlencode', $search);
+                $search = array_map(rawurlencode(...), $search);
                 $link['url'] .= 's[]=' . implode('&amp;s[]=', $search);
             } else {
                 $link['url'] .= 's=' . rawurlencode($search);
@@ -1054,7 +1067,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         }
 
         //do we stay at the same server? Use local target
-        if (strpos($url, DOKU_URL) === 0 || strpos($url, DOKU_BASE) === 0) {
+        if (str_starts_with($url, DOKU_URL) || str_starts_with($url, DOKU_BASE)) {
             $link['target'] = $conf['target']['wiki'];
         }
         if ($exists !== null && !$isImage) {
@@ -1130,7 +1143,6 @@ class Doku_Renderer_xhtml extends Doku_Renderer
      */
     public function emaillink($address, $name = null, $returnonly = false)
     {
-        global $conf;
         //simple setup
         $link = [];
         $link['target'] = '';
@@ -1146,18 +1158,16 @@ class Doku_Renderer_xhtml extends Doku_Renderer
             $link['class'] = 'media';
         }
 
-        $address = $this->_xmlEntities($address);
-        $address = obfuscate($address);
+        $display = MailUtils::obfuscate($address);
+        $href = MailUtils::obfuscateUrl($address);
 
-        $title = $address;
+        $title = $display;
 
         if (empty($name)) {
-            $name = $address;
+            $name = $display;
         }
 
-        if ($conf['mailguard'] == 'visible') $address = rawurlencode($address);
-
-        $link['url'] = 'mailto:' . $address;
+        $link['url'] = 'mailto:' . $href;
         $link['name'] = $name;
         $link['title'] = $title;
 
@@ -1193,7 +1203,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         $return = false
     ) {
         global $ID;
-        if (strpos($src, '#') !== false) {
+        if (str_contains($src, '#')) {
             [$src, $hash] = sexplode('#', $src, 2);
         }
         $src = (new MediaResolver($ID))->resolveId($src, $this->date_at, true);
@@ -1509,6 +1519,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         // initialize the cell counter used for classes
         $this->_counter['cell_counter'] = 0;
+        // initialize the row counter in case a row is opened without a preceding table_open()
+        $this->_counter['row_counter'] ??= 0;
         $class = 'row' . $this->_counter['row_counter']++;
         if ($classes !== null) {
             if (is_array($classes)) $classes = implode(' ', $classes);
@@ -1970,7 +1982,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         // output each track if any
         foreach ($tracks as $trackid => $info) {
-            [$kind, $srclang] = array_map('hsc', $info);
+            [$kind, $srclang] = array_map(hsc(...), $info);
             $out .= "<track kind=\"$kind\" srclang=\"$srclang\" ";
             $out .= "label=\"$srclang\" ";
             $out .= 'src="' . ml($trackid, '', true) . '">' . NL;

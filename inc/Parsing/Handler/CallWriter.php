@@ -2,15 +2,17 @@
 
 namespace dokuwiki\Parsing\Handler;
 
+use dokuwiki\Parsing\Handler;
+
 class CallWriter implements CallWriterInterface
 {
-    /** @var \Doku_Handler $Handler */
+    /** @var Handler $Handler */
     protected $Handler;
 
     /**
-     * @param \Doku_Handler $Handler
+     * @param Handler $Handler
      */
-    public function __construct(\Doku_Handler $Handler)
+    public function __construct(Handler $Handler)
     {
         $this->Handler = $Handler;
     }

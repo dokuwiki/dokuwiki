@@ -68,7 +68,10 @@ class auth_plugin_authplain extends AuthPlugin
     public function checkPass($user, $pass)
     {
         $userinfo = $this->getUserData($user);
-        if ($userinfo === false) return false;
+        if ($userinfo === false) {
+            auth_cryptPassword('dummy'); // run a crypt op to prevent timing attacks
+            return false;
+        }
 
         return auth_verifyPassword($pass, $this->users[$user]['pass']);
     }
@@ -90,6 +93,7 @@ class auth_plugin_authplain extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
+        if (!is_string($user)) return false;
         if ($this->users === null) $this->loadUserData();
         return $this->users[$user] ?? false;
     }

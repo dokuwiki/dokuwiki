@@ -14,6 +14,10 @@ use dokuwiki\Remote\Response\Page;
 use dokuwiki\Remote\Response\PageChange;
 use dokuwiki\Remote\Response\PageHit;
 use dokuwiki\Remote\Response\User;
+use dokuwiki\Search\Indexer;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Sort;
 
 /**
@@ -33,43 +37,43 @@ class ApiCore
     public function getMethods()
     {
         return [
-            'core.getAPIVersion' => (new ApiCall([$this, 'getAPIVersion'], 'info'))->setPublic(),
+            'core.getAPIVersion' => (new ApiCall($this->getAPIVersion(...), 'info'))->setPublic(),
 
             'core.getWikiVersion' => new ApiCall('getVersion', 'info'),
-            'core.getWikiTitle' => (new ApiCall([$this, 'getWikiTitle'], 'info'))->setPublic(),
-            'core.getWikiTime' => (new ApiCall([$this, 'getWikiTime'], 'info')),
+            'core.getWikiTitle' => (new ApiCall($this->getWikiTitle(...), 'info'))->setPublic(),
+            'core.getWikiTime' => (new ApiCall($this->getWikiTime(...), 'info')),
 
-            'core.login' => (new ApiCall([$this, 'login'], 'user'))->setPublic(),
-            'core.logoff' => new ApiCall([$this, 'logoff'], 'user'),
-            'core.whoAmI' => (new ApiCall([$this, 'whoAmI'], 'user')),
-            'core.aclCheck' => new ApiCall([$this, 'aclCheck'], 'user'),
+            'core.login' => (new ApiCall($this->login(...), 'user'))->setPublic(),
+            'core.logoff' => new ApiCall($this->logoff(...), 'user'),
+            'core.whoAmI' => (new ApiCall($this->whoAmI(...), 'user')),
+            'core.aclCheck' => new ApiCall($this->aclCheck(...), 'user'),
 
-            'core.listPages' => new ApiCall([$this, 'listPages'], 'pages'),
-            'core.searchPages' => new ApiCall([$this, 'searchPages'], 'pages'),
-            'core.getRecentPageChanges' => new ApiCall([$this, 'getRecentPageChanges'], 'pages'),
+            'core.listPages' => new ApiCall($this->listPages(...), 'pages'),
+            'core.searchPages' => new ApiCall($this->searchPages(...), 'pages'),
+            'core.getRecentPageChanges' => new ApiCall($this->getRecentPageChanges(...), 'pages'),
 
-            'core.getPage' => (new ApiCall([$this, 'getPage'], 'pages')),
-            'core.getPageHTML' => (new ApiCall([$this, 'getPageHTML'], 'pages')),
-            'core.getPageInfo' => (new ApiCall([$this, 'getPageInfo'], 'pages')),
-            'core.getPageHistory' => new ApiCall([$this, 'getPageHistory'], 'pages'),
-            'core.getPageLinks' => new ApiCall([$this, 'getPageLinks'], 'pages'),
-            'core.getPageBackLinks' => new ApiCall([$this, 'getPageBackLinks'], 'pages'),
+            'core.getPage' => (new ApiCall($this->getPage(...), 'pages')),
+            'core.getPageHTML' => (new ApiCall($this->getPageHTML(...), 'pages')),
+            'core.getPageInfo' => (new ApiCall($this->getPageInfo(...), 'pages')),
+            'core.getPageHistory' => new ApiCall($this->getPageHistory(...), 'pages'),
+            'core.getPageLinks' => new ApiCall($this->getPageLinks(...), 'pages'),
+            'core.getPageBackLinks' => new ApiCall($this->getPageBackLinks(...), 'pages'),
 
-            'core.lockPages' => new ApiCall([$this, 'lockPages'], 'pages'),
-            'core.unlockPages' => new ApiCall([$this, 'unlockPages'], 'pages'),
-            'core.savePage' => new ApiCall([$this, 'savePage'], 'pages'),
-            'core.appendPage' => new ApiCall([$this, 'appendPage'], 'pages'),
+            'core.lockPages' => new ApiCall($this->lockPages(...), 'pages'),
+            'core.unlockPages' => new ApiCall($this->unlockPages(...), 'pages'),
+            'core.savePage' => new ApiCall($this->savePage(...), 'pages'),
+            'core.appendPage' => new ApiCall($this->appendPage(...), 'pages'),
 
-            'core.listMedia' => new ApiCall([$this, 'listMedia'], 'media'),
-            'core.getRecentMediaChanges' => new ApiCall([$this, 'getRecentMediaChanges'], 'media'),
+            'core.listMedia' => new ApiCall($this->listMedia(...), 'media'),
+            'core.getRecentMediaChanges' => new ApiCall($this->getRecentMediaChanges(...), 'media'),
 
-            'core.getMedia' => new ApiCall([$this, 'getMedia'], 'media'),
-            'core.getMediaInfo' => new ApiCall([$this, 'getMediaInfo'], 'media'),
-            'core.getMediaUsage' => new ApiCall([$this, 'getMediaUsage'], 'media'),
-            'core.getMediaHistory' => new ApiCall([$this, 'getMediaHistory'], 'media'),
+            'core.getMedia' => new ApiCall($this->getMedia(...), 'media'),
+            'core.getMediaInfo' => new ApiCall($this->getMediaInfo(...), 'media'),
+            'core.getMediaUsage' => new ApiCall($this->getMediaUsage(...), 'media'),
+            'core.getMediaHistory' => new ApiCall($this->getMediaHistory(...), 'media'),
 
-            'core.saveMedia' => new ApiCall([$this, 'saveMedia'], 'media'),
-            'core.deleteMedia' => new ApiCall([$this, 'deleteMedia'], 'media'),
+            'core.saveMedia' => new ApiCall($this->saveMedia(...), 'media'),
+            'core.deleteMedia' => new ApiCall($this->deleteMedia(...), 'media'),
         ];
     }
 
@@ -197,6 +201,8 @@ class ApiCore
      * This call allows to check the permissions for a given page/media and user/group combination.
      * If no user/group is given, the current user is used.
      *
+     * Checking the permissions of another user is restricted to superusers.
+     *
      * Read the link below to learn more about the permission levels.
      *
      * @link https://www.dokuwiki.org/acl#background_info
@@ -204,6 +210,7 @@ class ApiCore
      * @param string $user username
      * @param string[] $groups array of groups
      * @return int permission level
+     * @throws AccessDeniedException
      * @throws RemoteException
      */
     public function aclCheck($page, $user = '', $groups = [])
@@ -216,6 +223,10 @@ class ApiCore
         if ($user === '') {
             return auth_quickaclcheck($page);
         } else {
+            // checking another user's permissions discloses their ACL posture, restrict to superusers
+            if (!$this->isSelf($user) && !auth_isadmin()) {
+                throw new AccessDeniedException('Only admins are allowed to check ACL for other users', 114);
+            }
             if ($groups === []) {
                 $userinfo = $auth->getUserData($user);
                 if ($userinfo === false) {
@@ -226,6 +237,30 @@ class ApiCore
             }
             return auth_aclcheck($page, $user, $groups);
         }
+    }
+
+    /**
+     * Check whether the given user is the currently logged-in user
+     *
+     * The comparison normalizes both names the same way the ACL machinery matches
+     * them, so on a case-insensitive backend a differently-cased spelling of the
+     * current user is still recognized as themselves.
+     *
+     * @param string $user username to compare against the current user
+     * @return bool
+     */
+    protected function isSelf($user)
+    {
+        /** @var AuthPlugin $auth */
+        global $auth;
+        global $INPUT;
+
+        $curUser = $INPUT->server->str('REMOTE_USER');
+        if (!$auth->isCaseSensitive()) {
+            $user = PhpString::strtolower($user);
+            $curUser = PhpString::strtolower($curUser);
+        }
+        return $auth->cleanUser($user) === $auth->cleanUser($curUser);
     }
 
     // endregion
@@ -291,7 +326,7 @@ class ApiCore
     protected function getAllPages($hash = false)
     {
         $list = [];
-        $pages = idx_get_indexer()->getPages();
+        $pages = (new Indexer())->getAllPages();
         Sort::ksort($pages);
 
         foreach (array_keys($pages) as $idx) {
@@ -325,14 +360,15 @@ class ApiCore
     public function searchPages($query)
     {
         $regex = [];
-        $data = ft_pageSearch($query, $regex);
+        $FulltextSearch = new FulltextSearch();
+        $data = $FulltextSearch->pageSearch($query, $regex);
         $pages = [];
 
         // prepare additional data
         $idx = 0;
         foreach ($data as $id => $score) {
-            if ($idx < FT_SNIPPET_NUMBER) {
-                $snippet = ft_snippet($id, $regex);
+            if ($idx < $FulltextSearch->getMaxSnippets()) {
+                $snippet = $FulltextSearch->snippet($id, $regex);
                 $idx++;
             } else {
                 $snippet = '';
@@ -570,8 +606,7 @@ class ApiCore
     public function getPageBackLinks($page)
     {
         $page = $this->checkPage($page, 0, false);
-
-        return ft_backlinks($page);
+        return (new MetadataSearch())->backlinks($page);
     }
 
     /**
@@ -698,7 +733,11 @@ class ApiCore
         unlock($page);
 
         // run the indexer if page wasn't indexed yet
-        idx_addPage($page);
+        try {
+            (new Indexer())->addPage($page);
+        } catch (\Exception) {
+            // indexing failure is non-fatal, the page was saved successfully
+        }
 
         return true;
     }
@@ -831,7 +870,7 @@ class ApiCore
     public function getMedia($media, $rev = 0)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
@@ -868,7 +907,7 @@ class ApiCore
     public function getMediaInfo($media, $rev = 0, $author = false, $hash = false)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
 
@@ -905,14 +944,14 @@ class ApiCore
     public function getMediaUsage($media)
     {
         $media = cleanID($media);
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media)) {
             throw new RemoteException('The requested media file does not exist', 221);
         }
 
-        return ft_mediause($media);
+        return (new MetadataSearch())->mediause($media);
     }
 
     /**
@@ -937,7 +976,7 @@ class ApiCore
 
         $media = cleanID($media);
         // check that this media exists
-        if (auth_quickaclcheck($media) < AUTH_READ) {
+        if (auth_quickaclcheck(mediaAclPath($media)) < AUTH_READ) {
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media, 0)) {
@@ -987,7 +1026,7 @@ class ApiCore
     public function saveMedia($media, $base64, $overwrite = false)
     {
         $media = cleanID($media);
-        $auth = auth_quickaclcheck(getNS($media) . ':*');
+        $auth = auth_quickaclcheck(mediaAclPath($media));
 
         if ($media === '') {
             throw new RemoteException('Empty or invalid media ID given', 231);
@@ -1040,7 +1079,7 @@ class ApiCore
     {
         $media = cleanID($media);
 
-        $auth = auth_quickaclcheck($media);
+        $auth = auth_quickaclcheck(mediaAclPath($media));
         $res = media_delete($media, $auth);
         if ($res & DOKU_MEDIA_DELETED) {
             return true;

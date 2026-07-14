@@ -152,6 +152,11 @@ trait ChangeLogTrait
                     break;
                 }
                 $info = $this->parseLogLine($tmp);
+                if (!is_array($info)) {
+                    // skip unparsable lines, but still advance the search boundary
+                    $head = $finger;
+                    continue;
+                }
                 $finger_rev = $info['date'];
 
                 if ($finger_rev > $rev) {

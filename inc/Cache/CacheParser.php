@@ -16,11 +16,13 @@ class CacheParser extends Cache
      * @param string $id page id
      * @param string $file source file for cache
      * @param string $mode input mode
+     * @param string|null $syntax syntax flavour the file is parsed under;
+     *     when non-null it enters the cache key so the same file rendered
+     *     under two syntaxes in one request does not collide. null leaves
+     *     the key unchanged.
      */
-    public function __construct($id, $file, $mode)
+    public function __construct($id, $file, $mode, $syntax = null)
     {
-        global $INPUT;
-
         if ($id) {
             $this->page = $id;
         }
@@ -28,7 +30,23 @@ class CacheParser extends Cache
         $this->mode = $mode;
 
         $this->setEvent('PARSER_CACHE_USE');
-        parent::__construct($file . $INPUT->server->str('HTTP_HOST') . $INPUT->server->str('SERVER_PORT'), '.' . $mode);
+        parent::__construct(
+            $file . ($syntax ?? '') . $this->getEnvironmentKey(),
+            '.' . $mode
+        );
+    }
+
+    /**
+     * Environment-dependent fragment to append to the cache key
+     *
+     * The returned fragment is appended to the cache key in the constructor. Child classes can override
+     * this to include environment-dependent information like DOKU_BASE.
+     *
+     * @return string
+     */
+    protected function getEnvironmentKey()
+    {
+        return '';
     }
 
     /**
@@ -51,7 +69,7 @@ class CacheParser extends Cache
         $files = [
             $this->file, // source
             DOKU_INC . 'inc/Parsing/Parser.php', // parser
-            DOKU_INC . 'inc/parser/handler.php', // handler
+            DOKU_INC . 'inc/Parsing/Handler.php', // handler
         ];
         $files = array_merge($files, getConfigFiles('main')); // wiki settings
 

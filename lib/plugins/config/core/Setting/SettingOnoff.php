@@ -33,7 +33,7 @@ class SettingOnoff extends SettingNumeric
             $value = $this->protected;
             $disable = ' disabled="disabled"';
         } else {
-            $value = is_null($this->local) ? $this->default : $this->local;
+            $value = $this->local ?? $this->default;
         }
 
         $key = htmlspecialchars($this->key);
@@ -51,7 +51,7 @@ class SettingOnoff extends SettingNumeric
         if ($this->isProtected()) return false;
 
         $input = ($input) ? 1 : 0;
-        $value = is_null($this->local) ? $this->default : $this->local;
+        $value = $this->local ?? $this->default;
         if ($value == $input) return false;
 
         $this->local = $input;

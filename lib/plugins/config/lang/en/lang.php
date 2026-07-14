@@ -56,6 +56,11 @@ $lang['title']       = 'Wiki title aka. your wiki\'s name';
 $lang['start']       = 'Page name to use as the starting point for each namespace';
 $lang['lang']        = 'Interface language';
 $lang['template']    = 'Template aka. the design of the wiki.';
+$lang['syntax']            = 'Wiki syntax flavor';
+$lang['syntax_o_dw']    = 'DokuWiki only';
+$lang['syntax_o_md']    = 'Markdown only';
+$lang['syntax_o_dw+md'] = 'Both (DokuWiki preferred)';
+$lang['syntax_o_md+dw'] = 'Both (Markdown preferred)';
 $lang['tagline']     = 'Tagline (if template supports it)';
 $lang['sidebar']     = 'Sidebar page name (if template supports it), empty field disables the sidebar';
 $lang['license']     = 'Under which license should your content be released?';
@@ -197,7 +202,7 @@ $lang['hidewarnings'] = 'Do not display any warnings issued by PHP. This may eas
 $lang['dnslookups'] = 'DokuWiki will lookup hostnames for remote IP addresses of users editing pages. If you have a slow or non working DNS server or don\'t want this feature, disable this option';
 $lang['jquerycdn'] = 'Should the jQuery and jQuery UI script files be loaded from a CDN? This adds additional HTTP requests, but files may load faster and users may have them cached already.';
 $lang['trustedproxies'] = 'Comma-separated list of trusted proxy servers from which to read the X-Forwarded-For header. Each item in the array may be either an IPv4 or IPv6 address, or an IPv4 or IPv6 CIDR range (e.g. 10.0.0.0/8). Leave empty to trust no proxy.';
-$lang['realip'] = 'Trust the X-Real-IP header. Only enable this if your server writes this header, otherwise it may be spoofed.';
+$lang['client_ip_header'] = 'Evaluate a custom header instead of remote-ip (e.g. X_REAL_IP). Only enable this if your server writes this header, otherwise it may be spoofed.';
 
 /* jQuery CDN options */
 $lang['jquerycdn_o_0'] = 'No CDN, local delivery only';

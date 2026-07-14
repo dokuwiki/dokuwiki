@@ -2,7 +2,10 @@
 
 namespace dokuwiki;
 
+use dokuwiki\Search\Exception\SearchException;
 use dokuwiki\Extension\Event;
+use dokuwiki\Logger;
+use dokuwiki\Search\Indexer;
 use dokuwiki\Sitemap\Mapper;
 use dokuwiki\Subscriptions\BulkSubscriptionSender;
 use dokuwiki\ChangeLog\ChangeLog;
@@ -203,7 +206,21 @@ class TaskRunner
         }
 
         // do the work
-        return idx_addPage($ID, true);
+        try {
+            $indexer = (new Indexer())->setLogger(function ($msg) {
+                echo $msg . NL;
+            });
+            if (!page_exists($ID)) {
+                return $indexer->deletePage($ID);
+            } else {
+                return $indexer->addPage($ID);
+            }
+        } catch (SearchException $e) {
+            $msg = $e::class . ' : ' . $e->getMessage();
+            echo $msg;
+            Logger::debug($msg);
+            return false;
+        }
     }
 
     /**

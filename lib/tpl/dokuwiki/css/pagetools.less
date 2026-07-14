@@ -6,35 +6,34 @@
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 
+@pagetools-ico-width: 1.75rem;
+@pagetools-ico-margin: 0.5rem;
+@pagetools-item-width: (@pagetools-ico-width + @pagetools-ico-margin + @pagetools-ico-margin);
+@pagetools-item-height: (@pagetools-ico-width + @pagetools-ico-margin);
+
 #dokuwiki__site > .site {
     /* give space to the right so the tools won't disappear on smaller screens */
-    /* it's 40px because the 30px wide icons will have 5px more spacing to the left and right */
-    padding-right: 40px;
+    padding-right: @pagetools-item-width;
     /* give the same space to the left to balance it out */
-    padding-left: 40px;
+    padding-left: @pagetools-item-width;
 }
 
 .dokuwiki div.page {
-    height: 190px;
-    min-height: 190px; /* 30 (= height of icons) x 6 (= maximum number of possible tools) + 2x5 */
+    height: (@pagetools-item-height * 6 + @pagetools-ico-margin * 2);
+    min-height: (@pagetools-item-height * 6 + @pagetools-ico-margin * 2);
     height: auto;
 }
 
 #dokuwiki__pagetools {
-    @ico-width: 28px;
-    @ico-margin: 8px;
-    @item-width: (@ico-width + @ico-margin + @ico-margin);
-    @item-height: (@ico-width + @ico-margin);
-
     position: absolute;
-    right: (-1 * @item-width);
+    right: (-1 * @pagetools-item-width);
     /* on same vertical level as first headline, because .page has 2em padding */
     top: 2em;
-    width: @item-width;
+    width: @pagetools-item-width;
 
     div.tools {
         position: fixed;
-        width: @item-width;
+        width: @pagetools-item-width;
 
         ul {
             position: absolute;
@@ -58,19 +57,19 @@
                     /* add transparent border to prevent jumping when proper border is added on focus */
                     border: 1px solid transparent;
                     white-space: nowrap;
-                    line-height: @item-height;
+                    line-height: @pagetools-item-height;
                     vertical-align: middle;
-                    height: @item-height;
+                    height: @pagetools-item-height;
 
                     span {
                         display: none; // hide label until hover
-                        margin: 0 @ico-margin;
+                        margin: 0 @pagetools-ico-margin;
                     }
 
                     svg {
-                        width: @ico-width;
-                        height: @ico-width;
-                        margin: 0 @ico-margin;
+                        width: @pagetools-ico-width;
+                        height: @pagetools-ico-width;
+                        margin: 0 @pagetools-ico-margin;
                         display: inline-block;
                         vertical-align: middle;
                         fill: @ini_border;
@@ -97,7 +96,7 @@
 
     [dir=rtl] & {
         right: auto;
-        left: (-1 * @item-width);
+        left: (-1 * @pagetools-item-width);
 
         div.tools {
             ul {

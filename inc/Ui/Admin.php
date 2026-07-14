@@ -69,10 +69,18 @@ class Admin extends Ui
      */
     protected function showVersion()
     {
+        global $conf;
+
+        $runtime = getRuntimeVersions();
+        $runtime['php'] .= ' ' . $runtime['sapi'];
+        unset($runtime['sapi']);
+
         echo '<div id="admin__version">';
         echo getVersion();
         echo '<br>';
-        echo implode('<br>', array_map('hsc', array_values(getRuntimeVersions())));
+        echo hsc($conf['template']) . ' ' . hsc($conf['syntax']);
+        echo '<br>';
+        echo implode('<br>', array_map(hsc(...), array_values($runtime)));
         echo '</div>';
     }
 
@@ -156,9 +164,9 @@ class Admin extends Ui
         }
 
         // sort by name, then sort
-        uasort($menu['admin'], [$this, 'menuSort']);
-        uasort($menu['manager'], [$this, 'menuSort']);
-        uasort($menu['other'], [$this, 'menuSort']);
+        uasort($menu['admin'], $this->menuSort(...));
+        uasort($menu['manager'], $this->menuSort(...));
+        uasort($menu['other'], $this->menuSort(...));
 
         return $menu;
     }

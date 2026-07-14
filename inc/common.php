@@ -9,6 +9,7 @@
 
 use dokuwiki\PassHash;
 use dokuwiki\Draft;
+use dokuwiki\PrefCookie;
 use dokuwiki\Utf8\Clean;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Utf8\Conversion;
@@ -20,6 +21,8 @@ use dokuwiki\Subscriptions\SubscriberManager;
 use dokuwiki\Extension\AuthPlugin;
 use dokuwiki\Extension\Event;
 use dokuwiki\Ip;
+use dokuwiki\MailUtils;
+use dokuwiki\Search\MetadataSearch;
 
 use function PHP81_BC\strftime;
 
@@ -80,7 +83,7 @@ function blank(&$in, $trim = false)
     if (is_array($in)) return $in === [];
     if ($in === "\0") return true;
     if ($trim && trim($in) === '') return true;
-    if (strlen($in) > 0) return false;
+    if ((string) $in !== '') return false;
     return empty($in);
 }
 
@@ -471,7 +474,7 @@ function idfilter($id, $ue = true)
     } elseif (
         str_starts_with(strtoupper(PHP_OS), 'WIN') &&
         $conf['userewrite'] &&
-        strpos($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS') === false
+        !str_contains($INPUT->server->str('SERVER_SOFTWARE'), 'Microsoft-IIS')
     ) {
         $id = strtr($id, ':', ';');
     }
@@ -774,12 +777,12 @@ function checkwordblock($text = '')
  *
  * The IP is sourced from, in order of preference:
  *
- *   - The X-Real-IP header if $conf[realip] is true.
+ *   - The custom IP header if $conf[client_ip_header] is set.
  *   - The X-Forwarded-For header if all the proxies are trusted by $conf[trustedproxies].
  *   - The TCP/IP connection remote address.
  *   - 0.0.0.0 if all else fails.
  *
- * The 'realip' config value should only be set to true if the X-Real-IP header
+ * The 'client_ip_header' config value should only be set if the header
  * is being added by the web server, otherwise it may be spoofed by the client.
  *
  * The 'trustedproxies' setting must not allow any IP, otherwise the X-Forwarded-For
@@ -1233,23 +1236,6 @@ function con($pre, $text, $suf, $pretty = false)
 }
 
 /**
- * Checks if the current page version is newer than the last entry in the page's
- * changelog. If so, we assume it has been an external edit and we create an
- * attic copy and add a proper changelog line.
- *
- * This check is only executed when the page is about to be saved again from the
- * wiki, triggered in @param string $id the page ID
- * @see saveWikiText()
- *
- * @deprecated 2021-11-28
- */
-function detectExternalEdit($id)
-{
-    dbg_deprecated(PageFile::class . '::detectExternalEdit()');
-    (new PageFile($id))->detectExternalEdit();
-}
-
-/**
  * Saves a wikitext by calling io_writeWikiPage.
  * Also directs changelog and attic updates.
  *
@@ -1275,7 +1261,7 @@ function saveWikiText($id, $text, $summary, $minor = false)
 
     // if useheading is enabled, purge the cache of all linking pages
     if (useHeading('content')) {
-        $pages = ft_backlinks($id, true);
+        $pages = (new MetadataSearch())->backlinks($id, true);
         foreach ($pages as $page) {
             $cache = new CacheRenderer($page, wikiFN($page), 'xhtml');
             $cache->removeCache();
@@ -1382,7 +1368,7 @@ function getGoogleQuery()
 
     if (!$q) return '';
     // ignore if query includes a full URL
-    if (strpos($q, '//') !== false) return '';
+    if (str_contains($q, '//')) return '';
     $q = preg_split('/[\s\'"\\\\`()\]\[?:!\.{};,#+*<>\\/]+/', $q, -1, PREG_SPLIT_NO_EMPTY);
     return $q;
 }
@@ -1490,33 +1476,6 @@ function date_iso8601($int_date)
 }
 
 /**
- * return an obfuscated email address in line with $conf['mailguard'] setting
- *
- * @param string $email email address
- * @return string
- * @author Harry Fuecks <hfuecks@gmail.com>
- * @author Christopher Smith <chris@jalakai.co.uk>
- *
- */
-function obfuscate($email)
-{
-    global $conf;
-
-    switch ($conf['mailguard']) {
-        case 'visible':
-            $obfuscate = ['@' => ' [at] ', '.' => ' [dot] ', '-' => ' [dash] '];
-            return strtr($email, $obfuscate);
-
-        case 'hex':
-            return Conversion::toHtml($email, true);
-
-        case 'none':
-        default:
-            return $email;
-    }
-}
-
-/**
  * Removes quoting backslashes
  *
  * @param string $string
@@ -1543,20 +1502,12 @@ function unslash($string, $char = "'")
  */
 function php_to_byte($value)
 {
-    switch (strtoupper(substr($value, -1))) {
-        case 'G':
-            $ret = (int)substr($value, 0, -1) * 1024 * 1024 * 1024;
-            break;
-        case 'M':
-            $ret = (int)substr($value, 0, -1) * 1024 * 1024;
-            break;
-        case 'K':
-            $ret = (int)substr($value, 0, -1) * 1024;
-            break;
-        default:
-            $ret = (int)$value;
-            break;
-    }
+    $ret = match (strtoupper(substr($value, -1))) {
+        'G' => (int)substr($value, 0, -1) * 1024 * 1024 * 1024,
+        'M' => (int)substr($value, 0, -1) * 1024 * 1024,
+        'K' => (int)substr($value, 0, -1) * 1024,
+        default => (int)$value,
+    };
     return $ret;
 }
 
@@ -1673,7 +1624,7 @@ function userlink($username = null, $textonly = false)
                         break;
                     case 'email':
                     case 'email_link':
-                        $data['name'] = obfuscate($info['mail']);
+                        $data['name'] = MailUtils::obfuscate($info['mail']);
                         break;
                 }
             } else {
@@ -1691,7 +1642,7 @@ function userlink($username = null, $textonly = false)
                 }
                 if (isset($info) && $info) {
                     if ($conf['showuseras'] == 'email_link') {
-                        $data['link']['url'] = 'mailto:' . obfuscate($info['mail']);
+                        $data['link']['url'] = 'mailto:' . MailUtils::obfuscateUrl($info['mail']);
                     } else {
                         if (is_null($xhtml_renderer)) {
                             $xhtml_renderer = p_get_renderer('xhtml');
@@ -1830,7 +1781,7 @@ function send_redirect($url)
     // check if running on IIS < 6 with CGI-PHP
     if (
         $INPUT->server->has('SERVER_SOFTWARE') && $INPUT->server->has('GATEWAY_INTERFACE') &&
-        (strpos($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI') !== false) &&
+        (str_contains($INPUT->server->str('GATEWAY_INTERFACE'), 'CGI')) &&
         (preg_match('|^Microsoft-IIS/(\d)\.\d$|', trim($INPUT->server->str('SERVER_SOFTWARE')), $matches)) &&
         $matches[1] < 6
     ) {
@@ -1853,114 +1804,37 @@ function send_redirect($url)
 }
 
 /**
- * Validate a value using a set of valid values
- *
- * This function checks whether a specified value is set and in the array
- * $valid_values. If not, the function returns a default value or, if no
- * default is specified, throws an exception.
- *
- * @param string $param The name of the parameter
- * @param array $valid_values A set of valid values; Optionally a default may
- *                             be marked by the key “default”.
- * @param array $array The array containing the value (typically $_POST
- *                             or $_GET)
- * @param string $exc The text of the raised exception
- *
- * @return mixed
- * @throws Exception
- * @author Adrian Lang <lang@cosmocode.de>
- */
-function valid_input_set($param, $valid_values, $array, $exc = '')
-{
-    if (isset($array[$param]) && in_array($array[$param], $valid_values)) {
-        return $array[$param];
-    } elseif (isset($valid_values['default'])) {
-        return $valid_values['default'];
-    } else {
-        throw new Exception($exc);
-    }
-}
-
-/**
  * Read a preference from the DokuWiki cookie
- * (remembering both keys & values are urlencoded)
+ *
+ * Consider using PrefCookie directly
  *
  * @param string $pref preference key
  * @param mixed $default value returned when preference not found
- * @return string preference value
+ * @return mixed preference value
  */
 function get_doku_pref($pref, $default)
 {
-    $enc_pref = urlencode($pref);
-    if (isset($_COOKIE['DOKU_PREFS']) && strpos($_COOKIE['DOKU_PREFS'], $enc_pref) !== false) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt = count($parts);
-
-        // due to #2721 there might be duplicate entries,
-        // so we read from the end
-        for ($i = $cnt - 2; $i >= 0; $i -= 2) {
-            if ($parts[$i] === $enc_pref) {
-                return urldecode($parts[$i + 1]);
-            }
-        }
-    }
-    return $default;
+    return (new PrefCookie())->get($pref, $default);
 }
 
 /**
  * Add a preference to the DokuWiki cookie
- * (remembering $_COOKIE['DOKU_PREFS'] is urlencoded)
- * Remove it by setting $val to false
+ *
+ * Remove it by setting $val to false.
+ * Consider using PrefCookie directly
  *
  * @param string $pref preference key
- * @param string $val preference value
+ * @param string|false $val preference value
  */
 function set_doku_pref($pref, $val)
 {
-    global $conf;
-    $orig = get_doku_pref($pref, false);
-    $cookieVal = '';
-
-    if ($orig !== false && ($orig !== $val)) {
-        $parts = explode('#', $_COOKIE['DOKU_PREFS']);
-        $cnt = count($parts);
-        // urlencode $pref for the comparison
-        $enc_pref = rawurlencode($pref);
-        $seen = false;
-        for ($i = 0; $i < $cnt; $i += 2) {
-            if ($parts[$i] === $enc_pref) {
-                if (!$seen) {
-                    if ($val !== false) {
-                        $parts[$i + 1] = rawurlencode($val ?? '');
-                    } else {
-                        unset($parts[$i]);
-                        unset($parts[$i + 1]);
-                    }
-                    $seen = true;
-                } else {
-                    // no break because we want to remove duplicate entries
-                    unset($parts[$i]);
-                    unset($parts[$i + 1]);
-                }
-            }
-        }
-        $cookieVal = implode('#', $parts);
-    } elseif ($orig === false && $val !== false) {
-        $cookieVal = (isset($_COOKIE['DOKU_PREFS']) ? $_COOKIE['DOKU_PREFS'] . '#' : '') .
-            rawurlencode($pref) . '#' . rawurlencode($val);
-    }
-
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    if (defined('DOKU_UNITTEST')) {
-        $_COOKIE['DOKU_PREFS'] = $cookieVal;
+    if ($val === false) {
+        $val = null;
     } else {
-        setcookie('DOKU_PREFS', $cookieVal, [
-            'expires' => time() + 365 * 24 * 3600,
-            'path' => $cookieDir,
-            'secure' => ($conf['securecookie'] && is_ssl()),
-            'samesite' => 'Lax'
-        ]);
+        $val = (string) $val;
     }
+
+    (new PrefCookie())->set($pref, $val);
 }
 
 /**

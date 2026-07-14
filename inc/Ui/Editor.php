@@ -83,7 +83,7 @@ class Editor extends Ui
         if ($data['target'] !== 'section') {
             // Only emit event if page is writable, section edit data is valid and
             // edit target is not section.
-            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, [$this, 'addTextarea'], true);
+            Event::createAndTrigger('EDIT_FORM_ADDTEXTAREA', $data, $this->addTextarea(...), true);
         } else {
             $this->addTextarea($data);
         }
@@ -106,19 +106,18 @@ class Editor extends Ui
             // add edit buttons: save, preview, cancel
             $form->addTagOpen('div')->addClass('editButtons');
             $form->addButton('do[save]', $lang['btn_save'])->attr('type', 'submit')
-                ->attrs(['accesskey' => 's', 'tabindex' => '4'])
+                ->attrs(['accesskey' => 's'])
                 ->id('edbtn__save');
             $form->addButton('do[preview]', $lang['btn_preview'])->attr('type', 'submit')
-                ->attrs(['accesskey' => 'p', 'tabindex' => '5'])
+                ->attrs(['accesskey' => 'p'])
                 ->id('edbtn__preview');
-            $form->addButton('do[cancel]', $lang['btn_cancel'])->attr('type', 'submit')
-                ->attrs(['tabindex' => '6']);
+            $form->addButton('do[cancel]', $lang['btn_cancel'])->attr('type', 'submit');
             $form->addTagClose('div'); // close div editButtons class
 
             // add a textbox for edit summary
             $form->addTagOpen('div')->addClass('summary');
             $input = $form->addTextInput('summary', $lang['summary'])
-                ->attrs(['size' => '50', 'tabindex' => '2'])
+                ->attrs(['size' => '50'])
                 ->id('edit__summary')->addClass('edit')
                 ->val($SUM);
             $input->getLabel()->attr('class', 'nowrap');
@@ -198,7 +197,7 @@ class Editor extends Ui
         }
 
         // set textarea attributes
-        $attr = ['tabindex' => '1'];
+        $attr = [];
         if (!$data['wr']) $attr['readonly'] = 'readonly';
         $attr['dir'] = 'auto';
         $attr['cols'] = '80';

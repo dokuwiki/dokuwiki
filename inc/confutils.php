@@ -77,7 +77,7 @@ function getAcronyms()
     static $acronyms = null;
     if (!$acronyms) {
         $acronyms = retrieveConfig('acronyms', 'confToHash');
-        $acronyms = array_filter($acronyms, 'strlen');
+        $acronyms = array_filter($acronyms, strlen(...));
     }
     return $acronyms;
 }
@@ -92,7 +92,7 @@ function getSmileys()
     static $smileys = null;
     if (!$smileys) {
         $smileys = retrieveConfig('smileys', 'confToHash');
-        $smileys = array_filter($smileys, 'strlen');
+        $smileys = array_filter($smileys, strlen(...));
     }
     return $smileys;
 }
@@ -107,7 +107,7 @@ function getEntities()
     static $entities = null;
     if (!$entities) {
         $entities = retrieveConfig('entities', 'confToHash');
-        $entities = array_filter($entities, 'strlen');
+        $entities = array_filter($entities, strlen(...));
     }
     return $entities;
 }
@@ -122,7 +122,7 @@ function getInterwiki()
     static $wikis = null;
     if (!$wikis) {
         $wikis = retrieveConfig('interwiki', 'confToHash', [true]);
-        $wikis = array_filter($wikis, 'strlen');
+        $wikis = array_filter($wikis, strlen(...));
 
         //add sepecial case 'this'
         $wikis['this'] = DOKU_URL . '{NAME}';
@@ -201,7 +201,7 @@ function getSchemes()
     static $schemes = null;
     if (!$schemes) {
         $schemes = retrieveConfig('scheme', 'file', null, 'array_merge_with_removal');
-        $schemes = array_map('trim', $schemes);
+        $schemes = array_map(trim(...), $schemes);
         $schemes = preg_replace('/^#.*/', '', $schemes);
         $schemes = array_filter($schemes);
     }
@@ -367,7 +367,7 @@ function actionOK($action)
 
         // prepare disabled actions array and handle legacy options
         $disabled = explode(',', $conf['disableactions']);
-        $disabled = array_map('trim', $disabled);
+        $disabled = array_map(trim(...), $disabled);
         if (
             (isset($conf['openregister']) && !$conf['openregister']) || !$auth instanceof AuthPlugin
             || !$auth->canDo('addUser')
@@ -448,15 +448,11 @@ function useHeading($linktype)
  */
 function conf_encodeString($str, $code)
 {
-    switch ($code) {
-        case 'base64':
-            return '<b>' . base64_encode($str);
-        case 'uuencode':
-            return '<u>' . convert_uuencode($str);
-        case 'plain':
-        default:
-            return $str;
-    }
+    return match ($code) {
+        'base64' => '<b>' . base64_encode($str),
+        'uuencode' => '<u>' . convert_uuencode($str),
+        default => $str,
+    };
 }
 /**
  * return obscured data as plain text
@@ -466,14 +462,12 @@ function conf_encodeString($str, $code)
  */
 function conf_decodeString($str)
 {
-    switch (substr($str, 0, 3)) {
-        case '<b>':
-            return base64_decode(substr($str, 3));
-        case '<u>':
-            return convert_uudecode(substr($str, 3));
-        default:  // not encoded (or unknown)
-            return $str;
-    }
+    return match (substr($str, 0, 3)) {
+        '<b>' => base64_decode(substr($str, 3)),
+        '<u>' => convert_uudecode(substr($str, 3)),
+        // not encoded (or unknown)
+        default => $str,
+    };
 }
 
 /**

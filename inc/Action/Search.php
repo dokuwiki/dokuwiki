@@ -3,6 +3,9 @@
 namespace dokuwiki\Action;
 
 use dokuwiki\Action\Exception\ActionAbort;
+use dokuwiki\Search\FulltextSearch;
+use dokuwiki\Search\MetadataSearch;
+use dokuwiki\Search\Query\QueryParser;
 
 /**
  * Class Search
@@ -68,8 +71,21 @@ class Search extends AbstractAction
         global $INPUT, $QUERY;
         $after = $INPUT->str('min');
         $before = $INPUT->str('max');
-        $this->pageLookupResults = ft_pageLookup($QUERY, true, useHeading('navigation'), $after, $before);
-        $this->fullTextResults = ft_pageSearch($QUERY, $highlight, $INPUT->str('srt'), $after, $before);
+        $this->pageLookupResults = (new MetadataSearch())->pageLookup(
+            $QUERY,
+            true,
+            useHeading('navigation'),
+            $after,
+            $before
+        );
+        $highlight = [];
+        $this->fullTextResults = (new FulltextSearch())->pageSearch(
+            $QUERY,
+            $highlight,
+            $INPUT->str('srt'),
+            $after,
+            $before
+        );
         $this->highlight = $highlight;
     }
 
@@ -86,8 +102,7 @@ class Search extends AbstractAction
             return;
         }
 
-        $Indexer = idx_get_indexer();
-        $parsedQuery = ft_queryParser($Indexer, $QUERY);
+        $parsedQuery = (new QueryParser())->convert($QUERY);
 
         if (empty($parsedQuery['ns']) && empty($parsedQuery['notns'])) {
             if ($conf['search_nslimit'] > 0) {
@@ -101,19 +116,19 @@ class Search extends AbstractAction
 
         if ($conf['search_fragment'] !== 'exact') {
             if (empty(array_diff($parsedQuery['words'], $parsedQuery['and']))) {
-                if (strpos($QUERY, '*') === false) {
+                if (!str_contains($QUERY, '*')) {
                     $queryParts = explode(' ', $QUERY);
                     $queryParts = array_map(function ($part) {
-                        if (strpos($part, '@') === 0) {
+                        if (str_starts_with($part, '@')) {
                             return $part;
                         }
-                        if (strpos($part, 'ns:') === 0) {
+                        if (str_starts_with($part, 'ns:')) {
                             return $part;
                         }
-                        if (strpos($part, '^') === 0) {
+                        if (str_starts_with($part, '^')) {
                             return $part;
                         }
-                        if (strpos($part, '-ns:') === 0) {
+                        if (str_starts_with($part, '-ns:')) {
                             return $part;
                         }
 

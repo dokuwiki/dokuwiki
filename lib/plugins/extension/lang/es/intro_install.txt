@@ -1,1 +1,1 @@
-Aquí se puede instalar manualmente los plugins y las plantillas, ya sea cargándolos o dando una URL de descarga directa.
+Aquí puedes instalar manualmente complementos y plantillas, ya sea cargándolos o proporcionando una URL de descarga directa.

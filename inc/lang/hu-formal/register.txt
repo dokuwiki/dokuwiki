@@ -1,0 +1,3 @@
+====== Új felhasználó regisztrálása ======
+
+Töltse ki az összes alábbi adatot az új felhasználói fiókjának létrehozásához. Győződjön meg róla, hogy **érvényes e-mail-címet** adjon meg, mivel az új jelszavát erre a címre küldjük el. A felhasználóneve érvényes [[doku>hu:pagename|oldalnév]] kell, hogy legyen.

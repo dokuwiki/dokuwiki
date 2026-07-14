@@ -2,13 +2,20 @@
 
 namespace dokuwiki\Parsing\ParserMode;
 
+use dokuwiki\Parsing\Handler;
+
 class Eol extends AbstractMode
 {
     /** @inheritdoc */
+    public function getSort()
+    {
+        return 370;
+    }
+
+    /** @inheritdoc */
     public function connectTo($mode)
     {
-        $badModes = ['listblock', 'table'];
-        if (in_array($mode, $badModes)) {
+        if (in_array($mode, $this->registry->getBlockEolModes())) {
             return;
         }
         // see FS#1652, pattern extended to swallow preceding whitespace to avoid
@@ -17,8 +24,9 @@ class Eol extends AbstractMode
     }
 
     /** @inheritdoc */
-    public function getSort()
+    public function handle($match, $state, $pos, Handler $handler)
     {
-        return 370;
+        $handler->addCall('eol', [], $pos);
+        return true;
     }
 }

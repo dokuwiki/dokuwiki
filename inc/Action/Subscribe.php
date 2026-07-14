@@ -76,7 +76,7 @@ class Subscribe extends AbstractUserAction
         if (empty($params['action']) || !checkSecurityToken()) return;
 
         // Handle POST data, may throw exception.
-        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, [$this, 'handlePostData']);
+        Event::createAndTrigger('ACTION_HANDLE_SUBSCRIBE', $params, $this->handlePostData(...));
 
         $target = $params['target'];
         $style = $params['style'];
@@ -138,18 +138,16 @@ class Subscribe extends AbstractUserAction
             // Allow “list” subscribe style since the target is a namespace.
             $valid_styles[] = 'list';
         }
-        $style = valid_input_set(
-            'style',
-            $valid_styles,
-            $params,
-            'invalid subscription style given'
-        );
-        $action = valid_input_set(
-            'action',
-            ['subscribe', 'unsubscribe'],
-            $params,
-            'invalid subscription action given'
-        );
+        if (!in_array($params['style'] ?? '', $valid_styles, true)) {
+            throw new Exception('invalid subscription style given');
+        }
+        $style = $params['style'];
+
+        $valid_actions = ['subscribe', 'unsubscribe'];
+        if (!in_array($params['action'] ?? '', $valid_actions, true)) {
+            throw new Exception('invalid subscription action given');
+        }
+        $action = $params['action'];
 
         // Check other conditions.
         if ($action === 'subscribe') {

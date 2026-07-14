@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use IXR\DataType\Base64;
 use IXR\DataType\Date;
@@ -23,39 +24,39 @@ class LegacyApiCore extends ApiCore
         return array_merge(
             $methods,
             [
-                'dokuwiki.getVersion' => new ApiCall([$this, 'legacyGetVersion'], 'legacy'),
-                'dokuwiki.login' => (new ApiCall([$this, 'legacyLogin'], 'legacy'))->setPublic(),
-                'dokuwiki.logoff' => new ApiCall([$this, 'legacyLogoff'], 'legacy'),
-                'dokuwiki.getPagelist' => new ApiCall([$this, 'legacyGetPagelist'], 'legacy'),
-                'dokuwiki.search' => new ApiCall([$this, 'legacySearch'], 'legacy'),
-                'dokuwiki.getTime' => new ApiCall([$this, 'legacyGetTime'], 'legacy'),
-                'dokuwiki.setLocks' => new ApiCall([$this, 'legacySetLocks'], 'legacy'),
-                'dokuwiki.getTitle' => (new ApiCall([$this, 'legacyGetTitle'], 'legacy'))->setPublic(),
-                'dokuwiki.appendPage' => new ApiCall([$this, 'legacyAppendPage'], 'legacy'),
-                'dokuwiki.createUser' => new ApiCall([$this, 'legacyCreateUser'], 'legacy'),
-                'dokuwiki.deleteUsers' => new ApiCall([$this, 'legacyDeleteUsers'], 'legacy'),
-                'wiki.getPage' => new ApiCall([$this, 'legacyGetPage'], 'legacy'),
-                'wiki.getPageVersion' => new ApiCall([$this, 'legacyGetPageVersion'], 'legacy'),
-                'wiki.getPageHTML' => new ApiCall([$this, 'legacyGetPageHTML'], 'legacy'),
-                'wiki.getPageHTMLVersion' => new ApiCall([$this, 'legacyGetPageHTMLVersion'], 'legacy'),
-                'wiki.getAllPages' => new ApiCall([$this, 'legacyGetAllPages'], 'legacy'),
-                'wiki.getAttachments' => new ApiCall([$this, 'legacyGetAttachments'], 'legacy'),
-                'wiki.getBackLinks' => new ApiCall([$this, 'legacyGetBackLinks'], 'legacy'),
-                'wiki.getPageInfo' => new ApiCall([$this, 'legacyGetPageInfo'], 'legacy'),
-                'wiki.getPageInfoVersion' => new ApiCall([$this, 'legacyGetPageInfoVersion'], 'legacy'),
-                'wiki.getPageVersions' => new ApiCall([$this, 'legacyGetPageVersions'], 'legacy'),
-                'wiki.putPage' => new ApiCall([$this, 'legacyPutPage'], 'legacy'),
-                'wiki.listLinks' => new ApiCall([$this, 'legacyListLinks'], 'legacy'),
-                'wiki.getRecentChanges' => new ApiCall([$this, 'legacyGetRecentChanges'], 'legacy'),
-                'wiki.getRecentMediaChanges' => new ApiCall([$this, 'legacyGetRecentMediaChanges'], 'legacy'),
-                'wiki.aclCheck' => new ApiCall([$this, 'legacyAclCheck'], 'legacy'),
-                'wiki.putAttachment' => new ApiCall([$this, 'legacyPutAttachment'], 'legacy'),
-                'wiki.deleteAttachment' => new ApiCall([$this, 'legacyDeleteAttachment'], 'legacy'),
-                'wiki.getAttachment' => new ApiCall([$this, 'legacyGetAttachment'], 'legacy'),
-                'wiki.getAttachmentInfo' => new ApiCall([$this, 'legacyGetAttachmentInfo'], 'legacy'),
-                'dokuwiki.getXMLRPCAPIVersion' => (new ApiCall([$this, 'legacyGetXMLRPCAPIVersion'], 'legacy'))
+                'dokuwiki.getVersion' => new ApiCall($this->legacyGetVersion(...), 'legacy'),
+                'dokuwiki.login' => (new ApiCall($this->legacyLogin(...), 'legacy'))->setPublic(),
+                'dokuwiki.logoff' => new ApiCall($this->legacyLogoff(...), 'legacy'),
+                'dokuwiki.getPagelist' => new ApiCall($this->legacyGetPagelist(...), 'legacy'),
+                'dokuwiki.search' => new ApiCall($this->legacySearch(...), 'legacy'),
+                'dokuwiki.getTime' => new ApiCall($this->legacyGetTime(...), 'legacy'),
+                'dokuwiki.setLocks' => new ApiCall($this->legacySetLocks(...), 'legacy'),
+                'dokuwiki.getTitle' => (new ApiCall($this->legacyGetTitle(...), 'legacy'))->setPublic(),
+                'dokuwiki.appendPage' => new ApiCall($this->legacyAppendPage(...), 'legacy'),
+                'dokuwiki.createUser' => new ApiCall($this->legacyCreateUser(...), 'legacy'),
+                'dokuwiki.deleteUsers' => new ApiCall($this->legacyDeleteUsers(...), 'legacy'),
+                'wiki.getPage' => new ApiCall($this->legacyGetPage(...), 'legacy'),
+                'wiki.getPageVersion' => new ApiCall($this->legacyGetPageVersion(...), 'legacy'),
+                'wiki.getPageHTML' => new ApiCall($this->legacyGetPageHTML(...), 'legacy'),
+                'wiki.getPageHTMLVersion' => new ApiCall($this->legacyGetPageHTMLVersion(...), 'legacy'),
+                'wiki.getAllPages' => new ApiCall($this->legacyGetAllPages(...), 'legacy'),
+                'wiki.getAttachments' => new ApiCall($this->legacyGetAttachments(...), 'legacy'),
+                'wiki.getBackLinks' => new ApiCall($this->legacyGetBackLinks(...), 'legacy'),
+                'wiki.getPageInfo' => new ApiCall($this->legacyGetPageInfo(...), 'legacy'),
+                'wiki.getPageInfoVersion' => new ApiCall($this->legacyGetPageInfoVersion(...), 'legacy'),
+                'wiki.getPageVersions' => new ApiCall($this->legacyGetPageVersions(...), 'legacy'),
+                'wiki.putPage' => new ApiCall($this->legacyPutPage(...), 'legacy'),
+                'wiki.listLinks' => new ApiCall($this->legacyListLinks(...), 'legacy'),
+                'wiki.getRecentChanges' => new ApiCall($this->legacyGetRecentChanges(...), 'legacy'),
+                'wiki.getRecentMediaChanges' => new ApiCall($this->legacyGetRecentMediaChanges(...), 'legacy'),
+                'wiki.aclCheck' => new ApiCall($this->legacyAclCheck(...), 'legacy'),
+                'wiki.putAttachment' => new ApiCall($this->legacyPutAttachment(...), 'legacy'),
+                'wiki.deleteAttachment' => new ApiCall($this->legacyDeleteAttachment(...), 'legacy'),
+                'wiki.getAttachment' => new ApiCall($this->legacyGetAttachment(...), 'legacy'),
+                'wiki.getAttachmentInfo' => new ApiCall($this->legacyGetAttachmentInfo(...), 'legacy'),
+                'dokuwiki.getXMLRPCAPIVersion' => (new ApiCall($this->legacyGetXMLRPCAPIVersion(...), 'legacy'))
                     ->setPublic(),
-                'wiki.getRPCVersionSupported' => (new ApiCall([$this, 'legacyGetRPCVersionSupported'], 'legacy'))
+                'wiki.getRPCVersionSupported' => (new ApiCall($this->legacyGetRPCVersionSupported(...), 'legacy'))
                     ->setPublic(),
             ]
         );
@@ -354,7 +355,7 @@ class LegacyApiCore extends ApiCore
 
         if ($user === '') throw new RemoteException('empty or invalid user', 401);
         if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!mail_isvalid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if (!MailUtils::isValid($mail)) throw new RemoteException('empty or invalid mail address', 403);
 
         if ((string)$password === '') {
             $password = auth_pwgen($user);
@@ -477,7 +478,7 @@ class LegacyApiCore extends ApiCore
                 'lastModified' => $this->toDate($recent->revision),
                 'author' => $recent->author,
                 'version' => $recent->revision,
-                'perms' => auth_quickaclcheck($recent->id),
+                'perms' => auth_quickaclcheck(mediaAclPath($recent->id)),
                 'size' => @filesize(mediaFN($recent->id)),
             ];
         }
