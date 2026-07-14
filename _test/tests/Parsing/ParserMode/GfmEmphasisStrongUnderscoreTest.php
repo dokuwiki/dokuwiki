@@ -18,10 +18,11 @@ class GfmEmphasisStrongUnderscoreTest extends ParserTestBase
         $this->setSyntax('md');
     }
 
-    function testBasic()
+    public function testBasic()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('Foo ___Bar___ Baz');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -38,7 +39,7 @@ class GfmEmphasisStrongUnderscoreTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testSingleCharacter()
+    public function testSingleCharacter()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('___a___');
@@ -46,56 +47,56 @@ class GfmEmphasisStrongUnderscoreTest extends ParserTestBase
         $this->assertContains('strong_open', array_column($this->H->calls, 0));
     }
 
-    function testLeadingWhitespaceDoesNotMatch()
+    public function testLeadingWhitespaceDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('___ foo___');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testTrailingWhitespaceDoesNotMatch()
+    public function testTrailingWhitespaceDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('___foo ___');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testDoesNotSpanParagraphBoundary()
+    public function testDoesNotSpanParagraphBoundary()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse("___foo\n\nbar___");
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testLongerSymmetricRunDoesNotMatch()
+    public function testLongerSymmetricRunDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('____foo____');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testAsymmetricDoesNotMatch()
+    public function testAsymmetricDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('___foo__');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testIntrawordDoesNotMatch()
+    public function testIntrawordDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('abc___foo___');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testMultibyteIntrawordDoesNotMatch()
+    public function testMultibyteIntrawordDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('für___etwas___');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testMultibyteContentInside()
+    public function testMultibyteContentInside()
     {
         $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
         $this->P->parse('foo ___für___ bar');
@@ -103,8 +104,16 @@ class GfmEmphasisStrongUnderscoreTest extends ParserTestBase
         $this->assertContains('strong_open', array_column($this->H->calls, 0));
     }
 
-    function testSortValue()
+    public function testSortValue()
     {
         $this->assertSame(65, (new GfmEmphasisStrongUnderscore())->getSort());
+    }
+
+    public function testRejectedOpenerBeforeValidSpanStaysLiteral()
+    {
+        $this->P->addMode('gfm_emphasis_strong_underscore', new GfmEmphasisStrongUnderscore());
+        $this->P->parse('___ foo ___bar___');
+        $this->assertContains('emphasis_open', array_column($this->H->calls, 0));
+        $this->assertStringContainsString('___ foo ', $this->H->calls[2][1][0]);
     }
 }

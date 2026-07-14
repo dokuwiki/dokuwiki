@@ -84,7 +84,11 @@ class GfmQuote extends AbstractMode
      */
     public function connectTo($mode)
     {
-        $this->Lexer->addSpecialPattern('(?:^|\n)>[^\n]*(?:\n>[^\n]*)*', $mode, 'gfm_quote');
+        // The continuation group is possessive: each quote line ends at a
+        // `\n` that the next iteration re-anchors on, so the group never
+        // backtracks. Without it a very long blockquote makes the non-JIT
+        // PCRE engine retain one backtracking frame per line.
+        $this->Lexer->addSpecialPattern('(?:^|\n)>[^\n]*(?:\n>[^\n]*)*+', $mode, 'gfm_quote');
     }
 
     /** @inheritdoc */

@@ -85,15 +85,27 @@ class GfmCode extends AbstractMode
         //   (?=\n)                  — opener line must end at a newline;
         //                             without this anchor `` ``` aa ``` ``
         //                             on one line would parse as a fence
-        //   (?:(?!CLOSE).)*         — body: any char (DOTALL) that isn't
-        //                             the start of a close-fence line
+        //   (?:(?!CLOSE).)*+        — body: any char (DOTALL) that isn't
+        //                             the start of a close-fence line. The
+        //                             tempered dot stops at exactly the first
+        //                             CLOSE (the lookahead fails there), so
+        //                             no backtracking into the body is ever
+        //                             needed once it has stopped. The
+        //                             possessive quantifier makes that
+        //                             explicit: on an unclosed fence the body
+        //                             consumes to EOF, CLOSE fails, and the
+        //                             match fails at once instead of
+        //                             backtracking byte by byte — which the
+        //                             non-JIT PCRE engine does by retaining
+        //                             one frame per consumed byte, an
+        //                             unbounded memory spike on large fences.
         //   CLOSE = \nF{3,}[ \t]*(?=\n)  — close fence, required.
         //                             No `\z` fallback: unclosed fences stay
         //                             literal (see class docblock)
         $close = '\n' . $this->fenceChar . '{3,}[ \t]*(?=\n)';
         $this->Lexer->addSpecialPattern(
             '\n' . $this->fenceChar . '{3,}' . $this->infoClass . '(?=\n)'
-                . '(?:(?!' . $close . ').)*' . $close,
+                . '(?:(?!' . $close . ').)*+' . $close,
             $mode,
             $this->getModeName()
         );

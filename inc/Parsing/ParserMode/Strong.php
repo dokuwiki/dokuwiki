@@ -22,7 +22,7 @@ class Strong extends AbstractFormatting
         // Flanking rules (simplified): opener must be followed by non-whitespace
         // non-`*`; closer must be preceded by non-whitespace. This rejects
         // `** foo**`, `**foo **`, and empty pairs `****`.
-        return '\*\*(?=[^\s*])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]\*\*)';
+        return '\*\*(?=[^\s*])';
     }
 
     /** @inheritdoc */

@@ -19,7 +19,7 @@ class Underline extends AbstractFormatting
     /** @inheritdoc */
     protected function getEntryPattern(): string
     {
-        return '__(?=[^\s_])(?=' . self::CONTENT_UNTIL_PARA . '[^\s]__)';
+        return '__(?=[^\s_])';
     }
 
     /** @inheritdoc */

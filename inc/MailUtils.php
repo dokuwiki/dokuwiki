@@ -21,10 +21,17 @@ class MailUtils
      * Pattern for use in email detection and validation.
      *
      * Uses non-capturing groups since the parser does not allow captures.
+     *
+     * The dot-separated groups are possessive: an atext run stops at the
+     * next dot or the @, and a domain label always ends in a dot, so neither
+     * group can over-consume and neither ever needs to backtrack. A plain
+     * quantifier here is a ReDoS vector: a long `a.a.a.a…` local part or
+     * `a.a.a.a…` domain makes the non-JIT PCRE engine retain one
+     * backtracking frame per segment before the match ultimately fails.
      */
     public const PREG_PATTERN_VALID_EMAIL =
-        '[' . self::RFC2822_ATEXT . ']+(?:\.[' . self::RFC2822_ATEXT . ']+)*'
-        . '@(?i:[0-9a-z][0-9a-z-]*\.)+(?i:[a-z]{2,63})';
+        '[' . self::RFC2822_ATEXT . ']+(?:\.[' . self::RFC2822_ATEXT . ']+)*+'
+        . '@(?i:[0-9a-z][0-9a-z-]*\.)++(?i:[a-z]{2,63})';
 
     // region email-address obfuscation
 

@@ -19,10 +19,11 @@ class GfmEmphasisStrongTest extends ParserTestBase
         $this->setSyntax('md');
     }
 
-    function testBasic()
+    public function testBasic()
     {
         $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
         $this->P->parse('Foo ***Bar*** Baz');
+
         $calls = [
             ['document_start', []],
             ['p_open', []],
@@ -39,10 +40,11 @@ class GfmEmphasisStrongTest extends ParserTestBase
         $this->assertCalls($calls, $this->H->calls);
     }
 
-    function testSingleCharacter()
+    public function testSingleCharacter()
     {
         $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
         $this->P->parse('***a***');
+
         $modes = array_column($this->H->calls, 0);
         $this->assertContains('emphasis_open', $modes);
         $this->assertContains('strong_open', $modes);
@@ -50,28 +52,28 @@ class GfmEmphasisStrongTest extends ParserTestBase
         $this->assertContains('emphasis_close', $modes);
     }
 
-    function testLeadingWhitespaceDoesNotMatch()
+    public function testLeadingWhitespaceDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
         $this->P->parse('*** foo***');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testTrailingWhitespaceDoesNotMatch()
+    public function testTrailingWhitespaceDoesNotMatch()
     {
         $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
         $this->P->parse('***foo ***');
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testDoesNotSpanParagraphBoundary()
+    public function testDoesNotSpanParagraphBoundary()
     {
         $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
         $this->P->parse("***foo\n\nbar***");
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testLongerSymmetricRunDoesNotMatch()
+    public function testLongerSymmetricRunDoesNotMatch()
     {
         // `****foo****` has 4 asterisks each side. The entry pattern requires
         // the opener run to be exactly 3 (via `(?<!\*)` and `(?!\*)` on the
@@ -82,7 +84,7 @@ class GfmEmphasisStrongTest extends ParserTestBase
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testAsymmetricDoesNotMatch()
+    public function testAsymmetricDoesNotMatch()
     {
         // `***foo**` has 3 asterisks on the left but only 2 on the right.
         // The entry's closing-delimiter lookahead requires exactly 3 `*`s
@@ -92,8 +94,16 @@ class GfmEmphasisStrongTest extends ParserTestBase
         $this->assertNotContains('emphasis_open', array_column($this->H->calls, 0));
     }
 
-    function testSortValue()
+    public function testSortValue()
     {
         $this->assertSame(65, (new GfmEmphasisStrong())->getSort());
+    }
+
+    public function testRejectedOpenerBeforeValidSpanStaysLiteral()
+    {
+        $this->P->addMode('gfm_emphasis_strong', new GfmEmphasisStrong());
+        $this->P->parse('*** foo ***bar***');
+        $this->assertContains('emphasis_open', array_column($this->H->calls, 0));
+        $this->assertStringContainsString('*** foo ', $this->H->calls[2][1][0]);
     }
 }

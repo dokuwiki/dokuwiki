@@ -39,20 +39,14 @@ class Footnote extends AbstractMode
     /** @inheritdoc */
     public function connectTo($mode)
     {
-        $this->Lexer->addEntryPattern(
-            '\x28\x28(?=.*\x29\x29)',
-            $mode,
-            'footnote'
-        );
+        $this->Lexer->addEntryPattern('\x28\x28', $mode, 'footnote');
     }
 
     /** @inheritdoc */
     public function postConnect()
     {
-        $this->Lexer->addExitPattern(
-            '\x29\x29',
-            'footnote'
-        );
+        $this->Lexer->addExitPattern('\x29\x29', 'footnote');
+        $this->Lexer->addCloserPattern('\x29\x29', 'footnote');
     }
 
     /** @inheritdoc */

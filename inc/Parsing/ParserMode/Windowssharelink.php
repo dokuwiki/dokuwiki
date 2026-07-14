@@ -17,7 +17,11 @@ class Windowssharelink extends AbstractMode
     /** @inheritdoc */
     public function preConnect()
     {
-        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w\-$]+)+";
+        // The path-segment group is possessive: `[\w\-$]+` stops at each
+        // backslash, so successive segments never overlap and the group never
+        // needs to backtrack. Without it a long `\\host\a\b\c…` run makes the
+        // non-JIT PCRE engine retain one backtracking frame per segment.
+        $this->pattern = "\\\\\\\\\w+?(?:\\\\[\w\-$]+)++";
     }
 
     /** @inheritdoc */
