@@ -1519,6 +1519,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         // initialize the cell counter used for classes
         $this->_counter['cell_counter'] = 0;
+        // initialize the row counter in case a row is opened without a preceding table_open()
+        $this->_counter['row_counter'] ??= 0;
         $class = 'row' . $this->_counter['row_counter']++;
         if ($classes !== null) {
             if (is_array($classes)) $classes = implode(' ', $classes);
