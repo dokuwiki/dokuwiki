@@ -670,10 +670,10 @@ function auth_isMember($memberlist, $user, array $groups)
         if (!$auth->isCaseSensitive()) $member = PhpString::strtolower($member);
         if ($member[0] == '@') {
             $member = $auth->cleanGroup(substr($member, 1));
-            if (in_array($member, $groups)) return true;
+            if (in_array($member, $groups, true)) return true;
         } else {
             $member = $auth->cleanUser($member);
-            if ($member == $user) return true;
+            if ($member === $user) return true;
         }
     }
 
@@ -803,7 +803,7 @@ function auth_aclcheck_cb($data)
             if (!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                 $acl[1] = PhpString::strtolower($acl[1]);
             }
-            if (!in_array($acl[1], $groups)) {
+            if (!in_array($acl[1], $groups, true)) {
                 continue;
             }
             if ($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!
@@ -833,7 +833,7 @@ function auth_aclcheck_cb($data)
                 if (!$auth->isCaseSensitive() && $acl[1] !== '@ALL') {
                     $acl[1] = PhpString::strtolower($acl[1]);
                 }
-                if (!in_array($acl[1], $groups)) {
+                if (!in_array($acl[1], $groups, true)) {
                     continue;
                 }
                 if ($acl[2] > AUTH_DELETE) $acl[2] = AUTH_DELETE; //no admins in the ACL!

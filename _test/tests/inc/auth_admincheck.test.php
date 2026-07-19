@@ -198,4 +198,22 @@ class auth_admin_test extends DokuWikiTest
 
         $this->assertTrue(auth_ismanager('camilla', null, true, true));
     }
+
+    function test_ismanager_numeric_no_typejuggling()
+    {
+        $this->setSensitive();
+        global $conf;
+        $conf['superuser'] = '1e3,@1e3';
+        $conf['manager'] = '';
+
+        // exact matches are still recognized
+        $this->assertTrue(auth_ismanager('1e3', null, true, true));
+        $this->assertTrue(auth_ismanager('jill', ['1e3'], true, true));
+
+        // numerically-equal but textually-different names must not collide
+        $this->assertFalse(auth_ismanager('1000', null, true, true));
+        $this->assertFalse(auth_ismanager('01000', null, true, true));
+        $this->assertFalse(auth_ismanager('1000.0', null, true, true));
+        $this->assertFalse(auth_ismanager('jill', ['1000'], true, true));
+    }
 }
