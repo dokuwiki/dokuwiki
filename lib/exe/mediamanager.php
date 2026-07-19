@@ -86,17 +86,17 @@ if (!empty($_FILES['upload']['tmp_name'])) {
 
 // handle meta saving
 if ($IMG && @array_key_exists('save', $INPUT->arr('do'))) {
-    $JUMPTO = media_metasave($IMG, $AUTH, $INPUT->arr('meta'));
+    $JUMPTO = media_metasave($IMG, $INPUT->arr('meta'));
 }
 
 if ($IMG && ($INPUT->str('mediado') == 'save' || @array_key_exists('save', $INPUT->arr('mediado')))) {
-    $JUMPTO = media_metasave($IMG, $AUTH, $INPUT->arr('meta'));
+    $JUMPTO = media_metasave($IMG, $INPUT->arr('meta'));
 }
 
 if ($INPUT->int('rev') && $conf['mediarevisions']) $REV = $INPUT->int('rev');
 
 if ($INPUT->str('mediado') == 'restore' && $conf['mediarevisions'] && checkSecurityToken()) {
-    $JUMPTO = media_restore($INPUT->str('image'), $REV, $AUTH);
+    $JUMPTO = media_restore($INPUT->str('image'), $REV);
 }
 
 // handle deletion
