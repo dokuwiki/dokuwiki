@@ -127,4 +127,36 @@ class HandlerTest extends \DokuWikiTest
         $this->assertSame(['datetime'], $args[1]);
         $this->assertSame('~~INFO:datetime~~', $args[3]);
     }
+
+    /**
+     * PARSER_HANDLER_DONE marks a finished document, so finalize() fires it for
+     * a top-level parse; the per-item and per-blockquote sub-parses the built-in
+     * Markdown modes run fire PARSER_SUBHANDLER_DONE instead. Firing the
+     * document event per item let a plugin hooking it (e.g. struct's
+     * auto-output) inject a call into every list item, which defeated
+     * GfmListblock's tight-item detection and wrapped each item in a paragraph.
+     */
+    function testFinalizeFiresDocumentAndSubParserEventsSeparately()
+    {
+        global $EVENT_HANDLER;
+        $main = 0;
+        $sub = 0;
+        $EVENT_HANDLER->register_hook('PARSER_HANDLER_DONE', 'AFTER', null, function () use (&$main) {
+            $main++;
+        });
+        $EVENT_HANDLER->register_hook('PARSER_SUBHANDLER_DONE', 'AFTER', null, function () use (&$sub) {
+            $sub++;
+        });
+
+        // top-level parse fires PARSER_HANDLER_DONE only (also the BC contract
+        // for legacy new Doku_Handler() sub-parsing)
+        (new Handler(new ModeRegistry('md')))->finalize();
+        $this->assertSame(1, $main, 'main parse must fire PARSER_HANDLER_DONE');
+        $this->assertSame(0, $sub, 'main parse must not fire PARSER_SUBHANDLER_DONE');
+
+        // sub-parser handler fires PARSER_SUBHANDLER_DONE only
+        (new Handler(new ModeRegistry('md'), true))->finalize();
+        $this->assertSame(1, $main, 'sub-parse must not fire PARSER_HANDLER_DONE');
+        $this->assertSame(1, $sub, 'sub-parse must fire PARSER_SUBHANDLER_DONE');
+    }
 }

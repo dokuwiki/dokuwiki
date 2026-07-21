@@ -26,14 +26,18 @@ use dokuwiki\Parsing\ModeRegistry;
  * itself (defensive guard against lexer re-entry on pathological inputs;
  * normal nested lists are caught by the outer pattern instead).
  *
- * Each item's sub-parsed calls are wrapped in a `nest` instruction (see
- * Handler\Nest) before they reach the outer handler. This is essential:
- * the sub-parser's Block rewriter has already wrapped multi-paragraph
- * content in `p_open`/`p_close`, and without nest-wrapping the main
- * handler's Block rewriter would see those paragraphs and add another
- * `<p>` around the entire replayed range, producing nested `<p>` tags.
- * Block treats `nest` as opaque and the renderer base class unwraps it
- * transparently — the same pattern Footnote uses.
+ * Each item's sub-parsed calls are wrapped in a nest instruction (see
+ * Handler\Nest) before they reach the outer handler. The sub-parse has
+ * already run its own finalize - the call-writer rewriters plus the
+ * Block paragraph pass - producing a complete instruction sequence for
+ * the item. The main handler finalizes the whole document afterwards;
+ * wrapping the item in nest keeps it opaque to that second pass (Block
+ * copies a nest call verbatim instead of descending into it), so the
+ * item's block structure is preserved and replayed as-is by the renderer
+ * base class. This is the isolation Footnote has always relied on nest
+ * for, so nested block content is not re-stitched by the outer rewriters.
+ * Nest also merges adjacent cdata and drops stray eol as it buffers,
+ * sealing the item boundary.
  *
  * Indentation rule: depth = (indent / 2) + 1. Tabs become two spaces. 1- and
  * 3-space indents round down. Marker characters: -, *, + (unordered) and
@@ -145,10 +149,10 @@ class GfmListblock extends AbstractMode
             $itemCalls = $this->filterSubCalls($subHandler->calls);
             if (empty($itemCalls)) continue; // empty item — nothing to emit
 
-            // Wrap the item content in a Nest so the main handler's Block
-            // rewriter does not double-wrap our already-paragraphed content.
-            // Block treats `nest` as opaque and the renderer base class
-            // unwraps it transparently, the same pattern Footnote uses.
+            // Wrap the item content in a Nest so the outer handler's
+            // finalize (its rewriters and Block pass) does not re-process
+            // this already-finalized sub-tree: Block copies a nest call
+            // verbatim and the renderer base class replays it as-is.
             $outer = $handler->getCallWriter();
             $nest = new Nest($outer);
             $handler->setCallWriter($nest);

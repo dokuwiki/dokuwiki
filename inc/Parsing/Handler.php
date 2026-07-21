@@ -38,14 +38,19 @@ class Handler
     /** @var ModeRegistry the registry of the parse this handler belongs to */
     protected ModeRegistry $registry;
 
+    /** @var bool whether this handler drives a sub-parse */
+    protected bool $isSubParser = false;
+
     /**
      * @param ModeRegistry|null $registry the registry of the parse, so handler
      *     methods and plugin handle()/render() can ask for the active syntax.
      *     Null is a deprecated backward-compatibility path for the legacy
      *     manual sub-parsing pattern (new Doku_Handler() with no argument): a
      *     registry for the configured syntax is built in that case.
+     * @param bool $isSubParser true for the sub-parser instances the built-in
+     *     modes spin up per list item or blockquote.
      */
-    public function __construct(?ModeRegistry $registry = null)
+    public function __construct(?ModeRegistry $registry = null, bool $isSubParser = false)
     {
         if (!$registry instanceof ModeRegistry) {
             global $conf;
@@ -57,6 +62,7 @@ class Handler
             $registry = new ModeRegistry($conf['syntax']);
         }
         $this->registry = $registry;
+        $this->isSubParser = $isSubParser;
         $this->reset();
     }
 
@@ -241,7 +247,9 @@ class Handler
      * Called from the parser. Calls finalise() on the call writer, closes open
      * sections, rewrites blocks and adds document_start and document_end calls.
      *
-     * @triggers PARSER_HANDLER_DONE
+     * @triggers PARSER_HANDLER_DONE for the top-level document parse
+     * @triggers PARSER_SUBHANDLER_DONE for the sub-parses the built-in modes
+     *     run per list item or blockquote (see the $isSubParser flag)
      */
     public function finalize()
     {
@@ -255,7 +263,11 @@ class Handler
         $B = new Block();
         $this->calls = $B->process($this->calls);
 
-        Event::createAndTrigger('PARSER_HANDLER_DONE', $this);
+        if ($this->isSubParser) {
+            Event::createAndTrigger('PARSER_SUBHANDLER_DONE', $this);
+        } else {
+            Event::createAndTrigger('PARSER_HANDLER_DONE', $this);
+        }
 
         array_unshift($this->calls, ['document_start', [], 0]);
         $last_call = end($this->calls);

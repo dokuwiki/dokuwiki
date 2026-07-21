@@ -362,7 +362,7 @@ class ModeRegistry
             $excluded = array_merge($excluded, $categories[$cat] ?? []);
         }
 
-        $parser = new Parser(new Handler($this), $this);
+        $parser = new Parser(new Handler($this, true), $this);
         foreach ($this->getModes() as $m) {
             if (in_array($m['mode'], $excluded, true)) continue;
             // Mode objects expose a single $Lexer slot which Parser::addMode()
