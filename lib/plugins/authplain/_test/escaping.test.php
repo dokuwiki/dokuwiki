@@ -88,6 +88,58 @@ class helper_plugin_authplain_escaping_test extends DokuWikiTest {
         $this->assertTrue($this->auth->checkPass("testuser", $user['pass']));
     }
 
+    /**
+     * @see testModifyUserRegexMetacharacter
+     */
+    public function provideRegexMetacharacterUsers()
+    {
+        // Only the dot actually survives cleanUser() and is thus reachable as
+        // a stored username through the normal user flow. The other
+        // metacharacters are normally stripped during cleaning and cannot
+        // occur that way, but are exercised here directly to ensure
+        // modifyUser() escapes the username robustly on its own.
+        // [attacker username, sibling that an unescaped /^<attacker>:/ matches]
+        return [
+            ['a.b', 'a1b'],   // . matches any single character (reachable via cleanUser)
+            ['xy+', 'xyy'],   // + matches the repeated preceding character
+            ['ab?', 'a'],     // ? makes the preceding character optional
+            ['c[d', 'c[d'],   // [ would make the unescaped pattern an invalid regex
+        ];
+    }
+
+    /**
+     * Modifying a user whose name contains a regex metacharacter must only
+     * touch that user's own line and never match or destroy other accounts.
+     *
+     * @param string $attacker username containing a regex metacharacter
+     * @param string $sibling  account an unescaped pattern would also match
+     * @dataProvider provideRegexMetacharacterUsers
+     */
+    public function testModifyUserRegexMetacharacter($attacker, $sibling)
+    {
+        $this->auth->createUser($attacker, "password", "Attacker", "a@example.com");
+        if ($sibling !== $attacker) {
+            $this->auth->createUser($sibling, "password", "Sibling", "s@example.com");
+        }
+        $this->reloadUsers();
+
+        // the attacker updates only their own profile
+        $user = $this->auth->getUserData($attacker);
+        $user['name'] = "Renamed";
+        $this->assertTrue($this->auth->modifyUser($attacker, $user));
+        $this->reloadUsers();
+
+        // the attacker's own change took effect
+        $this->assertEquals("Renamed", $this->auth->getUserData($attacker)['name']);
+
+        // the sibling account must survive untouched
+        $saved = $this->auth->getUserData($sibling);
+        $this->assertNotFalse($saved, "sibling account '$sibling' was destroyed");
+        if ($sibling !== $attacker) {
+            $this->assertEquals("Sibling", $saved['name']);
+        }
+    }
+
     // really only required for developers to ensure this plugin will
     // work with systems running on PCRE 6.6 and lower.
     public function testLineSplit(){

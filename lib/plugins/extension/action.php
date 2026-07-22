@@ -40,6 +40,9 @@ class action_plugin_extension extends ActionPlugin
         $event->preventDefault();
         $event->stopPropagation();
 
+        // error responses below are plain text; the success path overrides this before rendering HTML
+        header('Content-Type: text/plain; charset=utf-8');
+
         /** @var admin_plugin_extension $admin */
         $admin = plugin_load('admin', 'extension');
         if (!$admin->isAccessibleByCurrentUser()) {
