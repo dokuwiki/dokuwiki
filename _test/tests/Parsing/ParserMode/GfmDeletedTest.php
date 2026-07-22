@@ -201,7 +201,7 @@ class GfmDeletedTest extends ParserTestBase
     public function testSortValue()
     {
         $mode = new GfmDeleted();
-        $this->assertSame(130, $mode->getSort());
+        $this->assertSame(1000, $mode->getSort());
     }
 
     public function testRejectedOpenerBeforeValidSpanStaysLiteral()

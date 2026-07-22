@@ -13,7 +13,11 @@ class GfmDeleted extends AbstractFormatting
     /** @inheritdoc */
     public function getSort()
     {
-        return 130;
+        // Deliberately sorted last: many plugins claim `~~KEYWORD~~` macros
+        // (e.g. ~~TOC~~, ~~NOFOOTER~~) whose opener the strikethrough entry
+        // pattern also matches. A high sort lets those plugins parse first
+        // and keep their syntax; plain ~~text~~ still falls through to here.
+        return 1000;
     }
 
     /** @inheritdoc */
