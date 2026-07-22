@@ -80,7 +80,7 @@ class GuiExtension extends Gui
             'alt' => '',
         ];
 
-        if ($screen) {
+        if ($screen && $this->isValidURL($screen)) {
             $link = [
                 'href' => $screen,
                 'target' => '_blank',
@@ -169,20 +169,18 @@ class GuiExtension extends Gui
         $html = '<div class="linkbar">';
 
 
-        $homepage = $this->extension->getURL();
-        if ($homepage) {
-            $params = $this->prepareLinkAttributes($homepage, 'homepage');
+        $params = $this->prepareLinkAttributes($this->extension->getURL(), 'homepage');
+        if ($params) {
             $html .= ' <a ' . buildAttributes($params, true) . '>' . $this->getLang('homepage_link') . '</a>';
         }
 
-        $bugtracker = $this->extension->getBugtrackerURL();
-        if ($bugtracker) {
-            $params = $this->prepareLinkAttributes($bugtracker, 'bugs');
+        $params = $this->prepareLinkAttributes($this->extension->getBugtrackerURL(), 'bugs');
+        if ($params) {
             $html .= ' <a ' . buildAttributes($params, true) . '>' . $this->getLang('bugs_features') . '</a>';
         }
 
-        if ($this->extension->getDonationURL()) {
-            $params = $this->prepareLinkAttributes($this->extension->getDonationURL(), 'donate');
+        $params = $this->prepareLinkAttributes($this->extension->getDonationURL(), 'donate');
+        if ($params) {
             $html .= ' <a ' . buildAttributes($params, true) . '>' . $this->getLang('donate_action') . '</a>';
         }
 
@@ -237,7 +235,7 @@ class GuiExtension extends Gui
 
         if (!$this->extension->isBundled() && $this->extension->getCompatibleVersions()) {
             $list['compatible'] = implode(', ', array_map(
-                static fn($date, $version) => '<bdi>' . $version['label'] . ' (' . $date . ')</bdi>',
+                static fn($date, $version) => '<bdi>' . hsc($version['label']) . ' (' . hsc($date) . ')</bdi>',
                 array_keys($this->extension->getCompatibleVersions()),
                 array_values($this->extension->getCompatibleVersions())
             ));
@@ -299,7 +297,7 @@ class GuiExtension extends Gui
         if ($mailid) {
             $url = $this->tabURL('search', ['q' => 'authorid:' . $mailid]);
             $html = '<a href="' . $url . '" class="author" title="' . $this->getLang('author_hint') . '" >' .
-                '<img src="//www.gravatar.com/avatar/' . $mailid .
+                '<img src="//www.gravatar.com/avatar/' . hsc($mailid) .
                 '?s=60&amp;d=mm" width="20" height="20" alt="" /> ' .
                 hsc($name) . '</a>';
         } else {
@@ -401,17 +399,33 @@ class GuiExtension extends Gui
     }
 
     /**
+     * Check whether the given URL is a safe http(s) URL
+     *
+     * Remote repository data must not be able to smuggle in other schemes
+     * such as javascript: which would execute in the admin's session.
+     *
+     * @param string $url The URL to check
+     * @return bool
+     */
+    protected function isValidURL($url)
+    {
+        return (bool)preg_match('#^https?://#i', (string)$url);
+    }
+
+    /**
      * Create an attributes array for a link
      *
      * Handles interwiki links to dokuwiki.org
      *
      * @param string $url The URL to link to
      * @param string $class Additional classes to add
-     * @return array
+     * @return array Empty when the URL is missing or not a safe http(s) URL
      */
     protected function prepareLinkAttributes($url, $class)
     {
         global $conf;
+
+        if (!$this->isValidURL($url)) return [];
 
         $attributes = [
             'href' => $url,
@@ -447,7 +461,8 @@ class GuiExtension extends Gui
      */
     protected function shortlink($url, $class, $fallback = '')
     {
-        if (!$url) return $fallback;
+        $params = $this->prepareLinkAttributes($url, $class);
+        if (!$params) return $fallback;
 
         $link = parse_url($url);
         $base = $link['host'];
@@ -457,7 +472,6 @@ class GuiExtension extends Gui
 
         $name = shorten($base, $long, 55);
 
-        $params = $this->prepareLinkAttributes($url, $class);
         $html = '<a ' . buildAttributes($params, true) . '>' . hsc($name) . '</a>';
         return $html;
     }

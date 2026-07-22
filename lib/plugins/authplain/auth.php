@@ -219,7 +219,14 @@ class auth_plugin_authplain extends AuthPlugin
             $userinfo['grps']
         );
 
-        if (!io_replaceInFile($config_cascade['plainauth.users']['default'], '/^' . $user . ':/', $userline, true)) {
+        if (
+            !io_replaceInFile(
+                $config_cascade['plainauth.users']['default'],
+                '/^' . preg_quote($user, '/') . ':/',
+                $userline,
+                true
+            )
+        ) {
             msg('There was an error modifying your user data. You may need to register again.', -1);
             // FIXME, io functions should be fail-safe so existing data isn't lost
             $ACT = 'register';

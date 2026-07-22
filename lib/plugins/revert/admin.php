@@ -185,7 +185,7 @@ class admin_plugin_revert extends AdminPlugin
             echo ' – ' . htmlspecialchars($recent['sum']);
 
             echo ' <span class="user">';
-                echo $recent['user'] . ' ' . $recent['ip'];
+                echo hsc($recent['user']) . ' ' . hsc($recent['ip']);
             echo '</span>';
 
             echo '</div>';

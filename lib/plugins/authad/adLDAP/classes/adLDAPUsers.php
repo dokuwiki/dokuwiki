@@ -225,10 +225,10 @@ class adLDAPUsers {
             $filter = "objectguid=" . $username;
         }
         else if (strstr($username, "@")) {
-             $filter = "userPrincipalName=" . $username;
+             $filter = "userPrincipalName=" . $this->adldap->utilities()->ldapSlashes($username);
         }
         else {
-             $filter = "samaccountname=" . $username;
+             $filter = "samaccountname=" . $this->adldap->utilities()->ldapSlashes($username);
         }
         $filter = "(&(objectCategory=person)({$filter}))";
         if ($fields === NULL) { 

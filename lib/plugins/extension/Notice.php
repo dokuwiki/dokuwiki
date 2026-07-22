@@ -107,7 +107,12 @@ class Notice
         $dependencies = $this->extension->getDependencyList();
         $missing = [];
         foreach ($dependencies as $dependency) {
-            $dep = Extension::createFromId($dependency);
+            try {
+                $dep = Extension::createFromId($dependency);
+            } catch (\RuntimeException) {
+                // ignore malformed dependency ids in the repository metadata
+                continue;
+            }
             if (!$dep->isInstalled()) $missing[] = $dep;
         }
         if (!$missing) return;
@@ -127,7 +132,12 @@ class Notice
         $conflicts = $this->extension->getConflictList();
         $found = [];
         foreach ($conflicts as $conflict) {
-            $dep = Extension::createFromId($conflict);
+            try {
+                $dep = Extension::createFromId($conflict);
+            } catch (\RuntimeException) {
+                // ignore malformed conflict ids in the repository metadata
+                continue;
+            }
             if ($dep->isInstalled()) $found[] = $dep;
         }
         if (!$found) return;

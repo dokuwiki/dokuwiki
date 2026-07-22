@@ -64,13 +64,12 @@ function media_filesinuse($data, $id)
  * @author Kate Arzamastseva <pshns@ukr.net>
  *
  * @param string $id media id
- * @param int $auth permission level
  * @param array $data
  * @return false|string
  */
-function media_metasave($id, $auth, $data)
+function media_metasave($id, $data)
 {
-    if ($auth < AUTH_UPLOAD) return false;
+    if (auth_quickaclcheck(mediaAclPath($id)) < AUTH_UPLOAD) return false;
     if (!checkSecurityToken()) return false;
     global $lang;
     global $conf;
@@ -305,11 +304,12 @@ function media_delete($id, $auth)
 /**
  * Handle file uploads via XMLHttpRequest
  *
- * @param string $ns   target namespace
- * @param int    $auth current auth check result
+ * @param string   $ns   target namespace
+ * @param null|int $auth deprecated and ignored, the ACL is re-checked against
+ *                       the resolved target id
  * @return false|string false on error, id of the new file on success
  */
-function media_upload_xhr($ns, $auth)
+function media_upload_xhr($ns, $auth = null)
 {
     if (!checkSecurityToken()) return false;
     global $INPUT;
@@ -328,11 +328,12 @@ function media_upload_xhr($ns, $auth)
         return false;
     }
 
+    $target = cleanID($ns . ':' . $id);
     $res = media_save(
         ['name' => $path, 'mime' => $mime, 'ext'  => $ext],
-        $ns . ':' . $id,
+        $target,
         ($INPUT->get->str('ow') == 'true'),
-        $auth,
+        auth_quickaclcheck(mediaAclPath($target)),
         'copy'
     );
     unlink($path);
@@ -351,11 +352,12 @@ function media_upload_xhr($ns, $auth)
  * @author Michael Klier <chi@chimeric.de>
  *
  * @param string     $ns    target namespace
- * @param int        $auth  current auth check result
+ * @param null|int   $auth  deprecated and ignored, the ACL is re-checked
+ *                          against the resolved target id
  * @param bool|array $file  $_FILES member, $_FILES['upload'] if false
  * @return false|string false on error, id of the new file on success
  */
-function media_upload($ns, $auth, $file = false)
+function media_upload($ns, $auth = null, $file = false)
 {
     if (!checkSecurityToken()) return false;
     global $lang;
@@ -381,15 +383,16 @@ function media_upload($ns, $auth, $file = false)
         msg(sprintf($lang['mediaextchange'], $fext, $iext));
     }
 
+    $target = cleanID($ns . ':' . $id);
     $res = media_save(
         [
             'name' => $file['tmp_name'],
             'mime' => $imime,
             'ext' => $iext
         ],
-        $ns . ':' . $id,
+        $target,
         $INPUT->post->bool('ow'),
-        $auth,
+        auth_quickaclcheck(mediaAclPath($target)),
         'copy_uploaded_file'
     );
     if (is_array($res)) {
@@ -1300,15 +1303,16 @@ function media_image_diff($image, $l_rev, $r_rev, $l_size, $r_size, $type)
  *
  * @param string $image media id
  * @param int    $rev   revision timestamp or empty string
- * @param int    $auth
- * @return string - file's id
+ * @return false|string the file's id, or false on error
  *
  * @author Kate Arzamastseva <pshns@ukr.net>
  */
-function media_restore($image, $rev, $auth)
+function media_restore($image, $rev)
 {
     global $conf;
-    if ($auth < AUTH_UPLOAD || !$conf['mediarevisions']) return false;
+    if (!$conf['mediarevisions']) return false;
+    $image = cleanID($image);
+    if (auth_quickaclcheck(mediaAclPath($image)) < AUTH_UPLOAD) return false;
     $removed = (!file_exists(mediaFN($image)) && file_exists(mediaMetaFN($image, '.changes')));
     if (!$image || (!file_exists(mediaFN($image)) && !$removed)) return false;
     if (!$rev || !file_exists(mediaFN($image, $rev))) return false;
