@@ -3,12 +3,12 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Andreas Gohr <andi@splitbrain.org>
  * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
  * @author Xrizzy <xrizzy@web.de>
  * @author Kurt Singer <webmaster@kurt-singer.com>
  * @author Robert Riebisch <rr@bttr-software.de>
- * @author Andreas Gohr <andi@splitbrain.org>
  * @author Markus Glaser <glaser@hallowelt.com>
  * @author Axel Schwarzer <SchwarzerA@gmail.com>
  * @author Eric Haberstroh <ehaberstroh@gmail.com>
@@ -193,7 +193,7 @@ $lang['profconfdelete']        = 'Ich möchte mein Benutzerprofil löschen.<br/>
 $lang['profconfdeletemissing'] = 'Bestätigung in Kontrollkästchen fehlt';
 $lang['proffail']              = 'Das Benutzerkonto konnte nicht aktualisiert werden.';
 $lang['proftokenlegend']       = 'Zugangs-Token';
-$lang['proftokengenerate']     = 'Rücksetz-Token';
+$lang['proftokengenerate']     = 'Token zurücksetzen';
 $lang['proftokeninfo']         = 'Das Zugangs-Token kann von Dritten benutzt werden, um Aktionen in Deinem Namen durchzuführen. Wird das Token zurückgesetzt, wird das alte ungültig und es wird aus allen Anwendungen, die das alte Token verwendet haben, ausgeloggt.';
 $lang['pwdforget']             = 'Passwort vergessen? Fordern Sie ein neues an';
 $lang['resendna']              = 'Passwörter versenden ist in diesem Wiki nicht möglich.';
