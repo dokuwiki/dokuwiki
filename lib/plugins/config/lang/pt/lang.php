@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Thalles Lázaro <dokuwiki@thall.es>
  * @author JPdroid <jpdroid.jpo@gmail.com>
  * @author Rafael Fernandes <rafa.fernan10@gmail.com>
- * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Gustavo B. Schenkel <gustavo.schenkel@gmail.com>
  * @author Paulo <pschopf@gmail.com>
  * @author Mario AlexandTeixeira dos Santos <masterofclan@gmail.com>
@@ -54,6 +54,11 @@ $lang['title']                 = 'Título deste Wiki';
 $lang['start']                 = 'Nome da Página Inicial';
 $lang['lang']                  = 'Idioma';
 $lang['template']              = 'Modelo';
+$lang['syntax']                = 'Variante de sintaxe Wiki';
+$lang['syntax_o_dw']           = 'Apenas DokuWiki';
+$lang['syntax_o_md']           = 'Apenas Markdown';
+$lang['syntax_o_dw+md']        = 'Ambos (preferível DokuWiki)';
+$lang['syntax_o_md+dw']        = 'Ambos (preferível Markdown)';
 $lang['tagline']               = 'Slogan (se o modelo for compatível)';
 $lang['sidebar']               = 'Nome da página da barra lateral (se o modelo for compatível). Um campo vazio desativará a barra lateral';
 $lang['license']               = 'Sob que licença o seu conteúdo deverá ser disponibilizado?';
@@ -173,6 +178,7 @@ $lang['hidewarnings']          = 'Não exibir nenhum aviso (Warning) emitido pel
 $lang['dnslookups']            = 'O DokuWiki irá procurar nomes de host para endereços IP remotos de usuários editando páginas. Se você tiver um servidor DNS lento, inoperante ou não quiser esse recurso, desabilite essa opção';
 $lang['jquerycdn']             = 'Os arquivos de script jQuery e jQuery UI devem ser carregados de um CDN? Isso gera solicitações HTTP adicionais mas os arquivos são carregados mais rapidamente e os usuários já podem tê-los armazenados em cache.';
 $lang['trustedproxies']        = 'Lista separada por vírgulas de servidores proxy confiáveis ​​dos quais ler o cabeçalho X-Forwarded-For. Cada item na matriz pode ser um endereço IPv4 ou IPv6, ou um intervalo CIDR IPv4 ou IPv6 (por exemplo, 10.0.0.0/8). Deixe em branco para não confiar em nenhum proxy.';
+$lang['client_ip_header']      = 'Avalie um cabeçalho personalizado em vez do remote-IP (por exemplo, X_REAL_IP). Só ative isso se seu servidor enviar esse cabeçalho, caso contrário, pode ser falsificado.';
 $lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
 $lang['jquerycdn_o_jquery']    = 'CDN em code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN em cdnjs.com';
