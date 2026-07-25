@@ -195,6 +195,39 @@ function css_out()
 }
 
 /**
+ * Find the file with an unbalanced brace count in the concatenated CSS
+ *
+ * @param string $css
+ * @return string|null
+ */
+function css_find_unbalanced_brace_file($css)
+{
+    // split on the file header comments css_out() inserts; captures the path
+    $parts = preg_split(
+        '/\/\* XXXXXXXXX (.*?) XXXXXXXXX \*\//',
+        $css, -1, PREG_SPLIT_DELIM_CAPTURE
+    );
+
+    $depth = 0;
+    for ($i = 1, $n = count($parts); $i < $n; $i += 2) {
+        $file = $parts[$i];
+        $content = $parts[$i + 1] ?? '';
+        $start = $depth;
+
+        // don't count the @media wrapper braces, or braces in comments/strings
+        $content = preg_replace('/^@media\s+\S+\s*\{/m', '', $content);
+        $content = preg_replace('/^\}\s*\/\*\s*\/@media.*$/m', '', $content);
+        $content = preg_replace('/\/\*.*?\*\//s', '', $content);
+        $content = preg_replace('/(["\']).*?(?<!\\\\)\1/s', '', $content);
+
+        $depth += substr_count($content, '{') - substr_count($content, '}');
+
+        if ($depth != $start) return $file;
+    }
+    return null;
+}
+
+/**
  * Uses phpless to parse LESS in our CSS
  *
  * most of this function is error handling to show a nice useful error when
@@ -226,13 +259,23 @@ function css_parseless($css)
             $msg = substr($msg, 0, -1 * strlen($m[0])); //remove useless linenumber
             $lno = $m[1];
 
-            // walk upwards to last include
-            $lines = explode("\n", $css);
-            for ($i = $lno - 1; $i >= 0; $i--) {
-                if (preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)) {
-                    // we found it, add info to message
-                    $msg .= ' in ' . $m[2] . ' at line ' . ($lno - $i);
-                    break;
+            // "unclosed block" is reported at the end of the concatenated
+            // CSS, so walking backwards blames the last file, not the real
+            // culprit. Track brace balance per file instead.
+            if (stripos($msg, 'unclosed block') !== false) {
+                $file = css_find_unbalanced_brace_file($css);
+                if ($file !== null) {
+                    $msg .= ' in ' . $file;
+                }
+            } else {
+                // walk upwards to last include
+                $lines = explode("\n", $css);
+                for ($i = $lno - 1; $i >= 0; $i--) {
+                    if (preg_match('/\/(\* XXXXXXXXX )(.*?)( XXXXXXXXX \*)\//', $lines[$i], $m)) {
+                        // we found it, add info to message
+                        $msg .= ' in ' . $m[2] . ' at line ' . ($lno - $i);
+                        break;
+                    }
                 }
             }
         }
@@ -240,7 +283,9 @@ function css_parseless($css)
         // something went wrong
         $error = 'A fatal error occured during compilation of the CSS files. ' .
             'If you recently installed a new plugin or template it ' .
-            'might be broken and you should try disabling it again. [' . $msg . ']';
+            'might be broken and you should try disabling it again. ' .
+            'This may also be caused by a syntax error in a userstyle ' .
+            'or template style file. [' . $msg . ']';
 
         echo ".dokuwiki:before {
             content: '$error';
