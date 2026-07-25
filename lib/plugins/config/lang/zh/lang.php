@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author MCnnyy2 <2160673970@qq.com>
  * @author chuachua <oceanynh@gmail.com>
  * @author Zhenzhe Huang <1991419264@qq.com>
  * @author 林晓东 <lin_xd@126.com>
@@ -68,6 +69,11 @@ $lang['title']                 = '维基站点的标题';
 $lang['start']                 = '开始页面的名称';
 $lang['lang']                  = '语言';
 $lang['template']              = '模版';
+$lang['syntax']                = 'Wiki语法风格';
+$lang['syntax_o_dw']           = '仅DokuWiki语法';
+$lang['syntax_o_md']           = '仅Markdown语法';
+$lang['syntax_o_dw+md']        = '共存（DokuWiki语法优先）';
+$lang['syntax_o_md+dw']        = '共存（Markdown语法优先）';
 $lang['tagline']               = '副标题 （如果模板支持此功能）';
 $lang['sidebar']               = '侧边栏的页面名称 （如果模板支持此功能），留空以禁用侧边栏';
 $lang['license']               = '您愿意让你贡献的内容在何种许可方式下发布？';
@@ -188,6 +194,8 @@ $lang['hidewarnings']          = '不显示 PHP 发出的任何警告。这可�
 $lang['dnslookups']            = 'DokuWiki 将会查询用户编辑页面的远程 IP 地址的主机名。如果您的 DNS 服务器比较缓慢或者不工作，或者您不想要这个功能，请禁用此选项。';
 $lang['jquerycdn']             = 'jQuery和jQuery UI脚本文件应该从CDN加载吗?
 这会增加额外的HTTP请求，但文件加载可能会更快，且用户可能已经缓存过。';
+$lang['trustedproxies']        = '受信任代理服务器列表（用,分隔），用于从中读取 X-Forwarded-For 请求头。列表项可以是具体的 IPv4 或 IPv6 地址，也可以是一个 IPv4 或 IPv6 CIDR 网段（例如 10.0.0.0/8）。留空则不信任任何代理。';
+$lang['client_ip_header']      = '使用自定义请求头（如 X_REAL_IP）来替代远程 IP 获取客户端真实地址。只有在您的服务器确实会写入这个请求头时才启用，否则可能被伪造。';
 $lang['jquerycdn_o_0']         = '不使用CDN，只使用本地库';
 $lang['jquerycdn_o_jquery']    = 'code.jquery.com 的 CDN';
 $lang['jquerycdn_o_cdnjs']     = 'cdnjs.com 的 CDN';

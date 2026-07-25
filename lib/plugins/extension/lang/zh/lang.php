@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author MCnnyy2 <2160673970@qq.com>
  * @author Luna Shirase <fwits@foxmail.com>
  * @author Haolin Xue <tzbkk@outlook.com>
  * @author Mr_Fang <klxf@vip.qq.com>
@@ -102,6 +103,16 @@ $lang['error_copy_mkdir']      = '不能创建目录%s';
 $lang['error_copy_copy']       = '不能把%s复制到%s';
 $lang['error_archive_read']    = '不能打开压缩文件%s并读取';
 $lang['error_archive_extract'] = '不能解压压缩文件%s：%s';
+$lang['error_uninstall_protected'] = '扩展 %s 受到保护，不能卸载';
+$lang['error_uninstall_dependants'] = '扩展 %s 仍被 %s 依赖，不能卸载';
+$lang['error_disable_protected'] = '扩展 %s 受到保护，不能禁用';
+$lang['error_disable_dependants'] = '扩展 %s 仍被 %s 依赖，不能禁用';
+$lang['error_nourl']           = '找不到扩展 %s 的下载链接';
+$lang['error_notinstalled']    = '扩展 %s 没有安装/已被卸载';
+$lang['error_alreadyenabled']  = '扩展 %s 已启用';
+$lang['error_alreadydisabled'] = '扩展 %s 已禁用';
+$lang['error_minphp']          = '扩展 %s 至少需要PHP %s ，但wiki运行的是PHP %s ';
+$lang['error_maxphp']          = '扩展 %s 最高支持PHP %s ，但wiki运行的是PHP %s';
 $lang['noperms']               = '扩展目录不可写';
 $lang['notplperms']            = '模板目录不可写';
 $lang['nopluginperms']         = '插件目录不可写';
