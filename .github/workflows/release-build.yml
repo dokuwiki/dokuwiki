@@ -67,8 +67,8 @@ jobs:
           echo "====== PlayGround ======" > data/pages/playground/playground.txt
           cd ..
           mv ${{ github.event.repository.name }} "dokuwiki-${{ env.current_file }}"
-          tar -czvf "dokuwiki-${{ env.current_file }}.tgz" dokuwiki-${{ env.current_file }}
-          zip -r "dokuwiki-${{ env.current_file }}.zip" dokuwiki-${{ env.current_file }}
+          tar -czvf "dokuwiki-${{ env.current_file }}.tgz" --exclude '.git' dokuwiki-${{ env.current_file }}
+          zip -r "dokuwiki-${{ env.current_file }}.zip" --exclude '.git/*' --exclude ".git" dokuwiki-${{ env.current_file }}
           rm -rf "dokuwiki-${{ env.current_file }}"
           mkdir ${{ github.event.repository.name }}
           mv "dokuwiki-${{ env.current_version }}.tgz" ${{ github.event.repository.name }}/
