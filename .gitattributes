@@ -5,7 +5,6 @@
 *.ico binary
 *.xcf binary
 
-.git export-ignore
 .gitattributes export-ignore
 .github export-ignore
 .github/** export-ignore
