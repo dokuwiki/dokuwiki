@@ -46,7 +46,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!$auth->canDo('addUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
-                404
+                114
             );
         }
 
@@ -100,7 +100,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!$auth->canDo('delUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do delUser', $auth->getPluginName()),
-                404
+                114
             );
         }
 
