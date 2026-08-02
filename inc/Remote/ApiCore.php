@@ -1142,7 +1142,15 @@ class ApiCore
         }
 
         if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
+            $permission = match ($minAccess) {
+                AUTH_READ => 'read',
+                AUTH_EDIT => 'edit',
+                AUTH_CREATE => 'create',
+                AUTH_UPLOAD => 'upload',
+                AUTH_DELETE => 'delete',
+                default => 'access',
+            };
+            throw new AccessDeniedException("You are not allowed to $permission this page", 111);
         }
 
         return $id;
