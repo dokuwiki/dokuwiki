@@ -189,6 +189,7 @@ class ApiCore
      * Info about the currently authenticated user
      *
      * @return User
+     * @throws AccessDeniedException when no user is logged in
      */
     public function whoAmI()
     {
