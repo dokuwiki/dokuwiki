@@ -714,7 +714,7 @@ class ApiCore
 
         // SPAM check
         if (checkwordblock()) {
-            throw new RemoteException('The page content was blocked', 134);
+            throw new RemoteException('The page content was blocked by the spam filter', 134);
         }
 
         // autoset summary on new pages
@@ -918,7 +918,7 @@ class ApiCore
         }
 
         if (!media_exists($media, $rev)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         $info = new Media($media, $rev);
@@ -949,7 +949,7 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         return (new MetadataSearch())->mediause($media);
@@ -981,7 +981,7 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media, 0)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         $medialog = new MediaChangeLog($media);
@@ -1089,7 +1089,7 @@ class ApiCore
         } elseif ($res & DOKU_MEDIA_INUSE) {
             throw new RemoteException('Media file is still referenced', 232);
         } elseif (!media_exists($media)) {
-            throw new RemoteException('The media file requested to delete does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         } else {
             throw new RemoteException('Failed to delete media file', 233);
         }

@@ -150,7 +150,7 @@ class Api
     {
         global $conf;
         if (!$conf['remote'] || trim($conf['remoteuser']) == '!!not set!!') {
-            throw new AccessDeniedException('Server Error. API is not enabled in config.', -32604);
+            throw new AccessDeniedException('The API is not enabled in the configuration', -32604);
         }
     }
 
@@ -175,6 +175,9 @@ class Api
         }
 
         // still here? no can do
-        throw new AccessDeniedException('server error. not authorized to call method', -32604);
+        throw new AccessDeniedException(
+            'API access is restricted to the users and groups configured in the remoteuser setting',
+            -32604
+        );
     }
 }

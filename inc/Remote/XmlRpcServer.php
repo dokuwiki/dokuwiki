@@ -30,7 +30,7 @@ class XmlRpcServer extends Server
         global $conf;
         global $INPUT;
         if (!$conf['remote']) {
-            throw new ServerException("XML-RPC server not enabled.", -32605);
+            throw new ServerException('XML-RPC server not enabled', -32605);
         }
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
@@ -38,7 +38,7 @@ class XmlRpcServer extends Server
         [$contentType] = explode(';', $INPUT->server->str('CONTENT_TYPE'), 2); // ignore charset
         $contentType = strtolower($contentType); // mime types are case-insensitive
         if ($contentType !== 'text/xml' && $contentType !== 'application/xml') {
-            throw new ServerException('XML-RPC server accepts XML requests only.', -32606);
+            throw new ServerException('XML-RPC server only accepts XML requests', -32606);
         }
 
         parent::serve($data);
@@ -64,7 +64,7 @@ class XmlRpcServer extends Server
                 http_status(403);
                 return new Error(
                     -32604,
-                    "server error. forbidden to call the method $methodname\n" . $e->getMessage()
+                    "server error. forbidden to call method $methodname\n" . $e->getMessage()
                 );
             }
         } catch (RemoteException $e) {

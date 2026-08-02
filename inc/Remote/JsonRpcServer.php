@@ -34,7 +34,7 @@ class JsonRpcServer
 
         if (!$conf['remote']) {
             http_status(404);
-            throw new RemoteException("JSON-RPC server not enabled.", -32605);
+            throw new RemoteException('JSON-RPC server not enabled', -32605);
         }
         if (!empty($conf['remotecors'])) {
             header('Access-Control-Allow-Origin: ' . $conf['remotecors']);
@@ -42,13 +42,13 @@ class JsonRpcServer
         if ($INPUT->server->str('REQUEST_METHOD') !== 'POST') {
             http_status(405);
             header('Allow: POST');
-            throw new RemoteException("JSON-RPC server only accepts POST requests.", -32606);
+            throw new RemoteException('JSON-RPC server only accepts POST requests', -32606);
         }
         [$contentType] = explode(';', $INPUT->server->str('CONTENT_TYPE'), 2); // ignore charset
         $contentType = strtolower($contentType); // mime types are case-insensitive
         if ($contentType !== 'application/json') {
             http_status(415);
-            throw new RemoteException("JSON-RPC server only accepts application/json requests.", -32606);
+            throw new RemoteException('JSON-RPC server only accepts application/json requests', -32606);
         }
 
         try {
@@ -62,7 +62,7 @@ class JsonRpcServer
             }
         } catch (\Exception) {
             http_status(400);
-            throw new RemoteException("JSON-RPC server only accepts valid JSON.", -32700);
+            throw new RemoteException('JSON-RPC server only accepts valid JSON', -32700);
         }
 
         return $this->createResponse($data);
@@ -186,7 +186,7 @@ class JsonRpcServer
             } else {
                 http_status(403);
                 throw new RemoteException(
-                    "server error. forbidden to call the method $methodname\n" . $e->getMessage(),
+                    "server error. forbidden to call method $methodname\n" . $e->getMessage(),
                     -32604,
                     $e
                 );
