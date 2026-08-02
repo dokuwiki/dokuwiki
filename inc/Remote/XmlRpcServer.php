@@ -53,13 +53,19 @@ class XmlRpcServer extends Server
         try {
             $result = $this->remote->call($methodname, $args);
             return $result;
-        } catch (AccessDeniedException) {
+        } catch (AccessDeniedException $e) {
             if (!$INPUT->server->has('REMOTE_USER')) {
                 http_status(401);
-                return new Error(-32603, "server error. not authorized to call method $methodname");
+                return new Error(
+                    -32603,
+                    "server error. not authorized to call method $methodname\n" . $e->getMessage()
+                );
             } else {
                 http_status(403);
-                return new Error(-32604, "server error. forbidden to call the method $methodname");
+                return new Error(
+                    -32604,
+                    "server error. forbidden to call the method $methodname\n" . $e->getMessage()
+                );
             }
         } catch (RemoteException $e) {
             return new Error($e->getCode(), $e->getMessage());

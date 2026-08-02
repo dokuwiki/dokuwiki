@@ -175,13 +175,21 @@ class JsonRpcServer
         global $INPUT;
         try {
             return $this->remote->call($methodname, $args);
-        } catch (AccessDeniedException) {
+        } catch (AccessDeniedException $e) {
             if (!$INPUT->server->has('REMOTE_USER')) {
                 http_status(401);
-                throw new RemoteException("server error. not authorized to call method $methodname", -32603);
+                throw new RemoteException(
+                    "server error. not authorized to call method $methodname\n" . $e->getMessage(),
+                    -32603,
+                    $e
+                );
             } else {
                 http_status(403);
-                throw new RemoteException("server error. forbidden to call the method $methodname", -32604);
+                throw new RemoteException(
+                    "server error. forbidden to call the method $methodname\n" . $e->getMessage(),
+                    -32604,
+                    $e
+                );
             }
         } catch (RemoteException $e) {
             http_status(400);
