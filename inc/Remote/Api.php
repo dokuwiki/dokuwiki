@@ -128,7 +128,7 @@ class Api
         $this->ensureApiIsEnabled();
         $methods = $this->getMethods();
         if (!isset($methods[$method])) {
-            throw new RemoteException('Method does not exist', -32603);
+            throw new RemoteException('Method does not exist', -32601);
         }
         $this->ensureAccessIsAllowed($methods[$method]);
 

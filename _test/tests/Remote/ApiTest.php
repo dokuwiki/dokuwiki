@@ -301,7 +301,7 @@ class ApiTest extends \DokuWikiTest
         $conf['remoteuser'] = '';
 
         $this->expectException(RemoteException::class);
-        $this->expectExceptionCode(-32603);
+        $this->expectExceptionCode(-32601);
 
         $remoteApi = new Api();
         $remoteApi->call('does.not exist'); // unknown method type
