@@ -206,7 +206,8 @@ function auth_tokenlogin()
     if (!$headers) {
         foreach ($_SERVER as $key => $value) {
             if (str_starts_with($key, 'HTTP_')) {
-                $headers[strtolower(substr($key, 5))] = $value;
+                // underscores in $_SERVER keys stand for dashes in the header name
+                $headers[strtolower(strtr(substr($key, 5), '_', '-'))] = $value;
             }
         }
     }

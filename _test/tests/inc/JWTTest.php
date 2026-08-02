@@ -82,11 +82,12 @@ class JWTTest extends \DokuWikiTest
 
     public function testLoginAlternativeHeader()
     {
-        $_SERVER['HTTP_X-DOKUWIKI-TOKEN'] =  JWT::fromUser('testuser')->getToken();
+        // web servers pass dashes in header names as underscores
+        $_SERVER['HTTP_X_DOKUWIKI_TOKEN'] = JWT::fromUser('testuser')->getToken();
 
         $this->assertArrayNotHasKey('REMOTE_USER', $_SERVER);
         auth_tokenlogin();
         $this->assertEquals('testuser', $_SERVER['REMOTE_USER']);
-        unset($_SERVER['HTTP_X-DOKUWIKI-TOKEN']);
+        unset($_SERVER['HTTP_X_DOKUWIKI_TOKEN']);
     }
 }
