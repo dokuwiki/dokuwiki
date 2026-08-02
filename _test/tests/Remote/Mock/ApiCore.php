@@ -25,6 +25,7 @@ class ApiCore
             'wiki.publicCall' => (new ApiCall([$this, 'publicCall']))->setPublic(),
             'wiki.getStructuredData' => (new ApiCall([$this, 'getStructuredData'])),
             'wiki.accessDeniedMethod' => new ApiCall([$this, 'accessDeniedMethod']),
+            'wiki.throwingMethod' => new ApiCall([$this, 'throwingMethod']),
         ];
     }
 
@@ -86,5 +87,10 @@ class ApiCore
     function accessDeniedMethod()
     {
         throw new AccessDeniedException('you may not do this', 114);
+    }
+
+    function throwingMethod()
+    {
+        throw new \RuntimeException('kaboom');
     }
 }

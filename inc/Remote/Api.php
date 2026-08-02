@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\ErrorHandler;
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Logger;
 use dokuwiki\test\Remote\Mock\ApiCore as MockApiCore;
@@ -135,8 +136,14 @@ class Api
         // invoke the ApiCall
         try {
             return $methods[$method]($args);
+        } catch (RemoteException $e) {
+            throw $e;
         } catch (\InvalidArgumentException | \ArgumentCountError $e) {
             throw new RemoteException($e->getMessage(), -32602, $e);
+        } catch (\Throwable $e) {
+            // anything a call did not anticipate itself, eg. a plugin throwing a plain exception
+            ErrorHandler::logException($e);
+            throw new RemoteException($e->getMessage(), -32603, $e);
         }
     }
 

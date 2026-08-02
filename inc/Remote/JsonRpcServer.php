@@ -121,7 +121,7 @@ class JsonRpcServer
     /**
      * Create an error response
      *
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @return array
      */
     public function returnError($exception)
@@ -135,7 +135,7 @@ class JsonRpcServer
      * Depending on the requested version, add error data to the response
      *
      * @param array $response
-     * @param \Exception|null $e
+     * @param \Throwable|null $e
      * @return void
      */
     protected function addErrorData(&$response, $e = null)
