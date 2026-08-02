@@ -13,6 +13,7 @@
 use dokuwiki\Ip;
 use dokuwiki\ErrorHandler;
 use dokuwiki\JWT;
+use dokuwiki\Logger;
 use dokuwiki\MailUtils;
 use dokuwiki\Utf8\PhpString;
 use dokuwiki\Extension\AuthPlugin;
@@ -229,6 +230,7 @@ function auth_tokenlogin()
     try {
         $authtoken = JWT::validate($token);
     } catch (Exception $e) {
+        Logger::debug('Token login failed: ' . $e->getMessage(), null, $e->getFile(), $e->getLine());
         msg(hsc($e->getMessage()), -1);
         return false;
     }
