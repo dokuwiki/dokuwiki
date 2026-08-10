@@ -326,7 +326,7 @@ function jsinfo()
     //export minimal info to JS, plugins can add more
     $JSINFO['id'] = $ID;
     $JSINFO['namespace'] = isset($INFO) ? (string)$INFO['namespace'] : '';
-    $JSINFO['ACT'] = act_clean($ACT);
+    $JSINFO['ACT'] = $ACT;
     $JSINFO['useHeadingNavigation'] = (int)useHeading('navigation');
     $JSINFO['useHeadingContent'] = (int)useHeading('content');
 }

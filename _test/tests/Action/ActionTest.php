@@ -7,6 +7,10 @@ use dokuwiki\Action\AbstractUserAction;
 use dokuwiki\Action\Exception\ActionAclRequiredException;
 use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionUserRequiredException;
+use dokuwiki\Action\Exception\NoActionException;
+use dokuwiki\Action\Export;
+use dokuwiki\Action\Media;
+use dokuwiki\Action\ProfileDelete;
 
 class ActionTest extends \DokuWikiTest
 {
@@ -119,6 +123,99 @@ class ActionTest extends \DokuWikiTest
         } catch (\Exception $e) {
             $this->assertSame(ActionDisabledException::class, get_class($e), $e);
         }
+    }
+
+    /**
+     * A disabled action may not be reached by spelling its name differently
+     *
+     * @dataProvider dataProvider
+     * @param $name
+     */
+    public function testDisabledActionNameVariants($name)
+    {
+        $this->assertTrue(true); // mark as not risky
+        if ($name == 'Show') return; // disabling show does not work
+
+        $classname = 'dokuwiki\\Action\\' . $name;
+        /** @var \dokuwiki\Action\AbstractAction $class */
+        $class = new $classname();
+
+        $actionname = $class->getActionName();
+
+        $variants = [
+            $actionname . '_',
+            '_' . $actionname,
+            '__' . $actionname . '__',
+            $actionname . '_zzz',
+        ];
+        // export_zzz is a renderer mode of its own, so it is not the disabled export
+        if ($class instanceof Export) array_pop($variants);
+
+        global $conf;
+        $conf['useacl'] = 1;
+        $conf['subscribers'] = 1;
+        $conf['disableactions'] = $actionname;
+        $_SERVER['REMOTE_USER'] = 'someone';
+
+        $router = \dokuwiki\ActionRouter::getInstance(true);
+        foreach ($variants as $variant) {
+            try {
+                $router->checkAction($router->loadAction($variant));
+                $this->fail("'$variant' was accepted while '$actionname' is disabled");
+            } catch (NoActionException | ActionDisabledException $e) {
+                $this->assertTrue(true); // mark as not risky
+            }
+        }
+    }
+
+    /**
+     * These are all the shapes an action name may have
+     */
+    public function testLoadActionAcceptedNames()
+    {
+        $router = \dokuwiki\ActionRouter::getInstance(true);
+
+        $this->assertInstanceOf(Media::class, $router->loadAction('media'));
+        $this->assertInstanceOf(ProfileDelete::class, $router->loadAction('profile_delete'));
+        $this->assertInstanceOf(Export::class, $router->loadAction('export_raw'));
+
+        // renderer plugins may provide components, the mode is taken from the action name
+        $export = $router->loadAction('export_odt_book');
+        $this->assertInstanceOf(Export::class, $export);
+        $this->assertSame('export_odt_book', $export->getActionName());
+    }
+
+    /**
+     * Names that look like an action but are none
+     *
+     * @return array
+     */
+    public function invalidNameProvider()
+    {
+        return [
+            ['media_'],
+            ['_media'],
+            ['__media__'],
+            ['media_zzz'],
+            ['me_dia'],
+            ['medi_a'],
+            ['export_raw_'],
+            ['_export_raw'],
+            ['export__raw'],
+            ['profile_delete_'],
+        ];
+    }
+
+    /**
+     * Anything not matching the accepted shapes is no action at all
+     *
+     * @dataProvider invalidNameProvider
+     * @param $name
+     */
+    public function testLoadActionRejectedNames($name)
+    {
+        $this->expectException(NoActionException::class);
+        \dokuwiki\ActionRouter::getInstance(true)->loadAction($name);
     }
 
     /**

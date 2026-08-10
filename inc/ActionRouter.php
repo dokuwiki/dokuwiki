@@ -8,7 +8,9 @@ use dokuwiki\Action\Exception\ActionDisabledException;
 use dokuwiki\Action\Exception\ActionException;
 use dokuwiki\Action\Exception\FatalException;
 use dokuwiki\Action\Exception\NoActionException;
+use dokuwiki\Action\Export;
 use dokuwiki\Action\Plugin;
+use dokuwiki\Action\ProfileDelete;
 
 /**
  * Class ActionRouter
@@ -45,7 +47,6 @@ class ActionRouter
         $this->disabled = explode(',', $conf['disableactions']);
         $this->disabled = array_map(trim(...), $this->disabled);
 
-        $ACT = act_clean($ACT);
         $this->setupAction($ACT);
         $ACT = $this->action->getActionName();
     }
@@ -167,28 +168,30 @@ class ActionRouter
     /**
      * Load the given action
      *
-     * This translates the given name to a class name by uppercasing the first letter.
-     * Underscores translate to camelcase names. For actions with underscores, the different
-     * parts are removed beginning from the end until a matching class is found. The instatiated
-     * Action will always have the full original action set as Name
+     * Each action name maps to exactly one class and each class to exactly one name.
+     * A name made up of letters and digits maps to the class of the same name with an
+     * uppercased first letter. The export modes and profile_delete are the only names
+     * containing underscores. Anything else is not an action name at all.
      *
-     * Example: 'export_raw' -> ExportRaw then 'export' -> 'Export'
+     * Example: 'media' -> Media, 'export_odt_book' -> Export
      *
-     * @param $actionname
+     * @param string $actionname a normalized action name as returned by act_clean()
      * @return AbstractAction
-     * @throws NoActionException
+     * @throws NoActionException when the name does not name an action
      */
     public function loadAction($actionname)
     {
-        $actionname = strtolower($actionname); // FIXME is this needed here? should we run a cleanup somewhere else?
-        $parts = explode('_', $actionname);
-        while ($parts !== []) {
-            $load = implode('_', $parts);
-            $class = 'dokuwiki\\Action\\' . str_replace('_', '', ucwords($load, '_'));
-            if (class_exists($class)) {
-                return new $class($actionname);
-            }
-            array_pop($parts);
+        // the only actions carrying underscores in their name
+        if (preg_match('/^export_[a-z0-9]+(_[a-z0-9]+)*$/', $actionname)) {
+            return new Export($actionname);
+        }
+        if ($actionname === 'profile_delete') {
+            return new ProfileDelete($actionname);
+        }
+
+        if (preg_match('/^[a-z0-9]+$/', $actionname)) {
+            $class = 'dokuwiki\\Action\\' . ucfirst($actionname);
+            if (class_exists($class)) return new $class($actionname);
         }
 
         throw new NoActionException();
