@@ -30,6 +30,8 @@ class ActionTest extends \DokuWikiTest
             array('Register', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Resendpwd', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Backlink', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
+            array('Authtoken', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
+            array('Plugin', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
 
             array('Revert', AUTH_EDIT, array('exists' => true, 'ismanager' => false)),
             array('Revert', AUTH_EDIT, array('exists' => true, 'ismanager' => true)),
@@ -52,6 +54,7 @@ class ActionTest extends \DokuWikiTest
             // aliases
             array('Cancel', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
             array('Recover', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
+            array('Redirect', AUTH_NONE, array('exists' => true, 'ismanager' => false)),
 
             // EDITING existing page
             array('Save', AUTH_EDIT, array('exists' => true, 'ismanager' => false)),
@@ -126,10 +129,52 @@ class ActionTest extends \DokuWikiTest
     }
 
     /**
+     * The class names of all actions, the base classes they inherit from excluded
+     *
+     * Using this instead of a hand kept list means a newly added action is covered by
+     * the tests it feeds without anyone having to remember them.
+     *
+     * @return array
+     */
+    public function actionClassProvider()
+    {
+        $data = [];
+        foreach (glob(DOKU_INC . 'inc/Action/*.php') as $file) {
+            $name = basename($file, '.php');
+            if (!(new \ReflectionClass('dokuwiki\\Action\\' . $name))->isInstantiable()) continue;
+            $data[$name] = [$name];
+        }
+        return $data;
+    }
+
+    /**
+     * Every action is reachable by the name it reports and no two of them share a name
+     *
+     * A class name spelled differently from the action name is not caught here, because
+     * class names match case insensitively once the class has been loaded.
+     *
+     * @dataProvider actionClassProvider
+     * @param string $name the class name of the action
+     */
+    public function testActionNameResolvesToItsClass($name)
+    {
+        $classname = 'dokuwiki\\Action\\' . $name;
+        /** @var \dokuwiki\Action\AbstractAction $class */
+        $class = new $classname();
+
+        $loaded = \dokuwiki\ActionRouter::getInstance(true)->loadAction($class->getActionName());
+        $this->assertSame($classname, get_class($loaded));
+    }
+
+    /**
      * A disabled action may not be reached by spelling its name differently
      *
-     * @dataProvider dataProvider
-     * @param $name
+     * None of the variants names an action today, so they are rejected before the disable
+     * check is ever reached. Should one of them start to resolve, the disable check has to
+     * catch it, which is why both outcomes are accepted here.
+     *
+     * @dataProvider actionClassProvider
+     * @param string $name the class name of the action
      */
     public function testDisabledActionNameVariants($name)
     {
