@@ -53,6 +53,11 @@ if (!defined('DOKU_E_LEVEL')) {
 // autoloader
 require_once(DOKU_INC . 'inc/load.php');
 
+// normalize the action requested by the entry script, everything below relies on this
+// entry scripts that dispatch no action leave $ACT unset, which is a signal of its own
+global $ACT;
+if (isset($ACT)) $ACT = act_clean($ACT);
+
 // avoid caching issues #1594
 header('Vary: Cookie');
 
@@ -176,7 +181,6 @@ if (!defined('DOKU_TPLINC')) {
 // enable gzip compression if supported
 $httpAcceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
 $conf['gzip_output'] &= (str_contains($httpAcceptEncoding, 'gzip'));
-global $ACT;
 if (
     $conf['gzip_output'] &&
         !defined('DOKU_DISABLE_GZIP_OUTPUT') &&

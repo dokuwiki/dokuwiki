@@ -15,6 +15,19 @@ use dokuwiki\Extension\AuthPlugin;
  */
 class ProfileDelete extends AbstractUserAction
 {
+    /**
+     * ProfileDelete constructor.
+     *
+     * The name of this action carries an underscore and thus cannot be derived
+     * from the class name.
+     *
+     * @param string $actionname the name of this action
+     */
+    public function __construct($actionname = 'profile_delete')
+    {
+        parent::__construct($actionname);
+    }
+
     /** @inheritdoc */
     public function minimumPermission()
     {

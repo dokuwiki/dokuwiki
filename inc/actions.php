@@ -46,11 +46,15 @@ function act_sendheaders($headers)
 }
 
 /**
- * Sanitize the action command
+ * Normalize the action command
+ *
+ * This is applied once while the request is initialized, so a requested action in the
+ * $ACT global is a lowercase name made up of letters, digits and underscores only.
+ * Whether that name actually is an existing action is decided later by the ActionRouter.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
  *
- * @param array|string $act
+ * @param array|string|null $act the action as given by the request
  * @return string
  */
 function act_clean($act)
@@ -65,7 +69,7 @@ function act_clean($act)
 
     //remove all bad chars
     $act = strtolower($act);
-    $act = preg_replace('/[^1-9a-z_]+/', '', $act);
+    $act = preg_replace('/[^0-9a-z_]+/', '', $act);
 
     if ($act == 'export_html') $act = 'export_xhtml';
     if ($act == 'export_htmlbody') $act = 'export_xhtmlbody';

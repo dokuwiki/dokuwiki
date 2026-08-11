@@ -25,7 +25,7 @@ global $ACT, $INPUT, $QUERY, $ID, $REV, $DATE_AT, $IDX,
 
 
 if (isset($_SERVER['HTTP_X_DOKUWIKI_DO'])) {
-    $ACT = trim(strtolower($_SERVER['HTTP_X_DOKUWIKI_DO']));
+    $ACT = $_SERVER['HTTP_X_DOKUWIKI_DO'];
 } elseif (!empty($_REQUEST['idx'])) {
     $ACT = 'index';
 } elseif (isset($_REQUEST['do'])) {
@@ -110,7 +110,7 @@ if ($conf['allowdebug'] && $ACT == 'debug') {
 if (
     !$INFO['exists'] &&
     ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/', $ID)) &&
-    ($ACT == 'show' || (!is_array($ACT) && str_starts_with($ACT, 'export_')))
+    ($ACT == 'show' || str_starts_with($ACT, 'export_'))
 ) {
     header('HTTP/1.0 404 Not Found');
 }
