@@ -37,7 +37,8 @@ class ActionRouter
      * ActionRouter constructor. Singleton, thus protected!
      *
      * Sets up the correct action based on the $ACT global. Writes back
-     * the selected action to $ACT
+     * the selected action to $ACT. Reaching this point means an action is
+     * dispatched, so a request that named none asks for show.
      */
     protected function __construct()
     {
@@ -47,6 +48,7 @@ class ActionRouter
         $this->disabled = explode(',', $conf['disableactions']);
         $this->disabled = array_map(trim(...), $this->disabled);
 
+        $ACT ??= 'show';
         $this->setupAction($ACT);
         $ACT = $this->action->getActionName();
     }

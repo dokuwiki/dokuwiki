@@ -48,8 +48,8 @@ function act_sendheaders($headers)
 /**
  * Normalize the action command
  *
- * This is applied once while the request is initialized, so everything reading the
- * $ACT global sees a lowercase name made up of letters, digits and underscores only.
+ * This is applied once while the request is initialized, so a requested action in the
+ * $ACT global is a lowercase name made up of letters, digits and underscores only.
  * Whether that name actually is an existing action is decided later by the ActionRouter.
  *
  * @author Andreas Gohr <andi@splitbrain.org>

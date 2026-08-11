@@ -54,8 +54,9 @@ if (!defined('DOKU_E_LEVEL')) {
 require_once(DOKU_INC . 'inc/load.php');
 
 // normalize the action requested by the entry script, everything below relies on this
+// entry scripts that dispatch no action leave $ACT unset, which is a signal of its own
 global $ACT;
-$ACT = act_clean($ACT);
+if (isset($ACT)) $ACT = act_clean($ACT);
 
 // avoid caching issues #1594
 header('Vary: Cookie');
