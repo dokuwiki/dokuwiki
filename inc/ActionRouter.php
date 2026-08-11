@@ -112,7 +112,7 @@ class ActionRouter
             msg('Action unknown: ' . hsc($actionname), -1);
             $actionname = 'show';
             $this->transitionAction($presetup, $actionname);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->handleFatalException($e);
         }
     }
@@ -147,10 +147,10 @@ class ActionRouter
     /**
      * Aborts all processing with a message
      *
-     * When a FataException instanc is passed, the code is treated as Status code
+     * When a FatalException instance is passed, the code is treated as Status code
      *
-     * @param \Exception|FatalException $e
-     * @throws FatalException during unit testing
+     * @param \Throwable $e
+     * @throws \Throwable during unit testing
      */
     protected function handleFatalException(\Throwable $e)
     {
@@ -170,10 +170,10 @@ class ActionRouter
     /**
      * Load the given action
      *
-     * Each action name maps to exactly one class and each class to exactly one name.
-     * A name made up of letters and digits maps to the class of the same name with an
-     * uppercased first letter. The export modes and profile_delete are the only names
-     * containing underscores. Anything else is not an action name at all.
+     * Each action name maps to exactly one class. A name made up of letters and digits maps
+     * to the class of the same name with an uppercased first letter, except for the base
+     * classes, whose names all start with abstract. The export modes and profile_delete are
+     * the only names containing underscores. Anything else is not an action name at all.
      *
      * Example: 'media' -> Media, 'export_odt_book' -> Export
      *
@@ -191,7 +191,8 @@ class ActionRouter
             return new ProfileDelete($actionname);
         }
 
-        if (preg_match('/^[a-z0-9]+$/', $actionname)) {
+        // class names match case insensitively, so the base class names have to be excluded
+        if (preg_match('/^[a-z0-9]+$/', $actionname) && !str_starts_with($actionname, 'abstract')) {
             $class = 'dokuwiki\\Action\\' . ucfirst($actionname);
             if (class_exists($class)) return new $class($actionname);
         }

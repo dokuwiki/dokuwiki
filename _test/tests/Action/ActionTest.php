@@ -219,6 +219,35 @@ class ActionTest extends \DokuWikiTest
     }
 
     /**
+     * The base classes the actions inherit from are no actions themselves
+     *
+     * Should a base class ever be named without the abstract prefix, this fails and the
+     * exclusion in loadAction() needs to be adjusted.
+     */
+    public function testLoadActionRejectedBaseClasses()
+    {
+        $router = \dokuwiki\ActionRouter::getInstance(true);
+
+        $checked = 0;
+        foreach (glob(DOKU_INC . 'inc/Action/*.php') as $file) {
+            $name = basename($file, '.php');
+            $class = 'dokuwiki\\Action\\' . $name;
+            // the reflection autoloads the class, so a lowercase spelling of it resolves from here on
+            if ((new \ReflectionClass($class))->isInstantiable()) continue;
+            $checked++;
+
+            try {
+                $router->loadAction(strtolower($name));
+                $this->fail("base class $class was accepted as an action");
+            } catch (NoActionException $e) {
+                $this->assertTrue(true); // mark as not risky
+            }
+        }
+
+        $this->assertGreaterThan(0, $checked, 'no base classes were found to check');
+    }
+
+    /**
      * Actions inheriting from AbstractAclAction should have an ACL enabled check
      *
      * @dataProvider dataProvider
