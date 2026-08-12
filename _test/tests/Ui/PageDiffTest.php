@@ -10,6 +10,44 @@ use dokuwiki\Ui\PageDiff;
 class PageDiffTest extends \DokuWikiTest
 {
     /**
+     * Regression test for issue #4718: with showuseras = email and the default
+     * mailguard = hex, the revision dropdown labels show the plain address
+     * instead of double-encoded obfuscation entities.
+     */
+    public function testRevisionOptionsShowPlainEmail()
+    {
+        global $conf, $INPUT;
+        $conf['showuseras'] = 'email';
+        $conf['mailguard'] = 'hex';
+        $_SERVER['REMOTE_USER'] = 'testuser';
+
+        $page = 'pagediff_email';
+        saveWikiText($page, 'first content', 'create', false);
+        clearstatcache();
+        $this->waitForTick(true);
+        saveWikiText($page, 'second content', 'edit', false);
+        clearstatcache();
+        $this->waitForTick(true);
+
+        $INPUT->remove('rev');
+        $INPUT->remove('rev2');
+
+        $diff = new PageDiff($page);
+        global $INFO;
+        $INFO['id'] = $page;
+        $this->callInaccessibleMethod($diff, 'handle', []);
+        $this->callInaccessibleMethod($diff, 'preProcess', []);
+        $changelog = $this->getInaccessibleProperty($diff, 'changelog');
+        $revs = $changelog->getRevisions(0, 100);
+        $options = $this->callInaccessibleMethod($diff, 'buildRevisionOptions', ['older', $revs]);
+
+        $labels = implode(' | ', array_column($options, 'label'));
+        $this->assertStringContainsString('arthur@example.com', $labels, 'dropdown label should show the plain email address');
+        $this->assertStringNotContainsString('&amp;#', $labels, 'dropdown label must not contain double-encoded entities');
+        $this->assertStringNotContainsString('&#', $labels, 'dropdown label must not contain any entity-encoded email');
+    }
+
+    /**
      * Determine which two revisions PageDiff would compare for a ?do=diff request
      * that carries no rev or rev2 parameters.
      *
