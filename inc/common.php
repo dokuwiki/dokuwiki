@@ -1624,7 +1624,7 @@ function userlink($username = null, $textonly = false)
                         break;
                     case 'email':
                     case 'email_link':
-                        $data['name'] = MailUtils::obfuscate($info['mail']);
+                        $data['name'] = $textonly ? $info['mail'] : MailUtils::obfuscate($info['mail']);
                         break;
                 }
             } else {
