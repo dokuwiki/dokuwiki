@@ -89,7 +89,11 @@ class cli_plugin_extension extends CLIPlugin
 
         switch ($options->getCmd()) {
             case 'list':
-                $ret = $this->cmdList($options->getOpt('verbose'), $options->getOpt('filter', ''), $options->getOpt('no-remote'));
+                $ret = $this->cmdList(
+                    $options->getOpt('verbose'),
+                    $options->getOpt('filter', ''),
+                    $options->getOpt('no-remote'),
+                );
                 break;
             case 'search':
                 $ret = $this->cmdSearch(
