@@ -39,7 +39,6 @@ class Notice
         $this->extension = $extension;
 
         $this->checkFolder();
-        $this->checkPHPVersion();
         $this->checkPermissions();
         $this->checkUnusedAuth();
         $this->checkGit();
@@ -56,6 +55,7 @@ class Notice
 
         $self->checkSecurity();
         $self->checkURLChange();
+        $self->checkPHPVersion();
         $self->checkDependencies();
         $self->checkConflicts();
         $self->checkUpdateMessage();

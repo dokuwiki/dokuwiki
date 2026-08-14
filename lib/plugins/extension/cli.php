@@ -305,7 +305,7 @@ class cli_plugin_extension extends CLIPlugin
                     $vcolor = null;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) {
+                if ($noremote ? $ext->isBundledNoRemote() : $ext->isBundled()) {
                     $status = 'b';
                     $date = '<bundled>';
                     $vcolor = null;
