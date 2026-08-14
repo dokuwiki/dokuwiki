@@ -273,7 +273,7 @@ class cli_plugin_extension extends CLIPlugin
             Repository::getInstance()->initExtensions(array_keys($extensions));
         }
 
-        $this->listExtensions($extensions, $showdetails, $filter);
+        $this->listExtensions($extensions, $showdetails, $filter, $noremote);
         return 0;
     }
 
@@ -318,7 +318,7 @@ class cli_plugin_extension extends CLIPlugin
                 }
             } else {
                 $ecolor = null;
-                $date = $ext->getLastUpdate();
+                $date = $noremote ? null : $ext->getLastUpdate();
                 $vcolor = null;
             }
 
