@@ -302,7 +302,7 @@ class cli_plugin_extension extends CLIPlugin
                 } elseif ($avail && $avail <= $date) {
                     $vcolor = Colors::C_GREEN;
                 } else {
-                    // No color change if status unknown
+                    $vcolor = null;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
                 if ($ext->isBundled()) {
@@ -326,7 +326,7 @@ class cli_plugin_extension extends CLIPlugin
                 continue;
             }
 
-            $notices = Notice::list($ext);
+            $notices = $noremote ? Notice::listNoRemote($ext) : Notice::list($ext);
             if ($notices[Notice::SECURITY]) $status .= Notice::symbol(Notice::SECURITY);
             if ($notices[Notice::ERROR]) $status .= Notice::symbol(Notice::ERROR);
             if ($notices[Notice::WARNING]) $status .= Notice::symbol(Notice::WARNING);
