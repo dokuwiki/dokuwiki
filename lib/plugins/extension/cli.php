@@ -299,8 +299,10 @@ class cli_plugin_extension extends CLIPlugin
                 if ($avail && $avail > $date) {
                     $vcolor = Colors::C_RED;
                     $status .= 'u';
-                } else {
+                } elseif ($avail && $avail <= $date) {
                     $vcolor = Colors::C_GREEN;
+                } else {
+                    // No color change if status unknown
                 }
                 if ($ext->isGitControlled()) $status = 'g';
                 if ($ext->isBundled()) {
