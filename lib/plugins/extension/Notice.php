@@ -39,7 +39,6 @@ class Notice
         $this->extension = $extension;
 
         $this->checkFolder();
-        $this->checkPermissions();
         $this->checkUnusedAuth();
         $this->checkGit();
     }
@@ -59,6 +58,7 @@ class Notice
         $self->checkDependencies();
         $self->checkConflicts();
         $self->checkUpdateMessage();
+        $self->checkPermissions();
 
         return $self->notices;
     }

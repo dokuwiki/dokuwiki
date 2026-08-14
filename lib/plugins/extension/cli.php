@@ -47,7 +47,7 @@ class cli_plugin_extension extends CLIPlugin
         $options->registerCommand('list', 'List installed extensions');
         $options->registerOption('verbose', 'Show detailed extension information', 'v', false, 'list');
         $options->registerOption('filter', 'Filter by this status', 'f', 'status', 'list');
-        $options->registerOption('no-remote', 'Don\'t contact the plugin repository', 'n', false, 'list');
+        $options->registerOption('no-remote', 'Don\'t contact the plugin repository; this means most issues won\'t be checked', 'n', false, 'list');
 
         // upgrade
         $options->registerCommand('upgrade', 'Update all installed extensions to their latest versions');
