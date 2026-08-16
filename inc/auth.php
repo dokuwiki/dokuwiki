@@ -650,6 +650,12 @@ function auth_isMember($memberlist, $user, array $groups)
     global $auth;
     if (!$auth instanceof AuthPlugin) return false;
 
+    // numeric names may arrive as integers when they were used as array keys
+    // (PHP coerces numeric keys); cast to string so the strict comparisons
+    // below match again without weakening them
+    $user   = (string) $user;
+    $groups = array_map(strval(...), $groups);
+
     // clean user and groups
     if (!$auth->isCaseSensitive()) {
         $user   = PhpString::strtolower($user);
