@@ -13,7 +13,7 @@ use dokuwiki\ChangeLog\PageChangeLog;
 use dokuwiki\Extension\Event;
 
 // update message version - always use a string to avoid localized floats!
-$updateVersion = "57";
+$updateVersion = "58";
 
 //  xdebug_start_profiling();
 
