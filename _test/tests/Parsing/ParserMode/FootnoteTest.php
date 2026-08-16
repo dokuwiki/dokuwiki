@@ -345,11 +345,9 @@ class FootnoteTest extends ParserTestBase
     }
 
     function testFootnoteQuote() {
-        // GfmQuote is the unified quote mode (replaces DW Quote). Under
-        // the test's default DW-preferred syntax the post-pass flattens
-        // sub-parsed paragraph wrapping into linebreak-separated cdata,
-        // and nested `>>` produces a nested `quote_open` pair. The body
-        // sub-parsed call list is wrapped in a `nest` instruction.
+        // The test runs under DW-preferred syntax, where the post-pass flattens
+        // paragraph wrapping into linebreak-separated cdata. The quote body,
+        // >> level included, sits in one nest inside the footnote's own nest.
         $this->P->addMode('gfm_quote', new GfmQuote());
         $this->P->parse("Foo ((
 > def
@@ -362,10 +360,12 @@ class FootnoteTest extends ParserTestBase
             ['nest', [ [
               ['footnote_open',[]],
               ['quote_open',[]],
-              ['nest', [ [ ['cdata', ['def']] ] ]],
-              ['quote_open',[]],
-              ['nest', [ [ ['cdata', ['ghi']] ] ]],
-              ['quote_close',[]],
+              ['nest', [ [
+                ['cdata', ['def']],
+                ['quote_open',[]],
+                ['cdata', ['ghi']],
+                ['quote_close',[]],
+              ] ]],
               ['quote_close',[]],
               ['cdata',["\n "]],
               ['footnote_close',[]],
