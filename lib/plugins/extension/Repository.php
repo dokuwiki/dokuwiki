@@ -13,6 +13,7 @@ class Repository
     protected const CACHE_PREFIX = '##extension_manager##';
     protected const CACHE_SUFFIX = '.repo';
     protected const CACHE_TIME = 3600 * 24;
+    protected const ACCESS_CACHE_KEY = '##extension_manager_access##';
 
     protected static $instance;
     protected $hasAccess;
@@ -45,6 +46,9 @@ class Repository
      * the repository for the first time and handle the exception there. Subsequent calls can then be used
      * to access cached data.
      *
+     * A successful check is remembered beyond the current request, so the API is not pinged again
+     * while the cached extension data is still valid. Any failing API request forgets it again.
+     *
      * @return bool
      * @throws Exception
      */
@@ -59,21 +63,58 @@ class Repository
             throw new Exception('nossl');
         }
 
-        // ping the API
-        $httpclient = new DokuHTTPClient();
-        $httpclient->timeout = 5;
+        $cache = $this->getAccessCache();
+        if ($cache->useCache(['age' => self::CACHE_TIME])) {
+            $this->hasAccess = true;
+            return $this->hasAccess;
+        }
 
-        $data = $httpclient->get(self::EXTENSION_REPOSITORY_API . '?cmd=ping');
+        $data = $this->ping();
         if ($data === false) {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_error');
         } elseif ($data !== '1') {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_badresponse');
-        } else {
-            $this->hasAccess = true;
         }
+
+        $this->hasAccess = true;
+        $cache->storeCache('1');
         return $this->hasAccess;
+    }
+
+    /**
+     * Ask the API if it is available
+     *
+     * @return string|false the API response or false when it could not be reached
+     */
+    protected function ping()
+    {
+        $httpclient = new DokuHTTPClient();
+        $httpclient->timeout = 5;
+        return $httpclient->get(self::EXTENSION_REPOSITORY_API . '?cmd=ping');
+    }
+
+    /**
+     * Forget that the API was reachable
+     *
+     * The next request pings the API again instead of running into the longer timeout of a
+     * real request.
+     */
+    protected function revokeAccess()
+    {
+        $this->hasAccess = false;
+        $this->getAccessCache()->removeCache();
+    }
+
+    /**
+     * The cache holding the flag that the API was reachable
+     *
+     * @return Cache
+     */
+    protected function getAccessCache()
+    {
+        return new Cache(self::ACCESS_CACHE_KEY, self::CACHE_SUFFIX);
     }
 
     /**
@@ -94,7 +135,7 @@ class Repository
 
         $response = $httpclient->post(self::EXTENSION_REPOSITORY_API, $data);
         if ($response === false) {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_error');
         }
 
@@ -110,7 +151,7 @@ class Repository
                 $this->storeCache($id, []);
             }
         } catch (JsonException $e) {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_badresponse', 0, $e);
         }
     }
@@ -136,8 +177,10 @@ class Repository
         // first get all that are cached
         foreach ($ids as $id) {
             $data = $this->retrieveCache($id);
-            if ($data === null || $data === []) {
+            if ($data === null) {
                 $toload[] = $id;
+            } elseif ($data === []) {
+                $result[$id] = null; // cached as not being in the repository
             } else {
                 $result[$id] = Extension::createFromRemoteData($data);
             }
@@ -208,14 +251,14 @@ class Repository
         $httpclient = new DokuHTTPClient();
         $response = $httpclient->post(self::EXTENSION_REPOSITORY_API, $query);
         if ($response === false) {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_error');
         }
 
         try {
             $items = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            $this->hasAccess = false;
+            $this->revokeAccess();
             throw new Exception('repo_badresponse', 0, $e);
         }
 
