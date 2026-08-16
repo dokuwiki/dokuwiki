@@ -269,6 +269,7 @@ class FootnoteTest extends ParserTestBase
             ['nest', [ [
               ['footnote_open',[]],
               ['table_open',[3, 2, 8]],
+              ['tabletbody_open',[]],
               ['tablerow_open',[]],
               ['tablecell_open',[1,'left',1]],
               ['cdata',[' Row 0 Col 1    ']],
@@ -291,6 +292,7 @@ class FootnoteTest extends ParserTestBase
               ['cdata',[' Row 1 Col 3        ']],
               ['tablecell_close',[]],
               ['tablerow_close',[]],
+              ['tabletbody_close',[]],
               ['table_close',[123]],
               ['cdata',[' ']],
               ['footnote_close',[]],

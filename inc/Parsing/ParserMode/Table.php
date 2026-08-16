@@ -43,7 +43,8 @@ class Table extends AbstractMode
     {
         $this->Lexer->addPattern('\n\^', 'table');
         $this->Lexer->addPattern('\n\|', 'table');
-        $this->Lexer->addPattern('[\t ]*:::[\t ]*(?=[\|\^])', 'table');
+        // a delimiter on either side makes the marker the whole content of its cell
+        $this->Lexer->addPattern('(?<=[\|\^])[\t ]*:::[\t ]*(?=[\|\^])', 'table');
         $this->Lexer->addPattern('[\t ]+', 'table');
         $this->Lexer->addPattern('\^', 'table');
         $this->Lexer->addPattern('\|', 'table');
