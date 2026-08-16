@@ -5,8 +5,20 @@
 /*____________ footnotes inside the text ____________*/
 
 /* link to footnote inside the text */
-.dokuwiki sup a.fn_top {
+.dokuwiki a.fn_top {
+    font-weight: bold;
+	vertical-align: super;
+	font-size: 56%;
+	margin: 0 0 0 .1em;
 }
+[dir=rtl] .dokuwiki a.fn_top {
+	margin: 0 .1em 0 0;
+}
+
+.dokuwiki a.fn_top::after {
+	content: ')';
+}
+
 /* JSpopup */
 div.insitu-footnote {
     max-width: 40%;
@@ -15,17 +27,45 @@ div.insitu-footnote {
 
 /*____________ footnotes at the bottom of the page ____________*/
 
-.dokuwiki div.footnotes {
+.dokuwiki #section__footnotes {
     border-top: 1px solid @ini_border;
     padding: .5em 0 0 0;
     margin: 1em 0 0 0;
     clear: both;
 }
-.dokuwiki div.footnotes div.fn {
+
+.dokuwiki #section__footnotes ol {
+	list-style: none inside;
+	padding: 0;
 }
-.dokuwiki div.footnotes div.fn div.content {
-    display: inline;
+
+.dokuwiki #section__footnotes li.fn {
+    margin: 0 0 0 2.5em;
+    text-indent: -2.5em;
 }
-.dokuwiki div.footnotes div.fn sup a.fn_bot {
-    font-weight: bold;
+[dir=rtl] .dokuwiki #section__footnotes li.fn {
+    margin: 0 2.5em 0 0;
 }
+.dokuwiki #section__footnotes li.fn .fn_bot {
+	display: inline;
+	width: fit-content;
+	text-align: right;
+	margin: 0;
+}
+.dokuwiki #section__footnotes li.fn .fn_bot:first-of-type {
+	display: inline-block;
+	width: 2em;
+}
+.dokuwiki #section__footnotes li.fn .content {
+	margin: 0 0 0 .5em;
+}
+[dir=rtl] .dokuwiki #section__footnotes li.fn .fn_bot {
+	text-align: left;
+}
+.dokuwiki #section__footnotes li.fn a.fn_bot::after {
+	content: ')';
+}
+[dir=rtl] .dokuwiki #section__footnotes li.fn .content {
+	margin: 0 .5em 0 0;
+}
+
