@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Parsing\Handler;
 
+use dokuwiki\Parsing\Helpers\TableFinalizer;
+
 class Table extends AbstractRewriter
 {
     protected $tableCalls = [];
@@ -138,188 +140,16 @@ class Table extends AbstractRewriter
         $this->tableCalls[] = $call;
     }
 
+    /**
+     * Hand the collected calls over to be turned into the final instruction list
+     */
     protected function finalizeTable()
     {
+        // every delimiter opens a cell, but the one closing a row opens one that is discarded again
+        $cols = $this->maxCols - 1;
+        // a table cannot consist of head rows alone
+        $headRows = $this->inTableHead ? 0 : $this->countTableHeadRows;
 
-        // Add the max cols and rows to the table opening
-        if ($this->tableCalls[0][0] == 'table_open') {
-            // Adjust to num cols not num col delimeters
-            $this->tableCalls[0][1][] = $this->maxCols - 1;
-            $this->tableCalls[0][1][] = $this->maxRows;
-            $this->tableCalls[0][1][] = array_shift($this->tableCalls[0][1]);
-        } else {
-            trigger_error('First element in table call list is not table_open');
-        }
-
-        $lastRow = 0;
-        $lastCell = 0;
-        $cellKey = [];
-        $toDelete = [];
-
-        // if still in tableheader, then there can be no table header
-        // as all rows can't be within <THEAD>
-        if ($this->inTableHead) {
-            $this->inTableHead = false;
-            $this->countTableHeadRows = 0;
-        }
-
-        // Look for the colspan elements and increment the colspan on the
-        // previous non-empty opening cell. Once done, delete all the cells
-        // that contain colspans
-        $key = -1;
-        while (++$key < count($this->tableCalls)) {
-            $call = $this->tableCalls[$key];
-
-            switch ($call[0]) {
-                case 'table_open':
-                    if ($this->countTableHeadRows) {
-                        array_splice($this->tableCalls, $key + 1, 0, [['tablethead_open', [], $call[2]]]);
-                    } else {
-                        // without a header the body starts right away
-                        array_splice($this->tableCalls, $key + 1, 0, [['tabletbody_open', [], $call[2]]]);
-                    }
-                    break;
-
-                case 'tablerow_open':
-                    $lastRow++;
-                    $lastCell = 0;
-                    break;
-
-                case 'tablecell_open':
-                case 'tableheader_open':
-                    $lastCell++;
-                    $cellKey[$lastRow][$lastCell] = $key;
-                    break;
-
-                case 'table_align':
-                    $prev = in_array($this->tableCalls[$key - 1][0], ['tablecell_open', 'tableheader_open']);
-                    $next = in_array($this->tableCalls[$key + 1][0], ['tablecell_close', 'tableheader_close']);
-                    // If the cell is empty, align left
-                    if ($prev && $next) {
-                        $this->tableCalls[$key - 1][1][1] = 'left';
-
-                        // If the previous element was a cell open, align right
-                    } elseif ($prev) {
-                        $this->tableCalls[$key - 1][1][1] = 'right';
-
-                        // If the next element is the close of an element, align either center or left
-                    } elseif ($next) {
-                        if ($this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] == 'right') {
-                            $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'center';
-                        } else {
-                            $this->tableCalls[$cellKey[$lastRow][$lastCell]][1][1] = 'left';
-                        }
-                    }
-
-                    // Now convert the whitespace back to cdata
-                    $this->tableCalls[$key][0] = 'cdata';
-                    break;
-
-                case 'colspan':
-                    $this->tableCalls[$key - 1][1][0] = false;
-
-                    for ($i = $key - 2; $i >= $cellKey[$lastRow][1]; $i--) {
-                        if (
-                            $this->tableCalls[$i][0] == 'tablecell_open' ||
-                            $this->tableCalls[$i][0] == 'tableheader_open'
-                        ) {
-                            if (false !== $this->tableCalls[$i][1][0]) {
-                                $this->tableCalls[$i][1][0]++;
-                                break;
-                            }
-                        }
-                    }
-
-                    $toDelete[] = $key - 1;
-                    $toDelete[] = $key;
-                    $toDelete[] = $key + 1;
-                    break;
-
-                case 'rowspan':
-                    if ($this->tableCalls[$key - 1][0] == 'cdata') {
-                        // ignore rowspan if previous call was cdata (text mixed with :::)
-                        // we don't have to check next call as that wont match regex
-                        $this->tableCalls[$key][0] = 'cdata';
-                    } else {
-                        $spanning_cell = null;
-
-                        // can't cross thead/tbody boundary
-                        if (!$this->countTableHeadRows || ($lastRow - 1 != $this->countTableHeadRows)) {
-                            for ($i = $lastRow - 1; $i > 0; $i--) {
-                                if (
-                                    $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tablecell_open' ||
-                                    $this->tableCalls[$cellKey[$i][$lastCell]][0] == 'tableheader_open'
-                                ) {
-                                    if ($this->tableCalls[$cellKey[$i][$lastCell]][1][2] >= $lastRow - $i) {
-                                        $spanning_cell = $i;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (is_null($spanning_cell)) {
-                            // No spanning cell found, so convert this cell to
-                            // an empty one to avoid broken tables
-                            $this->tableCalls[$key][0] = 'cdata';
-                            $this->tableCalls[$key][1][0] = '';
-                            break;
-                        }
-                        $this->tableCalls[$cellKey[$spanning_cell][$lastCell]][1][2]++;
-
-                        $this->tableCalls[$key - 1][1][2] = false;
-
-                        $toDelete[] = $key - 1;
-                        $toDelete[] = $key;
-                        $toDelete[] = $key + 1;
-                    }
-                    break;
-
-                case 'tablerow_close':
-                    // Fix broken tables by adding missing cells
-                    $moreCalls = [];
-                    while (++$lastCell < $this->maxCols) {
-                        $moreCalls[] = ['tablecell_open', [1, null, 1], $call[2]];
-                        $moreCalls[] = ['cdata', [''], $call[2]];
-                        $moreCalls[] = ['tablecell_close', [], $call[2]];
-                    }
-                    $moreCallsLength = count($moreCalls);
-                    if ($moreCallsLength) {
-                        array_splice($this->tableCalls, $key, 0, $moreCalls);
-                        $key += $moreCallsLength;
-                    }
-
-                    if ($this->countTableHeadRows == $lastRow) {
-                        array_splice($this->tableCalls, $key + 1, 0, [
-                            ['tablethead_close', [], $call[2]],
-                            ['tabletbody_open', [], $call[2]]
-                        ]);
-                    }
-                    break;
-            }
-        }
-
-        // condense cdata
-        $cnt = count($this->tableCalls);
-        for ($key = 0; $key < $cnt; $key++) {
-            if ($this->tableCalls[$key][0] == 'cdata') {
-                $ckey = $key;
-                $key++;
-                while ($this->tableCalls[$key][0] == 'cdata') {
-                    $this->tableCalls[$ckey][1][0] .= $this->tableCalls[$key][1][0];
-                    $toDelete[] = $key;
-                    $key++;
-                }
-                continue;
-            }
-        }
-
-        foreach ($toDelete as $delete) {
-            unset($this->tableCalls[$delete]);
-        }
-        $this->tableCalls = array_values($this->tableCalls);
-
-        // the body was opened above and always ends before the table closing
-        $last = count($this->tableCalls) - 1;
-        array_splice($this->tableCalls, $last, 0, [['tabletbody_close', [], $this->tableCalls[$last][2]]]);
+        $this->tableCalls = (new TableFinalizer($this->tableCalls, $cols, $this->maxRows, $headRows))->finalize();
     }
 }
