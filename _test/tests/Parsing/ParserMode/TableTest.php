@@ -505,6 +505,97 @@ def');
         $this->assertCalls($calls, $this->H->calls);
     }
 
+    function testRowSpanAfterFormattingIsText() {
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('strong',new Strong());
+        $this->P->parse('
+abc
+| a | b |
+| **c** ::: | d |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[2, 2, 6]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' a ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' b ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' ']],
+            ['strong_open',[]],
+            ['cdata',['c']],
+            ['strong_close',[]],
+            ['cdata',[' ::: ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' d ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[33]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
+    }
+
+    function testCellAlignmentWithMarkerAsText() {
+        $this->P->addMode('table',new Table());
+        $this->P->parse('
+abc
+|  a  |  b  |
+|  foo :::  |  d  |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[2, 2, 6]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  a  ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  b  ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  foo :::  ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  d  ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[39]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
+    }
+
     function testRowSpanTableHead() {
         $this->P->addMode('table',new Table());
         $this->P->parse('

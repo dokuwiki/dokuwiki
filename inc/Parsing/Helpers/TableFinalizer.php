@@ -244,13 +244,6 @@ class TableFinalizer
      */
     protected function applyRowspan(int $key, int $row, int $cell): void
     {
-        if ($this->calls[$key - 1][0] == 'cdata') {
-            // ignore rowspan if previous call was cdata (text mixed with :::)
-            // we don't have to check next call as that wont match regex
-            $this->calls[$key][0] = 'cdata';
-            return;
-        }
-
         $spanningCell = null;
 
         // can't cross thead/tbody boundary
