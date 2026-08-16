@@ -439,7 +439,17 @@ class Extension implements \Stringable
     public function isBundled()
     {
         $this->loadRemoteInfo();
-        return $this->remoteInfo['bundled'] ?? in_array(
+        return $this->remoteInfo['bundled'] ?? $this->isBundledNoRemote();
+    }
+
+    /**
+     * If the extension is bundled (no remote access)
+     *
+     * @return bool If the extension is bundled
+     */
+    public function isBundledNoRemote()
+    {
+        return in_array(
             $this->getId(),
             [
                 'authad',
