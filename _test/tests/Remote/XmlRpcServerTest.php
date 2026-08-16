@@ -144,4 +144,21 @@ EOD;
         $this->server->serve($request);
         $this->assertXmlStringEqualsXmlString(trim($expected), trim($this->server->output));
     }
+
+    function testAccessDeniedMessage()
+    {
+        $request = <<<EOD
+<?xml version="1.0"?>
+    <methodCall>
+        <methodName>wiki.accessDeniedMethod</methodName>
+   </methodCall>
+EOD;
+
+        $_SERVER['CONTENT_TYPE'] = 'text/xml';
+        $this->server->serve($request);
+        $this->assertStringContainsString(
+            "server error. not authorized to call method wiki.accessDeniedMethod\nyou may not do this",
+            $this->server->output
+        );
+    }
 }

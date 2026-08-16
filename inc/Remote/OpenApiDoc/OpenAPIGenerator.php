@@ -72,7 +72,7 @@ class OpenAPIGenerator
             if (preg_match('/ *function (\w+)/', $line, $match)) {
                 $method = $match[1];
             }
-            if (preg_match('/^ *throw new RemoteException\(\'([^\']+)\'.*?, (\d+)/', $line, $match)) {
+            if (preg_match('/^ *throw new RemoteException\([\'"]([^\'"]+)[\'"].*?, (-?\d+)/', $line, $match)) {
                 $codes[] = [
                     'line' => $no,
                     'exception' => 'RemoteException',
@@ -81,7 +81,7 @@ class OpenAPIGenerator
                     'message' => $match[1],
                 ];
             }
-            if (preg_match('/^ *throw new AccessDeniedException\(\'([^\']+)\'.*?, (\d+)/', $line, $match)) {
+            if (preg_match('/^ *throw new AccessDeniedException\([\'"]([^\'"]+)[\'"].*?, (-?\d+)/', $line, $match)) {
                 $codes[] = [
                     'line' => $no,
                     'exception' => 'AccessDeniedException',

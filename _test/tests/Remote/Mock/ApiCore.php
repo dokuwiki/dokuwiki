@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Remote\Mock;
 
 
+use dokuwiki\Remote\AccessDeniedException;
 use dokuwiki\Remote\ApiCall;
 use dokuwiki\Remote\Response\Link;
 
@@ -23,6 +24,8 @@ class ApiCore
             'wiki.twoArgWithDefaultArg' => new ApiCall([$this, 'twoArgWithDefaultArg']),
             'wiki.publicCall' => (new ApiCall([$this, 'publicCall']))->setPublic(),
             'wiki.getStructuredData' => (new ApiCall([$this, 'getStructuredData'])),
+            'wiki.accessDeniedMethod' => new ApiCall([$this, 'accessDeniedMethod']),
+            'wiki.throwingMethod' => new ApiCall([$this, 'throwingMethod']),
         ];
     }
 
@@ -79,5 +82,15 @@ class ApiCore
     function getStructuredData()
     {
         return new Link('internal', 'wiki:dokuwiki', 'https://www.dokuwiki.org/wiki:dokuwiki');
+    }
+
+    function accessDeniedMethod()
+    {
+        throw new AccessDeniedException('you may not do this', 114);
+    }
+
+    function throwingMethod()
+    {
+        throw new \RuntimeException('kaboom');
     }
 }
