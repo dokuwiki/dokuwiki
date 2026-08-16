@@ -174,6 +174,9 @@ class Table extends AbstractRewriter
                 case 'table_open':
                     if ($this->countTableHeadRows) {
                         array_splice($this->tableCalls, $key + 1, 0, [['tablethead_open', [], $call[2]]]);
+                    } else {
+                        // without a header the body starts right away
+                        array_splice($this->tableCalls, $key + 1, 0, [['tabletbody_open', [], $call[2]]]);
                     }
                     break;
 
@@ -286,7 +289,10 @@ class Table extends AbstractRewriter
                     }
 
                     if ($this->countTableHeadRows == $lastRow) {
-                        array_splice($this->tableCalls, $key + 1, 0, [['tablethead_close', [], $call[2]]]);
+                        array_splice($this->tableCalls, $key + 1, 0, [
+                            ['tablethead_close', [], $call[2]],
+                            ['tabletbody_open', [], $call[2]]
+                        ]);
                     }
                     break;
             }
@@ -311,5 +317,9 @@ class Table extends AbstractRewriter
             unset($this->tableCalls[$delete]);
         }
         $this->tableCalls = array_values($this->tableCalls);
+
+        // the body was opened above and always ends before the table closing
+        $last = count($this->tableCalls) - 1;
+        array_splice($this->tableCalls, $last, 0, [['tabletbody_close', [], $this->tableCalls[$last][2]]]);
     }
 }
