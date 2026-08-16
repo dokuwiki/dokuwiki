@@ -656,6 +656,9 @@ def');
 
     }
 
+    /**
+     * A cell spanning every row leaves no place for the head to end, so the table has no head
+     */
     function testRowSpanAcrossTableHeadBoundary() {
         $this->P->addMode('table',new Table());
         $this->P->parse('
@@ -672,12 +675,12 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 4, 6]],
-            ['tablethead_open',[]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tableheader_open',[1,null,1]],
             ['cdata',[' X1 ']],
             ['tableheader_close',[]],
-            ['tableheader_open',[1,null,2]],
+            ['tableheader_open',[1,null,4]],
             ['cdata',[' Y1 ']],
             ['tableheader_close',[]],
             ['tableheader_open',[1,null,1]],
@@ -692,14 +695,9 @@ def');
             ['cdata',[' Z2 ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
-            ['tablethead_close',[]],
-            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' A3 ']],
-            ['tablecell_close',[]],
-            ['tablecell_open',[1,null,2]],
-            ['cdata',['']],
             ['tablecell_close',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' C3 ']],
@@ -715,6 +713,66 @@ def');
             ['tablerow_close',[]],
             ['tabletbody_close',[]],
             ['table_close',[76]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
+    }
+
+    function testRowSpanShrinksTableHead() {
+        $this->P->addMode('table',new Table());
+        $this->P->parse('
+abc
+^ H1 ^ H2 ^ H3 ^
+^ A1 ^ B1 ^ C1 ^
+^ ::: ^ B2 | C2 |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[3, 3, 6]],
+            ['tablethead_open',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H2 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H3 ']],
+            ['tableheader_close',[]],
+            ['tablerow_close',[]],
+            ['tablethead_close',[]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,2]],
+            ['cdata',[' A1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' B1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' C1 ']],
+            ['tableheader_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' B2 ']],
+            ['tableheader_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' C2 ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[57]],
             ['p_open',[]],
             ['cdata',['def']],
             ['p_close',[]],

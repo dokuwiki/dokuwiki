@@ -16,6 +16,9 @@ class Table extends AbstractRewriter
     protected $currentRow = ['tableheader' => 0, 'tablecell' => 0];
     protected $countTableHeadRows = 0;
 
+    /** @var bool[] rows that share a cell with the row above, keyed by row number */
+    protected $rowContinues = [];
+
     /** @inheritdoc */
     protected function getClosingCall(): string
     {
@@ -37,6 +40,9 @@ class Table extends AbstractRewriter
                 case 'tableheader':
                 case 'tablecell':
                     $this->tableCell($call);
+                    break;
+                case 'rowspan':
+                    $this->tableRowspan($call);
                     break;
                 case 'table_end':
                     $this->tableRowClose($call);
@@ -135,6 +141,17 @@ class Table extends AbstractRewriter
         $this->currentCols++;
     }
 
+    /**
+     * Add a rowspan marker and remember which row holds it
+     *
+     * @param array $call the rowspan marker call
+     */
+    protected function tableRowspan($call)
+    {
+        $this->rowContinues[$this->maxRows] = true;
+        $this->tableCalls[] = $call;
+    }
+
     protected function tableDefault($call)
     {
         $this->tableCalls[] = $call;
@@ -149,6 +166,10 @@ class Table extends AbstractRewriter
         $cols = $this->maxCols - 1;
         // a table cannot consist of head rows alone
         $headRows = $this->inTableHead ? 0 : $this->countTableHeadRows;
+        // a cell cannot span from the head into the body
+        while ($headRows && !empty($this->rowContinues[$headRows + 1])) {
+            $headRows--;
+        }
 
         $this->tableCalls = (new TableFinalizer($this->tableCalls, $cols, $this->maxRows, $headRows))->finalize();
     }
