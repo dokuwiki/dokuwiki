@@ -148,9 +148,8 @@ class Display
         $h = $this->mediaFile->getHeight();
         if ($w && $h) {
             return $w . '&#215;' . $h;
-        } else {
-            return $empty;
         }
+        return $empty;
     }
 
     /** @return string */
@@ -168,8 +167,7 @@ class Display
                 $id = substr($id, strlen($this->relativeDisplay));
             }
             return ltrim($id, ':');
-        } else {
-            return $this->mediaFile->getDisplayName();
         }
+        return $this->mediaFile->getDisplayName();
     }
 }

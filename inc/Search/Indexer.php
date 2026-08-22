@@ -39,7 +39,6 @@ class Indexer
      * with different output mechanisms (TaskRunner echo, CLI output, Logger, etc.)
      *
      * @param callable $logger
-     * @return static
      */
     public function setLogger(callable $logger): static
     {
@@ -65,8 +64,6 @@ class Indexer
      * Plugins that modify what gets indexed should hook this event and
      * add their version info to the event data like so:
      *     $data[$plugin_name] = $plugin_version;
-     *
-     * @return int|string
      */
     public function getVersion(): int|string
     {

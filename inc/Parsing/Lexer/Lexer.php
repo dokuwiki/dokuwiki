@@ -486,7 +486,6 @@ class Lexer
      * @param string $mode the mode whose closer pattern applies
      * @param string $subject the full subject being lexed
      * @param int $from byte position just after the entry pattern match
-     * @return int|null
      */
     protected function closerPosition(string $mode, string $subject, int $from): ?int
     {

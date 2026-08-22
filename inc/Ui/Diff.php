@@ -75,7 +75,9 @@ abstract class Diff extends Ui
         if (is_string($prefs) && isset($value)) {
             $this->preference[$prefs] = $value;
             return $this;
-        } elseif (is_array($prefs)) {
+        }
+        // set
+        if (is_array($prefs)) {
             foreach ($prefs as $name => $value) {
                 $this->preference[$name] = $value;
             }

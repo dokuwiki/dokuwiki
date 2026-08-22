@@ -62,12 +62,7 @@ abstract class Element
             return $this;
         }
 
-        // get
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        } else {
-            return '';
-        }
+        return $this->attributes[$name] ?? '';
     }
 
     /**

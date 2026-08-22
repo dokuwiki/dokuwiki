@@ -93,9 +93,8 @@ class Sort
         $collator = self::getCollator();
         if (isset($collator)) {
             return $collator->compare($str1, $str2);
-        } else {
-            return strnatcasecmp($str1, $str2);
         }
+        return strnatcasecmp($str1, $str2);
     }
 
     /**
@@ -112,9 +111,8 @@ class Sort
         $collator = self::getCollator();
         if (isset($collator)) {
             return $collator->sort($array);
-        } else {
-            return sort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }
+        return sort($array, SORT_NATURAL | SORT_FLAG_CASE);
     }
 
     /**
@@ -131,9 +129,8 @@ class Sort
         $collator = self::getCollator();
         if (isset($collator)) {
             return uksort($array, $collator->compare(...));
-        } else {
-            return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }
+        return ksort($array, SORT_NATURAL | SORT_FLAG_CASE);
     }
 
     /**
@@ -150,9 +147,8 @@ class Sort
         $collator = self::getCollator();
         if (isset($collator)) {
             return $collator->asort($array);
-        } else {
-            return asort($array, SORT_NATURAL | SORT_FLAG_CASE);
         }
+        return asort($array, SORT_NATURAL | SORT_FLAG_CASE);
     }
 
     /**
@@ -172,9 +168,8 @@ class Sort
         return uasort($array, function ($fn1, $fn2) use ($collator) {
             if (isset($collator)) {
                 return $collator->compare(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
-            } else {
-                return strnatcasecmp(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
             }
+            return strnatcasecmp(utf8_decodeFN($fn1), utf8_decodeFN($fn2));
         });
     }
 }

@@ -62,9 +62,8 @@ if ($cache?->useCache($depends)) {
     if ($conf['allowdebug']) header("X-CacheUsed: $cache->cache");
     echo $cache->retrieveCache();
     exit;
-} else {
-    http_conditionalRequest(time());
 }
+http_conditionalRequest(time());
 
 // create new feed
 try {

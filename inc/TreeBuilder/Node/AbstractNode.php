@@ -49,9 +49,6 @@ abstract class AbstractNode implements \Stringable
         return getNS($this->id);
     }
 
-    /**
-     * @return string|null
-     */
     public function getTitle(): ?string
     {
         return $this->title;
@@ -139,8 +136,6 @@ abstract class AbstractNode implements \Stringable
 
     /**
      * Get the direct parent node
-     *
-     * @return AbstractNode|null
      */
     public function getParent(): ?AbstractNode
     {

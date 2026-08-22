@@ -45,7 +45,6 @@ abstract class DirectCollection extends AbstractCollection
      *
      * @param string $entity The name of the entity
      * @param string[] $tokens The list of tokens (only the first is used)
-     * @return static
      * @throws IndexLockException
      * @throws IndexAccessException
      * @throws IndexWriteException

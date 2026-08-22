@@ -102,7 +102,6 @@ class CloserPattern
      *
      * @param string $subject the full subject being lexed
      * @param int $from byte position just after the entry pattern match
-     * @return int|null
      */
     public function position(string $subject, int $from): ?int
     {

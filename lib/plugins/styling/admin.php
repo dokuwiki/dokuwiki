@@ -143,9 +143,8 @@ class admin_plugin_styling extends AdminPlugin
     {
         if (preg_match('/^#([0-9a-fA-F]{3}){1,2}$/', $value)) {
             return 'color';
-        } else {
-            return 'text';
         }
+        return 'text';
     }
 
     /**

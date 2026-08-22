@@ -318,44 +318,42 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
             $secret                 = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
             auth_setCookie($user, auth_encrypt($pass, $secret), $sticky);
             return true;
-        } else {
-            //invalid credentials - log off
-            if (!$silent) {
-                http_status(403, 'Login failed');
-                msg($lang['badlogin'], -1);
-            }
-            auth_logoff();
-            return false;
         }
-    } else {
-        // read cookie information
-        [$user, $sticky, $pass] = auth_getCookie();
-        if ($user && $pass) {
-            // we got a cookie - see if we can trust it
+        //invalid credentials - log off
+        if (!$silent) {
+            http_status(403, 'Login failed');
+            msg($lang['badlogin'], -1);
+        }
+        auth_logoff();
+        return false;
+    }
+    // read cookie information
+    [$user, $sticky, $pass] = auth_getCookie();
+    if ($user && $pass) {
+        // we got a cookie - see if we can trust it
 
-            // get session info
-            if (isset($_SESSION[DOKU_COOKIE])) {
-                $session = $_SESSION[DOKU_COOKIE]['auth'] ?? [];
-                if (
-                    isset($session['user']) &&
-                    isset($session['pass']) &&
-                    $auth->useSessionCache($user) &&
-                    ($session['time'] >= time() - $conf['auth_security_timeout']) &&
-                    ($session['user'] === $user) &&
-                    ($session['pass'] === sha1($pass)) && //still crypted
-                    ($session['buid'] === auth_browseruid())
-                ) {
-                    // he has session, cookie and browser right - let him in
-                    $INPUT->server->set('REMOTE_USER', $user);
-                    $USERINFO = $session['info']; //FIXME move all references to session
-                    return true;
-                }
+        // get session info
+        if (isset($_SESSION[DOKU_COOKIE])) {
+            $session = $_SESSION[DOKU_COOKIE]['auth'] ?? [];
+            if (
+                isset($session['user']) &&
+                isset($session['pass']) &&
+                $auth->useSessionCache($user) &&
+                ($session['time'] >= time() - $conf['auth_security_timeout']) &&
+                ($session['user'] === $user) &&
+                ($session['pass'] === sha1($pass)) && //still crypted
+                ($session['buid'] === auth_browseruid())
+            ) {
+                // he has session, cookie and browser right - let him in
+                $INPUT->server->set('REMOTE_USER', $user);
+                $USERINFO = $session['info']; //FIXME move all references to session
+                return true;
             }
-            // no we don't trust it yet - recheck pass but silent
-            $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
-            $pass   = auth_decrypt($pass, $secret);
-            return auth_login($user, $pass, $sticky, true);
         }
+        // no we don't trust it yet - recheck pass but silent
+        $secret = auth_cookiesalt(!$sticky, true); //bind non-sticky to session
+        $pass   = auth_decrypt($pass, $secret);
+        return auth_login($user, $pass, $sticky, true);
     }
     //just to be sure
     auth_logoff(true);
@@ -584,9 +582,8 @@ function auth_ismanager($user = null, $groups = null, $adminonly = false, $recac
     if (is_null($user)) {
         if (!$INPUT->server->has('REMOTE_USER')) {
             return false;
-        } else {
-            $user = $INPUT->server->str('REMOTE_USER');
         }
+        $user = $INPUT->server->str('REMOTE_USER');
     }
     if (is_null($groups)) {
         // checking the logged in user, or another one?
@@ -1070,10 +1067,9 @@ function register()
     if (auth_sendPassword($login, $pass)) {
         msg($lang['regsuccess'], 1);
         return true;
-    } else {
-        msg($lang['regmailfail'], -1);
-        return false;
     }
+    msg($lang['regmailfail'], -1);
+    return false;
 }
 
 /**
@@ -1301,45 +1297,37 @@ function act_resendpwd()
 
         @unlink($tfile);
         return true;
-    } else {
-        // we're in request phase
-
-        if (!$INPUT->post->bool('save')) return false;
-
-        if (!$INPUT->post->str('login')) {
-            msg($lang['resendpwdmissing'], -1);
-            return false;
-        } else {
-            $user = trim($auth->cleanUser($INPUT->post->str('login')));
-        }
-
-        $userinfo = $auth->getUserData($user, false);
-        if (!$userinfo['mail']) {
-            msg($lang['resendpwdnouser'], -1);
-            return false;
-        }
-
-        // generate auth token
-        $token = md5(auth_randombytes(16)); // random secret
-        $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
-        $url   = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
-
-        io_saveFile($tfile, $user);
-
-        $text = rawLocale('pwconfirm');
-        $trep = ['FULLNAME' => $userinfo['name'], 'LOGIN'    => $user, 'CONFIRM'  => $url];
-
-        $mail = new Mailer();
-        $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
-        $mail->subject($lang['regpwmail']);
-        $mail->setBody($text, $trep);
-        if ($mail->send()) {
-            msg($lang['resendpwdconfirm'], 1);
-        } else {
-            msg($lang['regmailfail'], -1);
-        }
-        return true;
     }
+    // we're in request phase
+    if (!$INPUT->post->bool('save')) return false;
+    if (!$INPUT->post->str('login')) {
+        msg($lang['resendpwdmissing'], -1);
+        return false;
+    }
+    $user = trim($auth->cleanUser($INPUT->post->str('login')));
+    $userinfo = $auth->getUserData($user, false);
+    if (!$userinfo['mail']) {
+        msg($lang['resendpwdnouser'], -1);
+        return false;
+    }
+    // generate auth token
+    $token = md5(auth_randombytes(16));
+    // random secret
+    $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
+    $url   = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
+    io_saveFile($tfile, $user);
+    $text = rawLocale('pwconfirm');
+    $trep = ['FULLNAME' => $userinfo['name'], 'LOGIN'    => $user, 'CONFIRM'  => $url];
+    $mail = new Mailer();
+    $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
+    $mail->subject($lang['regpwmail']);
+    $mail->setBody($text, $trep);
+    if ($mail->send()) {
+        msg($lang['resendpwdconfirm'], 1);
+    } else {
+        msg($lang['regmailfail'], -1);
+    }
+    return true;
     // never reached
 }
 

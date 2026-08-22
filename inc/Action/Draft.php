@@ -22,9 +22,8 @@ class Draft extends AbstractAction
         global $INFO;
         if ($INFO['exists']) {
             return AUTH_EDIT;
-        } else {
-            return AUTH_CREATE;
         }
+        return AUTH_CREATE;
     }
 
     /** @inheritdoc */

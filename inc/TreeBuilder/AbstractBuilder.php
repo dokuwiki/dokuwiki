@@ -229,7 +229,6 @@ abstract class AbstractBuilder implements \Stringable
 
     /**
      * @param AbstractNode $node
-     * @return AbstractNode|null
      */
     protected function applyNodeProcessor(AbstractNode $node): ?AbstractNode
     {
@@ -251,8 +250,6 @@ abstract class AbstractBuilder implements \Stringable
 
     /**
      * "prints" the tree
-     *
-     * @return array
      */
     public function __toString(): string
     {

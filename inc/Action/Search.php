@@ -26,16 +26,6 @@ class Search extends AbstractAction
         return AUTH_NONE;
     }
 
-    /**
-     * we only search if a search word was given
-     *
-     * @inheritdoc
-     */
-    public function checkPreconditions()
-    {
-        parent::checkPreconditions();
-    }
-
     public function preProcess()
     {
         global $QUERY, $ID, $conf, $INPUT;

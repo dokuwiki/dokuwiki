@@ -144,7 +144,8 @@ class WantedPagesCLI extends CLI
             $status = $this->dirFilter($entry, $dir);
             if ($status == WantedPagesCLI::DIR_CONTINUE) {
                 continue;
-            } elseif ($status == WantedPagesCLI::DIR_NS) {
+            }
+            if ($status == WantedPagesCLI::DIR_NS) {
                 $pages = array_merge($pages, $this->getPages($dir . '/' . $entry));
             } else {
                 $page = ['id' => pathID(substr($dir . '/' . $entry, $trunclen)), 'file' => $dir . '/' . $entry];

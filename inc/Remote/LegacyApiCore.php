@@ -321,9 +321,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->appendPage($id, $text, $params['sum'] ?? '', $params['minor'] ?? false);
         if ($ok === true) {
             return cleanID($id);
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**
@@ -402,9 +401,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->saveMedia($id, base64_encode($file), $params['ow'] ?? false);
         if ($ok === true) {
             return cleanID($id);
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**
@@ -415,9 +413,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->deleteMedia($id);
         if ($ok === true) {
             return 0;
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**

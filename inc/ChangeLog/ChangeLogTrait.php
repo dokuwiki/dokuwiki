@@ -38,9 +38,8 @@ trait ChangeLogTrait
                 'extra' => $info[6], // extra data (varies by line type)
                 'sizechange' => ($info[7] != '') ? (int)$info[7] : null, // size difference in bytes
             ];
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

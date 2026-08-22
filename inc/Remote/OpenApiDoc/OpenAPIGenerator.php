@@ -335,9 +335,8 @@ class OpenAPIGenerator
             $name = PhpString::ucwords($name);
 
             return "[$name]($url)";
-        } else {
-            return $url;
         }
+        return $url;
     }
 
 

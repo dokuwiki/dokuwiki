@@ -101,9 +101,8 @@ class cli_plugin_usermanager extends CLIPlugin
         if (!$auth->canDo('getUsers')) {
             $this->error($this->getLang('nosupport'));
             return 1;
-        } else {
-            $this->listUsers($showdetails);
         }
+        $this->listUsers($showdetails);
 
         return 0;
     }

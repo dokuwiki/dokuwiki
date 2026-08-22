@@ -112,8 +112,6 @@ abstract class AbstractCollection
 
     /**
      * Unlock all indexes that were successfully locked
-     *
-     * @return static
      */
     public function unlock(): static
     {
@@ -391,7 +389,6 @@ abstract class AbstractCollection
      *
      * @param string $entity The name of the entity
      * @param string[] $tokens The list of tokens for this entity
-     * @return static
      * @throws IndexAccessException
      * @throws IndexWriteException
      * @throws IndexLockException

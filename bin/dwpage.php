@@ -352,7 +352,7 @@ class PageCLI extends CLI
             return $user;
         }
         if (empty($user)) {
-            $user = 'admin';
+            return 'admin';
         }
         return $user;
     }

@@ -183,14 +183,13 @@ class JsonRpcServer
                     -32603,
                     $e
                 );
-            } else {
-                http_status(403);
-                throw new RemoteException(
-                    "server error. forbidden to call method $methodname\n" . $e->getMessage(),
-                    -32604,
-                    $e
-                );
             }
+            http_status(403);
+            throw new RemoteException(
+                "server error. forbidden to call method $methodname\n" . $e->getMessage(),
+                -32604,
+                $e
+            );
         } catch (RemoteException $e) {
             http_status(400);
             throw $e;

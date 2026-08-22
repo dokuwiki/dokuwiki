@@ -102,7 +102,8 @@ class admin_plugin_config extends AdminPlugin
         foreach ($this->configuration->getSettings() as $setting) {
             if ($setting instanceof SettingHidden) {
                 continue;
-            } elseif ($setting instanceof SettingFieldset) {
+            }
+            if ($setting instanceof SettingFieldset) {
                 // config setting group
                 if ($in_fieldset) {
                     echo '</table>';

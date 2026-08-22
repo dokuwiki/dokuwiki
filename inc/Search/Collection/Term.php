@@ -69,8 +69,6 @@ class Term
      *
      * The fulltext token index is already lowercased by the Tokenizer, so this is only
      * needed for metadata/title searches where indexed values preserve case.
-     *
-     * @return static
      */
     public function caseInsensitive(): static
     {

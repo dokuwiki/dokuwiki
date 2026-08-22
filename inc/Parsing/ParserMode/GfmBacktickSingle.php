@@ -143,7 +143,7 @@ class GfmBacktickSingle extends AbstractMode
             && $body[-1] === ' '
             && trim($body) !== ''
         ) {
-            $body = substr($body, 1, -1);
+            return substr($body, 1, -1);
         }
         return $body;
     }

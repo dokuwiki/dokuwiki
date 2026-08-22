@@ -346,7 +346,7 @@ class auth_plugin_authad extends AuthPlugin
         }
 
         // reattach domain
-        if ($domain) $user = "$user@$domain";
+        if ($domain) return "$user@$domain";
         return $user;
     }
 

@@ -55,14 +55,16 @@ class PageResolver extends Resolver
         global $conf;
 
         if ($id === '' || $id[-1] !== ':') return $id;
-
         if (page_exists($id . $conf['start'], $rev, true, $isDateAt)) {
             // start page inside namespace
             return $id . $conf['start'];
-        } elseif (page_exists($id . noNS(cleanID($id)), $rev, true, $isDateAt)) {
+        }
+        if (page_exists($id . noNS(cleanID($id)), $rev, true, $isDateAt)) {
             // page named like the NS inside the NS
             return $id . noNS(cleanID($id));
-        } elseif (page_exists(substr($id, 0, -1), $rev, true, $isDateAt)) {
+        }
+
+        if (page_exists(substr($id, 0, -1), $rev, true, $isDateAt)) {
             // page named like the NS outside the NS
             return substr($id, 0, -1);
         }

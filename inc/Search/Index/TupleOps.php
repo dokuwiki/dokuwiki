@@ -31,9 +31,8 @@ class TupleOps
             $tuple = ($count == 1) ? $key : "$key*$count";
             if ($record !== '') {
                 return "$tuple:" . $record;
-            } else {
-                return $tuple;
             }
+            return $tuple;
         }
         return $record;
     }

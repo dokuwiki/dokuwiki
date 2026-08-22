@@ -125,7 +125,6 @@ class FulltextSearch
      *
      * @param string $id page id
      * @param array $highlight
-     * @return mixed
      * @author Andreas Gohr <andi@splitbrain.org>
      * @triggers FULLTEXT_SNIPPET_CREATE
      *
@@ -276,7 +275,7 @@ class FulltextSearch
         }
 
         if (in_array($term, [$BL, $BR, $BL . $BR], true)) {
-            $term = '';
+            return '';
         }
         return $term;
     }

@@ -198,10 +198,11 @@ function p_cached_instructions($file, $cacheonly = false, $id = '', $syntax = nu
     $runKey = $file . '|' . ($syntax ?? '');
 
     $cache = new CacheInstructions($id, $file, $syntax);
-
     if ($cacheonly || $cache->useCache() || (isset($run[$runKey]) && !defined('DOKU_UNITTEST'))) {
         return $cache->retrieveCache();
-    } elseif (file_exists($file)) {
+    }
+
+    if (file_exists($file)) {
         // no cache - do some work
         $ins = p_get_instructions(io_readWikiPage($file, $id), $syntax);
         if ($cache->storeCache($ins)) {
@@ -427,9 +428,8 @@ function p_set_metadata($id, $data, $render = false, $persistent = true)
         $METADATA_RENDERERS[$id]['current'] = $meta['current'];
         $METADATA_RENDERERS[$id]['persistent'] = $meta['persistent'];
         return true;
-    } else {
-        return p_save_metadata($id, $meta);
     }
+    return p_save_metadata($id, $meta);
 }
 
 /**
@@ -735,7 +735,6 @@ function p_xhtml_cached_geshi($code, $language, $wrapper = 'pre', ?array $option
     // add a wrapper element if required
     if ($wrapper) {
         return "<$wrapper class=\"code $language\">$highlighted_code</$wrapper>";
-    } else {
-        return $highlighted_code;
     }
+    return $highlighted_code;
 }

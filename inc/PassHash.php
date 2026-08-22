@@ -186,10 +186,9 @@ class PassHash
 
         if (defined('CRYPT_MD5') && CRYPT_MD5 && $salt !== '') {
             return crypt($clear, '$1$' . $salt . '$');
-        } else {
-            // Fall back to PHP-only implementation
-            return $this->hash_apr1($clear, $salt, '1');
         }
+        // Fall back to PHP-only implementation
+        return $this->hash_apr1($clear, $salt, '1');
     }
 
     /**
@@ -744,9 +743,8 @@ class PassHash
         $this->init_salt($salt, 8, false);
         if (empty($rounds)) {
             return crypt($clear, '$' . $prefix . '$' . $salt . '$');
-        } else {
-            return crypt($clear, '$' . $prefix . '$' . $rounds . '$' . $salt . '$');
         }
+        return crypt($clear, '$' . $prefix . '$' . $rounds . '$' . $salt . '$');
     }
 
     /** @see sha2 */

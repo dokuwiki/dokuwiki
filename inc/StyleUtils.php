@@ -165,9 +165,8 @@ class StyleUtils
     {
         if ($config_group === 'default') {
             return tpl_basedir($this->tpl);
-        } else {
-            return DOKU_BASE;
         }
+        return DOKU_BASE;
     }
 
     /**

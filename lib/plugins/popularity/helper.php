@@ -67,7 +67,7 @@ class helper_plugin_popularity extends Dokuwiki_Plugin
         $httpClient = new DokuHTTPClient();
         $status = $httpClient->sendRequest($this->submitUrl, ['data' => $data], 'POST');
         if (! $status) {
-            $error = $httpClient->error;
+            return $httpClient->error;
         }
         return $error;
     }

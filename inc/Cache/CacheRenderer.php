@@ -75,14 +75,15 @@ class CacheRenderer extends CacheParser
     protected function addDependencies()
     {
         global $conf;
-
         // default renderer cache file 'age' is dependent on 'cachetime' setting, two special values:
         //    -1 : do not cache (should not be overridden)
         //    0  : cache never expires (can be overridden) - no need to set depends['age']
         if ($conf['cachetime'] == -1) {
             $this->_nocache = true;
             return;
-        } elseif ($conf['cachetime'] > 0) {
+        }
+
+        if ($conf['cachetime'] > 0) {
             $this->depends['age'] = isset($this->depends['age']) ?
                 min($this->depends['age'], $conf['cachetime']) : $conf['cachetime'];
         }

@@ -60,13 +60,12 @@ class XmlRpcServer extends Server
                     -32603,
                     "server error. not authorized to call method $methodname\n" . $e->getMessage()
                 );
-            } else {
-                http_status(403);
-                return new Error(
-                    -32604,
-                    "server error. forbidden to call method $methodname\n" . $e->getMessage()
-                );
             }
+            http_status(403);
+            return new Error(
+                -32604,
+                "server error. forbidden to call method $methodname\n" . $e->getMessage()
+            );
         } catch (RemoteException $e) {
             return new Error($e->getCode(), $e->getMessage());
         }

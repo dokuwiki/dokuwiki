@@ -127,9 +127,8 @@ function rfc2231_encode($name, $value, $charset = 'utf-8', $lang = 'en')
     );
     if ($value != $internal) {
         return ' ' . $name . '*=' . $charset . "'" . $lang . "'" . $internal;
-    } else {
-        return ' ' . $name . '="' . $value . '"';
     }
+    return ' ' . $name . '="' . $value . '"';
 }
 
 /**

@@ -67,12 +67,12 @@ class Repository
         if ($data === false) {
             $this->hasAccess = false;
             throw new Exception('repo_error');
-        } elseif ($data !== '1') {
+        }
+        if ($data !== '1') {
             $this->hasAccess = false;
             throw new Exception('repo_badresponse');
-        } else {
-            $this->hasAccess = true;
         }
+        $this->hasAccess = true;
         return $this->hasAccess;
     }
 

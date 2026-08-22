@@ -86,8 +86,6 @@ abstract class AbstractFormatting extends AbstractMode
      * paragraphs. The entry pattern should then perform only cheap local
      * checks (delimiter and flanking lookarounds); see addCloserPattern()
      * for why the closer check must not live in the entry pattern itself.
-     *
-     * @return string|null
      */
     protected function getCloserPattern(): ?string
     {

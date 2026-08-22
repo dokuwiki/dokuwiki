@@ -34,12 +34,16 @@ class Clean
         $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
             $b = ord($str[$i]);
-            if ($b < 0x80) continue; # 0bbbbbbb
-            elseif (($b & 0xE0) === 0xC0) $n = 1; # 110bbbbb
+            if ($b < 0x80) {
+                continue;
+            }
+            # 0bbbbbbb
+            if (($b & 0xE0) === 0xC0) $n = 1; # 110bbbbb
             elseif (($b & 0xF0) === 0xE0) $n = 2; # 1110bbbb
             elseif (($b & 0xF8) === 0xF0) $n = 3; # 11110bbb
             elseif (($b & 0xFC) === 0xF8) $n = 4; # 111110bb
-            elseif (($b & 0xFE) === 0xFC) $n = 5; # 1111110b
+            elseif (($b & 0xFE) === 0xFC) $n = 5;
+            # 1111110b
             else return false; # Does not match any model
 
             for ($j = 0; $j < $n; $j++) { # n bytes matching 10bbbbbb follow ?
@@ -154,7 +158,7 @@ class Clean
             $string = strtr($string, Table::lowerAccents());
         }
         if ($case >= 0) {
-            $string = strtr($string, Table::upperAccents());
+            return strtr($string, Table::upperAccents());
         }
         return $string;
     }

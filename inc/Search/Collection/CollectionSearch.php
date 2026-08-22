@@ -40,8 +40,6 @@ class CollectionSearch
 
     /**
      * Enable case-insensitive matching for all subsequently added terms
-     *
-     * @return static
      */
     public function caseInsensitive(): static
     {
