@@ -39,6 +39,7 @@ div.picker {
     border: 1px solid @ini_border;
     background-color: @ini_background_alt;
     color: inherit;
+    z-index: 100;
 }
 /* picker for headlines */
 div.picker.pk_hl {
