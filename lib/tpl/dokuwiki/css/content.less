@@ -176,39 +176,13 @@
     .code-copy-btn {
         opacity: 0;
     }
-}
 
-/* give the copy button a stable grid cell so it can stick to the scrollport edge */
-.dokuwiki pre.code,
-.dokuwiki pre.file {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto 1fr;
-    align-items: start;
-}
-
-/* keep the copy button pinned to the inline-end while the code scrolls horizontally */
-.dokuwiki .file > .code-copy-btn,
-.dokuwiki .code > .code-copy-btn {
-    position: sticky;
-    top: 0.25em;
-    right: 0.25em;
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.dokuwiki .file:hover .code-copy-btn,
-.dokuwiki .code:hover .code-copy-btn,
-.dokuwiki .file:focus .code-copy-btn,
-.dokuwiki .code:focus .code-copy-btn {
-    opacity: 1;
-}
-
-/* pin the copy button to the inline-end in RTL (overrides lib/styles/screen.css) */
-[dir=rtl] .dokuwiki .file > .code-copy-btn,
-[dir=rtl] .dokuwiki .code > .code-copy-btn {
-    right: unset;
-    left: 0.25em;
+    &:hover,
+    &:focus {
+        .code-copy-btn {
+            opacity: 1;
+        }
+    }
 }
 
 /*____________ JS popup ____________*/
