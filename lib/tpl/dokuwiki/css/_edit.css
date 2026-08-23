@@ -39,6 +39,9 @@ div.picker {
     border: 1px solid @ini_border;
     background-color: @ini_background_alt;
     color: inherit;
+    /* same stacking level as the search suggestion dropdown (css/_search.less),
+       so the picker isn't painted underneath later page content such as the footer */
+    z-index: 100;
 }
 /* picker for headlines */
 div.picker.pk_hl {
