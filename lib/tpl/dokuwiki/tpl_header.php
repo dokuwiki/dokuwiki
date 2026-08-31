@@ -73,16 +73,20 @@ if (!defined('DOKU_INC')) die();
     </div>
 
     <!-- BREADCRUMBS -->
-    <?php if ($conf['breadcrumbs'] || $conf['youarehere']) : ?>
+<?php if ($conf['breadcrumbs'] || $conf['youarehere']) : ?>
         <div class="breadcrumbs">
-            <?php if ($conf['youarehere']) : ?>
-                <div class="youarehere"><?php tpl_youarehere() ?></div>
-            <?php endif ?>
-            <?php if ($conf['breadcrumbs']) : ?>
-                <div class="trace"><?php tpl_breadcrumbs() ?></div>
-            <?php endif ?>
-        </div>
+    <?php if ($conf['youarehere']) : ?>
+        <nav class="youarehere">
+            <?php tpl_youarehere() ?>
+        </nav>
     <?php endif ?>
+    <?php if ($conf['breadcrumbs']) : ?>
+        <nav class="trace">
+            <?php tpl_breadcrumbs() ?>
+        </nav>
+    <?php endif ?>
+        </div>
+<?php endif ?>
 
     <hr class="a11y" />
 </div></header><!-- /header -->
