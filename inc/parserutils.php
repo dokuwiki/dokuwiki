@@ -474,7 +474,7 @@ function p_read_metadata($id, $cache = false)
 
     $file = metaFN($id, '.meta');
     $meta = file_exists($file) ?
-        unserialize(io_readFile($file, false)) :
+        unserialize(io_readFile($file, false), ['allowed_classes' => false]) :
         ['current' => [], 'persistent' => []];
 
     if ($cache) {
