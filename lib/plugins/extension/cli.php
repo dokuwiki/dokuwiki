@@ -47,6 +47,13 @@ class cli_plugin_extension extends CLIPlugin
         $options->registerCommand('list', 'List installed extensions');
         $options->registerOption('verbose', 'Show detailed extension information', 'v', false, 'list');
         $options->registerOption('filter', 'Filter by this status', 'f', 'status', 'list');
+        $options->registerOption(
+            'no-remote',
+            'Don\'t contact the plugin repository; this means most issues won\'t be checked',
+            'n',
+            false,
+            'list'
+        );
 
         // upgrade
         $options->registerCommand('upgrade', 'Update all installed extensions to their latest versions');
@@ -77,16 +84,22 @@ class cli_plugin_extension extends CLIPlugin
     /** @inheritdoc */
     protected function main(Options $options)
     {
-        $repo = Repository::getInstance();
-        try {
-            $repo->checkAccess();
-        } catch (ExtensionException $e) {
-            $this->warning($e->getMessage());
+        if (! $options->getOpt('no-remote')) {
+            $repo = Repository::getInstance();
+            try {
+                $repo->checkAccess();
+            } catch (ExtensionException $e) {
+                $this->warning($e->getMessage());
+            }
         }
 
         switch ($options->getCmd()) {
             case 'list':
-                $ret = $this->cmdList($options->getOpt('verbose'), $options->getOpt('filter', ''));
+                $ret = $this->cmdList(
+                    $options->getOpt('verbose'),
+                    $options->getOpt('filter', ''),
+                    $options->getOpt('no-remote'),
+                );
                 break;
             case 'search':
                 $ret = $this->cmdSearch(
@@ -253,16 +266,20 @@ class cli_plugin_extension extends CLIPlugin
     /**
      * @param bool $showdetails
      * @param string $filter
+     * @param bool $noremote
      * @return int
      * @throws Exception
      */
-    protected function cmdList($showdetails, $filter)
+    protected function cmdList($showdetails, $filter, $noremote)
     {
         $extensions = (new Local())->getExtensions();
-        // initialize remote data in one go
-        Repository::getInstance()->initExtensions(array_keys($extensions));
 
-        $this->listExtensions($extensions, $showdetails, $filter);
+        if (! $noremote) {
+            // initialize remote data in one go
+            Repository::getInstance()->initExtensions(array_keys($extensions));
+        }
+
+        $this->listExtensions($extensions, $showdetails, $filter, $noremote);
         return 0;
     }
 
@@ -272,26 +289,29 @@ class cli_plugin_extension extends CLIPlugin
      * @param Extension[] $list
      * @param bool $details display details
      * @param string $filter filter for this status
+     * @param bool $noremote whether to contact the remote repository
      * @throws Exception
      * @todo break into smaller methods
      */
-    protected function listExtensions($list, $details, $filter = '')
+    protected function listExtensions($list, $details, $filter = '', $noremote = false)
     {
         $tr = new TableFormatter($this->colors);
         foreach ($list as $ext) {
             $status = '';
             if ($ext->isInstalled()) {
                 $date = $ext->getInstalledVersion();
-                $avail = $ext->getLastUpdate();
+                $avail = $noremote ? null : $ext->getLastUpdate();
                 $status = 'i';
                 if ($avail && $avail > $date) {
                     $vcolor = Colors::C_RED;
                     $status .= 'u';
-                } else {
+                } elseif ($avail && $avail <= $date) {
                     $vcolor = Colors::C_GREEN;
+                } else {
+                    $vcolor = null;
                 }
                 if ($ext->isGitControlled()) $status = 'g';
-                if ($ext->isBundled()) {
+                if ($noremote ? $ext->isBundledNoRemote() : $ext->isBundled()) {
                     $status = 'b';
                     $date = '<bundled>';
                     $vcolor = null;
@@ -304,7 +324,7 @@ class cli_plugin_extension extends CLIPlugin
                 }
             } else {
                 $ecolor = null;
-                $date = $ext->getLastUpdate();
+                $date = $noremote ? null : $ext->getLastUpdate();
                 $vcolor = null;
             }
 
@@ -312,7 +332,7 @@ class cli_plugin_extension extends CLIPlugin
                 continue;
             }
 
-            $notices = Notice::list($ext);
+            $notices = $noremote ? Notice::listNoRemote($ext) : Notice::list($ext);
             if ($notices[Notice::SECURITY]) $status .= Notice::symbol(Notice::SECURITY);
             if ($notices[Notice::ERROR]) $status .= Notice::symbol(Notice::ERROR);
             if ($notices[Notice::WARNING]) $status .= Notice::symbol(Notice::WARNING);
