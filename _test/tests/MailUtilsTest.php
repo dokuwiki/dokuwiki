@@ -165,6 +165,19 @@ class MailUtilsTest extends \DokuWikiTest
         }
     }
 
+    /**
+     * A missing address must degrade to an empty string rather than a TypeError.
+     */
+    public function testObfuscateNull(): void
+    {
+        global $conf;
+        foreach (['none', 'visible', 'hex'] as $mode) {
+            $conf['mailguard'] = $mode;
+            $this->assertEquals('', MailUtils::obfuscate(null), "obfuscate/$mode");
+            $this->assertEquals('', MailUtils::obfuscateUrl(null), "obfuscateUrl/$mode");
+        }
+    }
+
     // endregion
     // region isValid()
 
