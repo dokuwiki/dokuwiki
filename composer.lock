@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1724a315cad31c0329d465ded5a9e39",
+    "content-hash": "3e0d9b814f41d7bd07ddd42023b9b45e",
     "packages": [
         {
             "name": "aziraphale/email-address-validator",
@@ -53,22 +53,21 @@
         },
         {
             "name": "geshi/geshi",
-            "version": "dev-master",
+            "version": "dev-dokuwiki",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c"
+                "url": "https://github.com/dokudeps/geshi-1.0.git",
+                "reference": "ddbd94d3b8267c88c8d880c7a8244cda81414ff1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/17ff9b22ac6695efa6ab6fbcf0607263f080468c",
-                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c",
+                "url": "https://api.github.com/repos/dokudeps/geshi-1.0/zipball/ddbd94d3b8267c88c8d880c7a8244cda81414ff1",
+                "reference": "ddbd94d3b8267c88c8d880c7a8244cda81414ff1",
                 "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "classmap": [
@@ -76,7 +75,6 @@
                     "src/geshi.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -93,10 +91,9 @@
             "support": {
                 "forum": "https://lists.sourceforge.net/lists/listinfo/geshi-users",
                 "irc": "irc://irc.freenode.org/geshi",
-                "issues": "https://sourceforge.net/p/geshi/feature-requests/",
-                "source": "https://github.com/GeSHi/geshi-1.0/tree/master"
+                "issues": "https://sourceforge.net/p/geshi/feature-requests/"
             },
-            "time": "2024-03-17T14:59:35+00:00"
+            "time": "2026-09-06T19:27:56+00:00"
         },
         {
             "name": "kissifrot/php-ixr",
@@ -846,7 +843,7 @@
     "aliases": [
         {
             "package": "geshi/geshi",
-            "version": "9999999-dev",
+            "version": "dev-dokuwiki",
             "alias": "1.0.x-dev",
             "alias_normalized": "1.0.9999999.9999999-dev"
         }
