@@ -112,7 +112,7 @@ if (
     ($conf['send404'] || preg_match('/^(robots\.txt|sitemap\.xml(\.gz)?|favicon\.ico|crossdomain\.xml)$/', $ID)) &&
     ($ACT == 'show' || (!is_array($ACT) && str_starts_with($ACT, 'export_')))
 ) {
-    header('HTTP/1.0 404 Not Found');
+    http_status(404);
 }
 
 //prepare breadcrumbs (initialize a static var)
