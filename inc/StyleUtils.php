@@ -149,6 +149,22 @@ class StyleUtils
                 msg("Stylesheet $file not found, please contact the developer of \"$this->tpl\" template.", 2);
             }
         }
+        if(strpos($file,'/')!==false){
+            #detect which convention this file uses in its url's. relative to the template dir or relative to the file itself.
+            $s=file_get_contents($incbase . $file);
+            #just look at the first one.
+            if(preg_match('#(url\([ \'"]*)(?!/|data:|http://|https://| |\'|")#',$s,$m,PREG_OFFSET_CAPTURE)){
+                if(preg_match('#^url\([ \'"]*([^\)\'"]+)[ \'"]*\)#',substr($s,$m[0][1]),$m2)){
+                    $url=trim($m2[1]);
+                    #if the default convention (relative to template dir) does not work,
+                    #but the alternative convention (url is relative to the file) works.
+                    if(!file_exists($incbase . $url) && file_exists($incbase . dirname($file) . '/' . $url)){ 
+                            $webbase.=dirname($file) . '/';    
+                    } 
+                }
+            }
+        }
+
         $stylesheets[$mode][fullpath($incbase . $file)] = $webbase;
         return $stylesheets;
     }
