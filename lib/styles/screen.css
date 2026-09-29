@@ -94,16 +94,23 @@ div.notify {
     right: -99999em !important;
 }
 
-/* copy to clipboard button on code blocks */
+/* copy to clipboard button on code blocks
+   uses a dedicated grid cell so the button can stick to the scrollport edge
+   instead of scrolling away with horizontally overflowing content */
 .dokuwiki .code,
 .dokuwiki .file {
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    align-items: start;
 }
 
 .dokuwiki .code-copy-btn {
-    position: absolute;
+    position: sticky;
     top: 0.25em;
     right: 0.25em;
+    grid-column: 2;
+    grid-row: 1;
 }
 
 [dir=rtl] .dokuwiki .code-copy-btn {
