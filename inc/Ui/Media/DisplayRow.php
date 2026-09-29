@@ -32,7 +32,7 @@ class DisplayRow extends DisplayTile
             'alt="' . $lang['mediaview'] . '" title="' . $lang['mediaview'] . '" class="btn" /></a>';
 
         // mediamanager button
-        $link = wl('', ['do' => 'media', 'image' => $id, 'ns' => getNS($id)]);
+        $link = wl('', ['do' => 'media', 'image' => $id, 'ns' => (string)getNS($id)]);
         echo ' <a href="' . $link . '" target="_blank"><img src="' . DOKU_BASE . 'lib/images/mediamanager.png" ' .
             'alt="' . $lang['btn_media'] . '" title="' . $lang['btn_media'] . '" class="btn" /></a>';
 

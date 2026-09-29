@@ -1452,6 +1452,7 @@ function media_managerURL($params = false, $amp = '&amp;', $abs = false, $params
     }
 
     if ($params) {
+        if (isset($params['ns'])) { $params['ns'] = (string)$params['ns']; }
         $gets = $params + $gets;
     }
     unset($gets['id']);
