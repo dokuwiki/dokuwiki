@@ -171,14 +171,13 @@
 }
 
 /* copy to clipboard */
-.dokuwiki .file,
-.dokuwiki .code {
+.dokuwiki .code-copy-wrap {
     .code-copy-btn {
         opacity: 0;
     }
 
     &:hover,
-    &:focus {
+    &:focus-within {
         .code-copy-btn {
             opacity: 1;
         }

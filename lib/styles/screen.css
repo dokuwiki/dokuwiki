@@ -95,8 +95,7 @@ div.notify {
 }
 
 /* copy to clipboard button on code blocks */
-.dokuwiki .code,
-.dokuwiki .file {
+.dokuwiki .code-copy-wrap {
     position: relative;
 }
 
