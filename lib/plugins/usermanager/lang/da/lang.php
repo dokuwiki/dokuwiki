@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <mail@jacobpalm.dk>
  * @author Lars Næsbye Christensen <larsnaesbye@stud.ku.dk>
  * @author Kalle Sommer Nielsen <kalle@php.net>
@@ -44,6 +45,7 @@ $lang['summary']               = 'Viser brugerne %1$d-%2$d ud af %3$d fundne. %4
 $lang['nonefound']             = 'Ingen brugere fundet. %d brugere totalt.';
 $lang['delete_ok']             = '%d brugere slettet';
 $lang['delete_fail']           = '%d kunne ikke slettes.';
+$lang['delete_fail_self']      = 'Du kan ikke slette din egen profil';
 $lang['update_ok']             = 'Bruger opdateret korrekt';
 $lang['update_fail']           = 'Opdatering af bruger mislykkedes';
 $lang['update_exists']         = 'Ændring af brugernavn mislykkedes, det valgte brugernavn (%s) er allerede benyttet (øvrige ændringer vil blive udført).';

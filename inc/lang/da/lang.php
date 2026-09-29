@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
@@ -126,6 +127,8 @@ $lang['js']['media_done_btn']  = 'Færdig';
 $lang['js']['media_drop']      = 'Træk filer hertil for at overføre';
 $lang['js']['media_cancel']    = 'fjern';
 $lang['js']['media_overwrt']   = 'Overskriv eksisterende filer';
+$lang['js']['clipboard_success'] = 'Kopieret!';
+$lang['js']['clipboard_error'] = 'Kopiering fejlede';
 $lang['search_exact_match']    = 'Præcist match';
 $lang['search_starts_with']    = 'Starter med';
 $lang['search_ends_with']      = 'Slutter med';
