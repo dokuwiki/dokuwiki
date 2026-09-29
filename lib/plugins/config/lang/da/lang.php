@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
@@ -49,6 +50,8 @@ $lang['title']                 = 'Wiki titel (navnet på din wiki)';
 $lang['start']                 = 'Startsidens navn (benyttes som startside i alle navnerum)';
 $lang['lang']                  = 'Sprog';
 $lang['template']              = 'Tema';
+$lang['syntax_o_dw']           = 'Kun DokuWiki';
+$lang['syntax_o_dw+md']        = 'Begge (DokuWiki foretrækkes)';
 $lang['tagline']               = 'Tagline (hvis tema understøtter det)';
 $lang['sidebar']               = 'Sidepanelet sidenavn (hvis temaet understøtter det). Lad være blankt for at deaktivere sidepanelet.';
 $lang['license']               = 'Under hvilken licens skal dit indhold frigives?';
@@ -158,7 +161,6 @@ $lang['search_fragment_o_exact'] = 'præcis';
 $lang['search_fragment_o_starts_with'] = 'starter med';
 $lang['search_fragment_o_ends_with'] = 'slutter med';
 $lang['search_fragment_o_contains'] = 'indeholder';
-$lang['trustedproxy']          = 'Hav tillid til viderestillede proxyer som rapporterer en oprindelig IP der matcher denne regular expression. Som standard matcher lokale netværk. Efterlad blank for ikke at have tillid til nogen proxyer.';
 $lang['_feature_flags']        = 'Funktionsflag';
 $lang['defer_js']              = 'Afvent med JavaScript ekserkvering, til sidens HTML er behandlet. Dette kan få sideindlæsning til at føles hurtigere, men kan potentielt forhindre et fåtal af udvidelser i at fungere korrekt.';
 $lang['dnslookups']            = 'DokuWiki laver DNS-opslag for at finde hostnames på de IP-adresser hvorfra brugere redigerer sider. Hvis du har en langsom eller ikke-fungerende DNS-server, eller ikke ønsker denne funktion, kan du slå den fra.';

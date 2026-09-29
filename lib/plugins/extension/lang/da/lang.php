@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Søren Birk <soer9648@eucl.dk>
  */
@@ -12,9 +13,6 @@ $lang['tab_templates']         = 'Installerede temaer';
 $lang['tab_search']            = 'Søg og installer';
 $lang['tab_install']           = 'Manuel installation';
 $lang['notimplemented']        = 'Denne funktion er ikke implementeret endnu';
-$lang['notinstalled']          = 'Denne udvidelse er ikke installeret';
-$lang['alreadyenabled']        = 'Denne udvidelse er allerede aktiveret';
-$lang['alreadydisabled']       = 'Denne udvidelse er allerede deaktiveret';
 $lang['pluginlistsaveerror']   = 'Der opstod en fejl under opdatering af udvidelseslisten';
 $lang['unknownauthor']         = 'Ukendt udvikler';
 $lang['unknownversion']        = 'Ukendt version';
@@ -30,6 +28,7 @@ $lang['js']['display_viewoptions'] = 'Visningsindstillinger:';
 $lang['js']['display_enabled'] = 'aktiveret';
 $lang['js']['display_disabled'] = 'deaktiveret';
 $lang['js']['display_updatable'] = 'kan opdateres';
+$lang['js']['close']           = 'Klik for at lukke';
 $lang['search_for']            = 'Søg efter udvidelse:';
 $lang['search']                = 'Søg';
 $lang['extensionby']           = '<strong>%s</strong> af %s';
@@ -68,17 +67,15 @@ $lang['msg_enabled']           = 'Udvidelsen %s aktiveret';
 $lang['msg_disabled']          = 'Udvidelsen %s deaktiveret';
 $lang['msg_delete_success']    = 'Udvidelsen %s afinstalleret';
 $lang['msg_delete_failed']     = 'Kunne ikke afinstallere udvidelsen %s';
-$lang['msg_template_install_success'] = 'Temaet %s blev installeret';
-$lang['msg_template_update_success'] = 'Temaet %s blev opdateret';
-$lang['msg_plugin_install_success'] = 'Udvidelsen %s blev installeret';
-$lang['msg_plugin_update_success'] = 'Udvidelsen %s blev opdateret';
 $lang['msg_upload_failed']     = 'Kunne ikke uploade filen';
 $lang['msg_nooverwrite']       = 'Udvidelsen %s findes allerede og overskrives ikke. For at overskrive, marker indstillingen for overskrivelse';
 $lang['missing_dependency']    = 'Manglende eller deaktiveret afhængighed: %s';
 $lang['security_issue']        = 'Sikkerhedsproblem: %s';
 $lang['security_warning']      = 'Sikkerhedsadvarsel: %s';
 $lang['wrong_folder']          = 'Udvidelse ikke installeret korrekt: Omdøb udvidelses-mappe "%s" til "%s".';
-$lang['url_change']            = "URL ændret: Download-URL er blevet ændret siden sidste download. Kontrollér om den nye URL er valid, inden udvidelsen opdateres.\nNy: %s\nGammel: %s";
+$lang['url_change']            = 'URL ændret: Download-URL er blevet ændret siden sidste download. Kontrollér om den nye URL er valid, inden udvidelsen opdateres.
+Ny: %s
+Gammel: %s';
 $lang['error_badurl']          = 'URL\'er skal starte med http eller https';
 $lang['error_dircreate']       = 'Ikke i stand til at oprette midlertidig mappe til modtagelse af download';
 $lang['error_download']        = 'Ikke i stand til at downloade filen: %s';
@@ -94,3 +91,5 @@ $lang['install_url']           = 'Installér fra URL:';
 $lang['install_upload']        = 'Upload udvidelse:';
 $lang['repo_error']            = 'Udvidelses-arkivet kunne ikke kontaktes. Kontrollér at din server kan kontakte www.dokuwiki.org kontrollér dine proxy-indstillinger.';
 $lang['nossl']                 = 'Din PHP lader til at mangle understøttelse for SSL. Mange DokuWiki udvidelser vil ikke kunne downloades.';
+$lang['popularity_high']       = 'Dette er en af de mest populære udvidelser';
+$lang['details']               = 'Detaljer';

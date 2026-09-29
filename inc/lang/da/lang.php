@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <jacobpalmdk@icloud.com>
  * @author Kenneth Schack Banner <kescba@gmail.com>
  * @author Jon Theil Nielsen <jontheil@gmail.com>
@@ -126,6 +127,12 @@ $lang['js']['media_done_btn']  = 'Færdig';
 $lang['js']['media_drop']      = 'Træk filer hertil for at overføre';
 $lang['js']['media_cancel']    = 'fjern';
 $lang['js']['media_overwrt']   = 'Overskriv eksisterende filer';
+$lang['js']['size_larger']     = 'Forstør inputfeltet';
+$lang['js']['size_smaller']    = 'Formindsk inputfeltet';
+$lang['js']['size_wrap']       = 'Slå linjeombrydning til/fra ';
+$lang['js']['clipboard_button'] = 'Kopieret';
+$lang['js']['clipboard_success'] = 'Kopieret!';
+$lang['js']['clipboard_error'] = 'Kopiering fejlede';
 $lang['search_exact_match']    = 'Præcist match';
 $lang['search_starts_with']    = 'Starter med';
 $lang['search_ends_with']      = 'Slutter med';
@@ -227,6 +234,7 @@ $lang['created']               = 'oprettet';
 $lang['restored']              = 'gammel revision gendannet (%s)';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Resumé af ændrigner';
+$lang['unknowndate']           = 'Ukendt dato';
 $lang['noflash']               = 'Du skal installere <a href="http://get.adobe.com/flashplayer">Adobe Flash Player</a> for at kunne se dette indhold.';
 $lang['download']              = 'Hent kodestykke';
 $lang['tools']                 = 'Værktøjer';
@@ -374,3 +382,4 @@ $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterf
 $lang['unable_to_parse_date']  = 'Kan ikke fortolke parameteren "%s".';
 $lang['email_signature_text']  = 'Denne e-mail blev genereret af DokuWiki på
 @DOKUWIKIURL@';
+$lang['log_file_failed_to_open'] = 'Kunne ikke åbne logfilen.';
