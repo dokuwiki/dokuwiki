@@ -49,7 +49,7 @@ function http_conditionalRequest($timestamp)
     }
 
     // Nothing has changed since their last request - serve a 304 and exit
-    header('HTTP/1.0 304 Not Modified');
+    http_status(304);
 
     // don't produce output, even if compression is on
     @ob_end_clean();
@@ -178,7 +178,7 @@ function http_rangeRequest($fh, $size, $mime)
                 $end = (int)$p[1];
                 if (!$end) $end = $size - 1;
                 if ($start > $end || $start > $size || $end > $size) {
-                    header('HTTP/1.1 416 Requested Range Not Satisfiable');
+                    http_status(416);
                     echo 'Bad Range Request!';
                     exit;
                 }
@@ -193,7 +193,7 @@ function http_rangeRequest($fh, $size, $mime)
     if (!$isrange) {
         header("Content-Type: $mime", true);
     } else {
-        header('HTTP/1.1 206 Partial Content');
+        http_status(206);
         if ($parts == 1) {
             header("Content-Type: $mime", true);
         } else {
@@ -348,7 +348,10 @@ function http_status($code = 200, $text = '')
 {
     global $INPUT;
 
+    // reason phrases as known to PHP itself, see main/http_status_codes.h
     static $stati = [
+        100 => 'Continue',
+        101 => 'Switching Protocols',
         200 => 'OK',
         201 => 'Created',
         202 => 'Accepted',
@@ -359,11 +362,14 @@ function http_status($code = 200, $text = '')
         300 => 'Multiple Choices',
         301 => 'Moved Permanently',
         302 => 'Found',
+        303 => 'See Other',
         304 => 'Not Modified',
         305 => 'Use Proxy',
         307 => 'Temporary Redirect',
+        308 => 'Permanent Redirect',
         400 => 'Bad Request',
         401 => 'Unauthorized',
+        402 => 'Payment Required',
         403 => 'Forbidden',
         404 => 'Not Found',
         405 => 'Method Not Allowed',
@@ -379,25 +385,32 @@ function http_status($code = 200, $text = '')
         415 => 'Unsupported Media Type',
         416 => 'Requested Range Not Satisfiable',
         417 => 'Expectation Failed',
+        426 => 'Upgrade Required',
+        428 => 'Precondition Required',
+        429 => 'Too Many Requests',
+        431 => 'Request Header Fields Too Large',
+        451 => 'Unavailable For Legal Reasons',
         500 => 'Internal Server Error',
         501 => 'Not Implemented',
         502 => 'Bad Gateway',
         503 => 'Service Unavailable',
         504 => 'Gateway Timeout',
-        505 => 'HTTP Version Not Supported'
+        505 => 'HTTP Version Not Supported',
+        506 => 'Variant Also Negotiates',
+        511 => 'Network Authentication Required'
     ];
 
     if ($text == '' && isset($stati[$code])) {
         $text = $stati[$code];
     }
 
-    $server_protocol = $INPUT->server->str('SERVER_PROTOCOL', false);
-
-    if (str_starts_with(PHP_SAPI, 'cgi') || defined('SIMPLE_TEST')) {
-        header("Status: {$code} {$text}", true);
-    } elseif ($server_protocol == 'HTTP/1.1' || $server_protocol == 'HTTP/1.0') {
-        header($server_protocol . " {$code} {$text}", true, $code);
-    } else {
-        header("HTTP/1.1 {$code} {$text}", true, $code);
+    // matches the cgi, cgi-fcgi and fpm-fcgi SAPIs
+    if (str_contains(PHP_SAPI, 'cgi') || defined('SIMPLE_TEST')) {
+        header("Status: {$code} {$text}", true, $code);
+        return;
     }
+
+    $protocol = $INPUT->server->str('SERVER_PROTOCOL');
+    if ($protocol != 'HTTP/1.0') $protocol = 'HTTP/1.1';
+    header("{$protocol} {$code} {$text}", true, $code);
 }
