@@ -51,6 +51,7 @@ $lang['start']                 = 'Startsidens navn (benyttes som startside i all
 $lang['lang']                  = 'Sprog';
 $lang['template']              = 'Tema';
 $lang['syntax_o_dw']           = 'Kun DokuWiki';
+$lang['syntax_o_dw+md']        = 'Begge (DokuWiki foretrækkes)';
 $lang['tagline']               = 'Tagline (hvis tema understøtter det)';
 $lang['sidebar']               = 'Sidepanelet sidenavn (hvis temaet understøtter det). Lad være blankt for at deaktivere sidepanelet.';
 $lang['license']               = 'Under hvilken licens skal dit indhold frigives?';
