@@ -127,11 +127,6 @@ $lang['js']['media_done_btn']  = 'Færdig';
 $lang['js']['media_drop']      = 'Træk filer hertil for at overføre';
 $lang['js']['media_cancel']    = 'fjern';
 $lang['js']['media_overwrt']   = 'Overskriv eksisterende filer';
-$lang['js']['data_insecure']   = 'ADVARSEL: Det virker til at din data-mappe (data directory) ikke er ordentligt sikret. Læs venligst omkring <ahref="https://www.dokuwiki.org/security#web_access_security">Web Access Security in DokuWiki</a>.';
-$lang['js']['size_larger']     = 'Forstør inputfelt';
-$lang['js']['size_smaller']    = 'Formindsk inputfelt';
-$lang['js']['size_wrap']       = 'Slå linjeombrydning til/fra';
-$lang['js']['clipboard_button'] = 'Kopier';
 $lang['js']['clipboard_success'] = 'Kopieret!';
 $lang['js']['clipboard_error'] = 'Kopiering fejlede';
 $lang['search_exact_match']    = 'Præcist match';
@@ -166,7 +161,6 @@ $lang['profdeleted']           = 'Din brugerkonto er blevet slettet fra denne wi
 $lang['profconfdelete']        = 'Jeg ønsker at slette min brugerkonto fra denne wiki. <br/> Denne handling kan ikke fortrydes.';
 $lang['profconfdeletemissing'] = 'Afkrydsningsfelt til bekræftelse er ikke markeret';
 $lang['proffail']              = 'Brugerprofilen blev ikke opdateret.';
-$lang['proftokengenerate']     = 'Nulstil Token';
 $lang['pwdforget']             = 'Har du glemt din adgangskode? Få en ny';
 $lang['resendna']              = 'Denne wiki understøtter ikke udsendelse af ny adgangskode.';
 $lang['resendpwd']             = 'Vælg en ny adgangskode for';
@@ -236,7 +230,6 @@ $lang['created']               = 'oprettet';
 $lang['restored']              = 'gammel revision gendannet (%s)';
 $lang['external_edit']         = 'ekstern redigering';
 $lang['summary']               = 'Resumé af ændrigner';
-$lang['unknowndate']           = 'Ukendt dato';
 $lang['noflash']               = 'Du skal installere <a href="http://get.adobe.com/flashplayer">Adobe Flash Player</a> for at kunne se dette indhold.';
 $lang['download']              = 'Hent kodestykke';
 $lang['tools']                 = 'Værktøjer';
@@ -384,4 +377,3 @@ $lang['page_nonexist_rev']     = 'Siden blev ikke fundet ved %s. Den blev efterf
 $lang['unable_to_parse_date']  = 'Kan ikke fortolke parameteren "%s".';
 $lang['email_signature_text']  = 'Denne e-mail blev genereret af DokuWiki på
 @DOKUWIKIURL@';
-$lang['log_file_failed_to_open'] = 'Kunne ikke åbne log filen.';
