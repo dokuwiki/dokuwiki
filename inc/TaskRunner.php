@@ -212,9 +212,8 @@ class TaskRunner
             });
             if (!page_exists($ID)) {
                 return $indexer->deletePage($ID);
-            } else {
-                return $indexer->addPage($ID);
             }
+            return $indexer->addPage($ID);
         } catch (SearchException $e) {
             $msg = $e::class . ' : ' . $e->getMessage();
             echo $msg;

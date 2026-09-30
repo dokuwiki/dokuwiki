@@ -29,7 +29,7 @@ class PhpString
 
         $suflen = strlen($suffix);
         if ($suflen && str_ends_with($path, $suffix)) {
-            $path = substr($path, 0, -$suflen);
+            return substr($path, 0, -$suflen);
         }
 
         return $path;

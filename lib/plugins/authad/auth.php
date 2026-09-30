@@ -207,7 +207,9 @@ class auth_plugin_authad extends AuthPlugin
         global $lang;
         global $ID;
         global $INPUT;
-        if (!is_string($user) || $user == '') return false;
+        if (!is_string($user) && !is_int($user)) return false;
+        $user = (string) $user;
+        if ($user == '') return false;
         $adldap = $this->initAdLdap($this->getUserDomain($user));
         if (!$adldap) return false;
 
@@ -346,7 +348,7 @@ class auth_plugin_authad extends AuthPlugin
         }
 
         // reattach domain
-        if ($domain) $user = "$user@$domain";
+        if ($domain) return "$user@$domain";
         return $user;
     }
 

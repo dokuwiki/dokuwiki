@@ -251,8 +251,6 @@ abstract class AbstractBuilder implements \Stringable
 
     /**
      * "prints" the tree
-     *
-     * @return array
      */
     public function __toString(): string
     {

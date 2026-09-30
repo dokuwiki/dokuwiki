@@ -257,9 +257,8 @@ abstract class ChangeLog
                 if ($nl > 0 && $tail <= $nl) {
                     $finger = max($finger - $this->chunk_size, 0);
                     continue;
-                } else {
-                    $finger = $nl;
                 }
+                $finger = $nl;
 
                 // read chunk
                 $chunk = '';
@@ -377,7 +376,7 @@ abstract class ChangeLog
             //true when $rev is found, but not the wanted follow-up.
             $checkOtherChunk = $fp
                 && ($info['date'] == $rev || ($revCounter > 0 && !$relativeRev))
-                && (!($tail == $eof && $direction > 0) && !($head == 0 && $direction < 0));
+                && (($tail != $eof || $direction <= 0) && ($head != 0 || $direction >= 0));
 
             if ($checkOtherChunk) {
                 [$lines, $head, $tail] = $this->readAdjacentChunk($fp, $head, $tail, $direction);
@@ -477,12 +476,12 @@ abstract class ChangeLog
         //requested date_at(timestamp) younger or equal then modified_time($this->id) => load current
         if (file_exists($fileLastMod) && $date_at >= @filemtime($fileLastMod)) {
             return '';
-        } elseif ($rev = $this->getRelativeRevision($date_at + 1, -1)) {
+        }
+        if ($rev = $this->getRelativeRevision($date_at + 1, -1)) {
             //+1 to get also the requested date revision
             return $rev;
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -1000,7 +999,7 @@ abstract class ChangeLog
     public function traceCurrentRevision($rev)
     {
         if ($rev > $this->lastRevision()) {
-            $rev = $this->currentRevision();
+            return $this->currentRevision();
         }
         return $rev;
     }

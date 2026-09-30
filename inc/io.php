@@ -94,9 +94,8 @@ function _io_readWikiPage_action($data)
 {
     if (is_array($data) && is_array($data[0]) && count($data[0]) === 2) {
         return io_readFile(...$data[0]);
-    } else {
-        return ''; //callback error
     }
+    return ''; //callback error
 }
 
 /**
@@ -132,9 +131,8 @@ function io_readFile($file, $clean = true)
     if ($ret === null) return false;
     if ($ret !== false && $clean) {
         return cleanText($ret);
-    } else {
-        return $ret;
     }
+    return $ret;
 }
 
 /**
@@ -285,9 +283,8 @@ function _io_writeWikiPage_action($data)
             @touch($data[0][0], $data[3]);
         }
         return $ok;
-    } else {
-        return false; //callback error
     }
+    return false; //callback error
 }
 
 /**
@@ -550,7 +547,7 @@ function io_createNamespace($id, $ns_type = 'pages')
     $ns_stack = explode(':', $id);
     $ns = $id;
     $tmp = dirname($file = call_user_func($types[$ns_type], $ns));
-    while (!@is_dir($tmp) && !(file_exists($tmp) && !is_dir($tmp))) {
+    while (!@is_dir($tmp) && (!file_exists($tmp) || is_dir($tmp))) {
         array_pop($ns_stack);
         $ns = implode(':', $ns_stack);
         if (strlen($ns) == 0) {
@@ -653,7 +650,9 @@ function io_rmdir($path, $removefiles = false)
         }
         // remove self
         return @rmdir($path);
-    } elseif ($removefiles) {
+    }
+
+    if ($removefiles) {
         return @unlink($path);
     }
     return false;
@@ -678,9 +677,8 @@ function io_mktmpdir()
 
     if (io_mkdir_p($tmpdir)) {
         return $tmpdir;
-    } else {
-        return false;
     }
+    return false;
 }
 
 /**

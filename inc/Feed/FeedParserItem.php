@@ -18,7 +18,8 @@ class FeedParserItem extends Item
     {
         if (!$date_format) {
             return $this->sanitize($this->get_date(''), SimplePie::CONSTRUCT_TEXT);
-        } elseif (($date = $this->get_date('U')) !== null && $date !== false) {
+        }
+        if (($date = $this->get_date('U')) !== null && $date !== false) {
             return strftime($date_format, $date);
         }
 

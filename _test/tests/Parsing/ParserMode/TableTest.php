@@ -25,6 +25,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' Row 0 Col 1    ']],
@@ -47,6 +48,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[121]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -65,6 +67,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' Row 0 Col 1    ']],
@@ -87,6 +90,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[121]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -109,8 +113,10 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[0, 1, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[7]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -134,6 +140,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 1, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tableheader_open',[1,null,1]],
             ['cdata',[' X ']],
@@ -145,6 +152,7 @@ def');
             ['cdata',[' Z ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[19]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -183,6 +191,7 @@ def');
             ['tableheader_close',[]],
             ['tablerow_close',[]],
             ['tablethead_close',[]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' x ']],
@@ -194,6 +203,7 @@ def');
             ['cdata',[' z ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[33]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -218,6 +228,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 1, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tableheader_open',[1,null,1]],
             ['cdata',[' X ']],
@@ -229,6 +240,7 @@ def');
             ['cdata',[' Z ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[19]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -279,6 +291,7 @@ def');
             ['tableheader_close',[]],
             ['tablerow_close',[]],
             ['tablethead_close',[]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' A ']],
@@ -290,6 +303,7 @@ def');
             ['cdata',[' C ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[53]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -314,6 +328,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 1, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'right',1]],
             ['cdata',['  X ']],
@@ -325,6 +340,7 @@ def');
             ['cdata',['  Z  ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[23]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -350,6 +366,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 3, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[2,'right',1]],
             ['cdata',['  d ']],
@@ -368,6 +385,7 @@ def');
             ['tablerow_close',[]],
             ['tablerow_open',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[31]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -392,6 +410,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 3, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,2]],
             ['cdata',[' a ']],
@@ -416,6 +435,7 @@ def');
             ['cdata',[':::f']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[51]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -440,6 +460,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[4, 3, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',['']],
@@ -474,6 +495,7 @@ def');
             ['tablecell_close',[]],
             ['tablerow_close',[]],
 
+            ['tabletbody_close',[]],
             ['table_close',[69]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -481,6 +503,97 @@ def');
             ['document_end',[]],
         ];
         $this->assertCalls($calls, $this->H->calls);
+    }
+
+    function testRowSpanAfterFormattingIsText() {
+        $this->P->addMode('table',new Table());
+        $this->P->addMode('strong',new Strong());
+        $this->P->parse('
+abc
+| a | b |
+| **c** ::: | d |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[2, 2, 6]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' a ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' b ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' ']],
+            ['strong_open',[]],
+            ['cdata',['c']],
+            ['strong_close',[]],
+            ['cdata',[' ::: ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' d ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[33]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
+    }
+
+    function testCellAlignmentWithMarkerAsText() {
+        $this->P->addMode('table',new Table());
+        $this->P->parse('
+abc
+|  a  |  b  |
+|  foo :::  |  d  |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[2, 2, 6]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  a  ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  b  ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  foo :::  ']],
+            ['tablecell_close',[]],
+            ['tablecell_open',[1,'center',1]],
+            ['cdata',['  d  ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[39]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
     }
 
     function testRowSpanTableHead() {
@@ -519,6 +632,7 @@ def');
             ['tableheader_close',[]],
             ['tablerow_close',[]],
             ['tablethead_close',[]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' A3 ']],
@@ -530,6 +644,7 @@ def');
             ['cdata',[' C3 ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[57]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -541,6 +656,9 @@ def');
 
     }
 
+    /**
+     * A cell spanning every row leaves no place for the head to end, so the table has no head
+     */
     function testRowSpanAcrossTableHeadBoundary() {
         $this->P->addMode('table',new Table());
         $this->P->parse('
@@ -557,12 +675,12 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 4, 6]],
-            ['tablethead_open',[]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tableheader_open',[1,null,1]],
             ['cdata',[' X1 ']],
             ['tableheader_close',[]],
-            ['tableheader_open',[1,null,2]],
+            ['tableheader_open',[1,null,4]],
             ['cdata',[' Y1 ']],
             ['tableheader_close',[]],
             ['tableheader_open',[1,null,1]],
@@ -577,13 +695,9 @@ def');
             ['cdata',[' Z2 ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
-            ['tablethead_close',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' A3 ']],
-            ['tablecell_close',[]],
-            ['tablecell_open',[1,null,2]],
-            ['cdata',['']],
             ['tablecell_close',[]],
             ['tablecell_open',[1,null,1]],
             ['cdata',[' C3 ']],
@@ -597,7 +711,68 @@ def');
             ['cdata',[' C4 ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[76]],
+            ['p_open',[]],
+            ['cdata',['def']],
+            ['p_close',[]],
+            ['document_end',[]],
+        ];
+
+        $this->assertCalls($calls, $this->H->calls);
+
+    }
+
+    function testRowSpanShrinksTableHead() {
+        $this->P->addMode('table',new Table());
+        $this->P->parse('
+abc
+^ H1 ^ H2 ^ H3 ^
+^ A1 ^ B1 ^ C1 ^
+^ ::: ^ B2 | C2 |
+def');
+
+        $calls = [
+            ['document_start',[]],
+            ['p_open',[]],
+            ['cdata',["\n\nabc"]],
+            ['p_close',[]],
+            ['table_open',[3, 3, 6]],
+            ['tablethead_open',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H2 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' H3 ']],
+            ['tableheader_close',[]],
+            ['tablerow_close',[]],
+            ['tablethead_close',[]],
+            ['tabletbody_open',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,2]],
+            ['cdata',[' A1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' B1 ']],
+            ['tableheader_close',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' C1 ']],
+            ['tableheader_close',[]],
+            ['tablerow_close',[]],
+            ['tablerow_open',[]],
+            ['tableheader_open',[1,null,1]],
+            ['cdata',[' B2 ']],
+            ['tableheader_close',[]],
+            ['tablecell_open',[1,null,1]],
+            ['cdata',[' C2 ']],
+            ['tablecell_close',[]],
+            ['tablerow_close',[]],
+            ['tabletbody_close',[]],
+            ['table_close',[57]],
             ['p_open',[]],
             ['cdata',['def']],
             ['p_close',[]],
@@ -622,6 +797,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 1, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'right',1]],
             ['cdata',['  ']],
@@ -637,6 +813,7 @@ def');
             ['cdata',['  Z  ']],
             ['tableheader_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[27]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -662,6 +839,7 @@ def');
             ['cdata',["abc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' Row 0 Col 1    ']],
@@ -684,6 +862,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[121]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -709,6 +888,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' ']],
@@ -739,6 +919,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[129]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -764,6 +945,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' ']],
@@ -790,6 +972,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[155]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -813,6 +996,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' Row 0']],
@@ -837,6 +1021,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[123]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -863,6 +1048,7 @@ def');
             ['cdata',["\n\nabc"]],
             ['p_close',[]],
             ['table_open',[3, 2, 6]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' ']],
@@ -897,6 +1083,7 @@ def');
             ['cdata',[' Row 1 Col 3        ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[129]],
             ['p_open',[]],
             ['cdata',['def']],
@@ -913,11 +1100,13 @@ def');
         $calls = [
             ['document_start',[]],
             ['table_open',[1, 1, 2]],
+            ['tabletbody_open',[]],
             ['tablerow_open',[]],
             ['tablecell_open',[1,'left',1]],
             ['cdata',[' Row 0 Col 1    ']],
             ['tablecell_close',[]],
             ['tablerow_close',[]],
+            ['tabletbody_close',[]],
             ['table_close',[strlen($syntax)]],
             ['document_end',[]],
         ];
@@ -934,6 +1123,7 @@ def');
         $calls = [
             ['document_start',[]],
             ['table_open',[3, 2, 2]],
+            ['tabletbody_open',[]],
 
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
@@ -959,6 +1149,7 @@ def');
             ['tablecell_close',[]],
             ['tablerow_close',[]],
 
+            ['tabletbody_close',[]],
             ['table_close',[strlen($syntax)]],
             ['document_end',[]],
         ];
@@ -975,6 +1166,7 @@ def');
         $calls = [
             ['document_start',[]],
             ['table_open',[3, 2, 2]],
+            ['tabletbody_open',[]],
 
             ['tablerow_open',[]],
             ['tablecell_open',[1,null,1]],
@@ -1000,6 +1192,7 @@ def');
             ['tablecell_close',[]],
             ['tablerow_close',[]],
 
+            ['tabletbody_close',[]],
             ['table_close',[strlen($syntax)]],
             ['document_end',[]],
         ];

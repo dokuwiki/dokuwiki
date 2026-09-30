@@ -27,9 +27,12 @@ use Rector\CodingStyle\Rector\String_\SimplifyQuoteEscapeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Block\ReplaceBlockToItsStmtsRector;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveMixedDocblockOverruledByNativeTypeRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedConstructorParamRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
+use Rector\DeadCode\Rector\ClassMethod\RemoveUselessUnionReturnDocblockRector;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\RemoveDeadIfBlockRector;
 use Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector;
@@ -132,6 +135,9 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveUselessParamTagRector::class, // keep doc blocks
         RemoveUselessVarTagRector::class, // keep doc blocks
         RemoveUselessReturnTagRector::class, // keep doc blocks
+        RemoveUselessUnionReturnDocblockRector::class, // keep doc blocks
+        RemoveDuplicatedReturnSelfDocblockRector::class, // keep doc blocks
+        RemoveMixedDocblockOverruledByNativeTypeRector::class, // keep doc blocks
         ExplicitReturnNullRector::class, // we sometimes return void or string intentionally
         UseIdenticalOverEqualWithSameTypeRector::class, // probably a good idea, maybe later
         ReduceAlwaysFalseIfOrRector::class, // see rectorphp/rector#8916

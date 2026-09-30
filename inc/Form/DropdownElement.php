@@ -112,9 +112,8 @@ class DropdownElement extends InputElement
         if ($value === null) {
             if (isset($this->attributes['multiple'])) {
                 return $this->values;
-            } else {
-                return $this->values[0];
             }
+            return $this->values[0];
         }
 
         // setter

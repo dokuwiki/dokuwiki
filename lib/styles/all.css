@@ -67,6 +67,11 @@ em em.u {
     font-style: italic;
 }
 
+/* line numbers of highlighted code always count in decimal, even inside a numbered list */
+pre.code ol {
+    list-style-type: decimal;
+}
+
 img.icon.smiley {
     height: 1.2em;
 }

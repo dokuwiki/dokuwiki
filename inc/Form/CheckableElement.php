@@ -75,8 +75,7 @@ class CheckableElement extends InputElement
                 . $this->mainElementHTML() . DOKU_LF
                 . '<span>' . $this->label->val() . '</span>' . DOKU_LF
                 . '</label>';
-        } else {
-            return $this->mainElementHTML();
         }
+        return $this->mainElementHTML();
     }
 }

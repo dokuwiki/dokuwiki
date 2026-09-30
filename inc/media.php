@@ -105,10 +105,9 @@ function media_metasave($id, $data)
 
         msg($lang['metasaveok'], 1);
         return $id;
-    } else {
-        msg($lang['metasaveerr'], -1);
-        return false;
     }
+    msg($lang['metasaveerr'], -1);
+    return false;
 }
 
 /**
@@ -234,12 +233,10 @@ function media_inuse($id)
         $mediareferences = (new MetadataSearch())->mediause($id, true);
         if ($mediareferences === []) {
             return false;
-        } else {
-            return $mediareferences;
         }
-    } else {
-        return false;
+        return $mediareferences;
     }
+    return false;
 }
 
 /**
@@ -488,9 +485,11 @@ function media_save($file, $id, $ow, $auth, $move)
     $ok = media_contentcheck($file['name'], $file['mime']);
     if ($ok == -1) {
         return [sprintf($lang['uploadbadcontent'], '.' . $file['ext']), -1];
-    } elseif ($ok == -2) {
+    }
+    if ($ok == -2) {
         return [$lang['uploadspam'], -1];
-    } elseif ($ok == -3) {
+    }
+    if ($ok == -3) {
         return [$lang['uploadxss'], -1];
     }
 
@@ -520,9 +519,8 @@ function _media_upload_action($data)
     // fixme do further sanity tests of given data?
     if (is_array($data) && count($data) === 6) {
         return media_upload_finish($data[0], $data[1], $data[2], $data[3], $data[4], $data[5]);
-    } else {
-        return false; //callback error
     }
+    return false; //callback error
 }
 
 /**
@@ -585,9 +583,8 @@ function media_upload_finish($fn_tmp, $fn, $id, $imime, $overwrite, $move = 'mov
             addMediaLogEntry($new, $id, DOKU_CHANGE_TYPE_CREATE, $lang['created'], '', null, $sizechange);
         }
         return $id;
-    } else {
-        return [$lang['uploadfail'], -1];
     }
+    return [$lang['uploadfail'], -1];
 }
 
 /**
@@ -927,13 +924,12 @@ function _media_get_display_param($param, $values)
     if (in_array($INPUT->str($param), $values)) {
         // FIXME: Set cookie
         return $INPUT->str($param);
-    } else {
-        $val = get_doku_pref($param, $values['default']);
-        if (!in_array($val, $values)) {
-            $val = $values['default'];
-        }
-        return $val;
     }
+    $val = get_doku_pref($param, $values['default']);
+    if (!in_array($val, $values)) {
+        return $values['default'];
+    }
+    return $val;
 }
 
 /**
@@ -1562,7 +1558,7 @@ function media_getuploadsize()
 
     if ($post && ($post < $okay || $okay === 0)) $okay = $post;
     if ($suho && ($suho < $okay || $okay == 0)) $okay = $suho;
-    if ($upld && ($upld < $okay || $okay == 0)) $okay = $upld;
+    if ($upld && ($upld < $okay || $okay == 0)) return $upld;
 
     return $okay;
 }
@@ -1861,9 +1857,8 @@ function media_get_from_URL($url, $ext, $cache)
     ) {
         if (media_image_download($url, $local)) {
             return $local;
-        } else {
-            return false;
         }
+        return false;
     }
 
     //if cache exists use it else

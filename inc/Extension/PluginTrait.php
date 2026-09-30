@@ -192,11 +192,7 @@ trait PluginTrait
             $this->loadConfig();
         }
 
-        if (isset($this->conf[$setting])) {
-            return $this->conf[$setting];
-        } else {
-            return $notset;
-        }
+        return $this->conf[$setting] ?? $notset;
     }
 
     /**

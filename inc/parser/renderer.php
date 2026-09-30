@@ -888,10 +888,9 @@ abstract class Doku_Renderer extends Plugin
     {
         if ($create) {
             return sectionID($title, $this->headers);
-        } else {
-            $check = false;
-            return sectionID($title, $check);
         }
+        $check = false;
+        return sectionID($title, $check);
     }
 
     /**

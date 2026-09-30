@@ -176,7 +176,7 @@ class Extension implements \Stringable
         } else {
             $id = $this->base;
         }
-        if ($wrap) $id = "`$id`";
+        if ($wrap) return "`$id`";
         return $id;
     }
 
@@ -329,19 +329,18 @@ class Extension implements \Stringable
         if ($this->isInstalled()) {
             if ($this->isTemplate()) {
                 return ['Template'];
-            } else {
-                $types = [];
-                foreach (self::COMPONENT_TYPES as $type) {
-                    $check = strtolower($type);
-                    if (
-                        file_exists($this->getInstallDir() . '/' . $check . '.php') ||
-                        is_dir($this->getInstallDir() . '/' . $check)
-                    ) {
-                        $types[] = $type;
-                    }
-                }
-                return $types;
             }
+            $types = [];
+            foreach (self::COMPONENT_TYPES as $type) {
+                $check = strtolower($type);
+                if (
+                    file_exists($this->getInstallDir() . '/' . $check . '.php') ||
+                    is_dir($this->getInstallDir() . '/' . $check)
+                ) {
+                    $types[] = $type;
+                }
+            }
+            return $types;
         }
         // still, here? use the remote info
         return $this->getTag('types', []);

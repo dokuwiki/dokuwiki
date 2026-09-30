@@ -153,9 +153,8 @@ class Logger
         // only log when any data available
         if (count($data['loglines'])) {
             return $this->writeLogLines($data['loglines'], $data['logfile']);
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

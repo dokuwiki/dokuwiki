@@ -546,7 +546,8 @@ function tpl_button($type, $return = false)
     $data = tpl_get_action($type);
     if ($data === false) {
         return false;
-    } elseif (!is_array($data)) {
+    }
+    if (!is_array($data)) {
         $out = sprintf($data, 'button');
     } else {
         /**
@@ -588,7 +589,8 @@ function tpl_actionlink($type, $pre = '', $suf = '', $inner = '', $return = fals
     $data = tpl_get_action($type);
     if ($data === false) {
         return false;
-    } elseif (!is_array($data)) {
+    }
+    if (!is_array($data)) {
         $out = sprintf($data, 'link');
     } else {
         /**
@@ -968,10 +970,9 @@ function tpl_pageinfo($ret = false)
         }
         if ($ret) {
             return $out;
-        } else {
-            echo $out;
-            return true;
         }
+        echo $out;
+        return true;
     }
     return false;
 }
@@ -1050,10 +1051,9 @@ function tpl_pagetitle($id = null, $ret = false)
 
     if ($ret) {
         return hsc($page_title);
-    } else {
-        echo hsc($page_title);
-        return true;
     }
+    echo hsc($page_title);
+    return true;
 }
 
 /**

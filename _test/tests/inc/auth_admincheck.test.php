@@ -216,4 +216,23 @@ class auth_admin_test extends DokuWikiTest
         $this->assertFalse(auth_ismanager('1000.0', null, true, true));
         $this->assertFalse(auth_ismanager('jill', ['1000'], true, true));
     }
+
+    function test_ismanager_integer_username()
+    {
+        $this->setSensitive();
+        global $conf;
+        $conf['manager'] = '';
+
+        // a numeric name used as an array key is coerced to int by PHP; such a
+        // username or group must still match its textual config entry
+        $conf['superuser'] = '1000,@1000';
+        $this->assertTrue(auth_ismanager(1000, null, true, true));
+        $this->assertTrue(auth_ismanager('jill', [1000], true, true));
+
+        // strict matching is preserved: an integer name must not collide with a
+        // numerically-equal but textually-different config entry
+        $conf['superuser'] = '1e3,@1e3';
+        $this->assertFalse(auth_ismanager(1000, null, true, true));
+        $this->assertFalse(auth_ismanager('jill', [1000], true, true));
+    }
 }

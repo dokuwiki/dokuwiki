@@ -142,10 +142,9 @@ class auth_plugin_authpdo extends AuthPlugin
             // hashed password
             $passhash = new PassHash();
             return $passhash->verify_hash($pass, $userdata['hash']);
-        } else {
-            // clear text password in the database O_o
-            return ($pass === $userdata['clear']);
         }
+        // clear text password in the database O_o
+        return ($pass === $userdata['clear']);
     }
 
     /**
@@ -164,7 +163,8 @@ class auth_plugin_authpdo extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
-        if (!is_string($user)) return false;
+        if (!is_string($user) && !is_int($user)) return false;
+        $user = (string) $user;
         $data = $this->selectUser($user);
         if ($data == false) return false;
 
@@ -459,9 +459,8 @@ class auth_plugin_authpdo extends AuthPlugin
 
         if (!$limit) {
             return array_splice($groups, $start);
-        } else {
-            return array_splice($groups, $start, $limit);
         }
+        return array_splice($groups, $start, $limit);
     }
 
     /**
@@ -783,7 +782,7 @@ class auth_plugin_authpdo extends AuthPlugin
             }
             $sql = str_replace($key, $val, $sql);
         }
-        if ($htmlescape) $sql = hsc($sql);
+        if ($htmlescape) return hsc($sql);
         return $sql;
     }
 }

@@ -46,33 +46,31 @@
         },
         {
             "name": "geshi/geshi",
-            "version": "dev-master",
-            "version_normalized": "dev-master",
+            "version": "dev-dokuwiki",
+            "version_normalized": "dev-dokuwiki",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c"
+                "url": "https://github.com/dokudeps/geshi-1.0.git",
+                "reference": "ddbd94d3b8267c88c8d880c7a8244cda81414ff1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/17ff9b22ac6695efa6ab6fbcf0607263f080468c",
-                "reference": "17ff9b22ac6695efa6ab6fbcf0607263f080468c",
+                "url": "https://api.github.com/repos/dokudeps/geshi-1.0/zipball/ddbd94d3b8267c88c8d880c7a8244cda81414ff1",
+                "reference": "ddbd94d3b8267c88c8d880c7a8244cda81414ff1",
                 "shasum": ""
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.2"
             },
-            "time": "2024-03-17T14:59:35+00:00",
-            "default-branch": true,
+            "time": "2026-09-06T19:27:56+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "classmap": [
                     "src/geshi/",
                     "src/geshi.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -89,8 +87,7 @@
             "support": {
                 "forum": "https://lists.sourceforge.net/lists/listinfo/geshi-users",
                 "irc": "irc://irc.freenode.org/geshi",
-                "issues": "https://sourceforge.net/p/geshi/feature-requests/",
-                "source": "https://github.com/GeSHi/geshi-1.0/tree/master"
+                "issues": "https://sourceforge.net/p/geshi/feature-requests/"
             },
             "install-path": "../geshi/geshi"
         },
@@ -384,17 +381,17 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.55",
-            "version_normalized": "3.0.55.0",
+            "version": "3.0.56",
+            "version_normalized": "3.0.56.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af"
+                "reference": "7adbbe38cde25e2df2116dbf2673c407e24fa305"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/db9744e6d47e742b1f974e965ad49bdd041105af",
-                "reference": "db9744e6d47e742b1f974e965ad49bdd041105af",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/7adbbe38cde25e2df2116dbf2673c407e24fa305",
+                "reference": "7adbbe38cde25e2df2116dbf2673c407e24fa305",
                 "shasum": ""
             },
             "require": {
@@ -412,7 +409,7 @@
                 "ext-mcrypt": "Install the Mcrypt extension in order to speed up a few other cryptographic operations.",
                 "ext-openssl": "Install the OpenSSL extension in order to speed up a wide variety of cryptographic operations."
             },
-            "time": "2026-06-14T23:24:10+00:00",
+            "time": "2026-08-03T04:36:50+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -477,7 +474,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.55"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.56"
             },
             "funding": [
                 {
@@ -645,17 +642,17 @@
         },
         {
             "name": "splitbrain/php-archive",
-            "version": "1.4.2",
-            "version_normalized": "1.4.2.0",
+            "version": "1.5.1",
+            "version_normalized": "1.5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/php-archive.git",
-                "reference": "8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60"
+                "reference": "0d8801eaac5342b26ff1776089d4a124117b652c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60",
-                "reference": "8fc0df6cc2bf5ccd79352ac2f97a6dd4c2a1fc60",
+                "url": "https://api.github.com/repos/splitbrain/php-archive/zipball/0d8801eaac5342b26ff1776089d4a124117b652c",
+                "reference": "0d8801eaac5342b26ff1776089d4a124117b652c",
                 "shasum": ""
             },
             "require": {
@@ -673,7 +670,7 @@
                 "ext-mbstring": "Can be used alternatively for handling filename encoding",
                 "ext-zlib": "For zlib compression"
             },
-            "time": "2026-05-13T09:06:51+00:00",
+            "time": "2026-08-19T11:50:37+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -702,7 +699,7 @@
             ],
             "support": {
                 "issues": "https://github.com/splitbrain/php-archive/issues",
-                "source": "https://github.com/splitbrain/php-archive/tree/1.4.2"
+                "source": "https://github.com/splitbrain/php-archive/tree/1.5.1"
             },
             "funding": [
                 {
@@ -825,17 +822,17 @@
         },
         {
             "name": "splitbrain/slika",
-            "version": "1.2.1",
-            "version_normalized": "1.2.1.0",
+            "version": "1.3.0",
+            "version_normalized": "1.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitbrain/slika.git",
-                "reference": "b40146f15a95cb820b60a3475a7d240cc279aeab"
+                "reference": "0770fec1b3beeb68beea1636e532eea96b72c655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitbrain/slika/zipball/b40146f15a95cb820b60a3475a7d240cc279aeab",
-                "reference": "b40146f15a95cb820b60a3475a7d240cc279aeab",
+                "url": "https://api.github.com/repos/splitbrain/slika/zipball/0770fec1b3beeb68beea1636e532eea96b72c655",
+                "reference": "0770fec1b3beeb68beea1636e532eea96b72c655",
                 "shasum": ""
             },
             "require": {
@@ -847,7 +844,7 @@
             "suggest": {
                 "ext-gd": "PHP's builtin image manipulation library. Alternatively use an installation of ImageMagick"
             },
-            "time": "2026-07-08T11:57:58+00:00",
+            "time": "2026-08-04T13:44:58+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -869,7 +866,7 @@
             "description": "Simple image resizing",
             "support": {
                 "issues": "https://github.com/splitbrain/slika/issues",
-                "source": "https://github.com/splitbrain/slika/tree/1.2.1"
+                "source": "https://github.com/splitbrain/slika/tree/1.3.0"
             },
             "install-path": "../splitbrain/slika"
         }

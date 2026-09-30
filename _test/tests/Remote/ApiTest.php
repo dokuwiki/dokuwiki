@@ -294,6 +294,21 @@ class ApiTest extends \DokuWikiTest
         $remoteApi->call('plugin.testplugin.method2', array());
     }
 
+    public function testUnexpectedException()
+    {
+        global $conf;
+        $conf['remote'] = 1;
+        $conf['remoteuser'] = '';
+        $remoteApi = new Api();
+        $remoteApi->getCoreMethods(new ApiCore());
+
+        $this->expectLogMessage('RuntimeException: kaboom');
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionCode(-32603);
+        $this->expectExceptionMessage('kaboom');
+        $remoteApi->call('wiki.throwingMethod');
+    }
+
     public function testNotExistingCall()
     {
         global $conf;
@@ -301,7 +316,7 @@ class ApiTest extends \DokuWikiTest
         $conf['remoteuser'] = '';
 
         $this->expectException(RemoteException::class);
-        $this->expectExceptionCode(-32603);
+        $this->expectExceptionCode(-32601);
 
         $remoteApi = new Api();
         $remoteApi->call('does.not exist'); // unknown method type

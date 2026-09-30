@@ -25,8 +25,8 @@
  */
 $lang['name']                  = 'Retroalimentación de popularidad (puede tardar en cargar)';
 $lang['submit']                = 'Enviar datos';
-$lang['autosubmit']            = 'Enviar automáticamente datos una vez al mes';
-$lang['submissionFailed']      = 'Los datos no se pudo enviar debido al error siguiente:';
-$lang['submitDirectly']        = 'Puede enviar los datos de forma manual mediante la presentación de la siguiente forma.';
-$lang['autosubmitError']       = 'El último auto no pudo presentar, debido al error siguiente:';
+$lang['autosubmit']            = 'Enviar datos automáticamente una vez al mes';
+$lang['submissionFailed']      = 'No se han podido enviar los datos debido al error siguiente:';
+$lang['submitDirectly']        = 'Puedes enviar los datos manualmente enviando el siguiente formulario.';
+$lang['autosubmitError']       = 'El último envío automático ha fallado, debido al error siguiente:';
 $lang['lastSent']              = 'Los datos se han enviado';

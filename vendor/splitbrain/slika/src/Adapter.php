@@ -32,7 +32,7 @@ abstract class Adapter
         }
 
         $this->imagepath = $imagepath;
-        $this->options = array_merge(Slika::DEFAULT_OPTIONS, $options);
+        $this->options = Slika::mergeOptions($options);
     }
 
     /**

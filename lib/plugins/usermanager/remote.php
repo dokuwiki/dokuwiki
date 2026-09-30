@@ -46,7 +46,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!$auth->canDo('addUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do addUser', $auth->getPluginName()),
-                404
+                114
             );
         }
 
@@ -54,9 +54,9 @@ class remote_plugin_usermanager extends RemotePlugin
         $name = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $name));
         $mail = trim(preg_replace('/[\x00-\x1f:<>&%,;]+/', '', $mail));
 
-        if ($user === '') throw new RemoteException('empty or invalid user', 401);
-        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!MailUtils::isValid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if ($user === '') throw new RemoteException('Empty or invalid user given', 401);
+        if ($name === '') throw new RemoteException('Empty or invalid user name given', 402);
+        if (!MailUtils::isValid($mail)) throw new RemoteException('Empty or invalid mail address given', 403);
 
         if ((string)$password === '') {
             try {
@@ -100,7 +100,7 @@ class remote_plugin_usermanager extends RemotePlugin
         if (!$auth->canDo('delUser')) {
             throw new AccessDeniedException(
                 sprintf('Authentication backend %s can\'t do delUser', $auth->getPluginName()),
-                404
+                114
             );
         }
 

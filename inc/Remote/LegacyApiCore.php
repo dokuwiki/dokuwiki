@@ -321,9 +321,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->appendPage($id, $text, $params['sum'] ?? '', $params['minor'] ?? false);
         if ($ok === true) {
             return cleanID($id);
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**
@@ -353,9 +352,9 @@ class LegacyApiCore extends ApiCore
 
         $notify = (bool)$userStruct['notify'] ?? false;
 
-        if ($user === '') throw new RemoteException('empty or invalid user', 401);
-        if ($name === '') throw new RemoteException('empty or invalid user name', 402);
-        if (!MailUtils::isValid($mail)) throw new RemoteException('empty or invalid mail address', 403);
+        if ($user === '') throw new RemoteException('Empty or invalid user given', 401);
+        if ($name === '') throw new RemoteException('Empty or invalid user name given', 402);
+        if (!MailUtils::isValid($mail)) throw new RemoteException('Empty or invalid mail address given', 403);
 
         if ((string)$password === '') {
             $password = auth_pwgen($user);
@@ -402,9 +401,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->saveMedia($id, base64_encode($file), $params['ow'] ?? false);
         if ($ok === true) {
             return cleanID($id);
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**
@@ -415,9 +413,8 @@ class LegacyApiCore extends ApiCore
         $ok = $this->deleteMedia($id);
         if ($ok === true) {
             return 0;
-        } else {
-            return $ok;
         }
+        return $ok;
     }
 
     /**

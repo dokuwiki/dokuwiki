@@ -93,7 +93,8 @@ class auth_plugin_authplain extends AuthPlugin
      */
     public function getUserData($user, $requireGroups = true)
     {
-        if (!is_string($user)) return false;
+        if (!is_string($user) && !is_int($user)) return false;
+        $user = (string) $user;
         if ($this->users === null) $this->loadUserData();
         return $this->users[$user] ?? false;
     }
@@ -297,7 +298,8 @@ class auth_plugin_authplain extends AuthPlugin
         $this->constructPattern($filter);
 
         foreach ($this->users as $user => $info) {
-            $count += $this->filter($user, $info);
+            // numeric names are coerced to int array keys, cast back to string
+            $count += $this->filter((string) $user, $info);
         }
 
         return $count;
@@ -326,6 +328,8 @@ class auth_plugin_authplain extends AuthPlugin
         $this->constructPattern($filter);
 
         foreach ($this->users as $user => $info) {
+            // numeric names are coerced to int array keys, cast back to string
+            $user = (string) $user;
             if ($this->filter($user, $info)) {
                 if ($i >= $start) {
                     $out[$user] = $info;

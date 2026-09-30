@@ -145,6 +145,30 @@ class GfmQuoteTest extends ParserTestBase
         $this->assertCount(2, $closes, 'two levels of quote_close expected');
     }
 
+    public function testDwContentAfterNestedQuote()
+    {
+        // The inner markers stay inside the nest, so Block sees one block and
+        // leaves every segment unwrapped.
+        $this->setSyntax('dw');
+        $this->P->addMode('gfm_quote', new GfmQuote());
+        $this->P->parse(">foo\n>>bar\n>baz\n");
+
+        $expected = [
+            ['document_start', []],
+            ['quote_open', []],
+            ['nest', [[
+                ['cdata', ['foo']],
+                ['quote_open', []],
+                ['cdata', ['bar']],
+                ['quote_close', []],
+                ['cdata', ['baz']],
+            ]]],
+            ['quote_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($expected, $this->H->calls);
+    }
+
     public function testDwNoLazyContinuation()
     {
         // GfmQuote does not implement lazy continuation: every quote
@@ -239,6 +263,36 @@ class GfmQuoteTest extends ParserTestBase
         $pCloses = array_filter($names, static fn($n) => $n === 'p_close');
         $this->assertCount(2, $pOpens, 'two paragraphs inside one blockquote');
         $this->assertCount(2, $pCloses);
+    }
+
+    public function testMdContentAfterNestedQuote()
+    {
+        // Each segment carries the paragraph its own sub-parse produced. Block
+        // copies the nest verbatim, so those are the only paragraphs.
+        $this->setSyntax('md');
+        $this->P->addMode('gfm_quote', new GfmQuote());
+        $this->P->parse(">foo\n>>bar\n>baz\n");
+
+        $expected = [
+            ['document_start', []],
+            ['quote_open', []],
+            ['nest', [[
+                ['p_open', []],
+                ['cdata', ['foo']],
+                ['p_close', []],
+                ['quote_open', []],
+                ['p_open', []],
+                ['cdata', ['bar']],
+                ['p_close', []],
+                ['quote_close', []],
+                ['p_open', []],
+                ['cdata', ['baz']],
+                ['p_close', []],
+            ]]],
+            ['quote_close', []],
+            ['document_end', []],
+        ];
+        $this->assertCalls($expected, $this->H->calls);
     }
 
     // ----- Handoff from preceding block modes ----------------------------

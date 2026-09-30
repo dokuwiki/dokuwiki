@@ -720,10 +720,10 @@ class Doku_Renderer_metadata extends Doku_Renderer
         if (is_array($title)) {
             if ($title['title']) {
                 return '[' . $title['title'] . ']';
-            } else {
-                return $default;
             }
-        } elseif (is_null($title) || trim($title) == '') {
+            return $default;
+        }
+        if (is_null($title) || trim($title) == '') {
             if (useHeading('content') && $id) {
                 $heading = p_get_first_heading($id, METADATA_DONT_RENDER);
                 if ($heading) {
@@ -731,9 +731,8 @@ class Doku_Renderer_metadata extends Doku_Renderer
                 }
             }
             return $default;
-        } else {
-            return $title;
         }
+        return $title;
     }
 
     /**

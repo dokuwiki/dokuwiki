@@ -6,7 +6,7 @@
  * @author smocap <smocap@gmail.com>
  * @author Domingo Redal <docxml@gmail.com>
  */
-$lang['menu']                  = 'Ajustes de plantilla';
+$lang['menu']                  = 'Ajustes de estilo de la plantilla';
 $lang['js']['loader']          = 'La vista previa se está cargando...<br />si esto no desaparece, es posible que tus valores sean incorrectos';
 $lang['js']['popup']           = 'Abrir como una ventana emergente';
 $lang['error']                 = 'Lo sentimos, esta plantilla no admite esta funcionalidad.';

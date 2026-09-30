@@ -321,7 +321,7 @@ class HTTPClient
                 if ($match[1] > $this->max_bodysize) {
                     if ($this->max_bodysize_abort)
                         throw new HTTPClientException('Reported content length exceeds allowed response size');
-                    else $this->error = 'Reported content length exceeds allowed response size';
+                    $this->error = 'Reported content length exceeds allowed response size';
                 }
             }
 
@@ -354,34 +354,32 @@ class HTTPClient
             if (in_array($this->status, [301, 302, 303, 307, 308])) {
                 if (empty($this->resp_headers['location'])) {
                     throw new HTTPClientException('Redirect but no Location Header found');
-                } elseif ($this->redirect_count == $this->max_redirect) {
+                }
+                if ($this->redirect_count == $this->max_redirect) {
                     throw new HTTPClientException('Maximum number of redirects exceeded');
-                } else {
-                    // close the connection because we don't handle content retrieval here
-                    // that's the easiest way to clean up the connection
-                    fclose($socket);
-                    unset(self::$connections[$connectionId]);
-
-                    $this->redirect_count++;
-                    $this->referer = $url;
-                    // handle non-RFC-compliant relative redirects
-                    if (!preg_match('/^http/i', $this->resp_headers['location'])) {
-                        if ($this->resp_headers['location'][0] != '/') {
-                            $this->resp_headers['location'] = $uri['scheme'] . '://' . $uri['host'] . ':' . $uriPort .
-                                dirname($path) . '/' . $this->resp_headers['location'];
-                        } else {
-                            $this->resp_headers['location'] = $uri['scheme'] . '://' . $uri['host'] . ':' . $uriPort .
-                                $this->resp_headers['location'];
-                        }
-                    }
-                    if ($this->status == 307 || $this->status == 308) {
-                        // perform redirected request, same method as before (required by RFC)
-                        return $this->sendRequest($this->resp_headers['location'], $unencodedData, $method);
+                }
+                // close the connection because we don't handle content retrieval here
+                // that's the easiest way to clean up the connection
+                fclose($socket);
+                unset(self::$connections[$connectionId]);
+                $this->redirect_count++;
+                $this->referer = $url;
+                // handle non-RFC-compliant relative redirects
+                if (!preg_match('/^http/i', $this->resp_headers['location'])) {
+                    if ($this->resp_headers['location'][0] != '/') {
+                        $this->resp_headers['location'] = $uri['scheme'] . '://' . $uri['host'] . ':' . $uriPort .
+                            dirname($path) . '/' . $this->resp_headers['location'];
                     } else {
-                        // perform redirected request, always via GET (required by RFC)
-                        return $this->sendRequest($this->resp_headers['location'], [], 'GET');
+                        $this->resp_headers['location'] = $uri['scheme'] . '://' . $uri['host'] . ':' . $uriPort .
+                            $this->resp_headers['location'];
                     }
                 }
+                if ($this->status == 307 || $this->status == 308) {
+                    // perform redirected request, same method as before (required by RFC)
+                    return $this->sendRequest($this->resp_headers['location'], $unencodedData, $method);
+                }
+                // perform redirected request, always via GET (required by RFC)
+                return $this->sendRequest($this->resp_headers['location'], [], 'GET');
             }
 
             // check if headers are as expected
@@ -462,9 +460,8 @@ class HTTPClient
                 if (strlen($r_body) > $this->max_bodysize) {
                     if ($this->max_bodysize_abort) {
                         throw new HTTPClientException('Allowed response size exceeded');
-                    } else {
-                        $this->error = 'Allowed response size exceeded';
                     }
+                    $this->error = 'Allowed response size exceeded';
                 }
             }
         } catch (HTTPClientException $err) {
@@ -822,7 +819,7 @@ class HTTPClient
             $headers .= "$key=$val; ";
         }
         $headers = substr($headers, 0, -2);
-        if ($headers) $headers = "Cookie: $headers" . HTTP_NL;
+        if ($headers) return "Cookie: $headers" . HTTP_NL;
         return $headers;
     }
 

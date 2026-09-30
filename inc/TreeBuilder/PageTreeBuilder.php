@@ -162,11 +162,9 @@ class PageTreeBuilder extends AbstractBuilder
             $ns = $id;
             $id = $this->getStartpage($id); // use the start page for the namespace
             $this->startpages[$id] = 1; // mark as seen
-            $node = new WikiStartpage($id, $title, $ns);
-        } else {
-            $node = new WikiNamespace($id, $title);
+            return new WikiStartpage($id, $title, $ns);
         }
-        return $node;
+        return new WikiNamespace($id, $title);
     }
 
     /**
@@ -245,7 +243,7 @@ class PageTreeBuilder extends AbstractBuilder
         $dir = wikiFN($namespace . ':xxx');
         $dir = substr($dir, strlen($base));
         $dir = dirname($dir); // remove the 'xxx' part
-        if ($dir === '.') $dir = ''; // dirname returns '.' for root namespace
+        if ($dir === '.') return ''; // dirname returns '.' for root namespace
         return $dir;
     }
 

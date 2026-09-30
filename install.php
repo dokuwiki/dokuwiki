@@ -138,7 +138,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div style="float: left; width: 58%;">
         <?php
         try {
-            if (!(check_functions() && check_permissions())) {
+            if (!check_functions() || !check_permissions()) {
                 echo '<p>' . $lang['i_problems'] . '</p>';
                 print_errors();
                 print_retry();

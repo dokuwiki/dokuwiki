@@ -175,7 +175,7 @@ class MailUtils
             // here is, where I don't agree with imap_8_bit,
             // please correct me, if I'm wrong,
             // or comment next line for RFC2045 conformance, if you like
-            if (!($bEmulate_imap_8bit && ($i == count($aLines) - 1))) {
+            if (!$bEmulate_imap_8bit || $i != count($aLines) - 1) {
                 if (($iLastChar == 0x09) || ($iLastChar == 0x20)) {
                     $sLine[$iLength - 1] = '=';
                     $sLine .= ($iLastChar == 0x09) ? '09' : '20';

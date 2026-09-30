@@ -68,10 +68,9 @@ trait PropertyDeprecationHelper
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
             throw new \RuntimeException("Cannot access non-public property $qualifiedName");
-        } else {
-            // Non-existing property. Try to behave like PHP would.
-            trigger_error("Undefined property: $qualifiedName", E_USER_NOTICE);
         }
+        // Non-existing property. Try to behave like PHP would.
+        trigger_error("Undefined property: $qualifiedName", E_USER_NOTICE);
         return null;
     }
 
@@ -88,10 +87,9 @@ trait PropertyDeprecationHelper
         if ($this->deprecationHelperGetPropertyOwner($name)) {
             // Someone tried to access a normal non-public property. Try to behave like PHP would.
             throw new \RuntimeException("Cannot access non-public property $qualifiedName");
-        } else {
-            // Non-existing property. Try to behave like PHP would.
-            $this->$name = $value;
         }
+        // Non-existing property. Try to behave like PHP would.
+        $this->$name = $value;
     }
 
     /**
@@ -123,7 +121,7 @@ trait PropertyDeprecationHelper
                 $classname = substr($obfuscatedProp, 1, -strlen($obfuscatedPropTail));
                 if ($classname === '*') {
                     // sanity; this shouldn't be possible as protected properties were handled earlier
-                    $classname = self::class;
+                    return self::class;
                 }
                 return $classname;
             }

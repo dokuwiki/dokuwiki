@@ -181,7 +181,7 @@ class RemoteApiTest extends DokuWikiTest
         $_SERVER['REMOTE_USER'] = 'admin';
 
         $this->expectException(AccessDeniedException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(114);
         $this->expectExceptionMessageMatches('/can\'t do addUser/');
         $this->remote->call('plugin.usermanager.createUser', $params);
     }
@@ -249,7 +249,7 @@ class RemoteApiTest extends DokuWikiTest
         $_SERVER['REMOTE_USER'] = 'admin';
 
         $this->expectException(AccessDeniedException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(114);
         $this->expectExceptionMessageMatches('/can\'t do delUser/');
         $this->remote->call('plugin.usermanager.deleteUser', ['user' => 'user1']);
     }

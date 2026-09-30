@@ -163,8 +163,7 @@ class InputElement extends Element
                 . '<span>' . hsc($this->label->val()) . '</span>' . DOKU_LF
                 . $this->mainElementHTML() . DOKU_LF
                 . '</label>';
-        } else {
-            return $this->mainElementHTML();
         }
+        return $this->mainElementHTML();
     }
 }

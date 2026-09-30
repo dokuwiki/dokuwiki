@@ -49,7 +49,7 @@ class TreeSort
     public static function sortByNsFirstThenId(AbstractNode $a, AbstractNode $b): int
     {
         $res = self::sortByNsFirst($a, $b);
-        if ($res === 0) $res = self::sortById($a, $b);
+        if ($res === 0) return self::sortById($a, $b);
         return $res;
     }
 
@@ -75,7 +75,7 @@ class TreeSort
     public static function sortByNsFirstThenTitle(AbstractNode $a, AbstractNode $b): int
     {
         $res = self::sortByNsFirst($a, $b);
-        if ($res === 0) $res = self::sortByTitle($a, $b);
+        if ($res === 0) return self::sortByTitle($a, $b);
         return $res;
     }
 
@@ -94,7 +94,8 @@ class TreeSort
         if ($isAaNs !== $isBaNs) {
             if ($isAaNs) {
                 return -1;
-            } elseif ($isBaNs) {
+            }
+            if ($isBaNs) {
                 return 1;
             }
         }
