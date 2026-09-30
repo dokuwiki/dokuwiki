@@ -38,14 +38,7 @@ class Notice
         $this->helper = plugin_load('helper', 'extension');
         $this->extension = $extension;
 
-        $this->checkSecurity();
-        $this->checkURLChange();
         $this->checkFolder();
-        $this->checkPHPVersion();
-        $this->checkDependencies();
-        $this->checkConflicts();
-        $this->checkUpdateMessage();
-        $this->checkPermissions();
         $this->checkUnusedAuth();
         $this->checkGit();
     }
@@ -56,6 +49,26 @@ class Notice
      * @return string[][] array of notices grouped by type
      */
     public static function list(Extension $extension): array
+    {
+        $self = new self($extension);
+
+        $self->checkSecurity();
+        $self->checkURLChange();
+        $self->checkPHPVersion();
+        $self->checkDependencies();
+        $self->checkConflicts();
+        $self->checkUpdateMessage();
+        $self->checkPermissions();
+
+        return $self->notices;
+    }
+
+    /**
+     * Get all local notices for the extension
+     *
+     * @return string[][] array of notices grouped by type
+     */
+    public static function listNoRemote(Extension $extension): array
     {
         $self = new self($extension);
         return $self->notices;
