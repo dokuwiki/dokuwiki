@@ -86,7 +86,7 @@ function auth_setup()
     // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
     $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
     if (preg_match('~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches)) {
-        $userpass = explode(':', base64_decode($matches[1]));
+        $userpass = explode(':', base64_decode($matches[1]), 2);
         [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']] = $userpass;
     }
 
