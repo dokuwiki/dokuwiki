@@ -79,7 +79,7 @@ class PluginCLI extends CLI
 
                 echo $tf->format(
                     [2, '30%', '*'],
-                    ['', $name, $info['desc']],
+                    ['', $name, $info['desc'] ?? ''],
                     ['', Colors::C_CYAN, '']
                 );
             }

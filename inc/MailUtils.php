@@ -44,14 +44,14 @@ class MailUtils
      * verbatim and is never run through the [at]/[dot]/[dash] substitution,
      * so dots and dashes inside body/subject values stay intact.
      *
-     * @param string $email raw email address, optionally followed by ?query
-     * @return string HTML-text-safe representation
+     * @param string|null $email raw email address, optionally followed by ?query
+     * @return string HTML-text-safe representation, empty for a null address
      */
-    public static function obfuscate(string $email): string
+    public static function obfuscate(?string $email): string
     {
         global $conf;
 
-        [$addr, $query] = sexplode('?', $email, 2);
+        [$addr, $query] = sexplode('?', $email ?? '', 2);
         $out = self::obfuscateAddress($addr);
         // 'hex' output is already pure ASCII numeric entities → HTML-safe.
         // For 'none'/'visible' the address half still needs HTML escaping.
@@ -75,14 +75,15 @@ class MailUtils
      * preserved verbatim with only HTML-attribute escaping applied, so mail
      * clients receive correct subject/body separators.
      *
-     * @param string $email raw email address, optionally followed by ?query
-     * @return string HTML-attribute-safe URL fragment (without 'mailto:' prefix)
+     * @param string|null $email raw email address, optionally followed by ?query
+     * @return string HTML-attribute-safe URL fragment (without 'mailto:' prefix),
+     *                empty for a null address
      */
-    public static function obfuscateUrl(string $email): string
+    public static function obfuscateUrl(?string $email): string
     {
         global $conf;
 
-        [$addr, $query] = sexplode('?', $email, 2);
+        [$addr, $query] = sexplode('?', $email ?? '', 2);
         $addr = self::obfuscateAddress($addr);
         if ($conf['mailguard'] === 'visible') {
             $addr = rawurlencode($addr);
