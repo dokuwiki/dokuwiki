@@ -32,6 +32,9 @@ use dokuwiki\Utf8\PhpString;
 function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp = [])
 {
     global $conf;
+	
+	header_remove('Pragma');
+	
     // send mime headers
     header("Content-Type: $mime");
 

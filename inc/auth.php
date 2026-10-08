@@ -537,6 +537,7 @@ function auth_logoff($keepbc = false)
     $INPUT->server->remove('REMOTE_USER');
     $USERINFO = null; //FIXME
 
+	if (isset($_COOKIE[DOKU_COOKIE])) {
     $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
     setcookie(DOKU_COOKIE, '', [
         'expires' => time() - 600000,
@@ -545,6 +546,7 @@ function auth_logoff($keepbc = false)
         'httponly' => true,
         'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
     ]);
+	}
 
     if ($auth instanceof AuthPlugin) {
         $auth->logOff();
