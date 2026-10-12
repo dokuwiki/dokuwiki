@@ -725,11 +725,11 @@ function html_debug()
     global $INFO;
 
     //remove sensitive data
-    $cnf = $conf;
+    $cnf = unserialize(serialize($conf));           // serialize -> unserialize is required to avoid overwriting of both, copy and original since references are used in array
     debug_guard($cnf);
-    $nfo = $INFO;
+    $nfo = unserialize(serialize($INFO));           // serialize -> unserialize is required to avoid overwriting of both, copy and original in case of references may be used in array
     debug_guard($nfo);
-    $ses = $_SESSION;
+    $ses = unserialize(serialize($_SESSION));       // serialize -> unserialize is required to avoid overwriting of both, copy and original in case of references may be used in array
     debug_guard($ses);
 
     echo '<html><body>';
