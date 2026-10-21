@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\extension\test;
 
+use dokuwiki\plugin\extension\Exception;
+use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Installer;
 use DokuWikiTest;
 
@@ -13,6 +15,7 @@ use DokuWikiTest;
  */
 class InstallerTest extends DokuWikiTest
 {
+    protected $pluginsEnabled = ['extension'];
 
     /**
      * Provide data for testFindExtensions
@@ -62,5 +65,41 @@ class InstallerTest extends DokuWikiTest
             $this->assertArrayHasKey($base, $expected, 'extension found');
             $this->assertEquals($expected[$base], $ext->getType(), 'extension type');
         }
+    }
+
+    /**
+     * Provide data for testEnsurePhpCompatibilityMax
+     */
+    public function provideMaxPhpData()
+    {
+        return [
+            'patch release of the maximum' => ['8.5', '8.5.10', true],
+            'first release of the maximum' => ['8.5', '8.5.0', true],
+            'distribution suffix' => ['8.5', '8.5.10-1ubuntu1', true],
+            'next minor' => ['8.5', '8.6.0', false],
+            'major only' => ['8', '8.5.10', true],
+            'next major' => ['8', '9.0.0', false],
+            'older maximum' => ['8.4', '8.5.0', false],
+            'patch-level maximum' => ['8.5.3', '8.5.10', false],
+            'exact patch-level maximum' => ['8.5.10', '8.5.10', true],
+            'no maximum' => ['', '9.0.0', true],
+        ];
+    }
+
+    /**
+     * phpmax names the newest supported release line, not an exact version (#4812)
+     *
+     * @dataProvider provideMaxPhpData
+     */
+    public function testEnsurePhpCompatibilityMax($max, $php, $expected)
+    {
+        $extension = Extension::createFromRemoteData(['plugin' => 'phpmaxtest', 'phpmax' => $max]);
+        try {
+            Installer::ensurePhpCompatibility($extension, $php);
+            $compatible = true;
+        } catch (Exception $e) {
+            $compatible = false;
+        }
+        $this->assertSame($expected, $compatible);
     }
 }

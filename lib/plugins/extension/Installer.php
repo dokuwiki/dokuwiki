@@ -378,18 +378,21 @@ class Installer
      * Throws an exception if the extension is not compatible
      *
      * @param Extension $extension
+     * @param string $phpVersion the PHP version to check against, the running one by default
      * @throws Exception
      */
-    public static function ensurePhpCompatibility(Extension $extension)
+    public static function ensurePhpCompatibility(Extension $extension, $phpVersion = PHP_VERSION)
     {
         $min = $extension->getMinimumPHPVersion();
-        if ($min && version_compare(PHP_VERSION, $min, '<')) {
-            throw new Exception('error_minphp', [$extension->getId(), $min, PHP_VERSION]);
+        if ($min && version_compare($phpVersion, $min, '<')) {
+            throw new Exception('error_minphp', [$extension->getId(), $min, $phpVersion]);
         }
 
         $max = $extension->getMaximumPHPVersion();
-        if ($max && version_compare(PHP_VERSION, $max, '>')) {
-            throw new Exception('error_maxphp', [$extension->getId(), $max, PHP_VERSION]);
+        // A maximum of "8.5" covers every 8.5.x release, so compare only as many parts as it has
+        $current = implode('.', array_slice(explode('.', $phpVersion), 0, count(explode('.', $max))));
+        if ($max && version_compare($current, $max, '>')) {
+            throw new Exception('error_maxphp', [$extension->getId(), $max, $phpVersion]);
         }
     }
 
