@@ -80,8 +80,8 @@ class InstallerTest extends DokuWikiTest
             'major only' => ['8', '8.5.10', true],
             'next major' => ['8', '9.0.0', false],
             'older maximum' => ['8.4', '8.5.0', false],
-            'patch-level maximum' => ['8.5.3', '8.5.10', false],
-            'exact patch-level maximum' => ['8.5.10', '8.5.10', true],
+            'patch-level maximum read as its release line' => ['8.5.3', '8.5.10', true],
+            'patch-level maximum, next minor' => ['8.5.3', '8.6.0', false],
             'no maximum' => ['', '9.0.0', true],
         ];
     }

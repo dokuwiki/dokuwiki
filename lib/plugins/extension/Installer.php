@@ -389,8 +389,11 @@ class Installer
         }
 
         $max = $extension->getMaximumPHPVersion();
-        // A maximum of "8.5" covers every 8.5.x release, so compare only as many parts as it has
-        $current = implode('.', array_slice(explode('.', $phpVersion), 0, count(explode('.', $max))));
+        // phpmax names a release line (Major.Minor, or Major), so "8.5" covers every 8.5.x release:
+        // compare at most the first two parts of both versions
+        $parts = min(count(explode('.', $max)), 2);
+        $max = implode('.', array_slice(explode('.', $max), 0, $parts));
+        $current = implode('.', array_slice(explode('.', $phpVersion), 0, $parts));
         if ($max && version_compare($current, $max, '>')) {
             throw new Exception('error_maxphp', [$extension->getId(), $max, $phpVersion]);
         }
