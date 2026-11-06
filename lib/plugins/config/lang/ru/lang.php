@@ -3,8 +3,8 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
- * @author Impeck <impeck@ya.ru>
  * @author Aleksandr Selivanov <alexgearbox@yandex.ru>
+ * @author Impeck <impeck@ya.ru>
  * @author Nikita <obraztsov568@gmail.com>
  * @author Анатолий <anatol_m@mail.ru>
  * @author Yuriy Skalko <yuriy.skalko@gmail.com>
@@ -153,7 +153,7 @@ $lang['useslash']              = 'Использовать слэш раздел
 $lang['sepchar']               = 'Разделитель слов в имени страницы';
 $lang['canonical']             = 'Полные канонические адреса (URL)';
 $lang['fnencode']              = 'Метод кодирования имён файлов, записанных не ASCII-символами.';
-$lang['autoplural']            = 'Проверять можественную форму имени страницы в ссылках';
+$lang['autoplural']            = 'Проверять множественную форму имени страницы в ссылках';
 $lang['compression']           = 'Метод сжатия для архивных файлов';
 $lang['gzip_output']           = 'Использовать gzip-сжатие для xhtml (Content-Encoding)';
 $lang['compress']              = 'Сжимать файлы CSS и javascript';
@@ -176,7 +176,6 @@ $lang['hidewarnings']          = 'Не отображать предупрежд
 $lang['dnslookups']            = '«Докувики» ищет DNS-имена пользователей, редактирующих страницы. Если у вас нет DNS-сервера или он работает медленно, рекомендуем отключить эту опцию.';
 $lang['jquerycdn']             = 'Требуется ли загрузка jQuery-скриптов (включая jQuery UI-скрипты) из CDN сети? Данная функция увеличивает количество HTTP запросов, но загрузка файлов будет проходить быстрее и пользователи смогут кэшировать запросы.';
 $lang['trustedproxies']        = 'Список доверенных прокси-серверов, разделённых запятыми, для чтения заголовка X-Forwarded-For. Элементы могут быть IPv4 или IPv6 адресами или диапазонами CIDR (например, 10.0.0.0/8). Оставьте пустым, чтобы не доверять прокси.';
-$lang['realip']                = 'Доверять заголовку X-Real-IP. Включайте только если сервер записывает этот заголовок, иначе он может быть подделан.';
 $lang['jquerycdn_o_0']         = 'Не использовать CDN. Использовать только локальную доставку';
 $lang['jquerycdn_o_jquery']    = 'Использовать CDN с code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'Использовать CDN с cdnjs.com';
