@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jo Schober <gnom.schober@gmx.de>
  * @author Andreas Gohr <andi@splitbrain.org>
  * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
@@ -64,6 +65,11 @@ $lang['title']                 = 'Titel des Wikis';
 $lang['start']                 = 'Startseitenname';
 $lang['lang']                  = 'Sprache';
 $lang['template']              = 'Designvorlage (Template)';
+$lang['syntax']                = 'Wiki-Syntax-Variante';
+$lang['syntax_o_dw']           = 'Nur DokuWiki';
+$lang['syntax_o_md']           = 'Nur Markdown';
+$lang['syntax_o_dw+md']        = 'Beide (DokuWiki bevorzugt)';
+$lang['syntax_o_md+dw']        = 'Beide (Markdown bevorzugt)';
 $lang['tagline']               = 'Tag-Linie (nur, wenn vom Template unterstützt)';
 $lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt), ein leeres Feld deaktiviert die Sidebar';
 $lang['license']               = 'Unter welcher Lizenz sollen Ihre Inhalte veröffentlicht werden?';
