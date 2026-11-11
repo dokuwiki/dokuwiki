@@ -536,14 +536,16 @@ function auth_logoff($keepbc = false)
     $INPUT->server->remove('REMOTE_USER');
     $USERINFO = null; //FIXME
 
-    $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
-    setcookie(DOKU_COOKIE, '', [
-        'expires' => time() - 600000,
-        'path' => $cookieDir,
-        'secure' => ($conf['securecookie'] && Ip::isSsl()),
-        'httponly' => true,
-        'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
-    ]);
+    if (isset($_COOKIE[DOKU_COOKIE])) {
+        $cookieDir = empty($conf['cookiedir']) ? DOKU_REL : $conf['cookiedir'];
+        setcookie(DOKU_COOKIE, '', [
+            'expires' => time() - 600000,
+            'path' => $cookieDir,
+            'secure' => ($conf['securecookie'] && Ip::isSsl()),
+            'httponly' => true,
+            'samesite' => $conf['samesitecookie'] ?: null, // null means browser default
+        ]);
+    }
 
     if ($auth instanceof AuthPlugin) {
         $auth->logOff();
