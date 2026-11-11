@@ -63,6 +63,11 @@ div.notify {
     overflow: hidden;
 }
 
+/* toolbar picker popups, above later content and focused toolbuttons */
+div.picker {
+    z-index: 2;
+}
+
 #link__wiz .ui-dialog-content {
     padding-left: 0;
     padding-right: 0;

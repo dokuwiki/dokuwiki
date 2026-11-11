@@ -33,13 +33,12 @@
 /* buttons inside of toolbar */
 .dokuwiki div.toolbar button.toolbutton {
 }
-/* picker popups (outside of .dokuwiki) */
+/* picker popups */
 div.picker {
     width: 300px;
     border: 1px solid @ini_border;
     background-color: @ini_background_alt;
     color: inherit;
-    z-index: 2; /* above later content and focused toolbuttons */
 }
 /* picker for headlines */
 div.picker.pk_hl {
