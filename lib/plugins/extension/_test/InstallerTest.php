@@ -2,6 +2,8 @@
 
 namespace dokuwiki\plugin\extension\test;
 
+use dokuwiki\plugin\extension\Exception;
+use dokuwiki\plugin\extension\Extension;
 use dokuwiki\plugin\extension\Installer;
 use DokuWikiTest;
 
@@ -13,6 +15,7 @@ use DokuWikiTest;
  */
 class InstallerTest extends DokuWikiTest
 {
+    protected $pluginsEnabled = ['extension'];
 
     /**
      * Provide data for testFindExtensions
@@ -62,5 +65,49 @@ class InstallerTest extends DokuWikiTest
             $this->assertArrayHasKey($base, $expected, 'extension found');
             $this->assertEquals($expected[$base], $ext->getType(), 'extension type');
         }
+    }
+
+    /**
+     * Provide data for testEnsurePhpCompatibilityMax
+     *
+     * @return array[] phpmax value, PHP version, expected compatibility
+     */
+    public function provideMaxPhpData()
+    {
+        return [
+            'no max allows 9.0.0' => ['', '9.0.0', true],
+            'max 8 allows 8.5.10' => ['8', '8.5.10', true],
+            'max 8 refuses 9.0.0' => ['8', '9.0.0', false],
+            'max 8.5 allows 8.5.0' => ['8.5', '8.5.0', true],
+            'max 8.5 allows 8.5.10' => ['8.5', '8.5.10', true],
+            'max 8.5 allows 8.5.10-1ubuntu1' => ['8.5', '8.5.10-1ubuntu1', true],
+            'max 8.5 refuses 8.6.0' => ['8.5', '8.6.0', false],
+            'max 8.4 refuses 8.5.0' => ['8.4', '8.5.0', false],
+            'max 8.5.10 allows 8.5.8' => ['8.5.10', '8.5.8', true],
+            'max 8.5.10 allows 8.5.10' => ['8.5.10', '8.5.10', true],
+            'max 8.5.10 allows 8.5.10-1ubuntu1' => ['8.5.10', '8.5.10-1ubuntu1', true],
+            'max 8.5.3 refuses 8.5.10' => ['8.5.3', '8.5.10', false],
+            'max 8.5.3 refuses 8.6.0' => ['8.5.3', '8.6.0', false],
+        ];
+    }
+
+    /**
+     * A Major.Minor phpmax includes all patch releases of that version (#4812)
+     *
+     * @dataProvider provideMaxPhpData
+     * @param string $max the phpmax value of the extension
+     * @param string $php the PHP version to check against
+     * @param bool $expected true if the extension is expected to be compatible
+     */
+    public function testEnsurePhpCompatibilityMax($max, $php, $expected)
+    {
+        $extension = Extension::createFromRemoteData(['plugin' => 'phpmaxtest', 'phpmax' => $max]);
+        try {
+            Installer::ensurePhpCompatibility($extension, $php);
+            $compatible = true;
+        } catch (Exception) {
+            $compatible = false;
+        }
+        $this->assertSame($expected, $compatible);
     }
 }

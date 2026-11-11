@@ -4,6 +4,7 @@
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author jFMd21 <j.felix@mueller-donath.de>
+ * @author Jo Schober <gnom.schober@gmx.de>
  * @author andreash <aeheil@gmail.com>
  * @author MaWi <drmaxxis@gmail.com>
  */
@@ -28,6 +29,7 @@ $lang['js']['display_viewoptions'] = 'Einstellungen anzeigen:';
 $lang['js']['display_enabled'] = 'aktiviert';
 $lang['js']['display_disabled'] = 'deaktiviert';
 $lang['js']['display_updatable'] = 'Update verfügbar';
+$lang['js']['filter']          = 'Nur aktualisierbare Erweiterungen anzeigen';
 $lang['search_for']            = 'Suche Erweiterung:';
 $lang['search']                = 'Suche';
 $lang['extensionby']           = '<strong>%s</strong> von %s';
