@@ -86,8 +86,7 @@ function auth_setup()
     // Note: with FastCGI, data is in REDIRECT_HTTP_AUTHORIZATION instead of HTTP_AUTHORIZATION
     $header = $INPUT->server->str('HTTP_AUTHORIZATION') ?: $INPUT->server->str('REDIRECT_HTTP_AUTHORIZATION');
     if (preg_match('~^Basic ([a-z\d/+]*={0,2})$~i', $header, $matches)) {
-        $userpass = explode(':', base64_decode($matches[1]), 2);
-        [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']] = $userpass;
+        [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']] = sexplode(':', base64_decode($matches[1]), 2, '');
     }
 
     // if no credentials were given try to use HTTP auth (for SSO)
