@@ -14,7 +14,7 @@ class Exception extends \Exception
      * @param array $context array of sprintf variables to be replaced in the message
      * @param Throwable|null $previous Previous exception
      */
-    public function __construct($message = "", $context = [], Throwable $previous = null)
+    public function __construct($message = "", $context = [], ?Throwable $previous = null)
     {
         // try to translate the message
         $helper = plugin_load('helper', 'extension');
