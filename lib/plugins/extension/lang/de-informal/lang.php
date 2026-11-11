@@ -3,10 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author jFMd21 <j.felix@mueller-donath.de>
  * @author Jo Schober <gnom.schober@gmx.de>
  * @author andreash <aeheil@gmail.com>
  * @author MaWi <drmaxxis@gmail.com>
- * @author Felix <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Erweiterungen verwalten';
 $lang['tab_plugins']           = 'Installierte Plugins';
@@ -83,6 +83,13 @@ $lang['error_download']        = 'Download der Datei: %s nicht möglich.';
 $lang['error_decompress']      = 'Die heruntergeladene Datei konnte nicht entpackt werden. Dies kann die Folge eines fehlerhaften Downloads sein. In diesem Fall solltest du versuchen den Vorgang zu wiederholen. Es kann auch die Folge eines unbekannten Kompressionsformates sein, in diesem Fall musst du die Datei selber herunterladen und manuell installieren.';
 $lang['error_findfolder']      = 'Das Erweiterungs-Verzeichnis konnte nicht identifiziert werden, lade die Datei herunter und installiere sie manuell.';
 $lang['error_copy']            = 'Beim Versuch Dateien in den Ordner <em>%s</em>: zu installieren trat ein Kopierfehler auf. Die Dateizugriffsberechtigungen könnten falsch sein. Dies kann an einem unvollständig installierten Plugin liegen und beeinträchtigt somit die Stabilität deiner Wiki-Installation.';
+$lang['error_copy_copy']       = '%s konnte nicht nach %s kiopiert werden';
+$lang['error_archive_read']    = 'Das Archiv %s kann nicht gelesen werden';
+$lang['error_archive_extract'] = 'Das Archiv %s kann nicht entppackt werden: %s';
+$lang['error_uninstall_protected'] = 'Die Erweiterung %s ist geschützt und kann nicht deinstalliert werden';
+$lang['error_uninstall_dependants'] = 'Die Erweiterung %s wird noch von %s benötigt und kann daher nicht deinstalliert werden';
+$lang['error_disable_protected'] = 'Die Erweiterung %s ist geschützt und kann nicht deaktiviert werden';
+$lang['error_disable_dependants'] = 'Die Erweiterung %s wird noch von %s benötigt und kann daher nicht deaktiviert werden';
 $lang['error_nourl']           = 'Es konnte keine Download-URL für die Erweiterung %s gefunden werden.';
 $lang['error_notinstalled']    = 'Die Erweiterung %s ist nicht installiert.';
 $lang['error_alreadyenabled']  = 'Die Erweiterung %s wurde bereits aktiviert.';
