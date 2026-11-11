@@ -432,11 +432,11 @@ function sort_search_fulltext($a, $b)
 {
     if ($a['count'] > $b['count']) {
         return -1;
-    } elseif ($a['count'] < $b['count']) {
-        return 1;
-    } else {
-        return Sort::strcmp($a['id'], $b['id']);
     }
+    if ($a['count'] < $b['count']) {
+        return 1;
+    }
+    return Sort::strcmp($a['id'], $b['id']);
 }
 
 /**

@@ -189,6 +189,7 @@ class ApiCore
      * Info about the currently authenticated user
      *
      * @return User
+     * @throws AccessDeniedException when no user is logged in
      */
     public function whoAmI()
     {
@@ -222,21 +223,20 @@ class ApiCore
 
         if ($user === '') {
             return auth_quickaclcheck($page);
-        } else {
-            // checking another user's permissions discloses their ACL posture, restrict to superusers
-            if (!$this->isSelf($user) && !auth_isadmin()) {
-                throw new AccessDeniedException('Only admins are allowed to check ACL for other users', 114);
-            }
-            if ($groups === []) {
-                $userinfo = $auth->getUserData($user);
-                if ($userinfo === false) {
-                    $groups = [];
-                } else {
-                    $groups = $userinfo['grps'];
-                }
-            }
-            return auth_aclcheck($page, $user, $groups);
         }
+        // checking another user's permissions discloses their ACL posture, restrict to superusers
+        if (!$this->isSelf($user) && !auth_isadmin()) {
+            throw new AccessDeniedException('Only admins are allowed to check ACL for other users', 114);
+        }
+        if ($groups === []) {
+            $userinfo = $auth->getUserData($user);
+            if ($userinfo === false) {
+                $groups = [];
+            } else {
+                $groups = $userinfo['grps'];
+            }
+        }
+        return auth_aclcheck($page, $user, $groups);
     }
 
     /**
@@ -442,9 +442,8 @@ class ApiCore
         $text = rawWiki($page, $rev);
         if (!$text && !$rev) {
             return pageTemplate($page);
-        } else {
-            return $text;
         }
+        return $text;
     }
 
     /**
@@ -713,7 +712,7 @@ class ApiCore
 
         // SPAM check
         if (checkwordblock()) {
-            throw new RemoteException('The page content was blocked', 134);
+            throw new RemoteException('The page content was blocked by the spam filter', 134);
         }
 
         // autoset summary on new pages
@@ -917,7 +916,7 @@ class ApiCore
         }
 
         if (!media_exists($media, $rev)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         $info = new Media($media, $rev);
@@ -948,7 +947,7 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         return (new MetadataSearch())->mediause($media);
@@ -980,7 +979,7 @@ class ApiCore
             throw new AccessDeniedException('You are not allowed to read this media file', 211);
         }
         if (!media_exists($media, 0)) {
-            throw new RemoteException('The requested media file does not exist', 221);
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
         }
 
         $medialog = new MediaChangeLog($media);
@@ -1083,15 +1082,17 @@ class ApiCore
         $res = media_delete($media, $auth);
         if ($res & DOKU_MEDIA_DELETED) {
             return true;
-        } elseif ($res & DOKU_MEDIA_NOT_AUTH) {
-            throw new AccessDeniedException('You are not allowed to delete this media file', 212);
-        } elseif ($res & DOKU_MEDIA_INUSE) {
-            throw new RemoteException('Media file is still referenced', 232);
-        } elseif (!media_exists($media)) {
-            throw new RemoteException('The media file requested to delete does not exist', 221);
-        } else {
-            throw new RemoteException('Failed to delete media file', 233);
         }
+        if ($res & DOKU_MEDIA_NOT_AUTH) {
+            throw new AccessDeniedException('You are not allowed to delete this media file', 212);
+        }
+        if ($res & DOKU_MEDIA_INUSE) {
+            throw new RemoteException('Media file is still referenced', 232);
+        }
+        if (!media_exists($media)) {
+            throw new RemoteException('The requested media file (revision) does not exist', 221);
+        }
+        throw new RemoteException('Failed to delete media file', 233);
     }
 
     /**
@@ -1141,7 +1142,15 @@ class ApiCore
         }
 
         if ($minAccess && auth_quickaclcheck($id) < $minAccess) {
-            throw new AccessDeniedException('You are not allowed to read this page', 111);
+            $permission = match ($minAccess) {
+                AUTH_READ => 'read',
+                AUTH_EDIT => 'edit',
+                AUTH_CREATE => 'create',
+                AUTH_UPLOAD => 'upload',
+                AUTH_DELETE => 'delete',
+                default => 'access',
+            };
+            throw new AccessDeniedException("You are not allowed to $permission this page", 111);
         }
 
         return $id;

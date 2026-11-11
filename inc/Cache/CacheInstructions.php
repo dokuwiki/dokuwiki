@@ -27,7 +27,7 @@ class CacheInstructions extends CacheParser
     public function retrieveCache($clean = true)
     {
         $contents = io_readFile($this->cache, false);
-        return empty($contents) ? [] : unserialize($contents);
+        return empty($contents) ? [] : unserialize($contents, ['allowed_classes' => ['stdClass']]);
     }
 
     /**

@@ -276,7 +276,7 @@ class FulltextSearch
         }
 
         if (in_array($term, [$BL, $BR, $BL . $BR], true)) {
-            $term = '';
+            return '';
         }
         return $term;
     }

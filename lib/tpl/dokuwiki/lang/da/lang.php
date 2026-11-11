@@ -3,8 +3,10 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Asta <astadue@gmail.com>
  * @author Jacob Palm <mail@jacobpalm.dk>
  */
+$lang['home']                  = 'Forside';
 $lang['__background_site__']   = 'Farve til den "bagerste" baggrund (bagved indholdets kasse)';
 $lang['__link__']              = 'Grundlæggende link-farve';
 $lang['__existing__']          = 'Link-farve til eksisterende sider';

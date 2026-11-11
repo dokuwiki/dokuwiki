@@ -82,7 +82,9 @@ class CacheRenderer extends CacheParser
         if ($conf['cachetime'] == -1) {
             $this->_nocache = true;
             return;
-        } elseif ($conf['cachetime'] > 0) {
+        }
+
+        if ($conf['cachetime'] > 0) {
             $this->depends['age'] = isset($this->depends['age']) ?
                 min($this->depends['age'], $conf['cachetime']) : $conf['cachetime'];
         }

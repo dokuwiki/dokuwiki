@@ -24,7 +24,7 @@ abstract class AdminPlugin extends Plugin
         $menutext = $this->getLang('menu');
         if (!$menutext) {
             $info = $this->getInfo();
-            $menutext = $info['name'] . ' ...';
+            $menutext = ($info['name'] ?? $this->getPluginName()) . ' ...';
         }
         return $menutext;
     }

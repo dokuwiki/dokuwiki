@@ -27,7 +27,7 @@ class SettingRenderer extends SettingMultichoice
                 $this->choices[] = $plugin;
 
                 $info = $renderer->getInfo();
-                $this->prompts[$plugin] = $info['name'];
+                $this->prompts[$plugin] = $info['name'] ?? $plugin;
             }
         }
 

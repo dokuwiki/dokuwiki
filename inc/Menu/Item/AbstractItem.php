@@ -87,7 +87,7 @@ abstract class AbstractItem
         if (strpos($label, '%s')) {
             $label = sprintf($label, $this->replacement);
         }
-        if ($label === '') $label = '[' . $this->type . ']';
+        if ($label === '') return '[' . $this->type . ']';
         return $label;
     }
 
@@ -120,9 +120,8 @@ abstract class AbstractItem
     {
         if ($this->id && $this->id[0] == '#') {
             return $this->id;
-        } else {
-            return wl($this->id, $this->params, false, '&');
         }
+        return wl($this->id, $this->params, false, '&');
     }
 
     /**

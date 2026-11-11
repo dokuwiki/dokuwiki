@@ -2,6 +2,8 @@
 
 namespace dokuwiki\Remote\Response;
 
+use dokuwiki\Remote\AccessDeniedException;
+
 /**
  * Represents a user
  */
@@ -25,6 +27,7 @@ class User extends ApiResponse
      * @param string $name
      * @param string $mail
      * @param string[] $groups
+     * @throws AccessDeniedException when no user is given and nobody is logged in
      */
     public function __construct($login = '', $name = '', $mail = '', $groups = [])
     {
@@ -42,7 +45,7 @@ class User extends ApiResponse
         }
 
         if ($this->login === '') {
-            throw new \RuntimeException('No user available');
+            throw new AccessDeniedException('No user available', -32604);
         }
 
         // for current user, use $USERINFO to fill up

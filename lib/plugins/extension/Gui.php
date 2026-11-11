@@ -30,7 +30,7 @@ class Gui
         global $INPUT;
 
         $tab = $INPUT->str('tab', 'plugins', true);
-        if (!in_array($tab, $this->tabs)) $tab = 'plugins';
+        if (!in_array($tab, $this->tabs)) return 'plugins';
         return $tab;
     }
 

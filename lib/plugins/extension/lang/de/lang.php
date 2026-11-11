@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Jo Schober <gnom.schober@gmx.de>
  * @author Niclas Tittl <niclas.tittl@msn.com>
  * @author Anika Rachow <rachowanika@gmail.com>
  * @author Jürgen Mayer <gro.ikiwukod@x.wellen.org>
@@ -39,7 +40,7 @@ $lang['js']['display_enabled'] = 'aktiviert';
 $lang['js']['display_disabled'] = 'deaktiviert';
 $lang['js']['display_updatable'] = 'aktualisierbar';
 $lang['js']['close']           = 'Zum schließen, klicken';
-$lang['js']['filter']          = 'Nur geänderte Erweiterungen anzeigen';
+$lang['js']['filter']          = 'Nur aktualisierbare Erweiterungen anzeigen';
 $lang['search_for']            = 'Erweiterung suchen:';
 $lang['search']                = 'Suchen';
 $lang['extensionby']           = '<strong>%s</strong> von %s';

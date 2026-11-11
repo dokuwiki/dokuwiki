@@ -44,9 +44,8 @@ class TagCloseElement extends ValueElement
     {
         if ($id === null) {
             return '';
-        } else {
-            throw new \BadMethodCallException('You can\t add ID to closing tag');
         }
+        throw new \BadMethodCallException('You can\t add ID to closing tag');
     }
 
     /**
@@ -61,9 +60,8 @@ class TagCloseElement extends ValueElement
     {
         if ($value === null) {
             return '';
-        } else {
-            throw new \BadMethodCallException('You can\t add attributes to closing tag');
         }
+        throw new \BadMethodCallException('You can\t add attributes to closing tag');
     }
 
     /**
@@ -77,9 +75,8 @@ class TagCloseElement extends ValueElement
     {
         if ($attributes === null) {
             return [];
-        } else {
-            throw new \BadMethodCallException('You can\t add attributes to closing tag');
         }
+        throw new \BadMethodCallException('You can\t add attributes to closing tag');
     }
 
     /**

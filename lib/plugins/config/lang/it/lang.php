@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paolo Supino <paolo@supino.org>
  * @author Claudio Tam <claudio.tamburrino1@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Simone Perin <simoneperin.92@libero.it>
@@ -56,6 +57,11 @@ $lang['title']                 = 'Titolo del wiki';
 $lang['start']                 = 'Nome della pagina iniziale';
 $lang['lang']                  = 'Lingua';
 $lang['template']              = 'Modello';
+$lang['syntax']                = 'Variante della sintassi wiki';
+$lang['syntax_o_dw']           = 'Solo Dokuwiki';
+$lang['syntax_o_md']           = 'solo Markdown';
+$lang['syntax_o_dw+md']        = 'Entrambi (preferenza a Dokuwiki';
+$lang['syntax_o_md+dw']        = 'Entrambi (preferenza a Markdown)';
 $lang['tagline']               = 'Tagline (se il template lo supporta)';
 $lang['sidebar']               = 'Nome pagina in barra laterale (se il template lo supporta), il campo vuoto disabilita la barra laterale';
 $lang['license']               = 'Sotto quale licenza vorresti rilasciare il tuo contenuto?';

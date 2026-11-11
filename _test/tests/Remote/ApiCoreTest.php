@@ -134,6 +134,15 @@ class ApiCoreTest extends \DokuWikiTest
         $this->markTestIncomplete('Missing test for core.whoAmI API Call');
     }
 
+    // core.whoAmI without a logged in user
+    public function testWhoAmIAnonymous()
+    {
+        unset($_SERVER['REMOTE_USER']);
+
+        $this->expectException(AccessDeniedException::class);
+        $this->remote->call('core.whoAmI');
+    }
+
     // core.aclCheck -> See also ApiCoreAclCheckTest.php
     public function testAclCheck()
     {

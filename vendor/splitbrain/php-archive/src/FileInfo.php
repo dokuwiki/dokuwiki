@@ -257,6 +257,11 @@ class FileInfo
     }
 
     /**
+     * The path of the file inside the archive
+     *
+     * Paths are expected to be UTF-8 encoded. Whether a path read from an archive really is
+     * depends on the archive format, because not every format stores the encoding of its names.
+     *
      * @return string
      */
     public function getPath()
@@ -265,7 +270,11 @@ class FileInfo
     }
 
     /**
-     * @param string $path
+     * Set the path of the file inside the archive
+     *
+     * Relative parts and leading slashes are removed from the given path.
+     *
+     * @param string $path UTF-8 encoded path
      */
     public function setPath($path)
     {

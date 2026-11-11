@@ -717,11 +717,7 @@ class admin_plugin_acl extends AdminPlugin
             $check = $ID;
         }
 
-        if (isset($this->acl[$check][$this->who])) {
-            return $this->acl[$check][$this->who];
-        } else {
-            return null;
-        }
+        return $this->acl[$check][$this->who] ?? null;
     }
 
     /**

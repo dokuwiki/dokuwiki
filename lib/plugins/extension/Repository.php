@@ -73,7 +73,8 @@ class Repository
         if ($data === false) {
             $this->revokeAccess();
             throw new Exception('repo_error');
-        } elseif ($data !== '1') {
+        }
+        if ($data !== '1') {
             $this->revokeAccess();
             throw new Exception('repo_badresponse');
         }
@@ -347,7 +348,7 @@ class Repository
     {
         $cache = new Cache(self::CACHE_PREFIX . $id, self::CACHE_SUFFIX);
         if ($cache->useCache(['age' => self::CACHE_TIME])) {
-            return unserialize($cache->retrieveCache(false));
+            return unserialize($cache->retrieveCache(false), ['allowed_classes' => false]);
         }
         return null;
     }

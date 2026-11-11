@@ -111,7 +111,8 @@ class RevisionInfo
         if ($this->val('mode') == self::MODE_MEDIA) {
             // media file revision
             return media_printicon($id);
-        } elseif ($this->val('mode') == self::MODE_PAGE) {
+        }
+        if ($this->val('mode') == self::MODE_PAGE) {
             // page revision
             return '<img class="icon" src="' . DOKU_BASE . 'lib/images/fileicons/file.png" alt="' . $id . '" />';
         }
@@ -294,9 +295,8 @@ class RevisionInfo
                   . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
-        } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
         }
+        return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
     }
 
     /**
@@ -335,9 +335,8 @@ class RevisionInfo
                   . '<img src="' . DOKU_BASE . 'lib/images/diff.png" width="15" height="11"'
                   . ' title="' . $lang['diff'] . '" alt="' . $lang['diff'] . '" />'
                   . '</a>';
-        } else {
-            return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
         }
+        return '<img src="' . DOKU_BASE . 'lib/images/blank.gif" width="15" height="11" alt="" />';
     }
 
     /**

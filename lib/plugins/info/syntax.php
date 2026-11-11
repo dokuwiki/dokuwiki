@@ -118,18 +118,18 @@ class syntax_plugin_info extends SyntaxPlugin
 
         // list them
         $renderer->listu_open();
-        foreach ($plginfo as $info) {
+        foreach ($plginfo as $name => $info) {
             $renderer->listitem_open(1);
             $renderer->listcontent_open();
-            $renderer->externallink($info['url'], $info['name']);
+            $renderer->externallink($info['url'] ?? '', $info['name'] ?? $name);
             $renderer->cdata(' ');
             $renderer->emphasis_open();
-            $renderer->cdata($info['date']);
+            $renderer->cdata($info['date'] ?? '');
             $renderer->emphasis_close();
             $renderer->cdata(' ' . $lang['by'] . ' ');
-            $renderer->emaillink($info['email'], $info['author']);
+            $renderer->emaillink($info['email'] ?? '', $info['author'] ?? '');
             $renderer->linebreak();
-            $renderer->cdata($info['desc']);
+            $renderer->cdata($info['desc'] ?? '');
             $renderer->listcontent_close();
             $renderer->listitem_close();
         }
@@ -154,10 +154,11 @@ class syntax_plugin_info extends SyntaxPlugin
             $methods = $po->getMethods();
             $info = $po->getInfo();
 
-            $hid = $this->addToToc($info['name'], 2, $renderer);
-            $doc = '<h2><a name="' . $hid . '" id="' . $hid . '">' . hsc($info['name']) . '</a></h2>';
+            $name = $info['name'] ?? $p;
+            $hid = $this->addToToc($name, 2, $renderer);
+            $doc = '<h2><a name="' . $hid . '" id="' . $hid . '">' . hsc($name) . '</a></h2>';
             $doc .= '<div class="level2">';
-            $doc .= '<p>' . strtr(hsc($info['desc']), ["\n" => "<br />"]) . '</p>';
+            $doc .= '<p>' . strtr(hsc($info['desc'] ?? ''), ["\n" => "<br />"]) . '</p>';
             $doc .= '<pre class="code">$' . $p . " = plugin_load('helper', '" . $p . "');</pre>";
             $doc .= '</div>';
             foreach ($methods as $method) {

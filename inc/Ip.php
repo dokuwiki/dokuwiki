@@ -121,16 +121,15 @@ class Ip
                 'upper' => 0,
                 'lower' => $ipNum,
             ];
-        } else {
-            // IPv6. strlen==16
-            if (PHP_INT_SIZE == 4) { // 32-bit
-                $result = Ip32::ipv6UpperLowerOn32($binary);
-            } else { // 64-bit arch
-                $result = unpack('Jupper/Jlower', $binary);
-            }
-            $result['version'] = 6;
-            return $result;
         }
+        // IPv6. strlen==16
+        if (PHP_INT_SIZE == 4) { // 32-bit
+            $result = Ip32::ipv6UpperLowerOn32($binary);
+        } else { // 64-bit arch
+            $result = unpack('Jupper/Jlower', $binary);
+        }
+        $result['version'] = 6;
+        return $result;
     }
 
     /**
@@ -328,13 +327,14 @@ class Ip
         $remoteAddr = $INPUT->server->str('REMOTE_ADDR');
         if ($INPUT->server->str('HTTP_X_FORWARDED_HOST') && self::proxyIsTrusted($remoteAddr)) {
             return $INPUT->server->str('HTTP_X_FORWARDED_HOST');
-        } elseif ($INPUT->server->str('HTTP_HOST')) {
-            return $INPUT->server->str('HTTP_HOST');
-        } elseif ($INPUT->server->str('SERVER_NAME')) {
-            return $INPUT->server->str('SERVER_NAME');
-        } else {
-            return php_uname('n');
         }
+        if ($INPUT->server->str('HTTP_HOST')) {
+            return $INPUT->server->str('HTTP_HOST');
+        }
+        if ($INPUT->server->str('SERVER_NAME')) {
+            return $INPUT->server->str('SERVER_NAME');
+        }
+        return php_uname('n');
     }
 
     /**

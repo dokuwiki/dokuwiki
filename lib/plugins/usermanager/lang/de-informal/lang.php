@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author jFMd21 <j.felix@mueller-donath.de>
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
  * @author Marcel Metz <marcel_metz@gmx.de>
@@ -12,7 +13,6 @@
  * @author Frank Loizzi <contact@software.bacal.de>
  * @author Volker Bödker <volker@boedker.de>
  * @author Dennis Plöger <develop@dieploegers.de>
- * @author F. Mueller-Donath <j.felix@mueller-donath.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
@@ -44,6 +44,7 @@ $lang['summary']               = 'Zeige Benutzer %1$d-%2$d von %3$d gefundenen. 
 $lang['nonefound']             = 'Keinen Benutzer gefunden. Insgesamt %d Benutzer.';
 $lang['delete_ok']             = '%d Benutzer wurden gelöscht';
 $lang['delete_fail']           = '%d konnte nicht gelöscht werden';
+$lang['delete_fail_self']      = 'Du kannst dich nicht selbst löschen!';
 $lang['update_ok']             = 'Benutzer wurde erfolgreich aktualisiert';
 $lang['update_fail']           = 'Aktualisierung des Benutzers ist fehlgeschlagen';
 $lang['update_exists']         = 'Benutzername konnte nicht geändert werden, der angegebene Benutzername (%s) existiert bereits (alle anderen Änderungen werden angewandt).';

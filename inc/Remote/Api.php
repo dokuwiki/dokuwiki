@@ -2,6 +2,7 @@
 
 namespace dokuwiki\Remote;
 
+use dokuwiki\ErrorHandler;
 use dokuwiki\Extension\RemotePlugin;
 use dokuwiki\Logger;
 use dokuwiki\test\Remote\Mock\ApiCore as MockApiCore;
@@ -128,15 +129,21 @@ class Api
         $this->ensureApiIsEnabled();
         $methods = $this->getMethods();
         if (!isset($methods[$method])) {
-            throw new RemoteException('Method does not exist', -32603);
+            throw new RemoteException('Method does not exist', -32601);
         }
         $this->ensureAccessIsAllowed($methods[$method]);
 
         // invoke the ApiCall
         try {
             return $methods[$method]($args);
+        } catch (RemoteException $e) {
+            throw $e;
         } catch (\InvalidArgumentException | \ArgumentCountError $e) {
             throw new RemoteException($e->getMessage(), -32602, $e);
+        } catch (\Throwable $e) {
+            // anything a call did not anticipate itself, eg. a plugin throwing a plain exception
+            ErrorHandler::logException($e);
+            throw new RemoteException($e->getMessage(), -32603, $e);
         }
     }
 
@@ -150,7 +157,7 @@ class Api
     {
         global $conf;
         if (!$conf['remote'] || trim($conf['remoteuser']) == '!!not set!!') {
-            throw new AccessDeniedException('Server Error. API is not enabled in config.', -32604);
+            throw new AccessDeniedException('The API is not enabled in the configuration', -32604);
         }
     }
 
@@ -175,6 +182,9 @@ class Api
         }
 
         // still here? no can do
-        throw new AccessDeniedException('server error. not authorized to call method', -32604);
+        throw new AccessDeniedException(
+            'API access is restricted to the users and groups configured in the remoteuser setting',
+            -32604
+        );
     }
 }

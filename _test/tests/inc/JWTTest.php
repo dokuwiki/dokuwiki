@@ -3,6 +3,7 @@
 namespace dokuwiki\test;
 
 use dokuwiki\JWT;
+use dokuwiki\Logger;
 
 class JWTTest extends \DokuWikiTest
 {
@@ -82,11 +83,32 @@ class JWTTest extends \DokuWikiTest
 
     public function testLoginAlternativeHeader()
     {
-        $_SERVER['HTTP_X-DOKUWIKI-TOKEN'] =  JWT::fromUser('testuser')->getToken();
+        // web servers pass dashes in header names as underscores
+        $_SERVER['HTTP_X_DOKUWIKI_TOKEN'] = JWT::fromUser('testuser')->getToken();
 
         $this->assertArrayNotHasKey('REMOTE_USER', $_SERVER);
         auth_tokenlogin();
         $this->assertEquals('testuser', $_SERVER['REMOTE_USER']);
-        unset($_SERVER['HTTP_X-DOKUWIKI-TOKEN']);
+        unset($_SERVER['HTTP_X_DOKUWIKI_TOKEN']);
+    }
+
+    public function testLoginFailureIsLogged()
+    {
+        $logger = Logger::getInstance(Logger::LOG_DEBUG);
+        $logging = self::getInaccessibleProperty($logger, 'isLogging');
+        self::setInaccessibleProperty($logger, 'isLogging', true);
+        $this->expectLogMessage('Token login failed: Invalid JWT signature', Logger::LOG_DEBUG);
+
+        $_SERVER['HTTP_AUTHORIZATION'] = 'Bearer not-a-token';
+        try {
+            $this->assertFalse(auth_tokenlogin());
+            $this->assertStringContainsString(
+                'Token login failed: Invalid JWT signature',
+                file_get_contents($logger->getLogfile())
+            );
+        } finally {
+            self::setInaccessibleProperty($logger, 'isLogging', $logging);
+            unset($_SERVER['HTTP_AUTHORIZATION']);
+        }
     }
 }

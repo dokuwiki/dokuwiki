@@ -7,7 +7,6 @@ use InvalidArgumentException;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
-use RuntimeException;
 
 class ApiCall
 {
@@ -73,7 +72,7 @@ class ApiCall
                 }
                 $this->docs = new DocBlockMethod($reflect);
             } catch (ReflectionException $e) {
-                throw new RuntimeException('Failed to parse API method documentation', 0, $e);
+                throw new RemoteException('Failed to parse API method documentation', -32603, $e);
             }
         }
         return $this->docs;

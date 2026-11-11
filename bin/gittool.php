@@ -267,10 +267,9 @@ class GitToolCLI extends CLI
         if ($ret === 0) {
             $this->success("cloning of $ext succeeded");
             return true;
-        } else {
-            $this->error("cloning of $ext failed");
-            return false;
         }
+        $this->error("cloning of $ext failed");
+        return false;
     }
 
     /**

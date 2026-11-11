@@ -3,6 +3,7 @@
 namespace dokuwiki\test\Remote;
 
 
+use dokuwiki\Remote\RemoteException;
 use dokuwiki\test\Remote\Mock\JsonRpcServer;
 
 /**
@@ -73,5 +74,18 @@ class JsonRpcServerTest extends \DokuWikiTest
 
         $response = json_encode($this->server->serve('[]')['result']);
         $this->assertJsonStringEqualsJsonString($expect, $response);
+    }
+
+    function testAccessDeniedMessage()
+    {
+        $_SERVER['CONTENT_TYPE'] = 'application/json';
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['PATH_INFO'] = '/wiki.accessDeniedMethod';
+
+        $this->expectException(RemoteException::class);
+        $this->expectExceptionMessage(
+            "server error. not authorized to call method wiki.accessDeniedMethod\nyou may not do this"
+        );
+        $this->server->serve('[]');
     }
 }

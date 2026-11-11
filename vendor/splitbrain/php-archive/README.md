@@ -66,3 +66,16 @@ you can call ```setCompression``` before each ```addFile()``` and ```addData()``
 
 The FileInfo class can be used to specify additional info like ownership or permissions when adding a file to
 an archive. 
+
+File name encoding
+------------------
+
+File names you pass to ```addFile()```, ```addData()``` or a FileInfo object are expected to be UTF-8 encoded.
+
+Zip archives record which encoding a name uses, so names read from a Zip are always returned as UTF-8. Names written
+outside the ASCII range are stored as UTF-8 and flagged as such, which is what current archivers expect.
+
+Tar archives have no field for that. Names are written exactly as you pass them and returned exactly as they are
+stored. Anything written by a current tool uses UTF-8, but an older archive may use any encoding without saying so,
+and such names are returned unchanged. Use ```mb_check_encoding()``` if you need to know, and convert them yourself
+if you know what encoding they use.

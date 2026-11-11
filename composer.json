@@ -8,6 +8,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/dokudeps/php-ixr.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dokudeps/geshi-1.0.git"
         }
     ],
     "require": {
@@ -16,7 +20,7 @@
         "splitbrain/php-archive": "~1.0",
         "phpseclib/phpseclib": "^3.0",
         "simplepie/simplepie": "^1.4",
-        "geshi/geshi": "dev-master as 1.0.x-dev",
+        "geshi/geshi": "dev-dokuwiki as 1.0.x-dev",
         "openpsa/universalfeedcreator": "^1.8",
         "aziraphale/email-address-validator": "^2",
         "splitbrain/lesserphp": "^0.10",

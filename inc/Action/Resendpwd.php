@@ -134,49 +134,39 @@ class Resendpwd extends AbstractAclAction
 
             @unlink($tfile);
             return true;
-        } else {
-            // we're in request phase
-
-            if (!$INPUT->post->bool('save')) return false;
-
-            if (!$INPUT->post->str('login')) {
-                msg($lang['resendpwdmissing'], -1);
-                return false;
-            } else {
-                $user = trim($auth->cleanUser($INPUT->post->str('login')));
-            }
-
-            $userinfo = $auth->getUserData($user, $requireGroups = false);
-            if (empty($userinfo['mail'])) {
-                msg($lang['resendpwdnouser'], -1);
-                return false;
-            }
-
-            // generate auth token
-            $token = md5(auth_randombytes(16)); // random secret
-            $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
-            $url = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
-
-            io_saveFile($tfile, $user);
-
-            $text = rawLocale('pwconfirm');
-            $trep = [
-                'FULLNAME' => $userinfo['name'],
-                'LOGIN' => $user,
-                'CONFIRM' => $url
-            ];
-
-            $mail = new \Mailer();
-            $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
-            $mail->subject($lang['regpwmail']);
-            $mail->setBody($text, $trep);
-            if ($mail->send()) {
-                msg($lang['resendpwdconfirm'], 1);
-            } else {
-                msg($lang['regmailfail'], -1);
-            }
-            return true;
         }
-        // never reached
+        // we're in request phase
+        if (!$INPUT->post->bool('save')) return false;
+        if (!$INPUT->post->str('login')) {
+            msg($lang['resendpwdmissing'], -1);
+            return false;
+        }
+        $user = trim($auth->cleanUser($INPUT->post->str('login')));
+        $userinfo = $auth->getUserData($user, $requireGroups = false);
+        if (empty($userinfo['mail'])) {
+            msg($lang['resendpwdnouser'], -1);
+            return false;
+        }
+        // generate auth token
+        $token = md5(auth_randombytes(16)); // random secret
+        $tfile = $conf['cachedir'] . '/' . $token[0] . '/' . $token . '.pwauth';
+        $url = wl('', ['do' => 'resendpwd', 'pwauth' => $token], true, '&');
+        io_saveFile($tfile, $user);
+        $text = rawLocale('pwconfirm');
+        $trep = [
+            'FULLNAME' => $userinfo['name'],
+            'LOGIN' => $user,
+            'CONFIRM' => $url
+        ];
+        $mail = new \Mailer();
+        $mail->to($userinfo['name'] . ' <' . $userinfo['mail'] . '>');
+        $mail->subject($lang['regpwmail']);
+        $mail->setBody($text, $trep);
+        if ($mail->send()) {
+            msg($lang['resendpwdconfirm'], 1);
+        } else {
+            msg($lang['regmailfail'], -1);
+        }
+        return true;
     }
 }

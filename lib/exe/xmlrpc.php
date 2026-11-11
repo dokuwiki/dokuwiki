@@ -14,6 +14,6 @@ session_write_close();  //close session
 $server = new XmlRpcServer(true);
 try {
     $server->serve();
-} catch (\Exception $e) {
+} catch (\Throwable $e) {
     $server->error($e->getCode() ?: 1, $e->getMessage());
 }

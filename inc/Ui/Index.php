@@ -113,7 +113,6 @@ class Index extends Ui
 
         $class = '';
         $id = '';
-
         if ($item['type'] == 'f') {
             // scroll to the current item
             if (isset($INFO) && $item['id'] == $INFO['id'] && $ACT == 'index') {
@@ -121,10 +120,11 @@ class Index extends Ui
                 $class = ' bounce';
             }
             return '<li class="level' . $item['level'] . $class . '" ' . $id . '>';
-        } elseif ($item['open']) {
-            return '<li class="open">';
-        } else {
-            return '<li class="closed">';
         }
+
+        if ($item['open']) {
+            return '<li class="open">';
+        }
+        return '<li class="closed">';
     }
 }

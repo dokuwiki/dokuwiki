@@ -12,7 +12,7 @@ header('Content-Type: application/json');
 $server = new JsonRpcServer();
 try {
     $result = $server->serve();
-} catch (\Exception $e) {
+} catch (\Throwable $e) {
     $result = $server->returnError($e);
 }
 

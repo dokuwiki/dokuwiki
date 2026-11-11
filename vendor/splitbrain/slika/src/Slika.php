@@ -19,6 +19,11 @@ class Slika
     const DEFAULT_OPTIONS = [
         'quality' => 92,
         'imconvert' => '/usr/bin/convert',
+        'imlimits' => [
+            'memory' => '256MiB',
+            'map' => '512MiB',
+            'disk' => '1GiB',
+        ],
     ];
 
     /**
@@ -27,6 +32,28 @@ class Slika
     private function __construct()
     {
         // there is no constructor.
+    }
+
+    /**
+     * Apply the given options on top of the defaults
+     *
+     * Options holding an array of their own are merged key by key, so overriding a single
+     * entry keeps the remaining defaults in place.
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function mergeOptions($options)
+    {
+        $merged = array_merge(self::DEFAULT_OPTIONS, $options);
+
+        foreach (self::DEFAULT_OPTIONS as $option => $default) {
+            if (is_array($default) && isset($options[$option]) && is_array($options[$option])) {
+                $merged[$option] = array_merge($default, $options[$option]);
+            }
+        }
+
+        return $merged;
     }
 
     /**
@@ -39,7 +66,7 @@ class Slika
      */
     public static function run($imagePath, $options = [])
     {
-        $options = array_merge(self::DEFAULT_OPTIONS, $options);
+        $options = self::mergeOptions($options);
 
         if (is_executable($options['imconvert'])) {
             return new ImageMagickAdapter($imagePath, $options);

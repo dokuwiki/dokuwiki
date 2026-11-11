@@ -2,6 +2,9 @@
 # but were removed later. An up to date DokuWiki should not have any of
 # the files installed
 
+# removed on 2026-09-29
+lib/tpl/dokuwiki/images/dokuwiki.svg
+
 # removed on 2026-06-25
 inc/Parsing/Handler/Quote.php
 inc/Parsing/ParserMode/Hr.php

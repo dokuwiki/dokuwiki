@@ -38,8 +38,7 @@ class ProfileDelete extends AbstractUserAction
         if (auth_deleteprofile()) {
             msg($lang['profdeleted'], 1);
             throw new ActionAbort('show');
-        } else {
-            throw new ActionAbort('profile');
         }
+        throw new ActionAbort('profile');
     }
 }

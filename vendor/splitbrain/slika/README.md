@@ -149,7 +149,69 @@ Options can be passed as associatiave array as the second parameter in `Slika::r
 
 The following options are availble currently:
 
-| Option      | Default            | Description                                |
-|-------------|--------------------|--------------------------------------------|
-| `imconvert` | `/usr/bin/convert` | The path to ImageMagick's `convert` binary |
-| `quality`   | `92`               | The quality when writing JPEG images       |
+| Option      | Default            | Description                                             |
+|-------------|--------------------|---------------------------------------------------------|
+| `imconvert` | `/usr/bin/convert` | The path to ImageMagick's `convert` binary              |
+| `quality`   | `92`               | The quality when writing JPEG images                    |
+| `imlimits`  | see below          | ImageMagick resource limits, as an associative array    |
+
+### Resource limits
+
+A small image file can still decode into an enormous amount of pixels. ImageMagick keeps
+the decoded image in a pixel cache, so a 3 MB JPEG holding 170 megapixels needs roughly
+2 GB of memory to resize — enough to exhaust a web server.
+
+The `imlimits` option caps that. Its entries are passed to ImageMagick as `-limit` arguments
+and default to:
+
+```php
+$options = ['imlimits' => [
+    'memory' => '256MiB',
+    'map' => '512MiB',
+    'disk' => '1GiB',
+]];
+```
+
+With these, memory use stays around 50 to 150 MB no matter how large the input is: once the
+pixel cache outgrows `memory` it spills to a memory mapped file, and once it outgrows `map` it
+spills to a temporary file on disk.
+
+`disk` bounds that temporary file and therefore also acts as an upper bound on the image size
+Slika will process at all. An image needing more cache than `disk` allows makes ImageMagick
+fail, which Slika reports as an `Exception`. How many pixels fit into the default 1 GB depends
+on how ImageMagick was compiled — about 90 megapixels for a `Q16-HDRI` build, more for `Q8`.
+
+Raise the limit to process larger images, at the cost of more temporary disk usage:
+
+```php
+Slika::run('huge.jpg', ['imlimits' => ['disk' => '4GiB']])
+    ->resize(500, 500)
+    ->save('output.jpg', 'jpg');
+```
+
+Entries are merged into the defaults individually, so the above keeps the default `memory` and
+`map` values. Setting an entry to `null` drops that limit and restores ImageMagick's own
+default, which is usually unlimited:
+
+```php
+# no disk limit at all
+Slika::run('huge.jpg', ['imlimits' => ['disk' => null]])
+```
+
+Any limit ImageMagick understands can be used as a key. `width` and `height` reject images
+exceeding the given pixel dimensions outright, which is cheaper than letting the pixel cache
+fill up first, and `time` aborts processing after the given number of seconds:
+
+```php
+$options = ['imlimits' => [
+    'memory' => '256MiB',
+    'map' => '512MiB',
+    'disk' => '1GiB',
+    'width' => 20000,
+    'height' => 20000,
+    'time' => 30,
+]];
+```
+
+These limits apply to the ImageMagick adapter only. The GD adapter is bound by PHP's own
+`memory_limit` instead.

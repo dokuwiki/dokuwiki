@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Hugo Gualandi <hugomg@ic.ufrj.br>
  * @author Daniel Dias Rodrigues <danieldiasr@gmail.com>
  * @author Eduardo Mozart de Oliveira <eduardomozart182@gmail.com>
  * @author Paul Nizan <paul_nizan@hormail.com>
@@ -60,6 +61,11 @@ $lang['title']                 = 'Título do wiki';
 $lang['start']                 = 'Nome da página inicial';
 $lang['lang']                  = 'Idioma';
 $lang['template']              = 'Modelo, ou a aparência do wiki.';
+$lang['syntax']                = 'Sintaxe da Wiki';
+$lang['syntax_o_dw']           = 'Apenas DokuWiki';
+$lang['syntax_o_md']           = 'Apenas Markdown';
+$lang['syntax_o_dw+md']        = 'Ambos (prefere DokuWiki)';
+$lang['syntax_o_md+dw']        = 'Ambos (prefere Markdown)';
 $lang['tagline']               = 'Slogan (caso o modelo suporte isso)';
 $lang['sidebar']               = 'Nome da página da barra lateral (caso o modelo suporte isso). Deixe em branco para desabilitar a barra lateral.';
 $lang['license']               = 'Sob qual licença o seu conteúdo deve ser disponibilizado?';
@@ -179,7 +185,6 @@ $lang['hidewarnings']          = 'Não exiba nenhum aviso emitido pelo PHP. Isso
 $lang['dnslookups']            = 'O DokuWiki procurará pelo nome de host dos endereços IP remotos dos usuários que estão editando as páginas. Caso você tenha um DNS lento, ele não esteja funcionando ou, ainda, você não queira esse recurso, desabilite essa opção.';
 $lang['jquerycdn']             = 'Os scripts jQuery e jQuery UI devem ser carregados a partir de uma CND? Isso adiciona requisições HTTP adicionais, mas os arquivos podem carregar mais rapidamente e os usuários podem já tê-los no cache.';
 $lang['trustedproxies']        = 'Lista separada por vírgulas de servidores proxy confiáveis ​​dos quais ler o cabeçalho X-Forwarded-For. Cada item na lista pode ser um endereço IPv4 ou IPv6, ou um intervalo CIDR IPv4 ou IPv6 (p. e., 10.0.0.0/8). Deixe em branco para não confiar em nenhum proxy.';
-$lang['realip']                = 'Confiar no cabeçalho X-Real-IP. Habilite esta opção somente se o seu servidor gravar este cabeçalho, caso contrário, ele poderá ser falsificado.';
 $lang['jquerycdn_o_0']         = 'Sem CDN, somente entrega local';
 $lang['jquerycdn_o_jquery']    = 'CDN em code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN em cdnjs.com';

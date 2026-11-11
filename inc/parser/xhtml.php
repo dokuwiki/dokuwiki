@@ -263,9 +263,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         if ($returnonly) {
             return $header;
-        } else {
-            $this->doc .= $header;
         }
+        $this->doc .= $header;
     }
 
     /**
@@ -845,9 +844,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
     {
         if ($returnonly) {
             return $this->internallink($link, $link, null, true);
-        } else {
-            $this->internallink($link, $link);
         }
+        $this->internallink($link, $link);
     }
 
     /**
@@ -871,9 +869,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
 
         if ($returnonly) {
             return $doc;
-        } else {
-            $this->doc .= $doc;
         }
+        $this->doc .= $doc;
     }
 
     /**
@@ -965,9 +962,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         //output formatted
         if ($returnonly) {
             return $this->_formatLink($link);
-        } else {
-            $this->doc .= $this->_formatLink($link);
         }
+        $this->doc .= $this->_formatLink($link);
     }
 
     /**
@@ -994,9 +990,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if (!$url) {
             if ($returnonly) {
                 return $name;
-            } else {
-                $this->doc .= $name;
             }
+            $this->doc .= $name;
             return;
         }
 
@@ -1026,9 +1021,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         //output formatted
         if ($returnonly) {
             return $this->_formatLink($link);
-        } else {
-            $this->doc .= $this->_formatLink($link);
         }
+        $this->doc .= $this->_formatLink($link);
     }
 
     /**
@@ -1087,7 +1081,9 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if ($returnonly) {
             if ($url == '') return $link['name'];
             return $this->_formatLink($link);
-        } elseif ($url == '') {
+        }
+
+        if ($url == '') {
             $this->doc .= $link['name'];
         } else $this->doc .= $this->_formatLink($link);
     }
@@ -1126,9 +1122,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         //output formatted
         if ($returnonly) {
             return $this->_formatLink($link);
-        } else {
-            $this->doc .= $this->_formatLink($link);
         }
+        $this->doc .= $this->_formatLink($link);
     }
 
     /**
@@ -1174,9 +1169,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         //output formatted
         if ($returnonly) {
             return $this->_formatLink($link);
-        } else {
-            $this->doc .= $this->_formatLink($link);
         }
+        $this->doc .= $this->_formatLink($link);
     }
 
     /**
@@ -1254,10 +1248,11 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if ($return) {
             if ($linking == 'nolink' || $noLink) {
                 return $link['name'];
-            } else {
-                return $this->_formatLink($link);
             }
-        } elseif ($linking == 'nolink' || $noLink) {
+            return $this->_formatLink($link);
+        }
+
+        if ($linking == 'nolink' || $noLink) {
             $this->doc .= $link['name'];
         } else {
             $this->doc .= $this->_formatLink($link);
@@ -1325,8 +1320,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         //output formatted
         if ($return) {
             if ($linking == 'nolink' || $noLink) return $link['name'];
-            else return $this->_formatLink($link);
-        } elseif ($linking == 'nolink' || $noLink) {
+            return $this->_formatLink($link);
+        }
+
+        if ($linking == 'nolink' || $noLink) {
             $this->doc .= $link['name'];
         } else $this->doc .= $this->_formatLink($link);
     }
@@ -1711,7 +1708,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 // return the title of the picture
                 if ($title === null || $title === "") {
                     // just show the sourcename
-                    $title = $this->_xmlEntities(PhpString::basename(noNS($src)));
+                    return $this->_xmlEntities(PhpString::basename(noNS($src)));
                 }
                 return $title;
             }
@@ -1831,7 +1828,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
         if (is_array($title)) {
             $isImage = true;
             return $this->_imageTitle($title);
-        } elseif (is_null($title) || trim($title) == '') {
+        }
+        if (is_null($title) || trim($title) == '') {
             if (useHeading($linktype) && $id) {
                 $heading = p_get_first_heading($id);
                 if (!blank($heading)) {
@@ -1839,9 +1837,8 @@ class Doku_Renderer_xhtml extends Doku_Renderer
                 }
             }
             return $this->_xmlEntities($default);
-        } else {
-            return $this->_xmlEntities($title);
         }
+        return $this->_xmlEntities($title);
     }
 
     /**

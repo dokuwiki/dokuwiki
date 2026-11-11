@@ -103,7 +103,15 @@ class GfmQuote extends AbstractMode
             $cursor += strlen($line) + 1; // +1 for the \n consumed by explode
         }
 
-        $currentDepth = 0;
+        $end = $pos + strlen($match);
+
+        // the whole body goes into one nest, which Block copies verbatim, so
+        // only the outermost marker pair reaches the document call stream
+        $handler->addCall('quote_open', [], $pos);
+        $nest = new Nest($handler->getCallWriter());
+        $handler->setCallWriter($nest);
+
+        $currentDepth = 1;
         $buffer = [];
         $segmentStart = $pos;
 
@@ -129,10 +137,14 @@ class GfmQuote extends AbstractMode
         if ($buffer) {
             $this->emitBody($handler, $segmentStart, implode("\n", $buffer));
         }
-        while ($currentDepth > 0) {
-            $handler->addCall('quote_close', [], $pos + strlen($match));
+        while ($currentDepth > 1) {
+            $handler->addCall('quote_close', [], $end);
             $currentDepth--;
         }
+
+        // an empty quote has no body to wrap
+        $handler->setCallWriter($nest->calls ? $nest->process() : $nest->getCallWriter());
+        $handler->addCall('quote_close', [], $end);
 
         return true;
     }
@@ -174,12 +186,12 @@ class GfmQuote extends AbstractMode
     }
 
     /**
-     * Sub-parse a body segment and emit its calls inside a Nest.
+     * Sub-parse a body segment and emit its calls on the handler.
      *
-     * Drops `document_start` / `document_end` from the sub-parser
+     * Drops document_start and document_end from the sub-parser
      * output. Under DW-preferred syntax, also runs the linebreak
      * post-pass so paragraph wrapping is flattened into explicit
-     * `linebreak` calls. Empty bodies emit nothing.
+     * linebreak calls. Empty bodies emit nothing.
      *
      * `$segmentStart` is the absolute byte offset of the segment's
      * first content character within the source. Sub-handler positions
@@ -217,15 +229,9 @@ class GfmQuote extends AbstractMode
             $calls = $this->flattenForDwRendering($calls);
         }
 
-        if (!$calls) return;
-
-        $outer = $handler->getCallWriter();
-        $nest = new Nest($outer);
-        $handler->setCallWriter($nest);
         foreach ($calls as $call) {
             $handler->addCall($call[0], $call[1], $segmentStart + $call[2]);
         }
-        $handler->setCallWriter($nest->process());
     }
 
     /**

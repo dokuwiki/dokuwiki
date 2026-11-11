@@ -410,7 +410,7 @@ class Mailer
         $name = trim($name, " \t\"");
         $name = str_replace('"', '\"', $name, $count);
         if ($count > 0 || str_contains($name, ',')) {
-            $name = '"' . $name . '"';
+            return '"' . $name . '"';
         }
         return $name;
     }

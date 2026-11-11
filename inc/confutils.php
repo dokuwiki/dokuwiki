@@ -41,15 +41,13 @@ function mimetype($file, $knownonly = true)
     if (!isset($mtypes[$ext])) {
         if ($knownonly) {
             return [false, false, false];
-        } else {
-            return [$ext, 'application/octet-stream', true];
         }
+        return [$ext, 'application/octet-stream', true];
     }
     if ($mtypes[$ext][0] == '!') {
         return [$ext, substr($mtypes[$ext], 1), true];
-    } else {
-        return [$ext, $mtypes[$ext], false];
     }
+    return [$ext, $mtypes[$ext], false];
 }
 
 /**
