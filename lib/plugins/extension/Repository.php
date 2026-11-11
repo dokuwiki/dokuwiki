@@ -153,7 +153,7 @@ class Repository
             }
         } catch (JsonException $e) {
             $this->revokeAccess();
-            throw new Exception('repo_badresponse', 0, $e);
+            throw new Exception('repo_badresponse', [], $e);
         }
     }
 
@@ -260,7 +260,7 @@ class Repository
             $items = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             $this->revokeAccess();
-            throw new Exception('repo_badresponse', 0, $e);
+            throw new Exception('repo_badresponse', [], $e);
         }
 
         $results = [];
