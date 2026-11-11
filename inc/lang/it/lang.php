@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Paolo Supino <paolo@supino.org>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
  * @author Simone Perin <simoneperin.92@libero.it>
  * @author Dario <darioriso@virgilio.it>
@@ -135,6 +136,12 @@ $lang['js']['media_drop']      = 'Sgancia i files qui per caricarli';
 $lang['js']['media_cancel']    = 'rimuovi';
 $lang['js']['media_overwrt']   = 'Sovrascrivi i file esistenti';
 $lang['js']['data_insecure']   = 'ATTENZIONE: sembra che la cartella "data" non sia adeguatamente protetta. Vedi <a href="https://www.dokuwiki.org/security#web_access_security">Sicurezza Accesso Web in DokuWiki</a>.';
+$lang['js']['size_larger']     = 'Aumenta le dimensioni del campo di input';
+$lang['js']['size_smaller']    = 'Ridurre le dimensioni del campo di input';
+$lang['js']['size_wrap']       = 'Avvolgimento della linea di interruzione';
+$lang['js']['clipboard_button'] = 'Copia';
+$lang['js']['clipboard_success'] = 'Copiato!';
+$lang['js']['clipboard_error'] = 'Campo copia';
 $lang['search_exact_match']    = 'Corrispondenza esatta';
 $lang['search_starts_with']    = 'Comincia con';
 $lang['search_ends_with']      = 'Finisce con';
