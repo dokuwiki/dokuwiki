@@ -140,8 +140,7 @@ class SettingMulticheckbox extends SettingString
     {
 
         // handle other
-        $other = trim($input['other']);
-        $other = empty($other) ? [] : explode(',', str_replace(' ', '', $input['other']));
+        $other = array_filter(array_map('trim', explode(',', $input['other'] ?? '')));
         unset($input['other']);
 
         $array = array_unique(array_merge($input, $other));
