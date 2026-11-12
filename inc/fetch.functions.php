@@ -54,6 +54,7 @@ function sendFile($file, $mime, $dl, $cache, $public = false, $orig = null, $csp
     if ($maxage) {
         if ($public) {
             // cache publically
+			header_remove('Pragma');
             header('Expires: ' . gmdate("D, d M Y H:i:s", $expires) . ' GMT');
             header('Cache-Control: public, proxy-revalidate, no-transform, max-age=' . $maxage);
         } else {
