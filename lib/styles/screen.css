@@ -99,10 +99,16 @@ div.picker {
     right: -99999em !important;
 }
 
-/* copy to clipboard button on code blocks */
-.dokuwiki .code,
-.dokuwiki .file {
+/* copy to clipboard button on code blocks, placed in a zero-size float in front of the code */
+.dokuwiki .code-copy-anchor {
+    float: right;
     position: relative;
+    width: 0;
+    height: 0;
+}
+
+[dir=rtl] .dokuwiki .code-copy-anchor {
+    float: left;
 }
 
 .dokuwiki .code-copy-btn {
