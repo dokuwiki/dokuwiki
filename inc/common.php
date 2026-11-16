@@ -119,7 +119,7 @@ function getSecurityToken()
 
     // CSRF checks are only for logged in users - do not generate for anonymous
     if (trim($user) == '' || trim($session) == '') return '';
-    return PassHash::hmac('md5', $session . $user, auth_cookiesalt());
+    return PassHash::hmac('sha256', $session . $user, auth_cookiesalt());
 }
 
 /**
@@ -135,7 +135,7 @@ function checkSecurityToken($token = null)
     if (!$INPUT->server->str('REMOTE_USER')) return true; // no logged in user, no need for a check
 
     if (is_null($token)) $token = $INPUT->str('sectok');
-    if (getSecurityToken() != $token) {
+    if (!hash_equals(getSecurityToken(), $token)) {
         msg('Security Token did not match. Possible CSRF attack.', -1);
         return false;
     }
