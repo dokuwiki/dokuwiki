@@ -578,9 +578,6 @@ class PassHash
         } else {
             $iter = (int) $opts['iter'];
         }
-        if (!function_exists('hash_pbkdf2')) {
-            throw new Exception('This PHP installation has no PBKDF2 support');
-        }
         if (!in_array($algo, hash_algos())) {
             throw new Exception("This PHP installation has no $algo support");
         }
@@ -613,9 +610,6 @@ class PassHash
             $iter = 24000;
         } else {
             $iter = (int) $opts['iter'];
-        }
-        if (!function_exists('hash_pbkdf2')) {
-            throw new \Exception('This PHP installation has no PBKDF2 support');
         }
         if (!in_array($algo, hash_algos())) {
             throw new \Exception("This PHP installation has no $algo support");
@@ -819,15 +813,13 @@ class PassHash
     }
 
     /**
-     * Wraps around native hash_hmac() or reimplents it
+     * Create a keyed hash using the HMAC method
      *
      * This is not directly used as password hashing method, and thus isn't callable via the
      * verify_hash() method. It should be used to create signatures and might be used in other
      * password hashing methods.
      *
      * @see hash_hmac()
-     * @author KC Cloyd
-     * @link http://php.net/manual/en/function.hash-hmac.php#93440
      *
      * @param string $algo Name of selected hashing algorithm (i.e. "md5", "sha256", "haval160,4",
      *                     etc..) See hash_algos() for a list of supported algorithms.
@@ -838,33 +830,7 @@ class PassHash
      */
     public static function hmac($algo, $data, $key, $raw_output = false)
     {
-        // use native function if available and not in unit test
-        if (function_exists('hash_hmac') && !defined('SIMPLE_TEST')) {
-            return hash_hmac($algo, $data, $key, $raw_output);
-        }
-
-        $algo = strtolower($algo);
-        $pack = 'H' . strlen($algo('test'));
-        $size = 64;
-        $opad = str_repeat(chr(0x5C), $size);
-        $ipad = str_repeat(chr(0x36), $size);
-
-        if (strlen($key) > $size) {
-            $key = str_pad(pack($pack, $algo($key)), $size, chr(0x00));
-        } else {
-            $key = str_pad($key, $size, chr(0x00));
-        }
-
-        for ($i = 0; $i < strlen($key) - 1; $i++) {
-            $ochar = $opad[$i] ^ $key[$i];
-            $ichar = $ipad[$i] ^ $key[$i];
-            $opad[$i] = $ochar;
-            $ipad[$i] = $ichar;
-        }
-
-        $output = $algo($opad . pack($pack, $algo($ipad . $data)));
-
-        return ($raw_output) ? pack($pack, $output) : $output;
+        return hash_hmac($algo, $data, $key, $raw_output);
     }
 
     /**
