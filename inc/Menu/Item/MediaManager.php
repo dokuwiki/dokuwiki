@@ -23,6 +23,6 @@ class MediaManager extends AbstractItem
 
         $this->svg = DOKU_INC . 'lib/images/menu/11-mediamanager_folder-image.svg';
         $this->type = 'mediaManager';
-        $this->params = ['ns' => $imgNS, 'image' => $IMG, 'do' => 'media'];
+        $this->params = ['ns' => (string)$imgNS, 'image' => $IMG, 'do' => 'media'];
     }
 }
