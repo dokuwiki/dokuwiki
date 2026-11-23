@@ -59,4 +59,75 @@ class ManagerTest extends DokuWikiTest
         $this->assertNotEquals($updated, $installed);
         $this->assertEquals('http://example.com/update', $manager->getDownloadURL());
     }
+
+    /**
+     * Data provider for testCleanURL
+     *
+     * @return array[] URL and expected result
+     */
+    public function provideCleanURL()
+    {
+        return [
+            ['https://example.com/plugin.zip', 'https://example.com/plugin.zip'],
+            ['https://example.com/plugin.zip?token=secret', 'https://example.com/plugin.zip'],
+            ['https://example.com/plugin.zip#frag', 'https://example.com/plugin.zip'],
+            ['https://user:pass@example.com/plugin.zip', 'https://example.com/plugin.zip'],
+            ['https://user@example.com/plugin.zip?a=b#c', 'https://example.com/plugin.zip'],
+            ['https://example.com/@user/plugin.zip', 'https://example.com/@user/plugin.zip'],
+            ['https://example.com:8080/plugin.zip?a=b', 'https://example.com:8080/plugin.zip'],
+        ];
+    }
+
+    /**
+     * Credentials, query and fragment are removed from URLs
+     *
+     * @dataProvider provideCleanURL
+     * @param string $url
+     * @param string $expected
+     */
+    public function testCleanURL($url, $expected)
+    {
+        $extension = $this->createMock(Extension::class);
+        $extension->method('getInstallDir')->willReturn(io_mktmpdir());
+        $manager = new Manager($extension);
+
+        $this->assertEquals($expected, $this->callInaccessibleMethod($manager, 'cleanURL', [$url]));
+    }
+
+    /**
+     * Secrets in the download URL are not written to manager.dat
+     */
+    public function testStoreUpdateRemovesSecrets()
+    {
+        $root = io_mktmpdir();
+
+        $extension = $this->createMock(Extension::class);
+        $extension->method('getInstallDir')->willReturn($root);
+
+        $manager = new Manager($extension);
+        $manager->storeUpdate('https://user:pass@example.com/plugin.zip?token=secret');
+
+        $content = file_get_contents($root . '/manager.dat');
+        $this->assertStringContainsString('downloadurl=https://example.com/plugin.zip' . DOKU_LF, $content);
+        $this->assertStringNotContainsString('secret', $content);
+        $this->assertStringNotContainsString('pass', $content);
+    }
+
+    /**
+     * Secrets in an existing manager.dat are not returned, and do not cause a URL change
+     */
+    public function testExistingSecrets()
+    {
+        $root = io_mktmpdir();
+        file_put_contents($root . '/manager.dat', "downloadurl=https://user:pass@example.com/plugin.zip?token=secret\n");
+
+        $extension = $this->createMock(Extension::class);
+        $extension->method('getInstallDir')->willReturn($root);
+        $manager = new Manager($extension);
+
+        $this->assertEquals('https://example.com/plugin.zip', $manager->getDownloadURL());
+        $this->assertFalse($manager->hasChangedURL('https://example.com/plugin.zip?token=other'));
+        $this->assertTrue($manager->hasChangedURL('https://example.com/other.zip'));
+        $this->assertFalse($manager->hasChangedURL(''));
+    }
 }
