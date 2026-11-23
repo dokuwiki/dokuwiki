@@ -33,11 +33,11 @@ class Manager
      *
      * It is called by Installer when installing or updating an extension
      *
-     * @param $url
+     * @param string $url the download URL
      */
     public function storeUpdate($url)
     {
-        $this->data['downloadurl'] = $url;
+        $this->data['downloadurl'] = $this->cleanURL($url);
         if (isset($this->data['installed'])) {
             // it's an update
             $this->data['updated'] = date('r');
@@ -53,6 +53,22 @@ class Manager
         io_saveFile($this->path, $data);
     }
 
+
+    /**
+     * Remove credentials, query and fragment from a URL
+     *
+     * The manager.dat file can be readable on the web, so it must not contain credentials or tokens.
+     *
+     * @param string $url
+     * @return string
+     */
+    protected function cleanURL($url)
+    {
+        $parts = parse_url($url);
+        $clean = $parts['scheme'] . '://' . $parts['host'];
+        if (isset($parts['port'])) $clean .= ':' . $parts['port'];
+        return $clean . ($parts['path'] ?? '');
+    }
 
     /**
      * Reads the manager.dat file and fills the managerInfo array
@@ -89,9 +105,31 @@ class Manager
         }
     }
 
+    /**
+     * Get the URL of the last download
+     *
+     * @return string empty when no download is recorded
+     */
     public function getDownloadURL()
     {
-        return $this->data['downloadurl'] ?? '';
+        $url = $this->data['downloadurl'] ?? '';
+        if (!$url) return '';
+        return $this->cleanURL($url);
+    }
+
+    /**
+     * Check if the given URL differs from the URL of the last download
+     *
+     * The comparison ignores credentials, query and fragment.
+     *
+     * @param string $url the current download URL
+     * @return bool false when one of the URLs is empty
+     */
+    public function hasChangedURL($url)
+    {
+        $last = $this->getDownloadURL();
+        if (!$last || !$url) return false;
+        return $last !== $this->cleanURL($url);
     }
 
     /**

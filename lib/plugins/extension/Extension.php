@@ -516,11 +516,7 @@ class Extension implements \Stringable
      */
     public function hasChangedURL()
     {
-        $last = $this->getManager()->getDownloadURL();
-        if (!$last) return false;
-        $url = $this->getDownloadURL();
-        if (!$url) return false;
-        return $last !== $url;
+        return $this->getManager()->hasChangedURL($this->getDownloadURL());
     }
 
     /**
