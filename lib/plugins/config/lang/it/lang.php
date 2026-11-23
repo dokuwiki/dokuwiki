@@ -3,6 +3,7 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
+ * @author Tassoman <tassoman@gmail.com>
  * @author Paolo Supino <paolo@supino.org>
  * @author Claudio Tam <claudio.tamburrino1@gmail.com>
  * @author Roberto Bellingeri <bellingeri@netguru.it>
@@ -54,7 +55,7 @@ $lang['_msg_setting_no_class'] = 'Nessuna classe definita.';
 $lang['_msg_setting_no_known_class'] = 'Classe di impostazioni non disponibile.';
 $lang['_msg_setting_no_default'] = 'Nessun valore predefinito.';
 $lang['title']                 = 'Titolo del wiki';
-$lang['start']                 = 'Nome della pagina iniziale';
+$lang['start']                 = 'Nome della pagina iniziale di ogni categoria';
 $lang['lang']                  = 'Lingua';
 $lang['template']              = 'Modello';
 $lang['syntax']                = 'Variante della sintassi wiki';
@@ -154,7 +155,7 @@ $lang['rss_media_o_pages']     = 'pagine';
 $lang['rss_media_o_media']     = 'media';
 $lang['updatecheck']           = 'Controllare aggiornamenti e avvisi di sicurezza? DokuWiki deve contattare update.dokuwiki.org per questa funzione.';
 $lang['userewrite']            = 'Usa il rewrite delle URL';
-$lang['useslash']              = 'Usa la barra rovescia (slash) come separatore nelle URL';
+$lang['useslash']              = 'Usa la barra (/) come separatore delle categorie nelle URL';
 $lang['sepchar']               = 'Separatore di parole nei nomi di pagina';
 $lang['canonical']             = 'Usa URL canoniche';
 $lang['fnencode']              = 'Metodo per codificare i filenames non-ASCII.';
@@ -169,7 +170,7 @@ $lang['xsendfile']             = 'Usare l\'header X-Sendfile per permettere al w
 $lang['renderer_xhtml']        = 'Renderer da usare per la visualizzazione del wiki (xhtml)';
 $lang['renderer__core']        = '%s (dokuwiki)';
 $lang['renderer__plugin']      = '%s (plugin)';
-$lang['search_nslimit']        = 'Limita la ricerca agli attuali spazi dei nomi X. Quando una ricerca viene eseguita da una pagina all\'interno di uno spazio dei nomi più profondo, i primi spazi dei nomi X verranno aggiunti come filtro';
+$lang['search_nslimit']        = 'Limita la ricerca a X categorie. Quando una ricerca viene eseguita da una pagina all\'interno di una categoria più in profondità, le prime X categorie verranno aggiunti come filtro';
 $lang['search_fragment']       = 'Specificare il comportamento di ricerca del frammento predefinito';
 $lang['search_fragment_o_exact'] = 'esatto';
 $lang['search_fragment_o_starts_with'] = 'inizia con';
@@ -181,6 +182,7 @@ $lang['hidewarnings']          = 'Non visualizzare alcun avviso emesso da PHP. Q
 $lang['dnslookups']            = 'Dokuwiki farà il lookup dei nomi host per ricavare l\'indirizzo IP remoto degli utenti che modificano le pagine. Se hai un DNS lento o non funzionante o se non vuoi questa funzione, disabilita l\'opzione';
 $lang['jquerycdn']             = 'Vuoi che gli script jQuery e jQuery UI siano caricati da una CDN? Questo richiederà richieste HTTP aggiuntive ma i file potrebbero caricarsi più velocemente e gli utenti potrebbero averli già in cache.';
 $lang['trustedproxies']        = 'Elenco separato da virgole di server proxy attendibili da cui leggere l\'intestazione X-Forwarded-For. Ogni elemento nell\'array può essere un indirizzo IPv4 o IPv6, oppure un intervallo CIDR IPv4 o IPv6 (ad esempio 10.0.0.0/8). Lasciare vuoto per non considerare attendibile alcun proxy.';
+$lang['client_ip_header']      = 'Considera un header personalizzato anziché il solito X_REAL_IP. Attivare soltanto se il tuo server scrive effettivamente l’header, altrimenti potrebbe essere alterato da altri.';
 $lang['jquerycdn_o_0']         = 'Nessuna CDN, solo consegna locale';
 $lang['jquerycdn_o_jquery']    = 'CDN presso code.jquery.com';
 $lang['jquerycdn_o_cdnjs']     = 'CDN presso cdnjs.com';
