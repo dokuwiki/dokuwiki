@@ -145,6 +145,9 @@ class ApiCore
         if (!$conf['useacl']) return 0;
         if (!$auth instanceof AuthPlugin) return 0;
 
+        $user = $auth->cleanUser(stripctl($user));
+        $pass = stripctl($pass);
+
         @session_start(); // reopen session for login
         $ok = null;
         if ($auth->canDo('external')) {
