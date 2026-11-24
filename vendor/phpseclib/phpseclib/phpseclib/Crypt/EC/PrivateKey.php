@@ -74,7 +74,13 @@ final class PrivateKey extends EC implements Common\PrivateKey
             }
             if (function_exists('sodium_crypto_scalarmult')) {
                 $dA = str_pad($this->dA->toBytes(), 32, "\0", STR_PAD_LEFT);
-                return sodium_crypto_scalarmult($dA, $coordinates);
+                try {
+                    return sodium_crypto_scalarmult($dA, $coordinates);
+                } catch (\SodiumException $e) {
+                    if (self::$forcedEngine == 'libsodium') {
+                        throw new BadConfigurationException('Engine libsodium is forced but was unable to perform multiplication because of ' . $e->getMessage());
+                    }
+                }
             }
         }
 

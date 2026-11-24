@@ -231,6 +231,22 @@ abstract class Base64 implements EncoderInterface
             // Just remove all padding.
             $encodedString = rtrim($encodedString, '=');
             $srcLen = strlen($encodedString);
+
+            if (extension_loaded('sodium')) {
+                $variant = match(static::class) {
+                    Base64::class => SODIUM_BASE64_VARIANT_ORIGINAL_NO_PADDING,
+                    Base64UrlSafe::class => SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING,
+                    default => 0,
+                };
+                if ($variant > 0) {
+                    try {
+                        return sodium_base642bin($encodedString, $variant);
+                    } catch (SodiumException) {
+                        // Non-canonical input. Fall through to the permissive decoder below,
+                        // which accepts what this mode has always accepted.
+                    }
+                }
+            }
         }
 
         $err = 0;

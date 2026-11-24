@@ -154,7 +154,7 @@ abstract class RFC4648
         #[SensitiveParameter]
         string $str
     ): string {
-        return Base32::encodeUpper($str);
+        return Base32Hex::encodeUpper($str);
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class RFC4648
         #[SensitiveParameter]
         string $str
     ): string {
-        return Base32::decodeUpper($str, true);
+        return Base32Hex::decodeUpper($str, true);
     }
 
     /**

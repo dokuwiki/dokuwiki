@@ -79,3 +79,24 @@ Tar archives have no field for that. Names are written exactly as you pass them 
 stored. Anything written by a current tool uses UTF-8, but an older archive may use any encoding without saying so,
 and such names are returned unchanged. Use ```mb_check_encoding()``` if you need to know, and convert them yourself
 if you know what encoding they use.
+
+Extracting untrusted archives
+-----------------------------
+
+A small archive can expand to a very large size or to very many files. By default, ```extract()``` has no limits.
+Set limits before you extract archives from an untrusted source:
+
+```php
+$zip = new Zip();
+$zip->setExtractionSizeLimit(100 * 1024 * 1024); // bytes of all extracted files
+$zip->setExtractionFileLimit(1000);              // number of extracted files and directories
+$zip->open('upload.zip');
+$zip->extract('/tmp/upload');
+```
+
+Before each entry, ```extract()``` compares the size declared in the archive with the limit. When an entry would
+exceed a limit, it throws an ArchiveLimitException. Files extracted up to that point stay on disk.
+
+For Tar archives, the size limit also applies to all data that ```extract()``` reads from the uncompressed archive,
+including headers and skipped entries. Since Tar needs to decompress the file as a whole, this is the only way to
+limit the time to decompress a Tar archive.

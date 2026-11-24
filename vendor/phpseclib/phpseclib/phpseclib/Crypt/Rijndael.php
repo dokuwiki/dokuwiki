@@ -262,7 +262,7 @@ class Rijndael extends BlockCipher
      *
      * This is mainly just a wrapper to set things up for \phpseclib3\Crypt\Common\SymmetricKey::isValidEngine()
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::__construct()
+     * Common\SymmetricKey::__construct()
      * @param int $engine
      * @return bool
      */
@@ -280,10 +280,9 @@ class Rijndael extends BlockCipher
                 if (!extension_loaded('openssl')) {
                     return false;
                 }
-                $methods = openssl_get_cipher_methods();
                 return $this->mode == self::MODE_GCM &&
                        version_compare(PHP_VERSION, '7.1.0', '>=') &&
-                       in_array('aes-' . $this->getKeyLength() . '-gcm', $methods) &&
+                       self::isValidOpenSSLCipher('aes-' . $this->getKeyLength() . '-gcm') &&
                        $this->block_size == 16;
             case self::ENGINE_OPENSSL:
                 if ($this->block_size != 16) {
@@ -511,7 +510,7 @@ class Rijndael extends BlockCipher
     /**
      * Setup the key (expansion)
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setupKey()
+     * Common\SymmetricKey::setupKey()
      */
     protected function setupKey()
     {
@@ -828,7 +827,7 @@ class Rijndael extends BlockCipher
     /**
      * Setup the performance-optimized function for de/encrypt()
      *
-     * @see \phpseclib3\Crypt\Common\SymmetricKey::setupInlineCrypt()
+     * Common\SymmetricKey::setupInlineCrypt()
      */
     protected function setupInlineCrypt()
     {

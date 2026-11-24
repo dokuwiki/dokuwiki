@@ -16,7 +16,6 @@ namespace splitbrain\PHPArchive;
  * encoding and can not be recognized as such.
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- * @package splitbrain\PHPArchive
  * @license MIT
  */
 class Tar extends Archive
@@ -54,6 +53,9 @@ class Tar extends Archive
     protected $contentUntil = 0;
     protected $skipUntil = 0;
     protected $paxGlobal = array();
+
+    /** @var int maximum position extract() may read to in the uncompressed archive, 0 for no limit */
+    protected $readLimit = 0;
 
     /**
      * Sets the compression to use
@@ -208,6 +210,7 @@ class Tar extends Archive
      * @param string $include a regular expression of files to include
      * @throws ArchiveIOException
      * @throws ArchiveCorruptedException
+     * @throws ArchiveLimitException
      * @return FileInfo[]
      */
     public function extract($outdir, $strip = '', $exclude = '', $include = '')
@@ -216,66 +219,47 @@ class Tar extends Archive
             throw new ArchiveIOException('Can not read from a closed archive');
         }
 
-        $outdir = rtrim($outdir, '/');
-        @mkdir($outdir, 0777, true);
-        if (!is_dir($outdir)) {
-            throw new ArchiveIOException("Could not create directory '$outdir'");
-        }
-
         $extracted = array();
-        while ($dat = $this->readbytes(512)) {
-            // read the file header
-            $header = $this->parseHeader($dat);
-            if (!is_array($header)) {
-                continue;
-            }
-            $fileinfo = $this->header2fileinfo($header);
+        $written   = 0;
 
-            // apply strip rules
-            $fileinfo->strip($strip);
+        try {
+            $this->readLimit = $this->extractionSizeLimit;
+            $outdir = $this->createOutputDirectory($outdir);
 
-            // skip unwanted files
-            if (!strlen($fileinfo->getPath()) || !$fileinfo->matchExpression($include, $exclude)) {
-                $this->skipbytes(ceil($header['size'] / 512) * 512);
-                continue;
-            }
+            while ($dat = $this->readbytes(512)) {
+                // read the file header
+                $header = $this->parseHeader($dat);
+                if (!is_array($header)) {
+                    continue;
+                }
+                $fileinfo = $this->header2fileinfo($header);
 
-            // create output directory
-            $output    = $outdir.'/'.$fileinfo->getPath();
-            $directory = ($fileinfo->getIsdir()) ? $output : dirname($output);
-            if (!file_exists($directory)) {
-                mkdir($directory, 0777, true);
-            }
+                // apply strip rules
+                $fileinfo->strip($strip);
 
-            // extract data
-            if (!$fileinfo->getIsdir()) {
-                $fp = @fopen($output, "wb");
-                if (!$fp) {
-                    throw new ArchiveIOException('Could not open file for writing: '.$output);
+                // skip unwanted files
+                if (!strlen($fileinfo->getPath()) || !$fileinfo->matchExpression($include, $exclude)) {
+                    $this->skipbytes(ceil($header['size'] / 512) * 512);
+                    continue;
                 }
 
-                $size = floor($header['size'] / 512);
-                for ($i = 0; $i < $size; $i++) {
-                    fwrite($fp, $this->readbytes(512), 512);
+                if (!$fileinfo->getIsdir()) {
+                    $written += $header['size'];
                 }
-                if (($header['size'] % 512) != 0) {
-                    fwrite($fp, $this->readbytes(512), $header['size'] % 512);
+                $this->checkExtractionLimits($fileinfo->getPath(), count($extracted) + 1, $written);
+
+                $this->extractEntry($header, $fileinfo, $outdir.'/'.$fileinfo->getPath());
+
+                if(is_callable($this->callback)) {
+                    call_user_func($this->callback, $fileinfo);
                 }
-
-                fclose($fp);
-                @touch($output, $fileinfo->getMtime());
-                @chmod($output, $fileinfo->getMode());
-            } else {
-                $this->skipbytes(ceil($header['size'] / 512) * 512); // the size is usually 0 for directories
+                $extracted[] = $fileinfo;
             }
-
-            if(is_callable($this->callback)) {
-                call_user_func($this->callback, $fileinfo);
-            }
-            $extracted[] = $fileinfo;
+        } finally {
+            $this->readLimit = 0;
+            $this->close();
         }
 
-        $this->close();
         return $extracted;
     }
 
@@ -503,10 +487,61 @@ class Tar extends Archive
     }
 
     /**
+     * Write the data of a single entry to disk
+     *
+     * Expects the read position at the start of the entry's data and moves it to the next header.
+     *
+     * @param array $header the parsed header of the entry
+     * @param FileInfo $fileinfo the entry with strip rules applied
+     * @param string $output the path to write the entry to
+     * @throws ArchiveIOException
+     * @throws ArchiveCorruptedException
+     */
+    protected function extractEntry($header, $fileinfo, $output)
+    {
+        $this->createOutputDirectory(($fileinfo->getIsdir()) ? $output : dirname($output));
+
+        if ($fileinfo->getIsdir()) {
+            $this->skipbytes(ceil($header['size'] / 512) * 512); // the size is usually 0 for directories
+            return;
+        }
+
+        $fp = @fopen($output, "wb");
+        if (!$fp) {
+            throw new ArchiveIOException('Could not open file for writing: '.$output);
+        }
+
+        try {
+            $size = $header['size'];
+            while ($size > 0) {
+                $read_size = min($size, 512);
+                $buffer    = $this->readbytes(512);
+                if (strlen($buffer) < $read_size) {
+                    throw new ArchiveCorruptedException(
+                        'Could not read the expected data for '.$header['filename']
+                    );
+                }
+                if (@fwrite($fp, $buffer, $read_size) !== $read_size) {
+                    throw new ArchiveIOException('Could not write to file: '.$output);
+                }
+                $size -= $read_size;
+            }
+        } catch (\Exception $e) {
+            fclose($fp);
+            @unlink($output);
+            throw $e;
+        }
+        fclose($fp);
+        @touch($output, $fileinfo->getMtime());
+        @chmod($output, $fileinfo->getMode());
+    }
+
+    /**
      * Read from the open file pointer
      *
      * @param int $length bytes to read
      * @return string
+     * @throws ArchiveLimitException
      */
     protected function readbytes($length)
     {
@@ -518,6 +553,7 @@ class Tar extends Archive
             $ret = @fread($this->fh, $length);
         }
         $this->position += strlen($ret);
+        $this->checkReadLimit($this->position);
         return $ret;
     }
 
@@ -552,9 +588,13 @@ class Tar extends Archive
      * This is basically a wrapper around seek() (and a workaround for bzip2)
      *
      * @param int $bytes seek to this position
+     * @throws ArchiveLimitException
      */
     protected function skipbytes($bytes)
     {
+        $this->checkReadLimit($this->position + $bytes);
+        $this->position += $bytes;
+
         if ($this->comptype === Archive::COMPRESS_GZIP) {
             @gzseek($this->fh, $bytes, SEEK_CUR);
         } elseif ($this->comptype === Archive::COMPRESS_BZIP) {
@@ -562,13 +602,29 @@ class Tar extends Archive
             // bzread allows to read a max of 8kb at once
             while($bytes) {
                 $toread = min(8192, $bytes);
-                @bzread($this->fh, $toread);
+                if (!strlen((string) @bzread($this->fh, $toread))) {
+                    break; // end of file
+                }
                 $bytes -= $toread;
             }
         } else {
             @fseek($this->fh, $bytes, SEEK_CUR);
         }
-        $this->position += $bytes;
+    }
+
+    /**
+     * Check that extract() stays within its size limit when reading up to the given position
+     *
+     * @param int $position the position in the uncompressed archive
+     * @throws ArchiveLimitException
+     */
+    protected function checkReadLimit($position)
+    {
+        if ($this->readLimit && $position > $this->readLimit) {
+            throw new ArchiveLimitException(
+                'Reading the archive exceeds the limit of '.$this->readLimit.' bytes'
+            );
+        }
     }
 
     /**

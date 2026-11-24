@@ -8,7 +8,6 @@ namespace splitbrain\PHPArchive;
  * stores meta data about a file in an Archive
  *
  * @author  Andreas Gohr <andi@splitbrain.org>
- * @package splitbrain\PHPArchive
  * @license MIT
  */
 class FileInfo

@@ -304,7 +304,7 @@ abstract class PHP extends Engine
      * @param bool $y_negative
      * @return array
      */
-    public static function subtractHelper(array $x_value, $x_negative, array $y_value, $y_negative)
+    protected static function subtractHelper(array $x_value, $x_negative, array $y_value, $y_negative)
     {
         $x_size = count($x_value);
         $y_size = count($y_value);
@@ -533,7 +533,11 @@ abstract class PHP extends Engine
             $quotient = new static();
             $remainder = new static();
             $quotient->value = $q;
-            if ($this->is_negative) {
+            // The common residue is the first positive modulo, so it is only the
+            // negative remainders that need the divisor added. A remainder of 0 is
+            // already the residue; adding the divisor would return the modulus
+            // itself, which is never a valid residue.
+            if ($this->is_negative && $r) {
                 $r = $y->value[0] - $r;
             }
             $remainder->value = [$r];
@@ -667,8 +671,9 @@ abstract class PHP extends Engine
 
         $quotient->is_negative = $x_sign != $y_sign;
 
-        // calculate the "common residue", if appropriate
-        if ($x_sign) {
+        // calculate the "common residue", if appropriate. A remainder of 0 is
+        // already the residue -- see divideHelper's single-digit branch.
+        if ($x_sign && count($x->value)) {
             $y->rshift($shift);
             $x = $y->subtract($x);
         }
@@ -1323,7 +1328,22 @@ abstract class PHP extends Engine
             $vals[] = $digit;
         }
 
-        while ($vals[count($vals) - 1] == 0) {
+        if (!count($vals)) {
+            return [];
+        }
+
+        /*
+          $vals is *normally* never all-zeros here as callers normalize first, and trim()
+          strips trailing zero-limbs, so the top limb is always non-zero. consequently,
+          the count()-1 read can't *normally* underflow.
+
+          the one exception to this is xdebug's trace mode. eg.
+
+          xdebug.mode=trace
+          xdebug.start_with_request=yes
+          xdebug.output_dir=/path/to/whatever
+        */
+        while (count($vals) && $vals[count($vals) - 1] == 0) {
             unset($vals[count($vals) - 1]);
         }
 

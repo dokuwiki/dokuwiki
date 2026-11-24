@@ -40,6 +40,13 @@
         }
     },
 
+    "scripts": {
+        "docs": [
+            "@php -r \"is_file('doctum.phar') || passthru('curl -fsSL -o doctum.phar https://doctum.long-term.support/releases/5/doctum.phar');\"",
+            "@php doctum.phar update doctum.php --no-progress"
+        ]
+    },
+
     "funding": [
         {
             "url": "https://github.com/sponsors/splitbrain",

@@ -3,7 +3,7 @@
 composer.phar
 vendor/
 composer.lock
-apigen.phar
 docs/
 nbproject/
 .phpunit.result.cache
+doctum.phar

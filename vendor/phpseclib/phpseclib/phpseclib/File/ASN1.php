@@ -540,7 +540,7 @@ abstract class ASN1
             case $mapping['type'] == self::TYPE_CHOICE:
                 foreach ($mapping['children'] as $key => $option) {
                     switch (true) {
-                        case isset($option['constant']) && $option['constant'] == $decoded['constant']:
+                        case isset($option['constant']) && isset($decoded['constant']) && $option['constant'] == $decoded['constant']:
                         case !isset($option['constant']) && $option['type'] == $decoded['type']:
                             $value = self::asn1map($decoded, $option, $special);
                             break;
@@ -620,10 +620,19 @@ abstract class ASN1
                             if (isset($constant) && isset($temp['constant'])) {
                                 // Can only match if constants and class match.
                                 $maymatch = $constant == $temp['constant'] && $childClass == $tempClass;
-                            } else {
+                            } elseif (!isset($constant) && !isset($temp['constant'])) {
                                 // Can only match if no constant expected and type matches or is generic.
                                 $maymatch = !isset($child['constant']) && array_search($child['type'], [$temp['type'], self::TYPE_ANY, self::TYPE_CHOICE]) !== false;
+                            } else {
+                                $maymatch = false;
                             }
+                        } elseif (isset($child['constant'])) {
+                            // a CHOICE that is itself tagged is identified by that tag. its alternatives
+                            // can't be used to tell it apart from a sibling with the same CHOICE definition
+                            // (eg. issuerLogo [1] / subjectLogo [2] in RFC 9399's LogotypeExtn).
+                            $maymatch = isset($temp['constant']) &&
+                                $child['constant'] == $temp['constant'] &&
+                                $temp['type'] == self::CLASS_CONTEXT_SPECIFIC;
                         }
                     }
 
@@ -696,6 +705,11 @@ abstract class ASN1
                                 // Can only match if no constant expected and type matches or is generic.
                                 $maymatch = !isset($child['constant']) && array_search($child['type'], [$temp['type'], self::TYPE_ANY, self::TYPE_CHOICE]) !== false;
                             }
+                        } elseif (isset($child['constant'])) {
+                            // see the comment in the TYPE_SEQUENCE case
+                            $maymatch = isset($temp['constant']) &&
+                                $child['constant'] == $temp['constant'] &&
+                                $tempClass == self::CLASS_CONTEXT_SPECIFIC;
                         }
 
                         if ($maymatch) {

@@ -284,7 +284,8 @@ abstract class Base32 implements EncoderInterface
                     }
                 }
             }
-            if (($srcLen & 7) === 1) {
+            $remainder = $srcLen & 7;
+            if ($remainder === 1 || $remainder === 3 || $remainder === 6) {
                 throw new RangeException(
                     'Incorrect padding'
                 );

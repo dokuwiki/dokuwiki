@@ -53,15 +53,15 @@ class DES extends BlockCipher
     /**
      * Contains $keys[self::ENCRYPT]
      *
-     * @see \phpseclib3\Crypt\DES::setupKey()
-     * @see \phpseclib3\Crypt\DES::processBlock()
+     * @see DES::setupKey()
+     * @see DES::processBlock()
      */
     const ENCRYPT = 0;
     /**
      * Contains $keys[self::DECRYPT]
      *
-     * @see \phpseclib3\Crypt\DES::setupKey()
-     * @see \phpseclib3\Crypt\DES::processBlock()
+     * @see DES::setupKey()
+     * @see DES::processBlock()
      */
     const DECRYPT = 1;
 
@@ -1295,7 +1295,7 @@ class DES extends BlockCipher
                 $sbox1 = array_map(["' . self::class . '", "safe_intval"], self::$sbox1);
                 $sbox2 = array_map(["' . self::class . '", "safe_intval"], self::$sbox2);
                 $sbox3 = array_map(["' . self::class . '", "safe_intval"], self::$sbox3);
-                $sbox4 = array_map(["' . self::class  .'", "safe_intval"], self::$sbox4);
+                $sbox4 = array_map(["' . self::class . '", "safe_intval"], self::$sbox4);
                 $sbox5 = array_map(["' . self::class . '", "safe_intval"], self::$sbox5);
                 $sbox6 = array_map(["' . self::class . '", "safe_intval"], self::$sbox6);
                 $sbox7 = array_map(["' . self::class . '", "safe_intval"], self::$sbox7);
