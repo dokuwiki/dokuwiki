@@ -122,6 +122,38 @@ class ApiCoreTest extends \DokuWikiTest
         $this->markTestIncomplete('Missing test for core.login API Call');
     }
 
+    // core.login passes cleaned credentials to the login check
+    public function testLoginCleansCredentials()
+    {
+        global $conf;
+        global $auth;
+        global $EVENT_HANDLER;
+        $conf['useacl'] = 1;
+
+        $auth = new class extends AuthPlugin {
+            public function cleanUser($user)
+            {
+                return strtolower($user);
+            }
+        };
+
+        $seen = [];
+        $EVENT_HANDLER->register_hook(
+            'AUTH_LOGIN_CHECK',
+            'BEFORE',
+            null,
+            static function ($event) use (&$seen) {
+                $seen = $event->data;
+                $event->preventDefault();
+                $event->result = true;
+            }
+        );
+
+        $this->assertTrue($this->remote->call('core.login', ['user' => "Test\x01User", 'pass' => "pass\x01word"]));
+        $this->assertEquals('testuser', $seen['user']);
+        $this->assertEquals('password', $seen['password']);
+    }
+
     // core.logoff
     public function testLogoff()
     {
