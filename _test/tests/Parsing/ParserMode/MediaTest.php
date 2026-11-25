@@ -424,6 +424,64 @@ class MediaTest extends ParserTestBase
         $this->assertCalls($calls, $parser_response);
     }
 
+    /**
+     * An unclosed `{{` must not swallow a table separator, later rows, or a
+     * following image. The malformed text stays cdata; the image is its own token.
+     */
+    function testDoesNotCrossTableBoundary() {
+        $parser_response = p_get_instructions(
+            "| Cell 1 | This is a macro: {{macro}.function()} |\n" .
+            "| Cell 2 | Normal text |\n" .
+            "\n" .
+            "Sample text\n" .
+            "\n" .
+            "| Image Cell | {{:wiki:image.png}} |\n"
+        );
+
+        $calls = [
+            ['document_start', []],
+            ['table_open', [2, 2, 1]],
+            ['tabletbody_open', []],
+            ['tablerow_open', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' Cell 1 ']],
+            ['tablecell_close', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' This is a macro: {{macro}.function()} ']],
+            ['tablecell_close', []],
+            ['tablerow_close', []],
+            ['tablerow_open', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' Cell 2 ']],
+            ['tablecell_close', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' Normal text ']],
+            ['tablecell_close', []],
+            ['tablerow_close', []],
+            ['tabletbody_close', []],
+            ['table_close', [76]],
+            ['p_open', []],
+            ['cdata', ['Sample text']],
+            ['p_close', []],
+            ['table_open', [2, 1, 91]],
+            ['tabletbody_open', []],
+            ['tablerow_open', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' Image Cell ']],
+            ['tablecell_close', []],
+            ['tablecell_open', [1, null, 1]],
+            ['cdata', [' ']],
+            ['internalmedia', [':wiki:image.png', null, null, null, null, 'cache', 'details']],
+            ['cdata', [' ']],
+            ['tablecell_close', []],
+            ['tablerow_close', []],
+            ['tabletbody_close', []],
+            ['table_close', [127]],
+            ['document_end', []],
+        ];
+        $this->assertCalls($calls, $parser_response);
+    }
+
     function testLinkTextWithWavedBrackets_3() {
         $file = 'wiki:dokuwiki-128.png';
         $parser_response = p_get_instructions('{{' . $file . '|We got a { and a } here.}}');
