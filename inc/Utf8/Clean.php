@@ -115,6 +115,10 @@ class Clean
      */
     public static function replaceBadBytes($str, $replace = '')
     {
+        if (preg_match('//u', $str)) {
+            return $str;
+        }
+
         $UTF8_BAD =
             '([\x00-\x7F]' .                          # ASCII (including control chars)
             '|[\xC2-\xDF][\x80-\xBF]' .               # non-overlong 2-byte
@@ -125,16 +129,11 @@ class Clean
             '|[\xF1-\xF3][\x80-\xBF]{3}' .            # planes 4-15
             '|\xF4[\x80-\x8F][\x80-\xBF]{2}' .        # plane 16
             '|(.{1}))';                               # invalid byte
-        ob_start();
-        while (preg_match('/' . $UTF8_BAD . '/S', $str, $matches)) {
-            if (!isset($matches[2])) {
-                echo $matches[0];
-            } else {
-                echo $replace;
-            }
-            $str = substr($str, strlen($matches[0]));
-        }
-        return ob_get_clean();
+        return preg_replace_callback(
+            '/' . $UTF8_BAD . '/S',
+            static fn($matches) => isset($matches[2]) ? $replace : $matches[0],
+            $str
+        );
     }
 
 
