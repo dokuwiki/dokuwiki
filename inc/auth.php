@@ -318,10 +318,14 @@ function auth_login($user, $pass, $sticky = false, $silent = false)
             auth_setCookie($user, auth_encrypt($pass, $secret), $sticky);
             return true;
         }
-        //invalid credentials - log off
+        // A directory outage clears AuthPlugin::$success. A rejected password does not.
         if (!$silent) {
             http_status(403, 'Login failed');
-            msg($lang['badlogin'], -1);
+            if ($auth->success == false) {
+                msg($lang['authtempfail'], -1);
+            } else {
+                msg($lang['badlogin'], -1);
+            }
         }
         auth_logoff();
         return false;

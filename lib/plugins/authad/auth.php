@@ -170,8 +170,11 @@ class auth_plugin_authad extends AuthPlugin
 
         try {
             return $adldap->authenticate($this->getUserName($user), $pass);
-        } catch (adLDAPException) {
-            // shouldn't really happen
+        } catch (adLDAPException $e) {
+            // The directory could not answer. Leave the backend unhealthy so
+            // auth_login() can report an outage instead of a bad password.
+            $this->success = false;
+            Logger::error('AD Auth: ' . $this->sanitizeAuthMessage($e->getMessage(), $pass));
             return false;
         }
     }
@@ -639,20 +642,62 @@ class auth_plugin_authad extends AuthPlugin
     {
         $domain = (string) ($domain ?? $this->opts['domain'] ?? '');
         $this->opts = $this->loadServerConfig($domain);
-        if (isset($this->adldap[$domain])) return $this->adldap[$domain];
+        // isset() is false for a cached null, which would repeat the whole
+        // controller budget and log the same outage again within one request.
+        if (array_key_exists($domain, $this->adldap)) {
+            if (!$this->adldap[$domain]) {
+                $this->success = false;
+                return false;
+            }
+            // A usable connection is not an unrelated earlier outage.
+            $this->success = true;
+            return $this->adldap[$domain];
+        }
 
         // connect
         try {
             $this->adldap[$domain] = new adLDAP($this->opts);
+            $this->success = true;
             return $this->adldap[$domain];
         } catch (Exception $e) {
+            $message = $this->sanitizeAuthMessage($e->getMessage(), $this->opts['admin_password'] ?? null);
             if ($this->conf['debug']) {
-                msg('AD Auth: ' . $e->getMessage(), -1);
+                msg('AD Auth: ' . $message, -1);
             }
+            Logger::error('AD Auth: ' . $message);
             $this->success         = false;
             $this->adldap[$domain] = null;
         }
         return false;
+    }
+
+    /**
+     * Remove credential material from a directory diagnostic before it is logged.
+     *
+     * @param string $message
+     * @param mixed $secret
+     * @return string
+     */
+    protected function sanitizeAuthMessage($message, $secret = null)
+    {
+        $message = (string) $message;
+        $secrets = [];
+        if (is_string($secret) && $secret !== '') {
+            $secrets[] = $secret;
+        }
+        $adminPassword = $this->opts['admin_password'] ?? null;
+        if (is_string($adminPassword) && $adminPassword !== '') {
+            $secrets[] = $adminPassword;
+        }
+        $krb5 = $_SERVER['KRB5CCNAME'] ?? '';
+        if (is_string($krb5) && $krb5 !== '') {
+            $secrets[] = $krb5;
+        }
+        usort($secrets, static fn($a, $b) => strlen($b) <=> strlen($a));
+        foreach ($secrets as $value) {
+            $message = str_replace($value, '[redacted]', $message);
+        }
+        return $message;
     }
 
     /**

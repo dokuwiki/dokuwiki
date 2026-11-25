@@ -78,6 +78,12 @@ class adLDAP {
     * The default port for LDAPS SSL connections
     */
     const ADLDAP_LDAPS_PORT = '636';
+
+    /**
+     * Seconds allowed for TCP connection establishment to one controller.
+     * This bounds the connect itself, not a later LDAP response or DNS lookup.
+     */
+    const ADLDAP_NETWORK_TIMEOUT = 2;
     
     /**
     * The account suffix for your domain, can be set when the class is invoked
@@ -174,6 +180,20 @@ class adLDAP {
     */
         protected $ldapConnection;
         protected $ldapBind;
+
+        /**
+         * Controller the current handle was opened against.
+         *
+         * @var string|null
+         */
+        protected $connectedController = null;
+
+        /**
+         * Whether StartTLS has already succeeded on the current handle.
+         *
+         * @var bool
+         */
+        protected $tlsStarted = false;
     
     /**
     * Get the active LDAP Connection
@@ -620,70 +640,59 @@ class adLDAP {
     * 
     * @return bool
     */
-    public function connect() 
+    public function connect()
     {
-        // Connect to the AD/LDAP server as the username/password
-        $domainController = $this->randomController();
-        if ($this->useSSL) {
-            $this->ldapConnection = ldap_connect("ldaps://" . $domainController, $this->adPort);
-        } else {
-            $this->ldapConnection = ldap_connect($domainController, $this->adPort);
+        $remoteUser = $_SERVER['REMOTE_USER'] ?? null;
+        $krb5 = $_SERVER['KRB5CCNAME'] ?? null;
+        $preferred = ($this->ldapConnection && $this->connectedController) ? $this->connectedController : null;
+        $candidates = $this->controllerCandidates($preferred);
+        if (count($candidates) === 0) {
+            $this->abandonConnection();
+            throw new adLDAPException($this->unavailableMessage('No domain controllers configured'));
         }
-               
-        // Set some ldap options for talking to AD
-        ldap_set_option($this->ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
-        ldap_set_option($this->ldapConnection, LDAP_OPT_REFERRALS, 0);
-        
-        if ($this->useTLS) {
-            ldap_start_tls($this->ldapConnection);
-        }
-               
-        // Bind as a domain admin if they've set it up
-        if ($this->adminUsername !== NULL && $this->adminPassword !== NULL) {
-            $this->ldapBind = @ldap_bind($this->ldapConnection, $this->adminUsername . $this->accountSuffix, $this->adminPassword);
-            if (!$this->ldapBind) {
-                if ($this->useSSL && !$this->useTLS) {
-                    // If you have problems troubleshooting, remove the @ character from the ldapldapBind command above to get the actual error message
-                    throw new adLDAPException('Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $this->getLastError());
-                }
-                else {
-                    throw new adLDAPException('Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $this->getLastError());
+
+        $diagnostic = '';
+        foreach ($candidates as $controller) {
+            if (!$this->useCandidate($controller, $diagnostic)) {
+                continue;
+            }
+
+            if ($this->adminUsername !== NULL && $this->adminPassword !== NULL) {
+                if (!$this->bindServiceAccount($diagnostic)) {
+                    continue;
                 }
             }
-        }
-        if ($this->useSSO && $_SERVER['REMOTE_USER'] && $this->adminUsername === null && $_SERVER['KRB5CCNAME']) {
-            putenv("KRB5CCNAME=" . $_SERVER['KRB5CCNAME']);  
-            $this->ldapBind = @ldap_sasl_bind($this->ldapConnection, NULL, NULL, "GSSAPI"); 
-            if (!$this->ldapBind){ 
-                throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError()); 
-            }
-            else {
+
+            if ($this->useSSO && $remoteUser && $this->adminUsername === null && $krb5) {
+                if (!$this->bindSasl($diagnostic)) {
+                    continue;
+                }
                 return true;
             }
+
+            if ($this->baseDn == NULL) {
+                $this->baseDn = $this->findBaseDn();
+            }
+
+            return true;
         }
-                
-        
-        if ($this->baseDn == NULL) {
-            $this->baseDn = $this->findBaseDn();   
-        }
-        
-        return true;
+
+        $this->abandonConnection();
+        throw new adLDAPException($this->unavailableMessage($diagnostic));
     }
-    
+
     /**
     * Closes the LDAP connection
-    * 
+    *
     * @return void
     */
     public function close() {
-        if ($this->ldapConnection) {
-            @ldap_close($this->ldapConnection);
-        }
+        $this->abandonConnection();
     }
-    
+
     /**
     * Validate a user's login credentials
-    * 
+    *
     * @param string $username A user's AD username
     * @param string $password A user's AD password
     * @param bool optional $preventRebind
@@ -691,43 +700,383 @@ class adLDAP {
     */
     public function authenticate($username, $password, $preventRebind = false) {
         // Prevent null binding
-        if ($username === NULL || $password === NULL) { return false; } 
+        if ($username === NULL || $password === NULL) { return false; }
         if (empty($username) || empty($password)) { return false; }
-        
+
         // Allow binding over SSO for Kerberos
-        if ($this->useSSO && $_SERVER['REMOTE_USER'] && $_SERVER['REMOTE_USER'] == $username && $this->adminUsername === NULL && $_SERVER['KRB5CCNAME']) { 
-            putenv("KRB5CCNAME=" . $_SERVER['KRB5CCNAME']);
-            $this->ldapBind = @ldap_sasl_bind($this->ldapConnection, NULL, NULL, "GSSAPI");
+        $remoteUser = $_SERVER['REMOTE_USER'] ?? null;
+        $krb5 = $_SERVER['KRB5CCNAME'] ?? null;
+        if ($this->useSSO && $remoteUser && $remoteUser == $username && $this->adminUsername === NULL && $krb5) {
+            return $this->authenticateSso();
+        }
+
+        $preferred = ($this->ldapConnection && $this->connectedController) ? $this->connectedController : null;
+        $candidates = $this->controllerCandidates($preferred);
+        if (count($candidates) === 0) {
+            $this->abandonConnection();
+            throw new adLDAPException($this->unavailableMessage('No domain controllers configured', $password));
+        }
+
+        $diagnostic = '';
+        foreach ($candidates as $controller) {
+            if (!$this->useCandidate($controller, $diagnostic)) {
+                continue;
+            }
+
+            // A lazy ldap_connect() handle is not authentication. Only a completed user bind is.
+            $this->ldapBind = @ldap_bind($this->ldapConnection, $username . $this->accountSuffix, $password);
             if (!$this->ldapBind) {
-                throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
+                $errno = @ldap_errno($this->ldapConnection);
+                $diagnostic = @ldap_error($this->ldapConnection);
+                if ($this->isTransportError($errno)) {
+                    $this->abandonConnection();
+                    continue;
+                }
+                // Rejected credentials stay on this controller. Do not replay the password.
+                $this->restoreAdmin($preventRebind, $password);
+                return false;
             }
-            else {
-                return true;
-            }
+
+            $this->restoreAdmin($preventRebind, $password);
+            return true;
         }
-        
-        // Bind as the user        
-        $ret = true;
-        $this->ldapBind = @ldap_bind($this->ldapConnection, $username . $this->accountSuffix, $password);
-        if (!$this->ldapBind){ 
-            $ret = false; 
-        }
-        
-        // Cnce we've checked their details, kick back into admin mode if we have it
-        if ($this->adminUsername !== NULL && !$preventRebind) {
-            $this->ldapBind = @ldap_bind($this->ldapConnection, $this->adminUsername . $this->accountSuffix , $this->adminPassword);
-            if (!$this->ldapBind){
-                // This should never happen in theory
-                throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->getLastError());
-            } 
-        } 
-        
-        return $ret;
+
+        $this->abandonConnection();
+        throw new adLDAPException($this->unavailableMessage($diagnostic, $password));
     }
-    
+
+    /**
+     * Try the current handle first, then each remaining controller once.
+     *
+     * @param string|null $preferred
+     * @return array
+     */
+    protected function controllerCandidates($preferred = null)
+    {
+        $controllers = array();
+        foreach ((array) $this->domainControllers as $controller) {
+            if (!is_string($controller) || $controller === '') {
+                continue;
+            }
+            $controllers[$controller] = $controller;
+        }
+        $controllers = array_values($controllers);
+        if (count($controllers) > 1) {
+            shuffle($controllers);
+        }
+        if ($preferred !== null && $preferred !== '') {
+            $index = array_search($preferred, $controllers, true);
+            if ($index !== false) {
+                unset($controllers[$index]);
+                array_unshift($controllers, $preferred);
+                $controllers = array_values($controllers);
+            }
+        }
+        return $controllers;
+    }
+
+    /**
+     * Open a controller, or reuse the handle already connected to it.
+     *
+     * @param string $controller
+     * @param string $diagnostic
+     * @return bool false when this controller had a transport failure
+     * @throws adLDAPException when StartTLS fails for a non-transport reason
+     */
+    protected function useCandidate($controller, &$diagnostic)
+    {
+        $reuse = ($this->ldapConnection && $this->connectedController === $controller);
+        if ($reuse) {
+            ldap_set_option($this->ldapConnection, LDAP_OPT_NETWORK_TIMEOUT, self::ADLDAP_NETWORK_TIMEOUT);
+            return $this->prepareConnection($diagnostic);
+        }
+
+        $this->abandonConnection();
+        if (!$this->openController($controller)) {
+            $diagnostic = 'ldap_connect failed';
+            return false;
+        }
+        return $this->prepareConnection($diagnostic);
+    }
+
+    /**
+     * Create a handle and set protocol options before any network operation.
+     *
+     * @param string $controller
+     * @return bool
+     */
+    protected function openController($controller)
+    {
+        if ($this->useSSL) {
+            $connection = ldap_connect("ldaps://" . $controller, $this->adPort);
+        } else {
+            $connection = ldap_connect($controller, $this->adPort);
+        }
+        if (!$connection) {
+            $this->ldapConnection = null;
+            $this->ldapBind = false;
+            $this->connectedController = null;
+            $this->tlsStarted = false;
+            return false;
+        }
+
+        $this->ldapConnection = $connection;
+        $this->ldapBind = false;
+        $this->connectedController = $controller;
+        $this->tlsStarted = false;
+
+        ldap_set_option($this->ldapConnection, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($this->ldapConnection, LDAP_OPT_REFERRALS, 0);
+        ldap_set_option($this->ldapConnection, LDAP_OPT_NETWORK_TIMEOUT, self::ADLDAP_NETWORK_TIMEOUT);
+        return true;
+    }
+
+    /**
+     * Start TLS when configured. A failure never continues on a plaintext handle.
+     *
+     * @param string $diagnostic
+     * @return bool false when another controller should be tried
+     * @throws adLDAPException
+     */
+    protected function prepareConnection(&$diagnostic)
+    {
+        if ($this->useTLS && !$this->tlsStarted) {
+            if (!ldap_start_tls($this->ldapConnection)) {
+                $errno = @ldap_errno($this->ldapConnection);
+                $diagnostic = @ldap_error($this->ldapConnection);
+                $transport = $this->isTransportError($errno);
+                $message = 'StartTLS to Active Directory failed. AD said: ' . $this->sanitizeDiagnostic($diagnostic);
+                $this->abandonConnection();
+                if ($transport) {
+                    return false;
+                }
+                throw new adLDAPException($message);
+            }
+            $this->tlsStarted = true;
+        }
+        return true;
+    }
+
+    /**
+     * Bind the configured service account. Credential rejection is not retried.
+     *
+     * @param string $diagnostic
+     * @return bool false when another controller should be tried
+     * @throws adLDAPException
+     */
+    protected function bindServiceAccount(&$diagnostic)
+    {
+        $this->ldapBind = @ldap_bind(
+            $this->ldapConnection,
+            $this->adminUsername . $this->accountSuffix,
+            $this->adminPassword
+        );
+        if ($this->ldapBind) {
+            return true;
+        }
+
+        $errno = @ldap_errno($this->ldapConnection);
+        $diagnostic = @ldap_error($this->ldapConnection);
+        if ($this->isTransportError($errno)) {
+            $this->abandonConnection();
+            return false;
+        }
+
+        $message = $this->serviceBindFailureMessage($diagnostic);
+        $this->abandonConnection();
+        throw new adLDAPException($message);
+    }
+
+    /**
+     * GSSAPI bind. Connection failures move on; other failures do not.
+     *
+     * @param string $diagnostic
+     * @return bool false when another controller should be tried
+     * @throws adLDAPException
+     */
+    protected function bindSasl(&$diagnostic)
+    {
+        putenv("KRB5CCNAME=" . $_SERVER['KRB5CCNAME']);
+        $this->ldapBind = @ldap_sasl_bind($this->ldapConnection, NULL, NULL, "GSSAPI");
+        if ($this->ldapBind) {
+            return true;
+        }
+
+        $errno = @ldap_errno($this->ldapConnection);
+        $diagnostic = @ldap_error($this->ldapConnection);
+        if ($this->isTransportError($errno)) {
+            $this->abandonConnection();
+            return false;
+        }
+
+        $message = 'Rebind to Active Directory failed. AD said: ' . $this->sanitizeDiagnostic($diagnostic);
+        $this->abandonConnection();
+        throw new adLDAPException($message);
+    }
+
+    /**
+     * SSO authentication across the finite controller list.
+     *
+     * @return bool
+     * @throws adLDAPException
+     */
+    protected function authenticateSso()
+    {
+        $preferred = ($this->ldapConnection && $this->connectedController) ? $this->connectedController : null;
+        $candidates = $this->controllerCandidates($preferred);
+        if (count($candidates) === 0) {
+            $this->abandonConnection();
+            throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->sanitizeDiagnostic('No domain controllers configured'));
+        }
+
+        $diagnostic = '';
+        foreach ($candidates as $controller) {
+            if (!$this->useCandidate($controller, $diagnostic)) {
+                continue;
+            }
+            if (!$this->bindSasl($diagnostic)) {
+                continue;
+            }
+            return true;
+        }
+
+        $this->abandonConnection();
+        throw new adLDAPException('Rebind to Active Directory failed. AD said: ' . $this->sanitizeDiagnostic($diagnostic));
+    }
+
+    /**
+     * Return the connection to the service account after a user bind.
+     * Failure here is an operational error and is never reported as a successful login.
+     *
+     * @param bool $preventRebind
+     * @param string|null $userPassword
+     * @return void
+     * @throws adLDAPException
+     */
+    protected function restoreAdmin($preventRebind, $userPassword)
+    {
+        if ($this->adminUsername === NULL || $preventRebind) {
+            return;
+        }
+
+        $this->ldapBind = @ldap_bind(
+            $this->ldapConnection,
+            $this->adminUsername . $this->accountSuffix,
+            $this->adminPassword
+        );
+        if ($this->ldapBind) {
+            return;
+        }
+
+        $errno = @ldap_errno($this->ldapConnection);
+        $diagnostic = @ldap_error($this->ldapConnection);
+        if ($diagnostic === '' || $diagnostic === null) {
+            $diagnostic = 'error ' . (int) $errno;
+        }
+        $message = 'Rebind to Active Directory failed. AD said: ' . $this->sanitizeDiagnostic($diagnostic, $userPassword);
+        $this->abandonConnection();
+        throw new adLDAPException($message);
+    }
+
+    /**
+     * Drop the current handle. Safe when no handle is open and when called twice.
+     *
+     * @return void
+     */
+    protected function abandonConnection()
+    {
+        $connection = $this->ldapConnection;
+        $this->ldapConnection = null;
+        $this->ldapBind = false;
+        $this->connectedController = null;
+        $this->tlsStarted = false;
+        if ($connection) {
+            @ldap_close($connection);
+        }
+    }
+
+    /**
+     * Client-library connection failures, in both OpenLDAP and WinLDAP numbering.
+     * PHP does not guarantee the LDAP_SERVER_DOWN / LDAP_TIMEOUT / LDAP_CONNECT_ERROR
+     * constants exist or use one sign.
+     *
+     * @param mixed $errno
+     * @return bool
+     */
+    protected function isTransportError($errno)
+    {
+        switch ((int) $errno) {
+            case -1:  // LDAP_SERVER_DOWN (OpenLDAP)
+            case -5:  // LDAP_TIMEOUT (OpenLDAP)
+            case -11: // LDAP_CONNECT_ERROR (OpenLDAP)
+            case 81:  // LDAP_SERVER_DOWN (WinLDAP)
+            case 85:  // LDAP_TIMEOUT (WinLDAP)
+            case 91:  // LDAP_CONNECT_ERROR (WinLDAP)
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param string $diagnostic
+     * @param string|null $userPassword
+     * @return string
+     */
+    protected function unavailableMessage($diagnostic, $userPassword = null)
+    {
+        $diagnostic = $this->sanitizeDiagnostic($diagnostic, $userPassword);
+        if ($diagnostic === '') {
+            $diagnostic = 'connection failed';
+        }
+        return 'Active Directory is unavailable. AD said: ' . $diagnostic;
+    }
+
+    /**
+     * @param string $diagnostic
+     * @return string
+     */
+    protected function serviceBindFailureMessage($diagnostic)
+    {
+        $diagnostic = $this->sanitizeDiagnostic($diagnostic);
+        if ($this->useSSL && !$this->useTLS) {
+            return 'Bind to Active Directory failed. Either the LDAPs connection failed or the login credentials are incorrect. AD said: ' . $diagnostic;
+        }
+        return 'Bind to Active Directory failed. Check the login credentials and/or server details. AD said: ' . $diagnostic;
+    }
+
+    /**
+     * Strip passwords and Kerberos credential paths from an operational diagnostic.
+     *
+     * @param mixed $diagnostic
+     * @param string|null $userPassword
+     * @return string
+     */
+    protected function sanitizeDiagnostic($diagnostic, $userPassword = null)
+    {
+        $diagnostic = (string) $diagnostic;
+        $secrets = array();
+        if (is_string($this->adminPassword) && $this->adminPassword !== '') {
+            $secrets[] = $this->adminPassword;
+        }
+        if (is_string($userPassword) && $userPassword !== '') {
+            $secrets[] = $userPassword;
+        }
+        $krb5 = $_SERVER['KRB5CCNAME'] ?? '';
+        if (is_string($krb5) && $krb5 !== '') {
+            $secrets[] = $krb5;
+        }
+        usort($secrets, function ($a, $b) {
+            return strlen($b) - strlen($a);
+        });
+        foreach ($secrets as $secret) {
+            $diagnostic = str_replace($secret, '[redacted]', $diagnostic);
+        }
+        return $diagnostic;
+    }
+
     /**
     * Find the Base DN of your domain controller
-    * 
+    *
     * @return string
     */
     public function findBaseDn() 
